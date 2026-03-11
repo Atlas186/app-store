@@ -77,7 +77,9 @@
         </section>
 
         <section id="view-finance" class="tab-content hidden">
-            <h2 class="text-xl font-extrabold mb-5 px-2">Souveraineté</h2>
+            <h2 class="text-xl font-extrabold mb-5 px-2 flex items-center gap-2">
+                <i class="fas fa-shield-alt text-ios-blue"></i> Souveraineté
+            </h2>
             <div id="grid-finance" class="grid grid-cols-2 md:grid-cols-3 gap-4"></div>
         </section>
 
@@ -124,7 +126,7 @@
                 img: "https://i.imgur.com/OJM0H6R.jpeg", 
                 banner: "https://i.imgur.com/OJM0H6R.jpeg", 
                 shots: ["https://i.imgur.com/OJM0H6R.jpeg", "https://i.imgur.com/NyWnYFN.jpeg"],
-                desc: "Votre bibliothèque sonore pour une transformation mentale radicale." 
+                desc: "Votre bibliothèque sonore pour une transformation mentale radicale. Des modules exclusifs pour bâtir votre succès." 
             },
             { 
                 id: "ag_business", 
@@ -133,11 +135,11 @@
                 name: "AGI Business Pro", 
                 cat: "Investissement", 
                 size: "5.2 Mo", 
-                file: "./agi-business.pro.apk", 
+                file: "https://agi-burkina.netlify.app/agi-business.pro.apk", 
                 img: "https://i.imgur.com/GS9UC1o.jpeg", 
                 banner: "https://i.imgur.com/GS9UC1o.jpeg", 
                 shots: ["https://i.imgur.com/GS9UC1o.jpeg", "https://i.imgur.com/NyWnYFN.jpeg"],
-                desc: "Gérez vos actifs et participez à l'essor industriel d'AGI." 
+                desc: "La plateforme officielle pour gérer vos actifs Nexus Core et participer aux projets industriels d'AGI au Burkina Faso." 
             }
         ];
 
@@ -190,7 +192,7 @@
             const ov = document.getElementById('detail-view');
             ov.innerHTML = `
                 <div class="sticky top-0 z-50 glass px-6 py-4 flex justify-between items-center border-b border-gray-100 dark:border-gray-800">
-                    <button onclick="closeApp()" class="text-ios-blue font-bold text-sm"><i class="fas fa-chevron-left mr-2"></i> Retour</button>
+                    <button onclick="closeApp()" class="text-ios-blue font-bold text-sm flex items-center"><i class="fas fa-chevron-left mr-2"></i> Retour</button>
                     <button onclick="install('${a.id}','${a.file}')" id="ins-btn" class="bg-ios-blue text-white px-8 py-2 rounded-full font-black text-xs uppercase shadow-lg">Installer</button>
                 </div>
                 <div class="max-w-xl mx-auto px-6 py-10">
