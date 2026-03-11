@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>AGI Premium Store | Nexus Core</title>
+    
+    <meta name="description" content="Plateforme officielle d'Atlas Groupe International.">
+    <link rel="canonical" href="https://agi-store.netlify.app/">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AGI Store">
+    <link rel="apple-touch-icon" href="https://i.imgur.com/NyWnYFN.jpeg">
+    <link rel="manifest" href='data:application/json,{"name":"AGI Premium Store","short_name":"AGI Store","start_url":"/","display":"standalone","background_color":"#05070a","theme_color":"#007AFF","icons":[{"src":"https://i.imgur.com/NyWnYFN.jpeg","sizes":"512x512","type":"image/jpeg"}]}'>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
+                    colors: { 
+                        ios: { blue: '#007AFF', gray: '#8E8E93', light: '#F2F2F7', dark: '#1C1C1E', success: '#34C759' } 
+                    },
+                    borderRadius: { 'apple': '1.8rem' }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root { --ios-blur: blur(25px); }
+        body { -webkit-tap-highlight-color: transparent; font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.015em; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .glass { background: rgba(255, 255, 255, 0.75); backdrop-filter: var(--ios-blur); -webkit-backdrop-filter: var(--ios-blur); }
+        .dark .glass { background: rgba(20, 20, 20, 0.85); }
+        .apple-card { transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform; cursor: pointer; }
+        .apple-card:active { transform: scale(0.96); }
+        .detail-view { transform: translateY(100%); transition: transform 0.6s cubic-bezier(0.32, 1, 0.23, 1); visibility: hidden; }
+        .detail-view.active { transform: translateY(0); visibility: visible; }
+        .snap-x { scroll-snap-type: x mandatory; }
+        .snap-center { scroll-snap-align: center; }
+        .tab-content { animation: fadeIn 0.5s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+
+<body class="bg-[#F2F2F7] dark:bg-black text-black dark:text-white min-h-screen selection:bg-ios-blue/30 overflow-x-hidden">
+
+    <header class="sticky top-0 z-40 glass border-b border-gray-200/50 dark:border-gray-800/50 px-6 py-4">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex justify-between items-end mb-4">
+                <div>
+                    <p class="text-[10px] font-bold text-ios-gray uppercase tracking-widest mb-0.5" id="current-date">...</p>
+                    <h1 class="text-3xl font-extrabold tracking-tight" id="main-title">Aujourd'hui</h1>
+                </div>
+                <div class="w-10 h-10 rounded-full overflow-hidden ring-2 ring-ios-blue/20">
+                    <img src="https://i.imgur.com/NyWnYFN.jpeg" class="w-full h-full object-cover">
+                </div>
+            </div>
+            <div class="relative">
+                <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-ios-gray text-xs"></i>
+                <input type="text" id="search-bar" oninput="handleSearch()" placeholder="Rechercher une application..." 
+                    class="w-full bg-gray-200/50 dark:bg-gray-800/50 border-none rounded-xl py-2.5 pl-10 pr-4 text-sm focus:ring-2 focus:ring-ios-blue outline-none transition-all">
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 pt-6 pb-40">
+        <section id="view-today" class="tab-content">
+            <div id="grid-featured" class="space-y-8"></div>
+        </section>
+
+        <section id="view-finance" class="tab-content hidden">
+            <h2 class="text-xl font-extrabold mb-5 px-2">Souveraineté</h2>
+            <div id="grid-finance" class="grid grid-cols-2 md:grid-cols-3 gap-4"></div>
+        </section>
+
+        <section id="view-apps" class="tab-content hidden">
+            <h2 class="text-xl font-extrabold mb-5 px-2">Toutes les Apps</h2>
+            <div id="grid-regular" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
+        </section>
+    </main>
+
+    <nav class="fixed bottom-0 w-full glass border-t border-gray-200/50 dark:border-gray-800/50 px-6 py-3 flex justify-around items-center z-50 rounded-t-[2rem]">
+        <button onclick="switchTab('today')" id="tab-today" class="flex flex-col items-center text-ios-blue nav-item">
+            <i class="fas fa-th-large text-xl"></i>
+            <span class="text-[9px] font-bold mt-1 uppercase">Store</span>
+        </button>
+        <button onclick="switchTab('finance')" id="tab-finance" class="flex flex-col items-center text-ios-gray nav-item">
+            <i class="fas fa-wallet text-xl"></i>
+            <span class="text-[9px] font-bold mt-1 uppercase">Finance</span>
+        </button>
+        <button onclick="switchTab('apps')" id="tab-apps" class="flex flex-col items-center text-ios-gray nav-item">
+            <i class="fas fa-rocket text-xl"></i>
+            <span class="text-[9px] font-bold mt-1 uppercase">Apps</span>
+        </button>
+    </nav>
+
+    <div id="detail-view" class="fixed inset-0 z-[100] bg-white dark:bg-black detail-view overflow-y-auto no-scrollbar"></div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, onValue, update, increment } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = { databaseURL: "https://atlasgroupebusiness-default-rtdb.firebaseio.com/" };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        const APPS = [
+            { 
+                id: "agi_audio_lib", 
+                type: "featured", 
+                isFinance: false,
+                name: "AGI Audio-LIB", 
+                cat: "Mentalité", 
+                size: "1.2 Go", 
+                file: "https://drive.google.com/file/d/1T7vUbnBwQqWdYh9zN0fhapopj_zSgUNw/view", 
+                img: "https://i.imgur.com/OJM0H6R.jpeg", 
+                banner: "https://i.imgur.com/OJM0H6R.jpeg", 
+                shots: ["https://i.imgur.com/OJM0H6R.jpeg", "https://i.imgur.com/NyWnYFN.jpeg"],
+                desc: "Votre bibliothèque sonore pour une transformation mentale radicale." 
+            },
+            { 
+                id: "ag_business", 
+                type: "featured", 
+                isFinance: true,
+                name: "AGI Business Pro", 
+                cat: "Investissement", 
+                size: "5.2 Mo", 
+                file: "./agi-business.pro.apk", 
+                img: "https://i.imgur.com/GS9UC1o.jpeg", 
+                banner: "https://i.imgur.com/GS9UC1o.jpeg", 
+                shots: ["https://i.imgur.com/GS9UC1o.jpeg", "https://i.imgur.com/NyWnYFN.jpeg"],
+                desc: "Gérez vos actifs et participez à l'essor industriel d'AGI." 
+            }
+        ];
+
+        window.handleSearch = () => {
+            const query = document.getElementById('search-bar').value.toLowerCase();
+            const filtered = APPS.filter(a => a.name.toLowerCase().includes(query) || a.cat.toLowerCase().includes(query));
+            renderGrids(filtered);
+        };
+
+        window.switchTab = (tabId) => {
+            ['today', 'finance', 'apps'].forEach(s => {
+                document.getElementById(`view-${s}`).classList.toggle('hidden', s !== tabId);
+                const tab = document.getElementById(`tab-${s}`);
+                tab.classList.toggle('text-ios-blue', s === tabId);
+                tab.classList.toggle('text-ios-gray', s !== tabId);
+            });
+            document.getElementById('main-title').innerText = tabId === 'today' ? 'Aujourd\'hui' : (tabId === 'finance' ? 'Souveraineté' : 'Applications');
+        };
+
+        const cardHtml = (a) => `
+            <div onclick="openApp('${a.id}')" class="apple-card bg-white dark:bg-ios-dark p-4 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col justify-between h-full">
+                <div>
+                    <img src="${a.img}" class="w-14 h-14 rounded-2xl object-cover mb-4 shadow-md" loading="lazy">
+                    <h3 class="font-bold text-sm leading-tight mb-1 line-clamp-1">${a.name}</h3>
+                    <p class="text-ios-gray text-[10px] uppercase font-bold tracking-tighter mb-4">${a.cat}</p>
+                </div>
+                <button class="w-full bg-ios-light dark:bg-gray-800 text-ios-blue py-2 rounded-full font-black text-[10px] uppercase">Obtenir</button>
+            </div>
+        `;
+
+        window.renderGrids = (data = APPS) => {
+            document.getElementById('grid-featured').innerHTML = data.filter(a => a.type === 'featured').map(a => `
+                <div onclick="openApp('${a.id}')" class="apple-card relative w-full h-[22rem] rounded-apple overflow-hidden shadow-2xl">
+                    <img src="${a.banner}" class="absolute inset-0 w-full h-full object-cover" decoding="async">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent"></div>
+                    <div class="absolute bottom-6 left-6 right-6 text-white">
+                        <p class="text-ios-blue text-[10px] font-black uppercase tracking-widest mb-2">${a.cat}</p>
+                        <h3 class="text-2xl font-extrabold mb-1">${a.name}</h3>
+                        <p class="text-white/70 text-xs line-clamp-1">${a.desc}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('grid-finance').innerHTML = data.filter(a => a.isFinance).map(cardHtml).join('');
+            document.getElementById('grid-regular').innerHTML = data.map(cardHtml).join('');
+        };
+
+        window.openApp = (id) => {
+            const a = APPS.find(x => x.id === id);
+            const ov = document.getElementById('detail-view');
+            ov.innerHTML = `
+                <div class="sticky top-0 z-50 glass px-6 py-4 flex justify-between items-center border-b border-gray-100 dark:border-gray-800">
+                    <button onclick="closeApp()" class="text-ios-blue font-bold text-sm"><i class="fas fa-chevron-left mr-2"></i> Retour</button>
+                    <button onclick="install('${a.id}','${a.file}')" id="ins-btn" class="bg-ios-blue text-white px-8 py-2 rounded-full font-black text-xs uppercase shadow-lg">Installer</button>
+                </div>
+                <div class="max-w-xl mx-auto px-6 py-10">
+                    <div class="flex gap-6 mb-8">
+                        <img src="${a.img}" class="w-24 h-24 rounded-2xl shadow-xl">
+                        <div>
+                            <h2 class="text-2xl font-black mb-1">${a.name}</h2>
+                            <p class="text-ios-blue font-bold text-xs uppercase mb-3">${a.cat}</p>
+                            <span class="text-[9px] bg-ios-success/10 text-ios-success px-3 py-1 rounded-full font-black uppercase" id="dl-count">... Downloads</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-10">
+                        <h3 class="text-lg font-black mb-4">Aperçu</h3>
+                        <div class="flex gap-4 overflow-x-auto snap-x no-scrollbar pb-4">
+                            ${a.shots.map(s => `<img src="${s}" class="h-64 rounded-2xl snap-center shadow-lg ring-1 ring-black/5">`).join('')}
+                        </div>
+                    </div>
+
+                    <h3 class="text-lg font-black mb-3">Description</h3>
+                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed text-sm mb-12">${a.desc}</p>
+                </div>
+            `;
+            ov.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            onValue(ref(db, 'downloads/'+id), (s) => {
+                const count = document.getElementById('dl-count');
+                if(count) count.innerText = (s.val()||0).toLocaleString() + " TÉLÉCHARGEMENTS";
+            });
+        };
+
+        window.closeApp = () => {
+            document.getElementById('detail-view').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        };
+
+        window.install = async (id, file) => {
+            const btn = document.getElementById('ins-btn');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            await update(ref(db), { [`downloads/${id}`]: increment(1) });
+            setTimeout(() => { 
+                btn.innerText="OUVERT"; 
+                btn.classList.replace('bg-ios-blue', 'bg-ios-success');
+                window.location.href = file;
+            }, 800);
+        };
+
+        document.getElementById('current-date').innerText = new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }).toUpperCase();
+        renderGrids();
+    </script>
+</body>
+</html>

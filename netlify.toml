@@ -1,0 +1,25 @@
+# Configuration de déploiement AGI Store
+[build]
+  publish = "."
+
+# Gestion des redirections pour éviter les erreurs 404
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Optimisation des en-têtes (Cache et Sécurité)
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    cache-control = "public, max-age=0, must-revalidate"
+
+# Cache spécifique pour les images et APK (plus long)
+[[headers]]
+  for = "*.apk"
+  [headers.values]
+    Content-Type = "application/vnd.android.package-archive"
+    Content-Disposition = "attachment"
+    cache-control = "public, max-age=31536000, immutable"
