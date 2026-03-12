@@ -6,7 +6,7 @@
     <title>AGI NEXUS | Registre Citoyen</title>
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -18,32 +18,28 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
         body { background: #000; color: var(--text-main); display: flex; justify-content: center; min-height: 100vh; }
 
-        .app-container { width: 100%; max-width: 450px; background: var(--bg); padding: 40px 20px; display: flex; flex-direction: column; border: 1px solid var(--border); position: relative; }
+        .app-container { width: 100%; max-width: 450px; background: var(--bg); padding: 40px 20px; border: 1px solid var(--border); position: relative; }
 
         .logo-section { text-align: center; margin-bottom: 35px; }
-        .logo { width: 90px; height: 90px; border-radius: 24px; border: 2px solid var(--agi-gold); box-shadow: 0 0 30px rgba(251,191,36,0.15); }
-        h1 { font-size: 1.5rem; font-weight: 800; margin-top: 15px; letter-spacing: -1px; }
+        .logo { width: 80px; height: 80px; border-radius: 20px; border: 2px solid var(--agi-gold); box-shadow: 0 0 20px rgba(251,191,36,0.2); }
+        h1 { font-size: 1.4rem; font-weight: 800; margin-top: 15px; letter-spacing: -1px; }
+
+        #referral-card { display: none; background: rgba(251,191,36,0.05); border: 1px solid var(--agi-gold); border-radius: 20px; padding: 15px; margin-bottom: 20px; animation: fadeIn 0.5s ease; }
 
         .form-group { display: flex; flex-direction: column; gap: 15px; }
         .input-wrap { position: relative; display: flex; align-items: center; }
-        .input-wrap i.main-icon { position: absolute; left: 18px; color: var(--agi-gold); font-size: 1.2rem; pointer-events: none; }
-        .toggle-pin { position: absolute; right: 18px; color: #4b5563; font-size: 1.2rem; cursor: pointer; }
+        .input-wrap i.main-icon { position: absolute; left: 18px; color: var(--agi-gold); font-size: 1.2rem; }
         
-        input { width: 100%; padding: 18px 50px; border-radius: 18px; background: var(--surface); border: 1px solid var(--border); color: white; font-size: 1rem; font-weight: 600; transition: 0.3s; }
-        input:focus { border-color: var(--agi-gold); outline: none; background: rgba(251,191,36,0.02); }
+        input { width: 100%; padding: 18px 50px; border-radius: 18px; background: var(--surface); border: 1px solid var(--border); color: white; font-size: 1rem; font-weight: 600; }
+        input:focus { border-color: var(--agi-gold); outline: none; }
 
-        /* Carte Parrain */
-        #referral-card { display: none; background: rgba(251,191,36,0.05); border: 1px solid var(--agi-gold); border-radius: 20px; padding: 15px; margin-bottom: 10px; animation: fadeIn 0.5s ease; }
-        .ref-info { font-size: 0.85rem; font-weight: 600; color: #fff; word-break: break-all; }
+        .btn-submit { background: var(--agi-gold); color: #000; border: none; padding: 20px; border-radius: 18px; font-weight: 900; font-size: 1rem; cursor: pointer; margin-top: 10px; }
+        .btn-submit:disabled { opacity: 0.5; }
 
-        .btn-submit { background: var(--agi-gold); color: #000; border: none; padding: 20px; border-radius: 18px; font-weight: 900; font-size: 1rem; cursor: pointer; margin-top: 10px; box-shadow: 0 10px 20px rgba(251,191,36,0.15); }
-        .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
-
-        /* Modal APK */
+        /* Modal Success */
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.98); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; padding: 20px; text-align: center; }
         .apk-card { background: var(--surface); border: 1px solid var(--agi-gold); border-radius: 35px; padding: 35px 20px; width: 100%; max-width: 400px; }
-        .uid-box { background: #000; padding: 15px; border-radius: 15px; font-family: 'JetBrains Mono'; font-size: 0.75rem; color: var(--agi-gold); margin: 20px 0; border: 1px solid var(--border); overflow-wrap: break-word; }
-        .btn-download { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 20px; background: var(--agi-gold); color: #000; text-decoration: none; border-radius: 18px; font-weight: 800; font-size: 1.1rem; }
+        .btn-download { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 20px; background: var(--agi-gold); color: #000; text-decoration: none; border-radius: 18px; font-weight: 800; margin-top: 20px;}
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -54,15 +50,15 @@
     <div class="logo-section">
         <img src="https://i.imgur.com/NyWnYFN.jpeg" class="logo">
         <h1>NEXUS CORE</h1>
-        <p style="color: #94a3b8; font-size: 0.8rem; margin-top: 5px;">Protocole d'enregistrement décentralisé</p>
+        <p style="color: #94a3b8; font-size: 0.8rem;">Activation d'Identité Citoyenne</p>
+    </div>
+
+    <div id="referral-card">
+        <p style="font-size: 0.6rem; color: var(--agi-gold); font-weight: 800; text-transform: uppercase;">Invitation confirmée de :</p>
+        <p id="ref-name" style="font-size: 0.85rem; font-weight: 700; color: #fff;">Vérification...</p>
     </div>
 
     <div class="form-group">
-        <div id="referral-card">
-            <p style="font-size: 0.65rem; color: var(--agi-gold); font-weight: 800; text-transform: uppercase;">Invitation de :</p>
-            <p id="display-ref-email" class="ref-info">Chargement du profil...</p>
-        </div>
-
         <div class="input-wrap">
             <i class="ri-mail-line main-icon"></i>
             <input type="email" id="email" placeholder="Adresse Email">
@@ -71,13 +67,6 @@
         <div class="input-wrap">
             <i class="ri-lock-2-line main-icon"></i>
             <input type="password" id="pin" placeholder="PIN de sécurité (6 chiffres)" maxlength="6" inputmode="numeric">
-            <i class="ri-eye-off-line toggle-pin" onclick="app.togglePin('pin', this)"></i>
-        </div>
-
-        <div class="input-wrap">
-            <i class="ri-shield-check-line main-icon"></i>
-            <input type="password" id="confirm_pin" placeholder="Confirmer le PIN" maxlength="6" inputmode="numeric">
-            <i class="ri-eye-off-line toggle-pin" onclick="app.togglePin('confirm_pin', this)"></i>
         </div>
 
         <button class="btn-submit" id="submitBtn" onclick="app.register()">ACTIVER MON IDENTITÉ</button>
@@ -86,12 +75,12 @@
 
 <div id="modal-apk" class="modal-overlay">
     <div class="apk-card">
-        <i class="ri-shield-user-fill" style="font-size: 4rem; color: var(--agi-gold);"></i>
-        <h2 style="margin-top: 15px;">COMPTE GÉNÉRÉ</h2>
-        <p style="color: #94a3b8; font-size: 0.85rem; margin-top: 10px;">Votre clé unique Base58 a été chiffrée :</p>
+        <i class="ri-checkbox-circle-fill" style="font-size: 4rem; color: var(--success);"></i>
+        <h2 style="margin-top: 15px;">IDENTITÉ CRÉÉE</h2>
+        <p style="color: #94a3b8; font-size: 0.85rem; margin: 15px 0;">
+            Votre bonus de <b>2000 AG-COIN</b> est en attente. Téléchargez l'APK pour l'activer.
+        </p>
         
-        <div class="uid-box" id="new-id-display">--</div>
-
         <a href="https://agi-burkina.netlify.app/agi-business.pro.apk" class="btn-download">
             <i class="ri-android-fill"></i> TÉLÉCHARGER L'APK PRO
         </a>
@@ -100,118 +89,93 @@
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getDatabase, ref, set, get, push, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+    import { getDatabase, ref, set, get, update, serverTimestamp, increment } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
     const firebaseConfig = { databaseURL: "https://atlasgroupebusiness-default-rtdb.firebaseio.com" };
     const fApp = initializeApp(firebaseConfig);
     const db = getDatabase(fApp);
 
-    const sanitizeEmail = (email) => email.toLowerCase().trim().replace(/[.#$[\]]/g, "_");
+    const GRADES = [
+        { min: 0, bonus: 0 }, { min: 6, bonus: 15 }, { min: 16, bonus: 35 },
+        { min: 36, bonus: 60 }, { min: 76, bonus: 75 }, { min: 151, bonus: 100 }, { min: 301, bonus: 110 }
+    ];
 
     window.app = {
-        tempEmail: "",
+        refID: new URLSearchParams(window.location.search).get('ref'),
         b58: "",
-        userData: null,
-        refID: null,
 
         async init() {
-            const params = new URLSearchParams(window.location.search);
-            this.refID = params.get('ref');
-
             if (this.refID) {
-                document.getElementById('referral-card').style.display = 'block';
-                const snap = await get(ref(db, `accounts/${sanitizeEmail(this.refID)}`));
+                const snap = await get(ref(db, `users/${this.refID}`));
                 if (snap.exists()) {
-                    document.getElementById('display-ref-email').innerText = snap.val().email;
-                }
+                    document.getElementById('referral-card').style.display = 'block';
+                    document.getElementById('ref-name').innerText = snap.val().email;
+                } else { this.refID = null; }
             }
         },
 
-        // --- VOTRE LOGIQUE DE GÉNÉRATION BASE58 ---
         generateB58(email) {
             const alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
-            const clean = email.toLowerCase().trim();
             let hash = 0;
-            for (let i = 0; i < clean.length; i++) { hash = (hash << 5) - hash + clean.charCodeAt(i); hash |= 0; }
-            let res = "AGI"; 
-            let n = Math.abs(hash * 999999);
+            for (let i = 0; i < email.length; i++) { hash = (hash << 5) - hash + email.charCodeAt(i); hash |= 0; }
+            let res = "AGI"; let n = Math.abs(hash * 999999);
             while (n > 0) { res += alphabet[n % 58]; n = Math.floor(n / 58); }
             while(res.length < 44) res += alphabet[(res.length * 31) % 58];
             return res.substring(0, 44);
         },
 
-        // --- VOTRE FONCTION DE CRÉATION DE COMPTE ---
-        async createNewAccount(pin) {
-            const userKey = sanitizeEmail(this.tempEmail);
-            this.b58 = this.generateB58(this.tempEmail); // Utilisation de l'algorithme Base58
-
-            const newUser = { 
-                email: this.tempEmail, 
-                id: this.b58, 
-                pin: pin, 
-                created: serverTimestamp(), 
-                agcoin: 0 
-            };
-
-            try {
-                // Écriture dans accounts/ (Privé)
-                await set(ref(db, `accounts/${userKey}`), newUser);
-                
-                // Écriture dans users/ (Public/Balance)
-                await set(ref(db, `users/${this.b58}`), { 
-                    balance: 0, 
-                    email: this.tempEmail 
-                });
-
-                // Parrainage
-                if (this.refID) {
-                    await push(ref(db, `referrals_pending/${sanitizeEmail(this.refID)}`), {
-                        filleul: this.tempEmail,
-                        id_filleul: this.b58,
-                        timestamp: serverTimestamp()
-                    });
-                }
-
-                this.userData = newUser;
-                this.showSuccess();
-
-            } catch (error) {
-                alert("Erreur Nexus : " + error.message);
-                document.getElementById('submitBtn').disabled = false;
-            }
-        },
-
         async register() {
-            const email = document.getElementById('email').value.trim();
+            const email = document.getElementById('email').value.trim().toLowerCase();
             const pin = document.getElementById('pin').value.trim();
-            const confirm = document.getElementById('confirm_pin').value.trim();
             const btn = document.getElementById('submitBtn');
 
-            if (!email.includes('@') || pin.length < 6 || pin !== confirm) {
-                alert("Erreur : Vérifiez l'email et la correspondance du PIN.");
-                return;
-            }
-
+            if (!email.includes('@') || pin.length < 6) return alert("Données invalides");
+            
             btn.disabled = true;
             btn.innerText = "SÉCURISATION...";
-            this.tempEmail = email;
-            
-            await this.createNewAccount(pin);
-        },
 
-        showSuccess() {
-            document.getElementById('new-id-display').innerText = this.b58;
-            document.getElementById('modal-apk').style.display = 'flex';
-        },
+            try {
+                const userKey = email.replace(/[.#$[\]]/g, "_");
+                const exist = await get(ref(db, `accounts/${userKey}`));
+                if (exist.exists()) throw new Error("Compte déjà existant");
 
-        togglePin(id, icon) {
-            const input = document.getElementById(id);
-            if (input.type === "password") {
-                input.type = "text";
-                icon.classList.replace('ri-eye-off-line', 'ri-eye-line');
-            } else {
-                input.type = "password";
-                icon.classList.replace('ri-eye-line', 'ri-eye-off-line');
+                this.b58 = this.generateB58(email);
+
+                // 1. Création du compte Filleul (Bonus = 0 jusqu'à l'APK)
+                await set(ref(db, `accounts/${userKey}`), {
+                    email, id: this.b58, pin, created: serverTimestamp(),
+                });
+
+                await set(ref(db, `users/${this.b58}`), {
+                    email, balance: 0, referrals_count: 0
+                });
+
+                // 2. Traitement du parrainage (Gains dynamiques)
+                if (this.refID) {
+                    const parrainSnap = await get(ref(db, `users/${this.refID}`));
+                    if (parrainSnap.exists()) {
+                        const pData = parrainSnap.val();
+                        const pCount = pData.referrals_count || 0;
+                        
+                        // Calcul du gain du parrain selon son grade
+                        let bonusPercent = 0;
+                        GRADES.forEach(g => { if(pCount >= g.min) bonusPercent = g.bonus; });
+                        const gainParrain = Math.floor(500 * (1 + bonusPercent/100));
+
+                        // Créditer le parrain immédiatement
+                        await update(ref(db, `users/${this.refID}`), {
+                            balance: increment(gainParrain),
+                            referrals_count: increment(1)
+                        });
+                    }
+                }
+
+                document.getElementById('modal-apk').style.display = 'flex';
+
+            } catch (e) {
+                alert(e.message);
+                btn.disabled = false;
+                btn.innerText = "ACTIVER MON IDENTITÉ";
             }
         }
     };
