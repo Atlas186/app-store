@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIVRE BLANC AGI NEXUS CORE V4.5.102</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Couleurs ajustées pour la production et une lisibilité maximale */
+            --agi-navy: #0f172a; /* Bleu nuit plus profond pour le texte */
+            --agi-gold: #d97706; /* Or plus sombre pour meilleur contraste sur fond clair */
+            --agi-emerald: #059669;
+            --agi-slate: #334155;
+            --agi-light: #f1f5f9; /* Arrière-plan gris perle doux */
+            --agi-blue-btn: #2563eb; /* Bleu Royal pour le bouton production */
+        }
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: var(--agi-light); 
+            color: var(--agi-navy);
+            scroll-behavior: smooth;
+        }
+        .mono { font-family: 'JetBrains Mono', monospace; font-size: 0.9em; }
+        .glass-card { background: #ffffff; border: 1px solid #cbd5e1; border-radius: 24px; padding: 2rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .hero-gradient { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white; }
+        .chapter-num { font-size: 4rem; font-weight: 900; color: rgba(15, 23, 42, 0.07); position: absolute; top: -20px; left: -10px; z-index: 0; }
+        .detail-text { font-size: 0.95rem; line-height: 1.8; text-align: justify; color: var(--agi-navy); font-weight: 400; }
+        .annex-box { border-left: 5px solid var(--agi-gold); background: #ffffff; padding: 2rem; margin-bottom: 2rem; border-radius: 0 24px 24px 0; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+        h3 { font-weight: 800; text-transform: uppercase; margin-top: 1.5rem; margin-bottom: 1rem; color: var(--agi-navy); letter-spacing: -0.025em; }
+        table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.55rem; background: white; }
+        th { background: var(--agi-navy); color: white; padding: 12px; text-align: left; }
+        td { border: 1px solid #e2e8f0; padding: 12px; color: var(--agi-slate); font-weight: 600; }
+        @media print { .no-print { display: none; } }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="fixed w-full z-50 bg-white/95 backdrop-blur-md border-b border-slate-300 py-3 no-print">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <img src="https://i.imgur.com/M1q5o2c.jpeg" class="w-10 h-10 rounded-lg shadow-md border border-agi-gold" alt="AGI Logo">
+                <div>
+                    <span class="block font-black text-lg leading-none uppercase italic text-slate-900">AGI <span class="text-agi-gold">NEXUS CORE</span></span>
+                    <span class="text-[8px] font-bold text-slate-500 uppercase tracking-widest italic">Build 4.5.102-Stable</span>
+                </div>
+            </div>
+            <button onclick="generatePDF()" class="bg-[#2563eb] text-white px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-wider flex items-center gap-2 hover:bg-blue-700 shadow-lg transition-all active:scale-95">
+                <i class="ri-file-pdf-2-line text-sm"></i> Télécharger PDF Production
+            </button>
+        </div>
+    </header>
+
+    <div id="whitepaper-content">
+        <section class="hero-gradient pt-40 pb-24 relative overflow-hidden">
+            <div class="container mx-auto px-6 relative z-10 text-center">
+                <h4 class="text-agi-gold font-black uppercase tracking-[0.4em] text-[11px] mb-6">Système d'Exploitation Financier & Souveraineté Numérique</h4>
+                <h1 class="text-5xl md:text-7xl font-black leading-tight mb-6 italic uppercase">Livre Blanc Magistral <br><span class="text-agi-gold text-5xl md:text-7xl">NUCLEUS V4.5</span></h1>
+                <p class="text-xl text-slate-300 font-light mb-10 italic">Récépissé n° PHUE 3539/2025 du 11/07/2025</p>
+                <div class="flex flex-wrap justify-center gap-4 text-[10px] font-black uppercase">
+                    <span class="bg-white/10 px-4 py-2 rounded-full border border-white/20 backdrop-blur-sm">Base58 Standard</span>
+                    <span class="bg-white/10 px-4 py-2 rounded-full border border-white/20 backdrop-blur-sm">AES-256 Military Grade</span>
+                    <span class="bg-white/10 px-4 py-2 rounded-full border border-white/20 backdrop-blur-sm">Proof-of-Authority</span>
+                </div>
+            </div>
+        </section>
+
+        <div class="container mx-auto px-6 py-20">
+            <div class="flex flex-col lg:flex-row gap-16">
+                
+                <aside class="lg:w-1/4 no-print">
+                    <div class="sticky top-24 space-y-6">
+                        <div class="bg-white p-6 rounded-3xl border border-slate-300 shadow-md">
+                            <h5 class="font-black text-[10px] uppercase tracking-widest mb-4 border-b border-slate-100 pb-2 text-slate-900">Table des Matières</h5>
+                            <ul class="space-y-3 text-[9px] font-bold uppercase text-slate-600">
+                                <li><a href="#ch1" class="hover:text-blue-600 transition-colors">01. Vision & Intro</a></li>
+                                <li><a href="#ch2" class="hover:text-blue-600 transition-colors">02. Cadre Juridique</a></li>
+                                <li><a href="#ch3" class="hover:text-blue-600 transition-colors">03. Architecture Nucleus</a></li>
+                                <li><a href="#ch4" class="hover:text-blue-600 transition-colors">04. ID Nexus Base58</a></li>
+                                <li><a href="#ch5" class="hover:text-blue-600 transition-colors">05. Économie AG-COIN</a></li>
+                                <li><a href="#ch6" class="hover:text-blue-600 transition-colors">06. HDI & Minage Cloud</a></li>
+                                <li><a href="#ch7" class="hover:text-blue-600 transition-colors">07. Réseau Citoyen</a></li>
+                                <li><a href="#ch8" class="hover:text-blue-600 transition-colors">08. Services & Hub</a></li>
+                                <li><a href="#ch9" class="hover:text-blue-600 transition-colors">09. Sécurité Militaire</a></li>
+                                <li><a href="#ch10" class="hover:text-blue-600 transition-colors">10. Stabilité Build 4.5</a></li>
+                                <li><a href="#ch11" class="hover:text-blue-600 transition-colors">11. Roadmap 2026-27</a></li>
+                                <li><a href="#annexes" class="text-agi-gold border-t pt-2 block mt-2">Annexes Techniques</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </aside>
+
+                <div class="lg:w-3/4 space-y-24">
+                    
+                    <section id="ch1" class="relative">
+                        <span class="chapter-num">01</span>
+                        <h2 class="text-3xl font-black mb-8 relative z-10 italic uppercase border-b-2 border-agi-gold pb-2 inline-block">1. Vision Stratégique & Introduction</h2>
+                        <div class="glass-card">
+                            <p class="detail-text">AGI NEXUS CORE n'est pas une simple application de finance, c'est une réponse technologique à la dépendance monétaire. L'objectif d'Atlas Groupe International est de fournir à chaque citoyen une infrastructure capable de générer, stocker et échanger de la valeur de manière autonome, rapide et sécurisée. Nous bâtissons un futur où la technologie sert la liberté économique.</p>
+                        </div>
+                    </section>
+
+                    <section id="ch2" class="relative">
+                        <span class="chapter-num">02</span>
+                        <h2 class="text-3xl font-black mb-8 relative z-10 italic uppercase border-b-2 border-agi-gold pb-2 inline-block">2. Cadre Juridique (Burkina Faso)</h2>
+                        <div class="glass-card border-l-8 border-agi-emerald">
+                            <p class="detail-text mb-4">La confiance repose sur la loi. AGI NEXUS CORE opère sous le <strong>Récépissé n° PHUE 3539/2025</strong>. Cette reconnaissance administrative garantit :</p>
+                            <ul class="list-disc ml-6 space-y-3 text-sm text-slate-700 font-extrabold uppercase tracking-tighter">
+                                <li>La protection des investissements des membres.</li>
+                                <li>L'existence réelle de l'entité Atlas Groupe International.</li>
+                                <li>Une transparence totale vis-à-vis des autorités de régulation numérique.</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <section id="ch3" class="relative">
+                        <span class="chapter-num">03</span>
+                        <h2 class="text-3xl font-black mb-8 relative z-10 italic uppercase border-b-2 border-agi-gold pb-2 inline-block">3. Architecture Technique : Nucleus V4.5</h2>
+                        <div class="bg-slate-900 p-10 rounded-[40px] text-white shadow-2xl">
+                            <p class="text-slate-400 text-sm italic mb-8 uppercase tracking-widest font-bold">Le moteur Nucleus est le cœur battant du système.</p>
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div class="p-5 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors">
+                                    <h5 class="text-agi-gold font-black text-[10px] uppercase mb-2 tracking-widest">Consensus PoA</h5>
+                                    <p class="text-[11px] leading-relaxed opacity-90">Proof-of-Authority : Contrairement aux blockchains lentes, le PoA permet une validation instantanée par des nœuds de confiance.</p>
+                                </div>
+                                <div class="p-5 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors">
+                                    <h5 class="text-agi-gold font-black text-[10px] uppercase mb-2 tracking-widest">Vitesse Ultra-Fast</h5>
+                                    <p class="text-[11px] leading-relaxed opacity-90">Temps de bloc de 0.4s, rendant les paiements plus rapides que les méthodes bancaires traditionnelles.</p>
+                                </div>
+                                <div class="p-5 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors">
+                                    <h5 class="text-agi-gold font-black text-[10px] uppercase mb-2 tracking-widest">Hybridation Cloud</h5>
+                                    <p class="text-[11px] leading-relaxed opacity-90">Combinaison entre la puissance décentralisée et la rapidité du Cloud Firebase Google pour une latence minimale.</p>
+                                </div>
+                                <div class="p-5 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors">
+                                    <h5 class="text-agi-gold font-black text-[10px] uppercase mb-2 tracking-widest">Build 4.5.102</h5>
+                                    <p class="text-[11px] leading-relaxed opacity-90">Version stable optimisée pour le support de milliers de requêtes simultanées.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="ch4" class="relative">
+                        <span class="chapter-num">04</span>
+                        <h2 class="text-3xl font-black mb-8 relative z-10 italic uppercase border-b-2 border-agi-gold pb-2 inline-block">4. Standard de Sécurité : L’ID Nexus Base58</h2>
+                        <div class="glass-card">
+                            <p class="detail-text mb-6">Pour éliminer les erreurs de transaction, nous utilisons le standard Base58 pour l'ID Nexus (ex: AGItfesnWu...).</p>
+                            <div class="mono bg-slate-900 p-8 rounded-2xl border-l-4 border-agi-gold text-white shadow-inner">
+                                <p class="text-agi-gold font-bold mb-2">> Zéro Ambiguïté : Exclusion des caractères (0, O, I, l).</p>
+                                <p class="text-white font-bold mb-2">> Robustesse : Hachage cryptographique unique lié au solde.</p>
+                                <p class="text-white font-bold">> Checksum : Détection d'erreur de saisie instantanée.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="ch5" class="relative">
+                        <span class="chapter-num">05</span>
+                        <h2 class="text-3xl font-black mb-8 relative z-10 italic uppercase border-b-2 border-agi-gold pb-2 inline-block">5 & 6. Économie & Rentabilisation</h2>
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div class="glass-card border-t-4 border-agi-gold">
+                                <h4 class="font-black text-sm text-agi-gold uppercase mb-4">L'AG-COIN</h4>
+                                <p class="detail-text">Unité de valeur native soutenue par l'activité économique réelle. Utilisé pour : Paiement de services, Hub Commercial, et Staking.</p>
+                            </div>
+                            <div class="glass-card border-t-4 border-agi-gold">
+                                <h4 class="font-black text-sm text-agi-gold uppercase mb-4">Minage Cloud</h4>
+                                <p class="detail-text">Aucun matériel requis. L'activation de l'unité de minage permet de participer au processus de consensus Cloud et de recevoir des récompenses par bloc.</p>
+                            </div>
+                        </div>
+                        <div class="mt-8 p-8 bg-emerald-50 rounded-[30px] border-2 border-emerald-200">
+                            <h4 class="font-black text-sm uppercase mb-4 text-emerald-800">Réserve HDI (Staking)</h4>
+                            <p class="detail-text italic font-bold text-emerald-900">Le Staking HDI permet de verrouiller ses actifs pour soutenir la liquidité du réseau en échange de dividendes réguliers.</p>
+                        </div>
+                    </section>
+
+                    <section id="ch7" class="relative">
+                        <span class="chapter-num">07</span>
+                        <h2 class="text-3xl font-black mb-8 relative z-10 italic uppercase border-b-2 border-agi-gold pb-2 inline-block">7 & 8. Réseau & Services</h2>
+                        <div class="space-y-6">
+                            <div class="glass-card bg-slate-50">
+                                <h4 class="font-black text-sm uppercase text-slate-900 mb-6 flex items-center gap-2">
+                                    <i class="ri-global-line text-agi-gold"></i> Protocole d'Expansion
+                                </h4>
+                                <ul class="grid grid-cols-2 gap-4 text-[10px] font-black uppercase">
+                                    <li class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-center">Bonus 1000 AG par inscription active</li>
+                                    <li class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-center">Système de parrainage à niveaux</li>
+                                </ul>
+                            </div>
+                            <div class="grid md:grid-cols-4 gap-4">
+                                <div class="text-center p-6 bg-white border border-slate-200 rounded-3xl shadow-sm hover:translate-y-[-5px] transition-transform">
+                                    <i class="ri-wallet-3-line text-2xl text-blue-600"></i>
+                                    <span class="block text-[9px] font-black uppercase mt-3">Nexus Wallet</span>
+                                </div>
+                                <div class="text-center p-6 bg-white border border-slate-200 rounded-3xl shadow-sm hover:translate-y-[-5px] transition-transform">
+                                    <i class="ri-refresh-line text-2xl text-emerald-600"></i>
+                                    <span class="block text-[9px] font-black uppercase mt-3">Swap CFA</span>
+                                </div>
+                                <div class="text-center p-6 bg-white border border-slate-200 rounded-3xl shadow-sm hover:translate-y-[-5px] transition-transform">
+                                    <i class="ri-shopping-bag-3-line text-2xl text-agi-gold"></i>
+                                    <span class="block text-[9px] font-black uppercase mt-3">Hub Commercial</span>
+                                </div>
+                                <div class="text-center p-6 bg-white border border-slate-200 rounded-3xl shadow-sm hover:translate-y-[-5px] transition-transform">
+                                    <i class="ri-gamepad-line text-2xl text-purple-600"></i>
+                                    <span class="block text-[9px] font-black uppercase mt-3">Centre de Jeux</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="ch9" class="relative">
+                        <span class="chapter-num">09</span>
+                        <h2 class="text-3xl font-black mb-8 relative z-10 italic uppercase border-b-2 border-agi-gold pb-2 inline-block">9 & 10. Sécurité & Stabilité</h2>
+                        <div class="bg-slate-900 p-12 rounded-[50px] text-white space-y-10 shadow-2xl">
+                            <div>
+                                <h4 class="text-agi-gold font-black text-xs uppercase mb-4 tracking-widest italic">Chiffrement AES-256 (Niveau Militaire)</h4>
+                                <p class="text-slate-300 text-sm leading-relaxed font-medium">Protection totale des données de session et des transactions contre toute tentative d'intrusion. Synchronisation Cloud persistante pour éviter toute perte de solde.</p>
+                            </div>
+                            <div>
+                                <h4 class="text-agi-gold font-black text-xs uppercase mb-4 tracking-widest italic">Gestion des Gains Anti-Plantage</h4>
+                                <p class="text-slate-300 text-sm leading-relaxed font-medium">Conformément au Build 4.5.102, les algorithmes de versement sont isolés pour empêcher tout crash lors des gains massifs. Performance fluide sous des milliers de requêtes.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="ch11" class="relative">
+                        <span class="chapter-num">11</span>
+                        <h2 class="text-3xl font-black mb-8 relative z-10 italic uppercase border-b-2 border-agi-gold pb-2 inline-block">11 & 12. Roadmap & Conclusion</h2>
+                        <div class="space-y-10">
+                            <div class="border-l-8 border-agi-gold pl-8 space-y-8">
+                                <div class="relative">
+                                    <span class="block text-xs font-black text-agi-gold uppercase italic">Phase Alpha (Terminée)</span>
+                                    <p class="text-sm font-extrabold uppercase text-slate-500">Développement Core & Génération Base58.</p>
+                                </div>
+                                <div class="relative">
+                                    <span class="block text-xs font-black text-agi-gold uppercase italic">Phase Bêta (Actuelle)</span>
+                                    <p class="text-sm font-extrabold uppercase text-slate-900">Build 4.5.102, 14 membres actifs, tests du Swap CFA.</p>
+                                </div>
+                                <div class="relative">
+                                    <span class="block text-xs font-black text-agi-gold uppercase italic">Expansion (Q2 2026)</span>
+                                    <p class="text-sm font-extrabold uppercase text-slate-500">Lancement Hub Commercial & Terminal de Trading.</p>
+                                </div>
+                                <div class="relative">
+                                    <span class="block text-xs font-black text-agi-gold uppercase italic">Souveraineté (2027)</span>
+                                    <p class="text-sm font-extrabold uppercase text-slate-500">Intégration régionale complète.</p>
+                                </div>
+                            </div>
+                            <div class="glass-card bg-slate-900 text-white text-center py-12">
+                                <h3 class="text-agi-gold italic text-2xl mb-6">Conclusion</h3>
+                                <p class="text-base leading-relaxed opacity-90 uppercase tracking-tight italic font-bold max-w-2xl mx-auto">AGI NEXUS CORE est l'outil ultime pour la souveraineté numérique. Grâce à sa base légale solide, son architecture Nucleus V4.5 et ses protocoles de sécurité Base58, Atlas Groupe International offre un futur financier stable, rentable et accessible à tous.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <hr class="border-slate-300">
+
+                    <section id="annexes" class="pt-10">
+                        <h2 class="text-5xl font-black mb-16 italic uppercase tracking-tighter text-agi-gold leading-tight">Annexes Techniques <br><span class="text-slate-900 text-2xl">Spécifications Build 4.5.102</span></h2>
+
+                        <div class="annex-box">
+                            <h3 class="flex items-center gap-4"><span class="bg-slate-900 text-white px-3 py-1 rounded text-sm">A</span> Le Moteur de Conversion SWAP-CFA</h3>
+                            <div class="detail-text space-y-4">
+                                <p><strong>1. Architecture du Pool de Liquidité :</strong> Pour garantir que chaque membre puisse convertir ses 100,546 AG ou plus en CFA sans délai, AGI NEXUS CORE utilise une réserve décentralisée. La part des bénéfices du Hub et du Minage alimente le pool fiduciaire. Un ratio de solvabilité constant est maintenu par l'algorithme Nucleus.</p>
+                                <p><strong>2. Algorithme de Tarification Dynamique :</strong> Taux protégé par "Lissage de Volatilité". Un Oracle Interne interroge le Terminal Trading pour éviter le "Slippage" (fragmentation automatique des ordres importants).</p>
+                                <p><strong>3. Workflow Technique :</strong> Hachage de transaction unique -> Vérification AES-256 (verrouillage de session) -> Validation PoA (Burn/Reserve) -> Confirmation Firebase instantanée.</p>
+                                <p><strong>4. Intégration Locale :</strong> Optimisé pour les Mobile Money au Burkina Faso et conforme KYC/AML selon le Récépissé n° PHUE 3539/2025.</p>
+                                <p><strong>5. Résilience Anti-Plantage :</strong> "Reconstruction d'État" asynchrone si le terminal s'éteint durant le swap.</p>
+                            </div>
+                        </div>
+
+                        <div class="annex-box">
+                            <h3 class="flex items-center gap-4"><span class="bg-slate-900 text-white px-3 py-1 rounded text-sm">B</span> Protocole d'Expansion & Réseau Citoyen</h3>
+                            <div class="detail-text space-y-4">
+                                <p>Modèle basé sur la "Preuve de Contribution" (Proof of Contribution). </p>
+                                <table>
+                                    <thead>
+                                        <tr><th>Rang</th><th>Condition</th><th>Bonus Staking</th><th>Frais Swap</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>Citoyen Alpha</td><td>Inscription</td><td>Standard</td><td>0%</td></tr>
+                                        <tr><td>Citoyen Pionnier</td><td>5 Membres Actifs</td><td>+ 5%</td><td>- 10%</td></tr>
+                                        <tr><td>Ambassadeur Core</td><td>20 Membres Actifs</td><td>+ 12%</td><td>- 25%</td></tr>
+                                        <tr><td>Gouverneur Atlas</td><td>100+ Membres</td><td>+ 25%</td><td>- 50%</td></tr>
+                                    </tbody>
+                                </table>
+                                <p><strong>Bonus de Dotation (1000 AG) :</strong> Allocation automatique pour amorcer le minage. Placé en "Staking Forcé" pour garantir la liquidité initiale et éviter l'inflation.</p>
+                                <p><strong>Algorithme de Distribution :</strong> Calcul asynchrone en temps réel. Les bonus sont isolés dans un sous-registre pour éviter la corruption de données lors des pics d'inscriptions.</p>
+                                <p><strong>Trust Score :</strong> Indice basé sur l'ancienneté, le volume du Hub et la stabilité HDI.</p>
+                            </div>
+                        </div>
+
+                        <div class="annex-box">
+                            <h3 class="flex items-center gap-4"><span class="bg-slate-900 text-white px-3 py-1 rounded text-sm">C</span> Spécifications Techniques du Cœur</h3>
+                            <div class="detail-text space-y-4">
+                                <p><strong>Base58 Implementation :</strong> Conversion du hachage SHA-256 de la clé publique. Somme de contrôle (Checksum) de 4 octets intégrée.</p>
+                                <p><strong>Standard AES-256 :</strong> Chiffrement des communications vers Firebase avec rotation dynamique des clés de session.</p>
+                                <p><strong>Zero-Crash Logic :</strong> Non-Blocking IO (Asynchronisme) permettant la navigation fluide pendant le crédit des gains. Système de "Watchdogs" (Sentinelles) pour la sauvegarde locale en cas d'anomalie réseau.</p>
+                                <p><strong>Performance Cloud :</strong> Latence < 150ms. Réplication sur trois zones géographiques.</p>
+                            </div>
+                        </div>
+
+                        <div class="annex-box">
+                            <h3 class="flex items-center gap-4"><span class="bg-slate-900 text-white px-3 py-1 rounded text-sm">D</span> Hub Commercial & Accréditation</h3>
+                            <div class="detail-text space-y-4">
+                                <p><strong>Statut Marchand :</strong> Licence de 12 mois pour 5000 AG-COIN (dépôt de garantie). Renouvellement auto ou manuel via Terminal de Gestion.</p>
+                                <p><strong>Avantages :</strong> Badge "Certifié Atlas", Priorité de Flux, et plafonds de Swap élevés.</p>
+                                <p><strong>Sécurité Escrow :</strong> Le dépôt de 5000 AG sert de fonds de garantie pour dédommager l'acheteur en cas de litige avéré.</p>
+                            </div>
+                        </div>
+
+                        <div class="annex-box">
+                            <h3 class="flex items-center gap-4"><span class="bg-slate-900 text-white px-3 py-1 rounded text-sm">E</span> Centre de Jeux & Provably Fair</h3>
+                            <div class="detail-text space-y-4">
+                                <p><strong>Transparence Totale :</strong> Utilisation de Server Seed, Client Seed et Nonce pour une équité prouvable mathématiquement.</p>
+                                <p><strong>Liquidité :</strong> Distribution des gains en 0.4s. Séparation de la logique de gain du moteur de rendu visuel pour une stabilité absolue.</p>
+                                <p><strong>Taxe de Réserve (1-3%) :</strong> Redistribuée vers la Réserve HDI et le Pool de Liquidité CFA.</p>
+                            </div>
+                        </div>
+
+                        <div class="annex-box">
+                            <h3 class="flex items-center gap-4"><span class="bg-slate-900 text-white px-3 py-1 rounded text-sm">F</span> Utilité Réelle & Impact</h3>
+                            <div class="detail-text space-y-4">
+                                <p><strong>Digitalisation :</strong> Inclusion financière par scan d'ID et réduction des risques liés aux espèces pour les marchands.</p>
+                                <p><strong>Micro-Capitalisation :</strong> Levier de financement via Staking PoA et bonus de dotation pour les citoyens sans capital de départ.</p>
+                                <p><strong>Souveraineté :</strong> Indépendance technique garantie par le Nucleus V4.5, lien constant avec le CFA pour le pouvoir d'achat.</p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <footer class="bg-slate-950 text-white py-20 text-center italic border-t-4 border-agi-gold">
+            <div class="container mx-auto px-6">
+                <p class="text-[11px] font-black uppercase tracking-[0.5em] mb-4 text-agi-gold">© 2026 Atlas Groupe International - Burkina Faso</p>
+                <p class="text-[9px] opacity-60 uppercase tracking-widest mb-10 italic font-bold">Core Engine Build: 4.5.102-Stable | Souveraineté Numérique</p>
+                <div class="flex justify-center gap-12 text-3xl text-agi-gold">
+                    <i class="ri-shield-check-line hover:scale-110 transition-transform"></i>
+                    <i class="ri-qr-code-line hover:scale-110 transition-transform"></i>
+                    <i class="ri-blockchain-line hover:scale-110 transition-transform"></i>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function generatePDF() {
+            const element = document.getElementById('whitepaper-content');
+            const opt = {
+                margin: 0,
+                filename: 'LIVRE_BLANC_AGI_NEXUS_V4.5_STABLE_PROD.pdf',
+                image: { type: 'jpeg', quality: 1.0 },
+                html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(element).save();
+        }
+    </script>
+
+</body>
+</html>
