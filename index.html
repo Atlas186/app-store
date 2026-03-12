@@ -1,247 +1,394 @@
 <!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>AGI Premium Store | Nexus Core</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ATLAS GROUPE INTERNATIONAL | Écosystème Industriel & Blockchain Nexus</title>
     
-    <meta name="description" content="Plateforme officielle d'Atlas Groupe International.">
-    <link rel="canonical" href="https://agi-store.netlify.app/">
-
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="AGI Store">
-    <link rel="apple-touch-icon" href="https://i.imgur.com/NyWnYFN.jpeg">
-    <link rel="manifest" href='data:application/json,{"name":"AGI Premium Store","short_name":"AGI Store","start_url":"/","display":"standalone","background_color":"#05070a","theme_color":"#007AFF","icons":[{"src":"https://i.imgur.com/NyWnYFN.jpeg","sizes":"512x512","type":"image/jpeg"}]}'>
-
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
     <script>
         tailwind.config = {
-            darkMode: 'class',
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
-                    colors: { 
-                        ios: { blue: '#007AFF', gray: '#8E8E93', light: '#F2F2F7', dark: '#1C1C1E', success: '#34C759' } 
-                    },
-                    borderRadius: { 'apple': '1.8rem' }
+                    colors: {
+                        'agi-navy': '#020617',
+                        'agi-gold': '#fbbf24',
+                        'agi-emerald': '#10b981',
+                        'agi-slate': '#1e293b',
+                        'agi-crimson': '#e11d48',
+                        'agi-azure': '#3b82f6'
+                    }
                 }
             }
         }
     </script>
 
     <style>
-        :root { --ios-blur: blur(25px); }
-        body { -webkit-tap-highlight-color: transparent; font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.015em; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .glass { background: rgba(255, 255, 255, 0.75); backdrop-filter: var(--ios-blur); -webkit-backdrop-filter: var(--ios-blur); }
-        .dark .glass { background: rgba(20, 20, 20, 0.85); }
-        .apple-card { transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform; cursor: pointer; }
-        .apple-card:active { transform: scale(0.96); }
-        .detail-view { transform: translateY(100%); transition: transform 0.6s cubic-bezier(0.32, 1, 0.23, 1); visibility: hidden; }
-        .detail-view.active { transform: translateY(0); visibility: visible; }
-        .snap-x { scroll-snap-type: x mandatory; }
-        .snap-center { scroll-snap-align: center; }
-        .tab-content { animation: fadeIn 0.5s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; color: #020617; overflow-x: hidden; scroll-behavior: smooth; }
+        .hero-bg { background: radial-gradient(circle at top right, rgba(251, 191, 36, 0.15), transparent), linear-gradient(135deg, #020617 0%, #0f172a 100%); }
+        .tech-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.3s ease; }
+        .tech-card:hover { border-color: #fbbf24; transform: translateY(-5px); }
+        [data-scroll] { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+        [data-scroll].scrolled { opacity: 1; transform: translateY(0); }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .gradient-text { background: linear-gradient(to right, #fbbf24, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .btn-hover { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .btn-hover:hover { transform: scale(1.02); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
     </style>
 </head>
+<body>
 
-<body class="bg-[#F2F2F7] dark:bg-black text-black dark:text-white min-h-screen selection:bg-ios-blue/30 overflow-x-hidden">
-
-    <header class="sticky top-0 z-40 glass border-b border-gray-200/50 dark:border-gray-800/50 px-6 py-4">
-        <div class="max-w-4xl mx-auto">
-            <div class="flex justify-between items-end mb-4">
+    <header class="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-gray-200">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <img src="https://i.imgur.com/NyWnYFN.jpeg" alt="AGI" class="w-12 h-12 rounded-xl shadow-md border border-gray-100">
                 <div>
-                    <p class="text-[10px] font-bold text-ios-gray uppercase tracking-widest mb-0.5" id="current-date">...</p>
-                    <h1 class="text-3xl font-extrabold tracking-tight" id="main-title">Aujourd'hui</h1>
-                </div>
-                <div class="w-10 h-10 rounded-full overflow-hidden ring-2 ring-ios-blue/20">
-                    <img src="https://i.imgur.com/NyWnYFN.jpeg" class="w-full h-full object-cover">
+                    <h1 class="font-extrabold text-md leading-none tracking-tighter uppercase text-agi-navy">Atlas Groupe International</h1>
+                    <div class="flex items-center gap-2 mt-1">
+                        <span class="text-[9px] font-black text-agi-emerald tracking-widest uppercase bg-agi-emerald/10 px-2 py-0.5 rounded">Récépissé PHUE-3539/2025</span>
+                        <span class="text-[8px] font-bold text-agi-gold bg-agi-gold/10 px-2 py-0.5 rounded italic">Est. 2025</span>
+                    </div>
                 </div>
             </div>
-            <div class="relative">
-                <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-ios-gray text-xs"></i>
-                <input type="text" id="search-bar" oninput="handleSearch()" placeholder="Rechercher une application..." 
-                    class="w-full bg-gray-200/50 dark:bg-gray-800/50 border-none rounded-xl py-2.5 pl-10 pr-4 text-sm focus:ring-2 focus:ring-ios-blue outline-none transition-all">
-            </div>
+            <nav class="hidden lg:flex items-center gap-10 text-[11px] font-extrabold uppercase tracking-widest">
+                <a href="#projets" class="flex items-center gap-2 hover:text-agi-gold transition"><i class="fa-solid fa-industry"></i> Pôles Industriels</a>
+                <a href="#nexus" class="flex items-center gap-2 hover:text-agi-gold transition"><i class="fa-solid fa-microchip"></i> Nexus Core</a>
+                <a href="#gouvernance" class="flex items-center gap-2 hover:text-agi-gold transition"><i class="fa-solid fa-shield-halved"></i> Gouvernance</a>
+                <a href="connect.html" class="flex items-center gap-2 bg-agi-navy text-white px-8 py-3 rounded-xl hover:bg-agi-gold hover:text-agi-navy btn-hover shadow-lg">
+                    <i class="fa-solid fa-user-lock"></i> Espace Membre
+                </a>
+            </nav>
         </div>
     </header>
 
-    <main class="max-w-4xl mx-auto px-4 pt-6 pb-40">
-        <section id="view-today" class="tab-content">
-            <div id="grid-featured" class="space-y-8"></div>
-        </section>
-
-        <section id="view-finance" class="tab-content hidden">
-            <h2 class="text-xl font-extrabold mb-5 px-2 flex items-center gap-2">
-                <i class="fas fa-shield-alt text-ios-blue"></i> Souveraineté
-            </h2>
-            <div id="grid-finance" class="grid grid-cols-2 md:grid-cols-3 gap-4"></div>
-        </section>
-
-        <section id="view-apps" class="tab-content hidden">
-            <h2 class="text-xl font-extrabold mb-5 px-2">Toutes les Apps</h2>
-            <div id="grid-regular" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
-        </section>
-    </main>
-
-    <nav class="fixed bottom-0 w-full glass border-t border-gray-200/50 dark:border-gray-800/50 px-6 py-3 flex justify-around items-center z-50 rounded-t-[2rem]">
-        <button onclick="switchTab('today')" id="tab-today" class="flex flex-col items-center text-ios-blue nav-item">
-            <i class="fas fa-th-large text-xl"></i>
-            <span class="text-[9px] font-bold mt-1 uppercase">Store</span>
-        </button>
-        <button onclick="switchTab('finance')" id="tab-finance" class="flex flex-col items-center text-ios-gray nav-item">
-            <i class="fas fa-wallet text-xl"></i>
-            <span class="text-[9px] font-bold mt-1 uppercase">Finance</span>
-        </button>
-        <button onclick="switchTab('apps')" id="tab-apps" class="flex flex-col items-center text-ios-gray nav-item">
-            <i class="fas fa-rocket text-xl"></i>
-            <span class="text-[9px] font-bold mt-1 uppercase">Apps</span>
-        </button>
-    </nav>
-
-    <div id="detail-view" class="fixed inset-0 z-[100] bg-white dark:bg-black detail-view overflow-y-auto no-scrollbar"></div>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, onValue, update, increment } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
-        const firebaseConfig = { databaseURL: "https://atlasgroupebusiness-default-rtdb.firebaseio.com/" };
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-
-        const APPS = [
-            { 
-                id: "agi_audio_lib", 
-                type: "featured", 
-                isFinance: false,
-                name: "AGI Audio-LIB", 
-                cat: "Mentalité", 
-                size: "1.61 Go", 
-                file: "https://drive.google.com/file/d/1T7vUbnBwQqWdYh9zN0fhapopj_zSgUNw/view", 
-                img: "https://i.imgur.com/OJM0H6R.jpeg", 
-                banner: "https://i.imgur.com/OJM0H6R.jpeg", 
-                shots: ["https://i.imgur.com/OJM0H6R.jpeg", "https://i.imgur.com/NyWnYFN.jpeg"],
-                desc: "Votre bibliothèque sonore pour une transformation mentale radicale. Des modules exclusifs pour bâtir votre succès." 
-            },
-            { 
-                id: "ag_business", 
-                type: "featured", 
-                isFinance: true,
-                name: "AGI Business Pro", 
-                cat: "Investissement", 
-                size: "18.25 Mo", 
-                file: "https://agi-burkina.netlify.app/agi-business.pro.apk", 
-                img: "https://i.imgur.com/GS9UC1o.jpeg", 
-                banner: "https://i.imgur.com/GS9UC1o.jpeg", 
-                shots: ["https://i.imgur.com/GS9UC1o.jpeg", "https://i.imgur.com/NyWnYFN.jpeg"],
-                desc: "La plateforme officielle pour gérer vos actifs Nexus Core et participer aux projets industriels d'AGI au Burkina Faso." 
-            }
-        ];
-
-        window.handleSearch = () => {
-            const query = document.getElementById('search-bar').value.toLowerCase();
-            const filtered = APPS.filter(a => a.name.toLowerCase().includes(query) || a.cat.toLowerCase().includes(query));
-            renderGrids(filtered);
-        };
-
-        window.switchTab = (tabId) => {
-            ['today', 'finance', 'apps'].forEach(s => {
-                document.getElementById(`view-${s}`).classList.toggle('hidden', s !== tabId);
-                const tab = document.getElementById(`tab-${s}`);
-                tab.classList.toggle('text-ios-blue', s === tabId);
-                tab.classList.toggle('text-ios-gray', s !== tabId);
-            });
-            document.getElementById('main-title').innerText = tabId === 'today' ? 'Aujourd\'hui' : (tabId === 'finance' ? 'Souveraineté' : 'Applications');
-        };
-
-        const cardHtml = (a) => `
-            <div onclick="openApp('${a.id}')" class="apple-card bg-white dark:bg-ios-dark p-4 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col justify-between h-full">
-                <div>
-                    <img src="${a.img}" class="w-14 h-14 rounded-2xl object-cover mb-4 shadow-md" loading="lazy">
-                    <h3 class="font-bold text-sm leading-tight mb-1 line-clamp-1">${a.name}</h3>
-                    <p class="text-ios-gray text-[10px] uppercase font-bold tracking-tighter mb-4">${a.cat}</p>
+    <section class="hero-bg text-white py-24 lg:py-36 relative overflow-hidden">
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-5xl mb-20" data-scroll>
+                <div class="inline-flex items-center gap-3 bg-white/5 border border-white/10 px-4 py-2 rounded-full mb-8">
+                    <span class="w-2 h-2 bg-agi-gold rounded-full animate-ping"></span>
+                    <span class="text-agi-gold text-[10px] font-black uppercase tracking-[0.4em]">Souveraineté 226 Active</span>
                 </div>
-                <button class="w-full bg-ios-light dark:bg-gray-800 text-ios-blue py-2 rounded-full font-black text-[10px] uppercase">Obtenir</button>
+                <h3 class="text-5xl lg:text-8xl font-extrabold leading-[1.05] mb-10 tracking-tighter">
+                    L'industrie du Faso, <br>
+                    <span class="gradient-text">réinventée par Nexus.</span>
+                </h3>
+                <p class="text-xl lg:text-2xl text-slate-300 font-medium leading-relaxed max-w-4xl mb-12">
+                    Fusionner la force de l'or blanc (coton) et l'énergie solaire avec la puissance immuable de la blockchain propriétaire <span class="text-white underline decoration-agi-gold font-bold">Nexus Core Engine V4.5</span>.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#projets" class="bg-agi-gold text-agi-navy px-10 py-5 rounded-2xl font-black uppercase text-xs btn-hover flex items-center gap-3">
+                        <i class="fa-solid fa-magnifying-glass-chart"></i> Explorer les Projets
+                    </a>
+                    <a href="whitepaper.html" class="bg-white/10 backdrop-blur text-white border border-white/20 px-10 py-5 rounded-2xl font-black uppercase text-xs btn-hover flex items-center gap-3">
+                        <i class="fa-solid fa-file-pdf"></i> Whitepaper 2026
+                    </a>
+                </div>
             </div>
-        `;
 
-        window.renderGrids = (data = APPS) => {
-            document.getElementById('grid-featured').innerHTML = data.filter(a => a.type === 'featured').map(a => `
-                <div onclick="openApp('${a.id}')" class="apple-card relative w-full h-[22rem] rounded-apple overflow-hidden shadow-2xl">
-                    <img src="${a.banner}" class="absolute inset-0 w-full h-full object-cover" decoding="async">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent"></div>
-                    <div class="absolute bottom-6 left-6 right-6 text-white">
-                        <p class="text-ios-blue text-[10px] font-black uppercase tracking-widest mb-2">${a.cat}</p>
-                        <h3 class="text-2xl font-extrabold mb-1">${a.name}</h3>
-                        <p class="text-white/70 text-xs line-clamp-1">${a.desc}</p>
-                    </div>
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6" data-scroll>
+                <div class="tech-card p-8 rounded-3xl border-t-4 border-agi-gold">
+                    <i class="fa-solid fa-coins text-agi-gold text-2xl mb-4"></i>
+                    <span class="block text-slate-400 text-[10px] font-bold uppercase mb-2 tracking-widest">Parité Native</span>
+                    <div class="text-3xl font-black mono text-white">1 ₳ = 1 XOF</div>
                 </div>
-            `).join('');
-
-            document.getElementById('grid-finance').innerHTML = data.filter(a => a.isFinance).map(cardHtml).join('');
-            document.getElementById('grid-regular').innerHTML = data.map(cardHtml).join('');
-        };
-
-        window.openApp = (id) => {
-            const a = APPS.find(x => x.id === id);
-            const ov = document.getElementById('detail-view');
-            ov.innerHTML = `
-                <div class="sticky top-0 z-50 glass px-6 py-4 flex justify-between items-center border-b border-gray-100 dark:border-gray-800">
-                    <button onclick="closeApp()" class="text-ios-blue font-bold text-sm flex items-center"><i class="fas fa-chevron-left mr-2"></i> Retour</button>
-                    <button onclick="install('${a.id}','${a.file}')" id="ins-btn" class="bg-ios-blue text-white px-8 py-2 rounded-full font-black text-xs uppercase shadow-lg">Installer</button>
+                <div class="tech-card p-8 rounded-3xl border-t-4 border-agi-emerald">
+                    <i class="fa-solid fa-link-slash text-agi-emerald text-2xl mb-4"></i>
+                    <span class="block text-slate-400 text-[10px] font-bold uppercase mb-2 tracking-widest">Consensus PoA</span>
+                    <div class="text-3xl font-black mono text-white">0% Gas Fee</div>
                 </div>
-                <div class="max-w-xl mx-auto px-6 py-10">
-                    <div class="flex gap-6 mb-8">
-                        <img src="${a.img}" class="w-24 h-24 rounded-2xl shadow-xl">
-                        <div>
-                            <h2 class="text-2xl font-black mb-1">${a.name}</h2>
-                            <p class="text-ios-blue font-bold text-xs uppercase mb-3">${a.cat}</p>
-                            <span class="text-[9px] bg-ios-success/10 text-ios-success px-3 py-1 rounded-full font-black uppercase" id="dl-count">... Downloads</span>
-                        </div>
+                <div class="tech-card p-8 rounded-3xl border-t-4 border-agi-azure">
+                    <i class="fa-solid fa-calendar-check text-agi-azure text-2xl mb-4"></i>
+                    <span class="block text-slate-400 text-[10px] font-bold uppercase mb-2 tracking-widest">ROI Semestriel</span>
+                    <div class="text-3xl font-black mono text-white">Up to 45%</div>
+                </div>
+                <div class="tech-card p-8 rounded-3xl border-t-4 border-purple-500">
+                    <i class="fa-solid fa-shield-virus text-purple-400 text-2xl mb-4"></i>
+                    <span class="block text-slate-400 text-[10px] font-bold uppercase mb-2 tracking-widest">Encryption</span>
+                    <div class="text-3xl font-black mono text-white">AES-256</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="nexus" class="py-32 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-20 items-center">
+                <div data-scroll>
+                    <div class="flex items-center gap-3 mb-6">
+                        <i class="fa-solid fa-microchip text-agi-emerald text-xl"></i>
+                        <h2 class="text-agi-emerald text-sm font-black uppercase tracking-[0.5em]">Technologie de Pointe</h2>
                     </div>
+                    <h3 class="text-4xl lg:text-6xl font-black mb-8 leading-tight">Nexus Core : <br><span class="text-agi-navy/50">L'Architecture de la Confiance.</span></h3>
+                    <p class="text-slate-600 text-lg leading-relaxed mb-10">
+                        Le moteur **Nexus Core Engine** est une blockchain de couche 1 (Layer-1) développée spécifiquement pour le contexte burkinabè. Elle résout les problèmes de volatilité et de coûts de transaction élevés.
+                    </p>
                     
-                    <div class="mb-10">
-                        <h3 class="text-lg font-black mb-4">Aperçu</h3>
-                        <div class="flex gap-4 overflow-x-auto snap-x no-scrollbar pb-4">
-                            ${a.shots.map(s => `<img src="${s}" class="h-64 rounded-2xl snap-center shadow-lg ring-1 ring-black/5">`).join('')}
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <div class="p-6 bg-slate-50 rounded-2xl border-l-4 border-agi-gold">
+                            <i class="fa-solid fa-bolt-lightning text-agi-gold text-2xl mb-4"></i>
+                            <h4 class="font-black text-sm uppercase mb-2">Blocs Ultra-Rapides</h4>
+                            <p class="text-xs text-slate-500 leading-relaxed">Validation en 2.5s pour une fluidité totale des paiements commerçants via AGI Pay.</p>
+                        </div>
+                        <div class="p-6 bg-slate-50 rounded-2xl border-l-4 border-agi-emerald">
+                            <i class="fa-solid fa-leaf text-agi-emerald text-2xl mb-4"></i>
+                            <h4 class="font-black text-sm uppercase mb-2">Éco-Responsable</h4>
+                            <p class="text-xs text-slate-500 leading-relaxed">Le consensus Proof-of-Authority réduit la consommation d'énergie de 99%.</p>
                         </div>
                     </div>
-
-                    <h3 class="text-lg font-black mb-3">Description</h3>
-                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed text-sm mb-12">${a.desc}</p>
                 </div>
-            `;
-            ov.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            onValue(ref(db, 'downloads/'+id), (s) => {
-                const count = document.getElementById('dl-count');
-                if(count) count.innerText = (s.val()||0).toLocaleString() + " TÉLÉCHARGEMENTS";
-            });
-        };
 
-        window.closeApp = () => {
-            document.getElementById('detail-view').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        };
+                <div class="bg-agi-navy rounded-[40px] p-10 text-white mono shadow-2xl relative" data-scroll>
+                    <div class="absolute -top-4 -right-4 bg-agi-emerald text-agi-navy text-[10px] font-black px-4 py-2 rounded-full uppercase tracking-widest shadow-lg">
+                        System Active
+                    </div>
+                    <div class="flex justify-between items-center mb-12 border-b border-white/10 pb-6">
+                        <div class="flex gap-2">
+                            <span class="w-3 h-3 bg-red-500 rounded-full"></span>
+                            <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
+                            <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+                        </div>
+                        <span class="text-agi-gold text-xs font-bold tracking-[0.2em] uppercase">NEXUS_v4.5_CORE</span>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="flex justify-between items-center border-b border-white/5 pb-4">
+                            <span class="text-slate-500 flex items-center gap-2"><i class="fa-solid fa-cube"></i> Dernier Bloc</span>
+                            <span class="font-bold text-agi-emerald tracking-widest">#1,284,092</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-white/5 pb-4">
+                            <span class="text-slate-500 flex items-center gap-2"><i class="fa-solid fa-gauge-high"></i> Débit Réseau</span>
+                            <span class="font-bold">12,400 TX/s</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-white/5 pb-4">
+                            <span class="text-slate-500 flex items-center gap-2"><i class="fa-solid fa-fingerprint"></i> ID Standard</span>
+                            <span class="font-bold text-agi-gold">Nexus_Base58</span>
+                        </div>
+                        <div class="flex justify-between items-center pb-4">
+                            <span class="text-slate-500 flex items-center gap-2"><i class="fa-solid fa-server"></i> Nœuds Burkinabè</span>
+                            <span class="font-bold italic">8 Validateurs Actifs</span>
+                        </div>
+                    </div>
+                    <div class="mt-8 pt-8 border-t border-white/10 text-center">
+                        <p class="text-[10px] text-agi-emerald/60 animate-pulse">-- SÉCURISATION AES-256 EN COURS --</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        window.install = async (id, file) => {
-            const btn = document.getElementById('ins-btn');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-            await update(ref(db), { [`downloads/${id}`]: increment(1) });
-            setTimeout(() => { 
-                btn.innerText="OUVERT"; 
-                btn.classList.replace('bg-ios-blue', 'bg-ios-success');
-                window.location.href = file;
-            }, 800);
-        };
+    <section id="projets" class="py-32 bg-slate-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-3xl mx-auto mb-20" data-scroll>
+                <i class="fa-solid fa-gears text-agi-gold text-3xl mb-6"></i>
+                <h2 class="text-4xl lg:text-5xl font-black mb-6 uppercase tracking-tighter">Pôles de Développement</h2>
+                <p class="text-slate-500 font-medium">L'économie réelle finançant l'écosystème numérique.</p>
+            </div>
 
-        document.getElementById('current-date').innerText = new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }).toUpperCase();
-        renderGrids();
+            <div class="grid lg:grid-cols-3 gap-10">
+                <div class="bg-white p-10 rounded-[40px] shadow-sm hover:shadow-2xl transition-all duration-500 group" data-scroll>
+                    <div class="w-20 h-20 bg-blue-50 text-blue-600 rounded-3xl flex items-center justify-center mb-10 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-500">
+                        <i class="fa-solid fa-shirt text-3xl"></i>
+                    </div>
+                    <h4 class="text-2xl font-black mb-4 uppercase">Unité Textile AGI</h4>
+                    <p class="text-sm text-slate-500 leading-relaxed mb-8">
+                        Transformation locale du coton à **Koupéla**. Tissage industriel pour vêtements et produits textiles certifiés, optimisant la chaîne de valeur burkinabè.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 pt-6 border-t border-slate-100">
+                        <div>
+                            <span class="block text-[10px] text-slate-400 font-bold uppercase mb-1">Impact</span>
+                            <span class="text-sm font-black text-agi-navy">+300% Value</span>
+                        </div>
+                        <div>
+                            <span class="block text-[10px] text-slate-400 font-bold uppercase mb-1">Région</span>
+                            <span class="text-sm font-black text-agi-navy">Kouritenga</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-10 rounded-[40px] shadow-sm hover:shadow-2xl transition-all duration-500 group" data-scroll>
+                    <div class="w-20 h-20 bg-orange-50 text-orange-600 rounded-3xl flex items-center justify-center mb-10 group-hover:bg-orange-600 group-hover:text-white transition-colors duration-500">
+                        <i class="fa-solid fa-wheat-awn text-3xl"></i>
+                    </div>
+                    <h4 class="text-2xl font-black mb-4 uppercase">Pôle Avicole Pâ</h4>
+                    <p class="text-sm text-slate-500 leading-relaxed mb-8">
+                        Sécurité alimentaire via une ferme avicole de haute technologie à **Pâ**. Production massive d'œufs distribués via les points de vente AGI.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 pt-6 border-t border-slate-100">
+                        <div>
+                            <span class="block text-[10px] text-slate-400 font-bold uppercase mb-1">Capacité J.</span>
+                            <span class="text-sm font-black text-agi-navy">25,000 Œufs</span>
+                        </div>
+                        <div>
+                            <span class="block text-[10px] text-slate-400 font-bold uppercase mb-1">ROI Type</span>
+                            <span class="text-sm font-black text-agi-navy">45% / 180j</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-10 rounded-[40px] shadow-sm hover:shadow-2xl transition-all duration-500 group" data-scroll>
+                    <div class="w-20 h-20 bg-emerald-50 text-emerald-600 rounded-3xl flex items-center justify-center mb-10 group-hover:bg-emerald-600 group-hover:text-white transition-colors duration-500">
+                        <i class="fa-solid fa-solar-panel text-3xl"></i>
+                    </div>
+                    <h4 class="text-2xl font-black mb-4 uppercase">GSHA-AGI Solaire</h4>
+                    <p class="text-sm text-slate-500 leading-relaxed mb-8">
+                        Générateurs solaires hybrides autonomes. Une solution radicale pour l'autonomie énergétique des industries et des ménages du Burkina.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 pt-6 border-t border-slate-100">
+                        <div>
+                            <span class="block text-[10px] text-slate-400 font-bold uppercase mb-1">Source</span>
+                            <span class="text-sm font-black text-agi-navy">100% Solaire</span>
+                        </div>
+                        <div>
+                            <span class="block text-[10px] text-slate-400 font-bold uppercase mb-1">Maintenance</span>
+                            <span class="text-sm font-black text-agi-navy">Full Remote</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gouvernance" class="py-32 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-24">
+                <div data-scroll>
+                    <div class="flex items-center gap-3 mb-8">
+                        <i class="fa-solid fa-users-gear text-agi-navy text-xl"></i>
+                        <h3 class="text-2xl font-black uppercase tracking-tight">Conseil d'Administration Officiel</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-6 bg-slate-50 rounded-2xl border border-slate-100 shadow-sm">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 bg-agi-navy text-agi-gold rounded-full flex items-center justify-center font-black">TY</div>
+                                <span class="font-black text-agi-navy">YOUGMA Thierry Joël</span>
+                            </div>
+                            <span class="text-[10px] font-black uppercase bg-agi-gold/20 text-agi-gold px-4 py-1.5 rounded-full tracking-widest italic">Président Fondateur</span>
+                        </div>
+                        <div class="flex items-center justify-between p-6 border border-slate-100 rounded-2xl">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 bg-slate-200 text-slate-600 rounded-full flex items-center justify-center font-black">EO</div>
+                                <span class="font-bold">OUÉDRAOGO K. Evariste Omar</span>
+                            </div>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Secrétaire Général</span>
+                        </div>
+                        <div class="flex items-center justify-between p-6 border border-slate-100 rounded-2xl">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 bg-slate-200 text-slate-600 rounded-full flex items-center justify-center font-black">TH</div>
+                                <span class="font-bold">TRAORET Hamadou</span>
+                            </div>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Trésorier Général</span>
+                        </div>
+                    </div>
+                    <div class="mt-8 p-6 bg-agi-emerald/5 rounded-2xl border-2 border-dashed border-agi-emerald/20">
+                        <p class="text-xs text-slate-600 leading-relaxed italic">
+                            <i class="fa-solid fa-circle-info text-agi-emerald mr-2"></i> Conformément au récépissé PHUE-3539/2025, ce bureau est garant de l'exécution des piliers industriels et du développement de la blockchain Nexus.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="space-y-10" data-scroll>
+                    <h3 class="text-2xl font-black uppercase tracking-tight flex items-center gap-3">
+                        <i class="fa-solid fa-folder-open text-agi-gold"></i> Centre de Conformité
+                    </h3>
+                    
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <a href="whitepaper.html" class="flex flex-col items-center justify-center p-8 bg-agi-navy text-white rounded-3xl btn-hover shadow-xl">
+                            <i class="fa-solid fa-book-open text-agi-gold text-3xl mb-4"></i>
+                            <span class="text-xs font-black uppercase tracking-widest">Livre Blanc V4.5</span>
+                        </a>
+                        <a href="legal.html" class="flex flex-col items-center justify-center p-8 bg-agi-azure text-white rounded-3xl btn-hover shadow-xl">
+                            <i class="fa-solid fa-gavel text-white text-3xl mb-4"></i>
+                            <span class="text-xs font-black uppercase tracking-widest">Mentions Légales</span>
+                        </a>
+                        <a href="cgu.html" class="flex flex-col items-center justify-center p-8 bg-agi-crimson text-white rounded-3xl btn-hover shadow-xl">
+                            <i class="fa-solid fa-file-contract text-white text-3xl mb-4"></i>
+                            <span class="text-xs font-black uppercase tracking-widest">Conditions (CGU)</span>
+                        </a>
+                        <a href="politique.html" class="flex flex-col items-center justify-center p-8 bg-agi-emerald text-white rounded-3xl btn-hover shadow-xl">
+                            <i class="fa-solid fa-user-shield text-white text-3xl mb-4"></i>
+                            <span class="text-xs font-black uppercase tracking-widest">Confidentialité</span>
+                        </a>
+                    </div>
+
+                    <a href="https://agi-burkina.netlify.app/agi-business.pro.apk" class="block w-full bg-slate-100 hover:bg-agi-gold hover:text-agi-navy border-2 border-agi-navy p-6 rounded-3xl text-center font-black uppercase text-sm tracking-[0.2em] transition-all duration-300">
+                        <i class="ri-android-fill"></i> Télécharger Notre Application (18,22 Mo)
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-agi-navy text-white pt-32 pb-16 relative overflow-hidden">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-4 gap-20 mb-20 border-b border-white/5 pb-24">
+                <div class="lg:col-span-2">
+                    <img src="https://i.imgur.com/NyWnYFN.jpeg" alt="AGI" class="w-20 h-20 rounded-2xl mb-10 border border-white/10 grayscale hover:grayscale-0 transition duration-700">
+                    <h4 class="text-4xl font-black mb-8 leading-tight">Bâtir l'avenir industriel <br><span class="text-agi-gold italic">du Burkina Faso.</span></h4>
+                    <p class="text-slate-400 text-lg font-medium leading-relaxed max-w-md">
+                        Atlas Groupe International est le pionnier de la convergence entre production réelle (Coton, Agri, Solaire) et finance décentralisée propriétaire.
+                    </p>
+                    <div class="flex gap-4 mt-10">
+                        <a href="#" class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-agi-gold hover:text-agi-navy transition"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-agi-gold hover:text-agi-navy transition"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="#" class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-agi-gold hover:text-agi-navy transition"><i class="fa-brands fa-x-twitter"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h5 class="text-agi-gold text-xs font-black uppercase tracking-widest mb-10 border-l-2 border-agi-gold pl-4">Écosystème Digital</h5>
+                    <ul class="space-y-6 text-sm font-bold text-slate-400">
+                        <li><a href="#" class="hover:text-white flex items-center gap-3 transition"><i class="fa-solid fa-shuffle"></i> AG-COIN Exchange</a></li>
+                        <li><a href="#" class="hover:text-white flex items-center gap-3 transition"><i class="fa-solid fa-wallet"></i> AGI Wallet Secure</a></li>
+                        <li><a href="#" class="hover:text-white flex items-center gap-3 transition"><i class="fa-solid fa-cart-shopping"></i> AGI Pay-Station</a></li>
+                        <li><a href="#" class="hover:text-white flex items-center gap-3 transition"><i class="fa-solid fa-book-audio"></i> AGI Audio-Lib</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="text-agi-gold text-xs font-black uppercase tracking-widest mb-10 border-l-2 border-agi-gold pl-4">Coordination Siège</h5>
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <i class="fa-solid fa-map-location-dot text-agi-gold text-xl"></i>
+                            <p class="text-sm text-slate-400 font-medium">BP 45 Koupéla, Province du Kouritenga, Burkina Faso</p>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <i class="fa-solid fa-phone-volume text-agi-gold text-xl"></i>
+                            <p class="text-lg font-black tracking-widest">+226 76 20 38 48</p>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <i class="fa-solid fa-headset text-agi-gold text-xl"></i>
+                            <p class="text-xs text-slate-500 font-bold uppercase tracking-widest">Support Investisseur 24/7</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8 text-[10px] text-slate-500 font-black uppercase tracking-[0.3em] text-center md:text-left">
+                <p>© 2026 ATLAS GROUPE INTERNATIONAL | NEXUS CORE TECHNOLOGY</p>
+                <p class="italic text-agi-emerald/60">"Souveraineté Numérique - Progrès - Solidarité"</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const observerOptions = {
+                threshold: 0.15,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('scrolled');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('[data-scroll]').forEach(el => observer.observe(el));
+        });
     </script>
 </body>
 </html>
