@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGU - Atlas Groupe International | Nexus Core V5.0</title>
+    <style>
+        :root {
+            --bg: #010409; --surface: #0d1117; --border: #30363d;
+            --gold: #fbbf24; --accent: #38bdf8; --text-main: #e6edf3;
+            --text-dim: #8b949e; --danger: #ef4444;
+        }
+        body { background: var(--bg); color: var(--text-main); font-family: 'Inter', -apple-system, sans-serif; padding: 40px 20px; line-height: 1.6; }
+        .cgu-box { max-width: 1000px; margin: 0 auto; background: var(--surface); border: 1px solid var(--border); padding: 60px; border-radius: 8px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        
+        .header-legal { border-bottom: 2px solid var(--gold); padding-bottom: 30px; margin-bottom: 40px; }
+        .header-legal h1 { color: var(--gold); font-size: 2.2rem; text-transform: uppercase; letter-spacing: 1px; margin: 0; }
+        .version-tag { background: rgba(56, 189, 248, 0.1); color: var(--accent); padding: 4px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; margin-top: 10px; display: inline-block; }
+
+        .clause { margin-bottom: 35px; }
+        .clause-num { color: var(--accent); font-weight: 800; text-transform: uppercase; font-size: 1.1rem; display: block; border-bottom: 1px solid rgba(56, 189, 248, 0.2); margin-bottom: 15px; padding-bottom: 5px; }
+        .sub-article { font-weight: 600; color: var(--text-main); display: block; margin: 15px 0 5px 0; font-size: 0.95rem; }
+        .clause-text { font-size: 0.95rem; color: var(--text-dim); text-align: justify; display: block; }
+        
+        .important-card { background: rgba(239, 68, 68, 0.05); border: 1px solid var(--danger); padding: 20px; border-radius: 6px; margin: 20px 0; }
+        .important-card b { color: var(--danger); text-transform: uppercase; }
+
+        ul { padding-left: 20px; margin-top: 10px; }
+        li { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 8px; }
+        
+        footer { margin-top: 60px; padding-top: 30px; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--text-dim); display: flex; justify-content: space-between; }
+        @media (max-width: 768px) { .cgu-box { padding: 30px; } .header-legal h1 { font-size: 1.5rem; } }
+    </style>
+</head>
+<body>
+    <div class="cgu-box">
+        <div class="header-legal">
+            <h1>Conditions Générales d'Utilisation</h1>
+            <p style="margin: 5px 0;">Atlas Groupe International (AGI) — Système Propriétaire Nexus Core</p>
+            <span class="version-tag">RÉFÉRENCE JURIDIQUE : AGI-NC-2026-V5</span>
+        </div>
+
+        <div class="clause">
+            <span class="clause-num">Article 1 : Définitions et Champ d'Application</span>
+            <span class="clause-text">
+                Le présent contrat définit les règles d'utilisation de l'écosystème numérique géré par <b>Atlas Groupe International (AGI)</b>. 
+                <br><br>
+                <b>1.1. Nexus Core :</b> Désigne la blockchain de couche 1, technologie propriétaire assurant la transparence et l'immuabilité des actifs.
+                <br><b>1.2. AG-COIN :</b> Unité de compte numérique indexée sur le Franc CFA (XOF) avec une parité de 1:1.
+                <br><b>1.3. Utilisateur :</b> Toute personne physique ou morale ayant initialisé un identifiant Base 58 sur le réseau.
+            </span>
+        </div>
+
+        <div class="clause">
+            <span class="clause-num">Article 2 : Propriété Intellectuelle et Licence</span>
+            <span class="clause-text">
+                L'architecture logicielle, les algorithmes de consensus (Proof-of-Authority), les interfaces graphiques et les marques "AGI" et "AG-COIN" sont la propriété exclusive d'Atlas Groupe International. 
+                Une licence d'utilisation personnelle, non exclusive et révocable est concédée à l'utilisateur pour la gestion de ses actifs. Toute tentative de rétro-ingénierie ou de duplication du code source "Nexus Engine" fera l'objet de poursuites pénales.
+            </span>
+        </div>
+
+        <div class="clause">
+            <span class="clause-num">Article 3 : Sécurité Cryptographique et Responsabilité</span>
+            <div class="important-card">
+                <b>Avertissement de sécurité majeur :</b> AGI opère sur un modèle de souveraineté individuelle. L'utilisateur est le Gardien Unique de ses clés d'accès (PIN et ID Base 58). 
+                L'absence de stockage centralisé des clés signifie qu'<b>aucune récupération n'est possible</b> en cas de perte. AGI décline toute responsabilité pour la perte de fonds résultant d'une négligence de l'utilisateur.
+            </div>
+        </div>
+
+        <div class="clause">
+            <span class="clause-num">Article 4 : Opérations Financières et AG-COIN</span>
+            <span class="sub-article">4.1. Parité et Liquidité</span>
+            <span class="clause-text">L'AG-COIN est garanti par les réserves d'AGI et ses partenaires financiers, notamment Coris Bank. La stabilité est maintenue par un mécanisme de collatéralisation stricte.</span>
+            
+            <span class="sub-article">4.2. Frais de Réseau (Gaz)</span>
+            <span class="clause-text">Pour garantir la maintenance des nœuds validateurs, une commission de protocole de 0.5% est prélevée sur les sorties d'écosystème (Cash-out). Les transferts internes P2P sont régis par les tarifs en vigueur affichés sur le terminal.</span>
+        </div>
+
+        <div class="clause">
+            <span class="clause-num">Article 5 : Lutte contre le Blanchiment (AML) et KYC</span>
+            <span class="clause-text">
+                Conformément aux réglementations financières internationales et aux directives de l'UEMOA, AGI se réserve le droit de :
+                <ul>
+                    <li>Exiger une vérification d'identité (KYC) pour tout mouvement dépassant les seuils réglementaires.</li>
+                    <li>Geler temporairement un ID Nexus suspecté de provenance frauduleuse ou de financement d'activités illicites.</li>
+                    <li>Coopérer avec les autorités compétentes du Burkina Faso pour la fourniture de logs de transaction en cas d'enquête officielle.</li>
+                </ul>
+            </span>
+        </div>
+
+        <div class="clause">
+            <span class="clause-num">Article 6 : Forfaits HDI et Investissements Industriels</span>
+            <span class="clause-text">
+                Les participations aux forfaits HDI (High Development Investment) représentent un soutien au développement industriel (projets de tissage et transformation de matières premières). 
+                Les rendements de 20% sur 180 jours sont calculés sur la performance des actifs numériques et la valorisation des projets industriels sous-jacents. Les retraits anticipés peuvent être soumis à des pénalités de débouclage.
+            </span>
+        </div>
+
+        <div class="clause">
+            <span class="clause-num">Article 7 : Force Majeure et Risques Technologiques</span>
+            <span class="clause-text">
+                AGI ne pourra être tenu responsable des dommages résultant de :
+                <ul>
+                    <li>Une défaillance majeure des réseaux de télécommunication nationaux ou mondiaux.</li>
+                    <li>Une cyber-attaque d'envergure ("Attaque des 51%") bien que le protocole PoA limite ce risque.</li>
+                    <li>Une modification législative ou réglementaire impactant les actifs numériques au Burkina Faso.</li>
+                </ul>
+            </span>
+        </div>
+
+        <div class="clause">
+            <span class="clause-num">Article 8 : Droit Applicable et Litiges</span>
+            <span class="clause-text">
+                Le présent contrat est soumis au droit burkinabè. Tout litige relatif à l'interprétation ou à l'exécution des présentes sera soumis à une médiation préalable. En cas d'échec, compétence exclusive est attribuée au <b>Tribunal de Commerce de Ouagadougou</b>.
+            </span>
+        </div>
+
+        <footer>
+            <span>Atlas Groupe International — Direction Juridique</span>
+            <span>Émis à Ouagadougou, le 06 Mars 2026</span>
+        </footer>
+    </div>
+</body>
+</html>
