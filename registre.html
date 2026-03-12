@@ -88,7 +88,7 @@
     <div class="apk-card">
         <i class="ri-shield-user-fill" style="font-size: 4rem; color: var(--agi-gold);"></i>
         <h2 style="margin-top: 15px;">COMPTE GÉNÉRÉ</h2>
-        <p style="color: #94a3b8; font-size: 0.85rem; margin-top: 10px;">Votre bonus de 2000 ₳ sera activé dans l'APK. Voici votre clé unique :</p>
+        <p style="color: #94a3b8; font-size: 0.85rem; margin-top: 10px;">Votre clé unique Base58 a été chiffrée :</p>
         
         <div class="uid-box" id="new-id-display">--</div>
 
@@ -100,19 +100,13 @@
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getDatabase, ref, set, get, update, increment, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+    import { getDatabase, ref, set, get, push, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
     const firebaseConfig = { databaseURL: "https://atlasgroupebusiness-default-rtdb.firebaseio.com" };
     const fApp = initializeApp(firebaseConfig);
     const db = getDatabase(fApp);
 
     const sanitizeEmail = (email) => email.toLowerCase().trim().replace(/[.#$[\]]/g, "_");
-
-    // Barème des grades ambassadeur
-    const GRADES = [
-        { min: 0, bonus: 0 }, { min: 6, bonus: 15 }, { min: 16, bonus: 35 },
-        { min: 36, bonus: 60 }, { min: 76, bonus: 75 }, { min: 151, bonus: 100 }, { min: 301, bonus: 110 }
-    ];
 
     window.app = {
         tempEmail: "",
@@ -126,13 +120,12 @@
 
             if (this.refID) {
                 document.getElementById('referral-card').style.display = 'block';
-                const snap = await get(ref(db, `users/${this.refID}`));
-                if (snap.exists()) {
-                    document.getElementById('display-ref-email').innerText = snap.val().email;
-                }
+                // Affiche directement l'ID Base58 du parrain
+                document.getElementById('display-ref-email').innerText = this.refID;
             }
         },
 
+        // --- VOTRE LOGIQUE DE GÉNÉRATION BASE58 ---
         generateB58(email) {
             const alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
             const clean = email.toLowerCase().trim();
@@ -145,42 +138,36 @@
             return res.substring(0, 44);
         },
 
+        // --- VOTRE FONCTION DE CRÉATION DE COMPTE ---
         async createNewAccount(pin) {
             const userKey = sanitizeEmail(this.tempEmail);
-            this.b58 = this.generateB58(this.tempEmail);
+            this.b58 = this.generateB58(this.tempEmail); // Utilisation de l'algorithme Base58
 
             const newUser = { 
                 email: this.tempEmail, 
                 id: this.b58, 
                 pin: pin, 
                 created: serverTimestamp(), 
-                agcoin: 0,
-                welcome_bonus_status: "PENDING" // Bonus de 2000 en attente d'activation APK
+                agcoin: 0 
             };
 
             try {
+                // Écriture dans accounts/ (Privé)
                 await set(ref(db, `accounts/${userKey}`), newUser);
+                
+                // Écriture dans users/ (Public/Balance)
                 await set(ref(db, `users/${this.b58}`), { 
                     balance: 0, 
-                    email: this.tempEmail,
-                    referrals_count: 0
+                    email: this.tempEmail 
                 });
 
-                // --- LOGIQUE AMBASSADEUR : GAINS DU PARRAIN ---
+                // Parrainage
                 if (this.refID) {
-                    const parrainSnap = await get(ref(db, `users/${this.refID}`));
-                    if (parrainSnap.exists()) {
-                        const count = parrainSnap.val().referrals_count || 0;
-                        let bonusPercent = 0;
-                        GRADES.forEach(g => { if(count >= g.min) bonusPercent = g.bonus; });
-                        
-                        const gainParrain = Math.floor(500 * (1 + bonusPercent/100));
-
-                        await update(ref(db, `users/${this.refID}`), {
-                            balance: increment(gainParrain),
-                            referrals_count: increment(1)
-                        });
-                    }
+                    await push(ref(db, `referrals_pending/${this.refID}`), {
+                        filleul: this.tempEmail,
+                        id_filleul: this.b58,
+                        timestamp: serverTimestamp()
+                    });
                 }
 
                 this.userData = newUser;
