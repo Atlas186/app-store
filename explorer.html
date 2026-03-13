@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AGI | REGISTRE OFFICIEL</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #020617; 
+            --surface: #0f172a; 
+            --border: rgba(255, 255, 255, 0.08); 
+            --accent: #38bdf8;
+            --text-main: #f8fafc; 
+            --text-dim: #64748b; 
+            --danger: #ef4444; 
+            --success: #10b981;
+            --agi-gold: #fbbf24; 
+            --overlay: rgba(0, 0, 0, 0.95);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        
+        body { 
+            background-color: #000; 
+            color: var(--text-main); 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            height: 100vh;
+            overflow: hidden; /* Empêche le scroll du body complet */
+        }
+
+        .app-container { 
+            width: 100%; max-width: 480px; height: 100vh;
+            background: var(--bg); border-left: 1px solid var(--border); border-right: 1px solid var(--border); 
+            display: flex; flex-direction: column; position: relative;
+        }
+        
+        /* SECTION FIXE (HAUT) */
+        .fixed-header {
+            flex-shrink: 0;
+            background: var(--bg);
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+            background-image: radial-gradient(circle at 50% 0%, rgba(251, 191, 36, 0.08) 0%, transparent 70%);
+        }
+
+        header { padding: 25px 20px 15px; text-align: center; }
+
+        .legal-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(251, 191, 36, 0.1); padding: 5px 14px; border-radius: 100px; margin-bottom: 12px;
+            border: 1px solid rgba(251, 191, 36, 0.2);
+        }
+
+        h1 { font-size: 1.1rem; font-weight: 800; letter-spacing: 2px; color: #fff; text-transform: uppercase; }
+
+        .registry-card {
+            margin: 0 15px 10px; padding: 18px;
+            background: linear-gradient(145deg, #0f172a 0%, #020617 100%);
+            border-radius: 20px; border: 1px solid var(--border);
+            position: relative; overflow: hidden;
+        }
+        
+        .reg-item { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.7rem; }
+        .reg-label { color: var(--text-dim); }
+        .reg-val { color: #fff; font-weight: 700; }
+
+        .masse-box { 
+            padding: 15px 20px; margin: 0 15px 10px; 
+            background: rgba(255,255,255,0.02);
+            border-radius: 20px; border: 1px solid var(--border); text-align: center;
+        }
+
+        .masse-val { 
+            font-family: 'JetBrains Mono', monospace; font-size: 1.8rem; 
+            font-weight: 700; color: var(--agi-gold); margin: 2px 0; display: block;
+        }
+
+        /* SECTION DÉFILABLE (BAS) */
+        .scrollable-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 15px 0 100px; /* Espace pour le bouton retour */
+            background: rgba(0,0,0,0.2);
+        }
+
+        .section-title {
+            padding: 0 20px 15px; font-size: 0.7rem; font-weight: 800; 
+            text-transform: uppercase; color: var(--text-dim); letter-spacing: 1px;
+        }
+
+        .tx-card { 
+            background: var(--surface); border: 1px solid var(--border); 
+            border-radius: 16px; padding: 16px; margin: 0 15px 12px; 
+            display: flex; align-items: center; gap: 12px; cursor: pointer;
+        }
+
+        .tx-icon {
+            width: 40px; height: 40px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; background: rgba(255,255,255,0.03);
+        }
+
+        .tx-info { flex: 1; min-width: 0; }
+        .tx-id { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #fff; }
+        .tx-meta { font-size: 0.65rem; color: var(--text-dim); }
+
+        .tx-amt { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; font-weight: 700; text-align: right; }
+
+        .bg-dépôt { color: var(--success); }
+        .bg-retrait { color: var(--danger); }
+
+        /* MODAL */
+        .modal-overlay { 
+            position: fixed; inset: 0; background: var(--overlay); 
+            backdrop-filter: blur(15px); display: none; z-index: 2000; align-items: center; justify-content: center; padding: 20px; 
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-content { width: 100%; max-width: 400px; background: var(--surface); border-radius: 28px; border: 1px solid var(--border); padding: 25px; }
+        .detail-row { display: flex; flex-direction: column; padding: 12px 0; border-bottom: 1px solid var(--border); gap: 4px; }
+        .detail-label { color: var(--text-dim); font-size: 0.65rem; text-transform: uppercase; font-weight: 700; }
+        .detail-value { color: #fff; font-size: 0.85rem; font-weight: 600; word-break: break-all; }
+
+        .btn-back { 
+            position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); 
+            width: 90%; max-width: 400px; background: #fff; color: #000; 
+            padding: 16px; border-radius: 18px; font-weight: 800; text-align: center; 
+            text-decoration: none; z-index: 1000; box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <div class="fixed-header">
+            <header>
+                <div class="legal-badge">
+                    <i class="ri-shield-check-fill" style="color: var(--agi-gold)"></i>
+                    <span style="font-size: 0.6rem; font-weight: 800; color: var(--agi-gold)">ENTITÉ ENREGISTRÉE - BURKINA FASO</span>
+                </div>
+                <h1>AGI Ledger Explorer</h1>
+            </header>
+
+            <div class="registry-card">
+                <div class="reg-item"><span class="reg-label">Structure</span><span class="reg-val">ATLAS GROUPE INTERNATIONAL</span></div>
+                <div class="reg-item"><span class="reg-label">Récépissé</span><span class="reg-val" style="color: var(--agi-gold)">PHUE-3539/2025</span></div>
+                <div class="reg-item"><span class="reg-label">Déclaration</span><span class="reg-val">11 Juillet 2025</span></div>
+                <div class="reg-item" style="margin-bottom: 0;"><span class="reg-label">Siège</span><span class="reg-val">Burkina Faso</span></div>
+            </div>
+
+            <div class="masse-box">
+                <span style="font-size: 0.6rem; color: var(--text-dim); text-transform: uppercase; font-weight: 800;">Actif Circulant (AG-COIN)</span>
+                <span class="masse-val" id="masse-totale">0</span>
+                <span style="font-size: 0.55rem; color: var(--success); font-weight: 700;"><i class="ri-pulse-fill"></i> Audit Temps Réel Actif</span>
+            </div>
+        </div>
+
+        <div class="scrollable-content">
+            <div class="section-title">Historique des Validations</div>
+            <div id="ledger-list"></div>
+        </div>
+
+        <a href="index.html" class="btn-back">
+            <i class="ri-home-4-line"></i> RETOUR AU PORTAIL
+        </a>
+    </div>
+
+    <div class="modal-overlay" id="detailModal">
+        <div class="modal-content">
+            <div id="modalIcon" style="font-size: 2.5rem; text-align: center; margin-bottom: 10px;"></div>
+            <h3 id="modalTitle" style="text-align: center; margin-bottom: 15px; text-transform: uppercase; font-size: 1rem;">Détails Transaction</h3>
+            
+            <div id="modalBody">
+                </div>
+
+            <button style="width:100%; margin-top:20px; padding:14px; border-radius:12px; background:rgba(255,255,255,0.05); color:#fff; border:1px solid var(--border); font-weight:700; cursor:pointer;" onclick="closeModal()">FERMER</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = { databaseURL: "https://atlasgroupebusiness-default-rtdb.firebaseio.com" };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // Masse Monétaire
+        onValue(ref(db, 'users'), (snap) => {
+            let total = 0;
+            if(snap.val()) Object.values(snap.val()).forEach(u => total += Math.floor(parseFloat(u.balance || 0)));
+            document.getElementById('masse-totale').innerText = total.toLocaleString('fr-FR') + " ₳";
+        });
+
+        // Liste des transactions
+        onValue(ref(db, 'requests'), (snap) => {
+            const data = snap.val();
+            const container = document.getElementById('ledger-list');
+            if(!data) return;
+
+            const valid = Object.entries(data).filter(([_, tx]) => tx.status === 'validé');
+            const sorted = valid.sort((a,b) => (b[1].timestamp || 0) - (a[1].timestamp || 0));
+            
+            container.innerHTML = sorted.map(([id, tx]) => {
+                let color = tx.type.includes('Dépôt') ? 'bg-dépôt' : 'bg-retrait';
+                let icon = tx.type.includes('Dépôt') ? 'ri-arrow-left-down-line' : 'ri-arrow-right-up-line';
+                
+                return `
+                    <div class="tx-card" onclick='openTxModal("${id}", ${JSON.stringify(tx).replace(/"/g, '&quot;')})'>
+                        <div class="tx-icon ${color}"><i class="${icon}"></i></div>
+                        <div class="tx-info">
+                            <div class="tx-id">TX-${id.substring(0,8).toUpperCase()}</div>
+                            <div class="tx-meta">${tx.type} • ${new Date(tx.timestamp).toLocaleDateString('fr-FR')}</div>
+                        </div>
+                        <div class="tx-amt ${color}">${Math.floor(tx.amount).toLocaleString('fr-FR')} ₳</div>
+                    </div>`;
+            }).join('');
+        });
+
+        window.openTxModal = (id, tx) => {
+            const modal = document.getElementById('detailModal');
+            document.getElementById('modalTitle').innerText = tx.type;
+            const iconWrap = document.getElementById('modalIcon');
+            iconWrap.innerHTML = tx.type.includes('Dépôt') ? 
+                '<i class="ri-checkbox-circle-fill" style="color:var(--success)"></i>' : 
+                '<i class="ri-indeterminate-circle-fill" style="color:var(--danger)"></i>';
+
+            // Logique Origine/Destination
+            let origine = tx.user_id || "Système AGI";
+            let destination = tx.type.includes('Dépôt') ? tx.user_id : (tx.receiver_id || "Réseau Externe");
+
+            document.getElementById('modalBody').innerHTML = `
+                <div class="detail-row"><span class="detail-label">ID Transaction</span><span class="detail-value" style="font-family:monospace;">${id.toUpperCase()}</span></div>
+                <div class="detail-row"><span class="detail-label">Origine (Source)</span><span class="detail-value">${origine}</span></div>
+                <div class="detail-row"><span class="detail-label">Destination</span><span class="detail-value">${destination}</span></div>
+                <div class="detail-row"><span class="detail-label">Montant</span><span class="detail-value" style="color:var(--agi-gold); font-size:1.1rem;">${Math.floor(tx.amount).toLocaleString('fr-FR')} ₳</span></div>
+                <div class="detail-row"><span class="detail-label">Date et Heure</span><span class="detail-value">${new Date(tx.timestamp).toLocaleString('fr-FR')}</span></div>
+                <div class="detail-row" style="border:none;"><span class="detail-label">Statut</span><span class="detail-value" style="color:var(--success)">CERTIFIÉ PAR AGI</span></div>
+            `;
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('active'), 10);
+        };
+
+        window.closeModal = () => {
+            const modal = document.getElementById('detailModal');
+            modal.classList.remove('active');
+            setTimeout(() => modal.style.display = 'none', 300);
+        };
+    </script>
+</body>
+</html>
