@@ -19,17 +19,30 @@
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         body { background-color: #000; color: var(--text-main); font-family: 'Plus Jakarta Sans', sans-serif; display: flex; justify-content: center; height: 100vh; overflow: hidden; }
 
-        /* ÉCRAN DE VERROUILLAGE */
-        #pinOverlay {
+        /* ÉCRAN D'AUTHENTIFICATION */
+        #authOverlay {
             position: fixed; inset: 0; background: var(--bg); z-index: 5000; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; padding: 20px; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            align-items: center; justify-content: center; padding: 30px; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .pin-dots { display: flex; gap: 15px; margin-bottom: 30px; }
+        
+        .auth-card { width: 100%; max-width: 350px; text-align: center; }
+        .auth-logo { width: 80px; border-radius: 20px; border: 2px solid var(--agi-gold); margin-bottom: 20px; box-shadow: 0 0 20px rgba(251, 191, 36, 0.2); }
+        
+        .input-group { width: 100%; margin-bottom: 20px; text-align: left; }
+        .input-group label { display: block; font-size: 0.65rem; color: var(--text-dim); text-transform: uppercase; font-weight: 800; margin-bottom: 8px; letter-spacing: 1px; }
+        .input-group input { width: 100%; background: var(--surface); border: 1px solid var(--border); padding: 16px; border-radius: 14px; color: #fff; outline: none; transition: 0.3s; }
+        .input-group input:focus { border-color: var(--agi-gold); }
+
+        .btn-next { width: 100%; background: var(--agi-gold); color: #000; padding: 16px; border-radius: 14px; font-weight: 800; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
+
+        /* CLAVIER PIN (MASQUÉ AU DÉBUT) */
+        #pinContainer { display: none; width: 100%; flex-direction: column; align-items: center; }
+        .pin-dots { display: flex; gap: 15px; margin: 25px 0; }
         .dot { width: 14px; height: 14px; border: 2px solid var(--border); border-radius: 4px; transition: 0.2s; }
         .dot.active { background: var(--agi-gold); border-color: var(--agi-gold); box-shadow: 0 0 15px var(--agi-gold); }
         .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; width: 100%; max-width: 300px; }
-        .key { aspect-ratio: 1; border-radius: 18px; background: var(--surface); border: 1px solid var(--border); color: #fff; font-size: 1.5rem; font-weight: 700; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-        .key:active { background: var(--agi-gold); color: #000; transform: scale(0.92); }
+        .key { aspect-ratio: 1.2; border-radius: 18px; background: var(--surface); border: 1px solid var(--border); color: #fff; font-size: 1.5rem; font-weight: 700; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .key:active { background: var(--agi-gold); color: #000; }
 
         /* APP CONTAINER */
         .app-container { 
@@ -68,17 +81,35 @@
 </head>
 <body>
 
-    <div id="pinOverlay">
-        <div style="text-align:center; margin-bottom:30px">
-            <img src="https://i.imgur.com/DxND3Yn.jpeg" style="width:70px; border-radius:18px; border:2px solid var(--agi-gold); margin-bottom:15px">
-            <h2 style="font-size:1rem; letter-spacing:1px">NEXUS EXPLORER</h2>
-            <p style="color:var(--text-dim); font-size:0.7rem">Saisissez votre code PIN d'accès</p>
+    <div id="authOverlay">
+        <div class="auth-card">
+            <img src="https://i.imgur.com/DxND3Yn.jpeg" class="auth-logo">
+            
+            <div id="emailContainer">
+                <h2 style="font-size:1.1rem; margin-bottom:10px">NEXUS EXPLORER</h2>
+                <p style="color:var(--text-dim); font-size:0.75rem; margin-bottom:25px">Identifiez-vous pour accéder au registre</p>
+                
+                <div class="input-group">
+                    <label>E-mail du compte</label>
+                    <input type="email" id="authEmail" placeholder="nom@exemple.com">
+                </div>
+                <button class="btn-next" onclick="goToPin()">
+                    CONTINUER <i class="ri-arrow-right-line"></i>
+                </button>
+            </div>
+
+            <div id="pinContainer">
+                <h2 id="welcomeUser" style="font-size:1rem; margin-bottom:5px">SÉCURITÉ NEXUS</h2>
+                <p style="color:var(--text-dim); font-size:0.7rem">Saisissez votre code PIN</p>
+                
+                <div class="pin-dots" id="pinDots">
+                    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                </div>
+                <div class="keypad" id="keypad"></div>
+                <button style="margin-top:20px; background:none; border:none; color:var(--text-dim); font-size:0.7rem; text-decoration:underline" onclick="backToEmail()">Changer d'e-mail</button>
+            </div>
         </div>
-        <div class="pin-dots" id="pinDots">
-            <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-            <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-        </div>
-        <div class="keypad" id="keypad"></div>
     </div>
 
     <div class="app-container" id="mainApp">
@@ -109,7 +140,6 @@
         </div>
 
         <div class="scrollable-content">
-            <div style="padding:10px 20px; font-size:0.7rem; font-weight:800; color:var(--text-dim); text-transform:uppercase">Flux Blockchain</div>
             <div id="ledger-list"></div>
         </div>
 
@@ -135,10 +165,27 @@
 
         let allTransactions = [];
         let inputPin = "";
-        const email = localStorage.getItem('agi_logged_email');
-        const sanitizeEmail = (e) => e ? e.toLowerCase().replace(/[.#$[\]]/g, "_").trim() : null;
+        let targetEmail = "";
 
-        // 1. PIN SYSTEM
+        const sanitize = (e) => e ? e.toLowerCase().replace(/[.#$[\]]/g, "_").trim() : null;
+
+        // NAVIGATION AUTH
+        window.goToPin = () => {
+            targetEmail = document.getElementById('authEmail').value;
+            if(!targetEmail.includes('@')) return alert("Veuillez entrer un e-mail valide.");
+            
+            document.getElementById('emailContainer').style.display = 'none';
+            document.getElementById('pinContainer').style.display = 'flex';
+        };
+
+        window.backToEmail = () => {
+            document.getElementById('emailContainer').style.display = 'block';
+            document.getElementById('pinContainer').style.display = 'none';
+            inputPin = "";
+            updateDots();
+        };
+
+        // PIN SYSTEM
         const initKeypad = () => {
             const keypad = document.getElementById('keypad');
             [1, 2, 3, 4, 5, 6, 7, 8, 9, 'back', 0, 'exit'].forEach(k => {
@@ -150,7 +197,7 @@
                     else if(k === 'back') inputPin = inputPin.slice(0, -1);
                     else if(inputPin.length < 6) inputPin += k;
                     updateDots();
-                    if(inputPin.length === 6) verifyPin();
+                    if(inputPin.length === 6) verifyAuth();
                 };
                 keypad.appendChild(btn);
             });
@@ -160,19 +207,22 @@
             document.querySelectorAll('.dot').forEach((dot, i) => dot.classList.toggle('active', i < inputPin.length));
         };
 
-        const verifyPin = async () => {
-            if(!email) return alert("Session non identifiée.");
-            const snap = await get(ref(db, `accounts/${sanitizeEmail(email)}/pin`));
-            if(snap.exists() && snap.val() === inputPin) {
-                document.getElementById('pinOverlay').style.transform = 'translateY(-100%)';
+        const verifyAuth = async () => {
+            const userRef = ref(db, `accounts/${sanitize(targetEmail)}`);
+            const snap = await get(userRef);
+            
+            if(snap.exists() && snap.val().pin === inputPin) {
+                document.getElementById('authOverlay').style.transform = 'translateY(-100%)';
                 document.getElementById('mainApp').classList.add('unlocked');
                 loadData();
             } else {
-                alert("PIN INCORRECT"); inputPin = ""; updateDots();
+                alert("Identifiants incorrects.");
+                inputPin = "";
+                updateDots();
             }
         };
 
-        // 2. DATA LOADING
+        // DATA LOADING
         function loadData() {
             onValue(ref(db, 'users'), (snap) => {
                 let total = 0;
@@ -220,7 +270,6 @@
             renderTransactions(filtered);
         };
 
-        // 3. MODAL LOGIC
         window.openTxModal = (id, tx) => {
             const modal = document.getElementById('detailModal');
             document.getElementById('modalTitle').innerText = tx.type;
@@ -228,25 +277,22 @@
                 '<i class="ri-shield-flash-fill" style="color:var(--success)"></i>' : 
                 '<i class="ri-shield-user-fill" style="color:var(--danger)"></i>';
             
-            // Logique Source / Destination
-            let src = tx.sender_id || (tx.type.includes('Dépôt') ? (tx.method || "Opérateur Externe") : tx.user_id);
-            let dest = tx.receiver_id || (tx.type.includes('Dépôt') ? tx.user_id : "Trésorerie AGI");
+            let src = tx.sender_id || (tx.type.includes('Dépôt') ? (tx.method || "Source Externe") : tx.user_id);
+            let dest = tx.receiver_id || (tx.type.includes('Dépôt') ? tx.user_id : "AGI Core");
 
             const fields = [
-                { label: "ID Transaction Nexus", val: id.toUpperCase() },
-                { label: "Provenance (Source)", val: src.toString().toUpperCase() },
-                { label: "Bénéficiaire (Destination)", val: dest.toString().toUpperCase() },
-                { label: "Montant Brut", val: `${Math.floor(tx.amount).toLocaleString()} ₳` },
-                { label: "Date & Heure", val: new Date(tx.timestamp).toLocaleString('fr-FR') },
-                { label: "Statut Audit", val: "CERTIFIÉ PAR NEXUS CORE" }
+                { label: "ID Nexus Hash", val: id.toUpperCase() },
+                { label: "Origine", val: src.toString().toUpperCase() },
+                { label: "Destination", val: dest.toString().toUpperCase() },
+                { label: "Montant", val: `${Math.floor(tx.amount).toLocaleString()} ₳` },
+                { label: "Horodatage", val: new Date(tx.timestamp).toLocaleString('fr-FR') },
+                { label: "Certification", val: "VÉRIFIÉ & SCELLÉ" }
             ];
 
             document.getElementById('modalBody').innerHTML = fields.map(f => `
                 <div class="detail-row">
                     <span class="detail-label">${f.label}</span>
-                    <span class="detail-value" style="${f.label === 'Statut Audit' ? 'color:var(--success)' : (f.label.includes('Montant') ? 'color:var(--agi-gold); font-size:1rem' : '')}">
-                        ${f.val}
-                    </span>
+                    <span class="detail-value" style="${f.label === 'Certification' ? 'color:var(--success)' : (f.label === 'Montant' ? 'color:var(--agi-gold)' : '')}">${f.val}</span>
                 </div>`).join('');
             
             modal.style.display = 'flex'; setTimeout(() => modal.classList.add('active'), 10);
