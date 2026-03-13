@@ -37,6 +37,7 @@
         .gradient-text { background: linear-gradient(to right, #fbbf24, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .btn-hover { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         .btn-hover:hover { transform: scale(1.02); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .logo { filter: drop-shadow(0 0 15px rgba(251, 191, 36, 0.3)); }
     </style>
 </head>
 <body>
@@ -64,40 +65,42 @@
         </div>
     </header>
 
-    <section class="hero-bg text-white py-24 lg:py-36 relative overflow-hidden">
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="max-w-5xl mb-20" data-scroll>
-                <div class="inline-flex items-center gap-3 bg-white/5 border border-white/10 px-4 py-2 rounded-full mb-8">
-                    <span class="w-2 h-2 bg-agi-gold rounded-full animate-ping"></span>
-                    <span class="text-agi-gold text-[10px] font-black uppercase tracking-[0.4em]">Souveraineté 226 Active</span>
-                </div>
-                <h3 class="text-5xl lg:text-8xl font-extrabold leading-[1.05] mb-10 tracking-tighter">
-                    L'industrie du Faso, <br>
-                    <span class="gradient-text">réinventée par Nexus.</span>
-                </h3>
-                <p class="text-xl lg:text-2xl text-slate-300 font-medium leading-relaxed max-w-4xl mb-12">
-                    Fusionner la force de l'or blanc (coton) et l'énergie solaire avec la puissance immuable de la blockchain propriétaire <span class="text-white underline decoration-agi-gold font-bold">Nexus Core Engine V4.5</span>.
-                </p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="#projets" class="bg-agi-gold text-agi-navy px-10 py-5 rounded-2xl font-black uppercase text-xs btn-hover flex items-center gap-3">
-                        <i class="fa-solid fa-magnifying-glass-chart"></i> Explorer les Projets
-                    </a>
-                    <a href="whitepaper.html" class="bg-white/10 backdrop-blur text-white border border-white/20 px-10 py-5 rounded-2xl font-black uppercase text-xs btn-hover flex items-center gap-3">
-                        <i class="fa-solid fa-file-pdf"></i> Whitepaper 2026
-                    </a>
-                </div>
+    <section class="hero-bg text-white py-16 md:py-32 relative overflow-hidden" data-scroll>
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <div class="inline-flex items-center gap-3 bg-white/5 border border-white/10 px-4 py-2 rounded-full mb-8">
+                <span class="w-2 h-2 bg-agi-gold rounded-full animate-ping"></span>
+                <span class="text-agi-gold text-[10px] font-black uppercase tracking-[0.4em]">Souveraineté 226 Active</span>
+            </div>
+            
+            <h1 class="text-3xl md:text-6xl font-bold mb-6 leading-tight tracking-tighter">
+                <img src="https://i.imgur.com/6YRySSd.jpeg" alt="Logo AGI" class="logo w-24 h-24 md:w-32 md:h-32 mx-auto mb-6 rounded-full border-4 border-agi-gold/30">
+                ATLAS GROUPE INTERNATIONAL<br>
+                <span class="gradient-text">L'avenir de la Souveraineté Économique au Faso</span>
+            </h1>
+            
+            <p class="text-lg md:text-2xl mb-12 max-w-3xl mx-auto text-gray-300 font-medium">
+                Le premier écosystème qui sécurise les paiements des producteurs de coton et finance l'industrialisation nationale via la blockchain <span class="text-white underline decoration-agi-gold">Nexus Core Engine V4.5</span>.
+            </p>
+            
+            <div class="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto mb-20">
+                <a href="whitepaper.html" class="bg-agi-navy border border-white/20 text-white px-8 py-4 rounded-2xl font-bold text-sm hover:bg-agi-slate transition shadow-lg btn-hover flex items-center justify-center min-w-[200px]">
+                    <i class="fas fa-file-alt mr-2 text-agi-gold"></i> Livre Blanc AG-COIN
+                </a>
+                <a href="#agcoin" class="bg-agi-emerald text-white px-8 py-4 rounded-2xl font-bold text-sm hover:bg-emerald-600 transition shadow-lg btn-hover flex items-center justify-center min-w-[200px]">
+                    <i class="fas fa-coins mr-2"></i> Découvrir l'AG-COIN
+                </a>
             </div>
 
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6" data-scroll>
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 text-left">
                 <div class="tech-card p-8 rounded-3xl border-t-4 border-agi-gold">
                     <i class="fa-solid fa-coins text-agi-gold text-2xl mb-4"></i>
                     <span class="block text-slate-400 text-[10px] font-bold uppercase mb-2 tracking-widest">Parité Native</span>
                     <div class="text-3xl font-black mono text-white">1 ₳ = 1 XOF</div>
                 </div>
                 <div class="tech-card p-8 rounded-3xl border-t-4 border-agi-emerald">
-                    <i class="fa-solid fa-link-slash text-agi-emerald text-2xl mb-4"></i>
-                    <span class="block text-slate-400 text-[10px] font-bold uppercase mb-2 tracking-widest">Consensus PoA</span>
-                    <div class="text-3xl font-black mono text-white">0% Gas Fee</div>
+                    <i class="fa-solid fa-bolt text-agi-emerald text-2xl mb-4"></i>
+                    <span class="block text-slate-400 text-[10px] font-bold uppercase mb-2 tracking-widest">Vitesse Nexus</span>
+                    <div class="text-3xl font-black mono text-white">0.4s / Tx</div>
                 </div>
                 <div class="tech-card p-8 rounded-3xl border-t-4 border-agi-azure">
                     <i class="fa-solid fa-calendar-check text-agi-azure text-2xl mb-4"></i>
@@ -113,255 +116,265 @@
         </div>
     </section>
 
-    <section id="nexus" class="py-32 bg-white">
+    <section id="apropos" class="py-24 bg-white" data-scroll>
         <div class="container mx-auto px-4">
-            <div class="grid lg:grid-cols-2 gap-20 items-center">
-                <div data-scroll>
-                    <div class="flex items-center gap-3 mb-6">
-                        <i class="fa-solid fa-microchip text-agi-emerald text-xl"></i>
-                        <h2 class="text-agi-emerald text-sm font-black uppercase tracking-[0.5em]">Technologie de Pointe</h2>
-                    </div>
-                    <h3 class="text-4xl lg:text-6xl font-black mb-8 leading-tight">Nexus Core : <br><span class="text-agi-navy/50">L'Architecture de la Confiance.</span></h3>
-                    <p class="text-slate-600 text-lg leading-relaxed mb-10">
-                        Le moteur **Nexus Core Engine** est une blockchain de couche 1 (Layer-1) développée spécifiquement pour le contexte burkinabè. Elle résout les problèmes de volatilité et de coûts de transaction élevés.
-                    </p>
-                    
-                    <div class="grid sm:grid-cols-2 gap-6">
-                        <div class="p-6 bg-slate-50 rounded-2xl border-l-4 border-agi-gold">
-                            <i class="fa-solid fa-bolt-lightning text-agi-gold text-2xl mb-4"></i>
-                            <h4 class="font-black text-sm uppercase mb-2">Blocs Ultra-Rapides</h4>
-                            <p class="text-xs text-slate-500 leading-relaxed">Validation en 2.5s pour une fluidité totale des paiements commerçants via AGI Pay.</p>
-                        </div>
-                        <div class="p-6 bg-slate-50 rounded-2xl border-l-4 border-agi-emerald">
-                            <i class="fa-solid fa-leaf text-agi-emerald text-2xl mb-4"></i>
-                            <h4 class="font-black text-sm uppercase mb-2">Éco-Responsable</h4>
-                            <p class="text-xs text-slate-500 leading-relaxed">Le consensus Proof-of-Authority réduit la consommation d'énergie de 99%.</p>
-                        </div>
+            <h2 class="text-4xl font-black text-center mb-12 text-agi-navy uppercase tracking-tight">
+                <i class="fas fa-building text-agi-emerald mr-3"></i> À Propos d'Atlas Groupe International
+            </h2>
+            <div class="grid lg:grid-cols-2 gap-16 items-center max-w-7xl mx-auto">
+                <div class="relative">
+                    <img src="https://i.imgur.com/dLD66wF.jpeg" alt="AGI Propos" class="rounded-[40px] shadow-2xl">
+                    <div class="absolute -bottom-6 -right-6 bg-agi-gold p-8 rounded-3xl shadow-xl hidden md:block">
+                        <p class="font-black text-agi-navy text-2xl">EST. 2025</p>
+                        <p class="text-[10px] uppercase font-bold tracking-widest">Burkina Faso</p>
                     </div>
                 </div>
-
-                <div class="bg-agi-navy rounded-[40px] p-10 text-white mono shadow-2xl relative" data-scroll>
-                    <div class="absolute -top-4 -right-4 bg-agi-emerald text-agi-navy text-[10px] font-black px-4 py-2 rounded-full uppercase tracking-widest shadow-lg">
-                        System Active
-                    </div>
-                    <div class="flex justify-between items-center mb-12 border-b border-white/10 pb-6">
-                        <div class="flex gap-2">
-                            <span class="w-3 h-3 bg-red-500 rounded-full"></span>
-                            <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
-                            <span class="w-3 h-3 bg-green-500 rounded-full"></span>
-                        </div>
-                        <span class="text-agi-gold text-xs font-bold tracking-[0.2em] uppercase">NEXUS_v4.5_CORE</span>
-                    </div>
-                    <div class="space-y-6">
-                        <div class="flex justify-between items-center border-b border-white/5 pb-4">
-                            <span class="text-slate-500 flex items-center gap-2"><i class="fa-solid fa-cube"></i> Dernier Bloc</span>
-                            <span class="font-bold text-agi-emerald tracking-widest">#1,284,092</span>
-                        </div>
-                        <div class="flex justify-between items-center border-b border-white/5 pb-4">
-                            <span class="text-slate-500 flex items-center gap-2"><i class="fa-solid fa-gauge-high"></i> Débit Réseau</span>
-                            <span class="font-bold">12,400 TX/s</span>
-                        </div>
-                        <div class="flex justify-between items-center border-b border-white/5 pb-4">
-                            <span class="text-slate-500 flex items-center gap-2"><i class="fa-solid fa-fingerprint"></i> ID Standard</span>
-                            <span class="font-bold text-agi-gold">Nexus_Base58</span>
-                        </div>
-                        <div class="flex justify-between items-center pb-4">
-                            <span class="text-slate-500 flex items-center gap-2"><i class="fa-solid fa-server"></i> Nœuds Burkinabè</span>
-                            <span class="font-bold italic">8 Validateurs Actifs</span>
-                        </div>
-                    </div>
-                    <div class="mt-8 pt-8 border-t border-white/10 text-center">
-                        <p class="text-[10px] text-agi-emerald/60 animate-pulse">-- SÉCURISATION AES-256 EN COURS --</p>
-                    </div>
+                <div class="text-slate-600 space-y-6 text-lg leading-relaxed">
+                    <p>Atlas Groupe International est une organisation visionnaire engagée à transformer le paysage industriel et agricole au Burkina Faso grâce à l'intégration stratégique de la technologie blockchain propriétaire **Nexus Core**.</p>
+                    <p>Notre mission est de catalyser la croissance en créant un pont entre l'économie réelle (Or blanc, Solaire, Aviculture) et la finance numérique sécurisée. Avec le token **AG-COIN**, nous offrons des solutions de micro-financement et de paiement instantané aux acteurs de la chaîne de valeur.</p>
+                    <p>Nous érigeons un écosystème où l'innovation technologique et la souveraineté économique convergent pour un avenir radieux. Atlas Groupe International n'est pas qu'une entreprise, c'est le moteur du nouveau Burkina industriel.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="projets" class="py-32 bg-slate-50">
-        <div class="container mx-auto px-4">
-            <div class="text-center max-w-3xl mx-auto mb-20" data-scroll>
-                <i class="fa-solid fa-gears text-agi-gold text-3xl mb-6"></i>
-                <h2 class="text-4xl lg:text-5xl font-black mb-6 uppercase tracking-tighter">Pôles de Développement</h2>
-                <p class="text-slate-500 font-medium">L'économie réelle finançant l'écosystème numérique.</p>
-            </div>
-
-            <div class="grid lg:grid-cols-3 gap-10">
-                <div class="bg-white p-10 rounded-[40px] shadow-sm hover:shadow-2xl transition-all duration-500 group" data-scroll>
-                    <div class="w-20 h-20 bg-blue-50 text-blue-600 rounded-3xl flex items-center justify-center mb-10 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-500">
-                        <i class="fa-solid fa-shirt text-3xl"></i>
-                    </div>
-                    <h4 class="text-2xl font-black mb-4 uppercase">Unité Textile AGI</h4>
-                    <p class="text-sm text-slate-500 leading-relaxed mb-8">
-                        Transformation locale du coton à **Koupéla**. Tissage industriel pour vêtements et produits textiles certifiés, optimisant la chaîne de valeur burkinabè.
-                    </p>
-                    <div class="grid grid-cols-2 gap-4 pt-6 border-t border-slate-100">
-                        <div>
-                            <span class="block text-[10px] text-slate-400 font-bold uppercase mb-1">Impact</span>
-                            <span class="text-sm font-black text-agi-navy">+300% Value</span>
-                        </div>
-                        <div>
-                            <span class="block text-[10px] text-slate-400 font-bold uppercase mb-1">Région</span>
-                            <span class="text-sm font-black text-agi-navy">Kouritenga</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white p-10 rounded-[40px] shadow-sm hover:shadow-2xl transition-all duration-500 group" data-scroll>
-                    <div class="w-20 h-20 bg-orange-50 text-orange-600 rounded-3xl flex items-center justify-center mb-10 group-hover:bg-orange-600 group-hover:text-white transition-colors duration-500">
-                        <i class="fa-solid fa-wheat-awn text-3xl"></i>
-                    </div>
-                    <h4 class="text-2xl font-black mb-4 uppercase">Pôle Avicole Pâ</h4>
-                    <p class="text-sm text-slate-500 leading-relaxed mb-8">
-                        Sécurité alimentaire via une ferme avicole de haute technologie à **Pâ**. Production massive d'œufs distribués via les points de vente AGI.
-                    </p>
-                    <div class="grid grid-cols-2 gap-4 pt-6 border-t border-slate-100">
-                        <div>
-                            <span class="block text-[10px] text-slate-400 font-bold uppercase mb-1">Capacité J.</span>
-                            <span class="text-sm font-black text-agi-navy">25,000 Œufs</span>
-                        </div>
-                        <div>
-                            <span class="block text-[10px] text-slate-400 font-bold uppercase mb-1">ROI Type</span>
-                            <span class="text-sm font-black text-agi-navy">45% / 180j</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white p-10 rounded-[40px] shadow-sm hover:shadow-2xl transition-all duration-500 group" data-scroll>
-                    <div class="w-20 h-20 bg-emerald-50 text-emerald-600 rounded-3xl flex items-center justify-center mb-10 group-hover:bg-emerald-600 group-hover:text-white transition-colors duration-500">
-                        <i class="fa-solid fa-solar-panel text-3xl"></i>
-                    </div>
-                    <h4 class="text-2xl font-black mb-4 uppercase">GSHA-AGI Solaire</h4>
-                    <p class="text-sm text-slate-500 leading-relaxed mb-8">
-                        Générateurs solaires hybrides autonomes. Une solution radicale pour l'autonomie énergétique des industries et des ménages du Burkina.
-                    </p>
-                    <div class="grid grid-cols-2 gap-4 pt-6 border-t border-slate-100">
-                        <div>
-                            <span class="block text-[10px] text-slate-400 font-bold uppercase mb-1">Source</span>
-                            <span class="text-sm font-black text-agi-navy">100% Solaire</span>
-                        </div>
-                        <div>
-                            <span class="block text-[10px] text-slate-400 font-bold uppercase mb-1">Maintenance</span>
-                            <span class="text-sm font-black text-agi-navy">Full Remote</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <section id="agcoin" class="py-24 bg-slate-50" data-scroll>
+        <div class="container mx-auto px-4 text-center mb-16">
+            <h2 class="text-4xl font-black text-agi-navy uppercase tracking-tight">
+                <i class="fas fa-coins text-agi-gold mr-3"></i> Atlas Groupe Coin (AG-COIN)
+            </h2>
         </div>
-    </section>
-
-    <section id="gouvernance" class="py-32 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="grid lg:grid-cols-2 gap-24">
-                <div data-scroll>
-                    <div class="flex items-center gap-3 mb-8">
-                        <i class="fa-solid fa-users-gear text-agi-navy text-xl"></i>
-                        <h3 class="text-2xl font-black uppercase tracking-tight">Conseil d'Administration Officiel</h3>
-                    </div>
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between p-6 bg-slate-50 rounded-2xl border border-slate-100 shadow-sm">
-                            <div class="flex items-center gap-4">
-                                <div class="w-10 h-10 bg-agi-navy text-agi-gold rounded-full flex items-center justify-center font-black">TY</div>
-                                <span class="font-black text-agi-navy">YOUGMA Thierry Joël</span>
-                            </div>
-                            <span class="text-[10px] font-black uppercase bg-agi-gold/20 text-agi-gold px-4 py-1.5 rounded-full tracking-widest italic">Président Fondateur</span>
-                        </div>
-                        <div class="flex items-center justify-between p-6 border border-slate-100 rounded-2xl">
-                            <div class="flex items-center gap-4">
-                                <div class="w-10 h-10 bg-slate-200 text-slate-600 rounded-full flex items-center justify-center font-black">EO</div>
-                                <span class="font-bold">OUÉDRAOGO K. Evariste Omar</span>
-                            </div>
-                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Secrétaire Général</span>
-                        </div>
-                        <div class="flex items-center justify-between p-6 border border-slate-100 rounded-2xl">
-                            <div class="flex items-center gap-4">
-                                <div class="w-10 h-10 bg-slate-200 text-slate-600 rounded-full flex items-center justify-center font-black">TH</div>
-                                <span class="font-bold">TRAORET Hamadou</span>
-                            </div>
-                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Trésorier Général</span>
-                        </div>
-                    </div>
-                    <div class="mt-8 p-6 bg-agi-emerald/5 rounded-2xl border-2 border-dashed border-agi-emerald/20">
-                        <p class="text-xs text-slate-600 leading-relaxed italic">
-                            <i class="fa-solid fa-circle-info text-agi-emerald mr-2"></i> Conformément au récépissé PHUE-3539/2025, ce bureau est garant de l'exécution des piliers industriels et du développement de la blockchain Nexus.
+        <div class="container mx-auto px-4 max-w-7xl">
+            <div class="bg-white rounded-[50px] p-8 md:p-16 shadow-xl border border-slate-100">
+                <div class="grid lg:grid-cols-2 gap-16 items-center mb-12">
+                    <div class="order-2 lg:order-1">
+                        <h3 class="text-3xl font-black text-agi-navy mb-6">Le Pilier du Système Nexus</h3>
+                        <p class="text-slate-600 text-lg mb-8 leading-relaxed">
+                            L'AG-COIN est un token utilitaire natif du réseau **Nexus Core**. Conçu pour fluidifier les échanges entre agriculteurs, fournisseurs et investisseurs, il garantit une vitesse de **0,4 seconde** par transaction avec **0% de frais de gaz** pour les opérations internes.
                         </p>
+                        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <li class="p-4 bg-slate-50 rounded-2xl flex items-start gap-3 border border-slate-100 italic">
+                                <i class="fas fa-bolt text-agi-emerald mt-1"></i>
+                                <span class="text-sm font-bold">Vitesse : 0,4s</span>
+                            </li>
+                            <li class="p-4 bg-slate-50 rounded-2xl flex items-start gap-3 border border-slate-100 italic">
+                                <i class="fas fa-shield-alt text-agi-azure mt-1"></i>
+                                <span class="text-sm font-bold">Sécurité : Nexus Proof-of-Authority</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <img src="https://i.imgur.com/V7PDh2e.jpeg" alt="AG-COIN" class="rounded-3xl shadow-lg order-1 lg:order-2">
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
+                    <div class="p-6 bg-agi-navy text-white rounded-3xl text-center">
+                        <span class="block text-[10px] text-agi-gold font-black uppercase mb-2 tracking-widest">Symbole</span>
+                        <div class="text-2xl font-black">₳</div>
+                    </div>
+                    <div class="p-6 bg-agi-navy text-white rounded-3xl text-center">
+                        <span class="block text-[10px] text-agi-gold font-black uppercase mb-2 tracking-widest">Réseau</span>
+                        <div class="text-2xl font-black uppercase">Nexus Core</div>
+                    </div>
+                    <div class="p-6 bg-agi-navy text-white rounded-3xl text-center">
+                        <span class="block text-[10px] text-agi-gold font-black uppercase mb-2 tracking-widest">Décimal</span>
+                        <div class="text-2xl font-black">2</div>
+                    </div>
+                    <div class="p-6 bg-agi-navy text-white rounded-3xl text-center">
+                        <span class="block text-[10px] text-agi-gold font-black uppercase mb-2 tracking-widest">Offre Totale</span>
+                        <div class="text-xl font-black">♾️</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-white" data-scroll>
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-black text-center mb-4 text-agi-navy">NOS PILIERS STRATÉGIQUES</h2>
+            <p class="text-center mb-16 text-slate-500 max-w-2xl mx-auto font-medium">AGI, le moteur de l'industrialisation et de l'inclusion financière au Burkina Faso.</p>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="bg-slate-50 p-8 rounded-[35px] border border-slate-100 hover:border-agi-emerald transition group">
+                    <div class="w-14 h-14 bg-agi-emerald/10 text-agi-emerald rounded-2xl flex items-center justify-center mb-6 group-hover:bg-agi-emerald group-hover:text-white transition-colors">
+                        <i class="fas fa-coins text-2xl"></i>
+                    </div>
+                    <h3 class="font-black text-lg mb-3 uppercase tracking-tighter">AG-COIN & SOFITEX</h3>
+                    <p class="text-xs text-slate-500 leading-relaxed italic">Paiement du coton sécurisé par Nexus (1 AG-COIN = 1 FCFA).</p>
+                </div>
+                <div class="bg-slate-50 p-8 rounded-[35px] border border-slate-100 hover:border-agi-gold transition group">
+                    <div class="w-14 h-14 bg-agi-gold/10 text-agi-gold rounded-2xl flex items-center justify-center mb-6 group-hover:bg-agi-gold group-hover:text-white transition-colors">
+                        <i class="fas fa-industry text-2xl"></i>
+                    </div>
+                    <h3 class="font-black text-lg mb-3 uppercase tracking-tighter">INDUSTRIALISATION</h3>
+                    <p class="text-xs text-slate-500 leading-relaxed italic">1. Tissage de coton,       2. Générateurs GSHA-AGI,      3. Ferme Avicole,      4. Projet Mère Nature.</p>
+                </div>
+                <div class="bg-slate-50 p-8 rounded-[35px] border border-slate-100 hover:border-agi-azure transition group">
+                    <div class="w-14 h-14 bg-agi-azure/10 text-agi-azure rounded-2xl flex items-center justify-center mb-6 group-hover:bg-agi-azure group-hover:text-white transition-colors">
+                        <i class="fas fa-chart-line text-2xl"></i>
+                    </div>
+                    <h3 class="font-black text-lg mb-3 uppercase tracking-tighter">ROI SEMESTRIEL</h3>
+                    <p class="text-xs text-slate-500 leading-relaxed italic">Offres d'investissement de 5%, 18% et 45% sur 180 jours.</p>
+                </div>
+                <div class="bg-slate-50 p-8 rounded-[35px] border border-slate-100 hover:border-purple-500 transition group">
+                    <div class="w-14 h-14 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                        <i class="fas fa-piggy-bank text-2xl"></i>
+                    </div>
+                    <h3 class="font-black text-lg mb-3 uppercase tracking-tighter">MICRO CRÉDIT AGB</h3>
+                    <p class="text-xs text-slate-500 leading-relaxed italic">Financement pour l'économie informelle et les petits producteurs.</p>
+                </div>
+                <div class="bg-slate-50 p-8 rounded-[35px] border border-slate-100 hover:border-teal-500 transition group">
+                    <div class="w-14 h-14 bg-teal-100 text-teal-600 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-teal-600 group-hover:text-white transition-colors">
+                        <i class="fas fa-graduation-cap text-2xl"></i>
+                    </div>
+                    <h3 class="font-black text-lg mb-3 uppercase tracking-tighter">INCLUSION JEUNESSE</h3>
+                    <p class="text-xs text-slate-500 leading-relaxed italic">Éducation financière et accès bancaire pour la jeunesse burkinabè.</p>
+                </div>
+                <div class="bg-slate-50 p-8 rounded-[35px] border border-slate-100 hover:border-pink-500 transition group">
+                    <div class="w-14 h-14 bg-pink-100 text-pink-600 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-pink-600 group-hover:text-white transition-colors">
+                        <i class="fas fa-exchange-alt text-2xl"></i>
+                    </div>
+                    <h3 class="font-black text-lg mb-3 uppercase tracking-tighter">AG SWAP</h3>
+                    <p class="text-xs text-slate-500 leading-relaxed italic">Échangeur d'actifs sécurisé pour la liquidité des investisseurs.</p>
+                </div>
+                <div class="bg-slate-50 p-8 rounded-[35px] border border-slate-100 hover:border-agi-crimson transition group">
+                    <div class="w-14 h-14 bg-agi-crimson/10 text-agi-crimson rounded-2xl flex items-center justify-center mb-6 group-hover:bg-agi-crimson group-hover:text-white transition-colors">
+                        <i class="fas fa-dice text-2xl"></i>
+                    </div>
+                    <h3 class="font-black text-lg mb-3 uppercase tracking-tighter">CASINO AGB</h3>
+                    <p class="text-xs text-slate-500 leading-relaxed italic">Divertissement sécurisé finançant les projets industriels nationaux.</p>
+                </div>
+                <div class="bg-slate-50 p-8 rounded-[35px] border border-slate-100 hover:border-agi-navy transition group">
+                    <div class="w-14 h-14 bg-agi-navy/10 text-agi-navy rounded-2xl flex items-center justify-center mb-6 group-hover:bg-agi-navy group-hover:text-white transition-colors">
+                        <i class="fas fa-handshake text-2xl"></i>
+                    </div>
+                    <h3 class="font-black text-lg mb-3 uppercase tracking-tighter">PARTENARIAT</h3>
+                    <p class="text-xs text-slate-500 leading-relaxed italic">Soutien institutionnel et bancaire (Coris Bank International).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gouvernance" class="py-24 bg-slate-50">
+        <div class="container mx-auto px-4 max-w-7xl">
+            <div class="grid lg:grid-cols-2 gap-16">
+                <div data-scroll>
+                    <h3 class="text-3xl font-black text-agi-navy mb-10 flex items-center gap-4 uppercase tracking-tighter">
+                        <i class="fas fa-users-gear text-agi-gold"></i> Conseil d'Administration
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-6 bg-white rounded-3xl shadow-sm border border-slate-100">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-agi-navy text-agi-gold rounded-full flex items-center justify-center font-black">TY</div>
+                                <div>
+                                    <p class="font-black text-agi-navy">YOUGMA Thierry Joël</p>
+                                    <p class="text-[10px] uppercase font-bold text-agi-gold tracking-widest">Président Fondateur</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-6 bg-white rounded-3xl shadow-sm border border-slate-100">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-slate-100 text-slate-500 rounded-full flex items-center justify-center font-black">EO</div>
+                                <div>
+                                    <p class="font-bold">OUÉDRAOGO K. Evariste Omar</p>
+                                    <p class="text-[10px] uppercase font-bold text-slate-400 tracking-widest">Secrétaire Général</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-6 bg-white rounded-3xl shadow-sm border border-slate-100">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-slate-100 text-slate-500 rounded-full flex items-center justify-center font-black">TH</div>
+                                <div>
+                                    <p class="font-bold">TRAORET Hamadou</p>
+                                    <p class="text-[10px] uppercase font-bold text-slate-400 tracking-widest">Trésorier Général</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="space-y-10" data-scroll>
-                    <h3 class="text-2xl font-black uppercase tracking-tight flex items-center gap-3">
-                        <i class="fa-solid fa-folder-open text-agi-gold"></i> Centre de Conformité
-                    </h3>
-                    
+                <div class="space-y-8" data-scroll>
+                    <h3 class="text-3xl font-black text-agi-navy mb-10 uppercase tracking-tighter">Conformité & Juridique</h3>
                     <div class="grid sm:grid-cols-2 gap-4">
-                        <a href="whitepaper.html" class="flex flex-col items-center justify-center p-8 bg-agi-navy text-white rounded-3xl btn-hover shadow-xl">
+                        <a href="explorer.html" class="flex flex-col items-center justify-center p-8 bg-agi-gold text-agi-navy rounded-[35px] btn-hover shadow-xl border-4 border-white">
+                            <i class="fa-solid fa-database text-3xl mb-4"></i>
+                            <span class="text-xs font-black uppercase tracking-widest text-center">Registre Privé d'Atlas</span>
+                        </a>
+                    </div>
+                        <a href="whitepaper.html" class="flex flex-col items-center justify-center p-8 bg-agi-navy text-white rounded-[35px] btn-hover shadow-xl">
                             <i class="fa-solid fa-book-open text-agi-gold text-3xl mb-4"></i>
                             <span class="text-xs font-black uppercase tracking-widest">Livre Blanc V4.5</span>
                         </a>
-                        <a href="legal.html" class="flex flex-col items-center justify-center p-8 bg-agi-azure text-white rounded-3xl btn-hover shadow-xl">
-                            <i class="fa-solid fa-gavel text-white text-3xl mb-4"></i>
+                        <a href="legal.html" class="flex flex-col items-center justify-center p-8 bg-agi-azure text-white rounded-[35px] btn-hover shadow-xl">
+                            <i class="fa-solid fa-gavel text-3xl mb-4"></i>
                             <span class="text-xs font-black uppercase tracking-widest">Mentions Légales</span>
                         </a>
-                        <a href="cgu.html" class="flex flex-col items-center justify-center p-8 bg-agi-crimson text-white rounded-3xl btn-hover shadow-xl">
-                            <i class="fa-solid fa-file-contract text-white text-3xl mb-4"></i>
+                        <a href="cgu.html" class="flex flex-col items-center justify-center p-8 bg-agi-crimson text-white rounded-[35px] btn-hover shadow-xl">
+                            <i class="fa-solid fa-file-contract text-3xl mb-4"></i>
                             <span class="text-xs font-black uppercase tracking-widest">Conditions (CGU)</span>
                         </a>
-                        <a href="politique.html" class="flex flex-col items-center justify-center p-8 bg-agi-emerald text-white rounded-3xl btn-hover shadow-xl">
-                            <i class="fa-solid fa-user-shield text-white text-3xl mb-4"></i>
+                        <a href="politique.html" class="flex flex-col items-center justify-center p-8 bg-agi-emerald text-white rounded-[35px] btn-hover shadow-xl">
+                            <i class="fa-solid fa-user-shield text-3xl mb-4"></i>
                             <span class="text-xs font-black uppercase tracking-widest">Confidentialité</span>
                         </a>
                     </div>
-
                     <a href="https://agi-burkina.netlify.app/agi-business.pro.apk" class="block w-full bg-slate-100 hover:bg-agi-gold hover:text-agi-navy border-2 border-agi-navy p-6 rounded-3xl text-center font-black uppercase text-sm tracking-[0.2em] transition-all duration-300">
                         <i class="ri-android-fill"></i> Télécharger Notre Application (18,22 Mo)
                     </a>
                 </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-agi-navy text-white pt-32 pb-16 relative overflow-hidden">
-        <div class="container mx-auto px-4">
-            <div class="grid lg:grid-cols-4 gap-20 mb-20 border-b border-white/5 pb-24">
+    <footer class="bg-agi-navy text-white pt-24 pb-12 relative">
+        <div class="container mx-auto px-4 max-w-7xl">
+            <div class="grid lg:grid-cols-4 gap-16 mb-20 border-b border-white/5 pb-20">
                 <div class="lg:col-span-2">
-                    <img src="https://i.imgur.com/NyWnYFN.jpeg" alt="AGI" class="w-20 h-20 rounded-2xl mb-10 border border-white/10 grayscale hover:grayscale-0 transition duration-700">
+                    <img src="https://i.imgur.com/NyWnYFN.jpeg" alt="AGI" class="w-20 h-20 rounded-2xl mb-8 border border-white/10">
                     <h4 class="text-4xl font-black mb-8 leading-tight">Bâtir l'avenir industriel <br><span class="text-agi-gold italic">du Burkina Faso.</span></h4>
-                    <p class="text-slate-400 text-lg font-medium leading-relaxed max-w-md">
-                        Atlas Groupe International est le pionnier de la convergence entre production réelle (Coton, Agri, Solaire) et finance décentralisée propriétaire.
+                    <p class="text-slate-400 text-lg mb-8 max-w-md">
+                        Siège social : Bobo Dioulasso, Lafiabougou, Secteur 20.<br>
+                        BP : 131 Koupéla, Province du Kouritenga.
                     </p>
-                    <div class="flex gap-4 mt-10">
-                        <a href="#" class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-agi-gold hover:text-agi-navy transition"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#" class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-agi-gold hover:text-agi-navy transition"><i class="fa-brands fa-whatsapp"></i></a>
-                        <a href="#" class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-agi-gold hover:text-agi-navy transition"><i class="fa-brands fa-x-twitter"></i></a>
+                    <div class="flex flex-wrap gap-4 mt-6">
+                        <a href="https://www.facebook.com/share/1HaczmCfQS/" class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-agi-gold hover:text-agi-navy transition btn-hover"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://www.tiktok.com/@atlas_groupe_inter" class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-agi-gold hover:text-agi-navy transition btn-hover"><i class="fa-brands fa-tiktok"></i></a>
+                        <a href="https://t.me/AtlasGroupeBusiness_Bot" class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-agi-gold hover:text-agi-navy transition btn-hover"><i class="fa-brands fa-telegram"></i></a>
+                        <a href="https://discord.gg/fTF3SZuJb" class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-agi-gold hover:text-agi-navy transition btn-hover"><i class="fa-brands fa-discord"></i></a>
+                        <a href="https://chat.whatsapp.com/DR21RjbTWFM6YSZQges1G0" class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-agi-gold hover:text-agi-navy transition btn-hover"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="#" class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-agi-gold hover:text-agi-navy transition btn-hover"><i class="fa-brands fa-x-twitter"></i></a>
                     </div>
                 </div>
 
                 <div>
-                    <h5 class="text-agi-gold text-xs font-black uppercase tracking-widest mb-10 border-l-2 border-agi-gold pl-4">Écosystème Digital</h5>
-                    <ul class="space-y-6 text-sm font-bold text-slate-400">
-                        <li><a href="#" class="hover:text-white flex items-center gap-3 transition"><i class="fa-solid fa-shuffle"></i> AG-COIN Exchange</a></li>
-                        <li><a href="#" class="hover:text-white flex items-center gap-3 transition"><i class="fa-solid fa-wallet"></i> AGI Wallet Secure</a></li>
-                        <li><a href="#" class="hover:text-white flex items-center gap-3 transition"><i class="fa-solid fa-cart-shopping"></i> AGI Pay-Station</a></li>
-                        <li><a href="#" class="hover:text-white flex items-center gap-3 transition"><i class="fa-solid fa-book-audio"></i> AGI Audio-Lib</a></li>
+                    <h5 class="text-agi-gold text-xs font-black uppercase tracking-widest mb-10 border-l-2 border-agi-gold pl-4">Contact & Support</h5>
+                    <ul class="space-y-6">
+                        <li class="flex items-center gap-4 group">
+                            <i class="fa-solid fa-envelope text-agi-gold"></i>
+                            <a href="mailto:atlasgroupeinter@gmail.com" class="text-sm font-bold text-slate-400 group-hover:text-white transition">atlasgroupeinter@gmail.com</a>
+                        </li>
+                        <li class="flex items-center gap-4 group">
+                            <i class="fa-solid fa-globe text-agi-gold"></i>
+                            <a href="https://agi-burkina.netlify.app" class="text-sm font-bold text-slate-400 group-hover:text-white transition">agi-burkina.netlify.app</a>
+                        </li>
+                        <li class="flex flex-col gap-2">
+                            <p class="text-[10px] uppercase font-black text-slate-500 mb-1 tracking-widest">Lignes Directes</p>
+                            <p class="text-md font-black text-white tracking-widest">+226 70 87 37 73</p>
+                            <p class="text-md font-black text-white tracking-widest">+226 76 20 38 48</p>
+                            <p class="text-md font-black text-white tracking-widest">+226 78 37 08 03</p>
+                        </li>
                     </ul>
                 </div>
 
                 <div>
-                    <h5 class="text-agi-gold text-xs font-black uppercase tracking-widest mb-10 border-l-2 border-agi-gold pl-4">Coordination Siège</h5>
-                    <div class="space-y-6">
-                        <div class="flex items-start gap-4">
-                            <i class="fa-solid fa-map-location-dot text-agi-gold text-xl"></i>
-                            <p class="text-sm text-slate-400 font-medium">BP 45 Koupéla, Province du Kouritenga, Burkina Faso</p>
-                        </div>
-                        <div class="flex items-center gap-4">
-                            <i class="fa-solid fa-phone-volume text-agi-gold text-xl"></i>
-                            <p class="text-lg font-black tracking-widest">+226 76 20 38 48</p>
-                        </div>
-                        <div class="flex items-center gap-4">
-                            <i class="fa-solid fa-headset text-agi-gold text-xl"></i>
-                            <p class="text-xs text-slate-500 font-bold uppercase tracking-widest">Support Investisseur 24/7</p>
-                        </div>
-                    </div>
+                    <h5 class="text-agi-gold text-xs font-black uppercase tracking-widest mb-10 border-l-2 border-agi-gold pl-4">Écosystème Digital</h5>
+                    <ul class="space-y-4 text-sm font-bold text-slate-400">
+                        <li><a href="#" class="hover:text-white transition flex items-center gap-2"><i class="fa-solid fa-caret-right text-[8px]"></i> AGI Business Pro</a></li>
+                        <li><a href="#" class="hover:text-white transition flex items-center gap-2"><i class="fa-solid fa-caret-right text-[8px]"></i> AGI SofiCash</a></li>
+                        <li><a href="#" class="hover:text-white transition flex items-center gap-2"><i class="fa-solid fa-caret-right text-[8px]"></i> AGI Pay-Station</a></li>
+                        <li><a href="#" class="hover:text-white transition flex items-center gap-2"><i class="fa-solid fa-caret-right text-[8px]"></i> AGI Audio-Lib</a></li>
+                    </ul>
                 </div>
             </div>
 
@@ -370,7 +383,7 @@
                 <p class="italic text-agi-emerald/60">"Souveraineté Numérique - Progrès - Solidarité"</p>
             </div>
         </div>
-    </section>
+    </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
