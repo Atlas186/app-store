@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dossier Stratégique AGI | Nexus Core 2026</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        :root {
+            --gold-dark: #b8860b;
+            --gold-primary: #d4af37;
+            --gold-soft: #f4e4bc;
+            --bg-page: #f9f9f9;
+            --text-dark: #121212;
+            --text-muted: #4a4a4a;
+        }
+
+        body { background-color: #555; font-family: 'Times New Roman', serif; margin: 0; padding: 0; }
+        .export-trigger {
+            position: fixed; top: 20px; right: 20px;
+            background: var(--gold-dark); color: white;
+            border: none; padding: 15px 30px; border-radius: 8px;
+            font-weight: bold; cursor: pointer; z-index: 2000;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .container {
+            width: 210mm; margin: 30px auto; background: white;
+            padding: 20mm 25mm; box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .page-break { page-break-before: always; padding-top: 25mm; }
+
+        /* Filigrane discret */
+        .watermark {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 8rem; color: rgba(212, 175, 55, 0.03); font-weight: 900;
+            pointer-events: none; white-space: nowrap; z-index: 0;
+        }
+
+        header { text-align: center; border-bottom: 4px solid var(--gold-primary); padding-bottom: 25px; margin-bottom: 50px; }
+        .logo-text { font-size: 2.5rem; font-weight: 900; color: var(--gold-dark); letter-spacing: 3px; }
+        .sub-header { font-size: 1.1rem; color: var(--gold-primary); font-weight: bold; margin-top: 5px; text-transform: uppercase; }
+
+        h2 { color: var(--gold-dark); border-bottom: 2px solid var(--gold-soft); padding-bottom: 10px; margin-top: 60px; text-transform: uppercase; font-size: 1.8rem; }
+        h3 { color: var(--gold-primary); margin-top: 30px; font-variant: small-caps; font-size: 1.4rem; }
+        
+        p { text-align: justify; line-height: 1.9; font-size: 1.1rem; color: var(--text-dark); margin-bottom: 20px; }
+        
+        .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 30px 0; }
+        .feature-item { border: 1px solid var(--gold-soft); padding: 20px; border-left: 5px solid var(--gold-primary); background: #fffcf5; }
+        .feature-item b { color: var(--gold-dark); display: block; margin-bottom: 10px; font-size: 1.1rem; }
+
+        .investment-table { width: 100%; border-collapse: collapse; margin: 30px 0; }
+        .investment-table th { background: var(--gold-dark); color: white; padding: 15px; text-align: left; }
+        .investment-table td { border: 1px solid var(--gold-soft); padding: 15px; }
+        .roi-highlight { font-weight: bold; color: var(--gold-dark); font-size: 1.2rem; }
+
+        .tech-specs { background: #1a1a1a; color: #eee; padding: 30px; border-radius: 4px; font-family: 'Courier New', monospace; margin: 30px 0; }
+        .tech-specs b { color: var(--gold-primary); }
+
+        footer { text-align: center; margin-top: 100px; padding-top: 30px; border-top: 1px solid var(--gold-soft); font-size: 0.9rem; color: var(--text-muted); }
+
+        .contact-box { background: var(--gold-soft); padding: 30px; margin-top: 50px; border-radius: 2px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    </style>
+</head>
+<body>
+
+    <button class="export-trigger" onclick="generatePremiumPDF()">
+        <i class="ri-printer-fill"></i> EXPORTER DOSSIER STRATÉGIQUE (PDF)
+    </button>
+
+    <div class="container" id="content">
+        <div class="watermark">ATLAS GROUPE</div>
+
+        <header>
+            <div class="logo-text">ATLAS GROUPE INTERNATIONAL</div>
+            <div class="sub-header">Nexus Core Ecosystem v4.5</div>
+            <p style="margin-top: 20px; font-style: italic;">"L'excellence technologique au service de la souveraineté économique"</p>
+        </header>
+
+        <section>
+            <h2>I. Vision et Fondements Institutionnels</h2>
+            <p>
+                <b>Atlas Groupe International (AGI)</b>, immatriculé sous le récépissé <b>N° PHUE-3539/2025</b>, s'établit comme la figure de proue de l'innovation technologique et industrielle au Burkina Faso. Sous la direction du <b>Président Fondateur Thierry Joël Yougma</b>, le groupe déploie un écosystème hybride alliant la puissance de la blockchain propriétaire <b>Nexus Core</b> à des infrastructures de production tangibles.
+            </p>
+            <p>
+                Notre mission est double : démocratiser l'accès aux outils financiers numériques de haute performance et transformer les ressources locales en richesses durables. En éliminant les intermédiaires traditionnels, AGI permet une redistribution directe de la valeur vers les citoyens et les investisseurs.
+            </p>
+            <div class="feature-item">
+                <b>Siège Social & Centre de Commandement</b>
+                Localisé au cœur économique de l'Afrique de l'Ouest :<br>
+                <b>Bobo-Dioulasso, Quartier Lafiabougou, Secteur 20</b>.<br>
+                Une infrastructure moderne abritant nos serveurs Nexus et nos services administratifs.
+            </div>
+        </section>
+
+        <div class="page-break"></div>
+        <h2>II. Architecture Nexus Core Engine</h2>
+        <p>
+            L'architecture <b>Nexus Core v4.5</b> est une blockchain de nouvelle génération fonctionnant sur le protocole de consensus <b>Proof-of-Authority (PoA)</b>. Ce choix technique garantit une intégrité totale du réseau tout en offrant des vitesses de transaction atteignant 0.4 seconde par bloc.
+        </p>
+        
+        <div class="tech-specs">
+            <b>> TERMINAL STATUS:</b> OPERATIONAL<br>
+            <b>> PROTOCOL:</b> Nexus Core v4.5 / Stable<br>
+            <b>> ENCRYPTION:</b> AES-256 Military Grade<br>
+            <b>> SYNC:</b> Real-time Firebase Global Node<br>
+            <b>> ASSET:</b> AG-COIN (Parity 1:1 XOF)
+        </div>
+
+        <h3>L'AG-COIN (₳) : L'Unité de Souveraineté</h3>
+        <p>
+            L'AG-COIN n'est pas une crypto-monnaie spéculative, mais un actif numérique de stabilité. Sa parité fixe avec le Franc CFA assure une transition fluide entre l'économie numérique et physique. 
+        </p>
+        <div class="feature-grid">
+            <div class="feature-item">
+                <b>Sécurité Maximale</b>
+                Chaque transaction est cryptée et immuable, consultable sur le registre public Nexus ID.
+            </div>
+            <div class="feature-item">
+                <b>Zéro Frais Réseau</b>
+                Les transferts de citoyen à citoyen au sein de l'écosystème sont effectués sans commissions.
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+        <h2>III. Écosystème AGI Business Pro (APK)</h2>
+        <p>
+            L'application <b>AGI Business Pro</b> est le terminal maître permettant à chaque membre de piloter ses actifs. Elle intègre des modules spécialisés pour chaque facette de l'écosystème Atlas :
+        </p>
+
+        <div class="feature-grid">
+            <div class="feature-item">
+                <b>Nexus Wallet</b>
+                Portefeuille sécurisé pour la gestion des AG-COIN et l'historique des transactions instantanées.
+            </div>
+            <div class="feature-item">
+                <b>Unité de Minage</b>
+                Module permettant la validation des transactions et la réception de récompenses de blocs toutes les 10 minutes.
+            </div>
+            <div class="feature-item">
+                <b>Terminal Trading</b>
+                Analyse en temps réel et échange d'actifs AG/XOF avec une latence ultra-faible.
+            </div>
+            <div class="feature-item">
+                <b>AGI 1X-Sport & Casino</b>
+                Plateformes de divertissement sécurisées par smart-contracts, garantissant des paiements automatiques et transparents.
+            </div>
+        </div>
+
+        <h3>Le Programme Nexus Ambassadeur</h3>
+        <p>
+            Ce pilier permet aux utilisateurs de devenir des nœuds de croissance du réseau. En parrainant de nouveaux membres, l'ambassadeur reçoit des commissions allant de <b>500 ₳ à 1050 ₳</b> par validation, selon son rang dans la hiérarchie Nexus (de Simple Node à Nexus Overlord).
+        </p>
+
+        <div class="page-break"></div>
+        <h2>IV. Stratégie d'Investissement HDI</h2>
+        <p>
+            Le programme <b>High Development Investment (HDI)</b> est le moteur financier qui alimente les projets industriels d'AGI. Les investisseurs participent directement au financement de l'économie réelle.
+        </p>
+
+        <table class="investment-table">
+            <thead>
+                <tr>
+                    <th>Type de Forfait</th>
+                    <th>Période de Rétention</th>
+                    <th>Rendement (ROI)</th>
+                    <th>Destination des Fonds</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>HDI Bronze</b></td>
+                    <td>30 Jours</td>
+                    <td class="roi-highlight">5%</td>
+                    <td>Fonds de roulement opérationnel</td>
+                </tr>
+                <tr>
+                    <td><b>HDI Argent</b></td>
+                    <td>60 Jours</td>
+                    <td class="roi-highlight">18%</td>
+                    <td>Expansion technologique Nexus</td>
+                </tr>
+                <tr>
+                    <td><b>HDI Or (Premium)</b></td>
+                    <td>180 Jours</td>
+                    <td class="roi-highlight">45%</td>
+                    <td>Infrastructures Industrielles</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>
+            Les rendements sont versés directement sur le solde AG-COIN de l'investisseur et sont immédiatement utilisables ou échangeables via le terminal **Asset Exchange**. Cette structure offre un équilibre parfait entre croissance de capital et sécurité.
+        </p>
+
+        <div class="page-break"></div>
+        <h2>V. Piliers Industriels & Impact Social</h2>
+        <p>
+            Atlas Groupe International réinvestit la puissance financière du réseau Nexus dans trois secteurs vitaux pour le Burkina Faso :
+        </p>
+
+        <h3>1. Énergie Solaire Hybride</h3>
+        <p>
+            Conception et déploiement de générateurs solaires autonomes 100% électriques. Ce projet vise à doter les zones hors-réseau d'une source d'énergie fiable, essentielle pour le développement des petites industries locales.
+        </p>
+
+        <h3>2. Innovation Pharmaceutique</h3>
+        <p>
+            Valorisation de la pharmacopée africaine par la transformation scientifique de plantes médicinales. AGI crée des produits de santé certifiés, alliant tradition ancestrale et protocoles de laboratoire modernes.
+        </p>
+
+        <h3>3. Souveraineté Alimentaire (Aviculture)</h3>
+        <p>
+            Mise en place de complexes avicoles de haute technologie avec une capacité cible de <b>15 000 à 25 000 œufs par jour</b>. Ce pôle assure non seulement une rentabilité élevée pour les investisseurs HDI, mais combat également l'insécurité alimentaire.
+        </p>
+
+        <div class="feature-item" style="margin-top: 20px;">
+            <b>Note Stratégique :</b> Ces projets constituent la "preuve d'actif" (Proof of Asset) qui garantit la valeur intrinsèque de l'AG-COIN.
+        </div>
+
+        <div class="page-break"></div>
+        <h2>VI. Administration et Gouvernance</h2>
+        <p>
+            La transparence est assurée par un bureau exécutif d'experts pluridisciplinaires :
+        </p>
+        <ul style="line-height: 2; columns: 2;">
+            <li><b>Yougma Thierry Joël :</b> Président Fondateur</li>
+            <li><b>Ouédraogo K. Evariste Omar :</b> Secrétaire Général</li>
+            <li><b>Traoret Hamadou :</b> Trésorier</li>
+            <li><b>Ouédraogo Adama W. E. G. :</b> Information</li>
+            <li><b>Traoret Aboubacar :</b> Organisation</li>
+            <li><b>Ouattara Alakote :</b> Commissaire aux Comptes</li>
+            <li><b>Sanou Boukary :</b> Commissaire aux Comptes</li>
+        </ul>
+
+        <div class="contact-box">
+            <div>
+                <b>COORDONNÉES OFFICIELLES</b><br><br>
+                <i class="ri-mail-line"></i> atlasgroupeinter@gmail.com<br>
+                <i class="ri-map-pin-line"></i> Bobo-Dioulasso, Secteur 20<br>
+                <i class="ri-mail-open-line"></i> BP 131 Koupéla, Kouritenga
+            </div>
+            <div>
+                <b>LIGNES DIRECTES</b><br><br>
+                <i class="ri-phone-line"></i> +226 70 87 37 73<br>
+                <i class="ri-phone-line"></i> +226 76 20 38 48<br>
+                <i class="ri-phone-line"></i> +226 78 37 08 03
+            </div>
+        </div>
+
+        <footer>
+            <p><b>ATLAS GROUPE INTERNATIONAL</b> - Document de Référence v4.5.102</p>
+            <p>Émis le 14 Mars 2026. La validité de ce document peut être vérifiée sur la blockchain Nexus.</p>
+        </footer>
+    </div>
+
+    <script>
+        function generatePremiumPDF() {
+            const element = document.getElementById('content');
+            const opt = {
+                margin:       [0, 0],
+                filename:     'Dossier_Strategique_AGI_2026.pdf',
+                image:        { type: 'jpeg', quality: 1.0 },
+                html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+            };
+            html2pdf().set(opt).from(element).save();
+        }
+    </script>
+</body>
+</html>
