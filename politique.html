@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Politique de Confidentialité - AGI Nexus Core v5.0</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         :root {
             --bg: #010409; --surface: #0d1117; --border: #30363d;
@@ -12,90 +13,113 @@
             --text-dim: #8b949e; --success: #10b981;
         }
         body { background: var(--bg); color: var(--text-main); font-family: 'Inter', -apple-system, sans-serif; padding: 40px 20px; line-height: 1.7; }
-        .privacy-box { max-width: 600px; margin: 0 auto; background: var(--surface); border: 1px solid var(--border); padding: 30px; border-radius: 6px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); }
         
-        .header-privacy { border-bottom: 2px solid var(--accent); padding-bottom: 30px; margin-bottom: 40px; }
-        .header-privacy h1 { color: var(--accent); font-size: 1.7rem; text-transform: uppercase; letter-spacing: 1px; margin: 0; }
-        .shield-icon { font-size: 2.5rem; color: var(--gold); margin-bottom: 15px; }
+        /* Bouton PDF */
+        .pdf-trigger {
+            position: fixed; top: 20px; right: 20px; background: var(--accent); color: var(--bg);
+            border: none; padding: 12px 20px; border-radius: 8px; font-weight: 800;
+            cursor: pointer; z-index: 1000; display: flex; align-items: center; gap: 8px;
+            box-shadow: 0 10px 20px rgba(56, 189, 248, 0.2); transition: 0.3s;
+        }
+        .pdf-trigger:hover { transform: translateY(-2px); filter: brightness(1.1); }
+
+        .privacy-box { max-width: 850px; margin: 0 auto; background: var(--surface); border: 1px solid var(--border); padding: 50px; border-radius: 8px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); }
         
-        .article { margin-bottom: 40px; }
+        .header-privacy { border-bottom: 2px solid var(--accent); padding-bottom: 30px; margin-bottom: 40px; text-align: center; }
+        .header-privacy h1 { color: var(--accent); font-size: 1.6rem; text-transform: uppercase; letter-spacing: 2px; margin: 10px 0; }
+        .shield-icon { font-size: 3rem; color: var(--gold); }
+        
+        .article { margin-bottom: 45px; border-left: 2px solid transparent; transition: 0.3s; }
+        .article:hover { border-left: 2px solid var(--gold); padding-left: 15px; }
+        
         .art-header { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; }
-        .art-num { background: var(--accent); color: var(--bg); font-weight: 900; padding: 2px 10px; border-radius: 4px; font-size: 0.9rem; }
+        .art-num { background: var(--accent); color: var(--bg); font-weight: 900; padding: 2px 12px; border-radius: 4px; font-size: 0.85rem; }
         .art-title { color: var(--gold); font-weight: 800; text-transform: uppercase; font-size: 1.1rem; letter-spacing: 0.5px; }
         
-        .art-content { font-size: 0.95rem; color: var(--text-dim); text-align: justify; padding-left: 45px; }
+        .art-content { font-size: 0.62rem; color: var(--text-dim); text-align: justify; }
         .highlight { color: var(--text-main); font-weight: 600; }
         
-        .data-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.60rem; }
-        .data-table th, .data-table td { border: 1px solid var(--border); padding: 12px; text-align: left; }
-        .data-table th { background: rgba(56, 189, 248, 0.1); color: var(--accent); }
+        .data-table { width: 100%; border-collapse: collapse; margin: 25px 0; font-size: 0.2rem; background: rgba(0,0,0,0.2); }
+        .data-table th, .data-table td { border: 1px solid var(--border); padding: 15px; text-align: left; }
+        .data-table th { background: rgba(56, 189, 248, 0.05); color: var(--accent); text-transform: uppercase; }
 
-        .tag { display: inline-block; background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; margin-bottom: 10px; }
+        .tag { display: inline-block; background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 5px 15px; border-radius: 50px; font-size: 0.7rem; font-weight: bold; margin-bottom: 10px; border: 1px solid var(--success); }
         
+        .tech-spec { background: rgba(251, 191, 36, 0.05); border: 1px dashed var(--gold); padding: 15px; border-radius: 6px; margin-top: 15px; font-family: 'Courier New', monospace; font-size: 0.85rem; }
+
         footer { margin-top: 60px; padding-top: 30px; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--text-dim); text-align: center; }
-        @media (max-width: 768px) { .privacy-box { padding: 30px; } .art-content { padding-left: 0; } }
+        
+        @media print { .pdf-trigger { display: none; } .privacy-box { border: none; box-shadow: none; } }
     </style>
 </head>
 <body>
-    <div class="privacy-box">
+
+    <button class="pdf-trigger" onclick="exportPrivacyPDF()">
+        <i class="ri-file-pdf-2-fill"></i> EXPORTER PDF
+    </button>
+
+    <div class="privacy-box" id="privacy-content">
         <div class="header-privacy">
-            <i class="ri-shield-check-fill shield-icon"></i>
+            <i class="ri-shield-keyhole-fill shield-icon"></i>
             <h1>Politique de Confidentialité</h1>
-            <p style="margin: 5px 0;">Protection des Données & Souveraineté Numérique - Atlas Groupe International</p>
-            <div class="tag">CONFORME LOI N°001-2021/AN (BURKINA FASO)</div>
+            <p style="margin: 5px 0; font-weight: bold;">Atlas Groupe International (AGI) — Nexus Core Ecosystem</p>
+            <div class="tag">CONFORME LOI N°001-2021/AN (BURKINA FASO) & RGPD STANDARDS</div>
         </div>
 
         <div class="article">
             <div class="art-header">
                 <span class="art-num">01</span>
-                <span class="art-title">Engagement de Confidentialité</span>
+                <span class="art-title">Philosophie de Protection</span>
             </div>
             <div class="art-content">
-                Atlas Groupe International (AGI) place la protection de la vie privée au cœur de son architecture <b>Nexus Core</b>. Nous appliquons le principe du "Privacy by Design", garantissant que la protection de vos données est intégrée nativement dans chaque protocole de notre blockchain.
+                La protection de la vie privée chez <b>Atlas Groupe International</b> n'est pas une option, mais une contrainte architecturale. Notre protocole <b>Nexus Core</b> utilise le principe du <span class="highlight">Zero-Knowledge Proof (ZKP)</span> partiel : nous validons vos transactions sans jamais exposer votre identité civile sur le registre public de la blockchain. Vos données sont traitées pour garantir votre souveraineté financière totale.
             </div>
         </div>
 
         <div class="article">
             <div class="art-header">
                 <span class="art-num">02</span>
-                <span class="art-title">Responsable du Traitement</span>
+                <span class="art-title">Responsable du Traitement & DPO</span>
             </div>
             <div class="art-content">
-                Le responsable légal du traitement des données est le département Cyber-Sécurité d'<b>Atlas Groupe International</b>, dont le siège social est situé à Ouagadougou, Burkina Faso. 
-                <br>Contact DPO (Data Protection Officer) : <span class="highlight">dpo@atlas-groupe.bf</span>
+                Le traitement est placé sous la responsabilité d'Atlas Groupe International, Burkina Faso. 
+                <br><br>
+                <b>Département :</b> Unité de Conformité et Cybersécurité (UCC).
+                <br><b>Data Protection Officer (DPO) :</b> <span class="highlight">compliance@atlas-groupe.bf</span>
+                <br><b>Siège Social :</b> Ouagadougou, Secteur 15, Burkina Faso.
             </div>
         </div>
 
         <div class="article">
             <div class="art-header">
                 <span class="art-num">03</span>
-                <span class="art-title">Catégories de Données Collectées</span>
+                <span class="art-title">Inventaire Détaillé des Données</span>
             </div>
             <div class="art-content">
-                Nous collectons uniquement les données strictement nécessaires au fonctionnement de l'écosystème :
+                Nous catégorisons les données collectées selon trois niveaux de criticité :
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Type</th>
-                            <th>Nature des Données</th>
-                            <th>Finalité</th>
+                            <th>Niveau</th>
+                            <th>Données</th>
+                            <th>Conservation</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="highlight">Identité Nexus</td>
-                            <td>Adresse Base 58, Email chiffré</td>
-                            <td>Synchronisation et Authentification</td>
+                            <td class="highlight" style="color: var(--accent);">Niveau 1 : Public</td>
+                            <td>Adresse de portefeuille Base 58, Horodatage des blocs, Montants AG-COIN.</td>
+                            <td>Illimitée (Blockchain)</td>
                         </tr>
                         <tr>
-                            <td class="highlight">Données Blockchain</td>
-                            <td>Soldes AG-COIN, Historique des blocs</td>
-                            <td>Preuve de transaction (PoA)</td>
+                            <td class="highlight" style="color: var(--gold);">Niveau 2 : Privé</td>
+                            <td>Email de secours (chiffré), Justificatifs KYC (CNIB/Passeport), Numéro de téléphone.</td>
+                            <td>Durée du contrat + 5 ans</td>
                         </tr>
                         <tr>
-                            <td class="highlight">Données Techniques</td>
-                            <td>Adresse IP, Type de terminal, OS</td>
-                            <td>Sécurité anti-fraude et accès session</td>
+                            <td class="highlight" style="color: var(--danger);">Niveau 3 : Technique</td>
+                            <td>Adresses IP de connexion, Logs de métadonnées de terminal, Empreintes de session.</td>
+                            <td>12 mois maximum</td>
                         </tr>
                     </tbody>
                 </table>
@@ -105,45 +129,56 @@
         <div class="article">
             <div class="art-header">
                 <span class="art-num">04</span>
-                <span class="art-title">Base Légale du Traitement</span>
+                <span class="art-title">Finalités du Traitement</span>
             </div>
             <div class="art-content">
-                Le traitement de vos données repose sur <span class="highlight">l'exécution contractuelle</span> (fourniture des services AG-COIN) et sur notre <span class="highlight">intérêt légitime</span> à sécuriser le réseau contre les cyber-attaques et le blanchiment d'argent.
+                Vos données sont utilisées strictement pour :
+                <ul>
+                    <li><span class="highlight">L'exécution des Services Nexus :</span> Gestion des comptes, validation des transferts P2P et déploiement des Smart Contracts.</li>
+                    <li><span class="highlight">La Conformité HDI :</span> Attribution des dividendes issus des projets industriels (Coton, Énergie, Aviculture) selon votre profil.</li>
+                    <li><span class="highlight">La Sécurité Réseau :</span> Prévention des attaques par déni de service (DDoS) et détection des accès frauduleux.</li>
+                </ul>
             </div>
         </div>
 
         <div class="article">
             <div class="art-header">
                 <span class="art-num">05</span>
-                <span class="art-title">Stockage et Souveraineté</span>
+                <span class="art-title">Stockage & Souveraineté Géographique</span>
             </div>
             <div class="art-content">
-                Contrairement aux services tiers, les données sensibles d'AGI sont stockées sur des serveurs privés gérés par l'écosystème Nexus. Aucune donnée personnelle n'est transmise à des courtiers de données ou à des régies publicitaires. Vos données restent au Burkina Faso ou sous juridiction conforme aux standards de sécurité d'AGI.
+                AGI refuse l'hébergement sur des clouds publics étrangers non sécurisés. 
+                <br><b>Infrastructure :</b> Les serveurs Nexus sont localisés dans des Data Centers privés sécurisés. Le stockage des documents KYC est <span class="highlight">isolé du réseau internet public</span> (Air-Gapped storage) pour prévenir toute fuite massive de données.
             </div>
         </div>
 
         <div class="article">
             <div class="art-header">
                 <span class="art-num">06</span>
-                <span class="art-title">Sécurité et Chiffrement Militaire</span>
+                <span class="art-title">Protocole de Sécurité Militaire</span>
             </div>
             <div class="art-content">
-                Nous utilisons le chiffrement <span class="highlight">AES-256-GCM</span> pour toutes les données au repos et le protocole <span class="highlight">TLS 1.3</span> pour les données en transit. Les accès administratifs sont régis par une authentification multi-facteurs (MFA) et un audit log permanent.
+                Nous appliquons des standards de sécurité de grade bancaire :
+                <div class="tech-spec">
+                    - Chiffrement symétrique : AES-256-GCM (Données au repos)<br>
+                    - Chiffrement asymétrique : Ed25519 (Signatures de transactions)<br>
+                    - Transport : TLS 1.3 avec Perfect Forward Secrecy (PFS)<br>
+                    - Hashage : SHA-3 (Keccak) pour l'intégrité des blocs
+                </div>
             </div>
         </div>
 
         <div class="article">
             <div class="art-header">
                 <span class="art-num">07</span>
-                <span class="art-title">Droits de l'Utilisateur</span>
+                <span class="art-title">Vos Droits Statutaires</span>
             </div>
             <div class="art-content">
-                Conformément à la réglementation, vous disposez des droits suivants :
+                Conformément à la loi burkinabè, vous disposez de droits étendus. Pour les exercer, envoyez un message signé avec votre clé Nexus à la conformité.
                 <ul>
-                    <li><b>Droit d'Accès :</b> Obtenir une copie de vos données traitées.</li>
-                    <li><b>Droit de Rectification :</b> Corriger vos informations de profil.</li>
-                    <li><b>Droit à l'Effacement :</b> Suppression des données hors-blockchain (l'historique des transactions sur Nexus Core est immuable et ne peut être effacé).</li>
-                    <li><b>Droit à la Portabilité :</b> Exporter vos données vers un autre service.</li>
+                    <li><b>Droit d'Opposition :</b> Vous pouvez refuser le traitement de vos données à des fins statistiques.</li>
+                    <li><b>Droit à la Limitation :</b> Geler l'usage de vos données en cas de contestation de leur exactitude.</li>
+                    <li><b>Note sur l'Immuabilité :</b> En raison de la nature de la technologie blockchain, les données inscrites dans les blocs (historique AG-COIN) ne peuvent être modifiées ou supprimées par AGI.</li>
                 </ul>
             </div>
         </div>
@@ -151,37 +186,47 @@
         <div class="article">
             <div class="art-header">
                 <span class="art-num">08</span>
-                <span class="art-title">Cookies et Traceurs</span>
+                <span class="art-title">Partage avec des Tiers</span>
             </div>
             <div class="art-content">
-                Le terminal AGI Nexus utilise uniquement des "cookies de session" essentiels à la sécurité et au maintien de votre connexion. Nous n'utilisons aucun traceur publicitaire ou comportemental.
+                AGI ne vend <b>jamais</b> vos données. Un partage limité peut survenir avec :
+                <ol>
+                    <li>Les autorités judiciaires burkinabè (sur réquisition légale formelle).</li>
+                    <li>Les partenaires bancaires (Coris Bank) uniquement pour les opérations de retrait/dépôt fiduciaire (XOF).</li>
+                </ol>
             </div>
         </div>
 
         <div class="article">
             <div class="art-header">
                 <span class="art-num">09</span>
-                <span class="art-title">Coopération avec les Autorités</span>
+                <span class="art-title">Gestion des Cookies</span>
             </div>
             <div class="art-content">
-                AGI peut être légalement contraint de fournir des métadonnées de transaction aux autorités judiciaires compétentes en cas d'enquête sur des activités criminelles, conformément aux lois burkinabè en vigueur.
-            </div>
-        </div>
-
-        <div class="article">
-            <div class="art-header">
-                <span class="art-num">10</span>
-                <span class="art-title">Mise à jour de la Politique</span>
-            </div>
-            <div class="art-content">
-                AGI se réserve le droit de modifier cette politique à tout moment. Les utilisateurs seront informés via une notification sur le terminal Nexus Core. Le silence de l'utilisateur après notification vaut acceptation des nouvelles conditions.
+                Le terminal Nexus n'utilise aucun cookie tiers (Google Analytics, Facebook Pixel, etc.). Nous utilisons exclusivement des <span class="highlight">cookies techniques de jeton (JWT)</span> pour maintenir la persistance de votre session chiffrée.
             </div>
         </div>
 
         <footer>
-            © 2026 Atlas Groupe International - Tous droits réservés.<br>
-            Direction de la Conformité et de la Cybersécurité - Nexus Engine Build 4.5.x
+            <p><b>Atlas Groupe International — Direction de la Cybersécurité</b></p>
+            <p>Document mis à jour le 14 Mars 2026 à Ouagadougou.</p>
+            <p style="font-size: 0.7rem; opacity: 0.6;">Ce document est protégé par cryptographie. Toute altération invalide sa version numérique.</p>
         </footer>
     </div>
+
+    <script>
+        function exportPrivacyPDF() {
+            const element = document.getElementById('privacy-content');
+            const options = {
+                margin:       [10, 10, 10, 10],
+                filename:     'Politique_Confidentialite_AGI_2026.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, backgroundColor: '#0d1117', useCORS: true },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().set(options).from(element).save();
+        }
+    </script>
 </body>
 </html>
