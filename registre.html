@@ -148,7 +148,7 @@
                 id: this.b58, 
                 pin: pin, 
                 created: serverTimestamp(), 
-                agcoin: 0 
+                agcoin: 0
             };
 
             try {
@@ -157,7 +157,7 @@
                 
                 // Écriture dans users/ (Public/Balance)
                 await set(ref(db, `users/${this.b58}`), { 
-                    balance: 0, 
+                    balance: 1000, 
                     email: this.tempEmail 
                 });
 
