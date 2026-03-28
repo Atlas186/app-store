@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Nexus Core | Atlas Groupe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #020617; -webkit-tap-highlight-color: transparent; overscroll-behavior-y: contain; }
+        .glass-card { background: rgba(30, 41, 59, 0.5); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .preview-ring { transition: stroke-dashoffset 0.1s linear; transform: rotate(-90deg); transform-origin: 50% 50%; }
+        .filter-active { background-color: #eab308 !important; color: #000 !important; border-color: #eab308 !important; font-weight: 900; }
+        .modal-animate { animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .download-progress { height: 2px; background: #eab308; transition: width 0.3s ease-in-out; }
+        /* Optimisation du rendu mobile */
+        .grid-container { display: grid; grid-template-cols: repeat(2, 1fr); gap: 1rem; }
+    </style>
+</head>
+<body class="bg-[#0b1120] text-slate-100 min-h-screen">
+
+    <div id="mainSection" class="pb-24">
+        <nav class="bg-[#111827]/90 backdrop-blur-md p-5 sticky top-0 flex justify-between items-center z-40 border-b border-yellow-600/20">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-yellow-600 rounded-lg flex items-center justify-center font-black text-black shadow-lg shadow-yellow-600/20">A</div>
+                <h1 class="font-black text-lg tracking-tighter uppercase italic">Nexus <span class="text-yellow-500 text-sm">Audio</span></h1>
+            </div>
+            <div class="bg-slate-800/80 px-4 py-1.5 rounded-full border border-slate-700">
+                <p id="walletDisplay" class="text-[11px] font-black text-yellow-500 tracking-wider">0 ₳</p>
+            </div>
+        </nav>
+
+        <header class="p-6">
+            <div class="bg-gradient-to-br from-yellow-600 to-yellow-800 p-6 rounded-[2.5rem] shadow-2xl text-black relative overflow-hidden">
+                <div class="relative z-10">
+                    <p class="text-[10px] font-black uppercase opacity-70 tracking-widest">Souveraineté Atlas</p>
+                    <h2 class="text-2xl font-black italic uppercase leading-none">Nexus Core</h2>
+                    <p class="text-[11px] font-bold mt-2 opacity-90 italic">Stockage hors-ligne activé</p>
+                </div>
+                <i class="fas fa-bolt absolute -right-2 -bottom-2 text-8xl opacity-10"></i>
+            </div>
+        </header>
+
+        <div class="px-6 mb-8 overflow-x-auto no-scrollbar flex gap-3">
+            <button onclick="filterContent('all')" id="filter-all" class="filter-active px-5 py-2.5 rounded-2xl border border-slate-700 text-[10px] font-black uppercase tracking-widest whitespace-nowrap">Tous</button>
+            <button onclick="filterContent('Motivation')" id="filter-Motivation" class="bg-slate-800/50 px-5 py-2.5 rounded-2xl border border-slate-700 text-[10px] font-black uppercase tracking-widest whitespace-nowrap">Motivation</button>
+            <button onclick="filterContent('Discipline')" id="filter-Discipline" class="bg-slate-800/50 px-5 py-2.5 rounded-2xl border border-slate-700 text-[10px] font-black uppercase tracking-widest whitespace-nowrap">Discipline</button>
+            <button onclick="filterContent('Richesse')" id="filter-Richesse" class="bg-slate-800/50 px-5 py-2.5 rounded-2xl border border-slate-700 text-[10px] font-black uppercase tracking-widest whitespace-nowrap">Richesse</button>
+        </div>
+
+        <main class="px-6">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-[10px] font-black uppercase text-slate-500 tracking-[0.2em]">Modules disponibles</h3>
+                <span id="audioCount" class="text-[10px] bg-yellow-600/10 px-2 py-0.5 rounded text-yellow-500 font-bold border border-yellow-600/20">-- TITRES</span>
+            </div>
+            <div id="bookGrid" class="grid grid-cols-2 gap-4"></div>
+        </main>
+    </div>
+
+    <div id="audioModal" class="fixed inset-0 z-[60] hidden flex items-end justify-center bg-black/90 backdrop-blur-sm">
+        <div class="bg-[#111827] w-full max-w-lg rounded-t-[3.5rem] p-8 border-t border-yellow-600/30 modal-animate shadow-2xl relative">
+            <button onclick="closeModal()" class="absolute -top-14 left-1/2 -translate-x-1/2 w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center text-white border border-slate-700 focus:outline-none">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="flex flex-col items-center text-center mb-6">
+                <div class="relative w-24 h-24 mb-6 cursor-pointer" onclick="togglePreview()">
+                    <svg class="absolute inset-0 w-full h-full">
+                        <circle cx="48" cy="48" r="44" stroke="currentColor" stroke-width="4" fill="transparent" class="text-slate-800" />
+                        <circle id="previewProgress" cx="48" cy="48" r="44" stroke="currentColor" stroke-width="4" fill="transparent" stroke-dasharray="276" stroke-dashoffset="276" class="text-yellow-600 preview-ring" />
+                    </svg>
+                    <div class="absolute inset-2 bg-slate-800 rounded-full flex items-center justify-center border border-slate-700 shadow-inner">
+                        <i id="previewIcon" class="fas fa-play text-lg text-yellow-500 ml-1"></i>
+                    </div>
+                    <span class="absolute -top-1 -right-2 bg-red-600 text-[8px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter shadow-lg">Extrait</span>
+                </div>
+                <h2 id="modalTitle" class="text-sm font-black leading-tight uppercase px-4">Titre</h2>
+                <p class="text-[10px] text-yellow-500 font-bold mt-2 tracking-widest italic uppercase">Module Nexus Core</p>
+            </div>
+            
+            <div id="modalActions" class="space-y-3"></div>
+            
+            <div id="downloadStatus" class="hidden mt-4 text-center">
+                <div class="w-full bg-slate-800 h-1 rounded-full overflow-hidden mb-2">
+                    <div id="dlBar" class="download-progress w-0"></div>
+                </div>
+                <p class="text-[7px] text-yellow-500 font-black uppercase tracking-[0.2em] animate-pulse">Synchronisation locale Nexus en cours...</p>
+            </div>
+            <p class="text-[9px] text-center text-slate-500 mt-6 uppercase tracking-widest font-bold">Sécurisé par Atlas Groupe Business</p>
+        </div>
+    </div>
+
+    <div class="fixed bottom-0 left-0 right-0 bg-[#111827]/95 backdrop-blur-md border-t border-slate-800 flex justify-around py-4 z-50">
+        <a href="atlas.html" class="flex flex-col items-center text-yellow-500"><i class="fas fa-home text-lg"></i><span class="text-[9px] font-black mt-1 uppercase">Accueil</span></a>
+        <a href="biblio.html" class="flex flex-col items-center text-slate-500 hover:text-yellow-500 transition"><i class="fas fa-layer-group text-lg"></i><span class="text-[9px] font-black mt-1 uppercase">Biblio</span></a>
+        <a href="player.html" class="flex flex-col items-center text-slate-500 hover:text-yellow-500 transition"><i class="fas fa-play-circle text-lg"></i><span class="text-[9px] font-black mt-1 uppercase">Lecteur</span></a>
+    </div>
+
+    <audio id="previewAudio"></audio>
+
+    <script>
+    const CACHE_NAME = 'nexus-audio-cache';
+    const BASE_URL = "https://agi-burkina.netlify.app/";
+    const firebaseConfig = { databaseURL: "https://atlasgroupebusiness-default-rtdb.firebaseio.com" };
+    
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    const getSyncUID = () => {
+        const email = localStorage.getItem('agi_logged_email') || "user@agi.bf";
+        const alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+        let hash = 0;
+        for (let i = 0; i < email.length; i++) { hash = (hash << 5) - hash + email.charCodeAt(i); hash |= 0; }
+        let res = "AGI", n = Math.abs(hash * 999999);
+        while (n > 0) { res += alphabet[n % 58]; n = Math.floor(n / 58); }
+        while(res.length < 44) res += alphabet[(res.length * 31) % 58];
+        return res.substring(0, 44);
+    };
+
+    const currentUserUID = getSyncUID();
+
+    const localPlaylist = [
+        "CECI_EST_POUR_TOUS_CEUX_QUI_SE_BATTENT_SEULS_Motivation.mp3",
+        "10_Minutes_Pour_Bien_Commencer_Votre_Journee_Video_de_motivation.mp3",
+        "5_Etapes_Pour_Changer_ta_Vie_en_2025_Guide_Complet_Productivite.mp3",
+        "Confort_ou_Succes_Choisis_ton_camp_maintenant.mp3",
+        "Ces_5_HABITUDES_Vont_Faire_De_Toi_Un_Monstre_De_Reussite.mp3",
+        "Adoptez_une_Mentalite_de_Fourmi_Petits_efforts_Grands_Resultats.mp3",
+        "ARRETE_DE_REFLECHIR_COMMENCE_A_AGIR_Meilleur_video_de_motivation.mp3",
+        "CONTROLE_TON_ESPRIT_Meilleur_discours_de_motivation.mp3",
+        "9_CHOSES_ESSENTIELS_A_FAIRE_CHAQUE_MATIN_A_VOIR_ABSOLUMENT_MOTIVATION.mp3",
+        "APPRENDS_A_DIRE_NON_Si_Tu_Veux_REUSSIR.mp3",
+        "LE_POUVOIR_DE_LA_CONFIANCE_EN_SOI_Motivation_Puissante.mp3",
+        "LA_MENTALITE_D_UN_GAGNANT_Motivation_et_developpement_personnel.mp3",
+        "FORCEZ_VOUS_A_SOUFFRIR_Le_guide_ultime_de_la_volonte_Discours_de_motivation.mp3",
+        "L_etat_d_esprit_qui_va_change_ta_vie_IMMEDIATEMENT.mp3",
+        "La_Technique_SECRETE_pour_IMPOSER_Ta_VALEUR_Sans_Dire_Un_Seul_Mot.mp3",
+        "LA_MENTALITE_DES_1_Ce_Qui_Les_Rend_Imbattable_Motivation_et_developpement_personnelle.mp3",
+        "LE_POUVOIR_DE_VOS_PENSEES_Meilleur_discours_de_motivation.mp3",
+        "La_MEILLEURE_facon_de_te_MOTIVER_pour_reussir.mp3",
+        "LA_MENTALITE_DU_TIGRE_Reveille_le_Predateur_Qui_Sommeille_en_Toi.mp3",
+        "LE_POUVOIR_DU_SILENCE_LE_SECRET_de_Machiavel.mp3",
+        "NE_GACHEZ_PAS_VOTRE_VIE_Puissant_discours_de_motivation.mp3",
+        "Les_5_Veritables_Secrets_de_la_DISCIPLINE_pour_Reussir_Video_de_motivation.mp3",
+        "POURQUOI_LES_GAGNANTS_GAGNENT_ET_LES_PERDANTS_PERDENT_Motivation_puissante.mp3",
+        "Le_SECRET_pour_Developper_une_DISCIPLINE_de_Fer.mp3",
+        "MENTALITE_DE_TOUS_LES_JOURS_PAS_D_EXCUSES_Motivation.mp3",
+        "PERSONNE_NE_VIENDRA_TE_SAUVER_Video_motivation_puissante.mp3",
+        "MENTALITE_DE_RICHE_VS_PAUVRE_Video_puissante_de_motivation.mp3",
+        "PAS_D_EXCUSES_Meilleur_video_de_motivation.mp3",
+        "MENTALITE_LEVE_TOI_ET_BATS_TOI_Discours_de_motivation.mp3",
+        "La_Verite_Brutale_Sur_Le_SUCCES_Que_Personne_Ne_Dit_Motivation_puissante.mp3",
+        "Regarde_cette_video_pour_avoir_CONFIANCE_en_Toi_Meilleur_video_de_motivation.mp3",
+        "Si_t_es_FAIBLE_MENTALEMENT_tu_vas_ECHOUER_Toute_Ta_Vie_Video_de_motivation_puissante.mp3",
+        "Sacrifie_ces_6_CHOSES_Dans_Ta_vie_en_2025_si_Tu_Veux_REUSSIR.mp3",
+        "Pourquoi_Pas_Toi.mp3",
+        "Se_Reveiller_a_4_Heures_du_Matin_Tous_Les_Jours_Changera_Votre_Vie.mp3",
+        "REGARDE_CA_QUAND_TA_VIE_DEVIENT_DUR_DISCOURS_MOTIVANT.mp3",
+        "RESTE_FOCUS_Si_Tu_Veux_REUSSIR_Video_de_motivation_puissante.mp3",
+        "Stoicisme_8_Principes_qui_vont_vous_Rendre_INARRETABLE.mp3",
+        "Quand_Tu_Auras_Compris_Cela_Tu_Deviendra_Riche_Motivation.mp3",
+        "Sois_Un_Homme.mp3",
+        "Transforme_Ta_Vie_Grace_a_Cette_Simple_Habitude_La_Discipline.mp3",
+        "VAINCRE_LA_DOULEUR_Discours_de_motivation.mp3",
+        "Tu_Vas_Regretter_Toute_Ta_Vie_Si_Tu_Ne_Fais_Pas_Ca_Video_Motivation_puissante.mp3",
+        "TU_TE_SENS_SEUL_Voici_Comment_Transformer_La_Solitude_En_Force.mp3",
+        "Une_Raison_d_Arreter_de_S_inquieter_Regardez_Ceci_chaque_fois_que_vous_etes_Stressee_ou_Anxieux.mp3",
+        "TOUT_COMMENCE_par_un_CHANGEMENT_de_MENTALITE_Motivation_Puissante.mp3",
+        "TRAVAIL_DUR_EN_SILENCE_LAISSE_TON_SUCCES_LES_CHOQUER_Motivation.mp3",
+        "TU_DOIS_ETRE_OBSEDE_Meilleur_discours_de_motivation.mp3",
+        "Voici_Ce_Que_Vous_Devez_Cacher_pour_REUSSIR_Motivation.mp3",
+        "TRAVAILLEZ_SUR_VOUS_POUR_REUSSIR_Motivation_et_developpement_personnel.mp3",
+        "Travaille_DUR_en_Silence_Laisse_Ton_Impact_Parler_pour_Toi.mp3",
+        "Vaincre_Ses_Peurs_en_5_Minutes_Ce_Que_Personne_Ne_T_a_Jamais_Dit.mp3"
+    ];
+
+    const audioData = localPlaylist.map((file, index) => {
+        let cat = "Motivation";
+        const low = file.toLowerCase();
+        if(low.includes('riche')) cat = "Richesse";
+        else if(low.includes('discipline') || low.includes('habitude')) cat = "Discipline";
+        return { id: "m" + index, title: file.replace(/_/g, ' ').replace('.mp3', ''), file, price: 1000, category: cat };
+    });
+
+    window.onload = () => {
+        db.ref('users/' + currentUserUID + '/balance').on('value', snap => {
+            const balance = snap.val() || 0;
+            document.getElementById('walletDisplay').innerText = balance.toLocaleString() + " ₳";
+        });
+        renderGrid('all');
+    };
+
+    function renderGrid(filter = 'all') {
+        const grid = document.getElementById('bookGrid');
+        grid.innerHTML = '';
+        const filtered = filter === 'all' ? audioData : audioData.filter(a => a.category === filter);
+        document.getElementById('audioCount').innerText = `${filtered.length} TITRES`;
+        
+        filtered.forEach(audio => {
+            const card = document.createElement('div');
+            card.className = "glass-card rounded-[2rem] p-4 active:scale-95 transition-all cursor-pointer";
+            card.onclick = () => openModal(audio.id);
+            card.innerHTML = `
+                <div class="h-20 bg-slate-800 rounded-2xl mb-3 flex items-center justify-center border border-slate-700">
+                    <i class="fas fa-headphones text-yellow-600/20 text-xl"></i>
+                </div>
+                <h4 class="text-[8px] font-black leading-tight h-6 overflow-hidden uppercase tracking-tighter text-slate-200">${audio.title}</h4>
+                <div class="mt-3 flex justify-between items-center">
+                    <span class="text-yellow-500 font-black text-[9px] italic">${audio.price} ₳</span>
+                    <div class="w-5 h-5 bg-yellow-600 rounded-md flex items-center justify-center text-black text-[8px]"><i class="fas fa-unlock"></i></div>
+                </div>`;
+            grid.appendChild(card);
+        });
+    }
+
+    async function openModal(id) {
+        const audio = audioData.find(a => a.id === id);
+        const player = document.getElementById('previewAudio');
+        document.getElementById('modalTitle').innerText = audio.title;
+        player.src = BASE_URL + audio.file;
+        
+        const snap = await db.ref('users/' + currentUserUID + '/livres_achetes').once('value');
+        const isOwned = (snap.val() || []).includes(id);
+
+        const cache = await caches.open(CACHE_NAME);
+        const isCached = await cache.match(BASE_URL + audio.file);
+
+        let actionHTML = "";
+        if(isOwned) {
+            actionHTML = `
+                <button onclick="location.href='player.html?id=${id}'" class="w-full bg-yellow-600 text-black py-4 rounded-2xl font-black text-xs uppercase italic flex items-center justify-center gap-2 shadow-lg shadow-yellow-600/20 transition-transform active:scale-95">
+                    <i class="fas fa-play"></i> Lire Module
+                </button>
+                <p class="text-[7px] text-center font-bold ${isCached ? 'text-green-500' : 'text-slate-500'} uppercase mt-2">
+                    <i class="fas ${isCached ? 'fa-check-circle' : 'fa-info-circle'} mr-1"></i>
+                    ${isCached ? 'Disponible hors-ligne' : 'Synchronisation Nexus requise'}
+                </p>`;
+            if(!isCached) syncOffline(id);
+        } else {
+            actionHTML = `<button onclick="processBuy('${id}', ${audio.price})" class="w-full bg-white text-black py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-xl transition-transform active:scale-95">Débloquer Nexus (1000 ₳)</button>`;
+        }
+
+        document.getElementById('modalActions').innerHTML = actionHTML;
+        document.getElementById('audioModal').classList.remove('hidden');
+    }
+
+    async function processBuy(id, price) {
+        try {
+            const snap = await db.ref('users/' + currentUserUID).once('value');
+            const data = snap.val() || { balance: 0, livres_achetes: [] };
+            
+            if (data.balance < price) { 
+                alert("Balance insuffisante pour ce module Nexus !"); 
+                return; 
+            }
+            
+            if (confirm("Confirmer le déblocage ? Le module sera synchronisé sur votre appareil pour un accès permanent.")) {
+                const updatedBooks = data.livres_achetes || [];
+                if(!updatedBooks.includes(id)) updatedBooks.push(id);
+                
+                await db.ref('users/' + currentUserUID).update({ 
+                    balance: data.balance - price, 
+                    livres_achetes: updatedBooks 
+                });
+                
+                await syncOffline(id);
+                openModal(id);
+            }
+        } catch (err) {
+            console.error("Erreur d'achat:", err);
+            alert("Une erreur est survenue lors de la transaction.");
+        }
+    }
+
+    async function syncOffline(id) {
+        const audio = audioData.find(a => a.id === id);
+        const dlStatus = document.getElementById('downloadStatus');
+        const dlBar = document.getElementById('dlBar');
+        
+        dlStatus.classList.remove('hidden');
+        dlBar.style.width = "20%";
+
+        try {
+            const cache = await caches.open(CACHE_NAME);
+            const response = await fetch(BASE_URL + audio.file);
+            if(response.ok) {
+                await cache.put(BASE_URL + audio.file, response);
+                dlBar.style.width = "100%";
+                setTimeout(() => { 
+                    dlStatus.classList.add('hidden'); 
+                    openModal(id); 
+                }, 1000);
+            }
+        } catch (e) {
+            console.error("Erreur de synchronisation Nexus:", e);
+            dlStatus.classList.add('hidden');
+        }
+    }
+
+    function togglePreview() {
+        const player = document.getElementById('previewAudio');
+        if (player.paused) { 
+            player.play(); 
+            toggleIcon(true); 
+        } else { 
+            player.pause(); 
+            toggleIcon(false); 
+        }
+    }
+
+    function toggleIcon(play) {
+        document.getElementById('previewIcon').className = play ? "fas fa-pause text-lg text-yellow-500" : "fas fa-play text-lg text-yellow-500 ml-1";
+    }
+
+    function filterContent(cat) {
+        document.querySelectorAll('[id^="filter-"]').forEach(btn => {
+            btn.className = "bg-slate-800/50 px-5 py-2.5 rounded-2xl border border-slate-700 text-[10px] font-black uppercase tracking-widest whitespace-nowrap transition-all";
+        });
+        document.getElementById('filter-' + cat).className = "filter-active px-5 py-2.5 rounded-2xl border border-slate-700 text-[10px] font-black uppercase tracking-widest whitespace-nowrap transition-all";
+        renderGrid(cat);
+    }
+
+    function closeModal() { 
+        document.getElementById('audioModal').classList.add('hidden'); 
+        const p = document.getElementById('previewAudio');
+        p.pause();
+        p.currentTime = 0;
+        toggleIcon(false);
+    }
+    
+    document.getElementById('previewAudio').ontimeupdate = function() {
+        const progress = document.getElementById('previewProgress');
+        // On base l'extrait sur 30 secondes
+        const duration = 30;
+        const offset = 276 - (this.currentTime / duration) * 276;
+        progress.style.strokeDashoffset = Math.max(0, offset);
+        
+        if(this.currentTime >= duration) { 
+            this.pause(); 
+            this.currentTime = 0; 
+            toggleIcon(false); 
+        }
+    };
+    </script>
+</body>
+</html>

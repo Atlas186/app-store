@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mes Audios | Nexus Core</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <style>
+        body { -webkit-tap-highlight-color: transparent; }
+        .glass { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px); }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: #eab308; border-radius: 10px; }
+        .empty-state { animation: fadeIn 0.5s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .card-nexus { background: rgba(30, 41, 59, 0.4); border: 1px solid rgba(234, 179, 8, 0.1); }
+        .is-offline { border-color: #22c55e !important; background: rgba(34, 197, 94, 0.05) !important; }
+    </style>
+</head>
+<body class="bg-[#0b1120] text-slate-100 pb-24 font-sans">
+
+    <nav class="bg-[#111827] p-5 sticky top-0 flex justify-between items-center z-40 border-b border-yellow-600/20">
+        <div class="flex items-center gap-2">
+            <a href="index.html" class="w-8 h-8 bg-slate-800 rounded-lg flex items-center justify-center text-yellow-500">
+                <i class="fas fa-chevron-left text-xs"></i>
+            </a>
+            <h1 class="font-black text-lg tracking-tighter uppercase italic">Ma <span class="text-yellow-500">Libro</span></h1>
+        </div>
+        <div class="bg-slate-800/80 px-4 py-1.5 rounded-full border border-slate-700">
+            <p id="walletDisplay" class="text-[11px] font-black text-yellow-500 tracking-wider">0 ₳</p>
+        </div>
+    </nav>
+
+    <header class="p-6">
+        <div class="bg-gradient-to-br from-slate-800 to-[#111827] p-6 rounded-[2.5rem] border border-slate-700 shadow-xl relative overflow-hidden">
+            <div class="relative z-10">
+                <p class="text-[10px] font-black uppercase text-yellow-500 tracking-[0.2em]">Votre Collection</p>
+                <h2 class="text-2xl font-black italic uppercase">Contenu débloqué</h2>
+                <div class="flex items-center gap-2 mt-1">
+                    <p class="text-[11px] font-bold text-slate-400 uppercase" id="statsCount">Chargement...</p>
+                    <span id="offlineBadge" class="hidden text-[8px] bg-green-500/20 text-green-500 px-2 py-0.5 rounded-full font-black uppercase border border-green-500/30">Mode Hors-ligne</span>
+                </div>
+            </div>
+            <i class="fas fa-shield-alt absolute -right-4 -bottom-4 text-7xl opacity-5 text-yellow-500"></i>
+        </div>
+    </header>
+
+    <main class="px-6">
+        <div id="purchasedGrid" class="grid grid-cols-2 gap-4">
+            <div id="loader" class="col-span-2 py-20 text-center">
+                <i class="fas fa-circle-notch fa-spin text-yellow-500 text-3xl"></i>
+                <p class="text-[10px] font-black text-slate-500 mt-4 uppercase tracking-widest">Accès Nexus Core...</p>
+            </div>
+        </div>
+
+        <div id="emptyMessage" class="hidden empty-state flex flex-col items-center justify-center py-20 text-center">
+            <div class="w-16 h-16 bg-slate-800/50 rounded-full flex items-center justify-center mb-4 border border-slate-700">
+                <i class="fas fa-lock-open text-slate-600 text-xl"></i>
+            </div>
+            <h3 class="text-[11px] font-black uppercase tracking-widest text-slate-400">Bibliothèque vide</h3>
+            <p class="text-[9px] text-slate-500 mt-2 px-10 uppercase font-bold">Débloquez des modules avec vos AG-COIN dans le catalogue.</p>
+            <a href="index.html" class="mt-6 px-6 py-3 bg-yellow-600 text-black text-[10px] font-black uppercase rounded-xl shadow-lg">Catalogue</a>
+        </div>
+    </main>
+
+    <div class="fixed bottom-0 left-0 right-0 bg-[#111827]/95 backdrop-blur-md border-t border-slate-800 flex justify-around py-4 z-50">
+        <a href="index.html" class="flex flex-col items-center text-slate-500 hover:text-yellow-500 transition">
+            <i class="fas fa-home text-lg"></i>
+            <span class="text-[9px] font-black mt-1 uppercase tracking-tighter">Accueil</span>
+        </a>
+        <a href="biblio.html" class="flex flex-col items-center text-yellow-500">
+            <i class="fas fa-layer-group text-lg"></i>
+            <span class="text-[9px] font-black mt-1 uppercase tracking-tighter">Biblio</span>
+        </a>
+        <a href="player.html" class="flex flex-col items-center text-slate-500 hover:text-yellow-500 transition">
+            <i class="fas fa-play-circle text-lg"></i>
+            <span class="text-[9px] font-black mt-1 uppercase tracking-tighter">Lecteur</span>
+        </a>
+    </div>
+    
+    <script>
+        const CACHE_NAME = 'nexus-audio-cache';
+        const BASE_URL = "https://agi-burkina.netlify.app/Audios/";
+        const firebaseConfig = { databaseURL: "https://atlasgroupebusiness-default-rtdb.firebaseio.com" };
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        const getSyncUID = () => {
+            const email = localStorage.getItem('agi_logged_email') || "user@agi.bf";
+            const alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+            let hash = 0;
+            for (let i = 0; i < email.length; i++) { hash = (hash << 5) - hash + email.charCodeAt(i); hash |= 0; }
+            let res = "AGI", n = Math.abs(hash * 999999);
+            while (n > 0) { res += alphabet[n % 58]; n = Math.floor(n / 58); }
+            while(res.length < 44) res += alphabet[(res.length * 31) % 58];
+            return res.substring(0, 44);
+        };
+
+        const uid = getSyncUID();
+
+        const rawAudios = [
+            "CECI_EST_POUR_TOUS_CEUX_QUI_SE_BATTENT_SEULS_Motivation.mp3",
+            "10_Minutes_Pour_Bien_Commencer_Votre_Journee_Video_de_motivation.mp3",
+            "5_Etapes_Pour_Changer_ta_Vie_en_2025_Guide_Complet_Productivite.mp3",
+            "Confort_ou_Succes_Choisis_ton_camp_maintenant.mp3",
+            "Ces_5_HABITUDES_Vont_Faire_De_Toi_Un_Monstre_De_Reussite.mp3",
+            "Adoptez_une_Mentalite_de_Fourmi_Petits_efforts_Grands_Resultats.mp3",
+            "ARRETE_DE_REFLECHIR_COMMENCE_A_AGIR_Meilleur_video_de_motivation.mp3",
+            "CONTROLE_TON_ESPRIT_Meilleur_discours_de_motivation.mp3",
+            "9_CHOSES_ESSENTIELS_A_FAIRE_CHAQUE_MATIN_A_VOIR_ABSOLUMENT_MOTIVATION.mp3",
+            "APPRENDS_A_DIRE_NON_Si_Tu_Veux_REUSSIR.mp3",
+            "LE_POUVOIR_DE_LA_CONFIANCE_EN_SOI_Motivation_Puissante.mp3",
+            "LA_MENTALITE_D_UN_GAGNANT_Motivation_et_developpement_personnel.mp3",
+            "FORCEZ_VOUS_A_SOUFFRIR_Le_guide_ultime_de_la_volonte_Discours_de_motivation.mp3",
+            "L_etat_d_esprit_qui_va_change_ta_vie_IMMEDIATEMENT.mp3",
+            "La_Technique_SECRETE_pour_IMPOSER_Ta_VALEUR_Sans_Dire_Un_Seul_Mot.mp3",
+            "LA_MENTALITE_DES_1_Ce_Qui_Les_Rend_Imbattable_Motivation_et_developpement_personnelle.mp3",
+            "LE_POUVOIR_DE_VOS_PENSEES_Meilleur_discours_de_motivation.mp3",
+            "La_MEILLEURE_facon_de_te_MOTIVER_pour_reussir.mp3",
+            "LA_MENTALITE_DU_TIGRE_Reveille_le_Predateur_Qui_Sommeille_en_Toi.mp3",
+            "LE_POUVOIR_DU_SILENCE_LE_SECRET_de_Machiavel.mp3",
+            "NE_GACHEZ_PAS_VOTRE_VIE_Puissant_discours_de_motivation.mp3",
+            "Les_5_Veritables_Secrets_de_la_DISCIPLINE_pour_Reussir_Video_de_motivation.mp3",
+            "POURQUOI_LES_GAGNANTS_GAGNENT_ET_LES_PERDANTS_PERDENT_Motivation_puissante.mp3",
+            "Le_SECRET_pour_Developper_une_DISCIPLINE_de_Fer.mp3",
+            "MENTALITE_DE_TOUS_LES_JOURS_PAS_D_EXCUSES_Motivation.mp3",
+            "PERSONNE_NE_VIENDRA_TE_SAUVER_Video_motivation_puissante.mp3",
+            "MENTALITE_DE_RICHE_VS_PAUVRE_Video_puissante_de_motivation.mp3",
+            "PAS_D_EXCUSES_Meilleur_video_de_motivation.mp3",
+            "MENTALITE_LEVE_TOI_ET_BATS_TOI_Discours_de_motivation.mp3",
+            "La_Verite_Brutale_Sur_Le_SUCCES_Que_Personne_Ne_Dit_Motivation_puissante.mp3",
+            "Regarde_cette_video_pour_avoir_CONFIANCE_en_Toi_Meilleur_video_de_motivation.mp3",
+            "Si_t_es_FAIBLE_MENTALEMENT_tu_vas_ECHOUER_Toute_Ta_Vie_Video_de_motivation_puissante.mp3",
+            "Sacrifie_ces_6_CHOSES_Dans_Ta_vie_en_2025_si_Tu_Veux_REUSSIR.mp3",
+            "Pourquoi_Pas_Toi.mp3",
+            "Se_Reveiller_a_4_Heures_du_Matin_Tous_Les_Jours_Changera_Votre_Vie.mp3",
+            "REGARDE_CA_QUAND_TA_VIE_DEVIENT_DUR_DISCOURS_MOTIVANT.mp3",
+            "RESTE_FOCUS_Si_Tu_Veux_REUSSIR_Video_de_motivation_puissante.mp3",
+            "Stoicisme_8_Principes_qui_vont_vous_Rendre_INARRETABLE.mp3",
+            "Quand_Tu_Auras_Compris_Cela_Tu_Deviendra_Riche_Motivation.mp3",
+            "Sois_Un_Homme.mp3",
+            "Transforme_Ta_Vie_Grace_a_Cette_Simple_Habitude_La_Discipline.mp3",
+            "VAINCRE_LA_DOULEUR_Discours_de_motivation.mp3",
+            "Tu_Vas_Regretter_Toute_Ta_Vie_Si_Tu_Ne_Fais_Pas_Ca_Video_Motivation_puissante.mp3",
+            "TU_TE_SENS_SEUL_Voici_Comment_Transformer_La_Solitude_En_Force.mp3",
+            "Une_Raison_d_Arreter_de_S_inquieter_Regardez_Ceci_chaque_fois_que_vous_etes_Stressee_ou_Anxieux.mp3",
+            "TOUT_COMMENCE_par_un_CHANGEMENT_de_MENTALITE_Motivation_Puissante.mp3",
+            "TRAVAIL_DUR_EN_SILENCE_LAISSE_TON_SUCCES_LES_CHOQUER_Motivation.mp3",
+            "TU_DOIS_ETRE_OBSEDE_Meilleur_discours_de_motivation.mp3",
+            "Voici_Ce_Que_Vous_Devez_Cacher_pour_REUSSIR_Motivation.mp3",
+            "TRAVAILLEZ_SUR_VOUS_POUR_REUSSIR_Motivation_et_developpement_personnel.mp3",
+            "Travaille_DUR_en_Silence_Laisse_Ton_Impact_Parler_pour_Toi.mp3",
+            "Vaincre_Ses_Peurs_en_5_Minutes_Ce_Que_Personne_Ne_T_a_Jamais_Dit.mp3"
+        ];
+
+        const audioDataMap = rawAudios.map((file, index) => ({
+            id: "m" + index,
+            title: file.split('_').join(' ').replace('.mp3', '').trim(),
+            file: file
+        }));
+
+        // Écoute Firebase
+        db.ref('users/' + uid).on('value', async (snap) => {
+            const data = snap.val() || { balance: 0, livres_achetes: [] };
+            document.getElementById('walletDisplay').innerText = (data.balance || 0).toLocaleString() + " ₳";
+            const purchasedIds = data.livres_achetes || [];
+            
+            // On vérifie le cache AVANT de rendre la grille
+            await renderLibrary(purchasedIds);
+        });
+
+        async function renderLibrary(ids) {
+            const grid = document.getElementById('purchasedGrid');
+            const empty = document.getElementById('emptyMessage');
+            const loader = document.getElementById('loader');
+            const offlineBadge = document.getElementById('offlineBadge');
+            
+            loader.style.display = 'none';
+            grid.innerHTML = '';
+
+            if (ids.length === 0) {
+                empty.classList.remove('hidden');
+                document.getElementById('statsCount').innerText = "0 module acquis";
+                return;
+            }
+
+            empty.classList.add('hidden');
+            document.getElementById('statsCount').innerText = `${ids.length} module(s) acquis`;
+
+            // Ouverture du cache Nexus
+            const cache = await caches.open(CACHE_NAME);
+            let hasOfflineContent = false;
+
+            for (const id of ids) {
+                const audio = audioDataMap.find(a => a.id === id);
+                if (audio) {
+                    // Vérifier si le fichier est présent physiquement
+                    const cachedResponse = await cache.match(BASE_URL + audio.file);
+                    const isCached = !!cachedResponse;
+                    if(isCached) hasOfflineContent = true;
+
+                    grid.innerHTML += `
+                        <div onclick="location.href='player.html?id=${audio.id}'" 
+                             class="card-nexus ${isCached ? 'is-offline shadow-green-900/10' : ''} rounded-[2rem] p-4 flex flex-col active:scale-95 transition-all shadow-xl group relative">
+                            
+                            <div class="h-24 bg-slate-800/80 rounded-2xl mb-3 flex items-center justify-center border border-slate-700 group-hover:border-yellow-600/50 transition">
+                                <i class="fas fa-play text-yellow-500 text-lg group-hover:scale-125 transition"></i>
+                            </div>
+
+                            <h4 class="text-[9px] font-black leading-tight h-8 overflow-hidden uppercase text-slate-200 tracking-tighter">${audio.title}</h4>
+                            
+                            <div class="mt-3 flex justify-between items-center">
+                                <span class="text-[7px] ${isCached ? 'bg-green-500/10 text-green-500 border-green-500/20' : 'bg-yellow-600/10 text-yellow-500 border-yellow-600/20'} px-2 py-0.5 rounded font-black uppercase border">
+                                    ${isCached ? 'Disponible' : 'En ligne'}
+                                </span>
+                                <div class="w-6 h-6 bg-slate-800 rounded flex items-center justify-center ${isCached ? 'text-green-500' : 'text-slate-500'} text-[9px]">
+                                    <i class="fas ${isCached ? 'fa-mobile-alt' : 'fa-cloud'}"></i>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+            
+            if(hasOfflineContent) offlineBadge.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

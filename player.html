@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>AGI NEXUS - System Notification Player</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <style>
+        body { background: #05070a; touch-action: manipulation; -webkit-tap-highlight-color: transparent; overscroll-behavior-y: contain; }
+        .disk-spin { animation: spin 12s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .paused-spin { animation-play-state: paused; }
+        .active-track { border-left: 4px solid #eab308 !important; background: rgba(234, 179, 8, 0.15) !important; transform: scale(1.02); }
+        .custom-scroll::-webkit-scrollbar { width: 2px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #334155; }
+        .loop-active { color: #eab308 !important; }
+        .offline-indicator { font-size: 8px; color: #22c55e; font-weight: 900; }
+        #progressArea { position: relative; height: 6px; background: #1e293b; border-radius: 10px; cursor: pointer; }
+        #progressBar { height: 100%; background: #eab308; border-radius: 10px; width: 0%; transition: width 0.1s linear; }
+    </style>
+</head>
+<body class="text-slate-100 h-screen flex flex-col overflow-hidden font-sans">
+
+    <div class="flex-none bg-slate-900/95 border-b border-slate-800 p-4 pt-8 shadow-2xl z-10">
+        <div class="flex items-center gap-4">
+            <div id="diskContainer" class="w-20 h-20 bg-slate-800 rounded-full border-2 border-slate-700 relative disk-spin paused-spin flex-none overflow-hidden">
+                <img src="https://i.imgur.com/OJM0H6R.jpeg" class="absolute inset-0 w-full h-full object-cover opacity-60">
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="w-3 h-3 bg-yellow-600 rounded-full border-2 border-black z-10 shadow-lg"></div>
+                </div>
+            </div>
+
+            <div class="flex-1 min-w-0">
+                <div class="flex justify-between items-start mb-1">
+                    <div class="truncate pr-2">
+                        <h2 id="trackTitle" class="text-[12px] font-black text-yellow-500 truncate uppercase italic tracking-tighter">Initialisation...</h2>
+                        <div class="flex items-center gap-2">
+                            <p class="text-[7px] text-slate-500 font-black tracking-widest uppercase">Nexus Core / AGI</p>
+                            <span id="sourceLabel" class="hidden offline-indicator uppercase tracking-tighter animate-pulse"><i class="fas fa-shield-check"></i> Local</span>
+                        </div>
+                    </div>
+                    <button onclick="toggleLoop()" id="loopBtn" class="text-slate-600 text-[10px] flex flex-col items-center bg-slate-800/50 p-2 rounded-lg">
+                        <i class="fas fa-redo"></i>
+                        <span id="loopLabel" class="text-[6px] mt-0.5 font-black">OFF</span>
+                    </button>
+                </div>
+
+                <div class="flex items-center justify-between mt-3 px-1">
+                    <button onclick="prev()" class="text-slate-400 p-2 active:text-yellow-500"><i class="fas fa-step-backward text-sm"></i></button>
+                    <button onclick="seek(-10)" class="text-slate-500 text-[8px] font-black uppercase bg-slate-800/40 px-2 py-1 rounded"> -10s </button>
+                    <button onclick="togglePlay()" id="playBtn" class="w-12 h-12 bg-yellow-600 rounded-full flex items-center justify-center text-black shadow-xl shadow-yellow-900/30 active:scale-90 transition-all">
+                        <i class="fas fa-play ml-1 text-lg"></i>
+                    </button>
+                    <button onclick="seek(10)" class="text-slate-500 text-[8px] font-black uppercase bg-slate-800/40 px-2 py-1 rounded"> +10s </button>
+                    <button onclick="next()" class="text-slate-400 p-2 active:text-yellow-500"><i class="fas fa-step-forward text-sm"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4 px-1">
+            <div id="progressArea" onclick="handleProgressClick(event)">
+                <div id="progressBar"></div>
+            </div>
+            <div class="flex justify-between text-[9px] mt-2 font-mono text-slate-500 font-bold tracking-tighter">
+                <span id="currentTime">00:00</span>
+                <span id="duration">--:--</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex-1 overflow-y-auto custom-scroll px-4 py-4 mb-20 space-y-2" id="playlistContainer">
+        <div class="flex flex-col items-center justify-center py-20 opacity-30">
+            <i class="fas fa-circle-notch fa-spin text-2xl mb-4"></i>
+            <p class="text-[10px] uppercase font-black tracking-widest">Liaison Nexus en cours...</p>
+        </div>
+    </div>
+    
+    <div class="fixed bottom-0 left-0 right-0 bg-slate-950/95 backdrop-blur-xl border-t border-slate-800/50 flex justify-around py-4 z-50">
+        <a href="catalogue.html" class="flex flex-col items-center text-slate-500"><i class="fas fa-th-large text-lg"></i><span class="text-[8px] font-black mt-1 uppercase">Catalogue</span></a>
+        <a href="biblio.html" class="flex flex-col items-center text-slate-500"><i class="fas fa-book-open text-lg"></i><span class="text-[8px] font-black mt-1 uppercase">Ma Biblio</span></a>
+        <a href="player.html" class="flex flex-col items-center text-yellow-500"><i class="fas fa-play-circle text-lg"></i><span class="text-[8px] font-black mt-1 uppercase">Lecteur</span></a>
+    </div>
+
+    <audio id="player" preload="auto" playsinline crossorigin="anonymous"></audio>
+
+    <script>
+        const CACHE_NAME = 'nexus-audio-cache';
+        const BASE_URL = "https://agi-burkina.netlify.app/";
+        const firebaseConfig = { databaseURL: "https://atlasgroupebusiness-default-rtdb.firebaseio.com" };
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        const audio = document.getElementById('player');
+        const playBtn = document.getElementById('playBtn');
+        const disk = document.getElementById('diskContainer');
+        
+        let playlist = [];
+        let index = 0;
+        let loopMode = 0; 
+        let currentBlobUrl = null;
+
+        const rawFiles = [
+            "CECI_EST_POUR_TOUS_CEUX_QUI_SE_BATTENT_SEULS_Motivation.mp3",
+            "10_Minutes_Pour_Bien_Commencer_Votre_Journee_Video_de_motivation.mp3",
+            "5_Etapes_Pour_Changer_ta_Vie_en_2025_Guide_Complet_Productivite.mp3",
+            "Confort_ou_Succes_Choisis_ton_camp_maintenant.mp3",
+            "Ces_5_HABITUDES_Vont_Faire_De_Toi_Un_Monstre_De_Reussite.mp3",
+            "Adoptez_une_Mentalite_de_Fourmi_Petits_efforts_Grands_Resultats.mp3",
+            "ARRETE_DE_REFLECHIR_COMMENCE_A_AGIR_Meilleur_video_de_motivation.mp3",
+            "CONTROLE_TON_ESPRIT_Meilleur_discours_de_motivation.mp3",
+            "9_CHOSES_ESSENTIELS_A_FAIRE_CHAQUE_MATIN_A_VOIR_ABSOLUMENT_MOTIVATION.mp3",
+            "APPRENDS_A_DIRE_NON_Si_Tu_Veux_REUSSIR.mp3",
+            "LE_POUVOIR_DE_LA_CONFIANCE_EN_SOI_Motivation_Puissante.mp3",
+            "LA_MENTALITE_D_UN_GAGNANT_Motivation_et_developpement_personnel.mp3",
+            "FORCEZ_VOUS_A_SOUFFRIR_Le_guide_ultime_de_la_volonte_Discours_de_motivation.mp3",
+            "L_etat_d_esprit_qui_va_change_ta_vie_IMMEDIATEMENT.mp3",
+            "La_Technique_SECRETE_pour_IMPOSER_Ta_VALEUR_Sans_Dire_Un_Seul_Mot.mp3",
+            "LA_MENTALITE_DES_1_Ce_Qui_Les_Rend_Imbattable_Motivation_et_developpement_personnelle.mp3",
+            "LE_POUVOIR_DE_VOS_PENSEES_Meilleur_discours_de_motivation.mp3",
+            "La_MEILLEURE_facon_de_te_MOTIVER_pour_reussir.mp3",
+            "LA_MENTALITE_DU_TIGRE_Reveille_le_Predateur_Qui_Sommeille_en_Toi.mp3",
+            "LE_POUVOIR_DU_SILENCE_LE_SECRET_de_Machiavel.mp3",
+            "NE_GACHEZ_PAS_VOTRE_VIE_Puissant_discours_de_motivation.mp3",
+            "Les_5_Veritables_Secrets_de_la_DISCIPLINE_pour_Reussir_Video_de_motivation.mp3",
+            "POURQUOI_LES_GAGNANTS_GAGNENT_ET_LES_PERDANTS_PERDENT_Motivation_puissante.mp3",
+            "Le_SECRET_pour_Developper_une_DISCIPLINE_de_Fer.mp3",
+            "MENTALITE_DE_TOUS_LES_JOURS_PAS_D_EXCUSES_Motivation.mp3",
+            "PERSONNE_NE_VIENDRA_TE_SAUVER_Video_motivation_puissante.mp3",
+            "MENTALITE_DE_RICHE_VS_PAUVRE_Video_puissante_de_motivation.mp3",
+            "PAS_D_EXCUSES_Meilleur_video_de_motivation.mp3",
+            "MENTALITE_LEVE_TOI_ET_BATS_TOI_Discours_de_motivation.mp3",
+            "La_Verite_Brutale_Sur_Le_SUCCES_Que_Personne_Ne_Dit_Motivation_puissante.mp3",
+            "Regarde_cette_video_pour_avoir_CONFIANCE_en_Toi_Meilleur_video_de_motivation.mp3",
+            "Si_t_es_FAIBLE_MENTALEMENT_tu_vas_ECHOUER_Toute_Ta_Vie_Video_de_motivation_puissante.mp3",
+            "Sacrifie_ces_6_CHOSES_Dans_Ta_vie_en_2025_si_Tu_Veux_REUSSIR.mp3",
+            "Pourquoi_Pas_Toi.mp3",
+            "Se_Reveiller_a_4_Heures_du_Matin_Tous_Les_Jours_Changera_Votre_Vie.mp3",
+            "REGARDE_CA_QUAND_TA_VIE_DEVIENT_DUR_DISCOURS_MOTIVANT.mp3",
+            "RESTE_FOCUS_Si_Tu_Veux_REUSSIR_Video_de_motivation_puissante.mp3",
+            "Stoicisme_8_Principes_qui_vont_vous_Rendre_INARRETABLE.mp3",
+            "Quand_Tu_Auras_Compris_Cela_Tu_Deviendra_Riche_Motivation.mp3",
+            "Sois_Un_Homme.mp3",
+            "Transforme_Ta_Vie_Grace_a_Cette_Simple_Habitude_La_Discipline.mp3",
+            "VAINCRE_LA_DOULEUR_Discours_de_motivation.mp3",
+            "Tu_Vas_Regretter_Toute_Ta_Vie_Si_Tu_Ne_Fais_Pas_Ca_Video_Motivation_puissante.mp3",
+            "TU_TE_SENS_SEUL_Voici_Comment_Transformer_La_Solitude_En_Force.mp3",
+            "Une_Raison_d_Arreter_de_S_inquieter_Regardez_Ceci_chaque_fois_que_vous_etes_Stressee_ou_Anxieux.mp3",
+            "TOUT_COMMENCE_par_un_CHANGEMENT_de_MENTALITE_Motivation_Puissante.mp3",
+            "TRAVAIL_DUR_EN_SILENCE_LAISSE_TON_SUCCES_LES_CHOQUER_Motivation.mp3",
+            "TU_DOIS_ETRE_OBSEDE_Meilleur_discours_de_motivation.mp3",
+            "Voici_Ce_Que_Vous_Devez_Cacher_pour_REUSSIR_Motivation.mp3",
+            "TRAVAILLEZ_SUR_VOUS_POUR_REUSSIR_Motivation_et_developpement_personnel.mp3",
+            "Travaille_DUR_en_Silence_Laisse_Ton_Impact_Parler_pour_Toi.mp3",
+            "Vaincre_Ses_Peurs_en_5_Minutes_Ce_Que_Personne_Ne_T_a_Jamais_Dit.mp3"
+        ];
+
+        const getSyncUID = () => {
+        const email = localStorage.getItem('agi_logged_email') || "user@agi.bf";
+        const alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+        let hash = 0;
+        for (let i = 0; i < email.length; i++) { hash = (hash << 5) - hash + email.charCodeAt(i); hash |= 0; }
+        let res = "AGI", n = Math.abs(hash * 999999);
+        while (n > 0) { res += alphabet[n % 58]; n = Math.floor(n / 58); }
+        while(res.length < 44) res += alphabet[(res.length * 31) % 58];
+        return res.substring(0, 44);
+    };
+
+        async function init() {
+            const uid = getSyncUID();
+            const urlParams = new URLSearchParams(window.location.search);
+            const selectedId = urlParams.get('id');
+
+            const snap = await db.ref(`users/${uid}/livres_achetes`).once('value');
+            const purchased = snap.val() || [];
+
+            playlist = rawFiles.map((file, i) => ({
+                id: `m${i}`, 
+                file, 
+                title: file.replace(/_/g, ' ').replace('.mp3', '')
+            })).filter(t => purchased.includes(t.id));
+
+            if (playlist.length === 0) {
+                document.getElementById('playlistContainer').innerHTML = `
+                    <div class="text-center py-20 px-10">
+                        <i class="fas fa-lock text-yellow-600 text-4xl mb-5"></i>
+                        <p class="text-xs font-black uppercase tracking-widest text-slate-400">Aucun module débloqué détecté sur ce compte.</p>
+                        <a href="catalogue.html" class="mt-8 inline-block bg-yellow-600 text-black px-10 py-3 rounded-full font-black text-[10px] uppercase shadow-lg">Ouvrir le Catalogue</a>
+                    </div>`;
+                return;
+            }
+
+            render();
+
+            // Reprise de position ou ID sélectionné
+            let startIdx = 0;
+            const lastTrackId = localStorage.getItem('nexus_last_track');
+            
+            if (selectedId) {
+                const found = playlist.findIndex(t => t.id === selectedId);
+                if (found !== -1) startIdx = found;
+            } else if (lastTrackId) {
+                const found = playlist.findIndex(t => t.id === lastTrackId);
+                if (found !== -1) startIdx = found;
+            }
+
+            await setupTrack(startIdx, !!selectedId);
+        }
+
+        async function setupTrack(i, autoPlay = false) {
+            if(!playlist[i]) return;
+            
+            // Nettoyage de l'ancien Blob pour la mémoire
+            if (currentBlobUrl) URL.revokeObjectURL(currentBlobUrl);
+
+            index = i;
+            const track = playlist[index];
+            const fullUrl = BASE_URL + track.file;
+            const sourceLabel = document.getElementById('sourceLabel');
+
+            try {
+                const cache = await caches.open(CACHE_NAME);
+                const cachedResponse = await cache.match(fullUrl);
+                
+                if (cachedResponse) {
+                    const blob = await cachedResponse.blob();
+                    currentBlobUrl = URL.createObjectURL(blob);
+                    audio.src = currentBlobUrl;
+                    sourceLabel.classList.remove('hidden');
+                } else {
+                    audio.src = fullUrl;
+                    sourceLabel.classList.add('hidden');
+                }
+            } catch (e) {
+                audio.src = fullUrl;
+                sourceLabel.classList.add('hidden');
+            }
+
+            document.getElementById('trackTitle').innerText = track.title;
+            localStorage.setItem('nexus_last_track', track.id);
+            
+            // UI Update
+            document.querySelectorAll('[id^="item-"]').forEach(el => el.classList.remove('active-track'));
+            const currentItem = document.getElementById(`item-${i}`);
+            if(currentItem) {
+                currentItem.classList.add('active-track');
+                currentItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+
+            // Reprendre la position sauvegardée si c'est la même piste
+            const savedPos = localStorage.getItem(`pos_${track.id}`);
+            if (savedPos && !autoPlay) {
+                audio.currentTime = parseFloat(savedPos);
+            }
+
+            // Config MediaSession (Background Play)
+            if ('mediaSession' in navigator) {
+                navigator.mediaSession.metadata = new MediaMetadata({
+                    title: track.title,
+                    artist: 'Atlas Groupe International',
+                    album: 'Nexus Core',
+                    artwork: [{ src: 'https://i.imgur.com/OJM0H6R.jpeg', sizes: '512x512', type: 'image/jpeg' }]
+                });
+                
+                navigator.mediaSession.setActionHandler('play', () => audio.play());
+                navigator.mediaSession.setActionHandler('pause', () => audio.pause());
+                navigator.mediaSession.setActionHandler('previoustrack', prev);
+                navigator.mediaSession.setActionHandler('nexttrack', next);
+            }
+
+            if(autoPlay) audio.play().catch(e => console.log("Interaction requise"));
+        }
+
+        function togglePlay() { audio.paused ? audio.play() : audio.pause(); }
+        function seek(s) { audio.currentTime += s; }
+        function next() { setupTrack((index + 1) % playlist.length, true); }
+        function prev() { setupTrack((index - 1 + playlist.length) % playlist.length, true); }
+        function playAt(i) { setupTrack(i, true); }
+
+        audio.onplay = () => { 
+            playBtn.innerHTML = '<i class="fas fa-pause text-lg"></i>'; 
+            disk.classList.remove('paused-spin');
+        };
+
+        audio.onpause = () => { 
+            playBtn.innerHTML = '<i class="fas fa-play ml-1 text-lg"></i>'; 
+            disk.classList.add('paused-spin');
+        };
+
+        audio.ontimeupdate = () => {
+            const p = (audio.currentTime / audio.duration) * 100;
+            document.getElementById('progressBar').style.width = (p || 0) + "%";
+            document.getElementById('currentTime').innerText = formatTime(audio.currentTime);
+            if(audio.duration) document.getElementById('duration').innerText = formatTime(audio.duration);
+            
+            // Sauvegarder la position toutes les 5 secondes
+            if (Math.floor(audio.currentTime) % 5 === 0) {
+                localStorage.setItem(`pos_${playlist[index].id}`, audio.currentTime);
+            }
+        };
+
+        audio.onended = () => {
+            localStorage.removeItem(`pos_${playlist[index].id}`); // Supprimer car fini
+            if (loopMode === 1) audio.play();
+            else next();
+        };
+
+        function toggleLoop() {
+            loopMode = (loopMode + 1) % 2; // 0: Off, 1: Single
+            document.getElementById('loopLabel').innerText = loopMode === 1 ? "UN" : "OFF";
+            document.getElementById('loopBtn').className = loopMode === 1 ? "loop-active flex flex-col items-center bg-slate-800 p-2 rounded-lg" : "text-slate-600 flex flex-col items-center bg-slate-800/50 p-2 rounded-lg";
+        }
+
+        function formatTime(s) {
+            if(isNaN(s)) return "00:00";
+            let m = Math.floor(s/60), sec = Math.floor(s%60);
+            return m.toString().padStart(2,'0') + ":" + sec.toString().padStart(2,'0');
+        }
+
+        function handleProgressClick(e) {
+            const rect = document.getElementById('progressArea').getBoundingClientRect();
+            const pos = (e.clientX - rect.left) / rect.width;
+            audio.currentTime = pos * audio.duration;
+        }
+
+        function render() {
+            document.getElementById('playlistContainer').innerHTML = playlist.map((t, i) => `
+                <div id="item-${i}" onclick="playAt(${i})" class="flex items-center gap-4 p-4 rounded-2xl bg-slate-900/40 border border-slate-800/50 active:scale-95 transition-all">
+                    <div class="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-[10px] font-black text-slate-500">${i+1}</div>
+                    <div class="flex-1 truncate">
+                        <h4 class="text-[10px] font-black text-slate-200 uppercase truncate tracking-tight">${t.title}</h4>
+                        <p class="text-[7px] text-yellow-600 font-bold uppercase tracking-widest mt-0.5">Nexus Module</p>
+                    </div>
+                    <i class="fas fa-play-circle text-slate-700 text-lg"></i>
+                </div>
+            `).join('');
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
