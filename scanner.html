@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scanner QR vers Appel</title>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        #reader {
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #000;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            display: none;
+            word-break: break-all;
+        }
+        .status {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Scanner QR Code</h2>
+    <p class="status">Le code scanné sera envoyé au pavé numérique.</p>
+    
+    <div id="reader"></div>
+    
+    <div id="result">
+        <strong>Dernier code détecté :</strong> <span id="scanned-result"></span>
+    </div>
+</div>
+
+<script>
+    function onScanSuccess(decodedText, decodedResult) {
+        // Nettoyer le texte (enlever les espaces)
+        const cleanNumber = decodedText.trim();
+        
+        // Arrêter le scanner pour éviter les boucles d'ouverture
+        html5QrcodeScanner.clear();
+
+        // Action : Rediriger vers le numéroteur téléphonique
+        // Le protocole "tel:" ouvre le pavé numérique avec le numéro
+        window.location.href = `tel:${cleanNumber}`;
+        
+        // Optionnel : Affichage du numéro sur la page
+        document.getElementById('result').style.display = 'block';
+        document.getElementById('scanned-result').innerText = cleanNumber;
+    }
+
+    function onScanFailure(error) {
+        // On ignore les erreurs de lecture silencieusement pour ne pas polluer la console
+    }
+
+    let html5QrcodeScanner = new Html5QrcodeScanner(
+        "reader", 
+        { 
+            fps: 10, 
+            qrbox: {width: 250, height: 250},
+            aspectRatio: 1.0 
+        }, 
+        /* verbose= */ false
+    );
+    
+    html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+</script>
+
+</body>
+</html>
