@@ -2,407 +2,152 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ATLAS GROUPE INTERNATIONAL | Écosystème Industriel & Blockchain Nexus</title>
-
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'agi-navy': '#020617',
-                        'agi-gold': '#fbbf24',
-                        'agi-emerald': '#10b981',
-                        'agi-slate': '#1e293b',
-                        'agi-crimson': '#e11d48',
-                        'agi-azure': '#3b82f6'
-                    }
-                }
-            }
-        }
-    </script>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlas Traducteur - Arabe & Mooré</title>
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; color: #020617; overflow-x: hidden; scroll-behavior: smooth; }
-        .hero-bg { background: radial-gradient(circle at top right, rgba(251, 191, 36, 0.15), transparent), linear-gradient(135deg, #020617 0%, #0f172a 100%); }
-        .tech-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.3s ease; }
-        .tech-card:hover { border-color: #fbbf24; transform: translateY(-5px); }
-        [data-scroll] { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
-        [data-scroll].scrolled { opacity: 1; transform: translateY(0); }
-        .mono { font-family: 'JetBrains Mono', monospace; }
-        .gradient-text { background: linear-gradient(to right, #fbbf24, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .btn-hover { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        .btn-hover:hover { transform: scale(1.02); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
-        .logo { filter: drop-shadow(0 0 15px rgba(251, 191, 36, 0.3)); }
+        :root { 
+            --p: #009739; --s: #ef2b2d; --y: #ffcd00; --bg: #f8f9fa; 
+        }
+        
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, sans-serif; 
+            background: var(--bg); 
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; margin: 0; 
+        }
+
+        .card { 
+            background: white; width: 95%; max-width: 650px; padding: 40px; 
+            border-radius: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); 
+            border-top: 12px solid var(--p); position: relative;
+        }
+
+        .card::after {
+            content: ""; position: absolute; top: -12px; left: 50%;
+            transform: translateX(-50%); width: 30px; height: 30px;
+            background: var(--y); clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        }
+
+        h1 { text-align: center; color: #2c3e50; margin: 0 0 10px 0; font-size: 2rem; }
+        
+        .status { 
+            font-size: 0.85rem; text-align: center; margin-bottom: 20px; 
+            font-weight: bold; color: #666;
+        }
+
+        select, textarea { 
+            width: 100%; padding: 18px; margin-top: 10px; 
+            border-radius: 12px; border: 2px solid #eee; 
+            font-size: 18px; box-sizing: border-box; transition: 0.3s;
+        }
+
+        textarea { height: 120px; resize: none; }
+        textarea:focus { border-color: var(--p); outline: none; }
+
+        button { 
+            width: 100%; background: linear-gradient(135deg, var(--p), #007a2e); 
+            color: white; border: none; padding: 20px; margin-top: 15px;
+            border-radius: 12px; font-weight: bold; font-size: 1.1rem; 
+            cursor: pointer; box-shadow: 0 4px 15px rgba(0,151,57,0.3);
+        }
+
+        .res { 
+            margin-top: 25px; padding: 25px; background: #f1f8f4; 
+            border-radius: 15px; border-left: 8px solid var(--s); 
+            min-height: 80px; font-size: 1.6rem; text-align: center; 
+            color: #1a1a1a; display: flex; justify-content: center; align-items: center;
+        }
     </style>
 </head>
 <body>
 
-    <header class="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-gray-200">
-        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-4">
-                <img src="https://i.imgur.com/NyWnYFN.jpeg" alt="AGI" class="w-12 h-12 rounded-xl shadow-md border border-gray-100">
-                <div>
-                    <h1 class="font-extrabold text-md leading-none tracking-tighter uppercase text-agi-navy">Atlas Groupe International</h1>
-                    <div class="flex items-center gap-2 mt-1">
-                        <span class="text-[9px] font-black text-agi-emerald tracking-widest uppercase bg-agi-emerald/10 px-2 py-0.5 rounded">Récépissé PHUE-3539/2025</span>
-                        <span class="text-[8px] font-bold text-agi-gold bg-agi-gold/10 px-2 py-0.5 rounded italic">Est. 2025</span>
-                    </div>
-                </div>
-            </div>
-            <nav class="hidden lg:flex items-center gap-10 text-[11px] font-extrabold uppercase tracking-widest">
-                <a href="#projets" class="flex items-center gap-2 hover:text-agi-gold transition"><i class="fa-solid fa-industry"></i> Pôles Industriels</a>
-                <a href="#nexus" class="flex items-center gap-2 hover:text-agi-gold transition"><i class="fa-solid fa-microchip"></i> Nexus Core</a>
-                <a href="#gouvernance" class="flex items-center gap-2 hover:text-agi-gold transition"><i class="fa-solid fa-shield-halved"></i> Gouvernance</a>
-                <a href="connect.html" class="flex items-center gap-2 bg-agi-navy text-white px-8 py-3 rounded-xl hover:bg-agi-gold hover:text-agi-navy btn-hover shadow-lg">
-                    <i class="fa-solid fa-user-lock"></i> Espace Membre
-                </a>
-            </nav>
-        </div>
-    </header>
+<div class="card">
+    <h1>Atlas Traducteur</h1>
+    <div class="status" id="loadStatus">Connexion au fichier JSON...</div>
+    
+    <select id="mode" onchange="clearResult()">
+        <option value="ar_to_mo">Arabe ➔ Mooré</option>
+        <option value="mo_to_ar">Mooré ➔ Arabe</option>
+    </select>
 
-    <section class="hero-bg text-white py-16 md:py-32 relative overflow-hidden" data-scroll>
-        <div class="container mx-auto px-4 text-center relative z-10">
-            <div class="inline-flex items-center gap-3 bg-white/5 border border-white/10 px-4 py-2 rounded-full mb-8">
-                <span class="w-2 h-2 bg-agi-gold rounded-full animate-ping"></span>
-                <span class="text-agi-gold text-[10px] font-black uppercase tracking-[0.4em]">Souveraineté 226 Active</span>
-            </div>
+    <textarea id="source" placeholder="Saisissez votre texte..." oninput="autoTranslate()"></textarea>
 
-            <h1 class="text-3xl md:text-6xl font-bold mb-6 leading-tight tracking-tighter">
-                <img src="https://i.imgur.com/6YRySSd.jpeg" alt="Logo AGI" class="logo w-24 h-24 md:w-32 md:h-32 mx-auto mb-6 rounded-full border-4 border-agi-gold/30">
-                ATLAS GROUPE INTERNATIONAL<br>
-                <span class="gradient-text">L'avenir de la Souveraineté Économique au Faso</span>
-            </h1>
+    <button onclick="performManualTranslate()">LANCER LA TRADUCTION</button>
 
-            <p class="text-lg md:text-2xl mb-12 max-w-3xl mx-auto text-gray-300 font-medium">
-                Le premier écosystème qui sécurise les paiements des producteurs de coton et finance l'industrialisation nationale via la blockchain <span class="text-white underline decoration-agi-gold">Nexus Core Engine V4.5</span>.
-            </p>
+    <div class="res" id="result">---</div>
+</div>
 
-            <div class="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto mb-20">
-                <a href="whitepaper.html" class="bg-agi-navy border border-white/20 text-white px-8 py-4 rounded-2xl font-bold text-sm hover:bg-agi-slate transition shadow-lg btn-hover flex items-center justify-center min-w-[200px]">
-                    <i class="fas fa-file-alt mr-2 text-agi-gold"></i> Livre Blanc AG-COIN
-                </a>
-                <a href="#agcoin" class="bg-agi-emerald text-white px-8 py-4 rounded-2xl font-bold text-sm hover:bg-emerald-600 transition shadow-lg btn-hover flex items-center justify-center min-w-[200px]">
-                    <i class="fas fa-coins mr-2"></i> Découvrir l'AG-COIN
-                </a>
-            </div>
+<script>
+    let dictionary = null;
 
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 text-left">
-                <div class="tech-card p-8 rounded-3xl border-t-4 border-agi-gold">
-                    <i class="fa-solid fa-coins text-agi-gold text-2xl mb-4"></i>
-                    <span class="block text-slate-400 text-[10px] font-bold uppercase mb-2 tracking-widest">Parité Native</span>
-                    <div class="text-3xl font-black mono text-white">1 ₳ = 1 XOF</div>
-                </div>
-                <div class="tech-card p-8 rounded-3xl border-t-4 border-agi-emerald">
-                    <i class="fa-solid fa-bolt text-agi-emerald text-2xl mb-4"></i>
-                    <span class="block text-slate-400 text-[10px] font-bold uppercase mb-2 tracking-widest">Vitesse Nexus</span>
-                    <div class="text-3xl font-black mono text-white">0.4s / Tx</div>
-                </div>
-                <div class="tech-card p-8 rounded-3xl border-t-4 border-agi-azure">
-                    <i class="fa-solid fa-calendar-check text-agi-azure text-2xl mb-4"></i>
-                    <span class="block text-slate-400 text-[10px] font-bold uppercase mb-2 tracking-widest">ROI Semestriel</span>
-                    <div class="text-3xl font-black mono text-white">Up to 45%</div>
-                </div>
-                <div class="tech-card p-8 rounded-3xl border-t-4 border-purple-500">
-                    <i class="fa-solid fa-shield-virus text-purple-400 text-2xl mb-4"></i>
-                    <span class="block text-slate-400 text-[10px] font-bold uppercase mb-2 tracking-widest">Encryption</span>
-                    <div class="text-3xl font-black mono text-white">AES-256</div>
-                </div>
-            </div>
-        </div>
-    </section>
+    // Chargement strict du fichier local dictionnaire.json
+    async function loadDictionary() {
+        const statusEl = document.getElementById('loadStatus');
+        try {
+            const response = await fetch('dictionnaire.json');
+            if (!response.ok) throw new Error("Fichier dictionnaire.json introuvable");
+            
+            dictionary = await response.json();
+            
+            statusEl.innerText = "● Base de données chargée avec succès";
+            statusEl.style.color = "var(--p)";
+        } catch (error) {
+            statusEl.innerText = "● Erreur : Assurez-vous que dictionnaire.json est dans le même dossier";
+            statusEl.style.color = "var(--s)";
+        }
+    }
 
-    <section id="apropos" class="py-24 bg-white" data-scroll>
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-black text-center mb-12 text-agi-navy uppercase tracking-tight">
-                <i class="fas fa-building text-agi-emerald mr-3"></i> À Propos d'Atlas Groupe International
-            </h2>
-            <div class="grid lg:grid-cols-2 gap-16 items-center max-w-7xl mx-auto">
-                <div class="relative">
-                    <img src="https://i.imgur.com/dLD66wF.jpeg" alt="AGI Propos" class="rounded-[40px] shadow-2xl">
-                    <div class="absolute -bottom-6 -right-6 bg-agi-gold p-8 rounded-3xl shadow-xl hidden md:block">
-                        <p class="font-black text-agi-navy text-2xl">EST. 2025</p>
-                        <p class="text-[10px] uppercase font-bold tracking-widest">Burkina Faso</p>
-                    </div>
-                </div>
-                <div class="text-slate-600 space-y-6 text-lg leading-relaxed">
-                    <p>Atlas Groupe International est une organisation visionnaire engagée à transformer le paysage industriel et agricole au Burkina Faso grâce à l'intégration stratégique de la technologie blockchain propriétaire **Nexus Core**.</p>
-                    <p>Notre mission est de catalyser la croissance en créant un pont entre l'économie réelle (Or blanc, Solaire, Aviculture) et la finance numérique sécurisée. Avec le token **AG-COIN**, nous offrons des solutions de micro-financement et de paiement instantané aux acteurs de la chaîne de valeur.</p>
-                    <p>Nous érigeons un écosystème où l'innovation technologique et la souveraineté économique convergent pour un avenir radieux. Atlas Groupe International n'est pas qu'une entreprise, c'est le moteur du nouveau Burkina industriel.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    // Recherche instantanée
+    function autoTranslate() {
+        if (!dictionary) return;
+        const input = document.getElementById('source').value.trim().toLowerCase();
+        const mode = document.getElementById('mode').value;
+        const target = document.getElementById('result');
 
-    <section id="agcoin" class="py-24 bg-slate-50" data-scroll>
-        <div class="container mx-auto px-4 text-center mb-16">
-            <h2 class="text-4xl font-black text-agi-navy uppercase tracking-tight">
-                <i class="fas fa-coins text-agi-gold mr-3"></i> Atlas Groupe Coin (AG-COIN)
-            </h2>
-        </div>
-        <div class="container mx-auto px-4 max-w-7xl">
-            <div class="bg-white rounded-[50px] p-8 md:p-16 shadow-xl border border-slate-100">
-                <div class="grid lg:grid-cols-2 gap-16 items-center mb-12">
-                    <div class="order-2 lg:order-1">
-                        <h3 class="text-3xl font-black text-agi-navy mb-6">Le Pilier du Système Nexus</h3>
-                        <p class="text-slate-600 text-lg mb-8 leading-relaxed">
-                            L'AG-COIN est un token utilitaire natif du réseau **Nexus Core**. Conçu pour fluidifier les échanges entre agriculteurs, fournisseurs et investisseurs, il garantit une vitesse de **0,4 seconde** par transaction avec **0% de frais de gaz** pour les opérations internes.
-                        </p>
-                        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <li class="p-4 bg-slate-50 rounded-2xl flex items-start gap-3 border border-slate-100 italic">
-                                <i class="fas fa-bolt text-agi-emerald mt-1"></i>
-                                <span class="text-sm font-bold">Vitesse : 0,4s</span>
-                            </li>
-                            <li class="p-4 bg-slate-50 rounded-2xl flex items-start gap-3 border border-slate-100 italic">
-                                <i class="fas fa-shield-alt text-agi-azure mt-1"></i>
-                                <span class="text-sm font-bold">Sécurité : Nexus Proof-of-Authority</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <img src="https://i.imgur.com/V7PDh2e.jpeg" alt="AG-COIN" class="rounded-3xl shadow-lg order-1 lg:order-2">
-                </div>
+        if (input === "") {
+            target.innerText = "---";
+            return;
+        }
 
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
-                    <div class="p-6 bg-agi-navy text-white rounded-3xl text-center">
-                        <span class="block text-[10px] text-agi-gold font-black uppercase mb-2 tracking-widest">Symbole</span>
-                        <div class="text-2xl font-black">₳</div>
-                    </div>
-                    <div class="p-6 bg-agi-navy text-white rounded-3xl text-center">
-                        <span class="block text-[10px] text-agi-gold font-black uppercase mb-2 tracking-widest">Réseau</span>
-                        <div class="text-2xl font-black uppercase">Nexus Core</div>
-                    </div>
-                    <div class="p-6 bg-agi-navy text-white rounded-3xl text-center">
-                        <span class="block text-[10px] text-agi-gold font-black uppercase mb-2 tracking-widest">Décimal</span>
-                        <div class="text-2xl font-black">2</div>
-                    </div>
-                    <div class="p-6 bg-agi-navy text-white rounded-3xl text-center">
-                        <span class="block text-[10px] text-agi-gold font-black uppercase mb-2 tracking-widest">Offre Totale</span>
-                        <div class="text-xl font-black">♾️</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        const found = dictionary[mode][input];
+        if (found) {
+            target.innerHTML = `<strong style="color:var(--p)">${found}</strong>`;
+        }
+    }
 
-    <section class="py-24 bg-white" data-scroll>
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-black text-center mb-4 text-agi-navy">NOS PILIERS STRATÉGIQUES</h2>
-            <p class="text-center mb-16 text-slate-500 max-w-2xl mx-auto font-medium">AGI, le moteur de l'industrialisation et de l'inclusion financière au Burkina Faso.</p>
+    // Recherche approfondie (Exacte puis par inclusion)
+    function performManualTranslate() {
+        if (!dictionary) return;
+        const input = document.getElementById('source').value.trim().toLowerCase();
+        const mode = document.getElementById('mode').value;
+        const target = document.getElementById('result');
 
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div class="bg-slate-50 p-8 rounded-[35px] border border-slate-100 hover:border-agi-emerald transition group">
-                    <div class="w-14 h-14 bg-agi-emerald/10 text-agi-emerald rounded-2xl flex items-center justify-center mb-6 group-hover:bg-agi-emerald group-hover:text-white transition-colors">
-                        <i class="fas fa-coins text-2xl"></i>
-                    </div>
-                    <h3 class="font-black text-lg mb-3 uppercase tracking-tighter">AG-COIN & SOFITEX</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed italic">Paiement du coton sécurisé par Nexus (1 AG-COIN = 1 FCFA).</p>
-                </div>
-                <div class="bg-slate-50 p-8 rounded-[35px] border border-slate-100 hover:border-agi-gold transition group">
-                    <div class="w-14 h-14 bg-agi-gold/10 text-agi-gold rounded-2xl flex items-center justify-center mb-6 group-hover:bg-agi-gold group-hover:text-white transition-colors">
-                        <i class="fas fa-industry text-2xl"></i>
-                    </div>
-                    <h3 class="font-black text-lg mb-3 uppercase tracking-tighter">INDUSTRIALISATION</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed italic">1. Tissage de coton,       2. Générateurs GSHA-AGI,      3. Ferme Avicole,      4. Projet Mère Nature.</p>
-                </div>
-                <div class="bg-slate-50 p-8 rounded-[35px] border border-slate-100 hover:border-agi-azure transition group">
-                    <div class="w-14 h-14 bg-agi-azure/10 text-agi-azure rounded-2xl flex items-center justify-center mb-6 group-hover:bg-agi-azure group-hover:text-white transition-colors">
-                        <i class="fas fa-chart-line text-2xl"></i>
-                    </div>
-                    <h3 class="font-black text-lg mb-3 uppercase tracking-tighter">ROI SEMESTRIEL</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed italic">Offres d'investissement de 5%, 18% et 45% sur 180 jours.</p>
-                </div>
-                <div class="bg-slate-50 p-8 rounded-[35px] border border-slate-100 hover:border-purple-500 transition group">
-                    <div class="w-14 h-14 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-purple-600 group-hover:text-white transition-colors">
-                        <i class="fas fa-piggy-bank text-2xl"></i>
-                    </div>
-                    <h3 class="font-black text-lg mb-3 uppercase tracking-tighter">MICRO CRÉDIT AGB</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed italic">Financement pour l'économie informelle et les petits producteurs.</p>
-                </div>
-                <div class="bg-slate-50 p-8 rounded-[35px] border border-slate-100 hover:border-teal-500 transition group">
-                    <div class="w-14 h-14 bg-teal-100 text-teal-600 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-teal-600 group-hover:text-white transition-colors">
-                        <i class="fas fa-graduation-cap text-2xl"></i>
-                    </div>
-                    <h3 class="font-black text-lg mb-3 uppercase tracking-tighter">INCLUSION JEUNESSE</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed italic">Éducation financière et accès bancaire pour la jeunesse burkinabè.</p>
-                </div>
-                <div class="bg-slate-50 p-8 rounded-[35px] border border-slate-100 hover:border-pink-500 transition group">
-                    <div class="w-14 h-14 bg-pink-100 text-pink-600 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-pink-600 group-hover:text-white transition-colors">
-                        <i class="fas fa-exchange-alt text-2xl"></i>
-                    </div>
-                    <h3 class="font-black text-lg mb-3 uppercase tracking-tighter">AG SWAP</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed italic">Échangeur d'actifs sécurisé pour la liquidité des investisseurs.</p>
-                </div>
-                <div class="bg-slate-50 p-8 rounded-[35px] border border-slate-100 hover:border-agi-crimson transition group">
-                    <div class="w-14 h-14 bg-agi-crimson/10 text-agi-crimson rounded-2xl flex items-center justify-center mb-6 group-hover:bg-agi-crimson group-hover:text-white transition-colors">
-                        <i class="fas fa-dice text-2xl"></i>
-                    </div>
-                    <h3 class="font-black text-lg mb-3 uppercase tracking-tighter">CASINO AGB</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed italic">Divertissement sécurisé finançant les projets industriels nationaux.</p>
-                </div>
-                <div class="bg-slate-50 p-8 rounded-[35px] border border-slate-100 hover:border-agi-navy transition group">
-                    <div class="w-14 h-14 bg-agi-navy/10 text-agi-navy rounded-2xl flex items-center justify-center mb-6 group-hover:bg-agi-navy group-hover:text-white transition-colors">
-                        <i class="fas fa-handshake text-2xl"></i>
-                    </div>
-                    <h3 class="font-black text-lg mb-3 uppercase tracking-tighter">PARTENARIAT</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed italic">Soutien institutionnel et bancaire (Coris Bank International).</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        if (input === "") return;
 
-    <section id="gouvernance" class="py-24 bg-slate-50">
-        <div class="container mx-auto px-4 max-w-7xl">
-            <div class="grid lg:grid-cols-2 gap-16">
-                <div data-scroll>
-                    <h3 class="text-3xl font-black text-agi-navy mb-10 flex items-center gap-4 uppercase tracking-tighter">
-                        <i class="fas fa-users-gear text-agi-gold"></i> Conseil d'Administration
-                    </h3>
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between p-6 bg-white rounded-3xl shadow-sm border border-slate-100">
-                            <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 bg-agi-navy text-agi-gold rounded-full flex items-center justify-center font-black">TY</div>
-                                <div>
-                                    <p class="font-black text-agi-navy">YOUGMA Thierry Joël</p>
-                                    <p class="text-[10px] uppercase font-bold text-agi-gold tracking-widest">Président Fondateur</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-between p-6 bg-white rounded-3xl shadow-sm border border-slate-100">
-                            <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 bg-slate-100 text-slate-500 rounded-full flex items-center justify-center font-black">EO</div>
-                                <div>
-                                    <p class="font-bold">OUÉDRAOGO K. Evariste Omar</p>
-                                    <p class="text-[10px] uppercase font-bold text-slate-400 tracking-widest">Secrétaire Général</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-between p-6 bg-white rounded-3xl shadow-sm border border-slate-100">
-                            <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 bg-slate-100 text-slate-500 rounded-full flex items-center justify-center font-black">TH</div>
-                                <div>
-                                    <p class="font-bold">TRAORET Hamadou</p>
-                                    <p class="text-[10px] uppercase font-bold text-slate-400 tracking-widest">Trésorier Général</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        // 1. Test direct
+        let output = dictionary[mode][input];
 
-                <div class="space-y-8" data-scroll>
-                    <h3 class="text-3xl font-black text-agi-navy mb-10 uppercase tracking-tighter">Conformité & Juridique</h3>
-                    <div class="grid sm:grid-cols-2 gap-4">
-                        <a href="presentation.html" class="flex flex-col items-center justify-center p-8 bg-white text-agi-navy rounded-[35px] btn-hover shadow-xl border-4 border-agi-gold">
-                            <i class="fa-solid fa-presentation-screen text-3xl mb-4 text-agi-gold"></i>
-                            <span class="text-xs font-black uppercase tracking-widest text-center">Présentation Atlas Groupe</span>
-                        </a>
-                        <a href="explorer.html" class="flex flex-col items-center justify-center p-8 bg-agi-gold text-agi-navy rounded-[35px] btn-hover shadow-xl border-4 border-white">
-                            <i class="fa-solid fa-database text-3xl mb-4"></i>
-                            <span class="text-xs font-black uppercase tracking-widest text-center">Registre Privé d'Atlas</span>
-                        </a>
-                        <a href="whitepaper.html" class="flex flex-col items-center justify-center p-8 bg-agi-navy text-white rounded-[35px] btn-hover shadow-xl">
-                            <i class="fa-solid fa-book-open text-agi-gold text-3xl mb-4"></i>
-                            <span class="text-xs font-black uppercase tracking-widest">Livre Blanc V4.5</span>
-                        </a>
-                        <a href="legal.html" class="flex flex-col items-center justify-center p-8 bg-agi-azure text-white rounded-[35px] btn-hover shadow-xl">
-                            <i class="fa-solid fa-gavel text-3xl mb-4"></i>
-                            <span class="text-xs font-black uppercase tracking-widest">Mentions Légales</span>
-                        </a>
-                        <a href="cgu.html" class="flex flex-col items-center justify-center p-8 bg-agi-crimson text-white rounded-[35px] btn-hover shadow-xl">
-                            <i class="fa-solid fa-file-contract text-3xl mb-4"></i>
-                            <span class="text-xs font-black uppercase tracking-widest">Conditions (CGU)</span>
-                        </a>
-                        <a href="politique.html" class="flex flex-col items-center justify-center p-8 bg-agi-emerald text-white rounded-[35px] btn-hover shadow-xl">
-                            <i class="fa-solid fa-user-shield text-3xl mb-4"></i>
-                            <span class="text-xs font-black uppercase tracking-widest">Confidentialité</span>
-                        </a>
-                    </div>
-                    <a href="registre.html" class="block w-full bg-slate-100 hover:bg-agi-gold hover:text-agi-navy border-2 border-agi-navy p-6 rounded-3xl text-center font-black uppercase text-sm tracking-[0.2em] transition-all duration-300">
-                        <i class="ri-android-fill"></i> Télécharger Notre Application (18,22 Mo)
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
+        // 2. Test par correspondance partielle si non trouvé
+        if (!output) {
+            const keys = Object.keys(dictionary[mode]);
+            const match = keys.find(k => k.toLowerCase().includes(input) || input.includes(k.toLowerCase()));
+            if (match) output = dictionary[mode][match];
+        }
 
-    <footer class="bg-agi-navy text-white pt-24 pb-12 relative">
-        <div class="container mx-auto px-4 max-w-7xl">
-            <div class="grid lg:grid-cols-4 gap-16 mb-20 border-b border-white/5 pb-20">
-                <div class="lg:col-span-2">
-                    <img src="https://i.imgur.com/NyWnYFN.jpeg" alt="AGI" class="w-20 h-20 rounded-2xl mb-8 border border-white/10">
-                    <h4 class="text-4xl font-black mb-8 leading-tight">Bâtir l'avenir industriel <br><span class="text-agi-gold italic">du Burkina Faso.</span></h4>
-                    <p class="text-slate-400 text-lg mb-8 max-w-md">
-                        Siège social : Bobo Dioulasso, Lafiabougou, Secteur 20.<br>
-                        BP : 131 Koupéla, Province du Kouritenga.
-                    </p>
-                    <div class="flex flex-wrap gap-4 mt-6">
-                        <a href="https://www.facebook.com/share/1HaczmCfQS/" class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-agi-gold hover:text-agi-navy transition btn-hover"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="https://www.tiktok.com/@atlas_groupe_inter" class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-agi-gold hover:text-agi-navy transition btn-hover"><i class="fa-brands fa-tiktok"></i></a>
-                        <a href="https://t.me/AtlasGroupeBusiness_Bot" class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-agi-gold hover:text-agi-navy transition btn-hover"><i class="fa-brands fa-telegram"></i></a>
-                        <a href="https://discord.gg/fTF3SZuJb" class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-agi-gold hover:text-agi-navy transition btn-hover"><i class="fa-brands fa-discord"></i></a>
-                        <a href="https://chat.whatsapp.com/DR21RjbTWFM6YSZQges1G0" class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-agi-gold hover:text-agi-navy transition btn-hover"><i class="fa-brands fa-whatsapp"></i></a>
-                        <a href="#" class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-agi-gold hover:text-agi-navy transition btn-hover"><i class="fa-brands fa-x-twitter"></i></a>
-                    </div>
-                </div>
+        if (output) {
+            target.innerHTML = `<strong style="color:var(--p)">${output}</strong>`;
+        } else {
+            target.innerHTML = `<span style="color:#888; font-size:1.1rem;">Aucun résultat pour "${input}"</span>`;
+        }
+    }
 
-                <div>
-                    <h5 class="text-agi-gold text-xs font-black uppercase tracking-widest mb-10 border-l-2 border-agi-gold pl-4">Contact & Support</h5>
-                    <ul class="space-y-6">
-                        <li class="flex items-center gap-4 group">
-                            <i class="fa-solid fa-envelope text-agi-gold"></i>
-                            <a href="mailto:atlasgroupeinter@gmail.com" class="text-sm font-bold text-slate-400 group-hover:text-white transition">atlasgroupeinter@gmail.com</a>
-                        </li>
-                        <li class="flex items-center gap-4 group">
-                            <i class="fa-solid fa-globe text-agi-gold"></i>
-                            <a href="https://agi-burkina.netlify.app" class="text-sm font-bold text-slate-400 group-hover:text-white transition">agi-burkina.netlify.app</a>
-                        </li>
-                        <li class="flex flex-col gap-2">
-                            <p class="text-[10px] uppercase font-black text-slate-500 mb-1 tracking-widest">Lignes Directes</p>
-                            <p class="text-md font-black text-white tracking-widest">+226 70 87 37 73</p>
-                            <p class="text-md font-black text-white tracking-widest">+226 76 20 38 48</p>
-                            <p class="text-md font-black text-white tracking-widest">+226 78 37 08 03</p>
-                        </li>
-                    </ul>
-                </div>
+    function clearResult() {
+        document.getElementById('source').value = "";
+        document.getElementById('result').innerText = "---";
+    }
 
-                <div>
-                    <h5 class="text-agi-gold text-xs font-black uppercase tracking-widest mb-10 border-l-2 border-agi-gold pl-4">Écosystème Digital</h5>
-                    <ul class="space-y-4 text-sm font-bold text-slate-400">
-                        <li><a href="#" class="hover:text-white transition flex items-center gap-2"><i class="fa-solid fa-caret-right text-[8px]"></i> AGI Business Pro</a></li>
-                        <li><a href="#" class="hover:text-white transition flex items-center gap-2"><i class="fa-solid fa-caret-right text-[8px]"></i> AGI SofiCash</a></li>
-                        <li><a href="#" class="hover:text-white transition flex items-center gap-2"><i class="fa-solid fa-caret-right text-[8px]"></i> AGI Pay-Station</a></li>
-                        <li><a href="#" class="hover:text-white transition flex items-center gap-2"><i class="fa-solid fa-caret-right text-[8px]"></i> AGI Audio-Lib</a></li>
-                    </ul>
-                </div>
-            </div>
+    window.onload = loadDictionary;
+</script>
 
-            <div class="flex flex-col md:flex-row justify-between items-center gap-8 text-[10px] text-slate-500 font-black uppercase tracking-[0.3em] text-center md:text-left">
-                <p>© 2026 ATLAS GROUPE INTERNATIONAL | NEXUS CORE TECHNOLOGY</p>
-                <p class="italic text-agi-emerald/60">"Souveraineté Numérique - Progrès - Solidarité"</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const observerOptions = {
-                threshold: 0.15,
-                rootMargin: '0px 0px -50px 0px'
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('scrolled');
-                    }
-                });
-            }, observerOptions);
-
-            document.querySelectorAll('[data-scroll]').forEach(el => observer.observe(el));
-        });
-    </script>
 </body>
 </html>
