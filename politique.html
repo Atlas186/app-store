@@ -4,229 +4,563 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Politique de Confidentialité - AGI Nexus Core v5.0</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --bg: #010409; --surface: #0d1117; --border: #30363d;
             --gold: #fbbf24; --accent: #38bdf8; --text-main: #e6edf3;
-            --text-dim: #8b949e; --success: #10b981;
+            --text-dim: #8b949e; --success: #10b981; --warning: #f59e0b;
         }
-        body { background: var(--bg); color: var(--text-main); font-family: 'Inter', -apple-system, sans-serif; padding: 40px 20px; line-height: 1.7; }
         
-        /* Bouton PDF */
-        .pdf-trigger {
-            position: fixed; top: 20px; right: 20px; background: var(--accent); color: var(--bg);
-            border: none; padding: 12px 20px; border-radius: 8px; font-weight: 800;
-            cursor: pointer; z-index: 1000; display: flex; align-items: center; gap: 8px;
-            box-shadow: 0 10px 20px rgba(56, 189, 248, 0.2); transition: 0.3s;
+        body { 
+            background: var(--bg); 
+            color: var(--text-main); 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            padding: 40px 20px; 
+            line-height: 1.6; 
+            font-size: 0.85rem; /* Taille de police diminuée pour éviter les débordements */
+            margin: 0;
+            transition: all 0.3s ease;
         }
-        .pdf-trigger:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
-        .privacy-box { max-width: 850px; margin: 0 auto; background: var(--surface); border: 1px solid var(--border); padding: 50px; border-radius: 8px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); }
+        /* Bouton de changement de langue fixe */
+        .lang-toggle-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--surface);
+            color: var(--accent);
+            border: 1px solid var(--border);
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+            z-index: 9999;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .lang-toggle-btn:hover {
+            background: var(--border);
+            color: var(--text-main);
+        }
+
+        .privacy-box { 
+            max-width: 900px; /* Élargi pour accommoder les textes longs et le tableau */
+            margin: 0 auto; 
+            background: var(--surface); 
+            border: 1px solid var(--border); 
+            padding: 40px; 
+            border-radius: 8px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4); 
+        }
         
         .header-privacy { border-bottom: 2px solid var(--accent); padding-bottom: 30px; margin-bottom: 40px; text-align: center; }
-        .header-privacy h1 { color: var(--accent); font-size: 1.6rem; text-transform: uppercase; letter-spacing: 2px; margin: 10px 0; }
-        .shield-icon { font-size: 3rem; color: var(--gold); }
+        .header-privacy h1 { color: var(--accent); font-size: 1.8rem; text-transform: uppercase; letter-spacing: 1.5px; margin: 10px 0; }
+        .shield-icon { font-size: 3rem; color: var(--gold); margin-bottom: 15px; display: inline-block; }
         
-        .article { margin-bottom: 45px; border-left: 2px solid transparent; transition: 0.3s; }
-        .article:hover { border-left: 2px solid var(--gold); padding-left: 15px; }
+        .article { margin-bottom: 50px; background: rgba(255,255,255,0.02); padding: 20px; border-radius: 6px; border-left: 3px solid var(--accent); }
+        .art-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+        .art-num { background: var(--accent); color: var(--bg); font-weight: 900; padding: 4px 12px; border-radius: 4px; font-size: 1rem; }
+        .art-title { color: var(--gold); font-weight: 800; text-transform: uppercase; font-size: 1.2rem; letter-spacing: 0.5px; }
         
-        .art-header { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; }
-        .art-num { background: var(--accent); color: var(--bg); font-weight: 900; padding: 2px 12px; border-radius: 4px; font-size: 0.85rem; }
-        .art-title { color: var(--gold); font-weight: 800; text-transform: uppercase; font-size: 1.1rem; letter-spacing: 0.5px; }
-        
-        .art-content { font-size: 0.62rem; color: var(--text-dim); text-align: justify; }
+        .art-content { font-size: 0.85rem; color: var(--text-dim); text-align: justify; padding-left: 0; }
+        .art-content p { margin-bottom: 15px; }
         .highlight { color: var(--text-main); font-weight: 600; }
         
-        .data-table { width: 100%; border-collapse: collapse; margin: 25px 0; font-size: 0.2rem; background: rgba(0,0,0,0.2); }
-        .data-table th, .data-table td { border: 1px solid var(--border); padding: 15px; text-align: left; }
-        .data-table th { background: rgba(56, 189, 248, 0.05); color: var(--accent); text-transform: uppercase; }
+        /* Conteneur pour empêcher le débordement du tableau */
+        .table-responsive { width: 100%; overflow-x: auto; margin: 25px 0; border-radius: 6px; border: 1px solid var(--border); }
+        .data-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; min-width: 700px; }
+        .data-table th, .data-table td { border-bottom: 1px solid var(--border); border-right: 1px solid var(--border); padding: 15px; text-align: left; }
+        .data-table th:last-child, .data-table td:last-child { border-right: none; }
+        .data-table tr:last-child td { border-bottom: none; }
+        .data-table th { background: rgba(56, 189, 248, 0.1); color: var(--accent); text-transform: uppercase; letter-spacing: 1px; }
+        .data-table tr:hover td { background: rgba(255,255,255,0.03); }
 
-        .tag { display: inline-block; background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 5px 15px; border-radius: 50px; font-size: 0.7rem; font-weight: bold; margin-bottom: 10px; border: 1px solid var(--success); }
+        .tag { display: inline-block; background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; margin-bottom: 10px; border: 1px solid var(--success); }
         
-        .tech-spec { background: rgba(251, 191, 36, 0.05); border: 1px dashed var(--gold); padding: 15px; border-radius: 6px; margin-top: 15px; font-family: 'Courier New', monospace; font-size: 0.85rem; }
+        /* Dictionnaire / Glossary Styles */
+        .dictionary-section { margin-top: 50px; padding: 30px; background: #0a0e14; border: 1px dashed var(--gold); border-radius: 8px; }
+        .dict-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
+        .dict-title { color: var(--gold); font-size: 1.3rem; font-weight: bold; text-transform: uppercase; }
+        .dict-search { padding: 10px 15px; background: var(--bg); border: 1px solid var(--border); color: var(--text-main); border-radius: 4px; width: 100%; max-width: 300px; font-family: inherit; }
+        .dict-search:focus { outline: none; border-color: var(--accent); }
+        .dict-list { display: grid; grid-template-columns: 1fr; gap: 15px; max-height: 400px; overflow-y: auto; padding-right: 10px; }
+        .dict-item { background: var(--surface); padding: 15px; border-left: 2px solid var(--gold); border-radius: 4px; }
+        .dict-term { color: var(--accent); font-weight: bold; font-size: 0.95rem; margin-bottom: 5px; }
+        .dict-def { color: var(--text-dim); font-size: 0.8rem; }
+
+        /* Scrollbar pour le dictionnaire et le tableau */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
         footer { margin-top: 60px; padding-top: 30px; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--text-dim); text-align: center; }
         
-        @media print { .pdf-trigger { display: none; } .privacy-box { border: none; box-shadow: none; } }
+        @media (max-width: 768px) { 
+            .privacy-box { padding: 20px; margin-top: 40px; } 
+            .lang-toggle-btn { top: 10px; right: 10px; padding: 8px 12px; font-size: 0.8rem; }
+            .header-privacy h1 { font-size: 1.4rem; }
+            .art-title { font-size: 1rem; }
+        }
+
+        /* Gestion des langues CSS */
+        .en { display: none; }
+        body.lang-en .fr { display: none; }
+        body.lang-en .en { display: block; }
     </style>
 </head>
 <body>
 
-    <button class="pdf-trigger" onclick="exportPrivacyPDF()">
-        <i class="ri-file-pdf-2-fill"></i> EXPORTER PDF
+    <button class="lang-toggle-btn" onclick="toggleLanguage()">
+        <i class="fa-solid fa-language"></i> <span id="lang-label">FR / EN</span>
     </button>
 
-    <div class="privacy-box" id="privacy-content">
+    <div class="privacy-box">
         <div class="header-privacy">
-            <i class="ri-shield-keyhole-fill shield-icon"></i>
-            <h1>Politique de Confidentialité</h1>
-            <p style="margin: 5px 0; font-weight: bold;">Atlas Groupe International (AGI) — Nexus Core Ecosystem</p>
-            <div class="tag">CONFORME LOI N°001-2021/AN (BURKINA FASO) & RGPD STANDARDS</div>
+            <i class="fa-solid fa-shield-halved shield-icon"></i>
+            <h1 class="fr">Politique de Confidentialité</h1>
+            <h1 class="en">Privacy Policy</h1>
+            
+            <p class="fr" style="margin: 5px 0; color: var(--text-dim);">Protection des Données & Souveraineté Numérique - Atlas Groupe International</p>
+            <p class="en" style="margin: 5px 0; color: var(--text-dim);">Data Protection & Digital Sovereignty - Atlas Group International</p>
+            
+            <div class="tag fr">CONFORME LOI N°001-2021/AN (BURKINA FASO)</div>
+            <div class="tag en">COMPLIANT WITH LAW N°001-2021/AN (BURKINA FASO)</div>
         </div>
 
         <div class="article">
             <div class="art-header">
                 <span class="art-num">01</span>
-                <span class="art-title">Philosophie de Protection</span>
+                <span class="art-title fr">Engagement de Confidentialité et Architecture</span>
+                <span class="art-title en">Privacy Commitment and Architecture</span>
             </div>
-            <div class="art-content">
-                La protection de la vie privée chez <b>Atlas Groupe International</b> n'est pas une option, mais une contrainte architecturale. Notre protocole <b>Nexus Core</b> utilise le principe du <span class="highlight">Zero-Knowledge Proof (ZKP)</span> partiel : nous validons vos transactions sans jamais exposer votre identité civile sur le registre public de la blockchain. Vos données sont traitées pour garantir votre souveraineté financière totale.
+            <div class="art-content fr">
+                <p>Atlas Groupe International (AGI) place la protection de la vie privée au cœur absolu de son architecture de nouvelle génération, <b>Nexus Core</b>. Conscient des enjeux critiques liés à la souveraineté des données dans le cyberespace moderne, nous avons conçu l'intégralité de nos systèmes en appliquant rigoureusement le principe du "Privacy by Design" et "Privacy by Default". Cela signifie que la protection de vos données n'est pas une simple surcouche ajoutée a posteriori, mais bien une composante intégrée nativement dans chaque protocole, chaque ligne de code de nos smart contracts, et chaque nœud de validation de notre infrastructure blockchain. Dès l'instant où un utilisateur interagit avec l'écosystème Nexus, des mécanismes de pseudonymisation avancés sont déclenchés, isolant les informations d'identification personnelle (PII) des données transactionnelles enregistrées sur le registre immuable.</p>
+                <p>Notre engagement dépasse la simple conformité légale ; il s'agit d'un impératif moral et technologique. Nous utilisons des preuves à divulgation nulle de connaissance (Zero-Knowledge Proofs - zk-SNARKs) qui permettent de valider l'authenticité d'une transaction ou l'éligibilité d'un utilisateur sans jamais révéler les données sous-jacentes au réseau public ou aux validateurs. De plus, AGI s'engage à mener des audits de sécurité trimestriels par des firmes indépendantes spécialisées en cybersécurité et cryptographie, dont les rapports (expurgés des vulnérabilités critiques en cours de correction) sont mis à la disposition de la communauté via le terminal Nexus. En acceptant cette politique, vous intégrez un réseau où votre souveraineté numérique est techniquement garantie et mathématiquement prouvée par des algorithmes de hachage de pointe, vous assurant un contrôle total et exclusif sur vos actifs et votre empreinte numérique.</p>
+            </div>
+            <div class="art-content en">
+                <p>Atlas Group International (AGI) places privacy protection at the absolute core of its next-generation architecture, <b>Nexus Core</b>. Recognizing the critical stakes related to data sovereignty in modern cyberspace, we have designed all our systems by rigorously applying the principles of "Privacy by Design" and "Privacy by Default". This means that data protection is not merely a superficial layer added as an afterthought, but a component natively integrated into every protocol, every line of code in our smart contracts, and every validation node in our blockchain infrastructure. From the moment a user interacts with the Nexus ecosystem, advanced pseudonymization mechanisms are triggered, isolating Personally Identifiable Information (PII) from the transactional data recorded on the immutable ledger.</p>
+                <p>Our commitment goes beyond simple legal compliance; it is a moral and technological imperative. We utilize Zero-Knowledge Proofs (zk-SNARKs) which allow us to validate the authenticity of a transaction or a user's eligibility without ever revealing the underlying data to the public network or the validators. Furthermore, AGI is committed to conducting quarterly security audits by independent firms specializing in cybersecurity and cryptography, the reports of which (redacted of any critical vulnerabilities actively being patched) are made available to the community via the Nexus terminal. By accepting this policy, you are joining a network where your digital sovereignty is technically guaranteed and mathematically proven by state-of-the-art hashing algorithms, ensuring you have total and exclusive control over your assets and digital footprint.</p>
             </div>
         </div>
 
         <div class="article">
             <div class="art-header">
                 <span class="art-num">02</span>
-                <span class="art-title">Responsable du Traitement & DPO</span>
+                <span class="art-title fr">Responsable du Traitement et DPO</span>
+                <span class="art-title en">Data Controller and DPO</span>
             </div>
-            <div class="art-content">
-                Le traitement est placé sous la responsabilité d'Atlas Groupe International, Burkina Faso. 
-                <br><br>
-                <b>Département :</b> Unité de Conformité et Cybersécurité (UCC).
-                <br><b>Data Protection Officer (DPO) :</b> <span class="highlight">compliance@atlas-groupe.bf</span>
-                <br><b>Siège Social :</b> Ouagadougou, Secteur 15, Burkina Faso.
+            <div class="art-content fr">
+                <p>Le responsable légal et opérationnel du traitement des données personnelles au sein de notre écosystème est le département exclusif de Cyber-Sécurité et de Conformité d'<b>Atlas Groupe International</b>. Notre siège social, centre névralgique de nos opérations, est situé à Ouagadougou, au Burkina Faso, sous la juridiction directe des lois nationales relatives à la protection des données à caractère personnel, notamment sous le contrôle de la Commission de l'Informatique et des Libertés (CIL). En tant que responsable du traitement, AGI détermine avec une précision chirurgicale les finalités et les moyens par lesquels vos données sont collectées, traitées, stockées et éventuellement détruites, garantissant que chaque étape du cycle de vie de la donnée respecte les normes d'éthique les plus strictes.</p>
+                <p>Pour assurer une transparence totale et un point de contact direct pour nos utilisateurs, nous avons nommé un Délégué à la Protection des Données (DPO - Data Protection Officer) de très haut niveau, indépendant dans ses fonctions de contrôle interne. Le DPO est chargé de veiller à la stricte application de la présente politique, d'auditer les processus internes d'ingénierie, et de servir de liaison principale avec les autorités de régulation étatiques. Si vous avez la moindre question, préoccupation, ou si vous souhaitez exercer vos droits légaux concernant vos informations personnelles, vous pouvez contacter notre DPO via le canal de communication chiffré de bout en bout à l'adresse suivante : <span class="highlight">dpo@atlas-groupe.bf</span>. Le DPO s'engage à accuser réception de toute requête dans un délai maximum de 48 heures ouvrées et à fournir une réponse complète, détaillée et conforme aux exigences légales sous 30 jours, un délai qui peut être étendu de 60 jours supplémentaires pour les requêtes d'une complexité technique avérée, notamment celles impliquant l'analyse de blocs historiques sur le réseau Nexus.</p>
+            </div>
+            <div class="art-content en">
+                <p>The legal and operational entity responsible for the processing of personal data within our ecosystem is the exclusive Cyber-Security and Compliance department of <b>Atlas Group International</b>. Our corporate headquarters, the nerve center of our operations, is located in Ouagadougou, Burkina Faso, operating strictly under the direct jurisdiction of national laws regarding the protection of personal data, and notably under the supervision of the Commission de l'Informatique et des Libertés (CIL). As the data controller, AGI determines with surgical precision the purposes and means by which your data is collected, processed, stored, and eventually destroyed, guaranteeing that every stage of the data lifecycle adheres to the highest ethical standards.</p>
+                <p>To ensure total transparency and provide a direct point of contact for our users, we have appointed an elite-level Data Protection Officer (DPO), who operates independently in their internal oversight functions. The DPO is tasked with ensuring the strict enforcement of this policy, auditing internal engineering processes, and acting as the primary liaison with state regulatory authorities. Should you have any questions, concerns, or wish to exercise your legal rights regarding your personal information, you may contact our DPO via our end-to-end encrypted communication channel at the following address: <span class="highlight">dpo@atlas-groupe.bf</span>. The DPO is committed to acknowledging receipt of any inquiry within a maximum of 48 business hours and providing a complete, detailed, and legally compliant response within 30 days. This timeframe may be extended by an additional 60 days for requests of proven technical complexity, particularly those requiring the forensic analysis of historical blocks on the Nexus network.</p>
             </div>
         </div>
 
         <div class="article">
             <div class="art-header">
                 <span class="art-num">03</span>
-                <span class="art-title">Inventaire Détaillé des Données</span>
+                <span class="art-title fr">Catégories Exhaustives de Données Collectées</span>
+                <span class="art-title en">Exhaustive Categories of Collected Data</span>
             </div>
-            <div class="art-content">
-                Nous catégorisons les données collectées selon trois niveaux de criticité :
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Niveau</th>
-                            <th>Données</th>
-                            <th>Conservation</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="highlight" style="color: var(--accent);">Niveau 1 : Public</td>
-                            <td>Adresse de portefeuille Base 58, Horodatage des blocs, Montants AG-COIN.</td>
-                            <td>Illimitée (Blockchain)</td>
-                        </tr>
-                        <tr>
-                            <td class="highlight" style="color: var(--gold);">Niveau 2 : Privé</td>
-                            <td>Email de secours (chiffré), Justificatifs KYC (CNIB/Passeport), Numéro de téléphone.</td>
-                            <td>Durée du contrat + 5 ans</td>
-                        </tr>
-                        <tr>
-                            <td class="highlight" style="color: var(--danger);">Niveau 3 : Technique</td>
-                            <td>Adresses IP de connexion, Logs de métadonnées de terminal, Empreintes de session.</td>
-                            <td>12 mois maximum</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="art-content fr">
+                <p>La doctrine d'Atlas Groupe International est la minimisation absolue des données. Nous ne collectons, ne traitons et ne conservons que les informations strictement indispensables, adéquates et pertinentes pour assurer le fonctionnement fluide, la sécurité inébranlable et l'intégrité globale de l'écosystème Nexus Core. Chaque point de donnée collecté fait l'objet d'une justification documentée dans notre registre des activités de traitement. Il est crucial de comprendre que notre infrastructure décentralisée limite intrinsèquement notre capacité et notre volonté d'accumuler des profils utilisateurs extensifs. Le tableau ci-dessous détaille avec une transparence granulaire les catégories exactes d'informations que notre système est susceptible de traiter lors de votre interaction avec nos terminaux, nos nœuds réseau ou nos applications décentralisées (dApps).</p>
+                
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Catégorie de Donnée</th>
+                                <th>Nature Technique des Éléments Collectés</th>
+                                <th>Finalité Principale du Traitement</th>
+                                <th>Durée de Conservation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="highlight">Identité Numérique Nexus</td>
+                                <td>Adresse de portefeuille Base 58, Clés publiques dérivées, Email haché (SHA-256), Alias réseau.</td>
+                                <td>Création de session, authentification décentralisée, routage des actifs numériques.</td>
+                                <td>Jusqu'à la suppression du compte hors-chaîne.</td>
+                            </tr>
+                            <tr>
+                                <td class="highlight">Métadonnées Blockchain</td>
+                                <td>Soldes cryptographiques AG-COIN, Hash des transactions (TxID), Horodatage des blocs, Frais de Gas, Logs d'exécution des Smart Contracts.</td>
+                                <td>Maintien du consensus Proof-of-Authority (PoA), traçabilité immuable des transferts de valeur, exécution des protocoles.</td>
+                                <td>Permanente (Immuabilité inhérente au registre distribué).</td>
+                            </tr>
+                            <tr>
+                                <td class="highlight">Données Techniques et Télémétrie</td>
+                                <td>Adresses IP (obfusquées après 24h), User-Agent, Empreinte matérielle du terminal (Device Fingerprinting), Version de l'OS, Version du build Nexus.</td>
+                                <td>Détection d'anomalies, prévention des attaques DDoS et Sybil, maintien de la stabilité des nœuds, gestion des sessions actives.</td>
+                                <td>12 mois glissants (Logs de sécurité).</td>
+                            </tr>
+                            <tr>
+                                <td class="highlight">Biométrie et Sécurité Avancée</td>
+                                <td>Hash cryptographique de l'empreinte digitale ou faciale locale (Aucune image biométrique brute n'est transmise, seul le token de validation cryptographique quitte le secure enclave du terminal).</td>
+                                <td>Authentification multi-facteurs (MFA) d'urgence, signature de transactions à haut risque, déverrouillage de stockage à froid.</td>
+                                <td>Exclusivement stockée localement sur le matériel de l'utilisateur.</td>
+                            </tr>
+                            <tr>
+                                <td class="highlight">Conformité et Lutte Anti-Fraude (KYC)</td>
+                                <td>Pièces d'identité numérisées, Preuves de domicile, Analyse comportementale des flux de fonds (exigé uniquement pour les passerelles Fiat).</td>
+                                <td>Respect des obligations légales LBC/FT (Lutte contre le Blanchiment de Capitaux et le Financement du Terrorisme).</td>
+                                <td>5 ans après la cessation de la relation d'affaires.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>En interagissant avec l'architecture Nexus, l'utilisateur consent techniquement à l'enregistrement des "Métadonnées Blockchain". Ces données, par la nature même de la technologie des registres distribués (DLT), sont répliquées sur de multiples nœuds validateurs afin d'assurer la résilience du réseau. Cependant, nous déployons des algorithmes de mixage et des adresses furtives (stealth addresses) optionnelles pour maximiser l'anonymat des flux lorsque la réglementation locale le permet, garantissant que vos transactions ne puissent pas être trivialement reliées à votre identité physique par des sociétés d'analyse de chaîne tierces.</p>
+            </div>
+            <div class="art-content en">
+                <p>The doctrine of Atlas Group International is absolute data minimization. We only collect, process, and retain information that is strictly indispensable, adequate, and relevant to ensure the seamless operation, unshakeable security, and global integrity of the Nexus Core ecosystem. Every data point collected is subject to documented justification in our record of processing activities. It is crucial to understand that our decentralized infrastructure intrinsically limits our capacity and desire to accumulate extensive user profiles. The table below details with granular transparency the exact categories of information our system may process during your interaction with our terminals, network nodes, or decentralized applications (dApps).</p>
+                
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Data Category</th>
+                                <th>Technical Nature of Collected Elements</th>
+                                <th>Primary Purpose of Processing</th>
+                                <th>Retention Period</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="highlight">Nexus Digital Identity</td>
+                                <td>Base 58 Wallet Address, Derived public keys, Hashed email (SHA-256), Network Alias.</td>
+                                <td>Session creation, decentralized authentication, digital asset routing.</td>
+                                <td>Until off-chain account deletion.</td>
+                            </tr>
+                            <tr>
+                                <td class="highlight">Blockchain Metadata</td>
+                                <td>AG-COIN cryptographic balances, Transaction Hashes (TxID), Block timestamps, Gas fees, Smart Contract execution logs.</td>
+                                <td>Maintenance of Proof-of-Authority (PoA) consensus, immutable traceability of value transfers, protocol execution.</td>
+                                <td>Permanent (Inherent immutability of the distributed ledger).</td>
+                            </tr>
+                            <tr>
+                                <td class="highlight">Technical & Telemetry Data</td>
+                                <td>IP Addresses (obfuscated after 24h), User-Agent, Device Fingerprinting, OS Version, Nexus Build Version.</td>
+                                <td>Anomaly detection, prevention of DDoS and Sybil attacks, node stability maintenance, active session management.</td>
+                                <td>Rolling 12 months (Security logs).</td>
+                            </tr>
+                            <tr>
+                                <td class="highlight">Biometrics & Advanced Security</td>
+                                <td>Cryptographic hash of local fingerprint or facial scan (No raw biometric image is transmitted; only the cryptographic validation token leaves the device's secure enclave).</td>
+                                <td>Emergency Multi-Factor Authentication (MFA), high-risk transaction signing, cold storage unlocking.</td>
+                                <td>Exclusively stored locally on the user's hardware.</td>
+                            </tr>
+                            <tr>
+                                <td class="highlight">Compliance & Anti-Fraud (KYC)</td>
+                                <td>Digitized ID documents, Proof of address, Behavioral analysis of fund flows (required only for Fiat gateways).</td>
+                                <td>Adherence to legal AML/CFT obligations (Anti-Money Laundering and Combating the Financing of Terrorism).</td>
+                                <td>5 years after the termination of the business relationship.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>By interacting with the Nexus architecture, the user technically consents to the recording of "Blockchain Metadata". These data, by the very nature of Distributed Ledger Technology (DLT), are replicated across multiple validator nodes to ensure network resilience. However, we deploy mixing algorithms and optional stealth addresses to maximize the anonymity of flows when local regulations permit, ensuring that your transactions cannot be trivially linked to your physical identity by third-party chain analysis firms.</p>
             </div>
         </div>
 
         <div class="article">
             <div class="art-header">
                 <span class="art-num">04</span>
-                <span class="art-title">Finalités du Traitement</span>
+                <span class="art-title fr">Bases Légales du Traitement des Données</span>
+                <span class="art-title en">Legal Basis for Data Processing</span>
             </div>
-            <div class="art-content">
-                Vos données sont utilisées strictement pour :
-                <ul>
-                    <li><span class="highlight">L'exécution des Services Nexus :</span> Gestion des comptes, validation des transferts P2P et déploiement des Smart Contracts.</li>
-                    <li><span class="highlight">La Conformité HDI :</span> Attribution des dividendes issus des projets industriels (Coton, Énergie, Aviculture) selon votre profil.</li>
-                    <li><span class="highlight">La Sécurité Réseau :</span> Prévention des attaques par déni de service (DDoS) et détection des accès frauduleux.</li>
-                </ul>
+            <div class="art-content fr">
+                <p>La légalité de nos opérations de traitement des données repose sur des fondations juridiques solides, soigneusement alignées avec les exigences réglementaires internationales et les spécificités de la loi N°001-2021/AN du Burkina Faso. Premièrement, le traitement est indispensable à l'<span class="highlight">exécution contractuelle</span>. En créant un portefeuille Nexus et en utilisant les services AG-COIN, vous acceptez nos Conditions Générales d'Utilisation. Pour fournir ces services cryptographiques, valider vos transactions, et maintenir la synchronisation de votre terminal avec le réseau principal, le traitement de vos clés publiques et de vos métadonnées de transaction est techniquement inévitable et contractuellement requis. Sans ce traitement de base, la fourniture du service serait matériellement impossible.</p>
+                <p>Deuxièmement, nous nous appuyons sur notre <span class="highlight">intérêt légitime</span> impérieux. Cet intérêt légitime concerne spécifiquement la sécurité globale de l'infrastructure réseau. Il englobe la surveillance proactive pour la détection d'intrusions, la prévention des fraudes massives, la défense contre les attaques par déni de service distribué (DDoS), et la protection des actifs des utilisateurs contre les acteurs malveillants. Nous avons procédé à une mise en balance rigoureuse de ces intérêts légitimes face à vos droits fondamentaux, concluant que les garanties techniques que nous appliquons (comme l'obfuscation et le chiffrement) protègent adéquatement votre vie privée tout en nous permettant de sécuriser le réseau. Enfin, dans certains contextes spécifiques tels que la conversion de monnaie fiduciaire en crypto-actifs, le traitement est dicté par le respect d'une <span class="highlight">obligation légale</span> stricte, notamment les directives internationales du GAFI (Groupe d'Action Financière) relatives à la lutte contre le blanchiment d'argent, nécessitant la collecte de données d'identification formelles.</p>
+            </div>
+            <div class="art-content en">
+                <p>The legality of our data processing operations is built upon solid legal foundations, carefully aligned with international regulatory requirements and the specificities of Law N°001-2021/AN of Burkina Faso. Firstly, processing is indispensable for <span class="highlight">contractual execution</span>. By creating a Nexus wallet and utilizing AG-COIN services, you accept our General Terms of Use. To provide these cryptographic services, validate your transactions, and maintain the synchronization of your terminal with the mainnet, the processing of your public keys and transaction metadata is technically inevitable and contractually required. Without this foundational processing, the provision of the service would be materially impossible.</p>
+                <p>Secondly, we rely on our compelling <span class="highlight">legitimate interest</span>. This legitimate interest specifically pertains to the global security of the network infrastructure. It encompasses proactive monitoring for intrusion detection, prevention of massive fraud, defense against Distributed Denial of Service (DDoS) attacks, and the protection of user assets from malicious actors. We have conducted a rigorous balancing test of these legitimate interests against your fundamental rights, concluding that the technical safeguards we apply (such as obfuscation and encryption) adequately protect your privacy while allowing us to secure the network. Finally, in specific contexts such as the conversion of fiat currency into crypto-assets, processing is dictated by compliance with a strict <span class="highlight">legal obligation</span>, notably the international directives of the FATF (Financial Action Task Force) concerning anti-money laundering, which necessitate the collection of formal identification data.</p>
             </div>
         </div>
 
         <div class="article">
             <div class="art-header">
                 <span class="art-num">05</span>
-                <span class="art-title">Stockage & Souveraineté Géographique</span>
+                <span class="art-title fr">Stockage, Localisation et Souveraineté Numérique</span>
+                <span class="art-title en">Storage, Localization, and Digital Sovereignty</span>
             </div>
-            <div class="art-content">
-                AGI refuse l'hébergement sur des clouds publics étrangers non sécurisés. 
-                <br><b>Infrastructure :</b> Les serveurs Nexus sont localisés dans des Data Centers privés sécurisés. Le stockage des documents KYC est <span class="highlight">isolé du réseau internet public</span> (Air-Gapped storage) pour prévenir toute fuite massive de données.
+            <div class="art-content fr">
+                <p>Dans un monde où les données sont souvent exploitées comme une marchandise par des conglomérats technologiques étrangers, Atlas Groupe International a pris la décision stratégique radicale d'internaliser l'intégralité de son infrastructure de stockage. Contrairement aux services financiers traditionnels ou aux applications Web3 de commodité qui s'appuient sur des serveurs cloud tiers vulnérables (AWS, Google Cloud, Azure), les bases de données relationnelles hors-chaîne (off-chain) contenant les informations sensibles des utilisateurs d'AGI sont stockées exclusivement sur des serveurs privés, de type "Bare Metal", entièrement conçus, déployés et gérés par les ingénieurs de l'écosystème Nexus. Ces centres de données, classifiés Tier IV, bénéficient d'une sécurité physique de niveau militaire, incluant des contrôles d'accès biométriques stricts, des systèmes de détection d'intrusion périmétrique, et des alimentations électriques redondantes pour garantir une disponibilité de 99.999%.</p>
+                <p>La question de la souveraineté numérique est primordiale pour notre groupe. Nous garantissons solennellement qu'absolument aucune donnée personnelle, historique de navigation, ou métadonnée financière n'est transmise, vendue, louée ou échangée avec des courtiers de données (data brokers), des agences de notation de crédit tierces ou des régies publicitaires mondiales. Conformément à notre charte fondatrice, les serveurs hébergeant les données critiques des citoyens et résidents de notre zone d'opération principale sont localisés physiquement sur le territoire du Burkina Faso. Dans le cas où l'expansion du réseau Nexus nécessiterait le déploiement de nœuds serveurs dans d'autres juridictions pour des raisons de latence ou de tolérance aux pannes, ces déploiements se feront uniquement dans des zones géographiques offrant un niveau de protection des données jugé strictement équivalent ou supérieur aux standards rigoureux d'AGI, encadrés par des Clauses Contractuelles Types (CCT) inflexibles interdisant tout accès par des entités gouvernementales étrangères non autorisées.</p>
+            </div>
+            <div class="art-content en">
+                <p>In a world where data is often exploited as a commodity by foreign technological conglomerates, Atlas Group International has made the radical strategic decision to internalize its entire storage infrastructure. Unlike traditional financial services or convenience Web3 applications that rely on vulnerable third-party cloud servers (AWS, Google Cloud, Azure), the off-chain relational databases containing sensitive AGI user information are stored exclusively on private, "Bare Metal" servers, entirely designed, deployed, and managed by the engineers of the Nexus ecosystem. These Tier IV classified data centers benefit from military-grade physical security, including strict biometric access controls, perimeter intrusion detection systems, and redundant power supplies to guarantee 99.999% availability.</p>
+                <p>The issue of digital sovereignty is paramount for our group. We solemnly guarantee that absolutely no personal data, browsing history, or financial metadata is transmitted, sold, rented, or exchanged with data brokers, third-party credit rating agencies, or global advertising networks. In accordance with our founding charter, the servers hosting the critical data of citizens and residents of our primary operational zone are physically located within the territory of Burkina Faso. In the event that the expansion of the Nexus network requires the deployment of server nodes in other jurisdictions for reasons of latency or fault tolerance, these deployments will only occur in geographical zones offering a level of data protection deemed strictly equivalent or superior to AGI's rigorous standards, framed by inflexible Standard Contractual Clauses (SCC) prohibiting any access by unauthorized foreign governmental entities.</p>
             </div>
         </div>
 
         <div class="article">
             <div class="art-header">
                 <span class="art-num">06</span>
-                <span class="art-title">Protocole de Sécurité Militaire</span>
+                <span class="art-title fr">Sécurité de l'Infrastructure et Chiffrement Militaire</span>
+                <span class="art-title en">Infrastructure Security and Military Encryption</span>
             </div>
-            <div class="art-content">
-                Nous appliquons des standards de sécurité de grade bancaire :
-                <div class="tech-spec">
-                    - Chiffrement symétrique : AES-256-GCM (Données au repos)<br>
-                    - Chiffrement asymétrique : Ed25519 (Signatures de transactions)<br>
-                    - Transport : TLS 1.3 avec Perfect Forward Secrecy (PFS)<br>
-                    - Hashage : SHA-3 (Keccak) pour l'intégrité des blocs
-                </div>
+            <div class="art-content fr">
+                <p>La forteresse numérique de Nexus Core est protégée par une architecture de sécurité multicouche, conçue pour résister aux menaces cybernétiques les plus sophistiquées, y compris les attaques potentielles par des ordinateurs quantiques dans un avenir proche. Pour toutes les données au repos (stockées sur nos serveurs de base de données), nous appliquons le standard de chiffrement symétrique de qualité militaire <span class="highlight">AES-256-GCM</span> (Advanced Encryption Standard avec Galois/Counter Mode). Ce standard est réputé inviolable par les moyens de calcul conventionnels actuels et garantit non seulement la confidentialité mais aussi l'intégrité des données chiffrées contre toute tentative de falsification. La gestion des clés cryptographiques d'entreprise est isolée de manière drastique au sein de Modules de Sécurité Matérielle (HSM) certifiés FIPS 140-2 Niveau 3, empêchant toute extraction des clés, même en cas de compromission physique du serveur hôte.</p>
+                <p>Pour les données en transit, c'est-à-dire toutes les communications entre votre terminal utilisateur, nos API d'accès, et les nœuds du réseau blockchain, nous imposons l'utilisation exclusive du protocole <span class="highlight">TLS 1.3</span> configuré avec des suites de chiffrement exigeant la confidentialité persistante (Perfect Forward Secrecy - PFS). Cela signifie que même si une clé privée à long terme venait à être compromise dans le futur, les communications passées resteraient indéchiffrables. Au niveau administratif, les accès des ingénieurs d'AGI aux systèmes critiques sont régis par les principes de "Moindre Privilège" et de "Séparation des Tâches". Chaque connexion nécessite une authentification multi-facteurs (MFA) matérielle (clés FIDO2 U2F), est canalisée via des bastions réseau sécurisés (Jump Hosts), et génère une piste d'audit (Audit Log) permanente, immuable et surveillée en temps réel par des algorithmes d'intelligence artificielle détectant les comportements anormaux.</p>
+            </div>
+            <div class="art-content en">
+                <p>The digital fortress of Nexus Core is protected by a multi-layered security architecture, designed to withstand the most sophisticated cybernetic threats, including potential attacks by quantum computers in the near future. For all data at rest (stored on our database servers), we apply the military-grade symmetric encryption standard <span class="highlight">AES-256-GCM</span> (Advanced Encryption Standard with Galois/Counter Mode). This standard is reputed to be unbreakable by current conventional computational means and guarantees not only the confidentiality but also the integrity of the encrypted data against any tampering attempts. Corporate cryptographic key management is drastically isolated within Hardware Security Modules (HSM) certified to FIPS 140-2 Level 3, preventing any key extraction, even in the event of a physical compromise of the host server.</p>
+                <p>For data in transit, meaning all communications between your user terminal, our access APIs, and the blockchain network nodes, we mandate the exclusive use of the <span class="highlight">TLS 1.3</span> protocol configured with cipher suites requiring Perfect Forward Secrecy (PFS). This means that even if a long-term private key were compromised in the future, past communications would remain undecipherable. At the administrative level, AGI engineers' access to critical systems is governed by the principles of "Least Privilege" and "Separation of Duties". Every login requires hardware-based Multi-Factor Authentication (MFA) (FIDO2 U2F keys), is channeled through secure network bastions (Jump Hosts), and generates a permanent, immutable Audit Log monitored in real-time by artificial intelligence algorithms detecting anomalous behavior.</p>
             </div>
         </div>
 
         <div class="article">
             <div class="art-header">
                 <span class="art-num">07</span>
-                <span class="art-title">Vos Droits Statutaires</span>
+                <span class="art-title fr">Droits Fondamentaux de l'Utilisateur</span>
+                <span class="art-title en">Fundamental User Rights</span>
             </div>
-            <div class="art-content">
-                Conformément à la loi burkinabè, vous disposez de droits étendus. Pour les exercer, envoyez un message signé avec votre clé Nexus à la conformité.
-                <ul>
-                    <li><b>Droit d'Opposition :</b> Vous pouvez refuser le traitement de vos données à des fins statistiques.</li>
-                    <li><b>Droit à la Limitation :</b> Geler l'usage de vos données en cas de contestation de leur exactitude.</li>
-                    <li><b>Note sur l'Immuabilité :</b> En raison de la nature de la technologie blockchain, les données inscrites dans les blocs (historique AG-COIN) ne peuvent être modifiées ou supprimées par AGI.</li>
-                </ul>
+            <div class="art-content fr">
+                <p>AGI reconnaît et consacre la souveraineté de l'individu sur ses données personnelles. Conformément aux réglementations locales les plus strictes et en s'inspirant des meilleurs standards internationaux (tels que le RGPD), vous disposez d'un arsenal complet de droits opposables. Vous avez le <b>Droit d'Accès</b> absolu : vous pouvez exiger, via une simple requête signée cryptographiquement depuis votre terminal, une copie exhaustive, dans un format structuré et lisible par machine (JSON ou CSV), de toutes les données hors-chaîne que nous détenons à votre sujet. Vous possédez également le <b>Droit de Rectification</b>, vous permettant d'exiger la correction immédiate de toute information de profil inexacte, incomplète ou obsolète, garantissant ainsi l'intégrité de votre dossier d'identité numérique au sein de notre base de données centralisée d'appoint.</p>
+                <p>Cependant, le domaine des registres distribués introduit des nuances techniques importantes concernant le <b>Droit à l'Effacement</b> ("Droit à l'oubli"). Vous pouvez exiger la suppression totale et irréversible de vos données personnelles stockées hors-chaîne sur les serveurs d'AGI. Nous exécuterons cette demande en utilisant des protocoles d'effacement de données conformes aux normes militaires (comme le standard DoD 5220.22-M), détruisant les clés de déchiffrement associées à votre profil. Néanmoins, il est impératif de comprendre que l'historique des transactions, les adresses de portefeuille publiques et les interactions de contrats intelligents gravés sur la blockchain <i>Nexus Core</i> sont mathématiquement <b>immuables</b> par nature. Ils ne peuvent être ni altérés, ni supprimés, ni censurés par quiconque, y compris par AGI. Dans ce cas, le "droit à l'oubli" se matérialise par la rupture définitive du lien hors-chaîne entre votre identité réelle (effacée) et l'adresse pseudonyme sur la blockchain, rendant l'historique public orphelin et anonyme. Enfin, vous bénéficiez du <b>Droit à la Portabilité</b>, vous autorisant à exporter vos clés privées (que vous êtes le seul à détenir de manière non-dépositaire) et vos métadonnées pour les utiliser avec un logiciel tiers compatible, et du <b>Droit d'Opposition</b> au traitement à des fins de profilage non-essentiel, bien que, comme mentionné précédemment, AGI ne pratique aucun profilage publicitaire.</p>
+            </div>
+            <div class="art-content en">
+                <p>AGI recognizes and enshrines the sovereignty of the individual over their personal data. In accordance with the strictest local regulations and inspired by the best international standards (such as the GDPR), you possess a comprehensive arsenal of enforceable rights. You have the absolute <b>Right of Access</b>: you may demand, via a simple cryptographically signed request from your terminal, an exhaustive copy, in a structured and machine-readable format (JSON or CSV), of all off-chain data we hold concerning you. You also possess the <b>Right to Rectification</b>, allowing you to demand the immediate correction of any inaccurate, incomplete, or obsolete profile information, thereby ensuring the integrity of your digital identity file within our auxiliary centralized database.</p>
+                <p>However, the domain of distributed ledgers introduces significant technical nuances regarding the <b>Right to Erasure</b> ("Right to be Forgotten"). You may demand the total and irreversible deletion of your personal data stored off-chain on AGI servers. We will execute this request using data wiping protocols compliant with military standards (such as the DoD 5220.22-M standard), destroying the decryption keys associated with your profile. Nevertheless, it is imperative to understand that transaction histories, public wallet addresses, and smart contract interactions etched onto the <i>Nexus Core</i> blockchain are mathematically <b>immutable</b> by nature. They can neither be altered, deleted, nor censored by anyone, including AGI. In this case, the "right to be forgotten" materializes through the definitive severing of the off-chain link between your real identity (which is deleted) and the pseudonymous address on the blockchain, rendering the public history orphaned and anonymous. Finally, you benefit from the <b>Right to Data Portability</b>, authorizing you to export your private keys (which you solely hold in a non-custodial manner) and your metadata to use with compatible third-party software, and the <b>Right to Object</b> to processing for non-essential profiling purposes, although, as previously mentioned, AGI does not engage in any advertising profiling.</p>
             </div>
         </div>
 
         <div class="article">
             <div class="art-header">
                 <span class="art-num">08</span>
-                <span class="art-title">Partage avec des Tiers</span>
+                <span class="art-title fr">Gestion Stricte des Cookies et Traceurs</span>
+                <span class="art-title en">Strict Management of Cookies and Trackers</span>
             </div>
-            <div class="art-content">
-                AGI ne vend <b>jamais</b> vos données. Un partage limité peut survenir avec :
-                <ol>
-                    <li>Les autorités judiciaires burkinabè (sur réquisition légale formelle).</li>
-                    <li>Les partenaires bancaires (Coris Bank) uniquement pour les opérations de retrait/dépôt fiduciaire (XOF).</li>
-                </ol>
+            <div class="art-content fr">
+                <p>Le paradigme d'Internet actuel est gangrené par la surveillance pernicieuse et le pistage continu des internautes à travers des constellations de cookies tiers. AGI rejette catégoriquement ce modèle économique intrusif. L'interface web et le terminal client lourd du Nexus Core ont été ingéniés avec une politique "zéro traceur externe". Nous n'incorporons aucun cookie analytique tiers (comme Google Analytics), aucun pixel de suivi de réseaux sociaux (comme les pixels Meta ou X), ni aucun outil de retargeting publicitaire. Votre navigation au sein de notre écosystème est une affaire privée qui ne regarde que vous. Le code source de notre interface est régulièrement audité pour s'assurer qu'aucune dépendance logicielle n'introduise secrètement des mécanismes de télémétrie dissimulés.</p>
+                <p>Les seuls "cookies" ou technologies de stockage local (tels que le LocalStorage HTML5 ou IndexedDB) que le terminal Nexus est autorisé à déployer sur votre appareil sont ceux d'une nécessité technique absolue. Ces marqueurs techniques éphémères servent uniquement à deux finalités critiques : le maintien de la sécurité de votre session cryptographique active (via des tokens JWT à très courte durée de vie) et la sauvegarde de vos préférences locales d'interface (comme le choix de la langue de cette présente politique ou le thème d'affichage de votre tableau de bord). Ces jetons de session sont conçus pour s'auto-détruire immédiatement dès que vous cliquez sur "Déconnexion" ou automatiquement après 15 minutes d'inactivité détectée, nécessitant alors une nouvelle signature cryptographique de votre part pour ré-authentifier l'accès à vos actifs. En aucun cas ces données techniques locales ne quittent l'enceinte de votre terminal matériel personnel.</p>
+            </div>
+            <div class="art-content en">
+                <p>The current Internet paradigm is plagued by the pernicious surveillance and continuous tracking of users across constellations of third-party cookies. AGI categorically rejects this intrusive economic model. The web interface and the heavy client terminal of Nexus Core have been engineered with a "zero external tracker" policy. We incorporate no third-party analytic cookies (such as Google Analytics), no social media tracking pixels (such as Meta or X pixels), nor any advertising retargeting tools. Your navigation within our ecosystem is a private matter concerning only you. The source code of our interface is regularly audited to ensure that no software dependency secretly introduces concealed telemetry mechanisms.</p>
+                <p>The only "cookies" or local storage technologies (such as HTML5 LocalStorage or IndexedDB) that the Nexus terminal is authorized to deploy on your device are those of absolute technical necessity. These ephemeral technical markers serve only two critical purposes: maintaining the security of your active cryptographic session (via very short-lived JWT tokens) and saving your local interface preferences (such as the language choice for this very policy or the display theme of your dashboard). These session tokens are designed to self-destruct immediately upon clicking "Logout" or automatically after 15 minutes of detected inactivity, subsequently requiring a new cryptographic signature from you to re-authenticate access to your assets. Under no circumstances do these local technical data leave the confines of your personal hardware terminal.</p>
             </div>
         </div>
 
         <div class="article">
             <div class="art-header">
                 <span class="art-num">09</span>
-                <span class="art-title">Gestion des Cookies</span>
+                <span class="art-title fr">Cadre de Coopération avec les Autorités Judiciaires</span>
+                <span class="art-title en">Framework for Cooperation with Judicial Authorities</span>
             </div>
-            <div class="art-content">
-                Le terminal Nexus n'utilise aucun cookie tiers (Google Analytics, Facebook Pixel, etc.). Nous utilisons exclusivement des <span class="highlight">cookies techniques de jeton (JWT)</span> pour maintenir la persistance de votre session chiffrée.
+            <div class="art-content fr">
+                <p>Bien que la protection de la vie privée soit le pilier de notre conception technologique, Atlas Groupe International est une entité juridique responsable, opérant dans les limites de l'État de droit. Nous ne tolérons pas et ne facilitons pas l'utilisation du réseau Nexus Core pour des activités criminelles telles que le financement du terrorisme, l'extorsion, le blanchiment de capitaux à grande échelle, ou la diffusion de contenus pénalement répréhensibles. Dans ce contexte, AGI a mis en place un protocole d'escalade juridique strict pour traiter les requêtes provenant des autorités régaliennes et judiciaires. Nous coopérons avec les forces de l'ordre exclusivement dans le cadre de procédures judiciaires formelles, telles qu'un mandat de perquisition dûment signé par un juge compétent, une commission rogatoire, ou une requête contraignante émise par la CENTIF (Cellule Nationale de Traitement des Informations Financières) du Burkina Faso ou son équivalent reconnu via des traités d'entraide judiciaire internationale (MLAT).</p>
+                <p>Lors de la réception d'une telle requête légale, notre équipe juridique interne procède systématiquement à un examen rigoureux pour vérifier sa validité, sa portée et son caractère proportionné. Si la demande est trop large, vague ou semble violer les droits constitutionnels de l'utilisateur, AGI s'engage à la contester formellement devant les tribunaux compétents pour en limiter la portée. Dans le cas où nous serions légalement contraints de fournir des informations, les données divulguées se limiteront strictement aux métadonnées hors-chaîne (adresses IP de connexion récentes, informations KYC si une passerelle fiat a été utilisée) dont nous disposons. Il est vital de réitérer que la nature décentralisée et chiffrée de la blockchain Nexus empêche techniquement AGI de geler, de saisir ou d'accéder aux fonds (AG-COIN) d'un utilisateur, car nous ne possédons ni les clés privées ni de mécanismes de "backdoor" intégrés au protocole pour altérer le registre distribué. Nous ne pouvons fournir que des analyses de traçabilité des flux publics, informations par ailleurs accessibles à tout observateur du registre ouvert.</p>
+            </div>
+            <div class="art-content en">
+                <p>Although the protection of privacy is the pillar of our technological design, Atlas Group International is a responsible legal entity, operating within the bounds of the rule of law. We do not tolerate nor facilitate the use of the Nexus Core network for criminal activities such as terrorism financing, extortion, large-scale money laundering, or the distribution of criminally reprehensible content. In this context, AGI has established a strict legal escalation protocol to process requests originating from sovereign and judicial authorities. We cooperate with law enforcement exclusively within the framework of formal judicial procedures, such as a search warrant duly signed by a competent judge, a rogatory commission, or a binding request issued by the CENTIF (National Financial Information Processing Unit) of Burkina Faso or its recognized equivalent via Mutual Legal Assistance Treaties (MLAT).</p>
+                <p>Upon receiving such a legal request, our internal legal team systematically conducts a rigorous review to verify its validity, scope, and proportionality. If the request is overly broad, vague, or appears to violate the user's constitutional rights, AGI is committed to formally challenging it in competent courts to narrow its scope. In the event that we are legally compelled to provide information, the disclosed data will be strictly limited to the off-chain metadata (recent connection IP addresses, KYC information if a fiat gateway was used) that we possess. It is vital to reiterate that the decentralized and encrypted nature of the Nexus blockchain technically prevents AGI from freezing, seizing, or accessing a user's funds (AG-COIN), as we possess neither the private keys nor any protocol-integrated "backdoor" mechanisms to alter the distributed ledger. We can only provide traceability analysis of public flows, information that is otherwise accessible to any observer of the open ledger.</p>
             </div>
         </div>
 
+        <div class="article">
+            <div class="art-header">
+                <span class="art-num">10</span>
+                <span class="art-title fr">Mise à Jour, Versionnage et Notification</span>
+                <span class="art-title en">Updates, Versioning, and Notification</span>
+            </div>
+            <div class="art-content fr">
+                <p>Le paysage technologique de la blockchain, ainsi que les cadres législatifs mondiaux relatifs à la vie privée, sont en constante et rapide évolution. Par conséquent, Atlas Groupe International se réserve le droit inaliénable de réviser, d'amender ou de mettre à jour substantiellement la présente Politique de Confidentialité afin de s'adapter aux nouvelles jurisprudences, aux exigences de conformité des régulateurs émergents, ou pour refléter l'implémentation de nouvelles fonctionnalités cryptographiques au sein des futures itérations du Nexus Engine (Build 5.x et au-delà). Cependant, la transparence envers notre communauté d'utilisateurs reste une priorité absolue. Nous n'appliquerons jamais de modifications réduisant vos droits de manière unilatérale ou rétroactive sans préavis explicite.</p>
+                <p>Toute mise à jour majeure fera l'objet d'un processus de notification rigoureux. Les utilisateurs seront informés au minimum 30 jours à l'avance de l'entrée en vigueur de la nouvelle politique via une notification système obligatoire s'affichant en superposition (overlay) sur le terminal client Nexus Core lors de la connexion, ainsi que par un message diffusé sur notre canal de communication principal décentralisé. Pour garantir l'intégrité du document, chaque version de la politique de confidentialité est hachée cryptographiquement (SHA-256) et le condensat résultant est ancré dans un bloc de la blockchain Nexus, créant une preuve temporelle indéniable de la version exacte en vigueur à un moment donné. Si un utilisateur est en désaccord avec les modifications proposées, il dispose de ce délai de 30 jours pour exercer son droit de retrait, transférer ses actifs vers un portefeuille externe hors du réseau Nexus, et demander la suppression de ses données hors-chaîne. L'utilisation continue des services de l'écosystème Nexus après la date d'entrée en vigueur de la politique mise à jour constituera une acceptation formelle et techniquement contraignante des nouvelles conditions stipulées.</p>
+            </div>
+            <div class="art-content en">
+                <p>The technological landscape of blockchain, as well as global legislative frameworks concerning privacy, are in constant and rapid evolution. Consequently, Atlas Group International reserves the inalienable right to revise, amend, or substantially update this Privacy Policy to adapt to new case laws, the compliance requirements of emerging regulators, or to reflect the implementation of new cryptographic features within future iterations of the Nexus Engine (Build 5.x and beyond). However, transparency toward our user community remains an absolute priority. We will never apply modifications that diminish your rights unilaterally or retroactively without explicit prior notice.</p>
+                <p>Any major update will be subject to a rigorous notification process. Users will be informed at least 30 days prior to the effective date of the new policy via a mandatory system notification displayed as an overlay on the Nexus Core client terminal upon login, as well as via a message broadcast on our main decentralized communication channel. To guarantee document integrity, each version of the privacy policy is cryptographically hashed (SHA-256) and the resulting digest is anchored into a block on the Nexus blockchain, creating an undeniable timestamped proof of the exact version in effect at any given moment. If a user disagrees with the proposed modifications, they have this 30-day window to exercise their right of withdrawal, transfer their assets to an external wallet off the Nexus network, and request the deletion of their off-chain data. Continued use of the Nexus ecosystem services after the effective date of the updated policy will constitute a formal and technically binding acceptance of the newly stipulated conditions.</p>
+            </div>
+        </div>
+
+        <div class="article">
+            <div class="art-header">
+                <span class="art-num">11</span>
+                <span class="art-title fr">Transferts Internationaux et Sous-traitance</span>
+                <span class="art-title en">International Transfers and Subcontracting</span>
+            </div>
+            <div class="art-content fr">
+                <p>La nature fondamentalement transfrontalière et distribuée de l'architecture blockchain implique par définition un réseau sans frontières. Les nœuds validateurs exécutant le protocole de consensus du Nexus Core peuvent être géographiquement répartis à travers le globe pour garantir la robustesse du réseau contre les pannes régionales, la censure étatique localisée ou les catastrophes naturelles majeures. De ce fait, lorsque vous initiez une transaction sur le réseau, les métadonnées cryptographiques inhérentes à cette opération sont propagées et répliquées internationalement. Cependant, AGI fait une distinction catégorique et absolue entre la propagation des données publiques chiffrées sur le registre distribué et le transfert de vos données d'identification personnelle sensibles (données hors-chaîne).</p>
+                <p>Pour l'hébergement, la maintenance de nos API critiques et le support utilisateur niveau 3, AGI limite strictement le recours à des sous-traitants externes. Dans les rares éventualités où un partenaire technique externe (par exemple, un fournisseur de services d'atténuation DDoS ou une firme d'audit de sécurité des contrats intelligents) nécessite un accès limité à certaines de nos infrastructures de périphérie, cet accès est conditionné par la signature d'accords de traitement de données (DPA) draconiens. Ces partenaires sont rigoureusement évalués sur leurs normes de sécurité (certification ISO/IEC 27001 minimum exigée). Si le sous-traitant opère en dehors de l'espace juridique du Burkina Faso ou de régions offrant un niveau de protection reconnu adéquat, AGI imposera contractuellement la mise en place de Clauses Contractuelles Types (CCT) inflexibles, associées à des mesures techniques supplémentaires, telles que l'anonymisation irréversible des jeux de données de test, garantissant ainsi qu'aucun transfert international ne puisse affaiblir ou compromettre le bouclier de confidentialité que nous vous garantissons.</p>
+            </div>
+            <div class="art-content en">
+                <p>The fundamentally cross-border and distributed nature of blockchain architecture implies by definition a borderless network. The validator nodes executing the consensus protocol of the Nexus Core may be geographically distributed across the globe to guarantee network robustness against regional outages, localized state censorship, or major natural disasters. As a result, when you initiate a transaction on the network, the cryptographic metadata inherent to this operation is propagated and replicated internationally. However, AGI makes a categorical and absolute distinction between the propagation of encrypted public data on the distributed ledger and the transfer of your sensitive personally identifiable information (off-chain data).</p>
+                <p>For hosting, maintenance of our critical APIs, and Level 3 user support, AGI strictly limits the use of external subcontractors. In the rare events where an external technical partner (e.g., a DDoS mitigation service provider or a smart contract security audit firm) requires limited access to certain edge infrastructures, this access is conditioned upon the signing of draconian Data Processing Agreements (DPA). These partners are rigorously evaluated on their security standards (minimum ISO/IEC 27001 certification required). If the subcontractor operates outside the legal space of Burkina Faso or regions offering a recognized adequate level of protection, AGI will contractually impose the implementation of inflexible Standard Contractual Clauses (SCC), coupled with supplementary technical measures, such as the irreversible anonymization of test data sets, thereby guaranteeing that no international transfer can weaken or compromise the privacy shield we guarantee you.</p>
+            </div>
+        </div>
+
+        <div class="article">
+            <div class="art-header">
+                <span class="art-num">12</span>
+                <span class="art-title fr">Juridiction Compétente et Résolution des Litiges</span>
+                <span class="art-title en">Competent Jurisdiction and Dispute Resolution</span>
+            </div>
+            <div class="art-content fr">
+                <p>La présente Politique de Confidentialité, ainsi que l'ensemble des opérations de traitement de données, d'ingénierie logicielle et de gestion des infrastructures menées par Atlas Groupe International, sont régies, interprétées et appliquées exclusivement conformément au droit matériel et processuel en vigueur au Burkina Faso, sans donner effet aux principes de conflits de lois de toute autre juridiction. L'utilisateur reconnaît et accepte expressément que la localisation centrale des opérations décisionnelles d'AGI et de la supervision de la conformité dicte cette juridiction applicable. En cas de réclamation, de contestation, ou de litige découlant de, ou lié à la collecte, au traitement, ou à la présumée violation de la confidentialité de vos données dans le cadre de l'utilisation du terminal Nexus Core, les parties s'engagent en premier lieu à tenter de résoudre le différend de manière amiable et de bonne foi à travers des négociations confidentielles facilitées par notre Délégué à la Protection des Données (DPO) pendant une période minimale de 45 jours après notification formelle du litige.</p>
+                <p>Si la phase de médiation préalable et obligatoire n'aboutit pas à une résolution mutuellement satisfaisante, l'utilisateur accepte que tout litige résiduel soit soumis à la compétence exclusive et définitive des juridictions étatiques compétentes du ressort de la Cour d'Appel de Ouagadougou, Burkina Faso. Dans la mesure maximale permise par la loi applicable, l'utilisateur renonce explicitement à tout droit de participer à un recours collectif (Class Action), à une action représentative ou à une procédure d'arbitrage de groupe à l'encontre d'Atlas Groupe International concernant des problématiques liées à la confidentialité. Par ailleurs, AGI décline toute responsabilité juridique découlant de la perte de données, de l'exposition de pseudonymes, ou de dommages consécutifs résultant d'un événement de force majeure technique, tel qu'un embranchement majeur imprévu du réseau (Hard Fork) initié par la communauté décentralisée, une défaillance catastrophique du consensus PoA ne relevant pas du contrôle direct des serveurs d'AGI, ou la compromission par l'utilisateur de ses propres clés privées par négligence ou attaque d'ingénierie sociale (phishing) à son encontre.</p>
+            </div>
+            <div class="art-content en">
+                <p>This Privacy Policy, along with all data processing operations, software engineering, and infrastructure management conducted by Atlas Group International, are governed, interpreted, and enforced exclusively in accordance with the substantive and procedural law in force in Burkina Faso, without giving effect to the conflict of law principles of any other jurisdiction. The user expressly acknowledges and accepts that the central location of AGI's decision-making operations and compliance oversight dictates this applicable jurisdiction. In the event of a claim, dispute, or litigation arising from, or related to the collection, processing, or alleged breach of confidentiality of your data in connection with the use of the Nexus Core terminal, the parties commit primarily to attempt to resolve the dispute amicably and in good faith through confidential negotiations facilitated by our Data Protection Officer (DPO) for a minimum period of 45 days following formal notification of the dispute.</p>
+                <p>If the mandatory preliminary mediation phase does not result in a mutually satisfactory resolution, the user agrees that any residual dispute shall be submitted to the exclusive and definitive jurisdiction of the competent state courts within the district of the Court of Appeal of Ouagadougou, Burkina Faso. To the maximum extent permitted by applicable law, the user explicitly waives any right to participate in a Class Action, a representative action, or a group arbitration proceeding against Atlas Group International concerning privacy-related issues. Furthermore, AGI disclaims any legal liability arising from data loss, pseudonym exposure, or consequential damages resulting from a technical force majeure event, such as an unforeseen major network branching (Hard Fork) initiated by the decentralized community, a catastrophic failure of the PoA consensus not under the direct control of AGI servers, or the user's compromise of their own private keys through negligence or a targeted social engineering attack (phishing) against them.</p>
+            </div>
+        </div>
+
+        <div class="dictionary-section">
+            <div class="dict-header">
+                <div class="dict-title fr"><i class="fa-solid fa-book-open"></i> Lexique Technique & Juridique</div>
+                <div class="dict-title en"><i class="fa-solid fa-book-open"></i> Technical & Legal Glossary</div>
+                <input type="text" id="dict-search" class="dict-search fr" placeholder="Rechercher un terme..." onkeyup="filterDictionary()">
+                <input type="text" id="dict-search-en" class="dict-search en" placeholder="Search for a term..." onkeyup="filterDictionaryEn()">
+            </div>
+            
+            <div class="dict-list" id="dict-list">
+                </div>
+        </div>
+
         <footer>
-            <p><b>Atlas Groupe International — Direction de la Cybersécurité</b></p>
-            <p>Document mis à jour le 14 Mars 2026 à Ouagadougou.</p>
-            <p style="font-size: 0.7rem; opacity: 0.6;">Ce document est protégé par cryptographie. Toute altération invalide sa version numérique.</p>
+            <span class="fr">© 2026 Atlas Groupe International - Tous droits réservés.<br>Direction de la Conformité et de la Cybersécurité - Nexus Engine Build 4.5.x</span>
+            <span class="en">© 2026 Atlas Group International - All rights reserved.<br>Department of Compliance and Cybersecurity - Nexus Engine Build 4.5.x</span>
         </footer>
     </div>
 
     <script>
-        function exportPrivacyPDF() {
-            const element = document.getElementById('privacy-content');
-            const options = {
-                margin:       [10, 10, 10, 10],
-                filename:     'Politique_Confidentialite_AGI_2026.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, backgroundColor: '#0d1117', useCORS: true },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
-
-            html2pdf().set(options).from(element).save();
+        // --- LOGIQUE DE CHANGEMENT DE LANGUE ---
+        let currentLang = 'fr';
+        
+        function toggleLanguage() {
+            currentLang = currentLang === 'fr' ? 'en' : 'fr';
+            
+            // Mise à jour de la classe sur le body pour la gestion CSS
+            if (currentLang === 'en') {
+                document.body.classList.add('lang-en');
+                document.getElementById('lang-label').innerText = 'EN / FR';
+            } else {
+                document.body.classList.remove('lang-en');
+                document.getElementById('lang-label').innerText = 'FR / EN';
+            }
+            
+            // Re-render du dictionnaire selon la langue
+            renderDictionary();
         }
+
+        // --- LOGIQUE DU DICTIONNAIRE (GLOSSAIRE) ---
+        const dictionaryData = [
+            {
+                termFr: "Adresse Base 58", 
+                termEn: "Base 58 Address",
+                defFr: "Format d'encodage spécifique utilisé pour représenter les clés publiques de portefeuille cryptographique, conçu pour éviter les confusions visuelles entre caractères similaires (comme '0' et 'O', '1' et 'I').",
+                defEn: "Specific encoding format used to represent cryptographic public wallet keys, designed to avoid visual confusion between similar characters (like '0' and 'O', '1' and 'I')."
+            },
+            {
+                termFr: "AES-256-GCM", 
+                termEn: "AES-256-GCM",
+                defFr: "Standard de chiffrement avancé utilisant des clés de 256 bits, reconnu par les agences de sécurité mondiales pour protéger les données confidentielles. Le mode GCM assure à la fois la confidentialité et l'authenticité des données.",
+                defEn: "Advanced Encryption Standard using 256-bit keys, recognized by global security agencies to protect confidential data. GCM mode ensures both data confidentiality and authenticity."
+            },
+            {
+                termFr: "DPO (Data Protection Officer)", 
+                termEn: "DPO (Data Protection Officer)",
+                defFr: "Délégué à la Protection des Données. Expert indépendant au sein de l'entreprise chargé de veiller à la conformité du traitement des données personnelles avec les lois en vigueur.",
+                defEn: "Independent expert within the company responsible for ensuring compliance of personal data processing with applicable laws."
+            },
+            {
+                termFr: "PoA (Proof of Authority)", 
+                termEn: "PoA (Proof of Authority)",
+                defFr: "Mécanisme de consensus blockchain où les transactions sont validées par un nombre restreint de nœuds approuvés et identifiés (les autorités), offrant rapidité et sécurité pour les réseaux d'entreprise.",
+                defEn: "Blockchain consensus mechanism where transactions are validated by a restricted number of approved and identified nodes (authorities), offering speed and security for enterprise networks."
+            },
+            {
+                termFr: "Smart Contract", 
+                termEn: "Smart Contract",
+                defFr: "Contrat intelligent. Programme informatique autonome stocké sur une blockchain, qui s'exécute automatiquement lorsque des conditions prédéfinies sont remplies, sans intervention humaine.",
+                defEn: "Autonomous computer program stored on a blockchain, which automatically executes when predefined conditions are met, without human intervention."
+            },
+            {
+                termFr: "TLS 1.3", 
+                termEn: "TLS 1.3",
+                defFr: "Dernière version du protocole Transport Layer Security. Il chiffre les communications sur Internet (HTTPS), garantissant que les données transitant entre le navigateur et le serveur ne peuvent être interceptées.",
+                defEn: "Latest version of the Transport Layer Security protocol. It encrypts internet communications (HTTPS), ensuring data in transit between the browser and the server cannot be intercepted."
+            },
+            {
+                termFr: "MFA (Multi-Factor Authentication)", 
+                termEn: "MFA (Multi-Factor Authentication)",
+                defFr: "Authentification multifacteur. Méthode de sécurité exigeant au moins deux preuves d'identité (par exemple, un mot de passe et une validation biométrique ou clé matérielle) pour accorder l'accès.",
+                defEn: "Security method requiring at least two pieces of evidence (e.g., a password and biometric validation or hardware key) to grant access."
+            },
+            {
+                termFr: "KYC / LBC-FT", 
+                termEn: "KYC / AML-CFT",
+                defFr: "Know Your Customer / Lutte contre le Blanchiment de Capitaux et le Financement du Terrorisme. Ensemble de procédures légales imposant la vérification de l'identité des clients pour prévenir les crimes financiers.",
+                defEn: "Know Your Customer / Anti-Money Laundering and Combating the Financing of Terrorism. Set of legal procedures requiring client identity verification to prevent financial crimes."
+            },
+            {
+                termFr: "Privacy by Design", 
+                termEn: "Privacy by Design",
+                defFr: "Concept d'ingénierie imposant que la protection de la vie privée soit intégrée dès la conception initiale de l'architecture technologique, et non comme une réflexion après coup.",
+                defEn: "Engineering concept requiring that privacy protection be integrated from the initial design of the technological architecture, not as an afterthought."
+            },
+            {
+                termFr: "Zero-Knowledge Proofs (zk-SNARKs)", 
+                termEn: "Zero-Knowledge Proofs (zk-SNARKs)",
+                defFr: "Protocole cryptographique permettant à une partie de prouver à une autre qu'une affirmation est vraie, sans révéler aucune information au-delà de la validité de l'affirmation elle-même.",
+                defEn: "Cryptographic protocol allowing one party to prove to another that a statement is true, without revealing any information beyond the validity of the statement itself."
+            }
+        ];
+
+        function renderDictionary(filterText = "") {
+            const listContainer = document.getElementById('dict-list');
+            listContainer.innerHTML = ''; // Clear current
+            
+            const lowerFilter = filterText.toLowerCase();
+
+            dictionaryData.forEach(item => {
+                const term = currentLang === 'fr' ? item.termFr : item.termEn;
+                const def = currentLang === 'fr' ? item.defFr : item.defEn;
+                
+                if (term.toLowerCase().includes(lowerFilter) || def.toLowerCase().includes(lowerFilter)) {
+                    const dictItem = document.createElement('div');
+                    dictItem.className = 'dict-item';
+                    
+                    const termEl = document.createElement('div');
+                    termEl.className = 'dict-term';
+                    termEl.innerText = term;
+                    
+                    const defEl = document.createElement('div');
+                    defEl.className = 'dict-def';
+                    defEl.innerText = def;
+                    
+                    dictItem.appendChild(termEl);
+                    dictItem.appendChild(defEl);
+                    listContainer.appendChild(dictItem);
+                }
+            });
+        }
+
+        function filterDictionary() {
+            const input = document.getElementById('dict-search').value;
+            renderDictionary(input);
+        }
+
+        function filterDictionaryEn() {
+            const input = document.getElementById('dict-search-en').value;
+            renderDictionary(input);
+        }
+
+        // Initialisation du dictionnaire au chargement de la page
+        document.addEventListener('DOMContentLoaded', () => {
+            renderDictionary();
+        });
+
     </script>
 </body>
 </html>
