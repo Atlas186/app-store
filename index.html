@@ -61,6 +61,39 @@
             padding: 10px 0;
         }
 
+        /* Boutons Fixes & Top Actions Bar */
+        .top-actions-bar {
+            position: fixed;
+            top: 15px;
+            right: 20px;
+            z-index: 1005;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .action-icon-btn {
+            background: var(--agi-navy);
+            color: var(--agi-gold);
+            border: 1px solid var(--agi-gold);
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 16px;
+        }
+
+        .action-icon-btn:hover {
+            background: var(--agi-gold);
+            color: var(--agi-navy);
+        }
+
+        .fixed-access-btn { position: fixed; bottom: 25px; right: 25px; z-index: 1001; }
+
         .btn-core {
             text-decoration: none;
             padding: 8px 16px;
@@ -70,6 +103,58 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
+        }
+
+        /* Side Menu Component */
+        .side-menu {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100vh;
+            background: #0f172a;
+            border-left: 2px solid var(--agi-gold);
+            z-index: 1010;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 40px 25px;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .side-menu.open {
+            right: 0;
+        }
+
+        .side-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(2, 6, 23, 0.7);
+            backdrop-filter: blur(4px);
+            z-index: 1009;
+            display: none;
+        }
+
+        .side-menu-overlay.open {
+            display: block;
+        }
+
+        .close-menu-btn {
+            align-self: flex-end;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .close-menu-btn:hover {
+            color: var(--agi-gold);
         }
 
         /* Hero Section */
@@ -152,23 +237,40 @@
 </head>
 <body>
 
+    <div class="top-actions-bar">
+        <button class="action-icon-btn" id="langSwitchBtn" title="Changer de langue / Switch Language">
+            <i class="fa-solid fa-language"></i>
+        </button>
+        <button class="action-icon-btn" id="menuToggleBtn" title="Menu">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </div>
+
+    <div class="side-menu-overlay" id="menuOverlay"></div>
+    <div class="side-menu" id="sideMenu">
+        <button class="close-menu-btn" id="menuCloseBtn"><i class="fa-solid fa-xmark"></i></button>
+        <div style="margin-top: 20px; text-center">
+            <h4 style="color: white; font-size: 0.85rem;" class="font-black uppercase tracking-ultra data-lang" data-key="menu_title">Navigation Privée</h4>
+        </div>
+    </div>
+
     <header>
         <div class="container flex justify-between">
             <div class="flex" style="gap: 12px;">
                 <img src="https://i.imgur.com/NyWnYFN.jpeg" alt="AGI" style="width: 40px; height: 40px; border-radius: 8px;">
                 <div>
-                    <h1 class="txt-sm font-black uppercase tracking-ultra" style="margin: 0;">Atlas Groupe International</h1>
+                    <h1 class="txt-sm font-black uppercase tracking-ultra data-lang" data-key="header_title" style="margin: 0;">Atlas Groupe International</h1>
                     <div class="flex" style="gap: 5px;">
-                        <span class="txt-xs font-black" style="color: var(--agi-emerald); background: rgba(16,185,129,0.1); padding: 1px 5px; border-radius: 3px;">RÉCÉPISSÉ PHUE-3539/2025 (11/07/2025)</span>
+                        <span class="txt-xs font-black data-lang" data-key="header_receipt" style="color: var(--agi-emerald); background: rgba(16,185,129,0.1); padding: 1px 5px; border-radius: 3px;">RÉCÉPISSÉ PHUE-3539/2025 (11/07/2025)</span>
                     </div>
                 </div>
             </div>
-            <nav class="hidden-mobile flex" style="gap: 25px;">
-                <a href="#projets" class="txt-xs font-black uppercase" style="text-decoration:none; color:inherit;">Piliers Industriels</a>
-                <a href="#nexus-spec" class="txt-xs font-black uppercase" style="text-decoration:none; color:inherit;">Spécifications Layer 1</a>
-                <a href="#mining" class="txt-xs font-black uppercase" style="text-decoration:none; color:inherit;">Console de Calcul</a>
-                <a href="#invest" class="txt-xs font-black uppercase" style="text-decoration:none; color:inherit;">Positions de Contrat</a>
-                <a href="atlas.html" class="btn-core" style="background: var(--agi-navy); color: white; font-size: 9px;">Espace Membre Unifié</a>
+            <nav class="hidden-mobile flex" style="gap: 25px; margin-right: 110px;">
+                <a href="#projets" class="txt-xs font-black uppercase data-lang" data-key="nav_pillars" style="text-decoration:none; color:inherit;">Piliers Industriels</a>
+                <a href="#nexus-spec" class="txt-xs font-black uppercase data-lang" data-key="nav_specs" style="text-decoration:none; color:inherit;">Spécifications Layer 1</a>
+                <a href="#mining" class="txt-xs font-black uppercase data-lang" data-key="nav_mining" style="text-decoration:none; color:inherit;">Console de Calcul</a>
+                <a href="#invest" class="txt-xs font-black uppercase data-lang" data-key="nav_contracts" style="text-decoration:none; color:inherit;">Positions de Contrat</a>
+                <a href="https://agi-burkinaf.netlify.app/agi-business.pro.apk" class="btn-core" style="background: var(--agi-navy); color: white; font-size: 9px;"><span class="data-lang" data-key="nav_space">Espace Membre Unifié</span></a>
             </nav>
         </div>
     </header>
@@ -176,42 +278,41 @@
     <section class="hero-bg" data-scroll>
         <div class="container text-center">
             <img src="https://i.imgur.com/6YRySSd.jpeg" alt="Logo AGI" style="width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--agi-gold); margin-bottom: 20px;">
-            <h1 class="font-black uppercase tracking-ultra" style="font-size: 2rem; margin-bottom: 15px;">
+            <h1 class="font-black uppercase tracking-ultra data-lang" data-key="hero_main_title" style="font-size: 2rem; margin-bottom: 15px;">
                 Souveraineté <span class="gradient-text">Numérique, Financière & Industrielle</span>
             </h1>
             <p class="txt-xs font-black uppercase" style="color: var(--agi-gold); margin-bottom: 15px; letter-spacing: 1px;">
-                <i class="fas fa-globe"></i> RÉSEAU OFFICIEL : https://agi-burkinaf.netlify.app | BURKINA FASO
+                <i class="fas fa-globe"></i> <span class="data-lang" data-key="hero_network_label">RÉSEAU OFFICIEL : https://agi-burkinaf.netlify.app | BURKINA FASO</span>
             </p>
-            <p class="txt-md" style="max-width: 700px; margin: 0 auto 30px; color: #cbd5e1;">
-                Propulser l'indépendance économique du Faso par la blockchain propriétaire Nexus Core V4.5. 
-                Une infrastructure Layer 1 autonome, évinçant tout protocole tiers, conçue pour la tokenisation d'actifs réels, le micro-paiement et le financement d'industries lourdes.
+            <p class="txt-md data-lang" data-key="hero_description" style="max-width: 700px; margin: 0 auto 30px; color: #cbd5e1;">
+                Propulser l'indépendance économique du Faso par la blockchain propriétaire Nexus Core V4.5. Une infrastructure Layer 1 autonome, évinçant tout protocole tiers, conçue pour la tokenisation d'actifs réels, le micro-paiement et le financement d'industries lourdes.
             </p>
             
             <div class="flex justify-center" style="gap: 15px; flex-wrap: wrap;">
                 <a href="whitepaper.html" class="btn-core" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid var(--border-glass); padding: 12px 25px; font-size: 11px;">
-                    <i class="fas fa-file-alt text-agi-gold"></i> TÉLÉCHARGER LE LIVRE BLANC COMPLET V4.5
+                    <i class="fas fa-file-alt text-agi-gold"></i> <span class="data-lang" data-key="btn_whitepaper">TÉLÉCHARGER LE LIVRE BLANC COMPLET V4.5</span>
                 </a>
                 <a href="#nexus" class="btn-core" style="background: var(--agi-emerald); color: white; padding: 12px 25px; font-size: 11px;">
-                    <i class="fas fa-coins"></i> EXPLORER L'ÉCOSYSTÈME NATIF AG-COIN
+                    <i class="fas fa-coins"></i> <span class="data-lang" data-key="btn_ecosystem">EXPLORER L'ÉCOSYSTÈME NATIF AG-COIN</span>
                 </a>
             </div>
 
             <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin-top: 50px;">
                 <div class="tech-card">
-                    <span class="txt-xs font-black uppercase" style="color: var(--agi-gold);"><i class="fa-solid fa-scale-balanced"></i> Stabilité Absolue</span>
-                    <div class="txt-md font-black" style="font-family: 'JetBrains Mono'; margin-top: 5px;">1 ₳ = 1 XOF (Fixe)</div>
+                    <span class="txt-xs font-black uppercase"><i class="fa-solid fa-scale-balanced"></i> <span class="data-lang" data-key="stat_stability">Stabilité Absolue</span></span>
+                    <div class="txt-md font-black" style="font-family: 'JetBrains Mono'; margin-top: 5px;">1 ₳ = 1 XOF (<span class="data-lang" data-key="stat_fixed">Fixe</span>)</div>
                 </div>
                 <div class="tech-card">
-                    <span class="txt-xs font-black uppercase" style="color: var(--agi-emerald);"><i class="fa-solid fa-gauge-high"></i> Vitesse Réseau</span>
-                    <div class="txt-md font-black" style="font-family: 'JetBrains Mono'; margin-top: 5px;">0.4s / Génération Bloc</div>
+                    <span class="txt-xs font-black uppercase"><i class="fa-solid fa-gauge-high"></i> <span class="data-lang" data-key="stat_speed">Vitesse Réseau</span></span>
+                    <div class="txt-md font-black data-lang" data-key="stat_speed_val" style="font-family: 'JetBrains Mono'; margin-top: 5px;">0.4s / Génération Bloc</div>
                 </div>
                 <div class="tech-card">
-                    <span class="txt-xs font-black uppercase" style="color: var(--agi-azure);"><i class="fa-solid fa-shield-halved"></i> Chiffrement</span>
+                    <span class="txt-xs font-black uppercase"><i class="fa-solid fa-shield-halved"></i> <span class="data-lang" data-key="stat_crypto">Cryptographie</span></span>
                     <div class="txt-md font-black" style="font-family: 'JetBrains Mono'; margin-top: 5px;">AES-256 + Shamir's Secret</div>
                 </div>
                 <div class="tech-card">
-                    <span class="txt-xs font-black uppercase" style="color: #a855f7;"><i class="fa-solid fa-bolt"></i> Bande Passante</span>
-                    <div class="txt-md font-black" style="font-family: 'JetBrains Mono'; margin-top: 5px;">165,000+ TPS Maximale</div>
+                    <span class="txt-xs font-black uppercase"><i class="fa-solid fa-bolt"></i> <span class="data-lang" data-key="stat_bandwidth">Bande Passante</span></span>
+                    <div class="txt-md font-black data-lang" data-key="stat_bandwidth_val" style="font-family: 'JetBrains Mono'; margin-top: 5px;">165,000+ TPS Maximale</div>
                 </div>
             </div>
         </div>
@@ -220,25 +321,25 @@
     <section id="nexus-spec" style="padding: 60px 0; background: #ffffff;" data-scroll>
         <div class="container">
             <div class="text-center" style="margin-bottom: 50px;">
-                <h2 class="font-black uppercase tracking-ultra" style="font-size: 1.5rem;">Spécifications Architecturales du Protocole V4.5</h2>
-                <p class="txt-xs font-black uppercase" style="color: #64748b; margin-top: 10px;">Le cœur technologique de l'autonomie et de la tokenisation des richesses nationales</p>
+                <h2 class="font-black uppercase tracking-ultra data-lang" data-key="spec_main_title" style="font-size: 1.5rem;">Spécifications Architecturales du Protocole V4.5</h2>
+                <p class="txt-xs font-black uppercase data-lang" data-key="spec_subtitle" style="color: #64748b; margin-top: 10px;">Le cœur technologique de l'autonomie et de la tokenisation des richesses nationales</p>
             </div>
             <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 30px;">
                 <div class="project-item" style="border-top: 4px solid var(--agi-emerald);">
-                    <h3 class="txt-md font-black uppercase" style="margin-bottom: 15px;"><i class="fa-solid fa-layer-group"></i> Consensus Proof-of-Asset (PoA)</h3>
-                    <p class="txt-sm" style="color: #475569; line-height: 1.6;">
+                    <h3 class="txt-md font-black uppercase"><i class="fa-solid fa-layer-group"></i> <span class="data-lang" data-key="spec_card1_title">Consensus Proof-of-Asset (PoA)</span></h3>
+                    <p class="txt-sm data-lang" data-key="spec_card1_desc" style="color: #475569; line-height: 1.6; margin-top: 15px;">
                         Chaque jeton AG-COIN (₳) émis sur le réseau est obligatoirement adossé à des réserves tangibles et auditées au sein d'industries réelles (fonds de roulement des usines textiles, bétail avicole et infrastructures solaires). Le PoA élimine la spéculation volatile et ancre la valeur numérique dans l'économie physique.
                     </p>
                 </div>
                 <div class="project-item" style="border-top: 4px solid var(--agi-crimson);">
-                    <h3 class="txt-md font-black uppercase" style="margin-bottom: 15px;"><i class="fa-solid fa-user-shield"></i> Architecture de Clés Fragmentées (SSS)</h3>
-                    <p class="txt-sm" style="color: #475569; line-height: 1.6;">
+                    <h3 class="txt-md font-black uppercase"><i class="fa-solid fa-user-shield"></i> <span class="data-lang" data-key="spec_card2_title">Architecture de Clés Fragmentées (SSS)</span></h3>
+                    <p class="txt-sm data-lang" data-key="spec_card2_desc" style="color: #475569; line-height: 1.6; margin-top: 15px;">
                         Afin de garantir un niveau de sécurité de classe militaire sans exiger de phrases mnémoniques vulnérables, chaque clé privée gérant un nœud ou un portefeuille est découpée de manière chiffrée par le protocole Shamir's Secret Sharing (SSS). Les transactions s'exécutent sur des smart contracts certifiés.
                     </p>
                 </div>
                 <div class="project-item" style="border-top: 4px solid var(--agi-azure);">
-                    <h3 class="txt-md font-black uppercase" style="margin-bottom: 15px;"><i class="fa-solid fa-money-bill-transfer"></i> Passerelle d'Échange & Liquidation Native</h3>
-                    <p class="txt-sm" style="color: #475569; line-height: 1.6;">
+                    <h3 class="txt-md font-black uppercase"><i class="fa-solid fa-money-bill-transfer"></i> <span class="data-lang" data-key="spec_card3_title">Passerelle d'Échange & Liquidation Native</span></h3>
+                    <p class="txt-sm data-lang" data-key="spec_card3_desc" style="color: #475569; line-height: 1.6; margin-top: 15px;">
                         Le protocole intègre une couche d'exécution financière pour connecter l'écosystème aux monnaies locales par requêtes USSD directes. Le traitement automatisé gère les passerelles Orange Money (via le code dédié *144*2*1*76203848*) et Moov Money (via *555*2*1*70873773*), ainsi que les retraits cryptos et agences physiques.
                     </p>
                 </div>
@@ -249,53 +350,53 @@
     <section id="mining" style="padding: 80px 0; background: #f8fafc;" data-scroll>
         <div class="container">
             <div class="text-center" style="margin-bottom: 50px;">
-                <h2 class="font-black uppercase tracking-ultra" style="font-size: 1.5rem;">Unités de Calcul & Minage Nexus Core</h2>
-                <p class="txt-xs font-black uppercase" style="color: #64748b; margin-top: 10px;">Participez activement à la sécurisation, validez les blocs de transactions et récoltez un rendement fixe de 0.012 ₳ par TH/s toutes les 24h via l'algorithme d'infrastructure Nexus-SHA256.</p>
+                <h2 class="font-black uppercase tracking-ultra data-lang" data-key="mining_title" style="font-size: 1.5rem;">Unités de Calcul & Minage Nexus Core</h2>
+                <p class="txt-xs font-black uppercase data-lang" data-key="mining_subtitle" style="color: #64748b; margin-top: 10px;">Participez activement à la sécurisation, validez les blocs de transactions et récoltez un rendement fixe de 0.012 ₳ par TH/s toutes les 24h via l'algorithme d'infrastructure Nexus-SHA256.</p>
             </div>
 
             <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
                 <div class="mining-tier" style="border-top: 5px solid var(--agi-slate); background: white;">
                     <div class="flex justify-between">
-                        <h3 class="txt-md font-black uppercase">Packs Hardware Classique</h3>
+                        <h3 class="txt-md font-black uppercase data-lang" data-key="mining_t1_title">Packs Hardware Classique</h3>
                         <i class="fas fa-microchip" style="color: var(--agi-slate);"></i>
                     </div>
-                    <p class="txt-xs" style="margin-top: 10px; color: #64748b;">Gamme d'infrastructure dédiée aux mineurs indépendants et nœuds secondaires.</p>
+                    <p class="txt-xs data-lang" data-key="mining_t1_sub" style="margin-top: 10px; color: #64748b;">Gamme d'infrastructure dédiée aux mineurs indépendants et nœuds secondaires.</p>
                     <ul class="mining-list">
-                        <li><span>Désignation Matériel</span> <strong>Nœud Pack Alpha (Série 1 à 10)</strong></li>
-                        <li><span>Prix d'Activation Réseau</span> <strong>5,000 ₳ (Soit 5.000 FCFA)</strong></li>
-                        <li><span>Puissance de Hachage</span> <span>25 MH/s Dédiés</span></li>
-                        <li><span>Frais de Maintenance & Pool</span> <span>0% Fixe et Garanti</span></li>
-                        <li><span>Fréquence des Récoltes</span> <span>Distribution Automatique / 24h</span></li>
+                        <li><span class="data-lang" data-key="m_lbl_des">Désignation Matériel</span> <strong class="data-lang" data-key="m_t1_v1">Nœud Pack Alpha (Série 1 à 10)</strong></li>
+                        <li><span class="data-lang" data-key="m_lbl_pri">Prix d'Activation Réseau</span> <strong class="data-lang" data-key="m_t1_v2">5,000 ₳ (Soit 5.000 FCFA)</strong></li>
+                        <li><span class="data-lang" data-key="m_lbl_pow">Puissance de Hachage</span> <span class="data-lang" data-key="m_t1_v3">25 MH/s Dédiés</span></li>
+                        <li><span class="data-lang" data-key="m_lbl_fee">Frais de Maintenance & Pool</span> <span class="data-lang" data-key="m_t1_v4">0% Fixe et Garanti</span></li>
+                        <li><span class="data-lang" data-key="m_lbl_frq">Fréquence des Récoltes</span> <span class="data-lang" data-key="m_t1_v5">Distribution Automatique / 24h</span></li>
                     </ul>
                 </div>
 
                 <div class="mining-tier" style="border-top: 5px solid var(--agi-azure); background: linear-gradient(to bottom, #f0f7ff, #fff);">
                     <div class="flex justify-between">
-                        <h3 class="txt-md font-black uppercase">Packs Pro-Series</h3>
+                        <h3 class="txt-md font-black uppercase data-lang" data-key="mining_t2_title">Packs Pro-Series</h3>
                         <i class="fas fa-server" style="color: var(--agi-azure);"></i>
                     </div>
-                    <p class="txt-xs" style="margin-top: 10px; color: #64748b;">Serveurs de grappes industrielles optimisés pour une validation intensive.</p>
+                    <p class="txt-xs data-lang" data-key="mining_t2_sub" style="margin-top: 10px; color: #64748b;">Serveurs de grappes industrielles optimisés pour une validation intensive.</p>
                     <ul class="mining-list">
-                        <li><span>Désignation Matériel</span> <strong>Nœud Pack Sigma (Série 1 à 10)</strong></li>
-                        <li><span>Prix d'Activation Réseau</span> <strong>25,000 ₳ (Soit 25.000 FCFA)</strong></li>
-                        <li><span>Puissance de Hachage</span> <span>150 MH/s Dédiés</span></li>
-                        <li><span>Avantage Fidélité Co-Staking</span> <span>+2% sur les rendements de coffre</span></li>
-                        <li><span>Canal de Support</span> <span>Priorité Algorithmique de Nœud</span></li>
+                        <li><span class="data-lang" data-key="m_lbl_des">Désignation Matériel</span> <strong class="data-lang" data-key="m_t2_v1">Nœud Pack Sigma (Série 1 à 10)</strong></li>
+                        <li><span class="data-lang" data-key="m_lbl_pri">Prix d'Activation Réseau</span> <strong class="data-lang" data-key="m_t2_v2">25,000 ₳ (Soit 25.000 FCFA)</strong></li>
+                        <li><span class="data-lang" data-key="m_lbl_pow">Puissance de Hachage</span> <span class="data-lang" data-key="m_t2_v3">150 MH/s Dédiés</span></li>
+                        <li><span class="data-lang" data-key="m_lbl_adv">Avantage Fidélité Co-Staking</span> <span class="data-lang" data-key="m_t2_v4">+2% sur les rendements de coffre</span></li>
+                        <li><span class="data-lang" data-key="m_lbl_chn">Canal de Support</span> <span class="data-lang" data-key="m_t2_v5">Priorité Algorithmique de Nœud</span></li>
                     </ul>
                 </div>
 
                 <div class="mining-tier" style="border-top: 5px solid var(--agi-gold); background: linear-gradient(to bottom, #fffef0, #fff);">
                     <div class="flex justify-between">
-                        <h3 class="txt-md font-black uppercase">Packs VIP-Nexus Master</h3>
+                        <h3 class="txt-md font-black uppercase data-lang" data-key="mining_t3_title">Packs VIP-Nexus Master</h3>
                         <i class="fas fa-crown" style="color: var(--agi-gold);"></i>
                     </div>
-                    <p class="txt-xs" style="margin-top: 10px; color: #64748b;">Masternodes directeurs dotés de privilèges de gouvernance de l'infrastructure.</p>
+                    <p class="txt-xs data-lang" data-key="mining_t3_sub" style="margin-top: 10px; color: #64748b;">Masternodes directeurs dotés de privilèges de gouvernance de l'infrastructure.</p>
                     <ul class="mining-list">
-                        <li><span>Désignation Matériel</span> <strong>Nœud Pack Nexus Core (Série 1 à 10)</strong></li>
-                        <li><span>Prix d'Activation Réseau</span> <strong>100,000 ₳ (Soit 100.000 FCFA)</strong></li>
-                        <li><span>Puissance de Hachage</span> <span>750 MH/s Dédiés</span></li>
-                        <li><span>Poids de Vote Politique</span> <span>1 Vote par Nœud sur les Smart Contracts</span></li>
-                        <li><span>Accès Conférences & Événements</span> <span>Invitation Prioritaire Gratuite</span></li>
+                        <li><span class="data-lang" data-key="m_lbl_des">Désignation Matériel</span> <strong class="data-lang" data-key="m_t3_v1">Nœud Pack Nexus Core (Série 1 à 10)</strong></li>
+                        <li><span class="data-lang" data-key="m_lbl_pri">Prix d'Activation Réseau</span> <strong class="data-lang" data-key="m_t3_v2">100,000 ₳ (Soit 100.000 FCFA)</strong></li>
+                        <li><span class="data-lang" data-key="m_lbl_pow">Puissance de Hachage</span> <span class="data-lang" data-key="m_t3_v3">750 MH/s Dédiés</span></li>
+                        <li><span class="data-lang" data-key="m_lbl_vot">Poids de Vote Politique</span> <span class="data-lang" data-key="m_t3_v4">1 Vote par Nœud sur les Smart Contracts</span></li>
+                        <li><span class="data-lang" data-key="m_lbl_acc">Accès Conférences & Événements</span> <span class="data-lang" data-key="m_t3_v5">Invitation Prioritaire Gratuite</span></li>
                     </ul>
                 </div>
             </div>
@@ -304,36 +405,36 @@
 
     <section id="invest" style="padding: 60px 0; background: #ffffff;" data-scroll>
         <div class="container">
-            <h2 class="font-black uppercase tracking-ultra text-center" style="font-size: 1.5rem; margin-bottom: 10px;">Coffres Verrouillés de Staking & Piliers Industriels</h2>
-            <p class="txt-xs font-black uppercase text-center" style="color: #64748b; margin-bottom: 40px;">Garantie de liquidité intégrale de 100% assurée par les flux réels du groupe — Absence de volatilité et versement automatique des profits à l'échéance exacte</p>
+            <h2 class="font-black uppercase tracking-ultra text-center data-lang" data-key="invest_title" style="font-size: 1.5rem; margin-bottom: 10px;">Coffres Verrouillés de Staking & Piliers Industriels</h2>
+            <p class="txt-xs font-black uppercase text-center data-lang" data-key="invest_subtitle" style="color: #64748b; margin-bottom: 40px;">Garantie de liquidité intégrale de 100% assurée par les flux réels du groupe — Absence de volatilité et versement automatique des profits à l'échéance exacte</p>
             <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
                 <div class="project-item" style="border-top: 4px solid var(--agi-azure);">
                     <div class="flex justify-between">
-                        <span class="txt-xs font-black uppercase">Contrat à Court Terme</span>
-                        <span class="roi-badge">+5% ROI / 30 Jours</span>
+                        <span class="txt-xs font-black uppercase data-lang" data-key="inv_c1_tag">Contrat à Court Terme</span>
+                        <span class="roi-badge">+2.5% ROI / 30 Jours</span>
                     </div>
-                    <h3 class="txt-md font-black" style="margin: 15px 0;">Cycle de Trésorerie Rapide</h3>
-                    <p class="txt-xs" style="color: #64748b; line-height: 1.6;">
+                    <h3 class="txt-md font-black data-lang" data-key="inv_c1_title" style="margin: 15px 0;">Cycle de Trésorerie Rapide</h3>
+                    <p class="txt-xs data-lang" data-key="inv_c1_desc" style="color: #64748b; line-height: 1.6;">
                         Idéal pour maintenir une flexibilité financière. Les fonds de ce coffre alimentent de manière exclusive les micro-opérations d'achats de matières premières immédiates, le micro-commerce de gros et la gestion fluide des stocks à rotation mensuelle.
                     </p>
                 </div>
                 <div class="project-item" style="border-top: 4px solid var(--agi-gold);">
                     <div class="flex justify-between">
-                        <span class="txt-xs font-black uppercase">Contrat Croissance Business</span>
-                        <span class="roi-badge">+18% ROI / 90 Jours</span>
+                        <span class="txt-xs font-black uppercase data-lang" data-key="inv_c2_tag">Contrat Croissance Business</span>
+                        <span class="roi-badge">+8% ROI / 90 Jours</span>
                     </div>
-                    <h3 class="txt-md font-black" style="margin: 15px 0;">Cycle de Financement Agricole</h3>
-                    <p class="txt-xs" style="color: #64748b; line-height: 1.6;">
+                    <h3 class="txt-md font-black data-lang" data-key="inv_c2_title" style="margin: 15px 0;">Cycle de Financement Agricole</h3>
+                    <p class="txt-xs data-lang" data-key="inv_c2_desc" style="color: #64748b; line-height: 1.6;">
                         Levier d'expansion stratégique de l'agro-business. Participe directement à l'acquisition de couveuses automatisées pour les fermes avicoles de production d'œufs de consommation, ainsi qu'à l'approvisionnement des laboratoires de transformation de plantes médicinales.
                     </p>
                 </div>
                 <div class="project-item" style="border-top: 4px solid var(--agi-emerald);">
                     <div class="flex justify-between">
-                        <span class="txt-xs font-black uppercase">Contrat Souveraineté Industriel</span>
-                        <span class="roi-badge">+45% ROI / 180 Jours</span>
+                        <span class="txt-xs font-black uppercase data-lang" data-key="inv_c3_tag">Contrat Souveraineté Industriel</span>
+                        <span class="roi-badge">+18% ROI / 180 Jours</span>
                     </div>
-                    <h3 class="txt-md font-black" style="margin: 15px 0;">Cycle d'Infrastructure Majeure</h3>
-                    <p class="txt-xs" style="color: #64748b; line-height: 1.6;">
+                    <h3 class="txt-md font-black data-lang" data-key="inv_c3_title" style="margin: 15px 0;">Cycle d'Infrastructure Majeure</h3>
+                    <p class="txt-xs data-lang" data-key="inv_c3_desc" style="color: #64748b; line-height: 1.6;">
                         Engagement à long terme dédié aux transformations structurelles du Burkina. Les capitaux de ce coffre sont investis à 100% dans l'implantation des métiers à tisser de l'usine textile de Koupéla et l'assemblage des Générateurs Solaires Hybrides Autonomes (GSHA).
                     </p>
                 </div>
@@ -344,15 +445,15 @@
     <section id="nexus" style="background: var(--agi-navy); color: white; padding: 80px 0;" data-scroll>
         <div class="container grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); align-items: center; gap: 50px;">
             <div>
-                <h2 class="font-black uppercase tracking-ultra" style="font-size: 1.5rem; border-left: 4px solid var(--agi-gold); padding-left: 20px; margin-bottom: 25px;">Moteur de Traitement Nexus Core v4.5</h2>
-                <p class="txt-sm" style="color: #94a3b8; margin-bottom: 20px; line-height: 1.7;">
+                <h2 class="font-black uppercase tracking-ultra data-lang" data-key="engine_title" style="font-size: 1.5rem; border-left: 4px solid var(--agi-gold); padding-left: 20px; margin-bottom: 25px;">Moteur de Traitement Nexus Core v4.5</h2>
+                <p class="txt-sm data-lang" data-key="engine_desc" style="color: #94a3b8; margin-bottom: 20px; line-height: 1.7;">
                     Nexus Core est une blockchain d'infrastructure souveraine de **Layer 1** développée spécifiquement pour le contexte ouest-africain. Nous excluons de manière absolue et catégorique toute dépendance vis-à-vis de réseaux de chaînes tiers ou d'infrastructures décentralisées étrangères (telles que Solana) pour garantir la sécurité continue, l'opacité face aux sanctions internationales et le contrôle exclusif de nos flux financiers.
                 </p>
                 <div class="grid" style="gap: 10px;">
-                    <div class="flex txt-xs" style="gap: 10px; background: var(--glass); padding: 12px; border-radius: 10px;">
+                    <div class="flex txt-xs data-lang" data-key="engine_feat1" style="gap: 10px; background: var(--glass); padding: 12px; border-radius: 10px;">
                         <i class="fas fa-network-wired text-agi-gold"></i> Transferts Instantanés P2P (Pair-à-Pair) exécutés en moins d'une seconde par scannage de QR Code ou identifiant unique Nexus UID.
                     </div>
-                    <div class="flex txt-xs" style="gap: 10px; background: var(--glass); padding: 12px; border-radius: 10px;">
+                    <div class="flex txt-xs data-lang" data-key="engine_feat2" style="gap: 10px; background: var(--glass); padding: 12px; border-radius: 10px;">
                         <i class="fas fa-shield-halved text-agi-emerald"></i> Gestion multi-ordres (Achat/Vente) de commodités numériques avec exécution sur carnet d'ordres local et levier ajustable allant de x1 jusqu'à x100.
                     </div>
                 </div>
@@ -360,19 +461,19 @@
             <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 15px;">
                 <div class="tech-card text-center">
                     <i class="fas fa-wallet" style="font-size: 20px; color: var(--agi-gold);"></i>
-                    <p class="txt-xs font-black uppercase" style="margin-top: 10px;">Nexus Wallet Pro (Gestion Cryptographique)</p>
+                    <p class="txt-xs font-black uppercase data-lang" data-key="engine_card1" style="margin-top: 10px;">Nexus Wallet Pro (Gestion Cryptographique)</p>
                 </div>
                 <div class="tech-card text-center">
                     <i class="fas fa-terminal" style="font-size: 20px; color: var(--agi-azure);"></i>
-                    <p class="txt-xs font-black uppercase" style="margin-top: 10px;">API Pay-Station (Intégration Factures & Centralisation)</p>
+                    <p class="txt-xs font-black uppercase data-lang" data-key="engine_card2" style="margin-top: 10px;">API Pay-Station (Intégration Factures & Centralisation)</p>
                 </div>
                 <div class="tech-card text-center">
                     <i class="fas fa-broadcast-tower" style="font-size: 20px; color: var(--agi-emerald);"></i>
-                    <p class="txt-xs font-black uppercase" style="margin-top: 10px;">SofiCash Nodes (Réseau de Collecte du Coton)</p>
+                    <p class="txt-xs font-black uppercase data-lang" data-key="engine_card3" style="margin-top: 10px;">SofiCash Nodes (Réseau de Collecte du Coton)</p>
                 </div>
                 <div class="tech-card text-center">
                     <i class="fas fa-exchange-alt" style="font-size: 20px; color: #f43f5e;"></i>
-                    <p class="txt-xs font-black uppercase" style="margin-top: 10px;">Asset Swap Hub (Passerelle Multi-Actifs Décentralisée)</p>
+                    <p class="txt-xs font-black uppercase data-lang" data-key="engine_card4" style="margin-top: 10px;">Asset Swap Hub (Passerelle Multi-Actifs Décentralisée)</p>
                 </div>
             </div>
         </div>
@@ -381,50 +482,50 @@
     <section id="projets" style="padding: 80px 0; background: #f1f5f9;" data-scroll>
         <div class="container">
             <div class="text-center">
-                <h2 class="font-black uppercase tracking-ultra" style="font-size: 1.5rem;">Écosystème Diversifié & Interconnecté AGI</h2>
-                <p class="txt-xs font-black uppercase" style="color: #64748b; margin-top: 10px;">Solutions Concrètes et Opérationnelles pour les Défis Socio-Économiques du Burkina Faso</p>
+                <h2 class="font-black uppercase tracking-ultra data-lang" data-key="eco_title" style="font-size: 1.5rem;">Écosystème Diversifié & Interconnecté AGI</h2>
+                <p class="txt-xs font-black uppercase data-lang" data-key="eco_subtitle" style="color: #64748b; margin-top: 10px;">Solutions Concrètes et Opérationnelles pour les Défis Socio-Économiques du Burkina Faso</p>
             </div>
             
             <div class="grid project-grid">
                 <div class="project-item">
                     <i class="fas fa-industry text-agi-gold" style="font-size: 24px;"></i>
-                    <h4 class="txt-sm font-black uppercase" style="margin: 15px 0 10px;">Unité de Tissage Textile (Koupéla)</h4>
-                    <p class="txt-xs" style="color: #64748b; line-height: 1.6;">Industrialisation de la filière blanche. Grand complexe de transformation situé à Koupéla, chef-lieu de la province du Kouritenga, orchestrant le tissage local du coton burkinabè pour valoriser la production nationale directement du champ de culture au tissu confectionné.</p>
+                    <h4 class="txt-sm font-black uppercase data-lang" data-key="p_c1_title" style="margin: 15px 0 10px;">Unité de Tissage Textile (Koupéla)</h4>
+                    <p class="txt-xs data-lang" data-key="p_c1_desc" style="color: #64748b; line-height: 1.6;">Industrialisation de la filière blanche. Grand complexe de transformation situé à Koupéla, chef-lieu de la province du Kouritenga, orchestrant le tissage local du coton burkinabè pour valoriser la production nationale directement du champ de culture au tissu confectionné.</p>
                 </div>
                 <div class="project-item">
                     <i class="fas fa-sun text-agi-azure" style="font-size: 24px;"></i>
-                    <h4 class="txt-sm font-black uppercase" style="margin: 15px 0 10px;">Énergie GSHA-AGI Autonome</h4>
-                    <p class="txt-xs" style="color: #64748b; line-height: 1.6;">Souveraineté énergétique en milieu rural. Ingénierie, assemblage et déploiement de Générateurs Solaires Hybrides Autonomes 100% électriques, garantissant une fourniture électrique continue, stable et décentralisée hors-réseau national.</p>
+                    <h4 class="txt-sm font-black uppercase data-lang" data-key="p_c2_title" style="margin: 15px 0 10px;">Énergie GSHA-AGI Autonome</h4>
+                    <p class="txt-xs data-lang" data-key="p_c2_desc" style="color: #64748b; line-height: 1.6;">Souveraineté énergétique en milieu rural. Ingénierie, assemblage et déploiement de Générateurs Solaires Hybrides Autonomes 100% électriques, garantissant une fourniture électrique continue, stable et décentralisée hors-réseau national.</p>
                 </div>
                 <div class="project-item">
                     <i class="fas fa-egg text-agi-emerald" style="font-size: 24px;"></i>
-                    <h4 class="txt-sm font-black uppercase" style="margin: 15px 0 10px;">Ferme Avicole Automatisée</h4>
-                    <p class="txt-xs" style="color: #64748b; line-height: 1.6;">Sécurité alimentaire et indépendance d'élevage. Exploitation agro-industrielle de pointe équipée de convoyeurs et extracteurs automatiques pour assurer une production journalière intensive de 15,000 à 25,000 œufs de consommation de haute qualité.</p>
+                    <h4 class="txt-sm font-black uppercase data-lang" data-key="p_c3_title" style="margin: 15px 0 10px;">Ferme Avicole Automatisée</h4>
+                    <p class="txt-xs data-lang" data-key="p_c3_desc" style="color: #64748b; line-height: 1.6;">Sécurité alimentaire et indépendance d'élevage. Exploitation agro-industrielle de pointe équipée de convoyeurs et extracteurs automatiques pour assurer une production journalière intensive de 15,000 à 25,000 œufs de consommation de haute qualité.</p>
                 </div>
                 <div class="project-item">
                     <i class="fas fa-leaf text-agi-crimson" style="font-size: 24px;"></i>
-                    <h4 class="txt-sm font-black uppercase" style="margin: 15px 0 10px;">Laboratoire Mère Nature</h4>
-                    <p class="txt-xs" style="color: #64748b; line-height: 1.6;">Valorisation de la pharmacopée traditionnelle. Unité de recherche scientifique, de formulation galénique et d'extraction médicinale transformant les plantes médicinales locales en produits de santé standardisés et accessibles.</p>
+                    <h4 class="txt-sm font-black uppercase data-lang" data-key="p_c4_title" style="margin: 15px 0 10px;">Laboratoire Mère Nature</h4>
+                    <p class="txt-xs data-lang" data-key="p_c4_desc" style="color: #64748b; line-height: 1.6;">Valorisation de la pharmacopée traditionnelle. Unité de recherche scientifique, de formulation galénique et d'extraction médicinale transformant les plantes médicinales locales en produits de santé standardisés et accessibles.</p>
                 </div>
                 <div class="project-item">
                     <i class="fas fa-chart-line text-agi-navy" style="font-size: 24px;"></i>
-                    <h4 class="txt-sm font-black uppercase" style="margin: 15px 0 10px;">Marché d'Actifs FinTech Nexus</h4>
-                    <p class="txt-xs" style="color: #64748b; line-height: 1.6;">Interface de couverture financière globale. Terminal boursier sécurisé permettant l'achat, la vente et le suivi analytique en temps réel des grandes paires de cryptomonnaies mondiales (BTC, ETH, BNB, SOL, XRP, ADA, DOGE, MATIC) convertibles nativement en stablecoin AG-COIN.</p>
+                    <h4 class="txt-sm font-black uppercase data-lang" data-key="p_c5_title" style="margin: 15px 0 10px;">Marché d'Actifs FinTech Nexus</h4>
+                    <p class="txt-xs data-lang" data-key="p_c5_desc" style="color: #64748b; line-height: 1.6;">Interface de couverture financière globale. Terminal boursier sécurisé permettant l'achat, la vente et le suivi analytique en temps réel des grandes paires de cryptomonnaies mondiales (BTC, ETH, BNB, SOL, XRP, ADA, DOGE, MATIC) convertibles nativement en stablecoin AG-COIN.</p>
                 </div>
                 <div class="project-item">
                     <i class="fas fa-shield-halved" style="font-size: 24px; color: #3b82f6;"></i>
-                    <h4 class="txt-sm font-black uppercase" style="margin: 15px 0 10px;">AGI 1X-FOOT Paris Sportifs</h4>
-                    <p class="txt-xs" style="color: #64748b; line-height: 1.6;">Divertissement sportif de confiance. Application de gestion des paris sur les championnats mondiaux, connectée directement au solde Nexus. Gestion automatique des coupons de paris, calculatrice de cotes intégrée et traitement immédiat des bulletins gagnants.</p>
+                    <h4 class="txt-sm font-black uppercase data-lang" data-key="p_c6_title" style="margin: 15px 0 10px;">AGI 1X-FOOT Paris Sportifs</h4>
+                    <p class="txt-xs data-lang" data-key="p_c6_desc" style="color: #64748b; line-height: 1.6;">Divertissement sportif de confiance. Application de gestion des paris sur les championnats mondiaux, connectée directement au solde Nexus. Gestion automatique des coupons de paris, calculatrice de cotes intégrée et traitement immédiat des bulletins gagnants.</p>
                 </div>
                 <div class="project-item">
                     <i class="fas fa-dice" style="font-size: 24px; color: #a855f7;"></i>
-                    <h4 class="txt-sm font-black uppercase" style="margin: 15px 0 10px;">Casino & Premium Games Hub</h4>
-                    <p class="txt-xs" style="color: #64748b; line-height: 1.6;">Espace ludique monétisé sur architecture distribuée. Catalogue exclusif regroupant des modules interactifs de machines à sous tactiles (Slots), d'arcade de précision et de jeux de table classiques, régis par un protocole cryptographique de transparence du taux de retour (RTP).</p>
+                    <h4 class="txt-sm font-black uppercase data-lang" data-key="p_c7_title" style="margin: 15px 0 10px;">Casino & Premium Games Hub</h4>
+                    <p class="txt-xs data-lang" data-key="p_c7_desc" style="color: #64748b; line-height: 1.6;">Espace ludique monétisé sur architecture distribuée. Catalogue exclusif regroupant des modules interactifs de machines à sous tactiles (Slots), d'arcade de précision et de jeux de table classiques, régis par un protocole cryptographique de transparence du taux de retour (RTP).</p>
                 </div>
                 <div class="project-item">
                     <i class="fas fa-headphones-simple text-agi-gold" style="font-size: 24px;"></i>
-                    <h4 class="txt-sm font-black uppercase" style="margin: 15px 0 10px;">AGI Audio-Lib App</h4>
-                    <p class="txt-xs" style="color: #64748b; line-height: 1.6;">Éducation financière de masse sans barrière de lecture. Bibliothèque d'écoute numérique diffusant des cours audio thématiques, des modules de formation en agronomie, en gestion d'entreprise, en informatique de réseau et en gestion financière décentralisée.</p>
+                    <h4 class="txt-sm font-black uppercase data-lang" data-key="p_c8_title" style="margin: 15px 0 10px;">AGI Audio-Lib App</h4>
+                    <p class="txt-xs data-lang" data-key="p_c8_desc" style="color: #64748b; line-height: 1.6;">Éducation financière de masse sans barrière de lecture. Bibliothèque d'écoute numérique diffusant des cours audio thématiques, des modules de formation en agronomie, en gestion d'entreprise, en informatique de réseau et en gestion financière décentralisée.</p>
                 </div>
             </div>
         </div>
@@ -432,60 +533,60 @@
 
     <section id="gouvernance" style="padding: 80px 0; background: white;">
         <div class="container">
-            <h3 class="txt-md font-black uppercase tracking-ultra text-center" style="margin-bottom: 40px;">Conseil d'Administration Exécutif d'Atlas Groupe International</h3>
+            <h3 class="txt-md font-black uppercase tracking-ultra text-center data-lang" data-key="gov_title" style="margin-bottom: 40px;">Conseil d'Administration Exécutif d'Atlas Groupe International</h3>
             <div class="grid admin-grid" style="grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 50px;">
                 <div class="project-item" style="border-left: 4px solid var(--agi-gold); display: flex; align-items: center; gap: 15px;">
                     <div style="width: 45px; height: 45px; background: var(--agi-navy); color: var(--agi-gold); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 900;">TY</div>
                     <div>
                         <p class="txt-sm font-black">YOUGMA Thierry Joël</p>
-                        <p class="txt-xs font-black uppercase" style="color: var(--agi-gold);">Président Fondateur | Initiateur Technologique</p>
+                        <p class="txt-xs font-black uppercase data-lang" data-key="gov_p1_role" style="color: var(--agi-gold);">Président Fondateur | Initiateur Technologique</p>
                     </div>
                 </div>
                 <div class="project-item" style="border-left: 4px solid var(--agi-azure); display: flex; align-items: center; gap: 15px;">
                     <div style="width: 45px; height: 45px; background: var(--agi-navy); color: var(--agi-azure); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 900;">OK</div>
                     <div>
                         <p class="txt-sm font-black">OUÉDRAOGO K. Evariste Omar</p>
-                        <p class="txt-xs font-black uppercase" style="color: var(--agi-azure);">Secrétaire Général | Administration Globale</p>
+                        <p class="txt-xs font-black uppercase data-lang" data-key="gov_p2_role" style="color: var(--agi-azure);">Secrétaire Général | Administration Globale</p>
                     </div>
                 </div>
                 <div class="project-item" style="border-left: 4px solid var(--agi-emerald); display: flex; align-items: center; gap: 15px;">
                     <div style="width: 45px; height: 45px; background: var(--agi-navy); color: var(--agi-emerald); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 900;">TH</div>
                     <div>
                         <p class="txt-sm font-black">TRAORET Hamadou</p>
-                        <p class="txt-xs font-black uppercase" style="color: var(--agi-emerald);">Trésorier Général | Contrôle Interne des Flux</p>
+                        <p class="txt-xs font-black uppercase data-lang" data-key="gov_p3_role" style="color: var(--agi-emerald);">Trésorier Général | Contrôle Interne des Flux</p>
                     </div>
                 </div>
             </div>
 
             <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;">
                 <div>
-                    <h3 class="txt-md font-black uppercase tracking-ultra" style="margin-bottom: 25px;">Conformité Constitutionnelle, Régulation & Cadre Légal</h3>
+                    <h3 class="txt-md font-black uppercase tracking-ultra data-lang" data-key="legal_section_title" style="margin-bottom: 25px;">Conformité Constitutionnelle, Régulation & Cadre Légal</h3>
                     <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 10px;">
                         <a href="explorer.html" class="btn-core flex-col" style="background: var(--agi-gold); color: var(--agi-navy); text-align: center; height: 100px; justify-content: center; border-radius: 25px;">
                             <i class="fa-solid fa-database" style="font-size: 20px; margin-bottom: 8px;"></i>
-                            <span class="txt-xs font-black uppercase">Registre Privé AGI</span>
+                            <span class="txt-xs font-black uppercase data-lang" data-key="leg_btn1">Registre Public AGI</span>
                         </a>
                         <a href="whitepaper.html" class="btn-core flex-col" style="background: var(--agi-navy); color: white; text-align: center; height: 100px; justify-content: center; border-radius: 25px;">
                             <i class="fa-solid fa-book-open" style="font-size: 20px; margin-bottom: 8px; color: var(--agi-gold);"></i>
-                            <span class="txt-xs font-black uppercase">Livre Blanc V4.5 PDF</span>
+                            <span class="txt-xs font-black uppercase data-lang" data-key="leg_btn2">Livre Blanc V4.5 PDF</span>
                         </a>
                         <a href="legal.html" class="btn-core flex-col" style="background: var(--agi-azure); color: white; text-align: center; height: 100px; justify-content: center; border-radius: 25px;">
                             <i class="fa-solid fa-gavel" style="font-size: 20px; margin-bottom: 8px;"></i>
-                            <span class="txt-xs font-black uppercase">Déclarations Légales</span>
+                            <span class="txt-xs font-black uppercase data-lang" data-key="leg_btn3">Déclarations Légales</span>
                         </a>
                         <a href="cgu.html" class="btn-core flex-col" style="background: var(--agi-crimson); color: white; text-align: center; height: 100px; justify-content: center; border-radius: 25px;">
                             <i class="fa-solid fa-file-contract" style="font-size: 20px; margin-bottom: 8px;"></i>
-                            <span class="txt-xs font-black uppercase">CGU d'Utilisation</span>
+                            <span class="txt-xs font-black uppercase data-lang" data-key="leg_btn4">CGU d'Utilisation</span>
                         </a>
                         <a href="politique.html" class="btn-core flex-col" style="background: var(--agi-emerald); color: white; text-align: center; height: 100px; justify-content: center; border-radius: 25px; grid-column: span 2;">
                             <i class="fa-solid fa-user-shield" style="font-size: 20px; margin-bottom: 8px;"></i>
-                            <span class="txt-xs font-black uppercase">Charte de Protection de la Confidentialité</span>
+                            <span class="txt-xs font-black uppercase data-lang" data-key="leg_btn5">Charte de Protection de la Confidentialité</span>
                         </a>
                     </div>
-                    <a href="apk.html" class="btn-core" style="width: 100%; margin-top: 15px; background: #f1f5f9; color: var(--agi-navy); border: 2px solid var(--agi-navy); padding: 20px; justify-content: center; border-radius: 20px;">
+                    <a href="https://agi-burkinaf.netlify.app/agi-business.pro.apk" class="btn-core" style="width: 100%; margin-top: 15px; background: #f1f5f9; color: var(--agi-navy); border: 2px solid var(--agi-navy); padding: 20px; justify-content: center; border-radius: 20px;">
                         <div class="text-center">
                             <i class="fa-brands fa-android" style="font-size: 24px; display: block; margin-bottom: 5px;"></i>
-                            <span class="txt-xs font-black uppercase tracking-ultra">Télécharger le Package .APK Applicatif AGI Business Pro</span>
+                            <span class="txt-xs font-black uppercase tracking-ultra data-lang" data-key="apk_download_text">Telecharger le TERMINAL AGI Business Pro - Module APK.</span>
                         </div>
                     </a>
                 </div>
@@ -500,9 +601,9 @@
                     <img src="https://i.imgur.com/NyWnYFN.jpeg" alt="AGI" style="width: 60px; border-radius: 12px; margin-bottom: 20px;">
                     <h4 class="font-black" style="font-size: 1.5rem; margin-bottom: 15px;">Atlas Groupe International (AGI)</h4>
                     <p class="txt-xs font-black uppercase" style="color: var(--agi-gold); margin-bottom: 15px;">
-                        <i class="fas fa-link"></i> PORTAIL WEB DÉPLOYÉ : https://agi-burkinaf.netlify.app
+                        <i class="fas fa-link"></i> <span class="data-lang" data-key="foot_web_portal">PORTAIL WEB DÉPLOYÉ : https://agi-burkinaf.netlify.app</span>
                     </p>
-                    <p class="txt-xs" style="color: #94a3b8; max-width: 400px; line-height: 1.6;">
+                    <p class="txt-xs data-lang" data-key="foot_address" style="color: #94a3b8; max-width: 400px; line-height: 1.6;">
                         Direction Administrative : Bobo Dioulasso, Secteur 20, Province du Houet.<br>
                         Enregistrement Postal : Boîte Postale 131 Koupéla, Province du Kouritenga.<br>
                         République du Burkina Faso.
@@ -516,31 +617,319 @@
                     </div>
                 </div>
                 <div>
-                    <h5 class="txt-xs font-black uppercase tracking-ultra" style="color: var(--agi-gold); margin-bottom: 20px;">Centrale de Support, d'Aide & Contacts Résidents</h5>
+                    <h5 class="txt-xs font-black uppercase tracking-ultra data-lang" data-key="foot_support_title" style="color: var(--agi-gold); margin-bottom: 20px;">Centrale de Support, d'Aide & Contacts Résidents</h5>
                     <ul style="list-style: none; display: grid; gap: 10px;" class="txt-xs">
-                        <li><i class="fa-solid fa-envelope" style="color: var(--agi-gold);"></i> Courriel : atlasgroupeinter@gmail.com</li>
-                        <li><i class="fa-solid fa-phone" style="color: var(--agi-gold);"></i> Secrétariat permanent : +226 70 87 37 73</li>
-                        <li><i class="fa-solid fa-phone" style="color: var(--agi-gold);"></i> Bureau de la Présidence : +226 76 20 38 48</li>
-                        <li><i class="fa-solid fa-phone" style="color: var(--agi-gold);"></i> Assistance Technique Écosystème : +226 78 37 08 03</li>
+                        <li><i class="fa-solid fa-envelope" style="color: var(--agi-gold);"></i> <span class="data-lang" data-key="f_cnt_1">Courriel : atlasgroupeinter@gmail.com</span></li>
+                        <li><i class="fa-solid fa-phone" style="color: var(--agi-gold);"></i> <span class="data-lang" data-key="f_cnt_2">Secrétariat permanent : +226 70 87 37 73</span></li>
+                        <li><i class="fa-solid fa-phone" style="color: var(--agi-gold);"></i> <span class="data-lang" data-key="f_cnt_3">Bureau de la Présidence : +226 76 20 38 48</span></li>
+                        <li><i class="fa-solid fa-phone" style="color: var(--agi-gold);"></i> <span class="data-lang" data-key="f_cnt_4">Assistance Technique Écosystème : +226 78 37 08 03</span></li>
                     </ul>
                 </div>
             </div>
             
             <div style="padding: 20px 0; font-size: 0.72rem; color: #64748b; line-height: 1.5; border-bottom: 1px solid var(--border-glass);">
-                <p class="font-black uppercase" style="color: var(--agi-gold); margin-bottom: 5px;"><i class="fa-solid fa-triangle-exclamation"></i> Clause Légale Obligatoire de Prévention, de Limitation des Risques et d'Accompagnement</p>
-                <p>
+                <p class="font-black uppercase data-lang" data-key="foot_warn_title" style="color: var(--agi-gold); margin-bottom: 5px;"><i class="fa-solid fa-triangle-exclamation"></i> Clause Légale Obligatoire de Prévention, de Limitation des Risques et d'Accompagnement</p>
+                <p class="data-lang" data-key="foot_warn_desc">
                     La participation aux modules de prédiction, de paris sportifs et de divertissement monétisés comporte des risques financiers et psychologiques importants, notamment le surendettement, l'isolement social progressif et le développement d'une dépendance pathologique. Pour obtenir des conseils de modération ou une assistance technique dédiée, veuillez contacter sans délai les canaux d'écoute client certifiés d'Atlas Groupe International. Jouez de façon responsable, raisonnable et prudente. L'accès aux plateformes de jeux d'argent est strictement interdit aux personnes mineures selon la législation nationale.
                 </p>
             </div>
 
             <div class="flex justify-between" style="padding-top: 30px; flex-wrap: wrap; gap: 20px;">
-                <p class="txt-xs font-black uppercase tracking-ultra" style="color: #64748b;">© 2026 ATLAS GROUPE INTERNATIONAL | PROTOCOLE EXCLUSIF NEXUS CORE BLOCKCHAIN V4.5 PRODUCTION LAYER</p>
-                <p class="txt-xs font-black uppercase" style="color: var(--agi-emerald);">SOUVERAINETÉ NUMÉRIQUE — PROGRÈS INDUSTRIEL — SOLIDARITÉ NATIONALE</p>
+                <p class="txt-xs font-black uppercase tracking-ultra data-lang" data-key="foot_copy" style="color: #64748b;">© 2026 ATLAS GROUPE INTERNATIONAL | PROTOCOLE EXCLUSIF NEXUS CORE BLOCKCHAIN V4.5 PRODUCTION LAYER</p>
+                <p class="txt-xs font-black uppercase data-lang" data-key="foot_slogan" style="color: var(--agi-emerald);">SOUVERAINETÉ NUMÉRIQUE — PROGRÈS INDUSTRIEL — SOLIDARITÉ NATIONALE</p>
             </div>
         </div>
     </footer>
 
     <script>
+        // Logique de Dictionnaire Multilingue
+        const dictionary = {
+            fr: {
+                menu_title: "Navigation Privée",
+                btn_agent: "AGENT AGI",
+                header_title: "Atlas Groupe International",
+                header_receipt: "RÉCÉPISSÉ PHUE-3539/2025 (11/07/2025)",
+                nav_pillars: "Piliers Industriels",
+                nav_specs: "Spécifications Layer 1",
+                nav_mining: "Console de Calcul",
+                nav_contracts: "Positions de Contrat",
+                nav_space: "Espace Membre Unifié",
+                hero_main_title: "Souveraineté Numérique, Financière & Industrielle",
+                hero_network_label: "RÉSEAU OFFICIEL : https://agi-burkinaf.netlify.app | BURKINA FASO",
+                hero_description: "Propulser l'indépendance économique du Faso par la blockchain propriétaire Nexus Core V4.5. Une infrastructure Layer 1 autonome, évinçant tout protocole tiers, conçue pour la tokenisation d'actifs réels, le micro-paiement et le financement d'industries lourdes.",
+                btn_whitepaper: "TÉLÉCHARGER LE LIVRE BLANC COMPLET V4.5",
+                btn_ecosystem: "EXPLORER L'ÉCOSYSTÈME NATIF AG-COIN",
+                stat_stability: "Stabilité Absolue",
+                stat_fixed: "Fixe",
+                stat_speed: "Vitesse Réseau",
+                stat_speed_val: "0.4s / Génération Bloc",
+                stat_crypto: "Cryptographie",
+                stat_bandwidth: "Bande Passante",
+                stat_bandwidth_val: "165,000+ TPS Maximale",
+                spec_main_title: "Spécifications Architecturales du Protocole V4.5",
+                spec_subtitle: "Le cœur technologique de l'autonomie et de la tokenisation des richesses nationales",
+                spec_card1_title: "Consensus Proof-of-Asset (PoA)",
+                spec_card1_desc: "Chaque jeton AG-COIN (₳) émis sur le réseau est obligatoirement adossé à des réserves tangibles et auditées au sein d'industries réelles (fonds de roulement des usines textiles, bétail avicole et infrastructures solaires). Le PoA élimine la spéculation volatile et ancre la valeur numérique dans l'économie physique.",
+                spec_card2_title: "Architecture de Clés Fragmentées (SSS)",
+                spec_card2_desc: "Afin de garantir un niveau de sécurité de classe militaire sans exiger de phrases mnémoniques vulnérables, chaque clé privée gérant un nœud ou un portefeuille est découpée de manière chiffrée par le protocole Shamir's Secret Sharing (SSS). Les transactions s'exécutent sur des smart contracts certifiés.",
+                spec_card3_title: "Passerelle d'Échange & Liquidation Native",
+                spec_card3_desc: "Le protocole intègre une couche d'exécution financière pour connecter l'écosystème aux monnaies locales par requêtes USSD directes. Le traitement automatisé gère les passerelles Orange Money (via le code dédié *144*2*1*76203848*) et Moov Money (via *555*2*1*70873773*), ainsi que les retraits cryptos et agences physiques.",
+                mining_title: "Unités de Calcul & Minage Nexus Core",
+                mining_subtitle: "Participez activement à la sécurisation, validez les blocs de transactions et récoltez un rendement fixe de 0.012 ₳ par TH/s toutes les 24h via l'algorithme d'infrastructure Nexus-SHA256.",
+                mining_t1_title: "Packs Hardware Classique",
+                mining_t1_sub: "Gamme d'infrastructure dédiée aux mineurs indépendants et nœuds secondaires.",
+                m_lbl_des: "Désignation Matériel",
+                m_t1_v1: "Nœud Pack Alpha (Série 1 à 10)",
+                m_lbl_pri: "Prix d'Activation Réseau",
+                m_t1_v2: "5,000 ₳ (Soit 5.000 FCFA)",
+                m_lbl_pow: "Puissance de Hachage",
+                m_t1_v3: "25 MH/s Dédiés",
+                m_lbl_fee: "Frais de Maintenance & Pool",
+                m_t1_v4: "0% Fixe et Garanti",
+                m_lbl_frq: "Fréquence des Récoltes",
+                m_t1_v5: "Distribution Automatique / 24h",
+                mining_t2_title: "Packs Pro-Series",
+                mining_t2_sub: "Serveurs de grappes industrielles optimisés pour une validation intensive.",
+                m_t2_v1: "Nœud Pack Sigma (Série 1 à 10)",
+                m_t2_v2: "25,000 ₳ (Soit 25.000 FCFA)",
+                m_t2_v3: "150 MH/s Dédiés",
+                m_lbl_adv: "Avantage Fidélité Co-Staking",
+                m_t2_v4: "+2% sur les rendements de coffre",
+                m_lbl_chn: "Canal de Support",
+                m_t2_v5: "Priorité Algorithmique de Nœud",
+                mining_t3_title: "Packs VIP-Nexus Master",
+                mining_t3_sub: "Masternodes directeurs dotés de privilèges de gouvernance de l'infrastructure.",
+                m_t3_v1: "Nœud Pack Nexus Core (Série 1 à 10)",
+                m_t3_v2: "100,000 ₳ (Soit 100.000 FCFA)",
+                m_t3_v3: "750 MH/s Dédiés",
+                m_lbl_vot: "Poids de Vote Politique",
+                m_t3_v4: "1 Vote par Nœud sur les Smart Contracts",
+                m_lbl_acc: "Accès Conférences & Événements",
+                m_t3_v5: "Invitation Prioritaire Gratuite",
+                invest_title: "Coffres Verrouillés de Staking & Piliers Industriels",
+                invest_subtitle: "Garantie de liquidité intégrale de 100% assurée par les flux réels du groupe — Absence de volatilité et versement automatique des profits à l'échéance exacte",
+                inv_c1_tag: "Contrat à Court Terme",
+                inv_c1_title: "Cycle de Trésorerie Rapide",
+                inv_c1_desc: "Idéal pour maintenir une flexibilité financière. Les fonds de ce coffre alimentent de manière exclusive les micro-opérations d'achats de matières premières immédiates, le micro-commerce de gros et la gestion fluide des stocks à rotation mensuelle.",
+                inv_c2_tag: "Contrat Croissance Business",
+                inv_c2_title: "Cycle de Financement Agricole",
+                inv_c2_desc: "Levier d'expansion stratégique de l'agro-business. Participe directement à l'acquisition de couveuses automatisées pour les fermes avicoles de production d'œufs de consommation, ainsi qu'à l'approvisionnement des laboratoires de transformation de plantes médicinales.",
+                inv_c3_tag: "Contrat Souveraineté Industriel",
+                inv_c3_title: "Cycle d'Infrastructure Majeure",
+                inv_c3_desc: "Engagement à long terme dédié aux transformations structurelles du Burkina. Les capitaux de ce coffre sont investis à 100% dans l'implantation des métiers à tisser de l'usine textile de Koupéla et l'assemblage des Générateurs Solaires Hybrides Autonomes (GSHA).",
+                engine_title: "Moteur de Traitement Nexus Core v4.5",
+                engine_desc: "Nexus Core est une blockchain d'infrastructure souveraine de **Layer 1** développée spécifiquement pour le contexte ouest-africain. Nous excluons de manière absolue et catégorique toute dépendance vis-à-vis de réseaux de chaînes tiers ou d'infrastructures décentralisées étrangères (telles que Solana) pour garantir la sécurité continue, l'opacité face aux sanctions internationales et le contrôle exclusif de nos flux financiers.",
+                engine_feat1: "Transferts Instantanés P2P (Pair-à-Pair) exécutés en moins d'une seconde par scannage de QR Code ou identifiant unique Nexus UID.",
+                engine_feat2: "Gestion multi-ordres (Achat/Vente) de commodités numériques avec exécution sur carnet d'ordres local et levier ajustable allant de x1 jusqu'à x100.",
+                engine_card1: "Nexus Wallet Pro (Gestion Cryptographique)",
+                engine_card2: "API Pay-Station (Intégration Factures & Centralisation)",
+                engine_card3: "SofiCash Nodes (Réseau de Collecte du Coton)",
+                engine_card4: "Asset Swap Hub (Passerelle Multi-Actifs Décentralisée)",
+                eco_title: "Écosystème Diversifié & Interconnecté AGI",
+                eco_subtitle: "Solutions Concrètes et Opérationnelles pour les Défis Socio-Économiques du Burkina Faso",
+                p_c1_title: "Unité de Tissage Textile (Koupéla)",
+                p_c1_desc: "Industrialisation de la filière blanche. Grand complexe de transformation situé à Koupéla, chef-lieu de la province du Kouritenga, orchestrant le tissage local du coton burkinabè pour valoriser la production nationale directement du champ de culture au tissu confectionné.",
+                p_c2_title: "Énergie GSHA-AGI Autonome",
+                p_c2_desc: "Souveraineté énergétique en milieu rural. Ingénierie, assemblage et déploiement de Générateurs Solaires Hybrides Autonomes 100% électriques, garantissant une fourniture électrique continue, stable et décentralisée hors-réseau national.",
+                p_c3_title: "Ferme Avicole Automatisée",
+                p_c3_desc: "Sécurité alimentaire et indépendance d'élevage. Exploitation agro-industrielle de pointe équipée de convoyeurs et extracteurs automatiques pour assurer une production journalière intensive de 15,000 à 25,000 œufs de consommation de haute qualité.",
+                p_c4_title: "Laboratoire Mère Nature",
+                p_c4_desc: "Valorisation de la pharmacopée traditionnelle. Unité de recherche scientifique, de formulation galénique et d'extraction médicinale transformant les plantes médicinales locales en produits de santé standardisés et accessibles.",
+                p_c5_title: "Marché d'Actifs FinTech Nexus",
+                p_c5_desc: "Interface de couverture financière globale. Terminal boursier sécurisé permettant l'achat, la vente et le suivi analytique en temps réel des grandes paires de cryptomonnaies mondiales (BTC, ETH, BNB, SOL, XRP, ADA, DOGE, MATIC) convertibles nativement en stablecoin AG-COIN.",
+                p_c6_title: "AGI 1X-FOOT Paris Sportifs",
+                p_c6_desc: "Divertissement sportif de confiance. Application de gestion des paris sur les championnats mondiaux, connectée directement au solde Nexus. Gestion automatique des coupons de paris, calculatrice de cotes intégrée et traitement immédiat des bulletins gagnants.",
+                p_c7_title: "Casino & Premium Games Hub",
+                p_c7_desc: "Espace ludique monétisé sur architecture distribuée. Catalogue exclusif regroupant des modules interactifs de machines à sous tactiles (Slots), d'arcade de précision et de jeux de table classiques, régis par un protocole cryptographique de transparence du taux de retour (RTP).",
+                p_c8_title: "AGI Audio-Lib App",
+                p_c8_desc: "Éducation financière de masse sans barrière de lecture. Bibliothèque d'écoute numérique diffusant des cours audio thématiques, des modules de formation en agronomie, en gestion d'entreprise, en informatique de réseau et en gestion financière décentralisée.",
+                gov_title: "Conseil d'Administration Exécutif d'Atlas Groupe International",
+                gov_p1_role: "Président Fondateur | Initiateur Technologique",
+                gov_p2_role: "Secrétaire Général | Administration Globale",
+                gov_p3_role: "Trésorier Général | Contrôle Interne des Flux",
+                legal_section_title: "Conformité Constitutionnelle, Régulation & Cadre Légal",
+                leg_btn1: "Registre Public AGI",
+                leg_btn2: "Livre Blanc V4.5 PDF",
+                leg_btn3: "Déclarations Légales",
+                leg_btn4: "CGU d'Utilisation",
+                leg_btn5: "Charte de Protection de la Confidentialité",
+                apk_download_text: "Télécharger le Terminal AGI Business Pro - Module APK.",
+                foot_web_portal: "PORTAIL WEB DÉPLOYÉ : https://agi-burkinaf.netlify.app",
+                foot_address: "Direction Administrative : Bobo Dioulasso, Secteur 20, Province du Houet.<br>Enregistrement Postal : Boîte Postale 131 Koupéla, Province du Kouritenga.<br>République du Burkina Faso.",
+                foot_support_title: "Centrale de Support, d'Aide & Contacts Résidents",
+                f_cnt_1: "Courriel : atlasgroupeinter@gmail.com",
+                f_cnt_2: "Secrétariat permanent : +226 70 87 37 73",
+                f_cnt_3: "Bureau de la Présidence : +226 76 20 38 48",
+                f_cnt_4: "Assistance Technique Écosystème : +226 78 37 08 03",
+                foot_warn_title: "Clause Légale Obligatoire de Prévention, de Limitation des Risques et d'Accompagnement",
+                foot_warn_desc: "La participation aux modules de prédiction, de paris sportifs et de divertissement monétisés comporte des risques financiers et psychologiques importants, notamment le surendettement, l'isolement social progressif et le développement d'une dépendance pathologique. Pour obtenir des conseils de modération ou une assistance technique dédiée, veuillez contacter sans délai les canaux d'écoute client certifiés d'Atlas Groupe International. Jouez de façon responsable, raisonnable et prudente. L'accès aux plateformes de jeux d'argent est strictement interdit aux personnes mineures selon la législation nationale.",
+                foot_copy: "© 2026 ATLAS GROUPE INTERNATIONAL | PROTOCOLE EXCLUSIF NEXUS CORE BLOCKCHAIN V4.5 PRODUCTION LAYER",
+                foot_slogan: "SOUVERAINETÉ NUMÉRIQUE — PROGRÈS INDUSTRIEL — SOLIDARITÉ NATIONALE"
+            },
+            en: {
+                menu_title: "Private Navigation",
+                btn_agent: "AGI AGENT",
+                header_title: "Atlas Groupe International",
+                header_receipt: "RECEIPT PHUE-3539/2025 (11/07/2025)",
+                nav_pillars: "Industrial Pillars",
+                nav_specs: "Layer 1 Specifications",
+                nav_mining: "Computing Console",
+                nav_contracts: "Contract Positions",
+                nav_space: "Unified Member Space",
+                hero_main_title: "Digital, Financial & Industrial Sovereignty",
+                hero_network_label: "OFFICIAL NETWORK: https://agi-burkinaf.netlify.app | BURKINA FASO",
+                hero_description: "Propelling the economic independence of Faso through the proprietary Nexus Core V4.5 blockchain. An autonomous Layer 1 infrastructure, bypassing any third-party protocols, designed for real asset tokenization, micro-payments, and heavy industry financing.",
+                btn_whitepaper: "DOWNLOAD COMPLETE WHITEPAPER V4.5",
+                btn_ecosystem: "EXPLORE NATIVE AG-COIN ECOSYSTEM",
+                stat_stability: "Absolute Stability",
+                stat_fixed: "Fixed",
+                stat_speed: "Network Speed",
+                stat_speed_val: "0.4s / Block Generation",
+                stat_crypto: "Cryptography",
+                stat_bandwidth: "Bandwidth",
+                stat_bandwidth_val: "165,000+ Maximum TPS",
+                spec_main_title: "Protocol V4.5 Architectural Specifications",
+                spec_subtitle: "The technological core of autonomy and tokenization of national wealth",
+                spec_card1_title: "Proof-of-Asset (PoA) Consensus",
+                spec_card1_desc: "Each AG-COIN token (₳) issued on the network must be backed by tangible and audited reserves within real industries (working capital of textile factories, poultry livestock, and solar infrastructures). PoA eliminates volatile speculation and anchors digital value in the physical economy.",
+                spec_card2_title: "Shamir's Secret Sharing (SSS) Architecture",
+                spec_card2_desc: "To guarantee military-grade security without requiring vulnerable mnemonic phrases, each private key managing a node or wallet is encrypted and split using the Shamir's Secret Sharing (SSS) protocol. Transactions execute on certified smart contracts.",
+                spec_card3_title: "Native Exchange & Liquidation Gateway",
+                spec_card3_desc: "The protocol integrates a financial execution layer to connect the ecosystem to local currencies via direct USSD requests. Automated processing handles Orange Money (via code *144*2*1*76203848*) and Moov Money (via *555*2*1*70873773*) gateways, as well as crypto withdrawals and physical agencies.",
+                mining_title: "Nexus Core Computing & Mining Units",
+                mining_subtitle: "Actively participate in securing the network, validate blocks of transactions and harvest a fixed yield of 0.012 ₳ per TH/s every 24h via the Nexus-SHA256 infrastructure algorithm.",
+                mining_t1_title: "Classic Hardware Packs",
+                mining_t1_sub: "Infrastructure range dedicated to independent miners and secondary nodes.",
+                m_lbl_des: "Hardware Description",
+                m_t1_v1: "Alpha Pack Node (Series 1 to 10)",
+                m_lbl_pri: "Network Activation Price",
+                m_t1_v2: "5,000 ₳ (Either 5,000 FCFA)",
+                m_lbl_pow: "Hashing Power",
+                m_t1_v3: "Dedicated 25 MH/s",
+                m_lbl_fee: "Maintenance & Pool Fees",
+                m_t1_v4: "0% Fixed and Guaranteed",
+                m_lbl_frq: "Harvest Frequency",
+                m_t1_v5: "Automatic Distribution / 24h",
+                mining_t2_title: "Pro-Series Packs",
+                mining_t2_sub: "Industrial cluster servers optimized for intensive validation.",
+                m_t2_v1: "Sigma Pack Node (Series 1 to 10)",
+                m_t2_v2: "25,000 ₳ (Either 25,000 FCFA)",
+                m_t2_v3: "Dedicated 150 MH/s",
+                m_lbl_adv: "Co-Staking Loyalty Benefit",
+                m_t2_v4: "+2% on vault yields",
+                m_lbl_chn: "Support Channel",
+                m_t2_v5: "Node Algorithmic Priority",
+                mining_t3_title: "VIP-Nexus Master Packs",
+                mining_t3_sub: "Director masternodes with infrastructure governance privileges.",
+                m_t3_v1: "Nexus Core Pack Node (Series 1 to 10)",
+                m_t3_v2: "100,000 ₳ (Either 100,000 FCFA)",
+                m_t3_v3: "Dedicated 750 MH/s",
+                m_lbl_vot: "Political Voting Weight",
+                m_t3_v4: "1 Vote per Node on Smart Contracts",
+                m_lbl_acc: "Conferences & Events Access",
+                m_t3_v5: "Priority Free Invitation",
+                invest_title: "Locked Staking Vaults & Industrial Pillars",
+                invest_subtitle: "100% full liquidity guarantee backed by the group's real flows — No volatility and automatic payout of profits at exact maturity",
+                inv_c1_tag: "Short Term Contract",
+                inv_c1_title: "Fast Cash Flow Cycle",
+                inv_c1_desc: "Ideal for maintaining financial flexibility. The funds in this vault exclusively fuel micro-operations of immediate raw material purchases, micro-wholesale trade, and fluid monthly inventory management.",
+                inv_c2_tag: "Business Growth Contract",
+                inv_c2_title: "Agricultural Financing Cycle",
+                inv_c2_desc: "Strategic expansion lever for agribusiness. Directly participates in the acquisition of automated incubators for poultry farms producing table eggs, as well as supplying medicinal plant processing laboratories.",
+                inv_c3_tag: "Industrial Sovereignty Contract",
+                inv_c3_title: "Major Infrastructure Cycle",
+                inv_c3_desc: "Long-term commitment dedicated to structural transformations in Burkina Faso. 100% of the capital in this vault is invested in setting up looms at the Koupéla textile factory and assembling Autonomous Hybrid Solar Generators (AHSG).",
+                engine_title: "Nexus Core v4.5 Processing Engine",
+                engine_desc: "Nexus Core is a sovereign Layer 1 infrastructure blockchain developed specifically for the West African context. We absolutely and categorically exclude any reliance on third-party chain networks or foreign decentralized infrastructures (such as Solana) to ensure continuous security, opacity against international sanctions, and exclusive control of our financial flows.",
+                engine_feat1: "Instant P2P (Peer-to-Peer) transfers executed in less than a second by scanning a QR Code or unique Nexus UID identifier.",
+                engine_feat2: "Multi-order management (Buy/Sell) of digital commodities with execution on local order book and adjustable leverage ranging from x1 up to x100.",
+                engine_card1: "Nexus Wallet Pro (Cryptographic Management)",
+                engine_card2: "API Pay-Station (Invoice Integration & Centralization)",
+                engine_card3: "SofiCash Nodes (Cotton Collection Network)",
+                engine_card4: "Asset Swap Hub (Decentralized Multi-Asset Gateway)",
+                eco_title: "AGI Diversified & Interconnected Ecosystem",
+                eco_subtitle: "Concrete and Operational Solutions for Burkina Faso's Socio-Economic Challenges",
+                p_c1_title: "Textile Weaving Unit (Koupéla)",
+                p_c1_desc: "Industrialization of the white sector. Large processing complex located in Koupéla, capital of Kouritenga province, orchestrating local weaving of Burkinabè cotton to enhance national production directly from cultivation field to tailored fabric.",
+                p_c2_title: "Autonomous GSHA-AGI Energy",
+                p_c2_desc: "Energy sovereignty in rural areas. Engineering, assembly, and deployment of 100% electric Autonomous Hybrid Solar Generators, guaranteeing continuous, stable, and decentralized off-grid power supply.",
+                p_c3_title: "Automated Poultry Farm",
+                p_c3_desc: "Food security and breeding independence. Advanced agro-industrial operation equipped with automatic conveyors and extractors to ensure intensive daily production of 15,000 to 25,000 high-quality table eggs.",
+                p_c4_title: "Mother Nature Laboratory",
+                p_c4_desc: "Valorization of traditional pharmacopeia. Scientific research, galenic formulation, and medicinal extraction unit transforming local medicinal plants into standardized and accessible healthcare products.",
+                p_c5_title: "Nexus FinTech Asset Market",
+                p_c5_desc: "Global financial hedging interface. Secured trading terminal enabling real-time purchase, sale, and analytical tracking of major global cryptocurrency pairs (BTC, ETH, BNB, SOL, XRP, ADA, DOGE, MATIC) natively convertible into AG-COIN stablecoin.",
+                p_c6_title: "AGI 1X-FOOT Sports Betting",
+                p_c6_desc: "Trusted sports entertainment. Betting management application for world championships, connected directly to Nexus balance. Automatic management of betting slips, integrated odds calculator, and immediate processing of winning tickets.",
+                p_c7_title: "Casino & Premium Games Hub",
+                p_c7_desc: "Monetized play space on distributed architecture. Exclusive catalog grouping interactive touchscreen slot machine modules (Slots), precision arcade, and classic table games, governed by a cryptographic Return to Player (RTP) transparency protocol.",
+                p_c8_title: "AGI Audio-Lib App",
+                p_c8_desc: "Mass financial education without reading barriers. Digital listening library broadcasting themed audio courses, training modules in agronomy, business management, network computing, and decentralized financial management.",
+                gov_title: "Executive Board of Directors of Atlas Groupe International",
+                gov_p1_role: "Founding President | Technological Initiator",
+                gov_p2_role: "General Secretary | Global Administration",
+                gov_p3_role: "General Treasurer | Internal Flow Control",
+                legal_section_title: "Constitutional Compliance, Regulation & Legal Framework",
+                leg_btn1: "AGI Public Registry",
+                leg_btn2: "Whitepaper V4.5 PDF",
+                leg_btn3: "Legal Declarations",
+                leg_btn4: "Terms of Use",
+                leg_btn5: "Privacy Protection Charter",
+                apk_download_text: "Download AGI Business Pro Applicative Modul.",
+                foot_web_portal: "DEPLOYED WEB PORTAL: https://agi-burkinaf.netlify.app",
+                foot_address: "Administrative Direction: Bobo Dioulasso, Sector 20, Houet Province.<br>Postal Registration: Post Office Box 131 Koupéla, Kouritenga Province.<br>Republic of Burkina Faso.",
+                foot_support_title: "Support Central, Help & Resident Contacts",
+                f_cnt_1: "Email: atlasgroupeinter@gmail.com",
+                f_cnt_2: "Permanent Secretariat: +226 70 87 37 73",
+                f_cnt_3: "President's Office: +226 76 20 38 48",
+                f_cnt_4: "Ecosystem Technical Assistance: +226 78 37 08 03",
+                foot_warn_title: "Mandatory Legal Clause for Prevention, Risk Limitation and Guidance",
+                foot_warn_desc: "Participation in prediction, sports betting, and monetized entertainment modules involves significant financial and psychological risks, including over-indebtedness, progressive social isolation, and the development of pathological dependency. For moderation advice or dedicated technical assistance, please contact Atlas Groupe International's certified customer listening channels without delay. Play responsibly, reasonably, and prudently. Access to gambling platforms is strictly prohibited for minors under national legislation.",
+                foot_copy: "© 2026 ATLAS GROUPE INTERNATIONAL | EXCLUSIVE PROTOCOL NEXUS CORE BLOCKCHAIN V4.5 PRODUCTION LAYER",
+                foot_slogan: "DIGITAL SOVEREIGNTY — INDUSTRIAL PROGRESS — NATIONAL SOLIDARITY"
+            }
+        };
+
+        let currentLang = 'fr';
+
+        function updateLanguage(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+            document.querySelectorAll('.data-lang').forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (dictionary[lang] && dictionary[lang][key]) {
+                    element.innerHTML = dictionary[lang][key];
+                }
+            });
+        }
+
+        // Événement d'interchange de langue
+        document.getElementById('langSwitchBtn').addEventListener('click', function() {
+            const nextLang = currentLang === 'fr' ? 'en' : 'fr';
+            updateLanguage(nextLang);
+        });
+
+        // Logique Structurelle du Menu Latéral Coulissant
+        const sideMenu = document.getElementById('sideMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const menuToggleBtn = document.getElementById('menuToggleBtn');
+        const menuCloseBtn = document.getElementById('menuCloseBtn');
+
+        function openMenu() {
+            sideMenu.classList.add('open');
+            menuOverlay.classList.add('open');
+        }
+
+        function closeMenu() {
+            sideMenu.classList.remove('open');
+            menuOverlay.classList.remove('open');
+        }
+
+        menuToggleBtn.addEventListener('click', openMenu);
+        menuCloseBtn.addEventListener('click', closeMenu);
+        menuOverlay.addEventListener('click', closeMenu);
+
+        // Intégration de l'IntersectionObserver d'origine pour l'animation au scroll
         document.addEventListener('DOMContentLoaded', function () {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -549,6 +938,9 @@
             }, { threshold: 0.1 });
 
             document.querySelectorAll('[data-scroll]').forEach(el => observer.observe(el));
+            
+            // Initialisation de la langue par défaut (fr)
+            updateLanguage('fr');
         });
     </script>
 </body>
