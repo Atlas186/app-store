@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ATLAS GROUPE INTERNATIONAL | Écosystème Industriel & Blockchain Nexus</title>
-    
+
     <script src="js/market-engine.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -31,6 +31,37 @@
             overflow-x: hidden; 
             scroll-behavior: smooth;
             line-height: 1.5;
+        }
+
+        /* --- Loader Global --- */
+        #agi-global-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--agi-navy);
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.6s ease-out;
+        }
+
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--border-glass);
+            border-top: 4px solid var(--agi-gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* Utilitaires de texte */
@@ -237,6 +268,11 @@
 </head>
 <body>
 
+    <div id="agi-global-loader">
+        <div class="loader-spinner"></div>
+        <p class="txt-xs font-black uppercase tracking-ultra" style="color: var(--agi-gold);">Initialisation Nexus Core...</p>
+    </div>
+
     <div class="top-actions-bar">
         <button class="action-icon-btn" id="langSwitchBtn" title="Changer de langue / Switch Language">
             <i class="fa-solid fa-language"></i>
@@ -287,7 +323,7 @@
             <p class="txt-md data-lang" data-key="hero_description" style="max-width: 700px; margin: 0 auto 30px; color: #cbd5e1;">
                 Propulser l'indépendance économique du Faso par la blockchain propriétaire Nexus Core V4.5. Une infrastructure Layer 1 autonome, évinçant tout protocole tiers, conçue pour la tokenisation d'actifs réels, le micro-paiement et le financement d'industries lourdes.
             </p>
-            
+
             <div class="flex justify-center" style="gap: 15px; flex-wrap: wrap;">
                 <a href="whitepaper.html" class="btn-core" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid var(--border-glass); padding: 12px 25px; font-size: 11px;">
                     <i class="fas fa-file-alt text-agi-gold"></i> <span class="data-lang" data-key="btn_whitepaper">TÉLÉCHARGER LE LIVRE BLANC COMPLET V4.5</span>
@@ -485,7 +521,7 @@
                 <h2 class="font-black uppercase tracking-ultra data-lang" data-key="eco_title" style="font-size: 1.5rem;">Écosystème Diversifié & Interconnecté AGI</h2>
                 <p class="txt-xs font-black uppercase data-lang" data-key="eco_subtitle" style="color: #64748b; margin-top: 10px;">Solutions Concrètes et Opérationnelles pour les Défis Socio-Économiques du Burkina Faso</p>
             </div>
-            
+
             <div class="grid project-grid">
                 <div class="project-item">
                     <i class="fas fa-industry text-agi-gold" style="font-size: 24px;"></i>
@@ -626,7 +662,7 @@
                     </ul>
                 </div>
             </div>
-            
+
             <div style="padding: 20px 0; font-size: 0.72rem; color: #64748b; line-height: 1.5; border-bottom: 1px solid var(--border-glass);">
                 <p class="font-black uppercase data-lang" data-key="foot_warn_title" style="color: var(--agi-gold); margin-bottom: 5px;"><i class="fa-solid fa-triangle-exclamation"></i> Clause Légale Obligatoire de Prévention, de Limitation des Risques et d'Accompagnement</p>
                 <p class="data-lang" data-key="foot_warn_desc">
@@ -642,6 +678,94 @@
     </footer>
 
     <script>
+        // =====================================================================
+        // MODULE DE CHIFFREMENT DE GRADE MILITAIRE (API Web Crypto AES-GCM)
+        // =====================================================================
+        class NexusCrypto {
+            /**
+             * Génère une clé cryptographique AES-GCM 256-bit
+             */
+            static async generateKey() {
+                return await window.crypto.subtle.generateKey(
+                    { name: "AES-GCM", length: 256 },
+                    true, // Extractable (utile si besoin d'exporter/sauvegarder la clé)
+                    ["encrypt", "decrypt"]
+                );
+            }
+
+            /**
+             * Chiffre une chaîne de caractères
+             * @param {string} text - Le texte brut à chiffrer
+             * @param {CryptoKey} key - La clé de chiffrement générée
+             * @returns {Promise<string>} - La chaîne chiffrée codée en Base64
+             */
+            static async encrypt(text, key) {
+                const encoder = new TextEncoder();
+                const data = encoder.encode(text);
+                // Générer un vecteur d'initialisation aléatoire cryptographiquement sûr (12 octets)
+                const iv = window.crypto.getRandomValues(new Uint8Array(12));
+                
+                const cipherBuffer = await window.crypto.subtle.encrypt(
+                    { name: "AES-GCM", iv: iv },
+                    key,
+                    data
+                );
+                
+                // Concaténation de l'IV et des données chiffrées pour faciliter le stockage
+                const cipherBytes = new Uint8Array(cipherBuffer);
+                const combinedResult = new Uint8Array(iv.length + cipherBytes.length);
+                combinedResult.set(iv, 0);
+                combinedResult.set(cipherBytes, iv.length);
+                
+                // Conversion en Base64 pour manipulation facile
+                return btoa(String.fromCharCode(...combinedResult));
+            }
+
+            /**
+             * Déchiffre une chaîne chiffrée par cette classe
+             * @param {string} base64Cipher - La chaîne chiffrée en Base64
+             * @param {CryptoKey} key - La clé de déchiffrement
+             * @returns {Promise<string>} - Le texte brut déchiffré
+             */
+            static async decrypt(base64Cipher, key) {
+                const binaryStr = atob(base64Cipher);
+                const bytes = new Uint8Array(binaryStr.length);
+                for (let i = 0; i < binaryStr.length; i++) {
+                    bytes[i] = binaryStr.charCodeAt(i);
+                }
+                
+                // Extraction de l'IV (les 12 premiers octets) et du message chiffré
+                const iv = bytes.slice(0, 12);
+                const data = bytes.slice(12);
+                
+                const decryptedBuffer = await window.crypto.subtle.decrypt(
+                    { name: "AES-GCM", iv: iv },
+                    key,
+                    data
+                );
+                
+                const decoder = new TextDecoder();
+                return decoder.decode(decryptedBuffer);
+            }
+        }
+        
+        // --- GESTION DU CHARGEUR GLOBAL (Initialisation Terminée) ---
+        // Exécution stricte : le chargeur se dissimule uniquement lorsque l'intégralité 
+        // de la page HTML et de ses dépendances est prête.
+        window.addEventListener('load', function() {
+            const loader = document.getElementById('agi-global-loader');
+            if (loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 600);
+            }
+        });
+
+        // =====================================================================
+        // LOGIQUE ORIGINALE DE L'APPLICATION
+        // =====================================================================
+
         // Logique de Dictionnaire Multilingue
         const dictionary = {
             fr: {
@@ -938,7 +1062,7 @@
             }, { threshold: 0.1 });
 
             document.querySelectorAll('[data-scroll]').forEach(el => observer.observe(el));
-            
+
             // Initialisation de la langue par défaut (fr)
             updateLanguage('fr');
         });
