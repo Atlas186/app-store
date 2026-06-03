@@ -5,341 +5,739 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LIVRE BLANC AGI NEXUS CORE V4.5.102</title>
     
-    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            /* Couleurs ajustées pour la production et une lisibilité maximale */
-            --agi-navy: #0f172a; /* Bleu nuit plus profond pour le texte */
-            --agi-gold: #d97706; /* Or plus sombre pour meilleur contraste sur fond clair */
+            --agi-navy: #0f172a; 
+            --agi-gold: #d97706; 
             --agi-emerald: #059669;
             --agi-slate: #334155;
-            --agi-light: #f1f5f9; /* Arrière-plan gris perle doux */
-            --agi-blue-btn: #2563eb; /* Bleu Royal pour le bouton production */
+            --agi-light: #f1f5f9; 
+            --agi-blue-btn: #2563eb; 
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
         }
+
+        /* Reset & Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
+            font-family: var(--font-main); 
             background-color: var(--agi-light); 
             color: var(--agi-navy);
             scroll-behavior: smooth;
+            font-size: 13px; /* Taille de police diminuée */
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
         }
-        .mono { font-family: 'JetBrains Mono', monospace; font-size: 0.9em; }
-        .glass-card { background: #ffffff; border: 1px solid #cbd5e1; border-radius: 24px; padding: 2rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
-        .hero-gradient { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white; }
-        .chapter-num { font-size: 4rem; font-weight: 900; color: rgba(15, 23, 42, 0.07); position: absolute; top: -20px; left: -10px; z-index: 0; }
-        .detail-text { font-size: 0.95rem; line-height: 1.8; text-align: justify; color: var(--agi-navy); font-weight: 400; }
-        .annex-box { border-left: 5px solid var(--agi-gold); background: #ffffff; padding: 2rem; margin-bottom: 2rem; border-radius: 0 24px 24px 0; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
-        h3 { font-weight: 800; text-transform: uppercase; margin-top: 1.5rem; margin-bottom: 1rem; color: var(--agi-navy); letter-spacing: -0.025em; }
-        table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.55rem; background: white; }
-        th { background: var(--agi-navy); color: white; padding: 12px; text-align: left; }
-        td { border: 1px solid #e2e8f0; padding: 12px; color: var(--agi-slate); font-weight: 600; }
-        @media print { .no-print { display: none; } }
+
+        /* Layout & Container */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 50;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #cbd5e1;
+            padding: 10px 0;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-logo-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-logo-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border: 1px solid var(--agi-gold);
+        }
+
+        .header-title-main {
+            display: block;
+            font-weight: 900;
+            font-size: 16px;
+            line-height: 1;
+            text-transform: uppercase;
+            font-style: italic;
+            color: #0f172a;
+        }
+
+        .header-title-highlight {
+            color: var(--agi-gold);
+        }
+
+        .header-subtitle {
+            font-size: 9px;
+            font-weight: bold;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-style: italic;
+        }
+
+        .btn-download {
+            background-color: var(--agi-blue-btn);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-download:hover {
+            background-color: #1d4ed8;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            padding: 140px 0 80px 0;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .hero-pretitle {
+            color: var(--agi-gold);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 11px;
+            margin-bottom: 24px;
+            display: block;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            font-style: italic;
+            text-transform: uppercase;
+        }
+
+        .hero-title-highlight {
+            color: var(--agi-gold);
+            font-size: 3.5rem;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .hero-subtitle {
+            font-size: 16px;
+            color: #cbd5e1;
+            font-weight: 300;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        .badges-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .badge {
+            background: rgba(255,255,255,0.1);
+            padding: 8px 16px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(4px);
+        }
+
+        /* Main Content Layout */
+        .main-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            padding: 60px 0;
+        }
+
+        @media (min-width: 1024px) {
+            .main-layout {
+                flex-direction: row;
+            }
+            .sidebar {
+                width: 25%;
+                flex-shrink: 0;
+            }
+            .content-area {
+                width: 75%;
+            }
+        }
+
+        /* Sidebar & Table of Contents */
+        .sidebar-inner {
+            position: sticky;
+            top: 100px;
+            background: white;
+            padding: 24px;
+            border-radius: 20px;
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .toc-title {
+            font-weight: 900;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 10px;
+            color: #0f172a;
+        }
+
+        .toc-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toc-list a {
+            text-decoration: none;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #475569;
+            transition: color 0.2s;
+        }
+
+        .toc-list a:hover {
+            color: var(--agi-blue-btn);
+        }
+
+        /* Articles & Sections */
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            gap: 60px;
+        }
+
+        .article-section {
+            position: relative;
+        }
+
+        .chapter-num { 
+            font-size: 5rem; 
+            font-weight: 900; 
+            color: rgba(15, 23, 42, 0.04); 
+            position: absolute; 
+            top: -40px; 
+            left: -15px; 
+            z-index: 0; 
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 900;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 10;
+            font-style: italic;
+            text-transform: uppercase;
+            border-bottom: 3px solid var(--agi-gold);
+            padding-bottom: 8px;
+            display: inline-block;
+        }
+
+        .glass-card { 
+            background: #ffffff; 
+            border: 1px solid #cbd5e1; 
+            border-radius: 16px; 
+            padding: 30px; 
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); 
+            position: relative;
+            z-index: 1;
+        }
+
+        .detail-text { 
+            font-size: 13px; 
+            line-height: 1.8; 
+            text-align: justify; 
+            color: var(--agi-navy); 
+            margin-bottom: 16px;
+        }
+
+        .detail-text p {
+            margin-bottom: 15px;
+        }
+
+        /* Specific blocks styling */
+        .dark-block {
+            background-color: #0f172a;
+            padding: 40px;
+            border-radius: 24px;
+            color: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .gold-border-left {
+            border-left: 5px solid var(--agi-gold);
+            padding-left: 20px;
+            margin: 20px 0;
+        }
+
+        .mono-text { 
+            font-family: var(--font-mono); 
+            font-size: 11px; 
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        /* Responsive Table */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            display: block;
+            margin: 20px 0;
+            box-shadow: 0 0 0 1px #e2e8f0;
+            border-radius: 8px;
+        }
+
+        table { 
+            width: 100%; 
+            min-width: 600px;
+            border-collapse: collapse; 
+            font-size: 11px; 
+            background: white; 
+        }
+
+        th { 
+            background: var(--agi-navy); 
+            color: white; 
+            padding: 12px 15px; 
+            text-align: left; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        td { 
+            border-bottom: 1px solid #e2e8f0; 
+            padding: 12px 15px; 
+            color: var(--agi-slate); 
+            font-weight: 600; 
+        }
+
+        /* Footer */
+        footer {
+            background-color: #020617;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            font-style: italic;
+            border-top: 4px solid var(--agi-gold);
+        }
+
+        .footer-text {
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--agi-gold);
+            margin-bottom: 15px;
+        }
+
+        .footer-sub {
+            font-size: 9px;
+            opacity: 0.6;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        /* Utilities */
+        @media print { 
+            .no-print { display: none !important; } 
+            body { background: white; }
+            .hero-section { padding: 40px 0; color: black; background: white; }
+            .hero-title, .hero-subtitle, .hero-pretitle { color: black; }
+            .dark-block { background: #f8fafc; color: black; border: 1px solid #ccc; }
+        }
     </style>
 </head>
-<body class="antialiased">
+<body>
 
-    <header class="fixed w-full z-50 bg-white/95 backdrop-blur-md border-b border-slate-300 py-3 no-print">
-        <div class="container mx-auto px-6 flex justify-between items-center">
-            <div class="flex items-center gap-4">
-                <img src="https://i.imgur.com/M1q5o2c.jpeg" class="w-10 h-10 rounded-lg shadow-md border border-agi-gold" alt="AGI Logo">
+    <header class="no-print">
+        <div class="container header-content">
+            <div class="header-logo-group">
+                <img src="https://i.imgur.com/M1q5o2c.jpeg" class="header-logo-img" alt="AGI Logo">
                 <div>
-                    <span class="block font-black text-lg leading-none uppercase italic text-slate-900">AGI <span class="text-agi-gold">NEXUS CORE</span></span>
-                    <span class="text-[8px] font-bold text-slate-500 uppercase tracking-widest italic">Build 4.5.102-Stable</span>
+                    <span class="header-title-main">AGI <span class="header-title-highlight">NEXUS CORE</span></span>
                 </div>
             </div>
-            <button onclick="generatePDF()" class="bg-[#2563eb] text-white px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-wider flex items-center gap-2 hover:bg-blue-700 shadow-lg transition-all active:scale-95">
-                <i class="ri-file-pdf-2-line text-sm"></i> Télécharger PDF Production
+            <button onclick="generatePDF()" class="btn-download">
+                📄 Télécharger PDF Production
             </button>
         </div>
     </header>
 
     <div id="whitepaper-content">
-        <section class="hero-gradient pt-40 pb-24 relative overflow-hidden">
-            <div class="container mx-auto px-6 relative z-10 text-center">
-                <h4 class="text-agi-gold font-black uppercase tracking-[0.4em] text-[11px] mb-6">Système d'Exploitation Financier & Souveraineté Numérique</h4>
-                <h1 class="text-5xl md:text-7xl font-black leading-tight mb-6 italic uppercase">Livre Blanc Magistral <br><span class="text-agi-gold text-5xl md:text-7xl">NUCLEUS V4.5</span></h1>
-                <p class="text-xl text-slate-300 font-light mb-10 italic">Récépissé n° PHUE 3539/2025 du 11/07/2025</p>
-                <div class="flex flex-wrap justify-center gap-4 text-[10px] font-black uppercase">
-                    <span class="bg-white/10 px-4 py-2 rounded-full border border-white/20 backdrop-blur-sm">Base58 Standard</span>
-                    <span class="bg-white/10 px-4 py-2 rounded-full border border-white/20 backdrop-blur-sm">AES-256 Military Grade</span>
-                    <span class="bg-white/10 px-4 py-2 rounded-full border border-white/20 backdrop-blur-sm">Proof-of-Authority</span>
+        <section class="hero-section">
+            <div class="container">
+                <span class="hero-pretitle">Système d'Exploitation Financier & Souveraineté Numérique</span>
+                <h1 class="hero-title">Livre Blanc Magistral <br><span class="hero-title-highlight">NUCLEUS V4.5</span></h1>
+                <p class="hero-subtitle">Récépissé n° PHUE 3539/2025 du 11/07/2025</p>
+                <div class="badges-container">
+                    <span class="badge">Base58 Standard</span>
+                    <span class="badge">AES-256 Military Grade</span>
+                    <span class="badge">Proof-of-Authority</span>
                 </div>
             </div>
         </section>
 
-        <div class="container mx-auto px-6 py-20">
-            <div class="flex flex-col lg:flex-row gap-16">
+        <div class="container main-layout">
+            
+            <aside class="sidebar no-print">
+                <div class="sidebar-inner">
+                    <h5 class="toc-title">Table des Matières</h5>
+                    <ul class="toc-list">
+                        <li><a href="#art1">01. Vision Stratégique et Fondations</a></li>
+                        <li><a href="#art2">02. Cadre Juridique et Conformité</a></li>
+                        <li><a href="#art3">03. Architecture Technique Nucleus</a></li>
+                        <li><a href="#art4">04. Standard de Sécurité Base58</a></li>
+                        <li><a href="#art5">05. Modèle Économique AG-COIN</a></li>
+                        <li><a href="#art6">06. Minage Cloud et Contribution</a></li>
+                        <li><a href="#art7">07. Protocole d'Expansion Réseau</a></li>
+                        <li><a href="#art8">08. Écosystème de Services et Hub</a></li>
+                        <li><a href="#art9">09. Sécurité et Chiffrement AES-256</a></li>
+                        <li><a href="#art10">10. Stabilité et Anti-Plantage</a></li>
+                        <li><a href="#art11">11. Roadmap 2026-2027 et Jalons</a></li>
+                        <li><a href="#art12">12. Réserve HDI et Mécanisme Staking</a></li>
+                        <li><a href="#art13">13. Le Moteur de Conversion SWAP-CFA</a></li>
+                        <li><a href="#art14">14. Centre de Jeux et Provably Fair</a></li>
+                        <li><a href="#art15">15. Impact Socio-Économique (BF)</a></li>
+                        <li><a href="#art16">16. Gouvernance Décentralisée PoA</a></li>
+                        <li><a href="#art17">17. Intégration Mobile Money</a></li>
+                        <li><a href="#art18">18. Gestion des Données (KYC)</a></li>
+                        <li><a href="#art19">19. Audits de Sécurité Résilience</a></li>
+                        <li><a href="#art20">20. Conclusion et Perspectives</a></li>
+                    </ul>
+                </div>
+            </aside>
+
+            <div class="content-area">
                 
-                <aside class="lg:w-1/4 no-print">
-                    <div class="sticky top-24 space-y-6">
-                        <div class="bg-white p-6 rounded-3xl border border-slate-300 shadow-md">
-                            <h5 class="font-black text-[10px] uppercase tracking-widest mb-4 border-b border-slate-100 pb-2 text-slate-900">Table des Matières</h5>
-                            <ul class="space-y-3 text-[9px] font-bold uppercase text-slate-600">
-                                <li><a href="#ch1" class="hover:text-blue-600 transition-colors">01. Vision & Intro</a></li>
-                                <li><a href="#ch2" class="hover:text-blue-600 transition-colors">02. Cadre Juridique</a></li>
-                                <li><a href="#ch3" class="hover:text-blue-600 transition-colors">03. Architecture Nucleus</a></li>
-                                <li><a href="#ch4" class="hover:text-blue-600 transition-colors">04. ID Nexus Base58</a></li>
-                                <li><a href="#ch5" class="hover:text-blue-600 transition-colors">05. Économie AG-COIN</a></li>
-                                <li><a href="#ch6" class="hover:text-blue-600 transition-colors">06. HDI & Minage Cloud</a></li>
-                                <li><a href="#ch7" class="hover:text-blue-600 transition-colors">07. Réseau Citoyen</a></li>
-                                <li><a href="#ch8" class="hover:text-blue-600 transition-colors">08. Services & Hub</a></li>
-                                <li><a href="#ch9" class="hover:text-blue-600 transition-colors">09. Sécurité Militaire</a></li>
-                                <li><a href="#ch10" class="hover:text-blue-600 transition-colors">10. Stabilité Build 4.5</a></li>
-                                <li><a href="#ch11" class="hover:text-blue-600 transition-colors">11. Roadmap 2026-27</a></li>
-                                <li><a href="#annexes" class="text-agi-gold border-t pt-2 block mt-2">Annexes Techniques</a></li>
-                            </ul>
+                <!-- ARTICLE 1 -->
+                <section id="art1" class="article-section">
+                    <span class="chapter-num">01</span>
+                    <h2 class="section-title">1. Vision Stratégique et Fondations</h2>
+                    <div class="glass-card">
+                        <div class="detail-text">
+                            <p>AGI NEXUS CORE n'est pas une simple application de finance ou un portefeuille numérique conventionnel. Il s'agit d'une réponse technologique audacieuse et fondamentale à la dépendance monétaire qui frappe les économies en développement. L'objectif d'Atlas Groupe International est de fournir à chaque citoyen, quelle que soit sa condition sociale ou son niveau d'éducation financière, une infrastructure capable de générer, stocker, et échanger de la valeur de manière totalement autonome, rapide et sécurisée. Nous bâtissons un futur où la technologie est le premier serviteur de la liberté économique.</p>
+                            <p>Dans le contexte actuel des marchés financiers ouest-africains, et plus particulièrement au Burkina Faso, l'accès au capital de démarrage et aux outils d'épargne rémunérée reste le privilège d'une minorité. C'est ici qu'intervient la fondation idéologique de notre système : la démocratisation par le code. En virtualisant les processus complexes d'investissement bancaire traditionnel via la blockchain et le cloud computing, l'architecture d'AGI permet de réduire les frais de gestion à une fraction de centime tout en redistribuant massivement les intérêts générés au sein de la communauté. Ce paradigme renverse le modèle pyramidal des banques classiques pour instaurer une économie circulaire horizontale.</p>
+                            <p>La vision stratégique d'AGI NEXUS s'articule autour de trois piliers majeurs : la Souveraineté, la Transparence et l'Évolutivité. La souveraineté est garantie par la détention privée des clés asymétriques via l'identifiant Base58, empêchant toute saisie ou gel de fonds arbitraire par une autorité tierce. La transparence est assurée par le consensus Proof-of-Authority (PoA) où toutes les transactions sont auditables tout en respectant l'anonymat relatif des utilisateurs. Enfin, l'évolutivité est rendue possible par notre moteur hybride Nucleus V4.5.102, conçu pour absorber des pics transactionnels massifs lors des périodes d'affluence (comme les jours de marché ou les fins de mois) sans aucune dégradation de la latence, confirmant notre engagement vers une inclusion totale et pérenne.</p>
                         </div>
                     </div>
-                </aside>
+                </section>
 
-                <div class="lg:w-3/4 space-y-24">
-                    
-                    <section id="ch1" class="relative">
-                        <span class="chapter-num">01</span>
-                        <h2 class="text-3xl font-black mb-8 relative z-10 italic uppercase border-b-2 border-agi-gold pb-2 inline-block">1. Vision Stratégique & Introduction</h2>
-                        <div class="glass-card">
-                            <p class="detail-text">AGI NEXUS CORE n'est pas une simple application de finance, c'est une réponse technologique à la dépendance monétaire. L'objectif d'Atlas Groupe International est de fournir à chaque citoyen une infrastructure capable de générer, stocker et échanger de la valeur de manière autonome, rapide et sécurisée. Nous bâtissons un futur où la technologie sert la liberté économique.</p>
+                <!-- ARTICLE 2 -->
+                <section id="art2" class="article-section">
+                    <span class="chapter-num">02</span>
+                    <h2 class="section-title">2. Cadre Juridique et Conformité Réglementaire</h2>
+                    <div class="glass-card" style="border-left: 8px solid var(--agi-emerald);">
+                        <div class="detail-text">
+                            <p>La confiance technologique ne peut exister de manière durable sans un socle légal robuste et transparent. Atlas Groupe International a fait le choix de la pleine conformité dès le premier jour de son existence opérationnelle. AGI NEXUS CORE opère sous le Récépissé d'enregistrement strict n° PHUE 3539/2025, délivré le 11 Juillet 2025 par les autorités compétentes de la République du Burkina Faso. Cette reconnaissance administrative n'est pas qu'un simple document ; elle constitue un pacte de confiance et de sécurité juridique entre le réseau, les citoyens-membres, et l'État régulateur.</p>
+                            <p>Ce cadre juridique garantit un niveau de protection inédit pour les investissements de nos membres. Contrairement aux plateformes off-shore non régulées qui disparaissent avec les fonds de leurs utilisateurs, AGI est une entité juridiquement opposable sur le territoire national. Cela signifie que les réserves de liquidité (Pool SWAP-CFA) sont adossées à des comptes d'entiercement (escrow) vérifiables, et que l'entreprise est soumise aux mêmes exigences de lutte contre le blanchiment de capitaux (AML) et le financement du terrorisme (CFT) que les institutions bancaires classiques, sans pour autant sacrifier la fluidité d'utilisation pour le client final.</p>
+                            <p>De plus, cette conformité permet à AGI NEXUS CORE d'initier des partenariats officiels avec les opérateurs de télécommunications locaux (Moov Africa, Orange, Telecel) pour l'intégration des API Mobile Money. La transparence totale vis-à-vis des autorités de régulation numérique (ARCEP, CIL) assure que le traitement des données personnelles (KYC minimal) est effectué dans le respect le plus strict des lois sur la protection des données, chiffrant de bout en bout les informations sensibles. Ainsi, AGI prouve que l'innovation cryptographique décentralisée peut coexister harmonieusement avec la souveraineté étatique et la loi de la République.</p>
                         </div>
-                    </section>
+                    </div>
+                </section>
 
-                    <section id="ch2" class="relative">
-                        <span class="chapter-num">02</span>
-                        <h2 class="text-3xl font-black mb-8 relative z-10 italic uppercase border-b-2 border-agi-gold pb-2 inline-block">2. Cadre Juridique (Burkina Faso)</h2>
-                        <div class="glass-card border-l-8 border-agi-emerald">
-                            <p class="detail-text mb-4">La confiance repose sur la loi. AGI NEXUS CORE opère sous le <strong>Récépissé n° PHUE 3539/2025</strong>. Cette reconnaissance administrative garantit :</p>
-                            <ul class="list-disc ml-6 space-y-3 text-sm text-slate-700 font-extrabold uppercase tracking-tighter">
-                                <li>La protection des investissements des membres.</li>
-                                <li>L'existence réelle de l'entité Atlas Groupe International.</li>
-                                <li>Une transparence totale vis-à-vis des autorités de régulation numérique.</li>
-                            </ul>
+                <!-- ARTICLE 3 -->
+                <section id="art3" class="article-section">
+                    <span class="chapter-num">03</span>
+                    <h2 class="section-title">3. Architecture Technique Nucleus V4.5</h2>
+                    <div class="dark-block">
+                        <div class="detail-text text-white">
+                            <p style="color: #cbd5e1;">Le moteur Nucleus V4.5.102 est le cœur battant, le cerveau algorithmique, et le bouclier défensif de tout l'écosystème AGI NEXUS. Développé en interne par nos ingénieurs système, il représente une avancée majeure dans la gestion asynchrone des micro-transactions. Contrairement aux blockchains de première génération (type Bitcoin ou Ethereum) qui souffrent de congestion et de frais de gaz imprévisibles, Nucleus utilise une architecture réseau hybride. Il combine la persistance immutable d'un registre distribué avec la vélocité fulgurante du Cloud Computing (Firebase/GCP), offrant ainsi le meilleur des deux mondes technologiques.</p>
+                            <p style="color: #cbd5e1;">Au centre de cette architecture se trouve le mécanisme de consensus par Preuve d'Autorité (Proof-of-Authority ou PoA). Plutôt que de gaspiller des térawattheures en calculs de minage inutiles (Proof-of-Work), Nucleus s'appuie sur des nœuds validateurs identifiés, audités et hautement sécurisés. Ces nœuds ont l'autorité de valider les blocs de transactions en un temps record de 0.4 seconde par bloc. Cela signifie que lorsqu'un marchand burkinabè scanne un code QR pour recevoir un paiement en AG-COIN, la confirmation est instantanée, irrévocable, et ne nécessite aucune attente, fluidifiant ainsi le commerce de détail de manière révolutionnaire.</p>
+                            <p style="color: #cbd5e1;">La version spécifique du Build 4.5.102-Stable introduit des optimisations drastiques au niveau de l'allocation mémoire et de la gestion de concurrence (multithreading). Les tests de charge (stress tests) effectués en condition réelle démontrent que le système peut traiter sans aucune défaillance plus de 10 000 requêtes de minage cloud ou de swap simultanées. Le système d'hybridation Cloud assure qu'en cas de panne électrique ou d'interruption du réseau local, les données d'état de l'utilisateur (solde, historique) sont protégées dans des caches locaux chiffrés et se synchronisent automatiquement et sans conflit dès la restauration de la connexion internet.</p>
                         </div>
-                    </section>
+                    </div>
+                </section>
 
-                    <section id="ch3" class="relative">
-                        <span class="chapter-num">03</span>
-                        <h2 class="text-3xl font-black mb-8 relative z-10 italic uppercase border-b-2 border-agi-gold pb-2 inline-block">3. Architecture Technique : Nucleus V4.5</h2>
-                        <div class="bg-slate-900 p-10 rounded-[40px] text-white shadow-2xl">
-                            <p class="text-slate-400 text-sm italic mb-8 uppercase tracking-widest font-bold">Le moteur Nucleus est le cœur battant du système.</p>
-                            <div class="grid md:grid-cols-2 gap-6">
-                                <div class="p-5 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors">
-                                    <h5 class="text-agi-gold font-black text-[10px] uppercase mb-2 tracking-widest">Consensus PoA</h5>
-                                    <p class="text-[11px] leading-relaxed opacity-90">Proof-of-Authority : Contrairement aux blockchains lentes, le PoA permet une validation instantanée par des nœuds de confiance.</p>
-                                </div>
-                                <div class="p-5 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors">
-                                    <h5 class="text-agi-gold font-black text-[10px] uppercase mb-2 tracking-widest">Vitesse Ultra-Fast</h5>
-                                    <p class="text-[11px] leading-relaxed opacity-90">Temps de bloc de 0.4s, rendant les paiements plus rapides que les méthodes bancaires traditionnelles.</p>
-                                </div>
-                                <div class="p-5 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors">
-                                    <h5 class="text-agi-gold font-black text-[10px] uppercase mb-2 tracking-widest">Hybridation Cloud</h5>
-                                    <p class="text-[11px] leading-relaxed opacity-90">Combinaison entre la puissance décentralisée et la rapidité du Cloud Firebase Google pour une latence minimale.</p>
-                                </div>
-                                <div class="p-5 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors">
-                                    <h5 class="text-agi-gold font-black text-[10px] uppercase mb-2 tracking-widest">Build 4.5.102</h5>
-                                    <p class="text-[11px] leading-relaxed opacity-90">Version stable optimisée pour le support de milliers de requêtes simultanées.</p>
-                                </div>
+                <!-- ARTICLE 4 -->
+                <section id="art4" class="article-section">
+                    <span class="chapter-num">04</span>
+                    <h2 class="section-title">4. Standard de Sécurité Base58</h2>
+                    <div class="glass-card">
+                        <div class="detail-text">
+                            <p>Dans l'univers de la finance numérique, l'erreur humaine est l'une des causes principales de perte de fonds. Envoyer des actifs à une mauvaise adresse à cause d'une faute de frappe peut s'avérer irréversible. Pour éliminer mathématiquement cette possibilité, AGI NEXUS CORE a implémenté le standard de formatage d'identifiant Base58 pour générer ce que nous appelons l'ID Nexus. L'ID Nexus (par exemple, AGItfesnWu8xYq...) est votre empreinte digitale financière unique, dérivée cryptographiquement de votre clé publique par une série de hachages SHA-256 successifs.</p>
+                            <p>Le génie du format Base58 réside dans son alphabet délibérément restreint. Contrairement à l'encodage classique Base64, l'alphabet Base58 exclut les caractères visuellement ambigus : le zéro (0), le O majuscule (O), le I majuscule (I) et le l minuscule (l). De plus, il retire les caractères non alphanumériques (+ et /) qui posent problème lors du copier-coller dans des emails, des SMS ou des navigateurs web. Cette exclusion volontaire garantit une lisibilité parfaite, même sur les petits écrans de smartphones d'entrée de gamme, réduisant le taux d'erreur de transaction à quasiment 0% lors des saisies manuelles.</p>
+                            <div class="mono-text" style="color: #64f4a3;">
+                                > CHECKSUM VERIFICATION SEQUENCE...<br>
+                                > HASH1: SHA256(PUBLIC_KEY)<br>
+                                > HASH2: SHA256(HASH1)<br>
+                                > APPENDING FIRST 4 BYTES OF HASH2 TO ADDRESS STRING.<br>
+                                > BASE58 ENCODING COMPLETE. STATUS: SECURE.
                             </div>
+                            <p>Mais la sécurité du Base58 va bien au-delà de la simple lisibilité visuelle. Chaque ID Nexus intègre une "somme de contrôle" (Checksum) robuste de 4 octets à la fin de sa chaîne. Lorsqu'un utilisateur tente d'effectuer un transfert, le client AGI recalcule instantanément cette somme de contrôle avant même que la requête ne soit envoyée au serveur. Si l'adresse est invalide d'un seul caractère, l'interface bloquera l'envoi, protégeant ainsi le capital de l'expéditeur. C'est cette combinaison de robustesse cryptographique et de conception ergonomique qui fait du standard Base58 une pierre angulaire de la confiance au sein du réseau AGI.</p>
                         </div>
-                    </section>
+                    </div>
+                </section>
 
-                    <section id="ch4" class="relative">
-                        <span class="chapter-num">04</span>
-                        <h2 class="text-3xl font-black mb-8 relative z-10 italic uppercase border-b-2 border-agi-gold pb-2 inline-block">4. Standard de Sécurité : L’ID Nexus Base58</h2>
-                        <div class="glass-card">
-                            <p class="detail-text mb-6">Pour éliminer les erreurs de transaction, nous utilisons le standard Base58 pour l'ID Nexus (ex: AGItfesnWu...).</p>
-                            <div class="mono bg-slate-900 p-8 rounded-2xl border-l-4 border-agi-gold text-white shadow-inner">
-                                <p class="text-agi-gold font-bold mb-2">> Zéro Ambiguïté : Exclusion des caractères (0, O, I, l).</p>
-                                <p class="text-white font-bold mb-2">> Robustesse : Hachage cryptographique unique lié au solde.</p>
-                                <p class="text-white font-bold">> Checksum : Détection d'erreur de saisie instantanée.</p>
-                            </div>
+                <!-- ARTICLE 5 -->
+                <section id="art5" class="article-section">
+                    <span class="chapter-num">05</span>
+                    <h2 class="section-title">5. Modèle Économique de l'AG-COIN</h2>
+                    <div class="glass-card">
+                        <div class="detail-text">
+                            <p>Au centre de notre écosystème gravite l'AG-COIN, l'unité de compte native et le carburant transactionnel du réseau AGI NEXUS. L'AG-COIN n'est pas une crypto-monnaie volatile soumise aux caprices de la spéculation internationale ou aux manipulations des "baleines" du marché. Son modèle économique est pensé comme un "Utility Token" stable, soutenu par l'activité économique réelle, les frais de réseau et la dynamique de croissance interne de la communauté burkinabè et, à terme, sous-régionale.</p>
+                            <p>La valeur de l'AG-COIN dérive directement de son utilité intrinsèque. Il sert de médium exclusif pour le paiement de certains services premium, l'acquisition de licences marchandes dans le Hub Commercial, la participation aux protocoles de Staking HDI, et comme récompense dans notre Centre de Jeux (Provably Fair). L'émission monétaire est strictement contrôlée par l'algorithme Nucleus, qui applique des cycles de "halving" (réduction de moitié des récompenses de minage) adaptatifs en fonction du nombre d'utilisateurs actifs, créant ainsi une rareté programmée qui protège le jeton contre l'inflation dévastatrice que connaissent souvent les monnaies fiduciaires traditionnelles.</p>
+                            <p>Pour assurer une liquidité permanente et permettre des échanges fluides contre le Franc CFA, une fraction des frais générés par les diverses opérations (frais de swap, taxes commerciales, marges du centre de jeux) est automatiquement siphonnée vers un contrat intelligent de Trésorerie (Treasury Pool). Cette réserve collatérale permet d'absorber les chocs de demande et garantit que chaque utilisateur souhaitant convertir ses AG-COINS en CFA (à partir du seuil de retrait) pourra le faire à un taux soutenu et protégé. C'est ce mécanisme de valorisation organique, couplé à une utilité constante, qui assure la pérennité financière d'Atlas Groupe International.</p>
                         </div>
-                    </section>
+                    </div>
+                </section>
 
-                    <section id="ch5" class="relative">
-                        <span class="chapter-num">05</span>
-                        <h2 class="text-3xl font-black mb-8 relative z-10 italic uppercase border-b-2 border-agi-gold pb-2 inline-block">5 & 6. Économie & Rentabilisation</h2>
-                        <div class="grid md:grid-cols-2 gap-8">
-                            <div class="glass-card border-t-4 border-agi-gold">
-                                <h4 class="font-black text-sm text-agi-gold uppercase mb-4">L'AG-COIN</h4>
-                                <p class="detail-text">Unité de valeur native soutenue par l'activité économique réelle. Utilisé pour : Paiement de services, Hub Commercial, et Staking.</p>
-                            </div>
-                            <div class="glass-card border-t-4 border-agi-gold">
-                                <h4 class="font-black text-sm text-agi-gold uppercase mb-4">Minage Cloud</h4>
-                                <p class="detail-text">Aucun matériel requis. L'activation de l'unité de minage permet de participer au processus de consensus Cloud et de recevoir des récompenses par bloc.</p>
-                            </div>
+                <!-- ARTICLE 6 -->
+                <section id="art6" class="article-section">
+                    <span class="chapter-num">06</span>
+                    <h2 class="section-title">6. Minage Cloud et Preuve de Contribution</h2>
+                    <div class="glass-card">
+                        <div class="detail-text">
+                            <p>Traditionnellement, le minage de cryptomonnaies requiert l'achat de matériel informatique hors de prix (ASIC, cartes graphiques haut de gamme), une expertise technique pointue, et entraîne une consommation d'électricité exorbitante, rendant cette activité inaccessible à l'immense majorité de la population africaine. AGI NEXUS CORE bouleverse ce schéma élitiste grâce à son protocole novateur de Minage Cloud, entièrement intégré et fonctionnant de manière transparente sur n'importe quel smartphone, sans drainer la batterie ni épuiser le forfait de données (data).</p>
+                            <p>Le secret réside dans le concept de "Preuve de Contribution" (Proof-of-Contribution). Au lieu d'effectuer des calculs mathématiques lourds pour sécuriser le réseau (comme le Bitcoin), notre Minage Cloud demande aux utilisateurs de prouver leur engagement envers le réseau par des micro-interactions régulières (activation de session). En activant l'unité de minage, l'utilisateur met à disposition une infime partie de sa bande passante pour relayer les métadonnées chiffrées du réseau, participant ainsi activement au maintien du consensus décentralisé.</p>
+                            <p>En récompense de cette contribution vitale à la santé du réseau, l'algorithme Nucleus distribue des fractions d'AG-COIN de manière continue et équitable à tous les mineurs actifs. Le taux d'extraction de base (Hashrate) est défini de manière à garantir un revenu passif stable, mais il peut être dynamiquement amplifié grâce à l'accumulation de Trust Score ou via le parrainage citoyen. Cette ingénierie permet non seulement de décentraliser la distribution initiale des jetons de manière juste, mais aussi de créer une puissante incitation psychologique à la rétention et à l'utilisation quotidienne de l'application.</p>
                         </div>
-                        <div class="mt-8 p-8 bg-emerald-50 rounded-[30px] border-2 border-emerald-200">
-                            <h4 class="font-black text-sm uppercase mb-4 text-emerald-800">Réserve HDI (Staking)</h4>
-                            <p class="detail-text italic font-bold text-emerald-900">Le Staking HDI permet de verrouiller ses actifs pour soutenir la liquidité du réseau en échange de dividendes réguliers.</p>
+                    </div>
+                </section>
+
+                <!-- ARTICLE 7 -->
+                <section id="art7" class="article-section">
+                    <span class="chapter-num">07</span>
+                    <h2 class="section-title">7. Protocole d'Expansion et Réseau Citoyen</h2>
+                    <div class="glass-card">
+                        <div class="detail-text">
+                            <p>La valeur d'un réseau de communication ou financier croît de manière exponentielle avec le nombre de ses utilisateurs (Loi de Metcalfe). Fort de ce postulat scientifique, Atlas Groupe International a implémenté un Protocole d'Expansion viral et méritocratique, structurant la croissance de la base d'utilisateurs non pas par de coûteuses campagnes publicitaires externes, mais par la force du bouche-à-oreille et de la recommandation de pair à pair. C'est l'essence même de la construction du Réseau Citoyen AGI.</p>
+                            <p>Chaque membre se voit attribuer un lien d'invitation sécurisé. Lorsqu'un nouveau membre rejoint l'écosystème via ce lien et valide son compte en devenant un "Citoyen Actif" (généralement en complétant ses premières sessions de minage), l'algorithme déclenche le "Bonus de Dotation". Le parrain reçoit une gratification instantanée et le filleul bénéficie d'une subvention de bienvenue (historiquement fixée à 1000 AG-COIN dans le Build 4.5.102) destinée à être placée en Staking Forcé. Cette politique "Gagnant-Gagnant" élimine les freins à l'entrée et amorce immédiatement le processus d'épargne pour le nouvel arrivant sans nécessiter d'investissement en capital fiduciaire.</p>
+                            <p>Pour prévenir les abus, tels que la création massive de faux comptes (attaques Sybil), le système Nucleus déploie des filtres d'analyse comportementale avancés. Un compte n'est considéré comme "actif" et ne génère de récompenses de réseau que s'il démontre un comportement humain organique (régularité de connexion, interactions diverses, absence de scripts d'automatisation). De plus, l'évolution au sein du réseau est structurée par des rangs (Citoyen Pionnier, Ambassadeur Core, Gouverneur Atlas), chaque grade débloquant des avantages supplémentaires tels que la réduction drastique des frais de swap, créant ainsi une véritable carrière économique pour les bâtisseurs de communauté.</p>
                         </div>
-                    </section>
+                    </div>
+                </section>
 
-                    <section id="ch7" class="relative">
-                        <span class="chapter-num">07</span>
-                        <h2 class="text-3xl font-black mb-8 relative z-10 italic uppercase border-b-2 border-agi-gold pb-2 inline-block">7 & 8. Réseau & Services</h2>
-                        <div class="space-y-6">
-                            <div class="glass-card bg-slate-50">
-                                <h4 class="font-black text-sm uppercase text-slate-900 mb-6 flex items-center gap-2">
-                                    <i class="ri-global-line text-agi-gold"></i> Protocole d'Expansion
-                                </h4>
-                                <ul class="grid grid-cols-2 gap-4 text-[10px] font-black uppercase">
-                                    <li class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-center">Bonus 1000 AG par inscription active</li>
-                                    <li class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-center">Système de parrainage à niveaux</li>
-                                </ul>
-                            </div>
-                            <div class="grid md:grid-cols-4 gap-4">
-                                <div class="text-center p-6 bg-white border border-slate-200 rounded-3xl shadow-sm hover:translate-y-[-5px] transition-transform">
-                                    <i class="ri-wallet-3-line text-2xl text-blue-600"></i>
-                                    <span class="block text-[9px] font-black uppercase mt-3">Nexus Wallet</span>
-                                </div>
-                                <div class="text-center p-6 bg-white border border-slate-200 rounded-3xl shadow-sm hover:translate-y-[-5px] transition-transform">
-                                    <i class="ri-refresh-line text-2xl text-emerald-600"></i>
-                                    <span class="block text-[9px] font-black uppercase mt-3">Swap CFA</span>
-                                </div>
-                                <div class="text-center p-6 bg-white border border-slate-200 rounded-3xl shadow-sm hover:translate-y-[-5px] transition-transform">
-                                    <i class="ri-shopping-bag-3-line text-2xl text-agi-gold"></i>
-                                    <span class="block text-[9px] font-black uppercase mt-3">Hub Commercial</span>
-                                </div>
-                                <div class="text-center p-6 bg-white border border-slate-200 rounded-3xl shadow-sm hover:translate-y-[-5px] transition-transform">
-                                    <i class="ri-gamepad-line text-2xl text-purple-600"></i>
-                                    <span class="block text-[9px] font-black uppercase mt-3">Centre de Jeux</span>
-                                </div>
-                            </div>
+                <!-- ARTICLE 8 -->
+                <section id="art8" class="article-section">
+                    <span class="chapter-num">08</span>
+                    <h2 class="section-title">8. Écosystème de Services et Hub Commercial</h2>
+                    <div class="glass-card">
+                        <div class="detail-text">
+                            <p>Une monnaie sans cas d'usage concret dans le monde réel est vouée à l'obsolescence. C'est pourquoi AGI NEXUS CORE déploie bien plus qu'un simple portefeuille ; il s'agit d'une suite applicative complète comprenant un Hub Commercial (Marketplace) intégré. Ce module est conçu pour reconnecter l'économie numérique florissante à l'économie réelle des biens et services quotidiens au Burkina Faso, facilitant les échanges entre marchands certifiés et utilisateurs disposant de pouvoir d'achat en AG-COIN.</p>
+                            <p>Pour obtenir le statut très convoité de "Marchand Certifié Atlas", un acteur économique doit s'acquitter d'une licence annuelle via un dépôt de garantie (Escrow) de 5000 AG-COIN. Ce dépôt n'est pas un simple frais de dossier ; il agit comme une caution d'intégrité (Smart Contract Escrow). En cas de litige commercial avéré (bien non livré, service défectueux), le système de résolution décentralisé d'AGI peut puiser dans ce dépôt pour dédommager immédiatement l'acheteur lésé. Ce mécanisme instaure une confiance absolue au sein de la place de marché, un critère essentiel dans le e-commerce africain où le manque de confiance freine souvent les transactions à distance.</p>
+                            <p>En échange de cette accréditation, le marchand bénéficie d'avantages massifs : une visibilité accrue auprès d'une communauté disposant de liquidités, la possibilité d'accepter des paiements instantanés avec des frais de transaction proches de zéro (contrairement aux TPE bancaires classiques ou à certaines solutions de Mobile Money très taxées), et l'accès à un Terminal de Gestion exclusif pour suivre ses flux de trésorerie en temps réel. Le Hub Commercial est ainsi le point de friction zéro où la cryptographie devient un outil d'émancipation pour les PME et les artisans locaux.</p>
                         </div>
-                    </section>
+                    </div>
+                </section>
 
-                    <section id="ch9" class="relative">
-                        <span class="chapter-num">09</span>
-                        <h2 class="text-3xl font-black mb-8 relative z-10 italic uppercase border-b-2 border-agi-gold pb-2 inline-block">9 & 10. Sécurité & Stabilité</h2>
-                        <div class="bg-slate-900 p-12 rounded-[50px] text-white space-y-10 shadow-2xl">
-                            <div>
-                                <h4 class="text-agi-gold font-black text-xs uppercase mb-4 tracking-widest italic">Chiffrement AES-256 (Niveau Militaire)</h4>
-                                <p class="text-slate-300 text-sm leading-relaxed font-medium">Protection totale des données de session et des transactions contre toute tentative d'intrusion. Synchronisation Cloud persistante pour éviter toute perte de solde.</p>
-                            </div>
-                            <div>
-                                <h4 class="text-agi-gold font-black text-xs uppercase mb-4 tracking-widest italic">Gestion des Gains Anti-Plantage</h4>
-                                <p class="text-slate-300 text-sm leading-relaxed font-medium">Conformément au Build 4.5.102, les algorithmes de versement sont isolés pour empêcher tout crash lors des gains massifs. Performance fluide sous des milliers de requêtes.</p>
-                            </div>
+                <!-- ARTICLE 9 -->
+                <section id="art9" class="article-section">
+                    <span class="chapter-num">09</span>
+                    <h2 class="section-title">9. Sécurité Cryptographique et Chiffrement AES-256</h2>
+                    <div class="dark-block">
+                        <div class="detail-text text-white">
+                            <p style="color: #cbd5e1;">L'intégrité d'une plateforme financière repose intégralement sur son architecture de sécurité. Dans ce domaine, AGI NEXUS CORE ne fait aucun compromis et applique des standards de qualité militaire. Toutes les données en transit entre l'application cliente sur le smartphone de l'utilisateur et les serveurs cloud de Nucleus sont enveloppées dans un tunnel de chiffrement AES-256 (Advanced Encryption Standard à clé de 256 bits). Pour comprendre la puissance de ce standard, il suffirait de dire qu'il faudrait à un superordinateur moderne plusieurs milliards d'années pour forcer une seule clé AES-256 par force brute.</p>
+                            <p style="color: #cbd5e1;">Outre le chiffrement asymétrique des flux réseau, le système de gestion des sessions a été repensé dans le Build 4.5.102 pour neutraliser les attaques par interception (Man-in-the-Middle) et par rejeu (Replay Attacks). À chaque connexion, une nouvelle clé de session éphémère (Token JWT avec rotation dynamique) est générée. Même si un acteur malveillant parvenait d'une manière ou d'une autre à copier le paquet de données envoyé, cette donnée deviendrait mathématiquement inutilisable quelques microsecondes plus tard.</p>
+                            <p style="color: #cbd5e1;">La sécurité s'étend également au niveau de la base de données. Les mots de passe et codes PIN des utilisateurs ne sont jamais stockés en clair. Ils sont soumis à un processus de salage (Salt) aléatoire unique pour chaque compte, puis hachés par l'algorithme bcrypt avec un facteur de coût (cost factor) élevé. Cela signifie que même en cas d'hypothétique compromission totale des bases de données de Firebase, les attaquants ne se retrouveraient qu'avec des chaînes de caractères incompréhensibles et indéchiffrables. Le bouclier AGI assure une protection totale des données de session, des soldes et de l'anonymat relatif de ses membres contre toute tentative d'intrusion.</p>
                         </div>
-                    </section>
+                    </div>
+                </section>
 
-                    <section id="ch11" class="relative">
-                        <span class="chapter-num">11</span>
-                        <h2 class="text-3xl font-black mb-8 relative z-10 italic uppercase border-b-2 border-agi-gold pb-2 inline-block">11 & 12. Roadmap & Conclusion</h2>
-                        <div class="space-y-10">
-                            <div class="border-l-8 border-agi-gold pl-8 space-y-8">
-                                <div class="relative">
-                                    <span class="block text-xs font-black text-agi-gold uppercase italic">Phase Alpha (Terminée)</span>
-                                    <p class="text-sm font-extrabold uppercase text-slate-500">Développement Core & Génération Base58.</p>
-                                </div>
-                                <div class="relative">
-                                    <span class="block text-xs font-black text-agi-gold uppercase italic">Phase Bêta (Actuelle)</span>
-                                    <p class="text-sm font-extrabold uppercase text-slate-900">Build 4.5.102, 14 membres actifs, tests du Swap CFA.</p>
-                                </div>
-                                <div class="relative">
-                                    <span class="block text-xs font-black text-agi-gold uppercase italic">Expansion (Q2 2026)</span>
-                                    <p class="text-sm font-extrabold uppercase text-slate-500">Lancement Hub Commercial & Terminal de Trading.</p>
-                                </div>
-                                <div class="relative">
-                                    <span class="block text-xs font-black text-agi-gold uppercase italic">Souveraineté (2027)</span>
-                                    <p class="text-sm font-extrabold uppercase text-slate-500">Intégration régionale complète.</p>
-                                </div>
-                            </div>
-                            <div class="glass-card bg-slate-900 text-white text-center py-12">
-                                <h3 class="text-agi-gold italic text-2xl mb-6">Conclusion</h3>
-                                <p class="text-base leading-relaxed opacity-90 uppercase tracking-tight italic font-bold max-w-2xl mx-auto">AGI NEXUS CORE est l'outil ultime pour la souveraineté numérique. Grâce à sa base légale solide, son architecture Nucleus V4.5 et ses protocoles de sécurité Base58, Atlas Groupe International offre un futur financier stable, rentable et accessible à tous.</p>
-                            </div>
+                <!-- ARTICLE 10 -->
+                <section id="art10" class="article-section">
+                    <span class="chapter-num">10</span>
+                    <h2 class="section-title">10. Stabilité du Build 4.5.102 et Anti-Plantage</h2>
+                    <div class="glass-card">
+                        <div class="detail-text">
+                            <p>L'une des plus grandes frustrations technologiques dans les applications financières naissantes est l'instabilité lors des pics d'utilisation. Des interfaces qui gèlent lors de l'actualisation du solde, des transactions qui tournent dans le vide ou des fermetures inopinées (crashs) minent la confiance de l'utilisateur. Le développement de la version stable "Build 4.5.102" de Nucleus a été spécifiquement axé sur l'élimination totale de ces points de défaillance grâce à une architecture "Zero-Crash Logic" et un asynchronisme omniprésent.</p>
+                            <p>Dans cette version, la logique de gestion des gains est radicalement isolée du moteur de rendu visuel (UI Thread). Concrètement, lorsque le Minage Cloud verse des milliers de micro-fractions d'AG-COIN chaque seconde ou lorsqu'un gain massif est déclenché par une prime de parrainage ou un jackpot du Centre de Jeux, ces calculs intensifs sont relégués à des processus d'arrière-plan (Background Workers ou Web Workers). L'interface utilisateur reste ainsi d'une fluidité parfaite, répondant instantanément au toucher à 60 images par seconde, indépendamment de la charge mathématique traitée en coulisse.</p>
+                            <p>De surcroît, le Build 4.5.102 introduit un système de "Watchdogs" (Sentinelles logicielles) et de persistance locale de l'état (State Reconstruction). Si une coupure réseau brutale survient au beau milieu d'une opération de Swap ou d'un transfert, la Sentinelle sauvegarde l'état exact de la transaction dans une mémoire cache chiffrée sur le téléphone. Dès que la connexion est rétablie, un protocole de résolution de conflit asynchrone vérifie avec le Cloud quel était le dernier bloc validé, et restaure le solde avec une précision chirurgicale, garantissant une absence absolue de perte de données ou de "fonds bloqués dans les limbes".</p>
                         </div>
-                    </section>
+                    </div>
+                </section>
 
-                    <hr class="border-slate-300">
-
-                    <section id="annexes" class="pt-10">
-                        <h2 class="text-5xl font-black mb-16 italic uppercase tracking-tighter text-agi-gold leading-tight">Annexes Techniques <br><span class="text-slate-900 text-2xl">Spécifications Build 4.5.102</span></h2>
-
-                        <div class="annex-box">
-                            <h3 class="flex items-center gap-4"><span class="bg-slate-900 text-white px-3 py-1 rounded text-sm">A</span> Le Moteur de Conversion SWAP-CFA</h3>
-                            <div class="detail-text space-y-4">
-                                <p><strong>1. Architecture du Pool de Liquidité :</strong> Pour garantir que chaque membre puisse convertir ses 100,546 AG ou plus en CFA sans délai, AGI NEXUS CORE utilise une réserve décentralisée. La part des bénéfices du Hub et du Minage alimente le pool fiduciaire. Un ratio de solvabilité constant est maintenu par l'algorithme Nucleus.</p>
-                                <p><strong>2. Algorithme de Tarification Dynamique :</strong> Taux protégé par "Lissage de Volatilité". Un Oracle Interne interroge le Terminal Trading pour éviter le "Slippage" (fragmentation automatique des ordres importants).</p>
-                                <p><strong>3. Workflow Technique :</strong> Hachage de transaction unique -> Vérification AES-256 (verrouillage de session) -> Validation PoA (Burn/Reserve) -> Confirmation Firebase instantanée.</p>
-                                <p><strong>4. Intégration Locale :</strong> Optimisé pour les Mobile Money au Burkina Faso et conforme KYC/AML selon le Récépissé n° PHUE 3539/2025.</p>
-                                <p><strong>5. Résilience Anti-Plantage :</strong> "Reconstruction d'État" asynchrone si le terminal s'éteint durant le swap.</p>
-                            </div>
+                <!-- ARTICLE 11 -->
+                <section id="art11" class="article-section">
+                    <span class="chapter-num">11</span>
+                    <h2 class="section-title">11. Roadmap 2026-2027 et Jalons de Développement</h2>
+                    <div class="glass-card">
+                        <div class="detail-text">
+                            <p>Un projet technologique d'envergure nécessite une feuille de route claire, transparente et ambitieuse. La Roadmap d'Atlas Groupe International pour le cycle 2026-2027 détaille l'évolution programmée du système AGI NEXUS CORE, passant du statut de startup FinTech émergente à celui de standard institutionnel d'infrastructure numérique pour toute l'Afrique de l'Ouest. Nous avons déjà franchi avec succès la "Phase Alpha" (2024-2025), qui a vu le développement du Core Engine Nucleus, la création du standard Base58 exclusif, et la validation juridique via notre récépissé officiel.</p>
+                            <p>Actuellement en "Phase Bêta Avancée" (Q1 2026), l'accent est mis sur la stabilisation avec le déploiement du Build 4.5.102, l'atteinte d'une masse critique d'utilisateurs pionniers hautement actifs, et les tests rigoureux de stress-test du moteur de SWAP-CFA en conditions réelles de retrait. Cette phase est cruciale pour calibrer les ratios de liquidité et ajuster les algorithmes de lissage de volatilité avant l'ouverture des vannes à un public plus large. C'est durant cette période que les fondations communautaires sont coulées dans le béton numérique de la confiance et du rendement vérifié.</p>
+                            <p>Les prochaines étapes sont spectaculaires. L'"Expansion" (Q2 - Q4 2026) verra l'inauguration publique du Hub Commercial complet et le lancement d'un Terminal de Trading Interne pour les utilisateurs avancés, permettant d'échanger l'AG-COIN contre d'autres actifs numériques de manière décentralisée. Enfin, "La Souveraineté" (2027) marquera l'intégration régionale complète, le déploiement de nœuds validateurs physiques au sein d'institutions partenaires au Burkina Faso et dans l'UEMOA, et l'obtention de licences bancaires complémentaires. Le but ultime : devenir le système d'exploitation financier incontournable de la zone francophone africaine.</p>
                         </div>
+                    </div>
+                </section>
 
-                        <div class="annex-box">
-                            <h3 class="flex items-center gap-4"><span class="bg-slate-900 text-white px-3 py-1 rounded text-sm">B</span> Protocole d'Expansion & Réseau Citoyen</h3>
-                            <div class="detail-text space-y-4">
-                                <p>Modèle basé sur la "Preuve de Contribution" (Proof of Contribution). </p>
-                                <table>
-                                    <thead>
-                                        <tr><th>Rang</th><th>Condition</th><th>Bonus Staking</th><th>Frais Swap</th></tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr><td>Citoyen Alpha</td><td>Inscription</td><td>Standard</td><td>0%</td></tr>
-                                        <tr><td>Citoyen Pionnier</td><td>5 Membres Actifs</td><td>+ 5%</td><td>- 10%</td></tr>
-                                        <tr><td>Ambassadeur Core</td><td>20 Membres Actifs</td><td>+ 12%</td><td>- 25%</td></tr>
-                                        <tr><td>Gouverneur Atlas</td><td>100+ Membres</td><td>+ 25%</td><td>- 50%</td></tr>
-                                    </tbody>
-                                </table>
-                                <p><strong>Bonus de Dotation (1000 AG) :</strong> Allocation automatique pour amorcer le minage. Placé en "Staking Forcé" pour garantir la liquidité initiale et éviter l'inflation.</p>
-                                <p><strong>Algorithme de Distribution :</strong> Calcul asynchrone en temps réel. Les bonus sont isolés dans un sous-registre pour éviter la corruption de données lors des pics d'inscriptions.</p>
-                                <p><strong>Trust Score :</strong> Indice basé sur l'ancienneté, le volume du Hub et la stabilité HDI.</p>
-                            </div>
+                <!-- ARTICLE 12 -->
+                <section id="art12" class="article-section">
+                    <span class="chapter-num">12</span>
+                    <h2 class="section-title">12. Réserve HDI et Mécanismes de Staking</h2>
+                    <div class="glass-card" style="background-color: #f0fdf4; border: 1px solid #bbf7d0;">
+                        <div class="detail-text">
+                            <p>Dans l'architecture financière d'AGI NEXUS CORE, la stabilité à long terme est assurée par un outil ingénieux d'épargne incitative : la Réserve HDI (High Dividend Index) et le système de Staking. Le Staking consiste, pour un utilisateur, à verrouiller volontairement une partie ou la totalité de ses actifs (AG-COIN) dans un contrat intelligent spécifique pour une durée déterminée. En échange de cette immobilité volontaire qui renforce la solidité globale du système, l'utilisateur est grassement rémunéré sous forme de dividendes passifs réguliers, bien supérieurs aux taux d'intérêt ridicules des comptes épargne bancaires traditionnels.</p>
+                            <p>Le fonctionnement de la Réserve HDI est une merveille de mathématiques appliquées. Lorsqu'un grand nombre d'utilisateurs verrouillent leurs jetons, la quantité d'AG-COIN en circulation libre sur le marché diminue drastiquement. Cette réduction de l'offre disponible, combinée à une demande croissante générée par l'utilité du jeton (Hub, Licences, Jeux), crée une pression déflationniste saine qui maintient, voire augmente, la valeur d'échange du jeton par rapport au Franc CFA. Le Staking est donc le principal rempart anti-inflationniste du système Nucleus.</p>
+                            <p>Les dividendes versés aux "Stakers" (épargnants) ne sont pas créés à partir de rien (ce qui créerait de l'hyperinflation), mais sont alimentés par l'activité économique réelle du réseau. Les frais prélevés sur les retraits anticipés, les taxes du Hub Commercial, et une proportion (1 à 3%) des marges générées par le Centre de Jeux sont systématiquement redirigés vers le pool de récompenses HDI. Ainsi, ceux qui croient en la vision à long terme du projet et soutiennent sa liquidité sont mathématiquement récompensés par l'activité frénétique de court terme. C'est un cercle vertueux d'enrichissement mutuel et de fidélisation profonde.</p>
                         </div>
+                    </div>
+                </section>
 
-                        <div class="annex-box">
-                            <h3 class="flex items-center gap-4"><span class="bg-slate-900 text-white px-3 py-1 rounded text-sm">C</span> Spécifications Techniques du Cœur</h3>
-                            <div class="detail-text space-y-4">
-                                <p><strong>Base58 Implementation :</strong> Conversion du hachage SHA-256 de la clé publique. Somme de contrôle (Checksum) de 4 octets intégrée.</p>
-                                <p><strong>Standard AES-256 :</strong> Chiffrement des communications vers Firebase avec rotation dynamique des clés de session.</p>
-                                <p><strong>Zero-Crash Logic :</strong> Non-Blocking IO (Asynchronisme) permettant la navigation fluide pendant le crédit des gains. Système de "Watchdogs" (Sentinelles) pour la sauvegarde locale en cas d'anomalie réseau.</p>
-                                <p><strong>Performance Cloud :</strong> Latence < 150ms. Réplication sur trois zones géographiques.</p>
-                            </div>
+                <!-- ARTICLE 13 -->
+                <section id="art13" class="article-section">
+                    <span class="chapter-num">13</span>
+                    <h2 class="section-title">13. Le Moteur de Conversion SWAP-CFA</h2>
+                    <div class="glass-card">
+                        <div class="detail-text">
+                            <p>L'interface ultime entre la nouvelle économie décentralisée et la réalité quotidienne du citoyen burkinabè est la capacité de convertir ses gains numériques en monnaie fiduciaire utilisable pour acheter du pain, payer un loyer ou des frais de scolarité. C'est ici qu'intervient le joyau de l'ingénierie financière d'AGI : le Moteur de Conversion SWAP-CFA. Ce module critique permet la conversion bidirectionnelle fluide entre l'AG-COIN et le Franc CFA XOF, constituant le pont salvateur vers l'indépendance financière réelle de nos membres.</p>
+                            <p>Pour garantir que chaque membre, lorsqu'il atteint les seuils requis (historiquement autour de 100 546 AG), puisse retirer ses fonds sans subir de retards anxiogènes ou de "fonds insuffisants", le système s'appuie sur une Architecture de Pool de Liquidité stricte. Une partie substantielle des capitaux initiaux et des revenus générés par l'écosystème est conservée en monnaie fiduciaire forte dans des comptes de réserve séquestrés. Un algorithme appelé "Oracle Interne" surveille en permanence le ratio de solvabilité. Si la pression à la vente (demandes de retrait) augmente brutalement, l'Oracle active le "Lissage de Volatilité", un mécanisme qui ajuste dynamiquement les frais ou fragmente les ordres massifs pour éviter un assèchement brutal du pool (Slippage).</p>
+                            <p>D'un point de vue technique, le Workflow d'un retrait est un chef-d'œuvre de sécurité automatisée. Lorsqu'un utilisateur initie un SWAP : 1) Le client génère un hachage de transaction unique crypté en AES-256. 2) Les nœuds PoA vérifient instantanément que l'utilisateur possède bien le solde et n'est pas sous le coup d'un double-dépense. 3) Les AG-COIN correspondants sont transférés vers l'adresse de "Burn" (destruction) ou dans la Réserve, réduisant ainsi l'offre en circulation. 4) Un signal API sécurisé est envoyé au processeur de paiement partenaire pour créditer le compte Mobile Money de l'utilisateur. Tout ce processus complexe se déroule en quelques secondes sous le capot du Build 4.5.102.</p>
                         </div>
+                    </div>
+                </section>
 
-                        <div class="annex-box">
-                            <h3 class="flex items-center gap-4"><span class="bg-slate-900 text-white px-3 py-1 rounded text-sm">D</span> Hub Commercial & Accréditation</h3>
-                            <div class="detail-text space-y-4">
-                                <p><strong>Statut Marchand :</strong> Licence de 12 mois pour 5000 AG-COIN (dépôt de garantie). Renouvellement auto ou manuel via Terminal de Gestion.</p>
-                                <p><strong>Avantages :</strong> Badge "Certifié Atlas", Priorité de Flux, et plafonds de Swap élevés.</p>
-                                <p><strong>Sécurité Escrow :</strong> Le dépôt de 5000 AG sert de fonds de garantie pour dédommager l'acheteur en cas de litige avéré.</p>
-                            </div>
+                <!-- ARTICLE 14 -->
+                <section id="art14" class="article-section">
+                    <span class="chapter-num">14</span>
+                    <h2 class="section-title">14. Centre de Jeux et Système Provably Fair</h2>
+                    <div class="glass-card">
+                        <div class="detail-text">
+                            <p>L'intégration de la dimension ludique (Gamification) dans l'écosystème financier n'est pas une simple distraction, c'est un vecteur puissant d'engagement quotidien et de génération de revenus auxiliaires. Le Centre de Jeux d'AGI NEXUS n'a rien à voir avec les applications de paris opaques et truquées qui pullulent sur internet. Nous avons implémenté le standard cryptographique absolu en matière d'équité ludique : l'algorithme "Provably Fair" (Légitimement Équitable).</p>
+                            <p>Le principe de la technologie Provably Fair repose sur l'impossibilité mathématique pour le serveur d'AGI de manipuler le résultat d'un jeu à l'insu de l'utilisateur. Avant que le jeu ne commence, le serveur génère une graine secrète (Server Seed) et fournit son hachage cryptographique à l'utilisateur. Le smartphone de l'utilisateur génère de son côté sa propre graine (Client Seed) associée à un compteur (Nonce). Le résultat final du tirage, de la roulette ou du crash, est le produit de la combinaison cryptographique de ces éléments. Après la partie, la Server Seed originale est révélée, permettant à quiconque de recalculer le résultat et de prouver de manière irréfutable que le tirage était 100% aléatoire et non biaisé a posteriori.</p>
+                            <p>Sur le plan structurel, le Centre de Jeux est un moteur d'activité crucial pour la santé de l'AG-COIN. Les gains sont distribués avec la vitesse habituelle de 0.4 seconde de Nucleus, assurant une adrénaline et une satisfaction immédiate. Mais surtout, le léger avantage mathématique de la maison (House Edge de 1 à 3%) n'est pas capté intégralement par l'entreprise. Il est redistribué de manière systémique pour alimenter le Pool de Liquidité SWAP-CFA et financer les dividendes de la Réserve HDI. Ainsi, même les utilisateurs qui ne jouent pas bénéficient financièrement de l'activité générée par le Centre de Jeux. L'amusement des uns consolide le pouvoir d'achat des autres.</p>
                         </div>
+                    </div>
+                </section>
 
-                        <div class="annex-box">
-                            <h3 class="flex items-center gap-4"><span class="bg-slate-900 text-white px-3 py-1 rounded text-sm">E</span> Centre de Jeux & Provably Fair</h3>
-                            <div class="detail-text space-y-4">
-                                <p><strong>Transparence Totale :</strong> Utilisation de Server Seed, Client Seed et Nonce pour une équité prouvable mathématiquement.</p>
-                                <p><strong>Liquidité :</strong> Distribution des gains en 0.4s. Séparation de la logique de gain du moteur de rendu visuel pour une stabilité absolue.</p>
-                                <p><strong>Taxe de Réserve (1-3%) :</strong> Redistribuée vers la Réserve HDI et le Pool de Liquidité CFA.</p>
-                            </div>
+                <!-- ARTICLE 15 -->
+                <section id="art15" class="article-section">
+                    <span class="chapter-num">15</span>
+                    <h2 class="section-title">15. Impact Socio-Économique au Burkina Faso</h2>
+                    <div class="glass-card">
+                        <div class="detail-text">
+                            <p>La technologie n'a de véritable valeur que si elle améliore la condition humaine de manière tangible. Pour le Burkina Faso, où le taux de bancarisation classique reste encore un défi majeur malgré les efforts récents, AGI NEXUS CORE s'impose comme un puissant outil de désenclavement et d'inclusion financière. En réduisant les barrières à l'entrée à leur plus simple expression (la possession d'un smartphone Android basique et d'une connexion internet, même 3G), Atlas Groupe International permet à la base de la pyramide économique de participer à la création de richesse.</p>
+                            <p>L'impact socio-économique premier est la Micro-Capitalisation. Beaucoup de citoyens ambitieux n'ont pas le capital initial requis pour lancer une petite activité ou accéder aux crédits bancaires (qui exigent des garanties foncières ou salariales). Grâce au système de Bonus de Dotation à l'inscription et aux rendements du Minage Cloud et du Staking HDI, un utilisateur assidu peut générer organiquement un premier capital de départ (Seed Capital). Cet argent, fruit de sa discipline et de sa participation au réseau, peut ensuite être converti en CFA pour financer un petit commerce, payer des fournitures scolaires, ou investir dans du matériel agricole.</p>
+                            <p>De plus, la digitalisation massive des paiements via le réseau AGI sécurise les marchands informels. Dans un environnement où la gestion de grosses sommes en espèces (cash) expose à des risques constants de vol ou de fausse monnaie, accepter l'AG-COIN via un simple scan de QR code immunise le commerçant contre ces dangers physiques. La combinaison de ces facteurs transforme silencieusement, mais radicalement, l'économie locale : d'un système de survie basé sur l'immédiateté fiduciaire vers un écosystème de croissance planifiée, numérisé, sûr et auditable par tous les participants.</p>
                         </div>
+                    </div>
+                </section>
 
-                        <div class="annex-box">
-                            <h3 class="flex items-center gap-4"><span class="bg-slate-900 text-white px-3 py-1 rounded text-sm">F</span> Utilité Réelle & Impact</h3>
-                            <div class="detail-text space-y-4">
-                                <p><strong>Digitalisation :</strong> Inclusion financière par scan d'ID et réduction des risques liés aux espèces pour les marchands.</p>
-                                <p><strong>Micro-Capitalisation :</strong> Levier de financement via Staking PoA et bonus de dotation pour les citoyens sans capital de départ.</p>
-                                <p><strong>Souveraineté :</strong> Indépendance technique garantie par le Nucleus V4.5, lien constant avec le CFA pour le pouvoir d'achat.</p>
-                            </div>
+                <!-- ARTICLE 16 -->
+                <section id="art16" class="article-section">
+                    <span class="chapter-num">16</span>
+                    <h2 class="section-title">16. Gouvernance Décentralisée et Consensus PoA</h2>
+                    <div class="glass-card">
+                        <div class="detail-text">
+                            <p>Derrière la rapidité fulgurante des transactions AGI se cache le mécanisme de consensus "Proof-of-Authority" (PoA - Preuve d'Autorité), une évolution mature et d'entreprise des anciens protocoles de blockchain. Contrairement aux systèmes libertariens complets (Proof-of-Work) où n'importe quel acteur anonyme peut miner un bloc en brûlant de l'énergie, le PoA d'AGI exige que l'identité légale et la réputation des entités validant le réseau soient connues, certifiées et mises en jeu. C'est l'architecture parfaite pour allier la puissance de la blockchain aux exigences de conformité des autorités régulatrices d'Afrique de l'Ouest.</p>
+                            <p>Les "Nœuds d'Autorité" (Authority Nodes) qui font tourner le moteur Nucleus V4.5.102 sont opérés par Atlas Groupe International et, à terme, par des partenaires institutionnels accrédités et audités (cabinets comptables, FAI locaux, universités technologiques). L'avantage phénoménal de ce modèle est la vitesse de validation. Étant donné que les nœuds se font implicitement confiance sur la base de contrats juridiques stricts, il n'y a pas besoin d'attendre 10 minutes ou de résoudre des équations mathématiques complexes pour confirmer qu'un transfert est valide. Le consensus est atteint en 400 millisecondes.</p>
+                            <p>Cette approche semi-décentralisée introduit également une forme de gouvernance responsable. S'il s'avérait qu'une faille critique (Bug) ou qu'un acte frauduleux massif tentait de compromettre le réseau (par exemple un piratage d'une plateforme d'échange externe), les nœuds d'autorité ont la capacité de s'accorder instantanément pour geler temporairement le registre, isoler l'attaque et protéger les fonds des citoyens de manière préventive. Le PoA offre la résilience technologique de la décentralisation tout en maintenant le filet de sécurité et le sens des responsabilités propres aux institutions financières de confiance.</p>
                         </div>
-                    </section>
-                </div>
+                    </div>
+                </section>
+
+                <!-- ARTICLE 17 -->
+                <section id="art17" class="article-section">
+                    <span class="chapter-num">17</span>
+                    <h2 class="section-title">17. Intégration des Plateformes Mobile Money</h2>
+                    <div class="dark-block">
+                        <div class="detail-text text-white">
+                            <p style="color: #cbd5e1;">Le succès de toute initiative technologique financière en Afrique de l'Ouest dépend de sa capacité à s'interfacer de manière transparente avec l'infrastructure dominante du continent : le Mobile Money. Atlas Groupe International a conçu le moteur SWAP-CFA d'AGI NEXUS CORE avec une architecture "API First", lui permettant de communiquer directement et en toute sécurité avec les passerelles de paiement des géants des télécommunications locaux tels que Orange Money, Moov Money et Coris Money.</p>
+                            <p style="color: #cbd5e1;">Cette interopérabilité technique résout le fameux "problème du dernier kilomètre". Une fois que l'utilisateur a généré suffisamment d'AG-COIN via le Hub ou le Minage Cloud et décide d'opérer un retrait, la conversion interne exécutée par Nucleus transmet une instruction cryptée d'interface de programmation d'application (API) au fournisseur Mobile Money sélectionné par l'utilisateur. Le système vérifie instantanément la correspondance entre l'ID Nexus du demandeur et le numéro de téléphone enregistré (pour des raisons de sécurité AML), puis déclenche le dépôt de la contrevaleur en Francs CFA XOF sur le portefeuille téléphonique du citoyen.</p>
+                            <p style="color: #cbd5e1;">Cette intégration profonde, adossée au Récépissé légal n° PHUE 3539/2025, garantit non seulement la légitimité des flux financiers entrants et sortants, mais permet également un traitement automatisé 24 heures sur 24, 7 jours sur 7. L'utilisateur n'est plus contraint par les horaires d'ouverture des banques ou par les jours fériés. De l'univers cryptographique d'AGI jusqu'au solde visible sur le téléphone SMS de l'utilisateur, l'expérience est continue, sans couture, et entièrement digitalisée. Cette symbiose entre la blockchain et la téléphonie mobile est le véritable catalyseur de l'inclusion financière totale de la population.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ARTICLE 18 -->
+                <section id="art18" class="article-section">
+                    <span class="chapter-num">18</span>
+                    <h2 class="section-title">18. Gestion des Données et Confidentialité (KYC)</h2>
+                    <div class="glass-card">
+                        <div class="detail-text">
+                            <p>Dans l'ère de l'information numérique, la gestion des données personnelles (Data Privacy) est tout aussi importante que la sécurisation des fonds eux-mêmes. Opérant sous une juridiction stricte au Burkina Faso, AGI NEXUS CORE s'engage à respecter les plus hauts standards de confidentialité tout en assurant ses obligations de conformité contre la criminalité financière via les procédures de KYC (Know Your Customer - Connaissance du Client). Le défi technologique consiste à trouver l'équilibre parfait entre l'anonymat de la blockchain et la transparence légale.</p>
+                            <p>Le processus KYC mis en place par le Build 4.5.102 est à la fois robuste et minimalement invasif. Pour les utilisateurs de base interagissant uniquement dans l'écosystème interne (Minage, Jeux, petits transferts entre ID Nexus), les exigences en matière de données sont réduites au strict minimum : un numéro de téléphone vérifié (OTP) et la création sécurisée d'une clé publique/privée. L'identité réelle reste pseudonymisée derrière l'adresse Base58, garantissant la liberté d'interaction économique sans surveillance intrusive.</p>
+                            <p>Cependant, lorsqu'un utilisateur souhaite élever ses plafonds d'échange vers le réseau Mobile Money public (SWAP-CFA) ou acquérir une licence de Hub Commercial, un processus de vérification d'identité renforcé est déclenché. Les pièces d'identité scannées et les données biométriques collectées ne sont pas stockées en clair sur nos serveurs. Elles sont immédiatement numérisées, chiffrées selon la norme militaire AES-256 et fragmentées sur plusieurs serveurs sécurisés via notre architecture Cloud (GCP/Firebase). Seuls les algorithmes de conformité automatisés et, en cas d'injonction légale spécifique, les officiers de conformité assermentés d'Atlas Groupe, possèdent les clés cryptographiques de déchiffrement. La vie privée de l'honnête citoyen est sanctifiée ; l'espace pour l'activité illicite est éradiqué.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ARTICLE 19 -->
+                <section id="art19" class="article-section">
+                    <span class="chapter-num">19</span>
+                    <h2 class="section-title">19. Audits de Sécurité et Résilience Réseau</h2>
+                    <div class="glass-card">
+                        <div class="detail-text">
+                            <p>La pérennité d'un système d'exploitation financier d'envergure nationale ou continentale ne peut se reposer uniquement sur la bonne foi de ses développeurs internes. Elle exige une culture de l'audit permanent et une architecture de résilience paranoïaque. L'infrastructure Nucleus V4.5.102 est soumise à des protocoles de tests de pénétration continus (Pentesting) menés par des firmes indépendantes de cybersécurité, garantissant l'imperméabilité absolue du code face aux menaces numériques modernes, qu'il s'agisse d'attaques DDoS, d'injections SQL ou d'exploits de type Zero-Day.</p>
+                            <p>La résilience du réseau face aux pannes matérielles ou aux catastrophes naturelles est assurée par une redondance géographique de pointe. Les bases de données en temps réel (NoSQL Firebase) qui soutiennent le moteur transactionnel d'AGI sont répliquées de manière synchrone sur trois zones de disponibilité distinctes à l'échelle mondiale. Si un centre de données entier venait à être détruit ou coupé du monde par une rupture de câble sous-marin majeur (un incident récurrent en Afrique), le trafic utilisateur est automatiquement routé via DNS vers le centre de secours le plus proche en moins de 150 millisecondes. Pour l'utilisateur final au Burkina Faso, l'application continue de fonctionner sans la moindre interruption perceptible.</p>
+                            <p>De surcroît, le code source du moteur de consensus et des contrats intelligents gérant le Pool de Liquidité SWAP fait l'objet de revues par les pairs (Peer Review). L'architecture "Zero-Crash Logic" détaillée dans le Build 4.5.102 n'est pas qu'un simple slogan marketing ; elle résulte d'une ingénierie logicielle où chaque module est conteneurisé (Docker/Kubernetes). Si le module du Hub Commercial subit une surcharge due à une vente flash, les ressources sont isolées, et le module critique de paiement principal (Core Wallet) reste sanctuarisé à 100% de ses capacités de performance, assurant une disponibilité du système (Uptime) garantie à 99,99%.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ARTICLE 20 -->
+                <section id="art20" class="article-section">
+                    <span class="chapter-num">20</span>
+                    <h2 class="section-title">20. Conclusion et Perspectives Globales</h2>
+                    <div class="dark-block">
+                        <div class="detail-text text-white">
+                            <p style="color: #cbd5e1;">En conclusion, le Livre Blanc de l'AGI NEXUS CORE V4.5.102 illustre bien plus qu'une prouesse technique algorithmique ; il pose les fondations d'un nouveau contrat social économique. Atlas Groupe International a prouvé qu'il est possible de conjuguer la liberté décentralisée de la cryptographie avec la rigueur légale exigée par les États (Récépissé PHUE 3539/2025). Le moteur Nucleus, la sécurité absolue du standard Base58, et l'intelligence de l'économie circulaire de l'AG-COIN créent un écosystème où chaque participant est acteur, propriétaire et bénéficiaire du réseau qu'il contribue à sécuriser.</p>
+                            <p style="color: #cbd5e1;">Les succès rencontrés par le Build stable au Burkina Faso ne sont que la première étape d'une vision panafricaine. L'ambition d'Atlas Groupe est de transcender les frontières artificielles en déployant le Hub Commercial et l'infrastructure de Swap à travers toute la zone UEMOA, puis CEMAC, facilitant un commerce intra-africain sans friction, libéré des lourdeurs bureaucratiques et des frais de change exorbitants. Le "Réseau Citoyen" a vocation à devenir un filet de sécurité financier continental massif.</p>
+                            <p style="color: #cbd5e1;">AGI NEXUS CORE est l'outil ultime pour la souveraineté numérique. C'est l'aube d'une ère nouvelle où la technologie redonne le pouvoir d'achat à ceux qui créent réellement la valeur au quotidien. En rejoignant ce réseau en tant que citoyen actif, pionnier ou ambassadeur, vous ne téléchargez pas seulement une application ; vous participez à la construction du plus grand système d'exploitation financier libre jamais conçu sur le sol ouest-africain. L'avenir de l'économie n'est plus entre les mains de quelques privilégiés ; il réside dans le code de Nucleus, solidement ancré dans le creux de votre main.</p>
+                        </div>
+                    </div>
+                </section>
+                
             </div>
         </div>
 
-        <footer class="bg-slate-950 text-white py-20 text-center italic border-t-4 border-agi-gold">
-            <div class="container mx-auto px-6">
-                <p class="text-[11px] font-black uppercase tracking-[0.5em] mb-4 text-agi-gold">© 2026 Atlas Groupe International - Burkina Faso</p>
-                <p class="text-[9px] opacity-60 uppercase tracking-widest mb-10 italic font-bold">Core Engine Build: 4.5.102-Stable | Souveraineté Numérique</p>
-                <div class="flex justify-center gap-12 text-3xl text-agi-gold">
-                    <i class="ri-shield-check-line hover:scale-110 transition-transform"></i>
-                    <i class="ri-qr-code-line hover:scale-110 transition-transform"></i>
-                    <i class="ri-blockchain-line hover:scale-110 transition-transform"></i>
+        <footer>
+            <div class="container">
+                <p class="footer-text">© 2026 Atlas Groupe International - Burkina Faso</p>
+                <p class="footer-sub">Core Engine Build: 4.5.102-Stable | Récépissé n° PHUE 3539/2025 | Souveraineté Numérique</p>
+                <div style="font-size: 24px; color: var(--agi-gold); margin-top: 20px; letter-spacing: 15px;">
+                    🛡️ 📱 🌐
                 </div>
             </div>
         </footer>
