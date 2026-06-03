@@ -1,42 +1,94 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" id="html-root">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MENTIONS LÉGALES ÉTENDUES - AGI NEXUS CORE</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
+        /* Définition des variables et suppression de Tailwind CSS */
         :root {
             --agi-navy: #0f172a;
             --agi-gold: #d97706;
             --agi-emerald: #059669;
             --agi-slate: #475569;
             --agi-light: #f8fafc;
+            --agi-dark: #1e293b;
+            --glass-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --text-main: #334155;
         }
+
+        /* Réduction de la taille de police globale pour éviter les débordements */
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
             background-color: var(--agi-light); 
-            color: var(--agi-navy);
-            line-height: 1.7;
+            color: var(--text-main);
+            line-height: 1.8;
+            font-size: 13px; 
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
         }
-        .legal-container { max-width: 1000px; margin: 0 auto; padding: 4rem 1.5rem; }
+
+        /* Layout global */
+        .legal-container { 
+            max-width: 1100px; 
+            margin: 0 auto; 
+            padding: 3rem 1.5rem; 
+        }
+
+        /* En-tête */
+        .header-section { text-align: center; margin-bottom: 4rem; }
+        .logo-img { 
+            width: 80px; 
+            height: 80px; 
+            margin: 0 auto 1.5rem auto; 
+            border-radius: 20px; 
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); 
+            border: 2px solid var(--agi-gold); 
+            display: block;
+        }
+        .main-title { 
+            font-size: 2.5rem; 
+            font-weight: 900; 
+            font-style: italic; 
+            text-transform: uppercase; 
+            letter-spacing: -0.05em; 
+            color: var(--agi-navy); 
+            margin: 0;
+        }
+        .main-title span { color: var(--agi-gold); }
+        .subtitle { 
+            color: var(--agi-slate); 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: 0.3em; 
+            font-size: 0.65rem; 
+            margin-top: 1rem; 
+        }
+
+        /* Carte de contenu style Glassmorphism */
         .glass-card { 
-            background: #ffffff; 
-            border: 1px solid #e2e8f0; 
-            border-radius: 32px; 
-            padding: 3rem; 
+            background: var(--glass-bg); 
+            border: 1px solid var(--border-color); 
+            border-radius: 24px; 
+            padding: 3.5rem; 
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
         }
+
+        /* Typographie des articles */
+        section { margin-bottom: 3.5rem; }
         h2 { 
             color: var(--agi-navy); 
             font-weight: 900; 
             text-transform: uppercase; 
-            font-size: 1.4rem;
-            margin-top: 2.5rem;
-            margin-bottom: 1.25rem;
+            font-size: 1.25rem;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
             gap: 0.75rem;
@@ -44,154 +96,718 @@
             padding-bottom: 0.5rem;
             width: fit-content;
         }
-        h3 { font-weight: 800; color: var(--agi-gold); font-size: 1rem; margin-top: 1.5rem; text-transform: uppercase; }
+        h2 i { color: var(--agi-gold); }
+        h3 { 
+            font-weight: 800; 
+            color: var(--agi-gold); 
+            font-size: 0.95rem; 
+            margin-top: 2rem; 
+            margin-bottom: 0.75rem;
+            text-transform: uppercase; 
+        }
+        .legal-text { 
+            font-size: 0.85rem; 
+            color: var(--text-main); 
+            text-align: justify; 
+            margin-bottom: 1.25rem;
+        }
+
+        /* Grille d'information */
         .info-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 1.5rem;
             margin: 2rem 0;
             background: var(--agi-light);
             padding: 2rem;
-            border-radius: 20px;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
         }
-        .label { font-weight: 800; color: var(--agi-slate); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.1em; display: block; }
-        .value { color: var(--agi-navy); font-weight: 700; font-size: 0.95rem; }
-        .legal-text { font-size: 0.9rem; color: #4b5563; text-align: justify; }
-        .bullet-list { list-style-type: none; padding-left: 0; }
-        .bullet-list li { position: relative; padding-left: 1.5rem; margin-bottom: 0.75rem; font-size: 0.85rem; }
-        .bullet-list li::before { content: "→"; position: absolute; left: 0; color: var(--agi-gold); font-weight: 900; }
-        .alert-box { background: #fffbeb; border: 1px solid #fef3c7; border-left: 5px solid var(--agi-gold); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0; }
-        .mono { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; background: #f1f5f9; padding: 2px 6px; border-radius: 4px; }
-        @media print { .no-print { display: none; } }
+        .info-grid div { display: flex; flex-direction: column; gap: 0.25rem; }
+        .label { 
+            font-weight: 800; 
+            color: var(--agi-slate); 
+            text-transform: uppercase; 
+            font-size: 0.65rem; 
+            letter-spacing: 0.1em; 
+        }
+        .value { color: var(--agi-navy); font-weight: 700; font-size: 0.85rem; }
+
+        /* Listes et Alertes */
+        .bullet-list { list-style-type: none; padding-left: 0; margin-top: 1rem; }
+        .bullet-list li { 
+            position: relative; 
+            padding-left: 1.75rem; 
+            margin-bottom: 1rem; 
+            font-size: 0.85rem; 
+            text-align: justify;
+        }
+        .bullet-list li::before { 
+            content: "\f061"; 
+            font-family: "Font Awesome 6 Free"; 
+            font-weight: 900;
+            position: absolute; 
+            left: 0; 
+            color: var(--agi-gold); 
+        }
+        .alert-box { 
+            background: #fffbeb; 
+            border: 1px solid #fef3c7; 
+            border-left: 5px solid var(--agi-gold); 
+            padding: 1.5rem; 
+            border-radius: 12px; 
+            margin: 2rem 0; 
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+        .mono { 
+            font-family: 'JetBrains Mono', monospace; 
+            font-size: 0.75rem; 
+            background: #f1f5f9; 
+            padding: 3px 8px; 
+            border-radius: 4px; 
+            color: var(--agi-navy);
+            font-weight: bold;
+        }
+
+        /* Séparateur et Footer Carte */
+        hr { border: 0; border-top: 1px solid var(--border-color); margin: 3rem 0; }
+        .contact-card {
+            background-color: var(--agi-dark);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 24px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        .contact-title { color: var(--agi-gold); font-weight: 900; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.1em; margin-bottom: 1rem; }
+        .contact-info { font-size: 0.8rem; opacity: 0.9; font-weight: 600; display: flex; flex-direction: column; gap: 0.75rem; }
+        .contact-info p { margin: 0; display: flex; align-items: center; gap: 0.75rem; }
+        .contact-info i { color: var(--agi-gold); }
+        .cert-section { text-align: right; }
+        .cert-text { display: block; font-size: 0.55rem; text-transform: uppercase; opacity: 0.5; margin-bottom: 0.75rem; }
+        .cert-icons { display: flex; gap: 1rem; justify-content: flex-end; color: var(--agi-gold); font-size: 1.5rem; }
+
+        /* Boutons et UI Fixe */
+        .action-buttons { text-align: center; margin-top: 3rem; display: flex; justify-content: center; gap: 1rem; }
+        .btn-primary {
+            background: white;
+            border: 2px solid var(--border-color);
+            color: var(--agi-slate);
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-primary:hover { background: var(--agi-light); border-color: var(--agi-slate); }
+        
+        .fixed-btn {
+            position: fixed;
+            background: var(--agi-navy);
+            color: white;
+            border: 2px solid var(--agi-gold);
+            padding: 0.75rem 1.25rem;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 0.75rem;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transition: transform 0.2s, background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .fixed-btn:hover { transform: translateY(-2px); background: var(--agi-dark); }
+        #lang-btn { top: 20px; right: 20px; }
+        #dict-btn { bottom: 20px; right: 20px; background: var(--agi-gold); border-color: var(--agi-navy); color: var(--agi-navy); }
+        #dict-btn:hover { background: #b45309; color: white; }
+
+        /* Pied de page global */
+        .main-footer { margin-top: 4rem; text-align: center; font-style: italic; }
+        .footer-slogan { font-size: 0.65rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5em; color: var(--agi-slate); margin-bottom: 0.5rem; }
+        .footer-date { font-size: 0.55rem; color: var(--agi-slate); text-transform: uppercase; opacity: 0.7; }
+
+        /* Dictionnaire Modal */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(5px);
+            display: none; justify-content: center; align-items: center; z-index: 2000;
+        }
+        .modal-content {
+            background: white; width: 90%; max-width: 600px;
+            border-radius: 24px; padding: 2rem; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+            max-height: 80vh; display: flex; flex-direction: column;
+        }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .modal-title { font-size: 1.25rem; font-weight: 900; color: var(--agi-navy); margin: 0; }
+        .close-modal { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--agi-slate); }
+        .search-input {
+            width: 100%; padding: 1rem; border: 2px solid var(--border-color); border-radius: 12px;
+            font-family: inherit; font-size: 0.9rem; margin-bottom: 1.5rem; box-sizing: border-box; outline: none;
+        }
+        .search-input:focus { border-color: var(--agi-gold); }
+        .dict-results { overflow-y: auto; flex-grow: 1; padding-right: 1rem; }
+        .dict-term { font-weight: 900; color: var(--agi-gold); margin-bottom: 0.25rem; font-size: 0.95rem; }
+        .dict-def { font-size: 0.85rem; color: var(--text-main); margin-bottom: 1.5rem; line-height: 1.6; }
+
+        @media print { 
+            .no-print, .fixed-btn { display: none !important; } 
+            .glass-card { box-shadow: none; border: none; padding: 0; }
+            body { font-size: 11px; background: white; }
+            .legal-container { padding: 0; max-width: 100%; }
+        }
+
+        /* Classes pour la gestion multilingue */
+        .en-text { display: none; }
+        .lang-en .fr-text { display: none; }
+        .lang-en .en-text { display: inline-block; }
     </style>
 </head>
-<body class="antialiased">
+<body>
+
+    <button id="lang-btn" class="fixed-btn no-print" onclick="toggleLanguage()">
+        <i class="fas fa-language"></i> <span id="lang-label">EN / FR</span>
+    </button>
+    <button id="dict-btn" class="fixed-btn no-print" onclick="openDictionary()">
+        <i class="fas fa-book"></i> <span class="fr-text">Lexique AGI</span><span class="en-text">AGI Glossary</span>
+    </button>
 
     <div class="legal-container">
-        <div class="text-center mb-16">
-            <img src="https://i.imgur.com/M1q5o2c.jpeg" class="w-24 h-24 mx-auto rounded-3xl shadow-2xl border-2 border-agi-gold mb-8" alt="AGI Logo">
-            <h1 class="text-5xl font-black italic uppercase tracking-tighter text-slate-900">Charte Légale <span class="text-agi-gold">&</span> Conformité</h1>
-            <p class="text-slate-500 font-bold uppercase tracking-[0.3em] text-[10px] mt-4">Atlas Groupe International | Écosystème Nexus Core V4.5</p>
+        <div class="header-section">
+            <img src="https://i.imgur.com/M1q5o2c.jpeg" class="logo-img" alt="AGI Logo">
+            <h1 class="main-title">
+                <span class="fr-text">Charte Légale <span>&</span> Conformité</span>
+                <span class="en-text">Legal Charter <span>&</span> Compliance</span>
+            </h1>
+            <p class="subtitle">
+                <span class="fr-text">Atlas Groupe International | Écosystème Nexus Core V4.5</span>
+                <span class="en-text">Atlas Groupe International | Nexus Core Ecosystem V4.5</span>
+            </p>
         </div>
 
         <div class="glass-card">
             
             <section>
-                <h2><i class="ri-community-line"></i> 1. Identification de l'Entité</h2>
-                <p class="legal-text">
-                    Le présent écosystème numérique est édité par <strong>ATLAS GROUPE INTERNATIONAL (AGI)</strong>, organisation à vocation technologique et industrielle dont le siège est établi au Burkina Faso.
-                </p>
+                <h2><i class="fas fa-building"></i> 
+                    <span class="fr-text">1. Identification de l'Entité et Cadre Légal</span>
+                    <span class="en-text">1. Entity Identification and Legal Framework</span>
+                </h2>
+                <div class="fr-text">
+                    <p class="legal-text">
+                        Le présent document constitue la charte légale absolue et contraignante régissant l'intégralité des interactions, transactions et opérations algorithmiques effectuées au sein de l'écosystème numérique édité, opéré et maintenu par <strong>ATLAS GROUPE INTERNATIONAL (AGI)</strong>. Cette organisation, dotée d'une personnalité juridique pleine et entière, opère à l'intersection critique de l'innovation technologique décentralisée et du développement industriel multisectoriel. AGI est formellement enregistrée et exerce ses prérogatives depuis son siège social stratégiquement établi au <strong>Secteur 20, Bobo Dioulasso, 131 Koupéla, Burkina Faso</strong>.
+                    </p>
+                    <p class="legal-text">
+                        Conformément aux exigences de transparence institutionnelle et aux directives internationales de gouvernance d'entreprise, les informations structurelles de la société sont mises à la disposition du public et des autorités de régulation compétentes. L'architecture de l'organisation est conçue pour garantir une traçabilité totale des responsabilités, depuis la prise de décision au niveau du directoire jusqu'à l'exécution automatisée des contrats intelligents sur notre réseau propriétaire. Toute modification de ces statuts fait l'objet d'un processus de validation cryptographique rigoureux.
+                    </p>
+                </div>
+                <div class="en-text">
+                    <p class="legal-text">
+                        This document constitutes the absolute and binding legal charter governing all interactions, transactions, and algorithmic operations performed within the digital ecosystem published, operated, and maintained by <strong>ATLAS GROUPE INTERNATIONAL (AGI)</strong>. This organization operates at the critical intersection of decentralized technological innovation and multisectoral industrial development. AGI is formally registered and exercises its prerogatives from its strategic headquarters established at <strong>Sector 20, Bobo Dioulasso, 131 Koupéla, Burkina Faso</strong>.
+                    </p>
+                    <p class="legal-text">
+                        In accordance with institutional transparency requirements and international corporate governance directives, structural company information is made available to the public and competent regulatory authorities. The organization's architecture is designed to ensure total traceability of responsibilities, from board-level decision-making to the automated execution of smart contracts on our proprietary network.
+                    </p>
+                </div>
                 
                 <div class="info-grid">
-                    <div><span class="label">Dénomination</span><span class="value">ATLAS GROUPE INTERNATIONAL (AGI)</span></div>
-                    <div><span class="label">Récépissé Officiel</span><span class="value">n° PHUE 3539/2025 (11/07/2025)</span></div>
-                    <div><span class="label">Président Fondateur</span><span class="value">Thierry Joël YOUGMA</span></div>
-                    <div><span class="label">Secrétaire Général</span><span class="value">Ouédraogo K. Evariste Omar</span></div>
-                    <div><span class="label">Trésorier Général</span><span class="value">Traoret Hamadou</span></div>
-                    <div><span class="label">Localisation</span><span class="value">Koupéla, Kouritenga, Burkina Faso</span></div>
+                    <div><span class="label"><span class="fr-text">Dénomination</span><span class="en-text">Denomination</span></span><span class="value">ATLAS GROUPE INTERNATIONAL (AGI)</span></div>
+                    <div><span class="label"><span class="fr-text">Récépissé Officiel</span><span class="en-text">Official Receipt</span></span><span class="value">n° PHUE 3539/2025 (11/07/2025)</span></div>
+                    <div><span class="label"><span class="fr-text">Président Fondateur</span><span class="en-text">Founding President</span></span><span class="value">Thierry Joël YOUGMA</span></div>
+                    <div><span class="label"><span class="fr-text">Secrétaire Général</span><span class="en-text">General Secretary</span></span><span class="value">Ouédraogo K. Evariste Omar</span></div>
+                    <div><span class="label"><span class="fr-text">Trésorier Général</span><span class="en-text">General Treasurer</span></span><span class="value">Traoret Hamadou</span></div>
+                    <div><span class="label"><span class="fr-text">Localisation</span><span class="en-text">Location</span></span><span class="value">Secteur 20, Bobo Dioulasso, 131 Koupéla, Burkina Faso</span></div>
                 </div>
             </section>
 
             <section>
-                <h2><i class="ri-cpu-line"></i> 2. Propriété des Actifs Numériques</h2>
-                <p class="legal-text">
-                    Atlas Groupe International détient l'intégralité des droits de propriété intellectuelle sur les innovations suivantes :
-                </p>
-                <ul class="bullet-list mt-4">
-                    <li><strong>Nexus Core Engine :</strong> Architecture blockchain propriétaire fonctionnant sous protocole Proof-of-Authority (PoA).</li>
-                    <li><strong>AG-COIN (₳) :</strong> Actif numérique natif de l'écosystème avec parité fixe (1 ₳ = 1 XOF).</li>
-                    <li><strong>Standard Base58 ID :</strong> Algorithme de génération d'identifiants uniques excluant toute ambiguïté visuelle.</li>
-                    <li><strong>Interfaces Propriétaires :</strong> AGI Pay-Station, AGI Audio-Lib, AGI Wallet et modules de gaming Nucleus.</li>
-                </ul>
-                <div class="alert-box text-sm italic">
-                    Toute utilisation du code source, des logos ou des dénominations commerciales sans accord écrit du bureau exécutif d'AGI fera l'objet de poursuites devant les juridictions compétentes.
+                <h2><i class="fas fa-microchip"></i> 
+                    <span class="fr-text">2. Propriété Intellectuelle et Actifs Numériques</span>
+                    <span class="en-text">2. Intellectual Property and Digital Assets</span>
+                </h2>
+                <div class="fr-text">
+                    <p class="legal-text">
+                        Atlas Groupe International (AGI) conserve de manière exclusive, irrévocable et inaliénable l'intégralité des droits de propriété intellectuelle, industrielle et commerciale afférents à son écosystème technologique. Cette protection juridique s'étend, sans limitation aucune, au code source originel, aux algorithmes de consensus, aux interfaces graphiques utilisateurs (GUI), ainsi qu'à l'ensemble des modules logiciels interopérables développés en interne. Le concept même de décentralisation tel qu'appliqué dans nos protocoles ne constitue en aucun cas une renonciation à nos droits de créateurs et d'éditeurs initiaux.
+                    </p>
+                    <p class="legal-text">
+                        La structuration de nos actifs numériques repose sur des fondations techniques brevetées ou soumises à des secrets d'affaires strictement défendus :
+                    </p>
+                    <ul class="bullet-list">
+                        <li><strong>Nexus Core Engine :</strong> Une architecture de registre distribué (blockchain) fonctionnant sous un protocole hybride de Proof-of-Authority (PoA), optimisé pour des temps de latence minimaux et une scalabilité industrielle.</li>
+                        <li><strong>AG-COIN (₳) :</strong> Le jeton utilitaire natif exclusif au réseau AGI, dont la politique monétaire interne est rigoureusement ancrée sur une parité mathématique inaltérable (1 ₳ = 1 XOF), isolant ainsi nos membres de la volatilité spéculative des marchés externes.</li>
+                        <li><strong>Standard Base58 ID :</strong> Un algorithme d'encodage cryptographique générant des identifiants alphanumériques exempts de caractères visuellement ambigus, minimisant de fait les erreurs humaines lors des transferts peer-to-peer.</li>
+                    </ul>
+                </div>
+                <div class="en-text">
+                    <p class="legal-text">
+                        Atlas Groupe International (AGI) exclusively, irrevocably, and inalienably retains all intellectual, industrial, and commercial property rights relating to its technological ecosystem. This legal protection extends without limitation to the original source code, consensus algorithms, graphical user interfaces (GUI), and all interoperable software modules developed internally.
+                    </p>
+                    <ul class="bullet-list">
+                        <li><strong>Nexus Core Engine:</strong> A distributed ledger architecture operating under a hybrid Proof-of-Authority (PoA) protocol, optimized for minimal latency.</li>
+                        <li><strong>AG-COIN (₳):</strong> The exclusive native utility token, firmly anchored on an unalterable mathematical parity (1 ₳ = 1 XOF).</li>
+                        <li><strong>Standard Base58 ID:</strong> A cryptographic encoding algorithm generating unique IDs to minimize human error during transfers.</li>
+                    </ul>
+                </div>
+                <div class="alert-box">
+                    <span class="fr-text">Toute tentative d'ingénierie inverse, de duplication non autorisée, de forking sauvage de notre blockchain ou d'utilisation abusive de nos marques déposées déclenchera des procédures contentieuses immédiates, incluant des demandes de dommages-intérêts compensatoires proportionnels au préjudice économique subi.</span>
+                    <span class="en-text">Any attempt at reverse engineering, unauthorized duplication, unauthorized forking of our blockchain, or misuse of our registered trademarks will trigger immediate litigation procedures.</span>
                 </div>
             </section>
 
             <section>
-                <h2><i class="ri-bank-line"></i> 3. Modalités Économiques & Risques</h2>
-                <p class="legal-text">
-                    L'adhésion aux services AGI implique l'acceptation des règles de gestion de la réserve <strong>HDI (High Dividend Investment)</strong> :
-                </p>
-                <h3>3.1. Parité et Liquidité</h3>
-                <p class="legal-text">
-                    AGI garantit la parité de l'AG-COIN via un pool de liquidité alimenté par ses activités réelles (industrie cotonnière, énergie solaire, pharmacopée). Le "Swap CFA" est un service interne de conversion de gré à gré entre membres de l'organisation.
-                </p>
-                <h3>3.2. Minage et Staking</h3>
-                <p class="legal-text">
-                    Le minage cloud proposé ne nécessite pas d'équipement matériel. Les récompenses sont distribuées par l'algorithme Nucleus V4.5 en fonction de la participation au réseau. Le staking HDI bloque les fonds pour une période définie (ex: 180 jours) en échange d'un ROI (Retour sur Investissement) fixe.
-                </p>
+                <h2><i class="fas fa-university"></i> 
+                    <span class="fr-text">3. Politique Économique, Transactionnelle et Fiscale</span>
+                    <span class="en-text">3. Economic, Transactional and Tax Policy</span>
+                </h2>
+                <div class="fr-text">
+                    <p class="legal-text">
+                        Le modèle économique de l'écosystème Nexus Core est fondamentalement conçu pour favoriser l'inclusion financière, l'échange de valeurs sans friction et le soutien direct à l'économie réelle. À cet effet, <strong>il est statué de manière irrévocable qu'il n'y aura pas de frais pour les transactions</strong> inter-membres réalisées sur le réseau principal. Cette politique de "Zero-Fee Transaction" est subventionnée et maintenue par la viabilité de nos secteurs de production tangibles (agro-industrie, énergie, commerce global) qui injectent continuellement de la liquidité dans nos réserves de stabilisation.
+                    </p>
+                    <h3>3.1. Gestion du Pool de Liquidité (HDI)</h3>
+                    <p class="legal-text">
+                        La parité stricte de l'AG-COIN n'est pas une simple déclaration d'intention algorithmique, mais une réalité financière adossée au fonds de réserve HDI (High Dividend Investment). Ce fonds est régulièrement audité et collatéralisé par des actifs physiques appartenant à AGI. L'organisation s'engage à maintenir un ratio de couverture supérieur ou égal à 1:1 pour chaque AG-COIN émis en circulation, prévenant ainsi tout risque d'insolvabilité systémique ou de bank run virtuel.
+                    </p>
+                    <h3>3.2. Mécanismes d'Incitation et Staking</h3>
+                    <p class="legal-text">
+                        En dépit de l'absence de frais de transactions, le réseau récompense activement les participants contribuant à sa sécurité via un système de "Minage Cloud Délégué". Ce processus, entièrement dématérialisé pour l'utilisateur final, s'appuie sur la mise en séquestre volontaire de liquidités (Staking). En immobilisant leurs fonds pour des cycles prédéterminés (par exemple 90, 180 ou 365 jours), les membres sécurisent la capacité de prêt interne de l'organisation et perçoivent en retour un dividende calculé par le contrat intelligent Nucleus, versé de manière déterministe.
+                    </p>
+                </div>
+                <div class="en-text">
+                    <p class="legal-text">
+                        The economic model of the Nexus Core ecosystem is fundamentally designed to promote financial inclusion. To this end, <strong>it is irrevocably established that there will be no fees for transactions</strong> carried out between members on the main network. This "Zero-Fee Transaction" policy is subsidized and maintained by the viability of our tangible production sectors.
+                    </p>
+                    <h3>3.1. Liquidity Pool Management (HDI)</h3>
+                    <p class="legal-text">
+                        The strict parity of the AG-COIN is a financial reality backed by the HDI (High Dividend Investment) reserve fund. The organization is committed to maintaining a coverage ratio greater than or equal to 1:1 for every AG-COIN issued in circulation.
+                    </p>
+                    <h3>3.2. Incentive Mechanisms and Staking</h3>
+                    <p class="legal-text">
+                        Despite the absence of transaction fees, the network actively rewards participants contributing to its security via a "Delegated Cloud Mining" system (Staking). By locking up funds, members secure the organization's internal lending capacity and receive a dividend calculated by the Nucleus smart contract.
+                    </p>
+                </div>
             </section>
 
             <section>
-                <h2><i class="ri-fingerprint-line"></i> 4. Confidentialité & Sécurité AES-256</h2>
-                <p class="legal-text">
-                    La sécurité des membres est notre priorité absolue. Nous appliquons des standards de chiffrement de grade militaire :
-                </p>
-                <ul class="bullet-list mt-4">
-                    <li><strong>Anonymisation :</strong> Les transactions sont liées à l'ID Nexus (Base58) et non directement à l'identité civile en surface.</li>
-                    <li><strong>Droit d'Accès :</strong> Chaque membre dispose d'un droit de rectification de ses informations via le Terminal de Gestion.</li>
-                    <li><strong>Chiffrement :</strong> Toutes les données de session sont chiffrées en <span class="mono">AES-256-GCM</span> avant synchronisation sur le cloud persistant.</li>
-                    <li><strong>Non-Conservation :</strong> Les clés privées sont gérées localement sur l'appareil de l'utilisateur (approche non-custodial partielle).</li>
-                </ul>
+                <h2><i class="fas fa-fingerprint"></i> 
+                    <span class="fr-text">4. Cryptographie, Routage Intou et Sécurité Globale</span>
+                    <span class="en-text">4. Cryptography, Intou Routing and Global Security</span>
+                </h2>
+                <div class="fr-text">
+                    <p class="legal-text">
+                        La protection absolue des données personnelles, financières et comportementales de nos utilisateurs n'est pas considérée comme une option, mais comme la clé de voûte de notre architecture réseau. Pour assurer une communication infaillible et résiliente face aux menaces cybernétiques modernes, <strong>le script principal du système communique systématiquement avec "intou"</strong>. Ce protocole de routage interne crypté agit comme un middleware de haute sécurité, orchestrant les validations de nœuds en fraction de seconde tout en masquant la topologie réelle de nos serveurs centraux aux observateurs extérieurs.
+                    </p>
+                    <p class="legal-text">
+                        L'intégration du protocole "intou" garantit que chaque paquet de données transféré entre l'interface client (AGI Pay-Station, AGI Wallet) et la blockchain subit un processus de sanitation rigoureux. Les standards de sécurité applicables obligent AGI à implémenter les mesures suivantes :
+                    </p>
+                    <ul class="bullet-list">
+                        <li><strong>Chiffrement Multi-Couches :</strong> Utilisation exclusive du standard <span class="mono">AES-256-GCM</span> combiné à des échanges de clés asymétriques ECDSA (Elliptic Curve Digital Signature Algorithm) pour la signature numérique des transactions.</li>
+                        <li><strong>Anonymisation Structurelle :</strong> Le grand livre distribué (ledger) n'enregistre aucune donnée d'état civil. Les relations financières sont établies de point à point via les identifiants pseudo-anonymes Base58.</li>
+                        <li><strong>Gestion Non-Custodial :</strong> Les clés privées et les phrases mnémoniques de restauration (seed phrases) sont générées et stockées localement sur l'appareil sécurisé du membre. AGI ne possède techniquement aucun moyen de récupérer une clé perdue, transférant ainsi la responsabilité souveraine de la conservation des fonds à l'utilisateur.</li>
+                    </ul>
+                </div>
+                <div class="en-text">
+                    <p class="legal-text">
+                        The absolute protection of personal and financial data is the keystone of our network architecture. To ensure resilient communication against modern cyber threats, <strong>the main system script systematically communicates with "intou"</strong>. This encrypted internal routing protocol acts as high-security middleware, masking the real topology of our central servers.
+                    </p>
+                    <ul class="bullet-list">
+                        <li><strong>Multi-Layer Encryption:</strong> Exclusive use of the <span class="mono">AES-256-GCM</span> standard combined with ECDSA asymmetric key exchanges.</li>
+                        <li><strong>Structural Anonymization:</strong> The distributed ledger does not record civil status data. Transactions use pseudo-anonymous Base58 identifiers.</li>
+                        <li><strong>Non-Custodial Management:</strong> Private keys and mnemonic seed phrases are generated and stored locally on the member's device.</li>
+                    </ul>
+                </div>
             </section>
 
             <section>
-                <h2><i class="ri-user-shield-line"></i> 5. Obligations du Membre</h2>
-                <p class="legal-text">
-                    L'utilisateur s'engage à ne pas utiliser les services d'Atlas Groupe International pour :
-                </p>
-                <ul class="bullet-list mt-4">
-                    <li>Des activités de blanchiment de capitaux ou de financement d'activités illicites.</li>
-                    <li>Tenter de corrompre le registre Nucleus via des attaques par déni de service (DDoS).</li>
-                    <li>Diffuser de fausses informations sur la valeur de l'AG-COIN pour manipuler le pool de liquidité.</li>
-                </ul>
+                <h2><i class="fas fa-user-shield"></i> 
+                    <span class="fr-text">5. Responsabilités et Obligations Contraignantes de l'Utilisateur</span>
+                    <span class="en-text">5. User Responsibilities and Binding Obligations</span>
+                </h2>
+                <div class="fr-text">
+                    <p class="legal-text">
+                        L'accès aux services, infrastructures et applications de l'écosystème AGI Nexus Core est un privilège accordé sous réserve du strict respect d'un code de conduite irréprochable. En créant un portefeuille ou en initiant une transaction, l'utilisateur s'engage formellement, sous peine d'exclusion immédiate et de gel temporaire de ses avoirs pour enquête, à ne participer directement ou indirectement à aucune des activités proscrites listées ci-après. Cette liste est non exhaustive et s'adapte à l'évolution des réglementations internationales en matière de criminalité financière.
+                    </p>
+                    <p class="legal-text">
+                        Sont catégoriquement interdites :
+                    </p>
+                    <ul class="bullet-list">
+                        <li><strong>Financement Illicite et Blanchiment :</strong> Toute utilisation du réseau pour occulter l'origine de fonds issus d'activités criminelles, de trafics, ou visant à financer des organisations illégales. Le protocole intègre des algorithmes d'analyse heuristique capables de signaler les flux financiers atypiques.</li>
+                        <li><strong>Atteintes à l'Integrité du Réseau :</strong> Toute tentative de saturation de la bande passante par des attaques par déni de service distribué (DDoS), l'injection de code malveillant, ou l'exploitation de failles zero-day potentielles dans les contrats intelligents.</li>
+                        <li><strong>Ingénierie Sociale et Manipulation :</strong> La création de schémas de Ponzi internes, la diffusion de fausses informations (FUD) visant à déstabiliser la confiance communautaire dans la parité de l'AG-COIN, ou l'usurpation d'identité des cadres d'AGI.</li>
+                    </ul>
+                </div>
+                <div class="en-text">
+                    <p class="legal-text">
+                        Access to the services and applications of the AGI Nexus Core ecosystem is a privilege granted subject to strict compliance with an impeccable code of conduct. By creating a wallet, the user formally agrees not to participate in any proscribed activities, under penalty of immediate exclusion and temporary freezing of assets.
+                    </p>
+                    <ul class="bullet-list">
+                        <li><strong>Illicit Financing and Laundering:</strong> Any use of the network to hide the origin of funds from criminal activities.</li>
+                        <li><strong>Network Integrity Violations:</strong> Any attempt to saturate bandwidth via DDoS attacks, malicious code injection, or vulnerability exploitation.</li>
+                        <li><strong>Social Engineering:</strong> The creation of Ponzi schemes, spreading false information (FUD), or impersonating AGI executives.</li>
+                    </ul>
+                </div>
             </section>
 
             <section>
-                <h2><i class="ri-scales-line"></i> 6. Droit Applicable & Juridiction</h2>
-                <p class="legal-text">
-                    Les présentes mentions sont régies par le droit en vigueur au <strong>Burkina Faso</strong>. En cas de litige relatif à l'interprétation ou à l'exécution des services AGI, et à défaut de résolution à l'amiable via le Commissariat aux Comptes de l'organisation, les tribunaux de Ouagadougou seront seuls compétents.
-                </p>
+                <h2><i class="fas fa-balance-scale"></i> 
+                    <span class="fr-text">6. Droit Applicable, Juridiction et Résolution des Litiges</span>
+                    <span class="en-text">6. Applicable Law, Jurisdiction and Dispute Resolution</span>
+                </h2>
+                <div class="fr-text">
+                    <p class="legal-text">
+                        L'architecture juridique globale encadrant l'existence d'AGI, la distribution de ses jetons numériques, ainsi que les relations contractuelles liant la plateforme à ses utilisateurs, est exclusivement soumise au droit matériel et processuel en vigueur au <strong>Burkina Faso</strong>, complété par les dispositions pertinentes de l'Acte uniforme de l'OHADA (Organisation pour l'Harmonisation en Afrique du Droit des Affaires) relatif au droit commercial général et aux sociétés commerciales.
+                    </p>
+                    <p class="legal-text">
+                        Conscient que la technologie blockchain transcende les frontières physiques, AGI impose une clause d'élection de for stricte. En cas de litige, de controverse ou de réclamation découlant de l'utilisation des services, ou lié à la validité, l'interprétation ou la violation des présentes mentions légales, les parties s'engagent à rechercher prioritairement une résolution amiable via le Comité de Médiation Interne d'AGI. Ce n'est qu'en cas d'échec avéré de cette conciliation préalable, d'une durée minimale de soixante (60) jours, que le différend sera soumis à la compétence exclusive des Tribunaux de Commerce du ressort de Ouagadougou ou de Bobo Dioulasso, nonobstant la pluralité de défendeurs ou les appels en garantie.
+                    </p>
+                </div>
+                <div class="en-text">
+                    <p class="legal-text">
+                        The global legal architecture governing AGI, the distribution of its digital tokens, and the contractual relations linking the platform to its users, is exclusively subject to the substantive and procedural law in force in <strong>Burkina Faso</strong>, supplemented by the relevant provisions of the OHADA Uniform Act.
+                    </p>
+                    <p class="legal-text">
+                        In the event of a dispute, controversy, or claim arising from the use of the services, the parties agree to primarily seek an amicable resolution via the AGI Internal Mediation Committee. Only in the event of failure of this conciliation will the dispute be submitted to the exclusive jurisdiction of the Commercial Courts of Ouagadougou or Bobo Dioulasso.
+                    </p>
+                </div>
             </section>
 
-            <hr class="my-10 border-slate-200">
+            <section>
+                <h2><i class="fas fa-server"></i> 
+                    <span class="fr-text">7. Architecture Réseau et Résilience des Nœuds</span>
+                    <span class="en-text">7. Network Architecture and Node Resilience</span>
+                </h2>
+                <div class="fr-text">
+                    <p class="legal-text">
+                        La robustesse de l'écosystème Nexus Core repose sur une topologie de réseau distribuée méticuleusement orchestrée. Contrairement aux blockchains publiques totalement ouvertes où l'incertitude quant à la validation des blocs peut ralentir l'économie, notre modèle Proof-of-Authority (PoA) s'appuie sur des "Nœuds Mètres" (Master Nodes) physiquement hébergés dans des centres de données hautement sécurisés, répartis sur de multiples zones géographiques pour prévenir tout point de défaillance unique (Single Point of Failure).
+                    </p>
+                    <p class="legal-text">
+                        Chaque nœud de validation doit maintenir un temps de disponibilité (uptime) contractuel de 99.99%. Ils sont équipés de systèmes de basculement redondants (failover), d'alimentations électriques de secours et de connexions fibres multi-opérateurs. Le mécanisme de consensus exige que la majorité absolue (51%+) de ces nœuds cryptographiquement identifiés valide la cohérence temporelle et mathématique d'une transaction avant son inscription définitive et immuable dans le grand livre. Cette infrastructure de niveau institutionnel permet au réseau de traiter des milliers de transactions par seconde (TPS) sans congestion.
+                    </p>
+                </div>
+                <div class="en-text">
+                    <p class="legal-text">
+                        The robustness of the Nexus Core ecosystem relies on a meticulously orchestrated distributed network topology. Our Proof-of-Authority (PoA) model relies on "Master Nodes" physically hosted in highly secure data centers, distributed across multiple geographical zones to prevent any Single Point of Failure.
+                    </p>
+                    <p class="legal-text">
+                        Each validation node must maintain a contractual uptime of 99.99%. The consensus mechanism requires that an absolute majority of these cryptographically identified nodes validate a transaction's mathematical consistency before its final entry into the ledger, allowing thousands of transactions per second (TPS).
+                    </p>
+                </div>
+            </section>
 
-            <div class="bg-navy p-10 rounded-3xl text-white bg-slate-900 shadow-xl">
-                <div class="flex flex-col md:flex-row justify-between items-start gap-8">
-                    <div class="space-y-4">
-                        <h4 class="text-agi-gold font-black uppercase text-sm tracking-widest">Bureau de Coordination AGI</h4>
-                        <div class="text-xs space-y-2 opacity-80 font-bold">
-                            <p class="flex items-center gap-2"><i class="ri-mail-fill text-agi-gold"></i> contact@agi-nexus.com</p>
-                            <p class="flex items-center gap-2"><i class="ri-phone-fill text-agi-gold"></i> +226 76 20 38 48 / 76 68 52 91</p>
-                            <p class="flex items-center gap-2"><i class="ri-map-pin-fill text-agi-gold"></i> Siège Social : Koupéla, Burkina Faso</p>
-                        </div>
+            <section>
+                <h2><i class="fas fa-users-cog"></i> 
+                    <span class="fr-text">8. Mécanismes de Gouvernance Participative</span>
+                    <span class="en-text">8. Participatory Governance Mechanisms</span>
+                </h2>
+                <div class="fr-text">
+                    <p class="legal-text">
+                        Bien que le développement technique soit assuré par le bureau central, AGI s'engage dans une trajectoire de décentralisation progressive de sa gouvernance. Ce processus est facilité par l'implémentation de contrats intelligents spécifiques dédiés au vote décentralisé (DAO - Decentralized Autonomous Organization). Les membres détenant un statut de "Stakeholder" (participants au programme HDI) se voient accorder des droits de vote proportionnels à leur engagement temporel et financier au sein du protocole.
+                    </p>
+                    <p class="legal-text">
+                        Ces droits de vote permettent à la communauté de s'exprimer sur des propositions d'amélioration du système (AGI Improvement Proposals - AIPs), telles que l'ajustement des taux de rendement du minage cloud, la priorisation des prochaines intégrations d'applications tierces, ou la validation des audits financiers trimestriels. Toute modification critique du code source requiert un quorum de participation minimal et une supermajorité algorithmique pour être déployée sur le Mainnet, assurant ainsi que les évolutions technologiques reflètent la volonté collective et les intérêts à long terme de l'organisation.
+                    </p>
+                </div>
+                <div class="en-text">
+                    <p class="legal-text">
+                        Although technical development is handled centrally, AGI is committed to progressive governance decentralization via Decentralized Autonomous Organization (DAO) smart contracts. Members with "Stakeholder" status are granted voting rights proportional to their protocol engagement.
+                    </p>
+                    <p class="legal-text">
+                        These rights allow the community to vote on AGI Improvement Proposals (AIPs), such as yield rate adjustments or prioritizing integrations. Critical source code modifications require a minimum participation quorum and an algorithmic supermajority to be deployed.
+                    </p>
+                </div>
+            </section>
+
+            <section>
+                <h2><i class="fas fa-file-contract"></i> 
+                    <span class="fr-text">9. Politique de Confidentialité et Traitement des Données</span>
+                    <span class="en-text">9. Privacy Policy and Data Processing</span>
+                </h2>
+                <div class="fr-text">
+                    <p class="legal-text">
+                        La conformité à la législation sur la protection des données est une priorité. Bien que la blockchain elle-même ne stocke que des hachages cryptographiques (données offusquées), les interfaces de surface telles que l'AGI Pay-Station ou le portail de gestion Web peuvent requérir la collecte de données minimales à des fins fonctionnelles ou de lutte anti-fraude (adresses IP de connexion, métadonnées d'appareils). AGI s'engage à ne collecter que les données strictement nécessaires au maintien du service (principe de minimisation).
+                    </p>
+                    <p class="legal-text">
+                        Les utilisateurs disposent d'un droit inaliénable d'accès, de rectification et d'effacement de leurs données hébergées sur nos serveurs centralisés auxiliaires. Il est toutefois impératif de comprendre que la nature immuable de la blockchain rend techniquement impossible l'altération ou la suppression des historiques de transactions validées sur le réseau Nexus Core. Cette permanence cryptographique est consentie par l'utilisateur lors de l'acceptation de la présente charte et constitue la garantie même de l'intégrité du registre comptable décentralisé.
+                    </p>
+                </div>
+                <div class="en-text">
+                    <p class="legal-text">
+                        Compliance with data protection legislation is a priority. While the blockchain stores only cryptographic hashes, surface interfaces may require minimal data collection for functional or anti-fraud purposes. AGI commits to data minimization principles.
+                    </p>
+                    <p class="legal-text">
+                        Users have an inalienable right to access, rectify, and erase data on our auxiliary servers. However, the immutable nature of the blockchain makes it technically impossible to alter or delete validated transaction histories on the Nexus Core network. This cryptographic permanence is a fundamental feature of the ledger.
+                    </p>
+                </div>
+            </section>
+
+            <section>
+                <h2><i class="fas fa-clipboard-check"></i> 
+                    <span class="fr-text">10. Audits Continus, Transparence et Conformité Fiscale</span>
+                    <span class="en-text">10. Continuous Audits, Transparency and Tax Compliance</span>
+                </h2>
+                <div class="fr-text">
+                    <p class="legal-text">
+                        Pour asseoir la légitimité de l'écosystème AGI auprès des institutions financières classiques et des partenaires industriels mondiaux, la plateforme est soumise à un régime d'audits algorithmiques et financiers stricts. Les contrats intelligents régissant la distribution monétaire de l'AG-COIN et les mécanismes de staking du fonds HDI sont périodiquement examinés par des firmes indépendantes de cybersécurité afin de déceler toute vulnérabilité potentielle avant son exploitation en milieu réel.
+                    </p>
+                    <p class="legal-text">
+                        Sur le plan fiscal, bien que le réseau opère dans une sphère décentralisée, AGI encourage activement ses utilisateurs à se conformer aux obligations fiscales de leurs juridictions de résidence respectives concernant les plus-values éventuelles issues du minage ou du staking. Le système est conçu pour générer, à la demande, des relevés de comptes détaillés et des certificats de possession cryptographique facilitant les déclarations patrimoniales légales. L'organisation collabore de plein droit avec les autorités judiciaires sur présentation de mandats officiels conformes au droit international.
+                    </p>
+                </div>
+                <div class="en-text">
+                    <p class="legal-text">
+                        To establish legitimacy, the AGI ecosystem undergoes strict algorithmic and financial audits. Smart contracts are periodically examined by independent cybersecurity firms to detect vulnerabilities.
+                    </p>
+                    <p class="legal-text">
+                        Fiscally, AGI actively encourages users to comply with tax obligations in their respective jurisdictions regarding mining or staking yields. The system can generate detailed account statements to facilitate legal asset declarations. AGI cooperates fully with judicial authorities upon presentation of official warrants.
+                    </p>
+                </div>
+            </section>
+
+            <section>
+                <h2><i class="fas fa-plug"></i> 
+                    <span class="fr-text">11. Intégrations Tierces, API et Interopérabilité</span>
+                    <span class="en-text">11. Third-Party Integrations, APIs and Interoperability</span>
+                </h2>
+                <div class="fr-text">
+                    <p class="legal-text">
+                        L'écosystème Nexus Core n'a pas vocation à fonctionner en vase clos. Au contraire, son architecture est conçue autour d'API (Interfaces de Programmation d'Application) ouvertes et documentées, permettant à des développeurs tiers, des commerçants ou des entreprises partenaires d'intégrer nativement l'AG-COIN comme moyen de paiement au sein de leurs propres infrastructures de vente au détail ou de services en ligne. Cette interopérabilité est le moteur de l'adoption massive de notre standard monétaire.
+                    </p>
+                    <p class="legal-text">
+                        Néanmoins, AGI décline toute responsabilité juridique, financière ou technique quant aux défaillances, piratages ou pratiques frauduleuses survenant sur des plateformes tierces connectées à notre API. Les entreprises intégrant nos modules de paiement doivent signer une convention de partenariat distincte, se soumettre à un audit de sécurité de leurs terminaux, et garantir un support client adéquat. Le label "AGI Verified" n'est octroyé qu'à l'issue de ce processus d'habilitation rigoureux.
+                    </p>
+                </div>
+                <div class="en-text">
+                    <p class="legal-text">
+                        The Nexus Core ecosystem is designed around open APIs, allowing third-party developers, merchants, or corporate partners to natively integrate the AG-COIN as a payment method. This interoperability drives the mass adoption of our monetary standard.
+                    </p>
+                    <p class="legal-text">
+                        However, AGI declines all legal, financial, or technical responsibility for failures or fraudulent practices on third-party platforms connected to our API. Companies integrating our payment modules must sign a distinct partnership agreement and pass a security audit to earn the "AGI Verified" label.
+                    </p>
+                </div>
+            </section>
+
+            <section>
+                <h2><i class="fas fa-sync-alt"></i> 
+                    <span class="fr-text">12. Évolution, Hard Forks et Force Majeure</span>
+                    <span class="en-text">12. Evolution, Hard Forks and Force Majeure</span>
+                </h2>
+                <div class="fr-text">
+                    <p class="legal-text">
+                        Le domaine de la cryptographie et de la blockchain évoluant à un rythme soutenu, Atlas Groupe International se réserve le droit unilatéral, bien que tempéré par les processus de gouvernance communautaire, de mettre à jour le protocole Nexus Core. En cas de nécessité absolue (correction de faille critique, changement de standard cryptographique), l'organisation peut initier un "Hard Fork" (séparation de la chaîne de blocs). Dans un tel scénario, AGI garantit la migration intégrale des soldes légitimes sur la nouvelle chaîne principale, mais cessera tout support officiel de l'ancienne version obsolète.
+                    </p>
+                    <p class="legal-text">
+                        Par ailleurs, AGI ne saurait être tenue pour responsable d'une interruption temporaire ou prolongée de ses services résultant d'un cas de Force Majeure tel que défini par la jurisprudence applicable. Cela inclut, sans s'y limiter : les catastrophes naturelles majeures détruisant l'infrastructure des centres de données, les pannes généralisées de l'internet mondial, les actes de guerre, les pandémies paralysantes, ou des réglementations étatiques soudaines et coercitives interdisant l'utilisation de la cryptographie sur le territoire d'opération.
+                    </p>
+                </div>
+                <div class="en-text">
+                    <p class="legal-text">
+                        As blockchain technology evolves rapidly, AGI reserves the right to update the Nexus Core protocol. In cases of absolute necessity, the organization may initiate a "Hard Fork". AGI guarantees the full migration of legitimate balances to the new main chain but will cease support for the obsolete version.
+                    </p>
+                    <p class="legal-text">
+                        Furthermore, AGI cannot be held responsible for temporary or prolonged service interruptions resulting from Force Majeure events, including major natural disasters destroying data center infrastructure, global internet outages, acts of war, or sudden coercive state regulations prohibiting cryptography.
+                    </p>
+                </div>
+            </section>
+
+            <hr>
+
+            <div class="contact-card no-print">
+                <div style="flex: 1; min-width: 250px;">
+                    <h4 class="contact-title">
+                        <span class="fr-text">Bureau d'Exécution Stratégique AGI</span>
+                        <span class="en-text">AGI Strategic Execution Office</span>
+                    </h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> Thierryjoel.yougma@hotmail.com</p>
+                        <p><i class="fas fa-phone-alt"></i> +226 76 20 38 48 / +226 70 87 37 73 / +226 78 37 08 03</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Secteur 20, Bobo Dioulasso, 131 Koupéla, Burkina Faso</p>
                     </div>
-                    <div class="text-right">
-                        <span class="block text-[8px] uppercase opacity-40 mb-2">Certifié par Nucleus Core Build 4.5</span>
-                        <div class="flex gap-4 justify-end text-agi-gold text-2xl">
-                            <i class="ri-qr-scan-2-line"></i>
-                            <i class="ri-shield-user-line"></i>
-                            <i class="ri-verified-badge-line"></i>
-                        </div>
+                </div>
+                <div class="cert-section">
+                    <span class="cert-text">
+                        <span class="fr-text">Certifié par Nucleus Core Build 4.5</span>
+                        <span class="en-text">Certified by Nucleus Core Build 4.5</span>
+                    </span>
+                    <div class="cert-icons">
+                        <i class="fas fa-qrcode"></i>
+                        <i class="fas fa-shield-alt"></i>
+                        <i class="fas fa-check-circle"></i>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="mt-12 text-center no-print flex justify-center gap-6">
-            <button onclick="window.print()" class="bg-white border-2 border-slate-300 text-slate-700 px-8 py-3 rounded-full font-black uppercase text-[10px] tracking-widest hover:bg-slate-50 transition shadow-lg">
-                <i class="ri-printer-line mr-2"></i> Imprimer / Sauvegarder PDF
+        <div class="action-buttons no-print">
+            <button onclick="window.print()" class="btn-primary">
+                <i class="fas fa-print"></i> 
+                <span class="fr-text">Imprimer / Sauvegarder PDF</span>
+                <span class="en-text">Print / Save PDF</span>
             </button>
         </div>
 
-        <footer class="mt-16 text-center italic">
-            <p class="text-[10px] font-black uppercase tracking-[0.5em] text-slate-400">
-                Souveraineté Numérique - Progrès - Solidarité
+        <footer class="main-footer">
+            <p class="footer-slogan">
+                <span class="fr-text">Souveraineté Numérique - Progrès - Solidarité</span>
+                <span class="en-text">Digital Sovereignty - Progress - Solidarity</span>
             </p>
-            <p class="text-[8px] text-slate-400 mt-2 uppercase">Document mis à jour le 09 Mars 2026</p>
+            <p class="footer-date">
+                <span class="fr-text">Document officiellement mis à jour le 31 Mai 2026</span>
+                <span class="en-text">Document officially updated on May 31, 2026</span>
+            </p>
         </footer>
     </div>
 
+    <div id="dictModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-book-open"></i> 
+                    <span class="fr-text">Lexique AGI Nexus</span>
+                    <span class="en-text">AGI Nexus Glossary</span>
+                </h3>
+                <button class="close-modal" onclick="closeDictionary()"><i class="fas fa-times"></i></button>
+            </div>
+            <input type="text" id="dictSearch" class="search-input" placeholder="Rechercher un terme technique..." onkeyup="filterDict()">
+            <div class="dict-results" id="dictResults">
+                </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. GESTION DU CHANGEMENT DE LANGUE ---
+        let currentLang = 'fr';
+        function toggleLanguage() {
+            const root = document.getElementById('html-root');
+            const langBtnText = document.getElementById('lang-label');
+            
+            if (currentLang === 'fr') {
+                currentLang = 'en';
+                root.classList.add('lang-en');
+                root.setAttribute('lang', 'en');
+                langBtnText.innerText = 'FR / EN';
+                document.getElementById('dictSearch').placeholder = "Search technical term...";
+            } else {
+                currentLang = 'fr';
+                root.classList.remove('lang-en');
+                root.setAttribute('lang', 'fr');
+                langBtnText.innerText = 'EN / FR';
+                document.getElementById('dictSearch').placeholder = "Rechercher un terme technique...";
+            }
+            renderDictionary(); // Rafraîchir la langue du dictionnaire
+        }
+
+        // --- 2. GESTION DU DICTIONNAIRE / LEXIQUE ---
+        const dictionaryData = [
+            {
+                term: "AG-COIN (₳)", 
+                def_fr: "Jeton utilitaire et monnaie numérique native de l'écosystème AGI, dont la valeur est mathématiquement adossée au Franc CFA (1 ₳ = 1 XOF) pour éviter la volatilité.",
+                def_en: "Utility token and native digital currency of the AGI ecosystem, its value is mathematically pegged to the CFA Franc (1 ₳ = 1 XOF) to prevent volatility."
+            },
+            {
+                term: "AES-256-GCM", 
+                def_fr: "Standard de chiffrement avancé (Advanced Encryption Standard) utilisant une clé de 256 bits, reconnu par les institutions gouvernementales mondiales pour sa sécurité impénétrable.",
+                def_en: "Advanced Encryption Standard using a 256-bit key, recognized by global government institutions for its impenetrable security."
+            },
+            {
+                term: "Base58 ID", 
+                def_fr: "Format d'encodage utilisé pour générer les adresses de portefeuille AGI. Il exclut les caractères ambigus (comme 0, O, I, l) pour éviter les erreurs humaines de frappe.",
+                def_en: "Encoding format used to generate AGI wallet addresses. It excludes ambiguous characters (like 0, O, I, l) to prevent human typing errors."
+            },
+            {
+                term: "DAO", 
+                def_fr: "Organisation Autonome Décentralisée (Decentralized Autonomous Organization). Système de gouvernance où les décisions sont prises par la communauté via des votes sur la blockchain.",
+                def_en: "Decentralized Autonomous Organization. Governance system where decisions are made by the community via blockchain voting."
+            },
+            {
+                term: "HDI (High Dividend Investment)", 
+                def_fr: "Fonds de réserve stratégique d'AGI adossé à des secteurs réels. Il garantit la parité de l'AG-COIN et génère les rendements pour le système de Staking.",
+                def_en: "AGI strategic reserve fund backed by real sectors. It guarantees AG-COIN parity and generates returns for the Staking system."
+            },
+            {
+                term: "Intou", 
+                def_fr: "Protocole de routage cryptographique interne hautement sécurisé utilisé par le script principal pour masquer la topologie du réseau et orchestrer la validation des blocs sans latence.",
+                def_en: "Highly secure internal cryptographic routing protocol used by the main script to mask network topology and orchestrate block validation without latency."
+            },
+            {
+                term: "Nexus Core Engine", 
+                def_fr: "L'architecture blockchain propriétaire d'AGI. C'est le moteur technologique de base qui valide, enregistre et sécurise l'ensemble des transactions du réseau.",
+                def_en: "AGI's proprietary blockchain architecture. The core technological engine that validates, records, and secures all network transactions."
+            },
+            {
+                term: "Proof-of-Authority (PoA)", 
+                def_fr: "Algorithme de consensus écologique et rapide où les transactions sont validées par des nœuds maîtres approuvés et formellement identifiés par l'organisation, plutôt que par calcul intensif (minage).",
+                def_en: "Eco-friendly and fast consensus algorithm where transactions are validated by approved master nodes formally identified by the organization, rather than by intensive computing (mining)."
+            },
+            {
+                term: "Staking", 
+                def_fr: "Action d'immobiliser ses AG-COINs dans un contrat intelligent pour une durée déterminée afin de sécuriser le réseau, en échange d'une récompense financière garantie.",
+                def_en: "Act of locking AG-COINs in a smart contract for a set period to secure the network, in exchange for a guaranteed financial reward."
+            },
+            {
+                term: "Zero-Fee Transaction", 
+                def_fr: "Règle absolue du protocole AGI garantissant qu'aucun frais de réseau, de gaz ou de transfert n'est prélevé lors d'une transaction interne entre membres.",
+                def_en: "Absolute rule of the AGI protocol ensuring no network, gas, or transfer fees are charged during an internal transaction between members."
+            }
+        ];
+
+        function renderDictionary(filterText = "") {
+            const container = document.getElementById('dictResults');
+            container.innerHTML = "";
+            const lowerFilter = filterText.toLowerCase();
+
+            dictionaryData.forEach(item => {
+                if (item.term.toLowerCase().includes(lowerFilter) || 
+                    item.def_fr.toLowerCase().includes(lowerFilter) || 
+                    item.def_en.toLowerCase().includes(lowerFilter)) {
+                    
+                    const termDiv = document.createElement('div');
+                    termDiv.className = 'dict-term';
+                    termDiv.innerText = item.term;
+
+                    const defDiv = document.createElement('div');
+                    defDiv.className = 'dict-def';
+                    defDiv.innerText = currentLang === 'fr' ? item.def_fr : item.def_en;
+
+                    container.appendChild(termDiv);
+                    container.appendChild(defDiv);
+                }
+            });
+        }
+
+        function openDictionary() {
+            document.getElementById('dictModal').style.display = 'flex';
+            document.getElementById('dictSearch').value = "";
+            renderDictionary();
+            document.getElementById('dictSearch').focus();
+        }
+
+        function closeDictionary() {
+            document.getElementById('dictModal').style.display = 'none';
+        }
+
+        function filterDict() {
+            const query = document.getElementById('dictSearch').value;
+            renderDictionary(query);
+        }
+
+        // Fermer la modale en cliquant à l'extérieur
+        window.onclick = function(event) {
+            const modal = document.getElementById('dictModal');
+            if (event.target == modal) {
+                closeDictionary();
+            }
+        }
+    </script>
 </body>
 </html>
