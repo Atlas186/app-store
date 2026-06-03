@@ -3,177 +3,463 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CGU Officiels - Atlas Groupe International | Nexus Core V5.0</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <title>CGU - Atlas Groupe International | Nexus Core V5.0</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --bg: #010409; --surface: #0d1117; --border: #30363d;
             --gold: #fbbf24; --accent: #38bdf8; --text-main: #e6edf3;
-            --text-dim: #8b949e; --danger: #ef4444; --success: #22c55e;
+            --text-dim: #8b949e; --danger: #ef4444; --success: #10b981;
         }
-        body { background: var(--bg); color: var(--text-main); font-family: 'Inter', -apple-system, sans-serif; padding: 40px 20px; line-height: 1.6; }
+        body { background: var(--bg); color: var(--text-main); font-family: 'Inter', -apple-system, sans-serif; padding: 40px 20px; line-height: 1.6; position: relative; }
+        .cgu-box { max-width: 1000px; margin: 0 auto; background: var(--surface); border: 1px solid var(--border); padding: 60px; border-radius: 8px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); position: relative; }
         
-        /* Bouton de téléchargement */
-        .download-btn {
-            position: fixed; top: 20px; right: 20px; background: var(--gold); color: #000;
-            border: none; padding: 12px 24px; border-radius: 6px; font-weight: bold;
-            cursor: pointer; z-index: 1000; transition: transform 0.2s; box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
-        }
-        .download-btn:hover { transform: scale(1.05); background: #f59e0b; }
+        /* Floating Controls */
+        .floating-controls { position: fixed; top: 20px; right: 20px; display: flex; gap: 15px; z-index: 1000; }
+        .control-btn { background: var(--surface); color: var(--accent); border: 1px solid var(--border); border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
+        .control-btn:hover { background: var(--accent); color: var(--bg); transform: scale(1.1); }
+        
+        /* Modal Dictionnaire */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+        .modal-content { background: var(--surface); border: 1px solid var(--accent); border-radius: 8px; width: 90%; max-width: 600px; max-height: 80vh; overflow-y: auto; padding: 30px; position: relative; }
+        .close-modal { position: absolute; top: 15px; right: 20px; color: var(--danger); font-size: 1.5rem; cursor: pointer; }
+        .dict-term { color: var(--gold); font-weight: bold; font-size: 1.1rem; margin-top: 15px; border-bottom: 1px dashed var(--border); padding-bottom: 5px; }
+        .dict-def { color: var(--text-dim); font-size: 0.9rem; margin-top: 5px; margin-bottom: 15px; display: block; text-align: justify; }
 
-        .cgu-box { max-width: 900px; margin: 0 auto; background: var(--surface); border: 1px solid var(--border); padding: 50px; border-radius: 4px; }
-        
-        .header-legal { border-bottom: 2px solid var(--gold); padding-bottom: 30px; margin-bottom: 40px; text-align: center; }
-        .header-legal h1 { color: var(--gold); font-size: 1.4rem; text-transform: uppercase; letter-spacing: 2px; margin: 0; }
-        .version-tag { background: rgba(56, 189, 248, 0.1); color: var(--accent); padding: 4px 12px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; margin-top: 15px; display: inline-block; border: 1px solid var(--accent); }
+        .header-legal { border-bottom: 2px solid var(--gold); padding-bottom: 30px; margin-bottom: 40px; }
+        .header-legal h1 { color: var(--gold); font-size: 2.2rem; text-transform: uppercase; letter-spacing: 1px; margin: 0; }
+        .version-tag { background: rgba(56, 189, 248, 0.1); color: var(--accent); padding: 4px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; margin-top: 10px; display: inline-block; }
 
-        .clause { margin-bottom: 40px; }
-        .clause-num { color: var(--gold); font-weight: 800; text-transform: uppercase; font-size: 1rem; display: block; border-bottom: 1px solid var(--border); margin-bottom: 15px; padding-bottom: 5px; }
-        .sub-article { font-weight: 700; color: var(--accent); display: block; margin: 15px 0 8px 0; font-size: 0.9rem; text-decoration: underline; }
-        .clause-text { font-size: 0.9rem; color: var(--text-dim); text-align: justify; display: block; }
+        .clause { margin-bottom: 45px; }
+        .clause-num { color: var(--accent); font-weight: 800; text-transform: uppercase; font-size: 1.1rem; display: block; border-bottom: 1px solid rgba(56, 189, 248, 0.2); margin-bottom: 15px; padding-bottom: 5px; }
+        .sub-article { font-weight: 600; color: var(--text-main); display: block; margin: 20px 0 10px 0; font-size: 1rem; }
+        .clause-text { font-size: 0.95rem; color: var(--text-dim); text-align: justify; display: block; margin-bottom: 15px; }
         
-        .important-card { background: rgba(239, 68, 68, 0.05); border-left: 4px solid var(--danger); padding: 20px; margin: 20px 0; font-size: 0.85rem; }
-        .important-card b { color: var(--danger); }
+        .important-card { background: rgba(239, 68, 68, 0.05); border: 1px solid var(--danger); padding: 20px; border-radius: 6px; margin: 20px 0; }
+        .important-card b { color: var(--danger); text-transform: uppercase; }
 
         ul { padding-left: 20px; margin-top: 10px; }
-        li { color: var(--text-dim); font-size: 0.85rem; margin-bottom: 10px; list-style-type: square; }
+        li { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 10px; text-align: justify; }
         
-        footer { margin-top: 60px; padding-top: 30px; border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--text-dim); text-align: center; }
+        footer { margin-top: 60px; padding-top: 30px; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--text-dim); display: flex; justify-content: space-between; }
         
-        /* Ajustements pour le PDF */
-        @media print { .download-btn { display: none; } body { padding: 0; background: white; color: black; } }
+        /* Language display logic */
+        .lang-en { display: none; }
+        
+        @media (max-width: 768px) { 
+            .cgu-box { padding: 30px; margin-top: 60px; } 
+            .header-legal h1 { font-size: 1.5rem; } 
+            .floating-controls { top: 10px; right: 10px; }
+        }
     </style>
 </head>
 <body>
 
-    <button class="download-btn" onclick="generatePDF()">Télécharger en PDF</button>
+    <div class="floating-controls">
+        <button class="control-btn" id="btn-dict" title="Dictionnaire / Glossary">
+            <i class="fas fa-book"></i>
+        </button>
+        <button class="control-btn" id="btn-lang" title="Changer de langue / Change Language">
+            <i class="fas fa-language"></i>
+        </button>
+    </div>
 
-    <div class="cgu-box" id="legal-doc">
-        <div class="header-legal">
-            <h1>Conditions Générales d'Utilisation & d'Investissement</h1>
-            <p style="margin: 10px 0; font-weight: bold; font-size: 0.9rem;">ATLAS GROUPE INTERNATIONAL (AGI) — Burkina Faso</p>
-            <p style="font-size: 0.8rem; color: var(--text-dim);">Récépissé N° PHUE-3539/2025 du 11/07/2025</p>
-            <span class="version-tag">RÉFÉRENCE : AGI-NC-V5.0-2026</span>
-        </div>
-
-        <div class="clause">
-            <span class="clause-num">Article 1 : Préambule et Opposabilité</span>
-            <span class="clause-text">
-                Les présentes Conditions Générales d'Utilisation (ci-après « CGU ») constituent un accord légal contraignant entre l'utilisateur (ci-après « l'Utilisateur ») et Atlas Groupe International (AGI). L'accès aux services Nexus Core, à l'AG-COIN et aux forfaits d'investissement vaut acceptation sans réserve de l'intégralité des clauses détaillées ci-dessous. AGI se réserve le droit de modifier ces termes à tout moment pour se conformer aux évolutions législatives du Burkina Faso et de l'UEMOA.
-            </span>
-        </div>
-
-        <div class="clause">
-            <span class="clause-num">Article 2 : Écosystème Nexus Core et AG-COIN</span>
-            <span class="sub-article">2.1. Nature technologique</span>
-            <span class="clause-text">Nexus Core est une infrastructure blockchain de type 1 (Layer 1) propriétaire. Elle n'est pas affiliée à des réseaux tiers comme Solana ou Ethereum. Chaque transaction est validée par des nœuds d'autorité (Proof-of-Authority) garantissant rapidité et sécurité.</span>
+    <div class="modal-overlay" id="dictOverlay">
+        <div class="modal-content">
+            <i class="fas fa-times close-modal" id="closeDict"></i>
             
-            <span class="sub-article">2.2. Indexation de l'AG-COIN</span>
-            <span class="clause-text">L'AG-COIN est un actif numérique stable dont la valeur est arrimée au Franc CFA (XOF) selon le ratio strict : 1 AG-COIN (₳) = 1 XOF. Cette parité est garantie par les actifs tangibles d'AGI et ses réserves bancaires, notamment auprès de Coris Bank International.</span>
-        </div>
+            <div class="lang-fr">
+                <h2 style="color: var(--accent); margin-top: 0; border-bottom: 1px solid var(--border); padding-bottom: 10px;">Dictionnaire Juridique et Technique</h2>
+                
+                <div class="dict-term">AG-COIN (₳)</div>
+                <div class="dict-def">Unité de compte numérique (Token) exclusive à l'écosystème d'Atlas Groupe International, strictement indexée sur le Franc CFA (1 ₳ = 1 XOF), servant de moyen de transaction principal sur l'ensemble des plateformes AGI.</div>
+                
+                <div class="dict-term">Base 58 (ID)</div>
+                <div class="dict-def">Format d'encodage cryptographique utilisé pour générer les identifiants uniques des utilisateurs sur la blockchain Nexus Core. Il exclut les caractères visuellement ambigus (comme 0, O, I, l) pour éviter les erreurs de transfert.</div>
+                
+                <div class="dict-term">Forfaits HDI</div>
+                <div class="dict-def">High Development Investment. Programmes d'investissement participatif proposés par AGI permettant de financer des projets industriels réels (coton, énergie, agriculture) en échange de rendements fixes sur une période de 180 jours.</div>
+                
+                <div class="dict-term">KYC (Know Your Customer)</div>
+                <div class="dict-def">Procédure réglementaire de vérification d'identité exigée pour prévenir le blanchiment d'argent et le financement d'activités illicites, particulièrement stricte pour les marchands (UEMOA standard).</div>
+                
+                <div class="dict-term">Nexus Core</div>
+                <div class="dict-def">Blockchain propriétaire de couche 1 (Layer 1) développée exclusivement par Atlas Groupe International. Elle utilise un consensus de type Proof-of-Authority (PoA) garantissant des transactions ultra-rapides, sécurisées et indépendantes des réseaux publics.</div>
+                
+                <div class="dict-term">Proof-of-Authority (PoA)</div>
+                <div class="dict-def">Mécanisme de consensus blockchain où les transactions sont validées par un nombre restreint de "nœuds" approuvés et de confiance (les validateurs d'AGI), offrant une consommation énergétique réduite et une sécurité accrue contre les attaques externes.</div>
+            </div>
 
-        <div class="clause">
-            <span class="clause-num">Article 3 : Forfaits HDI (High Development Investment)</span>
-            <span class="sub-article">3.1. Destination des fonds</span>
-            <span class="clause-text">Les fonds collectés via les forfaits HDI sont exclusivement destinés au financement de projets industriels souverains au Burkina Faso :
-                <ul>
-                    <li>Unités de tissage et transformation du coton (Secteur textile).</li>
-                    <li>Construction de générateurs solaires hybrides autonomes.</li>
-                    <li>Unités de transformation de plantes médicinales.</li>
-                    <li>Production avicole industrielle.</li>
-                </ul>
-            </span>
-            <span class="sub-article">3.2. Rendements et Modalités de ROI</span>
-            <span class="clause-text">Les rendements (ROI) de 5%, 18% ou 45% (selon le forfait choisi) sont calculés sur une période contractuelle de 180 jours. Ces dividendes proviennent de la plus-value générée par les activités industrielles et la valorisation de l'écosystème numérique. Le versement s'effectue sur le portefeuille Nexus de l'utilisateur à l'échéance.</span>
-        </div>
-
-        <div class="clause">
-            <span class="clause-num">Article 4 : Sécurité et Responsabilité de l'Utilisateur</span>
-            <div class="important-card">
-                <b>CLAUSE DE NON-RÉCUPÉRATION :</b> L'architecture Nexus Core repose sur une décentralisation des accès. Atlas Groupe International ne stocke jamais les phrases de récupération ou les clés privées des utilisateurs. 
-                <br><br>
-                <b>Responsabilité :</b> En cas de perte de votre identifiant Base 58 ou de votre code PIN, AGI est dans l'impossibilité technique de restaurer l'accès à vos fonds. Vous reconnaissez être le seul responsable de la sauvegarde physique et numérique de vos accès.
+            <div class="lang-en">
+                <h2 style="color: var(--accent); margin-top: 0; border-bottom: 1px solid var(--border); padding-bottom: 10px;">Legal and Technical Dictionary</h2>
+                
+                <div class="dict-term">AG-COIN (₳)</div>
+                <div class="dict-def">Digital unit of account (Token) exclusive to the Atlas Groupe International ecosystem, strictly pegged to the CFA Franc (1 ₳ = 1 XOF), serving as the primary medium of transaction across all AGI platforms.</div>
+                
+                <div class="dict-term">Base 58 (ID)</div>
+                <div class="dict-def">Cryptographic encoding format used to generate unique user identifiers on the Nexus Core blockchain. It excludes visually ambiguous characters (like 0, O, I, l) to prevent transfer errors.</div>
+                
+                <div class="dict-term">HDI Packages</div>
+                <div class="dict-def">High Development Investment. Crowdfunding investment programs offered by AGI to finance real industrial projects (cotton, energy, agriculture) in exchange for fixed returns over a 180-day period.</div>
+                
+                <div class="dict-term">KYC (Know Your Customer)</div>
+                <div class="dict-def">Regulatory identity verification procedure required to prevent money laundering and the financing of illicit activities, particularly strict for merchants (UEMOA standard).</div>
+                
+                <div class="dict-term">Nexus Core</div>
+                <div class="dict-def">Proprietary Layer 1 blockchain developed exclusively by Atlas Groupe International. It uses a Proof-of-Authority (PoA) consensus mechanism ensuring ultra-fast, secure transactions independent of public networks.</div>
+                
+                <div class="dict-term">Proof-of-Authority (PoA)</div>
+                <div class="dict-def">Blockchain consensus mechanism where transactions are validated by a limited number of approved and trusted "nodes" (AGI validators), offering reduced energy consumption and increased security against external attacks.</div>
             </div>
         </div>
+    </div>
 
-        <div class="clause">
-            <span class="clause-num">Article 5 : Lutte contre la Criminalité Financière (LBC/FT)</span>
-            <span class="clause-text">
-                En application des règlements de la CENTIF (Cellule Nationale de Traitement des Informations Financières) :
-                <ul>
-                    <li><b>Vérification d'Identité :</b> Le processus KYC (Know Your Customer) est obligatoire pour tout retrait ou investissement dépassant le seuil fixé par la direction financière.</li>
-                    <li><b>Surveillance :</b> AGI utilise des algorithmes d'analyse pour détecter les comportements atypiques. Tout compte suspecté de blanchiment d'argent ou lié à des activités illicites sera gelé sans préavis pour investigation.</li>
-                </ul>
-            </span>
-        </div>
-
-        <div class="clause">
-            <span class="clause-num">Article 6 : Frais de Service et Gaz</span>
-            <span class="clause-text">L'utilisation du réseau Nexus Core implique des frais minimes destinés au maintien de l'infrastructure :
-                <ul>
-                    <li><b>Transferts P2P :</b> Tarification préférentielle affichée lors de la validation.</li>
-                    <li><b>Retraits (Cash-out) :</b> Une commission de protocole de 0,5% est appliquée sur les sorties vers des monnaies fiduciaires pour couvrir les frais de clearing bancaire.</li>
-                </ul>
-            </span>
-        </div>
-
-        <div class="clause">
-            <span class="clause-num">Article 7 : Limitation de Responsabilité et Force Majeure</span>
-            <span class="clause-text">
-                Atlas Groupe International ne saurait être tenu pour responsable en cas de :
-                <ul>
-                    <li>Dysfonctionnement du réseau internet mondial ou des infrastructures de télécommunication locales.</li>
-                    <li>Décisions gouvernementales ou législatives restreignant l'usage des actifs numériques au Burkina Faso.</li>
-                    <li>Erreurs de saisie de l'utilisateur lors de transferts (adresses Base 58 erronées).</li>
-                </ul>
-            </span>
-        </div>
-
-        <div class="clause">
-            <span class="clause-num">Article 8 : Confidentialité des Données</span>
-            <span class="clause-text">
-                Les données personnelles collectées lors du KYC sont traitées conformément à la loi n°001-2021/AN portant protection des données à caractère personnel au Burkina Faso. AGI s'engage à ne jamais vendre ces données à des tiers à des fins commerciales.
-            </span>
-        </div>
-
-        <div class="clause">
-            <span class="clause-num">Article 9 : Litiges et Droit Applicable</span>
-            <span class="clause-text">
-                Les présentes CGU sont régies par le droit burkinabè. En cas de contestation sur l'interprétation ou l'exécution du contrat, les parties s'engagent à rechercher une solution amiable sous 30 jours. Passé ce délai, le litige sera porté devant le <b>Tribunal de Commerce de Ouagadougou</b>.
-            </span>
-        </div>
-
-        <footer>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
-                <div style="text-align: left;">
-                    <b>Atlas Groupe International</b><br>
-                    Siège Social : Ouagadougou, BF<br>
-                    Contact : +226 76 20 38 48
-                </div>
-                <div style="text-align: right;">
-                    Document certifié conforme<br>
-                    Direction Juridique AGI<br>
-                    Date d'émission : 14 Mars 2026
-                </div>
+    <div class="cgu-box">
+        <div class="lang-fr">
+            <div class="header-legal">
+                <h1>Conditions Générales d'Utilisation</h1>
+                <p style="margin: 5px 0;">Atlas Groupe International (AGI) — Système Propriétaire Nexus Core</p>
+                <span class="version-tag">RÉFÉRENCE JURIDIQUE : AGI-NC-2026-V5</span>
             </div>
-            <p>© 2026 Atlas Groupe International. Tous droits réservés. Nexus Core™ est une marque déposée.</p>
-        </footer>
+
+            <div class="clause">
+                <span class="clause-num">Article 1 : Définitions et Champ d'Application Global</span>
+                <span class="clause-text">
+                    Le présent contrat, juridiquement contraignant, définit de manière exhaustive les règles d'utilisation, les droits, et les obligations inhérents à l'écosystème numérique souverain géré par <b>Atlas Groupe International (AGI)</b>, immatriculée sous le récépissé PHUE-3539/2025. 
+                    <br><br>
+                    <b>1.1. Nexus Core :</b> Désigne la blockchain de couche 1 (Layer 1), une technologie propriétaire développée en interne par AGI, assurant la transparence, l'immuabilité et la traçabilité de l'ensemble des actifs numériques. Contrairement aux blockchains publiques, Nexus Core opère sur une infrastructure fermée et hautement sécurisée, optimisée pour les besoins spécifiques du marché ouest-africain.
+                    <br><br>
+                    <b>1.2. AG-COIN :</b> Unité de compte numérique (Token utilitaire et de paiement) exclusive au réseau, strictement indexée sur le Franc CFA (XOF) avec une parité fixe et garantie de 1 ₳ pour 1 FCFA. L'AG-COIN constitue la pierre angulaire de l'écosystème, facilitant toutes les transactions, des paiements marchands aux investissements industriels.
+                    <br><br>
+                    <b>1.3. Utilisateur :</b> Toute personne physique majeure ou personne morale dûment enregistrée ayant initialisé un identifiant cryptographique Base 58 sur le réseau Nexus Core via les applications officielles d'AGI (notamment AGI Business Pro, Momo Pay, ou ImmoDirect). L'acceptation des présentes CGU est la condition <i>sine qua non</i> pour la création et le maintien de cet identifiant. Le champ d'application couvre l'intégralité des services financiers, de divertissement, de crédit et d'utilitaires proposés par l'écosystème AGI.
+                </span>
+            </div>
+
+            <div class="clause">
+                <span class="clause-num">Article 2 : Propriété Intellectuelle, Licence et Droits d'Auteur</span>
+                <span class="clause-text">
+                    L'architecture logicielle complexe sous-jacente, les algorithmes de consensus de type Proof-of-Authority (PoA), les interfaces graphiques, les bases de données, le code source des applications mobiles Kotlin/Java, ainsi que les marques déposées "AGI", "AG-COIN" et "Nexus Core" demeurent la propriété exclusive, absolue et inaliénable d'Atlas Groupe International et de son Président Fondateur.
+                    <br><br>
+                    Par les présentes, AGI concède à l'Utilisateur une licence d'utilisation strictement personnelle, non transférable, non exclusive et révocable à tout moment et sans préavis en cas de violation des termes. Cette licence est limitée à la consultation des interfaces et à la gestion des actifs numériques personnels via les canaux officiels approuvés.
+                    <br><br>
+                    <b>Restrictions formelles :</b> Il est rigoureusement interdit de procéder à toute forme de rétro-ingénierie (reverse engineering), de décompilation des fichiers APK, d'extraction automatisée de données (scraping), ou de duplication du code source du "Nexus Engine". Toute tentative d'accéder aux API privées sans autorisation, de cloner les interfaces de Nexus Bet, AGI Pay-Station ou AGI Audio-Lib fera immédiatement l'objet de poursuites pénales et civiles sévères devant les juridictions compétentes, assorties de demandes de dommages et intérêts pour préjudice commercial et technologique.
+                </span>
+            </div>
+
+            <div class="clause">
+                <span class="clause-num">Article 3 : Sécurité Cryptographique, Souveraineté et Responsabilité</span>
+                <div class="important-card">
+                    <b>Avertissement de sécurité majeur :</b> L'écosystème AGI opère sur un modèle strict de souveraineté individuelle numérique. L'utilisateur est désigné comme le Gardien Unique et exclusif de ses clés d'accès, notamment son code PIN de transaction et son ID Base 58. L'absence délibérée de stockage centralisé des clés privées signifie qu'<b>aucune récupération n'est techniquement possible</b> par l'administration d'AGI en cas de perte, d'oubli ou de compromission.
+                </div>
+                <span class="clause-text">
+                    L'Utilisateur reconnaît et accepte que la nature même de la technologie blockchain rend les transactions validées sur le réseau Nexus Core définitives et irréversibles. Une fois qu'une transaction P2P (Peer-to-Peer) ou un paiement marchand est inscrit dans un bloc et confirmé par les nœuds d'autorité, il ne peut être annulé, modifié ou remboursé par AGI.
+                    <br><br>
+                    <b>Exonération de responsabilité :</b> AGI décline formellement toute responsabilité pour la perte, le vol ou la destruction de fonds résultant d'une négligence de l'utilisateur. Cela inclut, sans s'y limiter : le partage volontaire ou involontaire du code PIN, les attaques d'ingénierie sociale (phishing), la compromission physique du smartphone de l'utilisateur, ou l'utilisation de réseaux Wi-Fi publics non sécurisés. L'Utilisateur est seul responsable de la mise en place de mesures de sécurité adéquates sur ses terminaux d'accès.
+                </span>
+            </div>
+
+            <div class="clause">
+                <span class="clause-num">Article 4 : Opérations Financières, Stabilité et Frais de Réseau</span>
+                <span class="sub-article">4.1. Parité Strict et Liquidité Garanties</span>
+                <span class="clause-text">
+                    La valeur de l'AG-COIN est inébranlablement fixée à la devise locale. L'AG-COIN est garanti par les réserves solides de l'écosystème AGI, notamment ses partenaires institutionnels et ses réserves internes accumulées via les projets industriels. La stabilité du jeton est maintenue par un mécanisme de collatéralisation stricte, audité périodiquement par les commissaires aux comptes d'AGI, assurant qu'à chaque AG-COIN en circulation correspond une valeur équivalente dans les actifs de l'entreprise.
+                </span>
+                
+                <span class="sub-article">4.2. Frais de Réseau (Gaz) et Finalité des Transactions</span>
+                <span class="clause-text">
+                    Pour garantir la maintenance continue des serveurs, la sécurisation cryptographique et la rémunération des nœuds validateurs du réseau Nexus Core, une commission de protocole fixée à 0.5% est systématiquement prélevée sur toutes les opérations de sortie de l'écosystème (Cash-out vers Mobile Money ou espèces). 
+                    <br><br>
+                    Les transferts internes P2P (entre deux identifiants Base 58) bénéficient de tarifs préférentiels, régis par la grille tarifaire dynamique affichée en temps réel sur le terminal de l'application AGI Business Pro. Le réseau s'engage à traiter ces transactions internes avec une finalité quasi-instantanée, sous réserve de la disponibilité normale du réseau internet.
+                </span>
+            </div>
+
+            <div class="clause">
+                <span class="clause-num">Article 5 : Lutte contre le Blanchiment d'Argent (AML) et Procédures KYC</span>
+                <span class="clause-text">
+                    Conformément aux réglementations financières internationales rigoureuses et aux directives spécifiques de l'Union Économique et Monétaire Ouest-Africaine (UEMOA) concernant les transactions numériques, AGI applique une politique de tolérance zéro face à la criminalité financière. L'institution se réserve le droit souverain et discrétionnaire de :
+                    <ul>
+                        <li><b>Exigences d'Identification :</b> Imposer une vérification d'identité approfondie (KYC - Know Your Customer) par paliers. Les comptes standards nécessitent une identification de base, tandis que les comptes marchands et les flux transactionnels dépassant les seuils réglementaires exigent la soumission de documents d'identité officiels validés par les autorités compétentes.</li>
+                        <li><b>Gel des Actifs :</b> Suspendre et geler temporairement ou indéfiniment tout ID Nexus Core suspecté, par nos algorithmes de surveillance ou par signalement, de provenance frauduleuse, d'escroquerie, de financement du terrorisme ou d'activités illicites.</li>
+                        <li><b>Coopération Légale :</b> Coopérer pleinement et de manière proactive avec les autorités judiciaires et policières du Burkina Faso. AGI fournira les logs de transaction complets, les historiques d'adresses IP et les données d'identification associées à tout compte faisant l'objet d'une réquisition ou d'une enquête officielle.</li>
+                    </ul>
+                </span>
+            </div>
+
+            <div class="clause">
+                <span class="clause-num">Article 6 : Forfaits HDI (High Development Investment) et Secteur Industriel</span>
+                <span class="clause-text">
+                    L'un des piliers stratégiques d'AGI est la liaison entre l'économie numérique et le développement industriel physique. Les participations aux forfaits HDI représentent un soutien direct, tokenisé via des smart contracts sur Nexus Core, à des projets structurants tels que le tissage de coton, la transformation de plantes médicinales, l'installation de fermes avicoles à haut rendement (15 000 à 25 000 œufs/jour) et la construction de générateurs solaires hybrides.
+                    <br><br>
+                    <b>Structure des Rendements :</b> AGI propose des plans d'investissement structurés offrant des rendements substantiels (pouvant inclure des paliers de 2,5%, 8%, ou 18% selon les offres en vigueur) sur un cycle d'immobilisation de 180 jours. Ces rendements ne sont pas des intérêts spéculatifs, mais des dividendes calculés sur la performance réelle et la valorisation des projets industriels sous-jacents financés.
+                    <br><br>
+                    <b>Conditions de Retrait :</b> Le capital engagé dans un forfait HDI est verrouillé dans un smart contract pour la durée stipulée afin de garantir le financement continu des industries. Toute demande exceptionnelle de retrait anticipé, si elle est approuvée par le conseil d'administration d'AGI, sera soumise à de lourdes pénalités de débouclage allant jusqu'à 30% du capital initial, afin de protéger l'intégrité financière des projets en cours.
+                </span>
+            </div>
+
+            <div class="clause">
+                <span class="clause-num">Article 7 : Divertissements Numériques, Paris et Jeux Responsables</span>
+                <span class="clause-text">
+                    L'écosystème AGI intègre des modules de divertissement sécurisés, incluant des plateformes de paris sportifs (Nexus Bet) et des jeux de casino algorithmiques (machines à sous, jeux "Crash"). Ces modules opèrent exclusivement via des données réelles du marché ou des générateurs de nombres aléatoires (RNG) certifiés, <b>excluant strictement toute forme de simulation trompeuse</b> afin de garantir l'équité absolue ("Provably Fair").
+                    <br><br>
+                    <b>Accès et Restrictions :</b> L'accès à ces services de divertissement financier est strictement interdit aux mineurs (moins de 18 ans). AGI s'engage dans une politique de jeu responsable. L'Utilisateur accepte que les jeux de hasard comportent un risque inhérent de perte en capital. AGI met à disposition des outils d'auto-exclusion et des limites de dépôt. L'entreprise ne saurait être tenue responsable de l'addiction au jeu ou des pertes financières subies volontairement par l'Utilisateur sur ces plateformes. Tout litige lié à un pari est résolu par l'historique immuable inscrit sur la blockchain Nexus Core.
+                </span>
+            </div>
+
+            <div class="clause">
+                <span class="clause-num">Article 8 : Services de Micro-Crédit et Financement Écosystémique</span>
+                <span class="clause-text">
+                    Afin de soutenir l'inclusion financière et l'entrepreneuriat au sein de sa communauté, AGI déploie un service de micro-crédit interne. Contrairement aux idées reçues, ce service n'est pas exclusif aux acteurs d'une seule filière (comme les producteurs de coton via SofiCash), mais est accessible à <b>l'ensemble des Utilisateurs qualifiés de l'écosystème AGI</b>.
+                    <br><br>
+                    <b>Octroi et Recouvrement :</b> L'éligibilité au micro-crédit est déterminée par un algorithme propriétaire analysant l'historique des transactions, l'ancienneté du compte Base 58 et les garanties collatérales éventuelles au sein de l'écosystème. Les prêts sont libellés et décaissés en AG-COIN.
+                    <br><br>
+                    En acceptant un micro-crédit, l'Utilisateur consent expressément à ce qu'AGI utilise des smart contracts pour prélever automatiquement les mensualités ou les pénalités de retard directement sur son solde disponible. En cas de défaut de paiement prolongé, AGI se réserve le droit de saisir les actifs investis dans les forfaits HDI de l'Utilisateur défaillant, ou d'engager des procédures de recouvrement contentieux conformément au droit burkinabè.
+                </span>
+            </div>
+
+            <div class="clause">
+                <span class="clause-num">Article 9 : Services Utilitaires (AGI Pay-Station) et Intermédiation Immobilière</span>
+                <span class="clause-text">
+                    <b>AGI Pay-Station :</b> AGI agit en tant qu'agrégateur technologique pour le paiement de factures utilitaires (telles que SONABEL, ONEA, Canal+) via l'AG-COIN. L'Utilisateur reconnaît qu'AGI n'est qu'un intermédiaire de paiement. AGI garantit la transmission de la requête de paiement, mais ne peut être tenue responsable des coupures de service, des erreurs de facturation ou des retards d'activation imputables exclusivement aux prestataires de services tiers.
+                    <br><br>
+                    <b>ImmoDirect :</b> Concernant la plateforme de transaction et de mise en relation immobilière, AGI fournit une infrastructure de paiement sécurisée et de formalisation des accords. Les transactions immobilières via ImmoDirect nécessitent un KYC de niveau maximum. AGI ne garantit ni l'état physique des biens immobiliers, ni l'absence de vices cachés, ces éléments relevant de la responsabilité exclusive du vendeur. Le rôle d'AGI se limite à la sécurisation des fonds (séquestre via smart contract) jusqu'à la validation notariée ou consensuelle de la transaction.
+                </span>
+            </div>
+
+            <div class="clause">
+                <span class="clause-num">Article 10 : Politique de Confidentialité et Protection des Données Personnelles</span>
+                <span class="clause-text">
+                    La protection de votre vie privée est une priorité absolue. Dans le cadre de son fonctionnement et de ses obligations légales (notamment le KYC), AGI collecte des données à caractère personnel (noms, numéros de téléphone, pièces d'identité, données biométriques éventuelles et historique de transactions).
+                    <br><br>
+                    Ces données sont stockées sur des serveurs cryptés hautement sécurisés et ne sont en aucun cas vendues, louées ou cédées à des entités commerciales tierces à des fins publicitaires. Elles sont exclusivement utilisées pour la gestion des comptes, l'amélioration des services (comme l'algorithme de micro-crédit) et le respect des obligations légales de la République du Burkina Faso. 
+                    <br><br>
+                    Conformément aux lois sur la protection des données personnelles, l'Utilisateur dispose d'un droit d'accès, de rectification et, dans les limites imposées par la législation financière sur la conservation des archives, d'un droit de suppression de ses données. Ce droit s'exerce par requête écrite adressée au Secrétariat Général d'AGI.
+                </span>
+            </div>
+
+            <div class="clause">
+                <span class="clause-num">Article 11 : Force Majeure et Risques Technologiques Majeurs</span>
+                <span class="clause-text">
+                    L'Utilisateur comprend et accepte les risques inhérents à l'utilisation de technologies numériques émergentes. AGI, ses fondateurs, son équipe technique et ses partenaires ne pourront en aucun cas être tenus responsables de l'inexécution de leurs obligations, de pertes financières, ou de dommages indirects résultant de cas de <b>Force Majeure</b>, définis comme tout événement imprévisible, irrésistible et extérieur.
+                    <br><br>
+                    Ces événements incluent, de manière non exhaustive :
+                    <ul>
+                        <li><b>Défaillances Infrastructurelles :</b> Une coupure prolongée, une censure ou une défaillance majeure des réseaux de télécommunication nationaux ou de la dorsale internet mondiale.</li>
+                        <li><b>Cyber-Guerre et Attaques :</b> Des attaques informatiques d'envergure nationale ou internationale, y compris le risque théorique d'une "Attaque des 51%" sur le réseau, bien que la nature fermée et autoritaire du protocole PoA de Nexus Core rende cette éventualité mathématiquement négligeable.</li>
+                        <li><b>Événements Politiques et Législatifs :</b> Des modifications soudaines de la législation fiscale ou réglementaire impactant le statut des actifs numériques au Burkina Faso ou dans la zone UEMOA, des émeutes, guerres, ou catastrophes naturelles détruisant physiquement les centres de données principaux d'AGI.</li>
+                    </ul>
+                    En de telles circonstances, AGI s'engage à déployer ses protocoles de "Disaster Recovery" pour sauvegarder l'état de la blockchain, mais suspend temporairement toute garantie de service continu.
+                </span>
+            </div>
+
+            <div class="clause">
+                <span class="clause-num">Article 12 : Droit Applicable, Médiation Interne et Règlement des Litiges</span>
+                <span class="clause-text">
+                    La validité, l'interprétation et l'exécution du présent contrat, ainsi que toute relation juridique découlant de l'utilisation de l'écosystème Atlas Groupe International, sont exclusivement soumises au <b>Droit de la République du Burkina Faso</b>.
+                    <br><br>
+                    <b>Procédure de Médiation Obligatoire :</b> En cas de litige, de différend ou de réclamation lié à l'utilisation du réseau Nexus Core, de l'AG-COIN, ou des services annexes, l'Utilisateur s'engage formellement à rechercher en priorité une solution amiable. Cette démarche s'effectue par la soumission d'un dossier complet au Comité de Médiation Interne d'AGI. Ce comité dispose d'un délai de quarante-cinq (45) jours ouvrables pour proposer une résolution basée sur l'analyse technique des logs de la blockchain.
+                    <br><br>
+                    <b>Juridiction Compétente :</b> Si et seulement si la procédure de médiation interne aboutit à un constat d'échec formellement documenté, le litige sera porté devant les tribunaux compétents. De convention expresse entre les parties, compétence exclusive est attribuée au <b>Tribunal de Commerce de Ouagadougou</b>, nonobstant la pluralité de défendeurs ou l'appel en garantie, même pour les procédures d'urgence ou les procédures conservatoires, en référé ou par requête.
+                </span>
+            </div>
+
+            <footer>
+                <span>Atlas Groupe International — Direction Juridique<br>Président Fondateur : Thierry Joël</span>
+                <span>Émis à Ouagadougou, le 06 Mars 2026</span>
+            </footer>
+        </div>
+
+        <div class="lang-en">
+            <div class="header-legal">
+                <h1>General Terms of Use</h1>
+                <p style="margin: 5px 0;">Atlas Groupe International (AGI) — Nexus Core Proprietary System</p>
+                <span class="version-tag">LEGAL REFERENCE: AGI-NC-2026-V5</span>
+            </div>
+
+            <div class="clause">
+                <span class="clause-num">Article 1: Definitions and Global Scope of Application</span>
+                <span class="clause-text">
+                    This legally binding contract exhaustively defines the rules of use, rights, and obligations inherent to the sovereign digital ecosystem managed by <b>Atlas Groupe International (AGI)</b>, registered under receipt PHUE-3539/2025.
+                    <br><br>
+                    <b>1.1. Nexus Core:</b> Refers to the Layer 1 blockchain, a proprietary technology developed in-house by AGI, ensuring transparency, immutability, and traceability of all digital assets. Unlike public blockchains, Nexus Core operates on a closed and highly secure infrastructure, optimized for the specific needs of the West African market.
+                    <br><br>
+                    <b>1.2. AG-COIN:</b> The digital unit of account (Utility and payment token) exclusive to the network, strictly pegged to the CFA Franc (XOF) with a guaranteed fixed parity of 1 ₳ to 1 FCFA. The AG-COIN is the cornerstone of the ecosystem, facilitating all transactions, from merchant payments to industrial investments.
+                    <br><br>
+                    <b>1.3. User:</b> Any individual of legal age or duly registered legal entity having initialized a cryptographic Base 58 identifier on the Nexus Core network via official AGI applications (notably AGI Business Pro, Momo Pay, or ImmoDirect). Acceptance of these TOS is the <i>sine qua non</i> condition for creating and maintaining this identifier. The scope covers all financial, entertainment, credit, and utility services offered by the AGI ecosystem.
+                </span>
+            </div>
+
+            <div class="clause">
+                <span class="clause-num">Article 2: Intellectual Property, License, and Copyrights</span>
+                <span class="clause-text">
+                    The complex underlying software architecture, the Proof-of-Authority (PoA) consensus algorithms, graphic interfaces, databases, Kotlin/Java mobile application source code, as well as the "AGI", "AG-COIN", and "Nexus Core" trademarks remain the exclusive, absolute, and inalienable property of Atlas Groupe International and its Founding President.
+                    <br><br>
+                    Hereby, AGI grants the User a strictly personal, non-transferable, non-exclusive license, revocable at any time and without notice in case of terms violation. This license is limited to viewing the interfaces and managing personal digital assets via approved official channels.
+                    <br><br>
+                    <b>Formal Restrictions:</b> It is strictly forbidden to engage in any form of reverse engineering, decompilation of APK files, automated data extraction (scraping), or duplication of the "Nexus Engine" source code. Any attempt to access private APIs without authorization, or to clone the interfaces of Nexus Bet, AGI Pay-Station, or AGI Audio-Lib will immediately result in severe criminal and civil prosecution before competent jurisdictions, coupled with claims for damages regarding commercial and technological harm.
+                </span>
+            </div>
+
+            <div class="clause">
+                <span class="clause-num">Article 3: Cryptographic Security, Sovereignty, and Liability</span>
+                <div class="important-card">
+                    <b>Major Security Warning:</b> The AGI ecosystem operates on a strict model of digital individual sovereignty. The user is designated as the Sole and exclusive Guardian of their access keys, notably their transaction PIN code and Base 58 ID. The deliberate lack of centralized private key storage means that <b>no recovery is technically possible</b> by AGI administration in case of loss, forgetting, or compromise.
+                </div>
+                <span class="clause-text">
+                    The User acknowledges and accepts that the very nature of blockchain technology makes transactions validated on the Nexus Core network final and irreversible. Once a P2P (Peer-to-Peer) transaction or merchant payment is recorded in a block and confirmed by authority nodes, it cannot be canceled, modified, or refunded by AGI.
+                    <br><br>
+                    <b>Disclaimer of Liability:</b> AGI formally declines all liability for the loss, theft, or destruction of funds resulting from user negligence. This includes, but is not limited to: voluntary or involuntary sharing of the PIN code, social engineering attacks (phishing), physical compromise of the user's smartphone, or the use of unsecured public Wi-Fi networks. The User is solely responsible for implementing adequate security measures on their access terminals.
+                </span>
+            </div>
+
+            <div class="clause">
+                <span class="clause-num">Article 4: Financial Operations, Stability, and Network Fees</span>
+                <span class="sub-article">4.1. Strict Parity and Guaranteed Liquidity</span>
+                <span class="clause-text">
+                    The value of the AG-COIN is unshakeably fixed to the local currency. The AG-COIN is backed by the solid reserves of the AGI ecosystem, notably its institutional partners and internal reserves accumulated via industrial projects. The token's stability is maintained by a strict collateralization mechanism, periodically audited by AGI's statutory auditors, ensuring that every AG-COIN in circulation corresponds to an equivalent value in the company's assets.
+                </span>
+                
+                <span class="sub-article">4.2. Network Fees (Gas) and Transaction Finality</span>
+                <span class="clause-text">
+                    To guarantee the continuous maintenance of servers, cryptographic security, and the remuneration of the Nexus Core network validator nodes, a protocol commission set at 0.5% is systematically deducted from all ecosystem exit operations (Cash-out to Mobile Money or cash).
+                    <br><br>
+                    Internal P2P transfers (between two Base 58 identifiers) benefit from preferential rates, governed by the dynamic fee schedule displayed in real-time on the AGI Business Pro application terminal. The network commits to processing these internal transactions with near-instant finality, subject to normal internet network availability.
+                </span>
+            </div>
+
+            <div class="clause">
+                <span class="clause-num">Article 5: Anti-Money Laundering (AML) and KYC Procedures</span>
+                <span class="clause-text">
+                    In accordance with rigorous international financial regulations and specific directives of the West African Economic and Monetary Union (WAEMU) regarding digital transactions, AGI applies a zero-tolerance policy towards financial crime. The institution reserves the sovereign and discretionary right to:
+                    <ul>
+                        <li><b>Identification Requirements:</b> Impose thorough identity verification (KYC - Know Your Customer) in tiers. Standard accounts require basic identification, while merchant accounts and transactional flows exceeding regulatory thresholds require the submission of official identity documents validated by competent authorities.</li>
+                        <li><b>Asset Freezing:</b> Temporarily or indefinitely suspend and freeze any Nexus Core ID suspected, by our surveillance algorithms or by reporting, of fraudulent origin, scamming, terrorism financing, or illicit activities.</li>
+                        <li><b>Legal Cooperation:</b> Fully and proactively cooperate with the judicial and police authorities of Burkina Faso. AGI will provide comprehensive transaction logs, IP address histories, and identification data associated with any account subject to official requisition or investigation.</li>
+                    </ul>
+                </span>
+            </div>
+
+            <div class="clause">
+                <span class="clause-num">Article 6: HDI Packages (High Development Investment) and Industrial Sector</span>
+                <span class="clause-text">
+                    One of AGI's strategic pillars is linking the digital economy with physical industrial development. Participations in HDI packages represent direct support, tokenized via smart contracts on Nexus Core, for structuring projects such as cotton weaving, medicinal plant processing, the installation of high-yield poultry farms (15,000 to 25,000 eggs/day), and the construction of hybrid solar generators.
+                    <br><br>
+                    <b>Yield Structure:</b> AGI offers structured investment plans providing substantial returns (which may include tiers of 2,5%, 8%, or 18% depending on current offers) over a 180-day lock-up cycle. These returns are not speculative interest, but dividends calculated on the actual performance and valuation of the underlying funded industrial projects.
+                    <br><br>
+                    <b>Withdrawal Conditions:</b> The capital committed in an HDI package is locked in a smart contract for the stipulated duration to ensure continuous funding of the industries. Any exceptional request for early withdrawal, if approved by AGI's board of directors, will be subject to heavy unwinding penalties of up to 30% of the initial capital, to protect the financial integrity of ongoing projects.
+                </span>
+            </div>
+
+            <div class="clause">
+                <span class="clause-num">Article 7: Digital Entertainment, Betting, and Responsible Gaming</span>
+                <span class="clause-text">
+                    The AGI ecosystem integrates secure entertainment modules, including sports betting platforms (Nexus Bet) and algorithmic casino games (slot machines, "Crash" games). These modules operate exclusively via real market data or certified Random Number Generators (RNG), <b>strictly excluding any form of deceptive simulation</b> to ensure absolute fairness ("Provably Fair").
+                    <br><br>
+                    <b>Access and Restrictions:</b> Access to these financial entertainment services is strictly prohibited to minors (under 18). AGI is committed to a responsible gaming policy. The User accepts that games of chance carry an inherent risk of capital loss. AGI provides self-exclusion tools and deposit limits. The company cannot be held responsible for gambling addiction or financial losses voluntarily incurred by the User on these platforms. Any betting dispute is resolved by the immutable history recorded on the Nexus Core blockchain.
+                </span>
+            </div>
+
+            <div class="clause">
+                <span class="clause-num">Article 8: Micro-Credit Services and Ecosystem Financing</span>
+                <span class="clause-text">
+                    To support financial inclusion and entrepreneurship within its community, AGI deploys an internal micro-credit service. Contrary to popular belief, this service is not exclusive to actors of a single sector (such as cotton producers via SofiCash) but is accessible to <b>all qualified Users of the AGI ecosystem</b>.
+                    <br><br>
+                    <b>Granting and Recovery:</b> Micro-credit eligibility is determined by a proprietary algorithm analyzing transaction history, Base 58 account age, and potential collateral guarantees within the ecosystem. Loans are denominated and disbursed in AG-COIN.
+                    <br><br>
+                    By accepting a micro-credit, the User expressly consents to AGI using smart contracts to automatically deduct monthly installments or late penalties directly from their available balance. In the event of prolonged default, AGI reserves the right to seize assets invested in the defaulting User's HDI packages, or to initiate contentious recovery procedures in accordance with Burkinabe law.
+                </span>
+            </div>
+
+            <div class="clause">
+                <span class="clause-num">Article 9: Utility Services (AGI Pay-Station) and Real Estate Intermediation</span>
+                <span class="clause-text">
+                    <b>AGI Pay-Station:</b> AGI acts as a technological aggregator for the payment of utility bills (such as SONABEL, ONEA, Canal+) via the AG-COIN. The User acknowledges that AGI is merely a payment intermediary. AGI guarantees the transmission of the payment request but cannot be held responsible for service cuts, billing errors, or activation delays attributable exclusively to third-party service providers.
+                    <br><br>
+                    <b>ImmoDirect:</b> Regarding the real estate transaction and matchmaking platform, AGI provides secure payment infrastructure and agreement formalization. Real estate transactions via ImmoDirect require maximum-level KYC. AGI guarantees neither the physical condition of the properties nor the absence of hidden defects; these elements fall under the exclusive responsibility of the seller. AGI's role is limited to securing funds (escrow via smart contract) until the notarized or consensual validation of the transaction.
+                </span>
+            </div>
+
+            <div class="clause">
+                <span class="clause-num">Article 10: Privacy Policy and Personal Data Protection</span>
+                <span class="clause-text">
+                    The protection of your privacy is a top priority. As part of its operation and legal obligations (notably KYC), AGI collects personal data (names, phone numbers, identity documents, potential biometric data, and transaction history).
+                    <br><br>
+                    This data is stored on highly secure encrypted servers and is under no circumstances sold, rented, or transferred to third-party commercial entities for advertising purposes. They are exclusively used for account management, service improvement (like the micro-credit algorithm), and compliance with the legal obligations of the Republic of Burkina Faso.
+                    <br><br>
+                    In accordance with personal data protection laws, the User has the right to access, rectify, and, within the limits imposed by financial legislation on archive retention, the right to delete their data. This right is exercised by a written request addressed to the General Secretariat of AGI.
+                </span>
+            </div>
+
+            <div class="clause">
+                <span class="clause-num">Article 11: Force Majeure and Major Technological Risks</span>
+                <span class="clause-text">
+                    The User understands and accepts the risks inherent in the use of emerging digital technologies. AGI, its founders, technical team, and partners can in no way be held liable for the non-performance of their obligations, financial losses, or indirect damages resulting from cases of <b>Force Majeure</b>, defined as any unforeseeable, irresistible, and external event.
+                    <br><br>
+                    These events include, but are not limited to:
+                    <ul>
+                        <li><b>Infrastructural Failures:</b> A prolonged outage, censorship, or major failure of national telecommunication networks or the global internet backbone.</li>
+                        <li><b>Cyber-Warfare and Attacks:</b> Large-scale national or international cyber attacks, including the theoretical risk of a "51% Attack" on the network, although the closed and authoritative nature of Nexus Core's PoA protocol makes this mathematical possibility negligible.</li>
+                        <li><b>Political and Legislative Events:</b> Sudden changes in tax or regulatory legislation impacting the status of digital assets in Burkina Faso or the WAEMU zone, riots, wars, or natural disasters physically destroying AGI's main data centers.</li>
+                    </ul>
+                    In such circumstances, AGI commits to deploying its "Disaster Recovery" protocols to safeguard the state of the blockchain but temporarily suspends any guarantee of continuous service.
+                </span>
+            </div>
+
+            <div class="clause">
+                <span class="clause-num">Article 12: Applicable Law, Internal Mediation, and Dispute Resolution</span>
+                <span class="clause-text">
+                    The validity, interpretation, and execution of this contract, as well as any legal relationship arising from the use of the Atlas Groupe International ecosystem, are exclusively subject to the <b>Law of the Republic of Burkina Faso</b>.
+                    <br><br>
+                    <b>Mandatory Mediation Procedure:</b> In the event of a dispute, disagreement, or claim related to the use of the Nexus Core network, the AG-COIN, or ancillary services, the User formally commits to prioritizing an amicable solution. This process is carried out by submitting a complete file to the AGI Internal Mediation Committee. This committee has forty-five (45) working days to propose a resolution based on the technical analysis of the blockchain logs.
+                    <br><br>
+                    <b>Competent Jurisdiction:</b> If and only if the internal mediation procedure results in a formally documented failure, the dispute will be brought before the competent courts. By express agreement between the parties, exclusive jurisdiction is attributed to the <b>Commercial Court of Ouagadougou (Tribunal de Commerce de Ouagadougou)</b>, notwithstanding plurality of defendants or introduction of third parties, even for emergency proceedings or protective measures, in summary proceedings or by petition.
+                </span>
+            </div>
+
+            <footer>
+                <span>Atlas Groupe International — Legal Department<br>Founding President: Thierry Joël</span>
+                <span>Issued in Ouagadougou, March 06, 2026</span>
+            </footer>
+        </div>
     </div>
 
     <script>
-        function generatePDF() {
-            const element = document.getElementById('legal-doc');
-            const opt = {
-                margin:       10,
-                filename:     'CGU_Atlas_Groupe_International_2026.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, backgroundColor: '#0d1117' },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
+        // Gestion du changement de langue
+        const btnLang = document.getElementById('btn-lang');
+        const elementsFr = document.querySelectorAll('.lang-fr');
+        const elementsEn = document.querySelectorAll('.lang-en');
+        let currentLang = 'fr';
 
-            // Exécuter la conversion
-            html2pdf().set(opt).from(element).save();
-        }
+        btnLang.addEventListener('click', () => {
+            if (currentLang === 'fr') {
+                elementsFr.forEach(el => el.style.display = 'none');
+                elementsEn.forEach(el => el.style.display = 'block');
+                currentLang = 'en';
+            } else {
+                elementsFr.forEach(el => el.style.display = 'block');
+                elementsEn.forEach(el => el.style.display = 'none');
+                currentLang = 'fr';
+            }
+        });
+
+        // Gestion du modal dictionnaire
+        const btnDict = document.getElementById('btn-dict');
+        const dictOverlay = document.getElementById('dictOverlay');
+        const closeDict = document.getElementById('closeDict');
+
+        btnDict.addEventListener('click', () => {
+            dictOverlay.style.display = 'flex';
+        });
+
+        closeDict.addEventListener('click', () => {
+            dictOverlay.style.display = 'none';
+        });
+
+        // Fermer le modal si on clique en dehors
+        window.addEventListener('click', (e) => {
+            if (e.target === dictOverlay) {
+                dictOverlay.style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>
