@@ -151,7 +151,8 @@
             box-shadow: -10px 0 30px rgba(0,0,0,0.5);
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: 20px;
+            overflow-y: auto;
         }
 
         .side-menu.open {
@@ -285,8 +286,36 @@
     <div class="side-menu-overlay" id="menuOverlay"></div>
     <div class="side-menu" id="sideMenu">
         <button class="close-menu-btn" id="menuCloseBtn"><i class="fa-solid fa-xmark"></i></button>
-        <div style="margin-top: 20px; text-center">
+        <div style="text-align: center;">
             <h4 style="color: white; font-size: 0.85rem;" class="font-black uppercase tracking-ultra data-lang" data-key="menu_title">Navigation Privée</h4>
+        </div>
+        
+        <div style="display: flex; flex-direction: column; gap: 10px; width: 100%; margin-top: 10px;">
+            <a href="explorer.html" class="btn-core" style="background: var(--agi-gold); color: var(--agi-navy); justify-content: center; font-size: 11px; padding: 12px;">
+                <i class="fa-solid fa-database"></i>
+                <span class="txt-xs font-black uppercase data-lang" data-key="leg_btn1">Registre Public AGI</span>
+            </a>
+            <a href="whitepaper.html" class="btn-core" style="background: rgba(255,255,255,0.05); color: white; border: 1px solid var(--border-glass); justify-content: center; font-size: 11px; padding: 12px;">
+                <i class="fa-solid fa-book-open" style="color: var(--agi-gold);"></i>
+                <span class="txt-xs font-black uppercase data-lang" data-key="leg_btn2">Livre Blanc V4.5 PDF</span>
+            </a>
+            <a href="legal.html" class="btn-core" style="background: var(--agi-azure); color: white; justify-content: center; font-size: 11px; padding: 12px;">
+                <i class="fa-solid fa-gavel"></i>
+                <span class="txt-xs font-black uppercase data-lang" data-key="leg_btn3">Déclarations Légales</span>
+            </a>
+            <a href="cgu.html" class="btn-core" style="background: var(--agi-crimson); color: white; justify-content: center; font-size: 11px; padding: 12px;">
+                <i class="fa-solid fa-file-contract"></i>
+                <span class="txt-xs font-black uppercase data-lang" data-key="leg_btn4">CGU d'Utilisation</span>
+            </a>
+            <a href="politique.html" class="btn-core" style="background: var(--agi-emerald); color: white; justify-content: center; font-size: 11px; padding: 12px;">
+                <i class="fa-solid fa-user-shield"></i>
+                <span class="txt-xs font-black uppercase data-lang" data-key="leg_btn5">Charte de Protection de la Confidentialité</span>
+            </a>
+            
+            <a href="https://agi-burkinaf.netlify.app/agi-business.pro.apk" class="btn-core flex-col" style="margin-top: 15px; background: #1e293b; color: white; border: 1px solid var(--agi-gold); padding: 15px; text-align: center; gap: 8px; border-radius: 14px;">
+                <i class="fa-brands fa-android" style="font-size: 20px; color: var(--agi-gold);"></i>
+                <span class="txt-xs font-black uppercase data-lang" data-key="apk_download_text" style="font-size: 10px; line-height: 1.4;">Télécharger le Terminal AGI Business Pro - Module APK.</span>
+            </a>
         </div>
     </div>
 
@@ -447,7 +476,7 @@
                 <div class="project-item" style="border-top: 4px solid var(--agi-azure);">
                     <div class="flex justify-between">
                         <span class="txt-xs font-black uppercase data-lang" data-key="inv_c1_tag">Contrat à Court Terme</span>
-                        <span class="roi-badge">+2.5% ROI / 30 Jours</span>
+                        <span class="roi-badge">+5% ROI / 30 Jours</span>
                     </div>
                     <h3 class="txt-md font-black data-lang" data-key="inv_c1_title" style="margin: 15px 0;">Cycle de Trésorerie Rapide</h3>
                     <p class="txt-xs data-lang" data-key="inv_c1_desc" style="color: #64748b; line-height: 1.6;">
@@ -457,7 +486,7 @@
                 <div class="project-item" style="border-top: 4px solid var(--agi-gold);">
                     <div class="flex justify-between">
                         <span class="txt-xs font-black uppercase data-lang" data-key="inv_c2_tag">Contrat Croissance Business</span>
-                        <span class="roi-badge">+8% ROI / 90 Jours</span>
+                        <span class="roi-badge">+10% ROI / 90 Jours</span>
                     </div>
                     <h3 class="txt-md font-black data-lang" data-key="inv_c2_title" style="margin: 15px 0;">Cycle de Financement Agricole</h3>
                     <p class="txt-xs data-lang" data-key="inv_c2_desc" style="color: #64748b; line-height: 1.6;">
@@ -467,7 +496,7 @@
                 <div class="project-item" style="border-top: 4px solid var(--agi-emerald);">
                     <div class="flex justify-between">
                         <span class="txt-xs font-black uppercase data-lang" data-key="inv_c3_tag">Contrat Souveraineté Industriel</span>
-                        <span class="roi-badge">+18% ROI / 180 Jours</span>
+                        <span class="roi-badge">+25% ROI / 180 Jours</span>
                     </div>
                     <h3 class="txt-md font-black data-lang" data-key="inv_c3_title" style="margin: 15px 0;">Cycle d'Infrastructure Majeure</h3>
                     <p class="txt-xs data-lang" data-key="inv_c3_desc" style="color: #64748b; line-height: 1.6;">
@@ -666,7 +695,7 @@
             <div style="padding: 20px 0; font-size: 0.72rem; color: #64748b; line-height: 1.5; border-bottom: 1px solid var(--border-glass);">
                 <p class="font-black uppercase data-lang" data-key="foot_warn_title" style="color: var(--agi-gold); margin-bottom: 5px;"><i class="fa-solid fa-triangle-exclamation"></i> Clause Légale Obligatoire de Prévention, de Limitation des Risques et d'Accompagnement</p>
                 <p class="data-lang" data-key="foot_warn_desc">
-                    La participation aux modules de prédiction, de paris sportifs et de divertissement monétisés comporte des risques financiers et psychologiques importants, notamment le surendettement, l'isolement social progressif et le développement d'une dépendance pathologique. Pour obtenir des conseils de modération ou une assistance technique dédiée, veuillez contacter sans délai les canaux d'écoute client certifiés d'Atlas Groupe International. Jouez de façon responsable, raisonnable et prudente. L'accès aux plateformes de jeux d'argent est strictement interdit aux personnes mineures selon la législation nationale.
+                    La participation aux modules de prédiction, de paris sportifs et de divertissement monétisés comporte des risques financiers et psychologiques importants, notamment le surendettement, l'isolement social progressif et le développement d'une dépendance pathologique. Pour obtenir des conseils de modération ou une assistance technique dédiée, veuillez contacter sans délai les canaux d'écoute client certifiés d'Atlas Groupe International. Jouez de façon responsable, raisonnable et prudente. L'accès aux plateformes de jeux d'argent est strictly interdit aux personnes mineures selon la législation nationale.
                 </p>
             </div>
 
@@ -688,21 +717,17 @@
             static async generateKey() {
                 return await window.crypto.subtle.generateKey(
                     { name: "AES-GCM", length: 256 },
-                    true, // Extractable (utile si besoin d'exporter/sauvegarder la clé)
+                    true, // Extractable (utile si besoin d'export/sauvegarde)
                     ["encrypt", "decrypt"]
                 );
             }
 
             /**
              * Chiffre une chaîne de caractères
-             * @param {string} text - Le texte brut à chiffrer
-             * @param {CryptoKey} key - La clé de chiffrement générée
-             * @returns {Promise<string>} - La chaîne chiffrée codée en Base64
              */
             static async encrypt(text, key) {
                 const encoder = new TextEncoder();
                 const data = encoder.encode(text);
-                // Générer un vecteur d'initialisation aléatoire cryptographiquement sûr (12 octets)
                 const iv = window.crypto.getRandomValues(new Uint8Array(12));
                 
                 const cipherBuffer = await window.crypto.subtle.encrypt(
@@ -711,21 +736,16 @@
                     data
                 );
                 
-                // Concaténation de l'IV et des données chiffrées pour faciliter le stockage
                 const cipherBytes = new Uint8Array(cipherBuffer);
                 const combinedResult = new Uint8Array(iv.length + cipherBytes.length);
                 combinedResult.set(iv, 0);
                 combinedResult.set(cipherBytes, iv.length);
                 
-                // Conversion en Base64 pour manipulation facile
                 return btoa(String.fromCharCode(...combinedResult));
             }
 
             /**
              * Déchiffre une chaîne chiffrée par cette classe
-             * @param {string} base64Cipher - La chaîne chiffrée en Base64
-             * @param {CryptoKey} key - La clé de déchiffrement
-             * @returns {Promise<string>} - Le texte brut déchiffré
              */
             static async decrypt(base64Cipher, key) {
                 const binaryStr = atob(base64Cipher);
@@ -734,7 +754,6 @@
                     bytes[i] = binaryStr.charCodeAt(i);
                 }
                 
-                // Extraction de l'IV (les 12 premiers octets) et du message chiffré
                 const iv = bytes.slice(0, 12);
                 const data = bytes.slice(12);
                 
@@ -750,8 +769,6 @@
         }
         
         // --- GESTION DU CHARGEUR GLOBAL (Initialisation Terminée) ---
-        // Exécution stricte : le chargeur se dissimule uniquement lorsque l'intégralité 
-        // de la page HTML et de ses dépendances est prête.
         window.addEventListener('load', function() {
             const loader = document.getElementById('agi-global-loader');
             if (loader) {
