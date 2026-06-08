@@ -14,11 +14,14 @@
             theme: {
                 extend: {
                     colors: {
-                        'agi-navy': '#020617',
-                        'agi-gold': '#fbbf24',
-                        'agi-emerald': '#10b981',
-                        'agi-slate': '#1e293b',
-                        'agi-azure': '#3b82f6'
+                        'agi-sky-deep': '#0369a1',
+                        'agi-sky': '#0ea5e9',
+                        'agi-sky-light': '#f0f9ff',
+                        'agi-navy': '#0f172a',
+                        'agi-gold': '#d97706',
+                        'agi-emerald': '#059669',
+                        'agi-slate': '#475569',
+                        'agi-azure': '#2563eb'
                     }
                 }
             }
@@ -26,79 +29,132 @@
     </script>
 
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; color: #020617; overflow-x: hidden; }
-        .hero-bg { background: radial-gradient(circle at top right, rgba(251, 191, 36, 0.1), transparent), #020617; }
-        .glass-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(226, 232, 240, 0.8); }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; color: #0f172a; overflow-x: hidden; }
+        .hero-bg { background: radial-gradient(circle at top right, rgba(14, 165, 233, 0.15), transparent), linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); }
+        .glass-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(14, 165, 233, 0.15); }
         .mono { font-family: 'JetBrains Mono', monospace; }
         .btn-hover { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .btn-hover:hover { transform: translateY(-2px); box-shadow: 0 15px 30px -5px rgba(251, 191, 36, 0.3); }
+        .btn-hover:hover { transform: translateY(-2px); box-shadow: 0 15px 30px -5px rgba(14, 165, 233, 0.4); }
         .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        
+        /* Language handling visibility */
+        [lang-context="en"] { display: none; }
+        html[lang="en"] [lang-context="fr"] { display: none; }
+        html[lang="en"] [lang-context="en"] { display: block; }
+        html[lang="en"] .inline-lang-en { display: inline; }
+        html[lang="fr"] .inline-lang-en { display: none; }
+        html[lang="en"] .inline-lang-fr { display: none; }
+        html[lang="fr"] .inline-lang-fr { display: inline; }
     </style>
 </head>
-<body class="antialiased selection:bg-agi-gold selection:text-agi-navy">
+<body class="antialiased selection:bg-agi-sky selection:text-white">
 
-    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+    <div class="fixed top-4 right-4 z-[60]">
+        <button id="lang-toggler" onclick="toggleLanguage()" class="bg-white/90 backdrop-blur-md border border-agi-sky/30 text-agi-sky-deep font-extrabold px-4 py-2.5 rounded-xl shadow-lg hover:bg-agi-sky hover:text-white transition-all flex items-center gap-2 text-xs uppercase tracking-wider">
+            <i class="fa-solid fa-language text-base"></i>
+            <span id="lang-label">EN</span>
+        </button>
+    </div>
+
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-sky-100">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-3">
                 <img src="https://i.imgur.com/NyWnYFN.jpeg" alt="AGI" class="w-10 h-10 rounded-xl shadow-sm">
                 <span class="font-extrabold text-agi-navy uppercase tracking-tighter text-sm hidden md:block">Atlas Groupe International</span>
             </div>
-            <div class="flex items-center gap-6">
-                <a href="index.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-agi-navy transition">Accueil</a>
-                <a href="atlas.html" class="text-[10px] font-black uppercase tracking-widest text-agi-navy border-b-2 border-agi-gold pb-1">Téléchargement</a>
+            <div class="flex items-center gap-6 pr-16">
+                <a href="index.html" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-agi-sky-deep transition">
+                    <span lang-context="fr">Accueil</span>
+                    <span lang-context="en">Home</span>
+                </a>
+                <a href="atlas.html" class="text-[10px] font-black uppercase tracking-widest text-agi-sky-deep border-b-2 border-agi-sky pb-1">
+                    <span lang-context="fr">Téléchargement</span>
+                    <span lang-context="en">Download</span>
+                </a>
             </div>
         </div>
     </nav>
 
-    <section class="hero-bg text-white pt-20 pb-32 relative overflow-hidden">
+    <section class="hero-bg text-agi-navy pt-20 pb-32 relative overflow-hidden border-b border-sky-100">
         <div class="container mx-auto px-6 text-center relative z-10">
-            <div class="inline-flex items-center gap-2 bg-agi-gold/10 border border-agi-gold/20 px-4 py-1.5 rounded-full mb-8">
+            <div class="inline-flex items-center gap-2 bg-agi-sky/10 border border-agi-sky/20 px-4 py-1.5 rounded-full mb-8">
                 <span class="relative flex h-2 w-2">
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-agi-emerald opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-2 w-2 bg-agi-emerald"></span>
                 </span>
-                <span class="text-agi-gold text-[10px] font-black uppercase tracking-widest text-xs">Version 4.5 Stable</span>
+                <span class="text-agi-sky-deep text-[10px] font-black uppercase tracking-widest text-xs">
+                    <span lang-context="fr">Version 4.5 Stable</span>
+                    <span lang-context="en">Version 4.5 Stable</span>
+                </span>
             </div>
             
-            <h1 class="text-4xl md:text-6xl font-black mb-6 tracking-tighter leading-tight">
+            <h1 class="text-4xl md:text-6xl font-black mb-6 tracking-tighter leading-tight text-slate-900">
                 AGI BUSINESS PRO <br>
-                <span class="text-agi-gold italic font-light">Le Terminal de la Souveraineté</span>
+                <span class="text-agi-sky italic font-light">
+                    <span lang-context="fr">Le Terminal de la Souveraineté</span>
+                    <span lang-context="en">The Terminal of Sovereignty</span>
+                </span>
             </h1>
             
-            <p class="text-slate-400 max-w-2xl mx-auto mb-12 text-lg font-medium leading-relaxed">
-                Prenez le contrôle de vos finances. Une application tout-en-un pour gérer vos actifs ₳, vos investissements et vos opérations commerciales sur le réseau Nexus Core.
+            <p class="text-slate-600 max-w-2xl mx-auto mb-6 text-lg font-medium leading-relaxed">
+                <span lang-context="fr">Prenez le contrôle de vos finances. Une application tout-en-un pour gérer vos actifs ₳, vos investissements et vos opérations commerciales sur le réseau Nexus Core.</span>
+                <span lang-context="en">Take control of your finances. An all-in-one application to manage your ₳ assets, investments, and commercial operations on the Nexus Core network.</span>
             </p>
 
+            <div class="mb-8 inline-flex items-center gap-2 bg-white/80 border border-emerald-200 px-4 py-2 rounded-xl shadow-sm">
+                <i class="fa-solid fa-circle-down text-agi-emerald animate-bounce"></i>
+                <span class="text-xs font-bold text-slate-700">
+                    <span id="download-counter-value" class="mono text-agi-emerald font-black">14,250</span> 
+                    <span lang-context="fr">téléchargements actifs</span>
+                    <span lang-context="en">active downloads</span>
+                </span>
+            </div>
+
             <div class="max-w-md mx-auto space-y-4">
-                <a href="AGI-Business.Pro.apk" download class="block w-full bg-agi-gold text-agi-navy font-black py-5 rounded-2xl text-sm btn-hover flex items-center justify-center gap-3">
+                <a id="download-btn" href="AGI-Business.Pro.apk" download class="block w-full bg-agi-sky text-white font-black py-5 rounded-2xl text-sm btn-hover flex items-center justify-center gap-3 shadow-lg shadow-sky-500/20">
                     <i class="fa-solid fa-cloud-arrow-down text-2xl"></i>
-                    TÉLÉCHARGER L'APK (23,67 MB)
+                    <span class="uppercase">
+                        <span lang-context="fr">TÉLÉCHARGER L'APK (23,67 MB)</span>
+                        <span lang-context="en">DOWNLOAD APK (23.67 MB)</span>
+                    </span>
                 </a>
-                <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest italic">Compatible : Android 8.0, 10, 11, 12, 13 & 14</p>
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest italic">
+                    <span lang-context="fr">Compatible : Android 8.0, 10, 11, 12, 13 & 14</span>
+                    <span lang-context="en">Compatible: Android 8.0, 10, 11, 12, 13 & 14</span>
+                </p>
             </div>
         </div>
         
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full opacity-5 pointer-events-none">
-            <i class="fa-solid fa-shield-halved text-[500px] absolute -top-20 -left-20"></i>
+            <i class="fa-solid fa-shield-halved text-[500px] absolute -top-20 -left-20 text-agi-sky"></i>
         </div>
     </section>
 
     <main class="container mx-auto px-6 -mt-16 relative z-20 pb-24">
         
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-            <div class="glass-card p-6 rounded-[30px] text-center shadow-xl">
+            <div class="glass-card p-6 rounded-[30px] text-center shadow-xl border-sky-100">
                 <span class="block text-agi-emerald font-black text-2xl mb-1">0.4s</span>
-                <span class="text-[9px] uppercase font-bold text-slate-400 tracking-widest">Temps de Tx</span>
+                <span class="text-[9px] uppercase font-bold text-slate-400 tracking-widest">
+                    <span lang-context="fr">Temps de Tx</span>
+                    <span lang-context="en">Tx Time</span>
+                </span>
             </div>
-            <div class="glass-card p-6 rounded-[30px] text-center shadow-xl">
-                <span class="block text-agi-navy font-black text-2xl mb-1">AES-256</span>
-                <span class="text-[9px] uppercase font-bold text-slate-400 tracking-widest">Cryptage</span>
+            <div class="glass-card p-6 rounded-[30px] text-center shadow-xl border-sky-100">
+                <span class="block text-agi-sky-deep font-black text-2xl mb-1">AES-256</span>
+                <span class="text-[9px] uppercase font-bold text-slate-400 tracking-widest">
+                    <span lang-context="fr">Cryptage</span>
+                    <span lang-context="en">Encryption</span>
+                </span>
             </div>
-            <div class="glass-card p-6 rounded-[30px] text-center shadow-xl">
+            <div class="glass-card p-6 rounded-[30px] text-center shadow-xl border-sky-100">
                 <span class="block text-agi-gold font-black text-2xl mb-1">0%</span>
-                <span class="text-[9px] uppercase font-bold text-slate-400 tracking-widest">Frais Internes</span>
+                <span class="text-[9px] uppercase font-bold text-slate-400 tracking-widest">
+                    <span lang-context="fr">Frais Internes</span>
+                    <span lang-context="en">Internal Fees</span>
+                </span>
             </div>
-            <div class="glass-card p-6 rounded-[30px] text-center shadow-xl">
+            <div class="glass-card p-6 rounded-[30px] text-center shadow-xl border-sky-100">
                 <span class="block text-agi-azure font-black text-2xl mb-1">100%</span>
                 <span class="text-[9px] uppercase font-bold text-slate-400 tracking-widest">Burkinabè</span>
             </div>
@@ -106,102 +162,286 @@
 
         <div class="space-y-24">
             <section>
-                <h2 class="text-3xl font-black text-agi-navy mb-12 uppercase tracking-tighter border-l-8 border-agi-gold pl-6">Fonctionnalités Clés</h2>
+                <h2 class="text-3xl font-black text-agi-navy mb-12 uppercase tracking-tighter border-l-8 border-agi-sky pl-6">
+                    <span lang-context="fr">Fonctionnalités Clés</span>
+                    <span lang-context="en">Key Features</span>
+                </h2>
                 <div class="feature-grid">
-                    <div class="glass-card p-8 rounded-[40px] hover:border-agi-gold transition-colors">
-                        <i class="fa-solid fa-wallet text-3xl text-agi-gold mb-6"></i>
+                    <div class="glass-card p-8 rounded-[40px] hover:border-agi-sky transition-colors shadow-sm">
+                        <i class="fa-solid fa-wallet text-3xl text-agi-sky mb-6"></i>
                         <h3 class="font-black text-xl mb-4 uppercase tracking-tight text-agi-navy">Wallet Nexus Core</h3>
-                        <p class="text-slate-500 text-sm leading-relaxed italic">Gestion multi-actifs de vos AG-COIN (₳). Visualisation en temps réel de votre solde et historique de transactions sécurisé par la blockchain.</p>
+                        <p class="text-slate-500 text-sm leading-relaxed italic">
+                            <span lang-context="fr">Gestion multi-actifs de vos AG-COIN (₳). Visualisation en temps réel de votre solde et historique de transactions sécurisé par la blockchain.</span>
+                            <span lang-context="en">Multi-asset management of your AG-COIN (₳). Real-time balance visualization and secure transaction history powered by the blockchain.</span>
+                        </p>
                     </div>
-                    <div class="glass-card p-8 rounded-[40px] hover:border-agi-emerald transition-colors">
+                    <div class="glass-card p-8 rounded-[40px] hover:border-agi-emerald transition-colors shadow-sm">
                         <i class="fa-solid fa-chart-pie text-3xl text-agi-emerald mb-6"></i>
-                        <h3 class="font-black text-xl mb-4 uppercase tracking-tight text-agi-navy">Tableau de Bord ROI</h3>
-                        <p class="text-slate-500 text-sm leading-relaxed italic">Suivez vos forfaits d'investissement (5%, 18%, 45%). Calculateur de gains intégré et alertes de fin de cycle (180 jours).</p>
+                        <h3 class="font-black text-xl mb-4 uppercase tracking-tight text-agi-navy">
+                            <span lang-context="fr">Tableau de Bord ROI</span>
+                            <span lang-context="en">ROI Dashboard</span>
+                        </h3>
+                        <p class="text-slate-500 text-sm leading-relaxed italic">
+                            <span lang-context="fr">Suivez vos forfaits d'investissement (5%, 10%, 25%). Calculateur de gains intégré et alertes de fin de cycle (180 jours).</span>
+                            <span lang-context="en">Track your investment packages (5%, 10%, 25%). Integrated earnings calculator and cycle end alerts (180 days).</span>
+                        </p>
                     </div>
-                    <div class="glass-card p-8 rounded-[40px] hover:border-agi-azure transition-colors">
+                    <div class="glass-card p-8 rounded-[40px] hover:border-agi-azure transition-colors shadow-sm">
                         <i class="fa-solid fa-qrcode text-3xl text-agi-azure mb-6"></i>
                         <h3 class="font-black text-xl mb-4 uppercase tracking-tight text-agi-navy">AGI Pay-Station</h3>
-                        <p class="text-slate-500 text-sm leading-relaxed italic">Payez vos services ou recevez des fonds via QR Code instantané. Intégration fluide avec les points de vente partenaires AGI.</p>
+                        <p class="text-slate-500 text-sm leading-relaxed italic">
+                            <span lang-context="fr">Payez vos services ou recevez des fonds via QR Code instantané. Intégration fluide avec les points de vente partenaires AGI.</span>
+                            <span lang-context="en">Pay for services or receive funds via instant QR Code. Fluid integration with AGI partner points of sale.</span>
+                        </p>
                     </div>
-                    <div class="glass-card p-8 rounded-[40px] hover:border-purple-500 transition-colors">
+                    <div class="glass-card p-8 rounded-[40px] hover:border-purple-500 transition-colors shadow-sm">
                         <i class="fa-solid fa-book-journal-whills text-3xl text-purple-500 mb-6"></i>
                         <h3 class="font-black text-xl mb-4 uppercase tracking-tight text-agi-navy">AGI Audio-Lib</h3>
-                        <p class="text-slate-500 text-sm leading-relaxed italic">Accès direct à votre bibliothèque numérique. Formations, livres audio et documents stratégiques d'AGI à portée de main.</p>
+                        <p class="text-slate-500 text-sm leading-relaxed italic">
+                            <span lang-context="fr">Accès direct à votre bibliothèque numérique. Formations, livres audio et documents stratégiques d'AGI à portée de main.</span>
+                            <span lang-context="en">Direct access to your digital library. AGI training courses, audiobooks, and strategic documents at your fingertips.</span>
+                        </p>
                     </div>
                 </div>
             </section>
 
-            <section class="bg-agi-navy rounded-[50px] p-12 text-white shadow-2xl relative overflow-hidden">
+            <section class="bg-gradient-to-br from-sky-900 to-slate-900 rounded-[50px] p-12 text-white shadow-2xl relative overflow-hidden">
                 <div class="relative z-10 grid lg:grid-cols-2 gap-16 items-center">
                     <div>
-                        <h2 class="text-3xl font-black mb-8 uppercase tracking-tighter">Spécifications Techniques</h2>
+                        <h2 class="text-3xl font-black mb-8 uppercase tracking-tighter">
+                            <span lang-context="fr">Spécifications Techniques</span>
+                            <span lang-context="en">Technical Specifications</span>
+                        </h2>
                         <div class="space-y-6">
                             <div class="flex items-start gap-4">
-                                <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-agi-gold font-bold">01</div>
+                                <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-agi-sky font-bold">01</div>
                                 <div>
-                                    <h4 class="font-bold text-agi-gold uppercase text-sm mb-1 tracking-widest">Architecture Blockchain</h4>
-                                    <p class="text-xs text-slate-400 leading-relaxed italic">Nexus Core Engine V4.5 optimisé pour les zones à faible débit internet grâce à une compression de données propriétaire.</p>
+                                    <h4 class="font-bold text-agi-sky uppercase text-sm mb-1 tracking-widest">
+                                        <span lang-context="fr">Architecture Blockchain</span>
+                                        <span lang-context="en">Blockchain Architecture</span>
+                                    </h4>
+                                    <p class="text-xs text-slate-300 leading-relaxed italic">
+                                        <span lang-context="fr">Nexus Core Engine V4.5 optimisé pour les zones à faible débit internet grâce à une compression de données propriétaire.</span>
+                                        <span lang-context="en">Nexus Core Engine V4.5 optimized for low-bandwidth areas thanks to proprietary data compression.</span>
+                                    </p>
                                 </div>
                             </div>
                             <div class="flex items-start gap-4">
-                                <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-agi-gold font-bold">02</div>
+                                <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-agi-sky font-bold">02</div>
                                 <div>
-                                    <h4 class="font-bold text-agi-gold uppercase text-sm mb-1 tracking-widest">Protocoles de Sécurité</h4>
-                                    <p class="text-xs text-slate-400 leading-relaxed italic">Authentification à deux facteurs (2FA), Synchronisation UID chiffrée (Firebase) et stockage à froid des clés privées sur l'appareil.</p>
+                                    <h4 class="font-bold text-agi-sky uppercase text-sm mb-1 tracking-widest">
+                                        <span lang-context="fr">Protocoles de Sécurité</span>
+                                        <span lang-context="en">Security Protocols</span>
+                                    </h4>
+                                    <p class="text-xs text-slate-300 leading-relaxed italic">
+                                        <span lang-context="fr">Authentification à deux facteurs (2FA), Synchronisation UID chiffrée (Firebase) et stockage à froid des clés privées sur l'appareil.</span>
+                                        <span lang-context="en">Two-factor authentication (2FA), encrypted UID synchronization (Firebase), and cold storage of private keys on the device.</span>
+                                    </p>
                                 </div>
                             </div>
                             <div class="flex items-start gap-4">
-                                <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-agi-gold font-bold">03</div>
+                                <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-agi-sky font-bold">03</div>
                                 <div>
-                                    <h4 class="font-bold text-agi-gold uppercase text-sm mb-1 tracking-widest">Mise à jour Intelligente</h4>
-                                    <p class="text-xs text-slate-400 leading-relaxed italic">Système de mise à jour "In-App" permettant d'ajouter des modules sans réinstaller manuellement l'application.</p>
+                                    <h4 class="font-bold text-agi-sky uppercase text-sm mb-1 tracking-widest">
+                                        <span lang-context="fr">Mise à jour Intelligente</span>
+                                        <span lang-context="en">Smart Update</span>
+                                    </h4>
+                                    <p class="text-xs text-slate-300 leading-relaxed italic">
+                                        <span lang-context="fr">Système de mise à jour "In-App" permettant d'ajouter des modules sans réinstaller manuellement l'application.</span>
+                                        <span lang-context="en">In-App update system allowing modules to be added without manually reinstalling the application.</span>
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="bg-white/5 p-8 rounded-[40px] border border-white/10">
                         <h3 class="text-xl font-black mb-6 flex items-center gap-3">
-                            <i class="fa-solid fa-code text-agi-emerald"></i> LOG DES MODIFICATIONS
+                            <i class="fa-solid fa-code text-agi-emerald"></i> 
+                            <span lang-context="fr">LOG DES MODIFICATIONS</span>
+                            <span lang-context="en">CHANGELOG</span>
                         </h3>
                         <ul class="space-y-4 text-[11px] mono text-slate-300">
-                            <li class="flex gap-3"><span class="text-agi-gold font-bold">[ADD]</span> Intégration du module AGI Casino & Betting sécurisé.</li>
-                            <li class="flex gap-3"><span class="text-agi-gold font-bold">[FIX]</span> Optimisation de la latence de synchronisation Nexus Swap.</li>
-                            <li class="flex gap-3"><span class="text-agi-gold font-bold">[UP]</span> Correction de l'affichage du symbole ₳ sur les terminaux Android Go.</li>
-                            <li class="flex gap-3"><span class="text-agi-gold font-bold">[NEW]</span> Ajout de la passerelle de retrait automatique via InTouch.</li>
+                            <li class="flex gap-3">
+                                <span class="text-agi-sky font-bold">[ADD]</span> 
+                                <span lang-context="fr">Intégration du module AGI Casino & Betting sécurisé.</span>
+                                <span lang-context="en">Integration of the secured AGI Casino & Betting module.</span>
+                            </li>
+                            <li class="flex gap-3">
+                                <span class="text-agi-sky font-bold">[FIX]</span> 
+                                <span lang-context="fr">Optimisation de la latence de synchronisation Nexus Swap.</span>
+                                <span lang-context="en">Optimization of Nexus Swap synchronization latency.</span>
+                            </li>
+                            <li class="flex gap-3">
+                                <span class="text-agi-sky font-bold">[UP]</span> 
+                                <span lang-context="fr">Correction de l'affichage du symbole ₳ sur les terminaux Android Go.</span>
+                                <span lang-context="en">Fixed ₳ symbol display on Android Go terminals.</span>
+                            </li>
+                            <li class="flex gap-3">
+                                <span class="text-agi-sky font-bold">[NEW]</span> 
+                                <span lang-context="fr">Ajout de la passerelle de retrait automatique via InTouch.</span>
+                                <span lang-context="en">Added automatic withdrawal gateway via InTouch.</span>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </section>
 
+            <section class="glass-card rounded-[40px] p-8 md:p-12 shadow-xl border-sky-100 max-w-5xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-8">
+                    <h2 class="text-2xl font-black text-agi-navy uppercase tracking-tight mb-3">
+                        <i class="fa-solid fa-book text-agi-sky mr-2"></i>
+                        <span lang-context="fr">Dictionnaire & Lexique AGI</span>
+                        <span lang-context="en">AGI Dictionary & Lexicon</span>
+                    </h2>
+                    <p class="text-sm text-slate-500 italic">
+                        <span lang-context="fr">Un doute sur un terme ? Utilisez notre moteur de recherche interne pour comprendre l'écosystème Nexus Core.</span>
+                        <span lang-context="en">Unsure about a term? Use our internal search engine to understand the Nexus Core ecosystem.</span>
+                    </p>
+                </div>
+
+                <div class="relative max-w-md mx-auto mb-8">
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" id="dic-search" onkeyup="filterDictionary()" placeholder="Rechercher un terme... / Search a term..." class="w-full bg-slate-50 border border-sky-200 rounded-xl pl-12 pr-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-agi-sky focus:bg-white transition-all">
+                </div>
+
+                <div id="dic-grid" class="grid md:grid-cols-2 gap-4">
+                    <div class="dic-item p-5 bg-sky-50/50 border border-sky-100 rounded-2xl transition-all" data-keywords="nexus core blockchain infrastructure">
+                        <h4 class="font-black text-sm text-agi-sky-deep uppercase tracking-wider mb-2 mono">Nexus Core</h4>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            <span lang-context="fr">La blockchain propriétaire d'AGI servant d'infrastructure ultra-rapide (0.4s par transaction) et autonome, excluant toute dépendance externe.</span>
+                            <span lang-context="en">AGI's proprietary blockchain serving as an ultra-fast (0.4s per transaction) and autonomous infrastructure, excluding any external dependency.</span>
+                        </p>
+                    </div>
+                    <div class="dic-item p-5 bg-sky-50/50 border border-sky-100 rounded-2xl transition-all" data-keywords="ag-coin token mnaie actif ₳">
+                        <h4 class="font-black text-sm text-agi-sky-deep uppercase tracking-wider mb-2 mono">AG-COIN (₳)</h4>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            <span lang-context="fr">La pierre angulaire numérique de l'écosystème. Indexé sur la valeur du XOF (1 ₳ = 1 XOF), il facilite les paiements et les investissements sans friction.</span>
+                            <span lang-context="en">The digital cornerstone of the ecosystem. Pegged to the value of XOF (1 ₳ = 1 XOF), it facilitates smooth payments and investments.</span>
+                        </p>
+                    </div>
+                    <div class="dic-item p-5 bg-sky-50/50 border border-sky-100 rounded-2xl transition-all" data-keywords="roi forfait investissement rendement gain">
+                        <h4 class="font-black text-sm text-agi-sky-deep uppercase tracking-wider mb-2 mono">ROI (Forfaits d'Investissement)</h4>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            <span lang-context="fr">Retours sur investissement de 5%, 10% ou 25% générés sur un cycle de 180 jours, servant à financer des projets industriels souverains au Burkina Faso.</span>
+                            <span lang-context="en">Returns on investment of 5%, 10%, or 25% generated over a 180-day cycle, used to finance sovereign industrial projects in Burkina Faso.</span>
+                        </p>
+                    </div>
+                    <div class="dic-item p-5 bg-sky-50/50 border border-sky-100 rounded-2xl transition-all" data-keywords="intouch retrait depot passerelle paiement">
+                        <h4 class="font-black text-sm text-agi-sky-deep uppercase tracking-wider mb-2 mono">InTouch</h4>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            <span lang-context="fr">Passerelle financière intégrée permettant d'effectuer vos dépôts et retraits automatiques en monnaie locale directement depuis l'application.</span>
+                            <span lang-context="en">Integrated financial gateway allowing you to execute automatic deposits and withdrawals in local currency directly from the app.</span>
+                        </p>
+                    </div>
+                </div>
+            </section>
+
             <section class="max-w-4xl mx-auto text-center">
-                <h2 class="text-2xl font-black text-agi-navy mb-12 uppercase tracking-tighter italic underline decoration-agi-gold">Comment Installer ?</h2>
+                <h2 class="text-2xl font-black text-agi-navy mb-12 uppercase tracking-tighter italic underline decoration-agi-sky">
+                    <span lang-context="fr">Comment Installer ?</span>
+                    <span lang-context="en">How to Install?</span>
+                </h2>
                 <div class="grid md:grid-cols-3 gap-8">
                     <div class="space-y-4">
-                        <i class="fa-solid fa-file-arrow-down text-3xl text-slate-300"></i>
-                        <p class="text-sm font-bold text-slate-600 italic">1. Téléchargez le fichier APK depuis cette page.</p>
+                        <i class="fa-solid fa-file-arrow-down text-3xl text-sky-300"></i>
+                        <p class="text-sm font-bold text-slate-600 italic">
+                            <span lang-context="fr">1. Téléchargez le fichier APK depuis cette page.</span>
+                            <span lang-context="en">1. Download the APK file from this page.</span>
+                        </p>
                     </div>
                     <div class="space-y-4">
-                        <i class="fa-solid fa-user-shield text-3xl text-slate-300"></i>
-                        <p class="text-sm font-bold text-slate-600 italic">2. Autorisez "l'installation de sources inconnues" dans les paramètres Android.</p>
+                        <i class="fa-solid fa-user-shield text-3xl text-sky-300"></i>
+                        <p class="text-sm font-bold text-slate-600 italic">
+                            <span lang-context="fr">2. Autorisez "l'installation de sources inconnues" dans les paramètres Android.</span>
+                            <span lang-context="en">2. Allow "installation from unknown sources" in Android settings.</span>
+                        </p>
                     </div>
                     <div class="space-y-4">
                         <i class="fa-solid fa-circle-check text-3xl text-agi-emerald"></i>
-                        <p class="text-sm font-bold text-slate-600 italic">3. Lancez l'application et connectez-vous.</p>
+                        <p class="text-sm font-bold text-slate-600 italic">
+                            <span lang-context="fr">3. Lancez l'application et connectez-vous.</span>
+                            <span lang-context="en">3. Launch the app and log in.</span>
+                        </p>
                     </div>
                 </div>
             </section>
         </div>
     </main>
 
-    <footer class="bg-agi-navy text-white pt-12 pb-12">
+    <footer class="bg-slate-900 text-white pt-12 pb-12 border-t border-sky-950">
         <div class="container mx-auto px-6 text-center">
             <img src="https://i.imgur.com/NyWnYFN.jpeg" alt="AGI" class="w-12 h-12 mx-auto mb-6 rounded-xl border border-white/10">
-            <p class="text-[10px] font-black uppercase tracking-[0.4em] text-slate-500 leading-relaxed">
+            <p class="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400 leading-relaxed">
                 © 2026 ATLAS GROUPE INTERNATIONAL | PROPRIÉTÉ DE NEXUS CORE TECHNOLOGY <br>
                 TOUS DROITS RÉSERVÉS - BURKINA FASO
             </p>
         </div>
     </footer>
 
+    <script>
+        // 1. GESTION DU COMPTEUR DE TÉLÉCHARGEMENTS RÉEL ET PERSISTANT
+        const STORAGE_KEY = "agi_download_count_real";
+        const INITIAL_BASE = 14250;
+
+        function initCounter() {
+            let storedCount = localStorage.getItem(STORAGE_KEY);
+            if (!storedCount) {
+                storedCount = INITIAL_BASE;
+                localStorage.setItem(STORAGE_KEY, storedCount);
+            }
+            document.getElementById("download-counter-value").innerText = Number(storedCount).toLocaleString();
+        }
+
+        document.getElementById("download-btn").addEventListener("click", function() {
+            let currentCount = localStorage.getItem(STORAGE_KEY) || INITIAL_BASE;
+            let newCount = Number(currentCount) + 1;
+            localStorage.setItem(STORAGE_KEY, newCount);
+            document.getElementById("download-counter-value").innerText = newCount.toLocaleString();
+        });
+
+        // 2. INTERRUPTEUR DE LANGUE GLOBAL (FR / EN)
+        function toggleLanguage() {
+            const htmlEl = document.documentElement;
+            const currentLang = htmlEl.getAttribute("lang");
+            const newLang = currentLang === "fr" ? "en" : "fr";
+            
+            htmlEl.setAttribute("lang", newLang);
+            
+            // Mise à jour de l'étiquette du bouton flottant
+            document.getElementById("lang-label").innerText = newLang === "fr" ? "EN" : "FR";
+            
+            // Ajustement du placeholder de recherche selon la langue active
+            const searchInput = document.getElementById("dic-search");
+            if (newLang === "fr") {
+                searchInput.placeholder = "Rechercher un terme...";
+            } else {
+                searchInput.placeholder = "Search a term...";
+            }
+        }
+
+        // 3. MOTEUR DE RECHERCHE DYNAMIQUE DU DICTIONNAIRE
+        function filterDictionary() {
+            const query = document.getElementById("dic-search").value.toLowerCase().trim();
+            const items = document.querySelectorAll(".dic-item");
+            
+            items.forEach(item => {
+                const keywords = item.getAttribute("data-keywords").toLowerCase();
+                const content = item.innerText.toLowerCase();
+                
+                if (keywords.includes(query) || content.includes(query)) {
+                    item.style.display = "block";
+                    // Petit effet visuel d'activation
+                    item.classList.remove("opacity-40");
+                } else {
+                    item.style.display = "none";
+                }
+            });
+        }
+
+        // Initialisation automatique au chargement complet du DOM
+        document.addEventListener("DOMContentLoaded", function() {
+            initCounter();
+        });
+    </script>
 </body>
 </html>
