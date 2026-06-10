@@ -276,7 +276,7 @@
     </div>
 
     <div id="quickAccess" class="fixed-access-btn">
-        <a href="./agi-business.pro.apk" class="btn-core" style="background: var(--agi-gold); color: var(--agi-navy); padding: 15px 30px; border-radius: 50px; font-size: 12px; box-shadow: 0 10px 30px rgba(245,158,11,0.4);">
+        <a href="./agi-business.pro.apk" id="openTerminalBtn" class="btn-core" style="background: var(--agi-gold); color: var(--agi-navy); padding: 15px 30px; border-radius: 50px; font-size: 12px; box-shadow: 0 10px 30px rgba(245,158,11,0.4);">
             <i class="fa-solid fa-right-to-bracket"></i> <span class="data-lang" data-key="btn_terminal">OUVRIR LE TERMINAL UNIFIÉ</span>
         </a>
     </div>
@@ -610,7 +610,7 @@
                             <span class="txt-xs font-black uppercase data-lang" data-key="leg_btn5">Charte de Protection de la Confidentialité</span>
                         </a>
                     </div>
-                    <a href="atlas.html" class="btn-core" style="width: 100%; margin-top: 15px; background: #e0f2fe; color: var(--agi-navy); border: 2px solid var(--agi-azure); padding: 20px; justify-content: center; border-radius: 20px;">
+                    <a href="./agi-business.pro.apk" id="openTerminalBtnBottom" class="btn-core" style="width: 100%; margin-top: 15px; background: #e0f2fe; color: var(--agi-navy); border: 2px solid var(--agi-azure); padding: 20px; justify-content: center; border-radius: 20px;">
                         <div class="text-center">
                             <i class="fa-brands fa-android" style="font-size: 24px; display: block; margin-bottom: 5px;"></i>
                             <span class="txt-xs font-black uppercase tracking-ultra data-lang" data-key="apk_download_text">Accedez au Terminal AGI Business Pro</span>
@@ -969,6 +969,49 @@
             // Initialisation de la langue par défaut (fr)
             updateLanguage('fr');
         });
+
+        // ==========================================
+        // Logique de Détection & Deep Linking pour le Terminal AGI
+        // ==========================================
+        function handleAppDeepLink(e) {
+            e.preventDefault();
+            const deepLink = 'agi://';
+            const fallbackUrl = './agi-business.pro.apk';
+            
+            let appOpened = false;
+            
+            // Écouteur pour vérifier si la page passe en arrière-plan (ce qui signifie que l'app s'est ouverte avec succès)
+            const visibilityHandler = function() {
+                if (document.hidden || document.visibilityState === 'hidden') {
+                    appOpened = true;
+                }
+            };
+            
+            document.addEventListener('visibilitychange', visibilityHandler);
+            
+            // 1. Tenter d'ouvrir l'application via le schéma d'URI personnalisé
+            window.location.href = deepLink;
+            
+            // 2. Fallback: si après 2.5 secondes la page est toujours active, on lance le téléchargement
+            setTimeout(function() {
+                document.removeEventListener('visibilitychange', visibilityHandler);
+                if (!appOpened) {
+                    window.location.href = fallbackUrl;
+                }
+            }, 2500);
+        }
+
+        // Attacher l'événement au bouton flottant principal
+        const terminalBtn = document.getElementById('openTerminalBtn');
+        if (terminalBtn) {
+            terminalBtn.addEventListener('click', handleAppDeepLink);
+        }
+        
+        // Attacher l'événement au bouton de la section légale en bas de page
+        const terminalBtnBottom = document.getElementById('openTerminalBtnBottom');
+        if (terminalBtnBottom) {
+            terminalBtnBottom.addEventListener('click', handleAppDeepLink);
+        }
     </script>
 </body>
 </html>
