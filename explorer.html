@@ -3,378 +3,317 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AGI | REGISTRE OFFICIEL NEXUS</title>
+    <title>AGI | REGISTRE OFFICIEL</title>
     
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 
     <style>
+        /* =======================================================================
+           THÈME CIEL-CLAIR (Light Sky Theme)
+           ======================================================================= */
         :root {
-            --bg: #020617; --surface: #0f172a; --border: rgba(255, 255, 255, 0.08); 
-            --accent: #38bdf8; --text-main: #f8fafc; --text-dim: #64748b; 
-            --danger: #ef4444; --success: #10b981; --agi-gold: #fbbf24; 
-            --overlay: rgba(0, 0, 0, 0.98);
+            --bg: #f0f8ff; /* AliceBlue / Ciel très clair */
+            --surface: #ffffff; /* Fond des cartes blanc pur */
+            --border: rgba(15, 23, 42, 0.08); /* Bordure foncée très légère */
+            --accent: #0ea5e9; /* Bleu azur */
+            --text-main: #0f172a; /* Bleu très sombre (Slate 900) */
+            --text-dim: #64748b; /* Gris-bleu (Slate 500) */
+            --danger: #ef4444; 
+            --success: #10b981;
+            --agi-gold: #d97706; /* Or assombri pour lisibilité sur fond clair */
+            --overlay: rgba(240, 248, 255, 0.85); /* Overlay clair et flouté */
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        body { background-color: #000; color: var(--text-main); font-family: 'Plus Jakarta Sans', sans-serif; display: flex; justify-content: center; height: 100vh; overflow: hidden; }
-
-        /* ÉCRAN D'AUTHENTIFICATION */
-        #authOverlay {
-            position: fixed; inset: 0; background: var(--bg); z-index: 5000; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; padding: 30px; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        
+        body { 
+            background-color: var(--bg); 
+            color: var(--text-main); 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            height: 100vh;
+            overflow: hidden; 
         }
-        
-        .auth-card { width: 100%; max-width: 350px; text-align: center; }
-        .auth-logo { width: 80px; border-radius: 20px; border: 2px solid var(--agi-gold); margin-bottom: 20px; box-shadow: 0 0 20px rgba(251, 191, 36, 0.2); }
-        
-        .input-group { width: 100%; margin-bottom: 20px; text-align: left; }
-        .input-group label { display: block; font-size: 0.65rem; color: var(--text-dim); text-transform: uppercase; font-weight: 800; margin-bottom: 8px; letter-spacing: 1px; }
-        .input-group input { width: 100%; background: var(--surface); border: 1px solid var(--border); padding: 16px; border-radius: 14px; color: #fff; outline: none; transition: 0.3s; }
-        .input-group input:focus { border-color: var(--agi-gold); }
 
-        .btn-next { width: 100%; background: var(--agi-gold); color: #000; padding: 16px; border-radius: 14px; font-weight: 800; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
-
-        /* CLAVIER PIN (MASQUÉ AU DÉBUT) */
-        #pinContainer { display: none; width: 100%; flex-direction: column; align-items: center; }
-        .pin-dots { display: flex; gap: 15px; margin: 25px 0; }
-        .dot { width: 14px; height: 14px; border: 2px solid var(--border); border-radius: 4px; transition: 0.2s; }
-        .dot.active { background: var(--agi-gold); border-color: var(--agi-gold); box-shadow: 0 0 15px var(--agi-gold); }
-        .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; width: 100%; max-width: 300px; }
-        .key { aspect-ratio: 1.2; border-radius: 18px; background: var(--surface); border: 1px solid var(--border); color: #fff; font-size: 1.5rem; font-weight: 700; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-        .key:active { background: var(--agi-gold); color: #000; }
-
-        /* APP CONTAINER */
         .app-container { 
-            width: 100%; max-width: 480px; height: 100vh; background: var(--bg); border-left: 1px solid var(--border); border-right: 1px solid var(--border); 
-            display: flex; flex-direction: column; position: relative; filter: blur(25px); transition: filter 0.8s ease; opacity: 0.5;
+            width: 100%; max-width: 480px; height: 100vh;
+            background: var(--bg); border-left: 1px solid var(--border); border-right: 1px solid var(--border); 
+            display: flex; flex-direction: column; position: relative;
         }
-        .app-container.unlocked { filter: blur(0); opacity: 1; }
-
-        .fixed-header { flex-shrink: 0; background: var(--bg); border-bottom: 1px solid var(--border); padding-bottom: 10px; background-image: radial-gradient(circle at 50% 0%, rgba(251, 191, 36, 0.08) 0%, transparent 70%); }
-        header { padding: 20px 20px 10px; text-align: center; }
-        .legal-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(251, 191, 36, 0.1); padding: 5px 14px; border-radius: 100px; margin-bottom: 8px; border: 1px solid rgba(251, 191, 36, 0.2); }
         
-        .registry-card { margin: 0 15px 10px; padding: 15px; background: linear-gradient(145deg, #0f172a 0%, #020617 100%); border-radius: 20px; border: 1px solid var(--border); }
-        .reg-item { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.65rem; }
-        
-        .search-bar { margin: 0 15px 10px; position: relative; }
-        .search-bar input { width: 100%; background: var(--surface); border: 1px solid var(--border); padding: 12px 15px 12px 40px; border-radius: 12px; color: #fff; font-size: 0.8rem; outline: none; }
-        .search-bar i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-dim); }
+        /* SECTION FIXE (HAUT) */
+        .fixed-header {
+            flex-shrink: 0;
+            background: var(--bg);
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+            background-image: radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.08) 0%, transparent 70%);
+        }
 
-        .masse-box { padding: 15px 20px; margin: 0 15px 10px; background: rgba(255,255,255,0.02); border-radius: 20px; border: 1px solid var(--border); text-align: center; }
-        .masse-val { font-family: 'JetBrains Mono', monospace; font-size: 1.8rem; font-weight: 700; color: var(--agi-gold); display: block; }
+        header { padding: 25px 20px 15px; text-align: center; }
 
-        .scrollable-content { flex-grow: 1; overflow-y: auto; padding-bottom: 120px; }
-        .tx-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 16px; margin: 0 15px 12px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: 0.2s; }
+        .legal-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(217, 119, 6, 0.1); padding: 5px 14px; border-radius: 100px; margin-bottom: 12px;
+            border: 1px solid rgba(217, 119, 6, 0.2);
+        }
+
+        h1 { font-size: 1.1rem; font-weight: 800; letter-spacing: 2px; color: var(--text-main); text-transform: uppercase; }
+
+        .registry-card {
+            margin: 0 15px 10px; padding: 18px;
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 20px; border: 1px solid var(--border);
+            position: relative; overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        }
         
+        .reg-item { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.7rem; }
+        .reg-label { color: var(--text-dim); font-weight: 600; }
+        .reg-val { color: var(--text-main); font-weight: 800; }
+
+        .masse-box { 
+            padding: 15px 20px; margin: 0 15px 10px; 
+            background: #ffffff;
+            border-radius: 20px; border: 1px solid var(--border); text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        }
+
+        .masse-val { 
+            font-family: 'JetBrains Mono', monospace; font-size: 1.8rem; 
+            font-weight: 800; color: var(--agi-gold); margin: 2px 0; display: block;
+        }
+
+        /* SECTION DÉFILABLE (BAS) */
+        .scrollable-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 15px 0 100px; 
+            background: rgba(255,255,255,0.4);
+        }
+
+        .section-title {
+            padding: 0 20px 15px; font-size: 0.7rem; font-weight: 800; 
+            text-transform: uppercase; color: var(--text-dim); letter-spacing: 1px;
+        }
+
+        .tx-card { 
+            background: var(--surface); border: 1px solid var(--border); 
+            border-radius: 16px; padding: 16px; margin: 0 15px 12px; 
+            display: flex; align-items: center; gap: 12px; cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02); transition: 0.2s;
+        }
+        .tx-card:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.05); }
+
+        .tx-icon {
+            width: 42px; height: 42px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .tx-info { flex: 1; min-width: 0; }
+        .tx-id { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-main); font-weight: 800; }
+        .tx-meta { font-size: 0.65rem; color: var(--text-dim); font-weight: 600; margin-top: 2px; }
+
+        .tx-amt { font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; font-weight: 800; text-align: right; }
+
+        .bg-dépôt { color: var(--success); }
+        .tx-icon.bg-dépôt { background: rgba(16, 185, 129, 0.1); }
+        
+        .bg-retrait { color: var(--danger); }
+        .tx-icon.bg-retrait { background: rgba(239, 68, 68, 0.1); }
+
         /* MODAL */
-        .modal-overlay { position: fixed; inset: 0; background: var(--overlay); backdrop-filter: blur(15px); display: none; z-index: 6000; align-items: center; justify-content: center; padding: 20px; }
+        .modal-overlay { 
+            position: fixed; inset: 0; background: var(--overlay); 
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); 
+            display: none; z-index: 2000; align-items: center; justify-content: center; padding: 20px; 
+        }
         .modal-overlay.active { display: flex; }
-        .modal-content { width: 100%; max-width: 420px; background: var(--surface); border-radius: 28px; border: 1px solid var(--border); padding: 25px; }
-        .detail-row { display: flex; flex-direction: column; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); gap: 4px; }
-        .detail-label { color: var(--text-dim); font-size: 0.6rem; text-transform: uppercase; font-weight: 700; }
-        .detail-value { color: #fff; font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; word-break: break-all; }
+        .modal-content { 
+            width: 100%; max-width: 400px; background: var(--surface); 
+            border-radius: 28px; border: 1px solid var(--border); padding: 25px; 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.1); border-top: 4px solid var(--agi-gold);
+        }
+        .detail-row { display: flex; flex-direction: column; padding: 12px 0; border-bottom: 1px solid var(--border); gap: 4px; }
+        .detail-label { color: var(--text-dim); font-size: 0.65rem; text-transform: uppercase; font-weight: 800; }
+        .detail-value { color: var(--text-main); font-size: 0.85rem; font-weight: 800; word-break: break-all; }
 
-        .btn-back { position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); width: 90%; background: #fff; color: #000; padding: 16px; border-radius: 18px; font-weight: 800; text-align: center; text-decoration: none; box-shadow: 0 10px 30px rgba(0,0,0,0.4); z-index: 100; }
+        .btn-back { 
+            position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); 
+            width: 90%; max-width: 400px; background: var(--text-main); color: #ffffff; 
+            padding: 16px; border-radius: 18px; font-weight: 800; text-align: center; 
+            text-decoration: none; z-index: 1000; box-shadow: 0 10px 20px rgba(15, 23, 42, 0.2);
+            transition: 0.2s;
+        }
+        .btn-back:hover { background: #000; }
     </style>
 </head>
 <body>
 
-    <div id="authOverlay">
-        <div class="auth-card">
-            <img src="https://i.imgur.com/DxND3Yn.jpeg" class="auth-logo">
-            
-            <div id="emailContainer">
-                <h2 style="font-size:1.1rem; margin-bottom:10px">NEXUS EXPLORER</h2>
-                <p style="color:var(--text-dim); font-size:0.75rem; margin-bottom:25px">Identifiez-vous pour accéder au registre</p>
-                
-                <div class="input-group">
-                    <label>E-mail du compte</label>
-                    <input type="email" id="authEmail" placeholder="nom@exemple.com">
-                </div>
-                <button class="btn-next" onclick="goToPin()">
-                    CONTINUER <i class="ri-arrow-right-line"></i>
-                </button>
-            </div>
-
-            <div id="pinContainer">
-                <h2 id="welcomeUser" style="font-size:1rem; margin-bottom:5px">SÉCURITÉ NEXUS</h2>
-                <p style="color:var(--text-dim); font-size:0.7rem">Saisissez votre code PIN</p>
-                
-                <div class="pin-dots" id="pinDots">
-                    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-                    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-                </div>
-                <div class="keypad" id="keypad"></div>
-                <button style="margin-top:20px; background:none; border:none; color:var(--text-dim); font-size:0.7rem; text-decoration:underline" onclick="backToEmail()">Changer d'e-mail</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="app-container" id="mainApp">
+    <div class="app-container">
         <div class="fixed-header">
             <header>
                 <div class="legal-badge">
-                    <i class="ri-shield-check-fill" style="color: var(--agi-gold)"></i>
-                    <span style="font-size: 0.6rem; font-weight: 800; color: var(--agi-gold)">REGISTRE OFFICIEL - BURKINA FASO</span>
+                    <i class="fa-solid fa-shield-halved" style="color: var(--agi-gold)"></i>
+                    <span style="font-size: 0.6rem; font-weight: 800; color: var(--agi-gold)">ENTITÉ ENREGISTRÉE - BURKINA FASO</span>
                 </div>
-                <h1>Ledger Explorer</h1>
+                <h1>AGI Ledger Explorer</h1>
             </header>
 
             <div class="registry-card">
                 <div class="reg-item"><span class="reg-label">Structure</span><span class="reg-val">ATLAS GROUPE INTERNATIONAL</span></div>
-                <div class="reg-item"><span class="reg-label">Récépissé</span><span class="reg-val" style="color:var(--agi-gold)">PHUE-3539/2025</span></div>
-                <div class="reg-item" style="margin-bottom:0"><span class="reg-label">Protocole</span><span class="reg-val">Nexus Core v3.0</span></div>
+                <div class="reg-item"><span class="reg-label">Récépissé</span><span class="reg-val" style="color: var(--agi-gold)">PHUE-3539/2025</span></div>
+                <div class="reg-item"><span class="reg-label">Déclaration</span><span class="reg-val">11 Juillet 2025</span></div>
+                <div class="reg-item" style="margin-bottom: 0;"><span class="reg-label">Siège</span><span class="reg-val">Burkina Faso</span></div>
             </div>
 
             <div class="masse-box">
-                <span style="font-size:0.6rem; color:var(--text-dim); text-transform:uppercase; font-weight:800">Actif Circulant (AG-COIN)</span>
-                <span class="masse-val" id="masse-totale">0 ₳</span>
-            </div>
-
-            <div class="search-bar">
-                <i class="ri-search-line"></i>
-                <input type="text" id="txSearch" placeholder="Rechercher un Hash ou un ID..." oninput="filterTransactions()">
+                <span style="font-size: 0.6rem; color: var(--text-dim); text-transform: uppercase; font-weight: 800;">Actif Circulant (₳)</span>
+                <span class="masse-val" id="masse-totale">0</span>
+                <span style="font-size: 0.55rem; color: var(--success); font-weight: 800;"><i class="fa-solid fa-heart-pulse"></i> Audit Temps Réel Actif</span>
             </div>
         </div>
 
         <div class="scrollable-content">
+            <div class="section-title">Historique des Validations</div>
             <div id="ledger-list"></div>
         </div>
 
-        <a href="index.html" class="btn-back">RETOUR AU PORTAIL</a>
+        <a href="index.html" class="btn-back">
+            <i class="fa-solid fa-house" style="margin-right: 5px;"></i> RETOUR AU PORTAIL
+        </a>
     </div>
 
     <div class="modal-overlay" id="detailModal">
         <div class="modal-content">
-            <div id="modalIcon" style="font-size:2.5rem; text-align:center; margin-bottom:10px"></div>
-            <h3 id="modalTitle" style="text-align:center; margin-bottom:20px; text-transform:uppercase; font-size:0.9rem">Détails</h3>
-            <div id="modalBody"></div>
-            <button style="width:100%; margin-top:20px; padding:16px; border-radius:14px; background:rgba(255,255,255,0.05); color:#fff; border:1px solid var(--border); font-weight:800; cursor:pointer" onclick="closeModal()">FERMER LE REGISTRE</button>
+            <div id="modalIcon" style="font-size: 2.5rem; text-align: center; margin-bottom: 10px;"></div>
+            <h3 id="modalTitle" style="text-align: center; margin-bottom: 15px; text-transform: uppercase; font-size: 1.1rem; font-weight: 800; color: var(--text-main);">Détails Transaction</h3>
+            
+            <div id="modalBody">
+                </div>
+
+            <button style="width:100%; margin-top:20px; padding:16px; border-radius:14px; background: var(--bg); color: var(--text-main); border:1px solid var(--border); font-weight:800; cursor:pointer;" onclick="closeModal()">
+                <i class="fa-solid fa-xmark"></i> FERMER
+            </button>
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, onValue, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
         const firebaseConfig = { databaseURL: "https://atlasgroupebusiness-default-rtdb.firebaseio.com" };
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        let allTransactions = [];
-        let inputPin = "";
-        let targetEmail = "";
+        // Masse Monétaire
+        onValue(ref(db, 'users'), (snap) => {
+            let total = 0;
+            if(snap.val()) Object.values(snap.val()).forEach(u => total += Math.floor(parseFloat(u.balance || 0)));
+            document.getElementById('masse-totale').innerText = total.toLocaleString('fr-FR') + " ₳";
+        });
 
-        const sanitize = (e) => e ? e.toLowerCase().replace(/[.#$[\]]/g, "_").trim() : null;
-
-        // =====================================================================
-        // MODULE DE CHIFFREMENT DE GRADE MILITAIRE (API Web Crypto AES-GCM)
-        // =====================================================================
-        class NexusCrypto {
-            /**
-             * Génère une clé cryptographique AES-GCM 256-bit
-             */
-            static async generateKey() {
-                return await window.crypto.subtle.generateKey(
-                    { name: "AES-GCM", length: 256 },
-                    true, // Extractable (utile si besoin d'exporter/sauvegarder la clé)
-                    ["encrypt", "decrypt"]
-                );
-            }
-
-            /**
-             * Chiffre une chaîne de caractères
-             * @param {string} text - Le texte brut à chiffrer
-             * @param {CryptoKey} key - La clé de chiffrement générée
-             * @returns {Promise<string>} - La chaîne chiffrée codée en Base64
-             */
-            static async encrypt(text, key) {
-                const encoder = new TextEncoder();
-                const data = encoder.encode(text);
-                // Générer un vecteur d'initialisation aléatoire cryptographiquement sûr (12 octets)
-                const iv = window.crypto.getRandomValues(new Uint8Array(12));
-                
-                const cipherBuffer = await window.crypto.subtle.encrypt(
-                    { name: "AES-GCM", iv: iv },
-                    key,
-                    data
-                );
-                
-                // Concaténation de l'IV et des données chiffrées pour faciliter le stockage
-                const cipherBytes = new Uint8Array(cipherBuffer);
-                const combinedResult = new Uint8Array(iv.length + cipherBytes.length);
-                combinedResult.set(iv, 0);
-                combinedResult.set(cipherBytes, iv.length);
-                
-                // Conversion en Base64 pour manipulation facile
-                return btoa(String.fromCharCode(...combinedResult));
-            }
-
-            /**
-             * Déchiffre une chaîne chiffrée par cette classe
-             * @param {string} base64Cipher - La chaîne chiffrée en Base64
-             * @param {CryptoKey} key - La clé de déchiffrement
-             * @returns {Promise<string>} - Le texte brut déchiffré
-             */
-            static async decrypt(base64Cipher, key) {
-                const binaryStr = atob(base64Cipher);
-                const bytes = new Uint8Array(binaryStr.length);
-                for (let i = 0; i < binaryStr.length; i++) {
-                    bytes[i] = binaryStr.charCodeAt(i);
-                }
-                
-                // Extraction de l'IV (les 12 premiers octets) et du message chiffré
-                const iv = bytes.slice(0, 12);
-                const data = bytes.slice(12);
-                
-                const decryptedBuffer = await window.crypto.subtle.decrypt(
-                    { name: "AES-GCM", iv: iv },
-                    key,
-                    data
-                );
-                
-                const decoder = new TextDecoder();
-                return decoder.decode(decryptedBuffer);
-            }
-        }
-
-        // NAVIGATION AUTH
-        window.goToPin = () => {
-            targetEmail = document.getElementById('authEmail').value;
-            if(!targetEmail.includes('@')) return alert("Veuillez entrer un e-mail valide.");
-            
-            document.getElementById('emailContainer').style.display = 'none';
-            document.getElementById('pinContainer').style.display = 'flex';
-        };
-
-        window.backToEmail = () => {
-            document.getElementById('emailContainer').style.display = 'block';
-            document.getElementById('pinContainer').style.display = 'none';
-            inputPin = "";
-            updateDots();
-        };
-
-        // PIN SYSTEM
-        const initKeypad = () => {
-            const keypad = document.getElementById('keypad');
-            [1, 2, 3, 4, 5, 6, 7, 8, 9, 'back', 0, 'exit'].forEach(k => {
-                const btn = document.createElement('div');
-                btn.className = 'key';
-                btn.innerHTML = k === 'back' ? '<i class="ri-backspace-line"></i>' : (k === 'exit' ? '<i class="ri-close-line"></i>' : k);
-                btn.onclick = () => {
-                    if(k === 'exit') window.location.href = 'index.html';
-                    else if(k === 'back') inputPin = inputPin.slice(0, -1);
-                    else if(inputPin.length < 6) inputPin += k;
-                    updateDots();
-                    if(inputPin.length === 6) verifyAuth();
-                };
-                keypad.appendChild(btn);
-            });
-        };
-
-        const updateDots = () => {
-            document.querySelectorAll('.dot').forEach((dot, i) => dot.classList.toggle('active', i < inputPin.length));
-        };
-
-        const verifyAuth = async () => {
-            const userRef = ref(db, `accounts/${sanitize(targetEmail)}`);
-            const snap = await get(userRef);
-            
-            if(snap.exists() && snap.val().pin === inputPin) {
-                document.getElementById('authOverlay').style.transform = 'translateY(-100%)';
-                document.getElementById('mainApp').classList.add('unlocked');
-                loadData();
-            } else {
-                alert("Identifiants incorrects.");
-                inputPin = "";
-                updateDots();
-            }
-        };
-
-        // DATA LOADING
-        function loadData() {
-            onValue(ref(db, 'users'), (snap) => {
-                let total = 0;
-                if(snap.val()) Object.values(snap.val()).forEach(u => total += Math.floor(parseFloat(u.balance || 0)));
-                document.getElementById('masse-totale').innerText = total.toLocaleString('fr-FR') + " ₳";
-            });
-
-            onValue(ref(db, 'requests'), (snap) => {
-                const data = snap.val();
-                if(!data) return;
-                allTransactions = Object.entries(data)
-                    .filter(([_, tx]) => tx.status === 'validé')
-                    .sort((a,b) => (b[1].timestamp || 0) - (a[1].timestamp || 0));
-                renderTransactions(allTransactions);
-            });
-        }
-
-        function renderTransactions(list) {
+        // Liste des transactions
+        onValue(ref(db, 'requests'), (snap) => {
+            const data = snap.val();
             const container = document.getElementById('ledger-list');
-            container.innerHTML = list.map(([id, tx]) => {
-                const isDeposit = tx.type.includes('Dépôt');
-                return `
-                <div class="tx-card" onclick='openTxModal("${id}", ${JSON.stringify(tx).replace(/"/g, '&quot;')})'>
-                    <div style="color:${isDeposit ? 'var(--success)' : 'var(--danger)'}; font-size:1.2rem">
-                        <i class="${isDeposit ? 'ri-arrow-left-down-fill' : 'ri-arrow-right-up-fill'}"></i>
-                    </div>
-                    <div class="tx-info">
-                        <div style="font-size:0.7rem; font-weight:800; font-family:monospace">#${id.substring(0,10).toUpperCase()}</div>
-                        <div style="font-size:0.6rem; color:var(--text-dim)">${tx.type} • ${new Date(tx.timestamp).toLocaleDateString()}</div>
-                    </div>
-                    <div style="margin-left:auto; text-align:right">
-                        <div style="font-family:'JetBrains Mono'; font-weight:700; color:${isDeposit ? 'var(--success)' : 'var(--danger)'}">
-                            ${Math.floor(tx.amount).toLocaleString()} ₳
-                        </div>
-                    </div>
-                </div>`;
-            }).join('');
-        }
+            if(!data) return;
 
-        window.filterTransactions = () => {
-            const q = document.getElementById('txSearch').value.toUpperCase();
-            const filtered = allTransactions.filter(([id, tx]) => 
-                id.toUpperCase().includes(q) || (tx.user_id && tx.user_id.toUpperCase().includes(q))
-            );
-            renderTransactions(filtered);
-        };
+            const valid = Object.entries(data).filter(([_, tx]) => tx.status === 'validé');
+            const sorted = valid.sort((a,b) => (b[1].timestamp || 0) - (a[1].timestamp || 0));
+            
+            container.innerHTML = sorted.map(([id, tx]) => {
+                const isDeposit = tx.type.includes('Dépôt') || tx.type.includes('Reçu');
+                let color = isDeposit ? 'bg-dépôt' : 'bg-retrait';
+                let icon = isDeposit ? 'fa-solid fa-arrow-turn-down' : 'fa-solid fa-arrow-turn-up';
+                let prefix = isDeposit ? "+" : "-";
+                
+                return `
+                    <div class="tx-card" onclick='openTxModal("${id}", ${JSON.stringify(tx).replace(/"/g, '&quot;')})'>
+                        <div class="tx-icon ${color}"><i class="${icon}"></i></div>
+                        <div class="tx-info">
+                            <div class="tx-id">TX-${id.substring(0,8).toUpperCase()}</div>
+                            <div class="tx-meta">${tx.type} • ${new Date(tx.timestamp).toLocaleDateString('fr-FR')}</div>
+                        </div>
+                        <div class="tx-amt ${color}">${prefix}${Math.floor(tx.amount).toLocaleString('fr-FR')} ₳</div>
+                    </div>`;
+            }).join('');
+        });
 
         window.openTxModal = (id, tx) => {
             const modal = document.getElementById('detailModal');
             document.getElementById('modalTitle').innerText = tx.type;
-            document.getElementById('modalIcon').innerHTML = tx.type.includes('Dépôt') ? 
-                '<i class="ri-shield-flash-fill" style="color:var(--success)"></i>' : 
-                '<i class="ri-shield-user-fill" style="color:var(--danger)"></i>';
+            const iconWrap = document.getElementById('modalIcon');
             
-            let src = tx.sender_id || (tx.type.includes('Dépôt') ? (tx.method || "Source Externe") : tx.user_id);
-            let dest = tx.receiver_id || (tx.type.includes('Dépôt') ? tx.user_id : "AGI Core");
-
-            const fields = [
-                { label: "ID Nexus Hash", val: id.toUpperCase() },
-                { label: "Origine", val: src.toString().toUpperCase() },
-                { label: "Destination", val: dest.toString().toUpperCase() },
-                { label: "Montant", val: `${Math.floor(tx.amount).toLocaleString()} ₳` },
-                { label: "Horodatage", val: new Date(tx.timestamp).toLocaleString('fr-FR') },
-                { label: "Certification", val: "VÉRIFIÉ & SCELLÉ" }
-            ];
-
-            document.getElementById('modalBody').innerHTML = fields.map(f => `
-                <div class="detail-row">
-                    <span class="detail-label">${f.label}</span>
-                    <span class="detail-value" style="${f.label === 'Certification' ? 'color:var(--success)' : (f.label === 'Montant' ? 'color:var(--agi-gold)' : '')}">${f.val}</span>
-                </div>`).join('');
+            const isDeposit = tx.type.includes('Dépôt') || tx.type.includes('Reçu');
             
-            modal.style.display = 'flex'; setTimeout(() => modal.classList.add('active'), 10);
+            iconWrap.innerHTML = isDeposit ? 
+                '<i class="fa-solid fa-circle-check" style="color:var(--success)"></i>' : 
+                '<i class="fa-solid fa-circle-minus" style="color:var(--danger)"></i>';
+
+            // Logique Origine/Destination minutieusement améliorée
+            let origine = "Non défini";
+            let destination = "Non défini";
+            let typeStr = tx.type || "";
+
+            if (isDeposit) {
+                // Pour un dépôt ou une réception : l'origine est l'extérieur ou l'envoyeur, la destination est le user
+                origine = tx.from || tx.provider || "Réseau Externe / Partenaire";
+                destination = tx.to || tx.user_id || "Mon Portefeuille (AGI)";
+            } else if (typeStr.includes('Retrait') || typeStr.includes('Envoi') || typeStr.includes('Cash')) {
+                // Pour un retrait ou un envoi : l'origine est le user, la destination est l'extérieur ou le receveur
+                origine = tx.from || tx.user_id || "Mon Portefeuille (AGI)";
+                destination = tx.to || tx.receiver_id || tx.provider || "Réseau Externe / Bénéficiaire";
+            } else {
+                // Fallback générique
+                origine = tx.from || tx.user_id || "Système AGI";
+                destination = tx.to || "Réseau Interne";
+            }
+
+            // Statut dynamique depuis Firebase
+            let statutCouleur = tx.status === 'validé' ? 'var(--success)' : (tx.status === 'en attente' ? 'var(--agi-gold)' : 'var(--danger)');
+            let statutIcone = tx.status === 'validé' ? 'fa-check-circle' : (tx.status === 'en attente' ? 'fa-clock' : 'fa-circle-xmark');
+
+            // Génération conditionnelle des métadonnées étendues
+            let detailsHTML = `
+                <div class="detail-row"><span class="detail-label">ID Transaction</span><span class="detail-value" style="font-family:'JetBrains Mono', monospace;">${id.toUpperCase()}</span></div>
+                <div class="detail-row"><span class="detail-label">Type d'Opération</span><span class="detail-value" style="color:var(--accent);">${typeStr}</span></div>
+                <div class="detail-row"><span class="detail-label">Origine (Émetteur)</span><span class="detail-value">${origine}</span></div>
+                <div class="detail-row"><span class="detail-label">Destination (Bénéficiaire)</span><span class="detail-value">${destination}</span></div>
+            `;
+
+            if (tx.provider) {
+                detailsHTML += `<div class="detail-row"><span class="detail-label">Opérateur / Réseau</span><span class="detail-value">${tx.provider}</span></div>`;
+            }
+            if (tx.fee) {
+                detailsHTML += `<div class="detail-row"><span class="detail-label">Frais de Réseau</span><span class="detail-value" style="color:var(--danger);">${tx.fee} ₳</span></div>`;
+            }
+            if (tx.total) {
+                detailsHTML += `<div class="detail-row"><span class="detail-label">Total Débité</span><span class="detail-value">${tx.total} ₳</span></div>`;
+            }
+
+            detailsHTML += `
+                <div class="detail-row"><span class="detail-label">Montant Net</span><span class="detail-value" style="color:var(--agi-gold); font-size:1.15rem;">${Math.floor(tx.amount).toLocaleString('fr-FR')} ₳</span></div>
+                <div class="detail-row"><span class="detail-label">Date et Heure</span><span class="detail-value">${new Date(tx.timestamp).toLocaleString('fr-FR')}</span></div>
+                <div class="detail-row"><span class="detail-label">Statut du Bloc</span><span class="detail-value" style="color:${statutCouleur}; text-transform: uppercase;"><i class="fa-solid ${statutIcone}" style="margin-right: 4px;"></i> ${tx.status || 'Non Défini'}</span></div>
+                <div class="detail-row" style="border:none;"><span class="detail-label">Statut d'Audit</span><span class="detail-value" style="color:var(--success)"><i class="fa-solid fa-check-double" style="margin-right: 4px;"></i> CERTIFIÉ PAR AGI</span></div>
+            `;
+
+            document.getElementById('modalBody').innerHTML = detailsHTML;
+            
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('active'), 10);
         };
 
         window.closeModal = () => {
             const modal = document.getElementById('detailModal');
-            modal.classList.remove('active'); setTimeout(() => modal.style.display = 'none', 300);
+            modal.classList.remove('active');
+            setTimeout(() => modal.style.display = 'none', 300);
         };
-
-        initKeypad();
     </script>
 </body>
 </html>
