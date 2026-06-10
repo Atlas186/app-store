@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Télécharger AGI Business Pro | Terminal Officiel Nexus Core</title>
     
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -104,7 +107,7 @@
             <div class="mb-8 inline-flex items-center gap-2 bg-white/80 border border-emerald-200 px-4 py-2 rounded-xl shadow-sm">
                 <i class="fa-solid fa-circle-down text-agi-emerald animate-bounce"></i>
                 <span class="text-xs font-bold text-slate-700">
-                    <span id="download-counter-value" class="mono text-agi-emerald font-black">14,250</span> 
+                    <span id="download-counter-value" class="mono text-agi-emerald font-black">...</span> 
                     <span lang-context="fr">téléchargements actifs</span>
                     <span lang-context="en">active downloads</span>
                 </span>
@@ -379,24 +382,43 @@
     </footer>
 
     <script>
-        // 1. GESTION DU COMPTEUR DE TÉLÉCHARGEMENTS RÉEL ET PERSISTANT
-        const STORAGE_KEY = "agi_download_count_real";
-        const INITIAL_BASE = 14250;
+        // 1. CONFIGURATION ET SYNC INITIALE SUR REALTIME DATABASE
+        const firebaseConfig = { 
+            databaseURL: "https://atlasgroupebusiness-default-rtdb.firebaseio.com" 
+        };
+        
+        // Initialisation de Firebase si ce n'est pas déjà fait
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const db = firebase.database();
+        const downloadCounterRef = db.ref("metrics/apk_downloads");
+        const INITIAL_BASE = 00;
 
         function initCounter() {
-            let storedCount = localStorage.getItem(STORAGE_KEY);
-            if (!storedCount) {
-                storedCount = INITIAL_BASE;
-                localStorage.setItem(STORAGE_KEY, storedCount);
-            }
-            document.getElementById("download-counter-value").innerText = Number(storedCount).toLocaleString();
+            // Lecture temps réel synchronisée sans simulation
+            downloadCounterRef.on('value', (snapshot) => {
+                let currentCount = snapshot.val();
+                
+                // Si la branche n'existe pas encore dans le nœud Firebase, initialisation stricte
+                if (currentCount === null) {
+                    downloadCounterRef.set(INITIAL_BASE);
+                    currentCount = INITIAL_BASE;
+                }
+                
+                document.getElementById("download-counter-value").innerText = Number(currentCount).toLocaleString('fr-FR');
+            }, (error) => {
+                console.error("Erreur de synchronisation réseau du compteur :", error);
+                document.getElementById("download-counter-value").innerText = INITIAL_BASE.toLocaleString('fr-FR');
+            });
         }
 
+        // Action lors du clic sur le bouton de téléchargement
         document.getElementById("download-btn").addEventListener("click", function() {
-            let currentCount = localStorage.getItem(STORAGE_KEY) || INITIAL_BASE;
-            let newCount = Number(currentCount) + 1;
-            localStorage.setItem(STORAGE_KEY, newCount);
-            document.getElementById("download-counter-value").innerText = newCount.toLocaleString();
+            // Utilisation d'une transaction Firebase pour éviter la concurrence sur le nœud et garantir l'exactitude mathématique
+            downloadCounterRef.transaction((currentValue) => {
+                return (currentValue || INITIAL_BASE) + 1;
+            });
         });
 
         // 2. INTERRUPTEUR DE LANGUE GLOBAL (FR / EN)
@@ -430,7 +452,6 @@
                 
                 if (keywords.includes(query) || content.includes(query)) {
                     item.style.display = "block";
-                    // Petit effet visuel d'activation
                     item.classList.remove("opacity-40");
                 } else {
                     item.style.display = "none";
