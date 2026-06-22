@@ -10,7 +10,7 @@
 
     <style>
         /* =======================================================================
-           THÈME CIEL-CLAIR (Light Sky Theme)
+           THÈME CIEL-CLAIR (Light Sky Theme) & CONSOLIDATION
            ======================================================================= */
         :root {
             --bg: #f0f8ff; /* AliceBlue / Ciel très clair */
@@ -53,65 +53,85 @@
             background-image: radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.08) 0%, transparent 70%);
         }
 
-        header { padding: 25px 20px 15px; text-align: center; }
+        header { padding: 20px 20px 15px; text-align: center; }
 
         .legal-badge {
             display: inline-flex; align-items: center; gap: 6px;
-            background: rgba(217, 119, 6, 0.1); padding: 5px 14px; border-radius: 100px; margin-bottom: 12px;
+            background: rgba(217, 119, 6, 0.1); padding: 5px 14px; border-radius: 100px; margin-bottom: 10px;
             border: 1px solid rgba(217, 119, 6, 0.2);
         }
 
         h1 { font-size: 1.1rem; font-weight: 800; letter-spacing: 2px; color: var(--text-main); text-transform: uppercase; }
 
         .registry-card {
-            margin: 0 15px 10px; padding: 18px;
+            margin: 0 15px 10px; padding: 15px 18px;
             background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
-            border-radius: 20px; border: 1px solid var(--border);
-            position: relative; overflow: hidden;
+            border-radius: 16px; border: 1px solid var(--border);
             box-shadow: 0 4px 15px rgba(0,0,0,0.02);
         }
         
-        .reg-item { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.7rem; }
+        .reg-item { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.7rem; }
+        .reg-item:last-child { margin-bottom: 0; }
         .reg-label { color: var(--text-dim); font-weight: 600; }
         .reg-val { color: var(--text-main); font-weight: 800; }
 
-        .masse-box { 
-            padding: 15px 20px; margin: 0 15px 10px; 
-            background: #ffffff;
-            border-radius: 20px; border: 1px solid var(--border); text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        /* PANNEAU FINANCIER CONSOLIDÉ */
+        .financial-panel {
+            margin: 0 15px 10px; padding: 16px 20px; 
+            background: var(--surface); border-radius: 16px; 
+            border: 1px solid var(--border); text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            display: flex; flex-direction: column; gap: 8px;
         }
 
-        .masse-val { 
-            font-family: 'JetBrains Mono', monospace; font-size: 1.8rem; 
-            font-weight: 800; color: var(--agi-gold); margin: 2px 0; display: block;
+        .stat-group { display: flex; flex-direction: column; align-items: center; }
+        
+        .stat-label { 
+            font-size: 0.65rem; color: var(--text-dim); 
+            text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; 
+        }
+        
+        .stat-val-static {
+            font-family: 'JetBrains Mono', monospace; font-size: 1.3rem; 
+            font-weight: 800; color: var(--text-main); margin-top: 2px;
+        }
+
+        .stat-val-dynamic { 
+            font-family: 'JetBrains Mono', monospace; font-size: 1.7rem; 
+            font-weight: 800; color: var(--agi-gold); margin-top: 2px;
+        }
+
+        .stat-divider {
+            height: 1px; background: var(--border); width: 60%; margin: 4px auto;
+        }
+
+        .audit-badge {
+            font-size: 0.6rem; color: var(--success); font-weight: 800; 
+            text-transform: uppercase; margin-top: 4px; letter-spacing: 0.5px;
         }
 
         /* SECTION DÉFILABLE (BAS) */
         .scrollable-content {
-            flex-grow: 1;
-            overflow-y: auto;
-            padding: 15px 0 100px; 
+            flex-grow: 1; overflow-y: auto; padding: 15px 0 100px; 
             background: rgba(255,255,255,0.4);
         }
 
         .section-title {
-            padding: 0 20px 15px; font-size: 0.7rem; font-weight: 800; 
+            padding: 0 20px 12px; font-size: 0.7rem; font-weight: 800; 
             text-transform: uppercase; color: var(--text-dim); letter-spacing: 1px;
         }
 
         .tx-card { 
             background: var(--surface); border: 1px solid var(--border); 
-            border-radius: 16px; padding: 16px; margin: 0 15px 12px; 
+            border-radius: 14px; padding: 14px 16px; margin: 0 15px 10px; 
             display: flex; align-items: center; gap: 12px; cursor: pointer;
             box-shadow: 0 2px 8px rgba(0,0,0,0.02); transition: 0.2s;
         }
         .tx-card:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.05); }
 
         .tx-icon {
-            width: 42px; height: 42px; border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem;
+            width: 40px; height: 40px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
         }
 
         .tx-info { flex: 1; min-width: 0; }
@@ -135,17 +155,17 @@
         .modal-overlay.active { display: flex; }
         .modal-content { 
             width: 100%; max-width: 400px; background: var(--surface); 
-            border-radius: 28px; border: 1px solid var(--border); padding: 25px; 
+            border-radius: 24px; border: 1px solid var(--border); padding: 25px; 
             box-shadow: 0 25px 50px rgba(0,0,0,0.1); border-top: 4px solid var(--agi-gold);
         }
-        .detail-row { display: flex; flex-direction: column; padding: 12px 0; border-bottom: 1px solid var(--border); gap: 4px; }
+        .detail-row { display: flex; flex-direction: column; padding: 10px 0; border-bottom: 1px solid var(--border); gap: 4px; }
         .detail-label { color: var(--text-dim); font-size: 0.65rem; text-transform: uppercase; font-weight: 800; }
         .detail-value { color: var(--text-main); font-size: 0.85rem; font-weight: 800; word-break: break-all; }
 
         .btn-back { 
-            position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); 
+            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); 
             width: 90%; max-width: 400px; background: var(--text-main); color: #ffffff; 
-            padding: 16px; border-radius: 18px; font-weight: 800; text-align: center; 
+            padding: 15px; border-radius: 16px; font-weight: 800; text-align: center; 
             text-decoration: none; z-index: 1000; box-shadow: 0 10px 20px rgba(15, 23, 42, 0.2);
             transition: 0.2s;
         }
@@ -168,13 +188,25 @@
                 <div class="reg-item"><span class="reg-label">Structure</span><span class="reg-val">ATLAS GROUPE INTERNATIONAL</span></div>
                 <div class="reg-item"><span class="reg-label">Récépissé</span><span class="reg-val" style="color: var(--agi-gold)">PHUE-3539/2025</span></div>
                 <div class="reg-item"><span class="reg-label">Déclaration</span><span class="reg-val">11 Juillet 2025</span></div>
-                <div class="reg-item" style="margin-bottom: 0;"><span class="reg-label">Siège</span><span class="reg-val">Burkina Faso</span></div>
+                <div class="reg-item"><span class="reg-label">Siège</span><span class="reg-val">Burkina Faso</span></div>
             </div>
 
-            <div class="masse-box">
-                <span style="font-size: 0.6rem; color: var(--text-dim); text-transform: uppercase; font-weight: 800;">Actif Circulant (₳)</span>
-                <span class="masse-val" id="masse-totale">0</span>
-                <span style="font-size: 0.55rem; color: var(--success); font-weight: 800;"><i class="fa-solid fa-heart-pulse"></i> Audit Temps Réel Actif</span>
+            <div class="financial-panel">
+                <div class="stat-group">
+                    <span class="stat-label">Offre Totale (₳)</span>
+                    <span class="stat-val-static">100 000 000 000</span>
+                </div>
+                
+                <div class="stat-divider"></div>
+                
+                <div class="stat-group">
+                    <span class="stat-label">Actif Circulant (₳)</span>
+                    <span class="stat-val-dynamic" id="masse-totale">0</span>
+                </div>
+                
+                <div class="audit-badge">
+                    <i class="fa-solid fa-heart-pulse"></i> Audit Temps Réel Actif
+                </div>
             </div>
         </div>
 
@@ -193,10 +225,9 @@
             <div id="modalIcon" style="font-size: 2.5rem; text-align: center; margin-bottom: 10px;"></div>
             <h3 id="modalTitle" style="text-align: center; margin-bottom: 15px; text-transform: uppercase; font-size: 1.1rem; font-weight: 800; color: var(--text-main);">Détails Transaction</h3>
             
-            <div id="modalBody">
-                </div>
+            <div id="modalBody"></div>
 
-            <button style="width:100%; margin-top:20px; padding:16px; border-radius:14px; background: var(--bg); color: var(--text-main); border:1px solid var(--border); font-weight:800; cursor:pointer;" onclick="closeModal()">
+            <button style="width:100%; margin-top:20px; padding:15px; border-radius:14px; background: var(--bg); color: var(--text-main); border:1px solid var(--border); font-weight:800; cursor:pointer; transition: 0.2s;" onclick="closeModal()">
                 <i class="fa-solid fa-xmark"></i> FERMER
             </button>
         </div>
