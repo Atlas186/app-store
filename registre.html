@@ -3,105 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Nexus Core | Activation Citoyenne</title>
+    <title>ATLAS NEXUS CORE | Enregistrement Citoyen & KYC</title>
     
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+
     <style>
         :root {
-            --bg: #f4f9fd;
-            --bg-gradient: radial-gradient(circle at 50% -20%, #e0f2fe, #f1f5f9 100%);
-            --card: rgba(255, 255, 255, 0.85);
-            --accent: #0284c7; /* Bleu azur profond */
-            --accent-light: #e0f2fe;
-            --agi-gold: #d97706; /* Or ambré lisible sur fond clair */
-            --text-main: #0f172a; /* Slate 900 */
-            --text-dim: #475569;  /* Slate 600 */
-            --border: rgba(15, 23, 42, 0.08);
-            --error: #ef4444;
-            --success: #10b981;
-            --shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.08);
+            --bg: #f0f9ff; 
+            --surface: #ffffff; 
+            --glass: rgba(255, 255, 255, 0.92); 
+            --border: rgba(14, 165, 233, 0.12); 
+            --accent: #0284c7; 
+            --text-main: #0f172a; 
+            --text-dim: #64748b; 
+            --danger: #ef4444; 
+            --success: #16a34a;
+            --agi-gold: #d97706; 
+            --glow: 0 4px 20px rgba(14, 165, 233, 0.15);
         }
 
-        * { 
-            box-sizing: border-box; 
-            -webkit-tap-highlight-color: transparent; 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        body { 
-            background: var(--bg); 
-            background-image: var(--bg-gradient);
-            color: var(--text-main); 
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            margin: 0; 
-            padding: 15px; 
-            min-height: 100vh; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; }
+        body { background-color: #bae6fd; color: var(--text-main); font-family: 'Plus Jakarta Sans', sans-serif; display: flex; justify-content: center; overflow-x: hidden; min-height: 100vh; }
 
-        .auth-card {
-            width: 100%; 
-            max-width: 440px; 
-            background: var(--card);
-            border: 1px solid var(--border); 
-            border-radius: 32px;
-            padding: 40px 30px; 
-            box-shadow: var(--shadow);
-            backdrop-filter: blur(20px);
-            position: relative;
-            overflow: hidden;
-        }
+        .app-container { width: 100%; max-width: 450px; min-height: 100vh; background: var(--bg); position: relative; border-left: 1px solid var(--border); border-right: 1px solid var(--border); display: flex; flex-direction: column; }
+        .bg-glow { position: fixed; inset: 0; background: radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.15), transparent 60%); z-index: 0; pointer-events: none; }
 
-        /* Effet de lueur en arrière-plan de la carte */
-        .auth-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(2, 132, 199, 0.05) 0%, transparent 60%);
-            pointer-events: none;
-            z-index: 0;
-        }
+        header { padding: 25px 20px 15px; position: relative; z-index: 10; text-align: center; }
+        .back-btn { position: absolute; left: 20px; top: 30px; color: var(--text-main); font-size: 1.2rem; cursor: pointer; text-decoration: none; }
+        .logo { width: 60px; height: 60px; border-radius: 12px; border: 2px solid var(--agi-gold); box-shadow: var(--glow); margin-bottom: 10px; }
+        h1 { font-size: 1.2rem; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: var(--text-main); }
+        p.subtitle { font-size: 0.75rem; color: var(--text-dim); margin-top: 5px; }
 
-        .card-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .header { text-align: center; margin-bottom: 30px; }
-        
-        .logo-ring {
-            width: 84px; 
-            height: 84px; 
-            border-radius: 24px; 
-            border: 2px solid var(--agi-gold);
-            margin: 0 auto 15px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            box-shadow: 0 10px 25px rgba(217, 119, 6, 0.15);
-            background: #fff;
-        }
-
+        /* Badge d'invitation hérité */
         .ref-badge {
-            background: var(--accent-light); 
+            background: rgba(2, 132, 199, 0.08); 
             color: var(--accent);
             padding: 10px 16px; 
-            border-radius: 20px; 
-            font-size: 0.75rem;
+            border-radius: 12px; 
+            font-size: 0.72rem;
             border: 1px solid rgba(2, 132, 199, 0.15); 
-            margin-bottom: 25px;
+            margin: 15px auto 5px;
             display: none; 
             align-items: center; 
             justify-content: center;
             gap: 8px;
-            font-weight: 600;
+            font-weight: 700;
+            max-width: 90%;
             animation: pulse 2s infinite;
         }
 
@@ -111,93 +61,70 @@
             100% { transform: scale(1); }
         }
 
-        .input-group { 
-            margin-bottom: 20px; 
-            position: relative; 
+        .progress-container { padding: 0 20px; margin-bottom: 25px; position: relative; z-index: 10; }
+        .progress-track { height: 6px; background: rgba(14, 165, 233, 0.1); border-radius: 10px; position: relative; overflow: hidden; }
+        .progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: var(--agi-gold); width: 25%; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .steps-labels { display: flex; justify-content: space-between; margin-top: 8px; font-size: 0.6rem; font-weight: 800; color: var(--text-dim); text-transform: uppercase; }
+        .step-label.active { color: var(--agi-gold); }
+
+        main { flex: 1; padding: 0 20px 30px; position: relative; z-index: 10; }
+        .step-section { display: none; animation: slideIn 0.4s ease forwards; }
+        .step-section.active { display: block; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
         }
+
+        .section-title { font-size: 0.95rem; font-weight: 800; margin-bottom: 20px; color: var(--accent); display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .section-title i { color: var(--agi-gold); }
+
+        .input-group { margin-bottom: 18px; position: relative; }
+        .input-group label { display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-main); margin-bottom: 6px; }
+        .input-wrapper { position: relative; }
+        .input-wrapper i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-dim); font-size: 1rem; }
         
-        .input-group i.input-icon { 
-            position: absolute; 
-            left: 18px; 
-            top: 50%; 
-            transform: translateY(-50%); 
-            color: var(--text-dim); 
-            font-size: 1.25rem; 
-        }
+        .form-control { width: 100%; background: var(--surface); border: 2px solid var(--border); padding: 14px 14px 14px 40px; border-radius: 12px; color: var(--text-main); font-size: 0.9rem; font-weight: 600; font-family: inherit; transition: 0.3s; }
+        .form-control:focus { border-color: var(--agi-gold); box-shadow: 0 0 0 4px rgba(217, 119, 6, 0.1); }
+        select.form-control { appearance: none; padding-right: 35px; }
+        .select-arrow { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--text-dim); pointer-events: none; }
 
-        .toggle-password {
-            position: absolute;
-            right: 18px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-dim);
-            cursor: pointer;
-            font-size: 1.2rem;
-            padding: 4px;
-        }
+        .pin-input { text-align: center; padding: 14px 0; font-size: 1.2rem; font-weight: 800; letter-spacing: 2px; }
+
+        .upload-zone { border: 2px dashed var(--border); background: rgba(14, 165, 233, 0.02); border-radius: 15px; padding: 25px 20px; text-align: center; cursor: pointer; transition: 0.3s; margin-bottom: 15px; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 140px; background-size: cover; background-position: center; }
+        .upload-zone:hover { border-color: var(--agi-gold); background-color: rgba(217, 119, 6, 0.03); }
+        .upload-content { transition: 0.2s; pointer-events: none; }
+        .upload-zone i { font-size: 2rem; color: var(--accent); margin-bottom: 10px; }
+        .upload-zone p { font-size: 0.75rem; font-weight: 600; color: var(--text-dim); }
+        .upload-zone input[type="file"] { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+        .file-status { margin-top: 8px; font-size: 0.7rem; font-weight: 800; color: var(--success); display: none; z-index: 2; background: rgba(255, 255, 255, 0.9); padding: 4px 8px; border-radius: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+
+        .security-notice { background: rgba(22, 163, 74, 0.08); border: 1px solid var(--success); border-radius: 12px; padding: 15px; display: flex; gap: 12px; align-items: flex-start; margin-bottom: 25px; }
+        .security-notice i { color: var(--success); font-size: 1.2rem; margin-top: 2px; }
+        .security-notice p { font-size: 0.7rem; color: var(--text-main); line-height: 1.5; font-weight: 600; }
+
+        .nav-buttons { display: flex; gap: 10px; margin-top: 30px; }
+        .btn { flex: 1; padding: 16px; border-radius: 14px; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; cursor: pointer; border: none; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 8px; }
+        .btn-prev { background: var(--surface); border: 2px solid var(--border); color: var(--text-dim); }
+        .btn-prev:hover { background: rgba(0,0,0,0.02); color: var(--text-main); }
+        .btn-next { background: var(--accent); color: #fff; box-shadow: 0 4px 15px rgba(2, 132, 199, 0.2); }
+        .btn-next:active { transform: scale(0.98); }
+        .btn-submit { background: var(--agi-gold); color: #fff; box-shadow: 0 4px 15px rgba(217, 119, 6, 0.3); }
+
+        #loader-overlay { position: fixed; inset: 0; background: var(--glass); backdrop-filter: blur(10px); z-index: 9999; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px;}
+        .spinner { width: 50px; height: 50px; border: 4px solid var(--border); border-top-color: var(--agi-gold); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
+        .loader-text { font-weight: 800; font-size: 0.9rem; color: var(--text-main); letter-spacing: 1px; }
+        .loader-subtext { font-size: 0.7rem; color: var(--text-dim); margin-top: 8px; max-width: 80%; }
+        @keyframes spin { to { transform: rotate(360deg); } }
         
-        input {
-            width: 100%; 
-            background: rgba(255, 255, 255, 0.9); 
-            border: 1px solid var(--border);
-            padding: 18px 50px 18px 50px; 
-            border-radius: 20px; 
-            color: var(--text-main);
-            font-size: 0.95rem; 
-            font-weight: 600; 
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.01);
-        }
-        
-        input:focus { 
-            border-color: var(--accent); 
-            outline: none; 
-            background: #fff;
-            box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.1);
-        }
+        #camera-container { display: none; margin-bottom: 15px; position: relative; border-radius: 12px; overflow: hidden; border: 2px solid var(--accent); background: #000; }
+        #webcam { width: 100%; display: block; transform: scaleX(-1); }
+        #canvas { display: none; }
 
-        /* Statuts de validation visuelle */
-        input:not(:placeholder-shown):valid {
-            border-color: rgba(16, 185, 129, 0.4);
-        }
+        .face-guideline { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+        .face-oval { width: 60%; height: 75%; border: 2px dashed rgba(255, 255, 255, 0.6); border-radius: 50%; box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5); }
 
-        .btn-activate {
-            width: 100%; 
-            padding: 20px; 
-            border-radius: 20px; 
-            background: linear-gradient(135deg, var(--agi-gold), #f59e0b);
-            color: #fff; 
-            border: none; 
-            font-weight: 800; 
-            font-size: 1.05rem;
-            letter-spacing: 0.5px;
-            cursor: pointer; 
-            margin-top: 10px; 
-            box-shadow: 0 10px 25px rgba(217, 119, 6, 0.25);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .btn-activate:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 14px 30px rgba(217, 119, 6, 0.35);
-        }
-
-        .btn-activate:active {
-            transform: translateY(0);
-        }
-
-        .btn-activate:disabled { 
-            opacity: 0.7; 
-            cursor: not-allowed;
-            transform: none !important;
-            box-shadow: none !important;
-            background: #cbd5e1;
-            color: #64748b;
-        }
-
-        /* Notifications Toast Custom */
+        /* Toast de notification */
         .toast {
             position: fixed;
             bottom: 20px;
@@ -206,9 +133,9 @@
             background: #0f172a;
             color: #fff;
             padding: 14px 24px;
-            border-radius: 16px;
+            border-radius: 12px;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             z-index: 10001;
             display: flex;
@@ -216,18 +143,20 @@
             gap: 10px;
             opacity: 0;
             pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 90%;
+            max-width: 400px;
         }
-
         .toast.show {
             transform: translateX(-50%) translateY(0);
             opacity: 1;
         }
 
-        /* Modal Succès Ciel-Clair */
+        /* Modal de Succès Premium */
         .modal {
             position: fixed; 
             inset: 0; 
-            background: rgba(244, 249, 253, 0.98);
+            background: rgba(240, 249, 255, 0.98);
             display: none; 
             flex-direction: column; 
             align-items: center; 
@@ -245,8 +174,8 @@
         }
 
         .success-icon-container {
-            width: 100px;
-            height: 100px;
+            width: 90px;
+            height: 90px;
             background: #ecfdf5;
             border-radius: 50%;
             display: flex;
@@ -257,187 +186,385 @@
         }
 
         .uid-box {
-            background: #fff; 
-            padding: 18px; 
-            border-radius: 20px;
+            background: var(--surface); 
+            padding: 16px; 
+            border-radius: 12px;
             font-family: 'JetBrains Mono', monospace; 
             font-size: 0.75rem; 
             color: var(--accent);
             font-weight: 700;
-            border: 1px solid var(--border); 
-            margin: 20px 0; 
+            border: 2px solid var(--border); 
+            margin: 15px 0; 
             word-break: break-all;
             max-width: 100%;
-            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.02);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
 
         .bonus-pill {
             background: #ecfdf5; 
             color: var(--success); 
             padding: 12px 24px; 
-            border-radius: 16px; 
+            border-radius: 12px; 
             font-weight: 800; 
             margin-bottom: 15px;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            border: 1px solid rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(22, 163, 74, 0.2);
+            font-size: 0.9rem;
         }
 
         .btn-backup {
-            background: #fff;
+            background: var(--surface);
             color: var(--text-main);
-            border: 1px solid var(--border);
-            padding: 14px 20px;
-            border-radius: 16px;
+            border: 2px solid var(--border);
+            padding: 12px 20px;
+            border-radius: 12px;
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 8px;
             margin-bottom: 25px;
+            transition: 0.3s;
         }
 
         .btn-backup:hover {
-            background: var(--accent-light);
+            background: rgba(14, 165, 233, 0.05);
             color: var(--accent);
-            border-color: rgba(2, 132, 199, 0.3);
+            border-color: var(--accent);
         }
 
-        /* Spinner */
-        .spinner {
-            animation: spin 1s linear infinite;
-            display: inline-block;
+        .btn-download {
+            width: 100%; 
+            max-width: 320px;
+            padding: 18px; 
+            border-radius: 16px; 
+            background: linear-gradient(135deg, var(--accent), #025a87);
+            color: #fff; 
+            border: none; 
+            font-weight: 800; 
+            font-size: 0.95rem;
+            cursor: pointer; 
+            box-shadow: 0 10px 25px rgba(2, 132, 199, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: 0.3s;
         }
-        @keyframes spin {
-            100% { transform: rotate(360deg); }
+        .btn-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px rgba(2, 132, 199, 0.35);
         }
     </style>
 </head>
 <body>
 
-<div class="auth-card">
-    <div class="card-content">
-        <div class="header">
-            <div class="logo-ring">
-                <img src="https://i.imgur.com/NyWnYFN.jpeg" alt="AGI Logo" style="width:100%; height:100%; object-fit:cover; border-radius:22px;">
+    <div class="app-container">
+        <div class="bg-glow"></div>
+
+        <header>
+            <a href="atlas.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <img src="https://i.imgur.com/NyWnYFN.jpeg" alt="AGI Logo" class="logo">
+            <h1>Registre Citoyen</h1>
+            <p class="subtitle">Protocole KYC - Blockchain Nexus Core</p>
+            
+            <div id="refBadge" class="ref-badge">
+                <i class="fa-solid fa-satellite-dish"></i>
+                <span>Invitation détectée : <b id="refName" style="font-family:'JetBrains Mono'">--</b></span>
             </div>
-            <h2 style="margin:0; font-weight:800; letter-spacing:-1px; color: var(--text-main);">NEXUS CORE</h2>
-            <p style="color:var(--text-dim); font-size:0.85rem; margin-top:6px; font-weight: 500;">Registre de Citoyenneté Numérique</p>
+        </header>
+
+        <div class="progress-container">
+            <div class="progress-track">
+                <div class="progress-fill" id="progress-bar"></div>
+            </div>
+            <div class="steps-labels">
+                <span class="step-label active" id="lbl-1">Identité</span>
+                <span class="step-label" id="lbl-2">Sécurité</span>
+                <span class="step-label" id="lbl-3">Documents</span>
+                <span class="step-label" id="lbl-4">Vérification</span>
+            </div>
         </div>
 
-        <div id="refBadge" class="ref-badge">
-            <i class="ri-radar-line"></i>
-            <span>Invitation détectée : <b id="refName" style="font-family:'JetBrains Mono'">--</b></span>
-        </div>
+        <main>
+            <form id="registration-form" onsubmit="event.preventDefault();">
+                
+                <div class="step-section active" id="step-1">
+                    <h2 class="section-title"><i class="fas fa-id-card"></i> Identité Civile</h2>
+                    
+                    <div class="input-group">
+                        <label>Nom de famille</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="reg-nom" class="form-control" placeholder="Entrez votre nom tel que sur la pièce" required>
+                        </div>
+                    </div>
 
-        <div class="input-group">
-            <i class="ri-mail-star-line input-icon" style="color: var(--accent)"></i>
-            <input type="email" id="email" placeholder="Adresse Email Citoyenne" required autocomplete="email">
-        </div>
+                    <div class="input-group">
+                        <label>Prénom(s)</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-user-tag"></i>
+                            <input type="text" id="reg-prenom" class="form-control" placeholder="Entrez votre prénom" required>
+                        </div>
+                    </div>
 
-        <div class="input-group">
-            <i class="ri-fingerprint-line input-icon" style="color: var(--agi-gold)"></i>
-            <input type="password" id="pin" placeholder="Code PIN (6 chiffres)" maxlength="6" inputmode="numeric" required autocomplete="new-password">
-            <i class="ri-eye-off-line toggle-password" onclick="app.togglePinVisibility('pin', this)"></i>
-        </div>
+                    <div class="input-group">
+                        <label>Date de naissance</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-calendar-alt"></i>
+                            <input type="date" id="reg-dob" class="form-control" required>
+                        </div>
+                    </div>
 
-        <div class="input-group">
-            <i class="ri-shield-keyhole-line input-icon" style="color: var(--success)"></i>
-            <input type="password" id="confirm_pin" placeholder="Confirmer le PIN" maxlength="6" inputmode="numeric" required autocomplete="new-password">
-            <i class="ri-eye-off-line toggle-password" onclick="app.togglePinVisibility('confirm_pin', this)"></i>
-        </div>
+                    <div class="input-group">
+                        <label>Sexe</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-venus-mars"></i>
+                            <select id="reg-sexe" class="form-control" required>
+                                <option value="" disabled selected>Sélectionnez...</option>
+                                <option value="M">Masculin</option>
+                                <option value="F">Féminin</option>
+                            </select>
+                            <i class="fas fa-chevron-down select-arrow"></i>
+                        </div>
+                    </div>
 
-        <button class="btn-activate" id="submitBtn" onclick="app.register()">
-            <i class="ri-pulse-line"></i> ACTIVER MON NODE
-        </button>
+                    <div class="input-group">
+                        <label>Pays de Résidence</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-globe-africa"></i>
+                            <select id="reg-pays" class="form-control" required>
+                                <option value="BF" selected>Burkina Faso</option>
+                                <option value="CI">Côte d'Ivoire</option>
+                                <option value="ML">Mali</option>
+                                <option value="NE">Niger</option>
+                                <option value="TG">Togo</option>
+                                <option value="SN">Sénégal</option>
+                                <option value="OTHER">Autre</option>
+                            </select>
+                            <i class="fas fa-chevron-down select-arrow"></i>
+                        </div>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button type="button" class="btn btn-next" onclick="nextStep(2)">Continuer <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <div class="step-section" id="step-2">
+                    <h2 class="section-title"><i class="fas fa-shield-halved"></i> Coordonnées & Sécurité</h2>
+
+                    <div class="security-notice">
+                        <i class="fas fa-lock"></i>
+                        <p>Vos identifiants seront cryptés selon la norme <b>AES-256</b>. Le code PIN servira de signature numérique pour toutes vos transactions sur la blockchain Nexus Core.</p>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Identifiant Citoyen (Email)</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="reg-email" class="form-control" placeholder="adresse@email.com" required autocomplete="email">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Numéro de Téléphone (WhatsApp)</label>
+                        <div class="input-wrapper">
+                            <i class="fab fa-whatsapp"></i>
+                            <input type="tel" id="reg-tel" class="form-control" placeholder="+226 XX XX XX XX" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Mot de passe d'accès</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-key"></i>
+                            <input type="password" id="reg-pwd" class="form-control" placeholder="Minimum 8 caractères" required autocomplete="new-password">
+                            <i class="fas fa-eye-slash" onclick="togglePasswordVisibility('reg-pwd', this)" style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--text-dim);"></i>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Code PIN de Transaction (6 chiffres)</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-th"></i>
+                            <input type="password" id="reg-pin" class="form-control pin-input" maxlength="6" inputmode="numeric" pattern="\d{6}" placeholder="••••••" required autocomplete="new-password">
+                            <i class="fas fa-eye-slash" onclick="togglePasswordVisibility('reg-pin', this)" style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--text-dim);"></i>
+                        </div>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button type="button" class="btn btn-prev" onclick="prevStep(1)"><i class="fas fa-arrow-left"></i> Retour</button>
+                        <button type="button" class="btn btn-next" onclick="nextStep(3)">Continuer <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <div class="step-section" id="step-3">
+                    <h2 class="section-title"><i class="fas fa-file-contract"></i> Pièces Justificatives</h2>
+                    
+                    <div class="input-group">
+                        <label>Type de Document</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-passport"></i>
+                            <select id="reg-doc-type" class="form-control" required>
+                                <option value="" disabled selected>Sélectionnez un document...</option>
+                                <option value="CNIB">Carte Nationale d'Identité (CNIB)</option>
+                                <option value="PASSPORT">Passeport</option>
+                                <option value="PRO_MILITARY">Carte Professionnelle / Militaire</option>
+                            </select>
+                            <i class="fas fa-chevron-down select-arrow"></i>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Numéro du Document</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-hashtag"></i>
+                            <input type="text" id="reg-doc-num" class="form-control" placeholder="Ex: B1234567" required>
+                        </div>
+                    </div>
+
+                    <label style="font-size: 0.75rem; font-weight: 700; color: var(--text-main); margin-bottom: 6px; display: block;">Copie Recto du Document (Clair et lisible)</label>
+                    <div class="upload-zone" id="zone-recto" onclick="document.getElementById('file-recto').click()">
+                        <div class="upload-content" id="content-recto">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Appuyez pour photographier ou importer le Recto</p>
+                        </div>
+                        <input type="file" id="file-recto" accept="image/*" onchange="updateFileStatus(this, 'status-recto', 'zone-recto', 'content-recto')">
+                        <div class="file-status" id="status-recto"><i class="fas fa-check-circle"></i> Recto Chargé</div>
+                    </div>
+
+                    <label style="font-size: 0.75rem; font-weight: 700; color: var(--text-main); margin-bottom: 6px; display: block;">Copie Verso du Document</label>
+                    <div class="upload-zone" id="zone-verso" onclick="document.getElementById('file-verso').click()">
+                        <div class="upload-content" id="content-verso">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Appuyez pour photographier ou importer le Verso</p>
+                        </div>
+                        <input type="file" id="file-verso" accept="image/*" onchange="updateFileStatus(this, 'status-verso', 'zone-verso', 'content-verso')">
+                        <div class="file-status" id="status-verso"><i class="fas fa-check-circle"></i> Verso Chargé</div>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button type="button" class="btn btn-prev" onclick="prevStep(2)"><i class="fas fa-arrow-left"></i> Retour</button>
+                        <button type="button" class="btn btn-next" onclick="nextStep(4)">Continuer <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <div class="step-section" id="step-4">
+                    <h2 class="section-title"><i class="fas fa-face-viewfinder"></i> Biométrie & Consentement</h2>
+
+                    <div style="background: var(--surface); border: 2px solid var(--border); border-radius: 15px; padding: 20px; text-align: center; margin-bottom: 20px;">
+                        
+                        <div id="camera-container">
+                            <video id="webcam" autoplay playsinline></video>
+                            <div class="face-guideline">
+                                <div class="face-oval"></div>
+                            </div>
+                            <canvas id="canvas"></canvas>
+                        </div>
+
+                        <div id="camera-icon-wrapper" style="width: 100px; height: 100px; border-radius: 50%; background: rgba(14, 165, 233, 0.1); margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; border: 2px dashed var(--accent);">
+                            <i class="fas fa-camera" style="font-size: 2.5rem; color: var(--accent);"></i>
+                        </div>
+                        
+                        <h3 style="font-size: 0.9rem; font-weight: 800; margin-bottom: 8px;">Vérification de Vivacité (Selfie)</h3>
+                        <p style="font-size: 0.75rem; color: var(--text-dim); margin-bottom: 15px;">Autorisez l'accès à votre caméra pour une capture biométrique en temps réel.</p>
+                        
+                        <button type="button" id="btn-camera" class="btn" style="background: rgba(14, 165, 233, 0.1); color: var(--accent); width: 100%; border: 1px solid var(--accent);" onclick="startCamera()">
+                            <i class="fas fa-video"></i> ACTIVER LA CAMÉRA
+                        </button>
+                        
+                        <div id="liveness-status" style="display: none; margin-top: 10px; font-size: 0.8rem; font-weight: 800; color: var(--success);">
+                            <i class="fas fa-check-double"></i> Photo Capturée et Validée
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 20px; display: flex; align-items: flex-start; gap: 10px;">
+                        <input type="checkbox" id="reg-consent" style="width: 20px; height: 20px; accent-color: var(--agi-gold); margin-top: 2px;" required>
+                        <label for="reg-consent" style="font-size: 0.7rem; color: var(--text-main); line-height: 1.5;">
+                            Je certifie l'exactitude des informations fournies et j'accepte que mes données soient traitées et cryptées conformément aux clauses de souveraineté numérique d'Atlas Groupe.
+                        </label>
+                    </div>
+
+                    <div class="nav-buttons">
+                        <button type="button" class="btn btn-prev" onclick="prevStep(3)"><i class="fas fa-arrow-left"></i> Retour</button>
+                        <button type="button" class="btn btn-submit" onclick="submitRegistration()"><i class="fas fa-fingerprint"></i> CRÉER LE NEXUS ID</button>
+                    </div>
+                </div>
+
+            </form>
+        </main>
     </div>
-</div>
 
-<div id="modalSuccess" class="modal">
-    <div class="success-icon-container">
-        <i class="ri-checkbox-circle-fill" style="font-size: 4rem; color: var(--success);"></i>
-    </div>
-    <h1 style="margin-top:0; font-weight: 800; color: var(--text-main); letter-spacing: -1px;">NODE ACTIVÉ !</h1>
-    <p style="color:var(--text-dim); margin-top: 0; font-weight: 500;">Votre identité décentralisée (Base58) :</p>
-    
-    <div class="uid-box" id="newIdDisplay">--</div>
-    
-    <div class="bonus-pill">
-        🎁 +2000 ₳ CRÉDITÉS
+    <div id="loader-overlay">
+        <div class="spinner"></div>
+        <div class="loader-text" id="loader-msg">TRAITEMENT EN COURS...</div>
+        <div class="loader-subtext" id="loader-submsg"></div>
     </div>
 
-    <div>
-        <button class="btn-backup" onclick="app.downloadEncryptedKeycard()"><i class="ri-download-cloud-line"></i> Télécharger le Kit Secours Chiffré</button>
+    <div id="modalSuccess" class="modal">
+        <div class="success-icon-container">
+            <i class="fas fa-check-circle" style="font-size: 4rem; color: var(--success);"></i>
+        </div>
+        <h1 style="margin-top:0; font-weight: 900; color: var(--text-main); letter-spacing: -1px;">NODE ACTIVÉ !</h1>
+        <p style="color:var(--text-dim); margin-top: 5px; font-size: 0.85rem; font-weight: 600;">Votre identité décentralisée (Base58) :</p>
+        
+        <div class="uid-box" id="newIdDisplay">--</div>
+        
+        <div class="bonus-pill">
+            🎁 +1000 AG-COIN CRÉDITÉS
+        </div>
+
+        <div>
+            <button class="btn-backup" onclick="downloadEncryptedKeycard()"><i class="fas fa-download-cloud"></i> Télécharger le Kit Secours Chiffré</button>
+        </div>
+
+        <a href="https://agi-nexus-core.click/agi-business.pro.apk" style="text-decoration:none; width:100%; display: flex; justify-content: center;">
+            <button class="btn-download">
+                <i class="fab fa-android"></i> TÉLÉCHARGER L'APK PRO
+            </button>
+        </a>
     </div>
 
-    <a href="https://agi-nexus-core.click/agi-business.pro.apk" style="text-decoration:none; width:100%; max-width:320px;">
-        <button class="btn-activate" style="background: linear-gradient(135deg, var(--accent), #025a87); box-shadow: 0 10px 25px rgba(2, 132, 199, 0.25);">
-            <i class="ri-android-fill"></i> TÉLÉCHARGER L'APK PRO
-        </button>
-    </a>
-</div>
+    <div id="toastNotification" class="toast">
+        <i id="toastIcon" class="fas fa-circle-info"></i>
+        <span id="toastMessage">Notification</span>
+    </div>
 
-<div id="toastNotification" class="toast">
-    <i id="toastIcon" class="ri-information-line"></i>
-    <span id="toastMessage">Notification</span>
-</div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, set, get, runTransaction, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, get, set, runTransaction, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-    const firebaseConfig = { databaseURL: "https://atlasgroupebusiness-default-rtdb.firebaseio.com" };
-    const fApp = initializeApp(firebaseConfig);
-    const db = getDatabase(fApp);
-
-    const BASE_REWARD = 500;
-    const GRADES = [
-        { min: 0, bonus: 0 }, { min: 6, bonus: 15 }, { min: 16, bonus: 35 },
-        { min: 36, bonus: 60 }, { min: 76, bonus: 75 }, { min: 151, bonus: 100 }, { min: 301, bonus: 110 }
-    ];
-
-    // Variables globales temporaires pour la génération de kit de secours
-    let activeCredentials = null;
-
-    window.app = {
-        refID: new URLSearchParams(window.location.search).get('ref'),
-
-        init() {
-            if (this.refID) {
-                const badge = document.getElementById('refBadge');
-                badge.style.display = 'flex';
-                document.getElementById('refName').innerText = this.refID.substring(0, 15) + "...";
+        // ==========================================
+        //  CONFIGURATION DE CONFORMITÉ INDUSTRIELLE
+        // ==========================================
+        const KYC_CONFIG = {
+            mode: "PRODUCTION", // "PRODUCTION" ou "SANDBOX"
+            complianceApiUrl: "https://api.atlas-nexus.com/v1/kyc/verify",
+            firebase: {
+                databaseURL: "https://atlasgroupebusiness-default-rtdb.firebaseio.com"
             }
-        },
+        };
 
-        showToast(message, iconClass = "ri-alert-line", duration = 4000) {
-            const toast = document.getElementById('toastNotification');
-            const icon = document.getElementById('toastIcon');
-            const msg = document.getElementById('toastMessage');
-            
-            icon.className = iconClass;
-            msg.innerText = message;
-            
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, duration);
-        },
+        // Initialisation Firebase
+        const app = initializeApp({ databaseURL: KYC_CONFIG.firebase.databaseURL });
+        const db = getDatabase(app);
 
-        togglePinVisibility(fieldId, triggerIcon) {
-            const field = document.getElementById(fieldId);
-            if (field.type === "password") {
-                field.type = "text";
-                triggerIcon.className = "ri-eye-line toggle-password";
-            } else {
-                field.type = "password";
-                triggerIcon.className = "ri-eye-off-line toggle-password";
-            }
-        },
+        // Réglages parrainage hérités
+        const BASE_REWARD = 500;
+        const GRADES = [
+            { min: 0, bonus: 0 }, { min: 6, bonus: 15 }, { min: 16, bonus: 35 },
+            { min: 36, bonus: 60 }, { min: 76, bonus: 75 }, { min: 151, bonus: 100 }, { min: 301, bonus: 110 }
+        ];
 
-        generateB58(email) {
+        // Stockage d'activation cryptographique locale
+        let activeCredentials = null;
+
+        // Algorithme Base58 hérité (Fonction strictement conservée)
+        const generateB58 = (email) => {
             const alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
             let hash = 0;
             const clean = email.toLowerCase().trim();
@@ -455,122 +582,398 @@
                 res += alphabet[(res.length * 31) % 58];
             }
             return res.substring(0, 44);
-        },
+        };
 
-        async register() {
-            const email = document.getElementById('email').value.trim().toLowerCase();
-            const pin = document.getElementById('pin').value;
-            const confirm = document.getElementById('confirm_pin').value;
-            const btn = document.getElementById('submitBtn');
+        const sanitizeEmail = (e) => e.toLowerCase().replace(/[.#$[\]]/g, "_").trim();
 
-            // Validation de base rigoureuse
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                this.showToast("Adresse email invalide.", "ri-mail-close-line");
-                return;
+        let currentStep = 1;
+        let livenessValidated = false;
+        let videoStream = null;
+        let selfieBlob = null; 
+
+        // --- INITIALISATION DU REFFERER DANS L'URL ---
+        window.initReferral = function() {
+            const refID = new URLSearchParams(window.location.search).get('ref');
+            if (refID) {
+                const badge = document.getElementById('refBadge');
+                badge.style.display = 'flex';
+                document.getElementById('refName').innerText = refID.substring(0, 15) + "...";
             }
-            if (pin.length !== 6 || isNaN(pin)) {
-                this.showToast("Le code PIN doit comporter 6 chiffres.", "ri-fingerprint-line");
-                return;
+        };
+
+        // --- SYSTÈME TOAST MODERNISÉ ---
+        window.showToast = function(message, iconClass = "fas fa-circle-exclamation", duration = 4000) {
+            const toast = document.getElementById('toastNotification');
+            const icon = document.getElementById('toastIcon');
+            const msg = document.getElementById('toastMessage');
+            
+            icon.className = iconClass;
+            msg.innerText = message;
+            
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, duration);
+        };
+
+        // --- GESTION DE VISIBILITÉ MOT DE PASSE ET PIN ---
+        window.togglePasswordVisibility = function(fieldId, icon) {
+            const field = document.getElementById(fieldId);
+            if (field.type === "password") {
+                field.type = "text";
+                icon.className = "fas fa-eye";
+            } else {
+                field.type = "password";
+                icon.className = "fas fa-eye-slash";
             }
-            if (pin !== confirm) {
-                this.showToast("Les codes PIN ne correspondent pas.", "ri-lock-password-line");
-                return;
-            }
+        };
 
-            try {
-                btn.disabled = true;
-                btn.innerHTML = `<i class="ri-loader-4-line spinner"></i> SYNCHRONISATION BLOCKCHAIN...`;
-
-                const userB58 = this.generateB58(email);
-                const userKey = email.replace(/[.#$[\]]/g, "_");
-
-                const check = await get(ref(db, `accounts/${userKey}`));
-                if (check.exists()) {
-                    this.showToast("Ce node est déjà actif sur le réseau.", "ri-error-warning-line");
-                    btn.disabled = false;
-                    btn.innerHTML = `<i class="ri-pulse-line"></i> ACTIVER MON NODE`;
-                    return;
+        // --- NAVIGATION DANS LES ETAPES ---
+        window.nextStep = function(step) {
+            if (currentStep === 1) {
+                if (!document.getElementById('reg-nom').value || !document.getElementById('reg-prenom').value || !document.getElementById('reg-dob').value || !document.getElementById('reg-sexe').value) {
+                    showToast("Veuillez remplir tous les champs d'identité.", "fas fa-id-card"); return;
                 }
+            } else if (currentStep === 2) {
+                const email = document.getElementById('reg-email').value;
+                const pin = document.getElementById('reg-pin').value;
+                if (!email.includes('@')) { showToast("Email invalide.", "fas fa-envelope"); return; }
+                if (pin.length !== 6 || isNaN(pin)) { showToast("Le code PIN doit contenir exactement 6 chiffres.", "fas fa-key"); return; }
+                if (!document.getElementById('reg-pwd').value) { showToast("Veuillez définir un mot de passe.", "fas fa-lock"); return; }
+            } else if (currentStep === 3) {
+                if (!document.getElementById('reg-doc-type').value || !document.getElementById('reg-doc-num').value) {
+                    showToast("Veuillez renseigner les informations de votre document.", "fas fa-file-signature"); return;
+                }
+                if (!document.getElementById('file-recto').files[0]) {
+                    showToast("Le document Recto est obligatoire.", "fas fa-file-arrow-up"); return;
+                }
+            }
 
-                // Sauvegarde temporaire pour le kit d'exportation
-                activeCredentials = { email, userB58, pin };
+            document.getElementById(`step-${currentStep}`).classList.remove('active');
+            document.getElementById(`lbl-${currentStep}`).classList.remove('active');
+            
+            currentStep = step;
+            
+            document.getElementById(`step-${currentStep}`).classList.add('active');
+            document.getElementById(`lbl-${currentStep}`).classList.add('active');
+            
+            const progress = ((currentStep - 1) / 3) * 100;
+            document.getElementById('progress-bar').style.width = progress === 0 ? '25%' : progress + '%';
+        };
 
-                // 1. Création du compte
-                await set(ref(db, `accounts/${userKey}`), { 
-                    email, 
-                    id: userB58, 
-                    pin, 
-                    created: serverTimestamp() 
-                });
+        window.prevStep = function(step) {
+            document.getElementById(`step-${currentStep}`).classList.remove('active');
+            document.getElementById(`lbl-${currentStep}`).classList.remove('active');
+            currentStep = step;
+            document.getElementById(`step-${currentStep}`).classList.add('active');
+            document.getElementById(`lbl-${currentStep}`).classList.add('active');
+            
+            const progress = ((currentStep - 1) / 3) * 100;
+            document.getElementById('progress-bar').style.width = progress === 0 ? '25%' : progress + '%';
+        };
 
-                // 2. Initialisation Solde (+2000 Bonus Bienvenue)
-                await set(ref(db, `users/${userB58}`), { 
-                    balance: 2000, 
-                    email, 
-                    referrals_count: 0 
-                });
-
-                // 3. Logique de Récompense Ambassadeur Dynamique
-                if (this.refID && this.refID !== userB58) {
-                    const parrainRef = ref(db, `users/${this.refID}`);
+        // --- GESTION DES FICHIERS & PREVISUALISATION UX ---
+        window.updateFileStatus = function(input, statusId, zoneId, contentId) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    const zone = document.getElementById(zoneId);
+                    const content = document.getElementById(contentId);
                     
-                    await runTransaction(parrainRef, (userData) => {
-                        if (userData) {
-                            const newCount = (userData.referrals_count || 0) + 1;
-                            
-                            // Calcul du bonus selon le grade actuel
-                            let currentBonus = 0;
-                            GRADES.forEach(g => { 
-                                if(newCount >= g.min) currentBonus = g.bonus; 
-                            });
-                            
-                            const gainFinal = Math.floor(BASE_REWARD * (1 + currentBonus/100));
-                            
-                            userData.balance = (userData.balance || 0) + gainFinal;
-                            userData.referrals_count = newCount;
-                        }
-                        return userData;
-                    });
+                    zone.style.backgroundImage = `url(${e.target.result})`;
+                    content.style.opacity = '0.15'; 
+                    
+                    document.getElementById(statusId).style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+
+        // --- GESTION DE LA CAMÉRA WEBRTC ---
+        window.startCamera = async function() {
+            try {
+                videoStream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { 
+                        facingMode: "user",
+                        width: { ideal: 640 },
+                        height: { ideal: 480 }
+                    } 
+                });
+                const videoElement = document.getElementById('webcam');
+                videoElement.srcObject = videoStream;
+                
+                document.getElementById('camera-icon-wrapper').style.display = 'none';
+                document.getElementById('camera-container').style.display = 'block';
+                
+                const btn = document.getElementById('btn-camera');
+                btn.innerHTML = '<i class="fas fa-camera"></i> CAPTURER LA PHOTO';
+                btn.setAttribute('onclick', 'takeSnapshot()');
+                btn.style.background = 'var(--accent)';
+                btn.style.color = '#fff';
+
+            } catch (err) {
+                console.error("Erreur Caméra:", err);
+                showToast("Impossible d'accéder à la caméra. Autorisez l'accès.", "fas fa-video-slash");
+            }
+        };
+
+        window.takeSnapshot = function() {
+            const video = document.getElementById('webcam');
+            const canvas = document.getElementById('canvas');
+            const context = canvas.getContext('2d');
+            
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            
+            context.translate(canvas.width, 0);
+            context.scale(-1, 1);
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            context.setTransform(1, 0, 0, 1, 0, 0);
+            
+            canvas.toBlob(function(blob) {
+                selfieBlob = blob;
+            }, 'image/jpeg', 0.9);
+
+            videoStream.getTracks().forEach(track => track.stop());
+            document.getElementById('webcam').style.display = 'none';
+            document.getElementById('camera-container').style.display = 'none';
+            document.getElementById('btn-camera').style.display = 'none';
+            
+            document.getElementById('liveness-status').style.display = 'block';
+            document.getElementById('camera-icon-wrapper').style.display = 'flex';
+            document.getElementById('camera-icon-wrapper').style.borderColor = 'var(--success)';
+            document.getElementById('camera-icon-wrapper').innerHTML = '<i class="fas fa-user-check" style="font-size: 2.5rem; color: var(--success);"></i>';
+            
+            livenessValidated = true;
+        };
+
+        // --- ALGORITHME DE VÉRIFICATION & ENREGISTREMENT ---
+        window.submitRegistration = async function() {
+            if (!livenessValidated) {
+                showToast("Veuillez effectuer la capture biométrique.", "fas fa-camera"); return;
+            }
+            if (!document.getElementById('reg-consent').checked) {
+                showToast("Vous devez accepter les clauses de souveraineté.", "fas fa-file-contract"); return;
+            }
+
+            const loader = document.getElementById('loader-overlay');
+            const loaderMsg = document.getElementById('loader-msg');
+            const loaderSubMsg = document.getElementById('loader-submsg');
+            loader.style.display = 'flex';
+
+            const email = document.getElementById('reg-email').value.trim();
+            const safeEmail = sanitizeEmail(email);
+            const b58_id = generateB58(email);
+            
+            const inputNom = document.getElementById('reg-nom').value.trim().toUpperCase();
+            const inputPrenom = document.getElementById('reg-prenom').value.trim();
+            const inputDocNum = document.getElementById('reg-doc-num').value.trim().toUpperCase();
+            const pin = document.getElementById('reg-pin').value;
+            const password = document.getElementById('reg-pwd').value;
+
+            const rectoFile = document.getElementById('file-recto').files[0];
+            const versoFile = document.getElementById('file-verso').files[0];
+
+            // Sauvegarde de session temporaire cryptologique
+            activeCredentials = { email, userB58: b58_id, pin };
+
+            const saveRecordsInFirebase = async (kyc_status) => {
+                const checkRef = ref(db, `accounts/${safeEmail}`);
+                const snap = await get(checkRef);
+                
+                if (snap.exists()) {
+                    throw new Error("Un compte existe déjà avec cet Identifiant Citoyen.");
                 }
 
-                // Enregistrement de session & affichage succès
+                const userData = {
+                    email: email,
+                    id: b58_id,
+                    nexus_id: b58_id,
+                    nom: inputNom,
+                    prenom: inputPrenom,
+                    dob: document.getElementById('reg-dob').value,
+                    sexe: document.getElementById('reg-sexe').value,
+                    pays: document.getElementById('reg-pays').value,
+                    telephone: document.getElementById('reg-tel').value.trim(),
+                    pin: pin,
+                    password: password,
+                    kyc_status: kyc_status,
+                    doc_type: document.getElementById('reg-doc-type').value,
+                    doc_num: inputDocNum,
+                    created_at: serverTimestamp(),
+                    created: serverTimestamp()
+                };
+
+                // 1. Enregistrement des données d'identité cryptées
+                await set(ref(db, `accounts/${safeEmail}`), userData);
+
+                // 2. Initialisation du Solde (+1000 AG-COIN de bonus de bienvenue)
+                await set(ref(db, `users/${b58_id}`), {
+                    email: email,
+                    balance: 1000, 
+                    referrals_count: 0,
+                    status: 'active',
+                    joined: serverTimestamp()
+                });
+
+                // 3. Logique de Récompense Parrainage Héritée
+                const refID = new URLSearchParams(window.location.search).get('ref');
+                if (refID && refID !== b58_id) {
+                    const parrainRef = ref(db, `users/${refID}`);
+                    try {
+                        await runTransaction(parrainRef, (userData) => {
+                            if (userData) {
+                                const newCount = (userData.referrals_count || 0) + 1;
+                                
+                                let currentBonus = 0;
+                                GRADES.forEach(g => { 
+                                    if(newCount >= g.min) currentBonus = g.bonus; 
+                                });
+                                
+                                const gainFinal = Math.floor(BASE_REWARD * (1 + currentBonus/100));
+                                
+                                userData.balance = (userData.balance || 0) + gainFinal;
+                                userData.referrals_count = newCount;
+                            }
+                            return userData;
+                        });
+                    } catch (txErr) {
+                        console.error("Erreur transaction ambassadeur:", txErr);
+                    }
+                }
+
                 localStorage.setItem('agi_logged_email', email);
-                document.getElementById('newIdDisplay').innerText = userB58;
-                document.getElementById('modalSuccess').style.display = 'flex';
+            };
 
-            } catch (e) {
-                console.error(e);
-                this.showToast("Erreur de connexion Nexus Core.", "ri-wifi-off-line");
-                btn.disabled = false;
-                btn.innerHTML = `<i class="ri-pulse-line"></i> ACTIVER MON NODE`;
+            // -----------------------------------------------------------------
+            // OPTION A : COMPLIANCE SERVEUR (USAGE INDUSTRIEL/COMMERCIAL)
+            // -----------------------------------------------------------------
+            if (KYC_CONFIG.mode === "PRODUCTION") {
+                loaderMsg.innerText = "TRANSMISSION SÉCURISÉE...";
+                loaderSubMsg.innerText = "Chiffrement et envoi des données biométriques et documents vers le serveur de conformité.";
+
+                const formData = new FormData();
+                formData.append("email", email);
+                formData.append("nexus_id", b58_id);
+                formData.append("nom", inputNom);
+                formData.append("prenom", inputPrenom);
+                formData.append("dob", document.getElementById('reg-dob').value);
+                formData.append("sexe", document.getElementById('reg-sexe').value);
+                formData.append("pays", document.getElementById('reg-pays').value);
+                formData.append("telephone", document.getElementById('reg-tel').value.trim());
+                formData.append("pin", pin);
+                formData.append("password", password);
+                formData.append("doc_type", document.getElementById('reg-doc-type').value);
+                formData.append("doc_num", inputDocNum);
+                
+                formData.append("document_recto", rectoFile);
+                if (versoFile) formData.append("document_verso", versoFile);
+                if (selfieBlob) formData.append("selfie_biometrique", selfieBlob, "selfie.jpg");
+
+                try {
+                    const response = await fetch(KYC_CONFIG.complianceApiUrl, {
+                        method: "POST",
+                        body: formData,
+                        headers: {
+                            "X-App-Client": "ATLAS-NEXUS-FRONTEND"
+                        }
+                    });
+
+                    const result = await response.json();
+
+                    if (!response.ok || !result.success) {
+                        throw new Error(result.message || "Le serveur de conformité a rejeté votre demande.");
+                    }
+
+                    await saveRecordsInFirebase("VERIFIE_PAR_SERVEUR");
+
+                    loaderMsg.innerText = "CONFORMITÉ VALIDÉE !";
+                    loaderSubMsg.innerText = "Initialisation de votre Node Atlas Nexus...";
+
+                    setTimeout(() => {
+                        loader.style.display = 'none';
+                        document.getElementById('newIdDisplay').innerText = b58_id;
+                        document.getElementById('modalSuccess').style.display = 'flex';
+                    }, 2000);
+
+                } catch (apiError) {
+                    console.error("Erreur de conformité serveur:", apiError);
+                    loader.style.display = 'none';
+                    showToast(`Conformité échouée : ${apiError.message}`, "fas fa-triangle-exclamation");
+                }
+            } 
+            
+            // -----------------------------------------------------------------
+            // OPTION B : COMPLIANCE LOCAL CLIENT + FIREBASE (MODE DEVELOPPEMENT)
+            // -----------------------------------------------------------------
+            else {
+                loaderMsg.innerText = "ANALYSE DE CONFORMITÉ LOCALE (OCR)...";
+                loaderSubMsg.innerText = "Vérification cryptographique locale de concordance de votre pièce d'identité.";
+
+                try {
+                    const worker = await Tesseract.createWorker('fra');
+                    const ret = await worker.recognize(rectoFile);
+                    const extractedText = ret.data.text.toUpperCase();
+                    await worker.terminate();
+
+                    const cleanExtractedText = extractedText.replace(/[^A-Z0-9]/g, '');
+                    const cleanInputNom = inputNom.replace(/[^A-Z0-9]/g, '');
+                    const cleanInputDocNum = inputDocNum.replace(/[^A-Z0-9]/g, '');
+
+                    const isNomValid = cleanExtractedText.includes(cleanInputNom);
+                    const isDocNumValid = cleanExtractedText.includes(cleanInputDocNum);
+                    const prenomParts = inputPrenom.toUpperCase().split(' ');
+                    const isPrenomValid = prenomParts.some(p => cleanExtractedText.includes(p.replace(/[^A-Z0-9]/g, '')));
+
+                    if (!isNomValid || !isPrenomValid || !isDocNumValid) {
+                        loader.style.display = 'none';
+                        showToast("Échec KYC local : Les informations ne correspondent pas à la pièce.", "fas fa-user-xmark");
+                        return;
+                    }
+
+                    loaderMsg.innerText = "SÉCURISATION & INSCRIPTION...";
+                    loaderSubMsg.innerText = "Génération de votre signature numérique sur la blockchain...";
+
+                    await saveRecordsInFirebase("VERIFIE_PAR_IA");
+
+                    loaderMsg.innerText = "SYNCHRONISATION TERMINÉE";
+                    loaderSubMsg.innerText = "Bienvenue citoyen ! Redirection...";
+
+                    setTimeout(() => {
+                        loader.style.display = 'none';
+                        document.getElementById('newIdDisplay').innerText = b58_id;
+                        document.getElementById('modalSuccess').style.display = 'flex';
+                    }, 1500);
+
+                } catch (ocrError) {
+                    console.error("Erreur validation locale:", ocrError);
+                    loader.style.display = 'none';
+                    showToast("Échec OCR de l'image. Veuillez utiliser une image plus nette.", "fas fa-image");
+                }
             }
-        },
+        };
 
-        // Extraction cryptographique industrielle utilisant la classe NexusCrypto
-        async downloadEncryptedKeycard() {
+        // --- PROTOCOLE DE SECURITÉ AES-GCM-256 (TÉLÉCHARGEMENT KIT SECOURS) ---
+        window.downloadEncryptedKeycard = async function() {
             if (!activeCredentials) {
-                this.showToast("Données d'activation introuvables.", "ri-error-warning-line");
+                showToast("Données d'activation introuvables.", "fas fa-shield-halved");
                 return;
             }
 
             try {
-                // Génération de la clé AES
                 const key = await NexusCrypto.generateKey();
                 const textToEncrypt = JSON.stringify({
                     id: activeCredentials.userB58,
                     email: activeCredentials.email,
-                    keycard_signature: "NEXUS-CORE-OFFICIAL-NODE",
+                    keycard_signature: "ATLAS-NEXUS-CORE-OFFICIAL-NODE",
                     timestamp: new Date().toISOString()
                 });
 
-                // Chiffrement avec AES-GCM
                 const encryptedPayload = await NexusCrypto.encrypt(textToEncrypt, key);
-                
-                // Export de la clé en format JWK pour récupération future possible
                 const exportedRawKey = await window.crypto.subtle.exportKey("jwk", key);
 
-                // Génération du fichier de secours (Kit de sécurité à conserver)
                 const backupData = JSON.stringify({
                     nexus_address: activeCredentials.userB58,
                     encrypted_identity: encryptedPayload,
@@ -588,83 +991,45 @@
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
 
-                this.showToast("Sauvegarde cryptographique réussie !", "ri-shield-check-line");
+                showToast("Sauvegarde cryptographique réussie !", "fas fa-circle-check");
             } catch (err) {
                 console.error("Échec de l'export cryptographique : ", err);
-                this.showToast("Échec de la génération sécurisée.", "ri-shield-cross-line");
+                showToast("Échec de la génération sécurisée.", "fas fa-triangle-exclamation");
+            }
+        };
+
+        // Classe cryptographique AES-GCM (Héritée de la première version)
+        class NexusCrypto {
+            static async generateKey() {
+                return await window.crypto.subtle.generateKey(
+                    { name: "AES-GCM", length: 256 },
+                    true,
+                    ["encrypt", "decrypt"]
+                );
+            }
+
+            static async encrypt(text, key) {
+                const encoder = new TextEncoder();
+                const data = encoder.encode(text);
+                const iv = window.crypto.getRandomValues(new Uint8Array(12));
+                
+                const cipherBuffer = await window.crypto.subtle.encrypt(
+                    { name: "AES-GCM", iv: iv },
+                    key,
+                    data
+                );
+                
+                const cipherBytes = new Uint8Array(cipherBuffer);
+                const combinedResult = new Uint8Array(iv.length + cipherBytes.length);
+                combinedResult.set(iv, 0);
+                combinedResult.set(cipherBytes, iv.length);
+                
+                return btoa(String.fromCharCode(...combinedResult));
             }
         }
-    };
 
-    // =====================================================================
-    // MODULE DE CHIFFREMENT DE GRADE MILITAIRE (API Web Crypto AES-GCM)
-    // =====================================================================
-    class NexusCrypto {
-        /**
-         * Génère une clé cryptographique AES-GCM 256-bit
-         */
-        static async generateKey() {
-            return await window.crypto.subtle.generateKey(
-                { name: "AES-GCM", length: 256 },
-                true, // Extractable
-                ["encrypt", "decrypt"]
-            );
-        }
-
-        /**
-         * Chiffre une chaîne de caractères
-         * @param {string} text - Le texte brut à chiffrer
-         * @param {CryptoKey} key - La clé de chiffrement générée
-         * @returns {Promise<string>} - La chaîne chiffrée codée en Base64
-         */
-        static async encrypt(text, key) {
-            const encoder = new TextEncoder();
-            const data = encoder.encode(text);
-            const iv = window.crypto.getRandomValues(new Uint8Array(12));
-            
-            const cipherBuffer = await window.crypto.subtle.encrypt(
-                { name: "AES-GCM", iv: iv },
-                key,
-                data
-            );
-            
-            const cipherBytes = new Uint8Array(cipherBuffer);
-            const combinedResult = new Uint8Array(iv.length + cipherBytes.length);
-            combinedResult.set(iv, 0);
-            combinedResult.set(cipherBytes, iv.length);
-            
-            return btoa(String.fromCharCode(...combinedResult));
-        }
-
-        /**
-         * Déchiffre une chaîne chiffrée par cette classe
-         * @param {string} base64Cipher - La chaîne chiffrée en Base64
-         * @param {CryptoKey} key - La clé de déchiffrement
-         * @returns {Promise<string>} - Le texte brut déchiffré
-         */
-        static async decrypt(base64Cipher, key) {
-            const binaryStr = atob(base64Cipher);
-            const bytes = new Uint8Array(binaryStr.length);
-            for (let i = 0; i < binaryStr.length; i++) {
-                bytes[i] = binaryStr.charCodeAt(i);
-            }
-            
-            const iv = bytes.slice(0, 12);
-            const data = bytes.slice(12);
-            
-            const decryptedBuffer = await window.crypto.subtle.decrypt(
-                { name: "AES-GCM", iv: iv },
-                key,
-                data
-            );
-            
-            const decoder = new TextDecoder();
-            return decoder.decode(decryptedBuffer);
-        }
-    }
-
-    app.init();
-</script>
-
+        // Démarrage
+        initReferral();
+    </script>
 </body>
 </html>
