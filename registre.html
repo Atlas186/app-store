@@ -540,7 +540,7 @@
         // ==========================================
         const KYC_CONFIG = {
             mode: "PRODUCTION", 
-            complianceApiUrl: "http://localhost:3002/api/kyc/verify", // Point d'entrée de votre serveur local (ou à changer vers l'URL publique de production)
+            complianceApiUrl: "https://91c3d4cc0511f4d0-154-66-165-10.serveousercontent.com/api/kyc/verify", // Point d'entrée sécurisé Serveo
             firebase: {
                 databaseURL: "https://atlasgroupebusiness-default-rtdb.firebaseio.com"
             }
@@ -550,7 +550,7 @@
         const app = initializeApp({ databaseURL: KYC_CONFIG.firebase.databaseURL });
         const db = getDatabase(app);
 
-        // Réglages parrainage hérités
+        // Réglages parrainage hérités (Utilisation explicite de AG-COIN)
         const BASE_REWARD = 500;
         const GRADES = [
             { min: 0, bonus: 0 }, { min: 6, bonus: 15 }, { min: 16, bonus: 35 },
@@ -802,7 +802,7 @@
 
                 await set(ref(db, `users/${b58_id}`), {
                     email: email,
-                    balance: 1000, 
+                    balance: 1000, // Récompense explicite en AG-COIN
                     referrals_count: 0,
                     status: 'active',
                     joined: serverTimestamp()
