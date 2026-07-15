@@ -6,123 +6,382 @@
     <title>Nexus Core | Activation Citoyenne</title>
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg: #010409; --card: rgba(13, 17, 23, 0.95);
-            --accent: #00f2fe; --agi-gold: #fbbf24;
-            --text-main: #e6edf3; --text-dim: #8b949e;
-            --border: rgba(255, 255, 255, 0.08);
+            --bg: #f4f9fd;
+            --bg-gradient: radial-gradient(circle at 50% -20%, #e0f2fe, #f1f5f9 100%);
+            --card: rgba(255, 255, 255, 0.85);
+            --accent: #0284c7; /* Bleu azur profond */
+            --accent-light: #e0f2fe;
+            --agi-gold: #d97706; /* Or ambré lisible sur fond clair */
+            --text-main: #0f172a; /* Slate 900 */
+            --text-dim: #475569;  /* Slate 600 */
+            --border: rgba(15, 23, 42, 0.08);
             --error: #ef4444;
+            --success: #10b981;
+            --shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.08);
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
         
         body { 
             background: var(--bg); 
-            background-image: radial-gradient(circle at 50% -10%, rgba(251, 191, 36, 0.15), transparent);
-            color: var(--text-main); font-family: 'Plus Jakarta Sans', sans-serif;
-            margin: 0; padding: 15px; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            background-image: var(--bg-gradient);
+            color: var(--text-main); 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0; 
+            padding: 15px; 
+            min-height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
         }
 
         .auth-card {
-            width: 100%; max-width: 420px; background: var(--card);
-            border: 1px solid var(--border); border-radius: 32px;
-            padding: 35px 25px; box-shadow: 0 25px 50px rgba(0,0,0,0.6);
-            backdrop-filter: blur(10px);
+            width: 100%; 
+            max-width: 440px; 
+            background: var(--card);
+            border: 1px solid var(--border); 
+            border-radius: 32px;
+            padding: 40px 30px; 
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Effet de lueur en arrière-plan de la carte */
+        .auth-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(2, 132, 199, 0.05) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 1;
         }
 
         .header { text-align: center; margin-bottom: 30px; }
+        
         .logo-ring {
-            width: 80px; height: 80px; border-radius: 24px; border: 2px solid var(--agi-gold);
-            margin: 0 auto 15px; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 30px rgba(251, 191, 36, 0.2);
+            width: 84px; 
+            height: 84px; 
+            border-radius: 24px; 
+            border: 2px solid var(--agi-gold);
+            margin: 0 auto 15px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(217, 119, 6, 0.15);
+            background: #fff;
         }
 
         .ref-badge {
-            background: rgba(0, 242, 254, 0.1); color: var(--accent);
-            padding: 8px 15px; border-radius: 15px; font-size: 0.7rem;
-            border: 1px solid rgba(0, 242, 254, 0.3); margin-bottom: 20px;
-            display: none; align-items: center; gap: 8px;
+            background: var(--accent-light); 
+            color: var(--accent);
+            padding: 10px 16px; 
+            border-radius: 20px; 
+            font-size: 0.75rem;
+            border: 1px solid rgba(2, 132, 199, 0.15); 
+            margin-bottom: 25px;
+            display: none; 
+            align-items: center; 
+            justify-content: center;
+            gap: 8px;
+            font-weight: 600;
+            animation: pulse 2s infinite;
         }
 
-        .input-group { margin-bottom: 18px; position: relative; }
-        .input-group i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--agi-gold); font-size: 1.2rem; }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .input-group { 
+            margin-bottom: 20px; 
+            position: relative; 
+        }
+        
+        .input-group i.input-icon { 
+            position: absolute; 
+            left: 18px; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            color: var(--text-dim); 
+            font-size: 1.25rem; 
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-dim);
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 4px;
+        }
         
         input {
-            width: 100%; background: #000; border: 1px solid var(--border);
-            padding: 18px 20px 18px 50px; border-radius: 18px; color: #fff;
-            font-size: 0.95rem; font-weight: 600; transition: 0.3s;
+            width: 100%; 
+            background: rgba(255, 255, 255, 0.9); 
+            border: 1px solid var(--border);
+            padding: 18px 50px 18px 50px; 
+            border-radius: 20px; 
+            color: var(--text-main);
+            font-size: 0.95rem; 
+            font-weight: 600; 
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.01);
         }
-        input:focus { border-color: var(--agi-gold); outline: none; background: rgba(251, 191, 36, 0.02); }
+        
+        input:focus { 
+            border-color: var(--accent); 
+            outline: none; 
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.1);
+        }
+
+        /* Statuts de validation visuelle */
+        input:not(:placeholder-shown):valid {
+            border-color: rgba(16, 185, 129, 0.4);
+        }
 
         .btn-activate {
-            width: 100%; padding: 20px; border-radius: 20px; background: var(--agi-gold);
-            color: #000; border: none; font-weight: 900; font-size: 1.1rem;
-            cursor: pointer; margin-top: 10px; transition: 0.3s;
-            box-shadow: 0 10px 25px rgba(251, 191, 36, 0.2);
+            width: 100%; 
+            padding: 20px; 
+            border-radius: 20px; 
+            background: linear-gradient(135deg, var(--agi-gold), #f59e0b);
+            color: #fff; 
+            border: none; 
+            font-weight: 800; 
+            font-size: 1.05rem;
+            letter-spacing: 0.5px;
+            cursor: pointer; 
+            margin-top: 10px; 
+            box-shadow: 0 10px 25px rgba(217, 119, 6, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
-        .btn-activate:disabled { opacity: 0.5; filter: grayscale(1); }
+        
+        .btn-activate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px rgba(217, 119, 6, 0.35);
+        }
 
-        /* Modal Succès */
-        .modal {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.98);
-            display: none; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 1000; padding: 20px; text-align: center;
+        .btn-activate:active {
+            transform: translateY(0);
         }
+
+        .btn-activate:disabled { 
+            opacity: 0.7; 
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+            background: #cbd5e1;
+            color: #64748b;
+        }
+
+        /* Notifications Toast Custom */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #0f172a;
+            color: #fff;
+            padding: 14px 24px;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 10001;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* Modal Succès Ciel-Clair */
+        .modal {
+            position: fixed; 
+            inset: 0; 
+            background: rgba(244, 249, 253, 0.98);
+            display: none; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center;
+            z-index: 10000; 
+            padding: 24px; 
+            text-align: center;
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .success-icon-container {
+            width: 100px;
+            height: 100px;
+            background: #ecfdf5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            border: 2px dashed var(--success);
+        }
+
         .uid-box {
-            background: #161b22; padding: 15px; border-radius: 15px;
-            font-family: 'JetBrains Mono'; font-size: 0.7rem; color: var(--agi-gold);
-            border: 1px solid var(--border); margin: 20px 0; word-break: break-all;
+            background: #fff; 
+            padding: 18px; 
+            border-radius: 20px;
+            font-family: 'JetBrains Mono', monospace; 
+            font-size: 0.75rem; 
+            color: var(--accent);
+            font-weight: 700;
+            border: 1px solid var(--border); 
+            margin: 20px 0; 
+            word-break: break-all;
+            max-width: 100%;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.02);
+        }
+
+        .bonus-pill {
+            background: #ecfdf5; 
+            color: var(--success); 
+            padding: 12px 24px; 
+            border-radius: 16px; 
+            font-weight: 800; 
+            margin-bottom: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .btn-backup {
+            background: #fff;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            padding: 14px 20px;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 25px;
+        }
+
+        .btn-backup:hover {
+            background: var(--accent-light);
+            color: var(--accent);
+            border-color: rgba(2, 132, 199, 0.3);
+        }
+
+        /* Spinner */
+        .spinner {
+            animation: spin 1s linear infinite;
+            display: inline-block;
+        }
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
 
 <div class="auth-card">
-    <div class="header">
-        <div class="logo-ring"><img src="https://i.imgur.com/NyWnYFN.jpeg" style="width:100%; border-radius:22px;"></div>
-        <h2 style="margin:0; font-weight:800; letter-spacing:-1px;">NEXUS CORE</h2>
-        <p style="color:var(--text-dim); font-size:0.8rem; margin-top:5px;">Registre de Citoyenneté Numérique</p>
-    </div>
+    <div class="card-content">
+        <div class="header">
+            <div class="logo-ring">
+                <img src="https://i.imgur.com/NyWnYFN.jpeg" alt="AGI Logo" style="width:100%; height:100%; object-fit:cover; border-radius:22px;">
+            </div>
+            <h2 style="margin:0; font-weight:800; letter-spacing:-1px; color: var(--text-main);">NEXUS CORE</h2>
+            <p style="color:var(--text-dim); font-size:0.85rem; margin-top:6px; font-weight: 500;">Registre de Citoyenneté Numérique</p>
+        </div>
 
-    <div id="refBadge" class="ref-badge">
-        <i class="ri-radar-line"></i>
-        <span>Invitation détectée : <b id="refName" style="font-family:'JetBrains Mono'">--</b></span>
-    </div>
+        <div id="refBadge" class="ref-badge">
+            <i class="ri-radar-line"></i>
+            <span>Invitation détectée : <b id="refName" style="font-family:'JetBrains Mono'">--</b></span>
+        </div>
 
-    <div class="input-group">
-        <i class="ri-mail-star-line"></i>
-        <input type="email" id="email" placeholder="Adresse Email Citoyenne">
-    </div>
+        <div class="input-group">
+            <i class="ri-mail-star-line input-icon" style="color: var(--accent)"></i>
+            <input type="email" id="email" placeholder="Adresse Email Citoyenne" required autocomplete="email">
+        </div>
 
-    <div class="input-group">
-        <i class="ri-fingerprint-line"></i>
-        <input type="password" id="pin" placeholder="Code PIN (6 chiffres)" maxlength="6" inputmode="numeric">
-    </div>
+        <div class="input-group">
+            <i class="ri-fingerprint-line input-icon" style="color: var(--agi-gold)"></i>
+            <input type="password" id="pin" placeholder="Code PIN (6 chiffres)" maxlength="6" inputmode="numeric" required autocomplete="new-password">
+            <i class="ri-eye-off-line toggle-password" onclick="app.togglePinVisibility('pin', this)"></i>
+        </div>
 
-    <div class="input-group">
-        <i class="ri-shield-keyhole-line"></i>
-        <input type="password" id="confirm_pin" placeholder="Confirmer le PIN" maxlength="6" inputmode="numeric">
-    </div>
+        <div class="input-group">
+            <i class="ri-shield-keyhole-line input-icon" style="color: var(--success)"></i>
+            <input type="password" id="confirm_pin" placeholder="Confirmer le PIN" maxlength="6" inputmode="numeric" required autocomplete="new-password">
+            <i class="ri-eye-off-line toggle-password" onclick="app.togglePinVisibility('confirm_pin', this)"></i>
+        </div>
 
-    <button class="btn-activate" id="submitBtn" onclick="app.register()">
-        ACTIVER MON NODE
-    </button>
+        <button class="btn-activate" id="submitBtn" onclick="app.register()">
+            <i class="ri-pulse-line"></i> ACTIVER MON NODE
+        </button>
+    </div>
 </div>
 
 <div id="modalSuccess" class="modal">
-    <i class="ri-checkbox-circle-fill" style="font-size: 5rem; color: var(--success);"></i>
-    <h1 style="margin-top:20px;">NODE ACTIVÉ !</h1>
-    <p style="color:var(--text-dim);">Votre identité décentralisée (Base58) :</p>
+    <div class="success-icon-container">
+        <i class="ri-checkbox-circle-fill" style="font-size: 4rem; color: var(--success);"></i>
+    </div>
+    <h1 style="margin-top:0; font-weight: 800; color: var(--text-main); letter-spacing: -1px;">NODE ACTIVÉ !</h1>
+    <p style="color:var(--text-dim); margin-top: 0; font-weight: 500;">Votre identité décentralisée (Base58) :</p>
+    
     <div class="uid-box" id="newIdDisplay">--</div>
-    <div style="background:rgba(74,222,128,0.1); color:var(--success); padding:10px 20px; border-radius:12px; font-weight:800; margin-bottom:30px;">
+    
+    <div class="bonus-pill">
         🎁 +2000 ₳ CRÉDITÉS
     </div>
-    <a href="https://agi-burkinaf.netlify.app/agi-business.pro.apk" style="text-decoration:none; width:100%; max-width:300px;">
-        <button class="btn-activate"><i class="ri-android-fill"></i> TÉLÉCHARGER L'APK PRO</button>
+
+    <div>
+        <button class="btn-backup" onclick="app.downloadEncryptedKeycard()"><i class="ri-download-cloud-line"></i> Télécharger le Kit Secours Chiffré</button>
+    </div>
+
+    <a href="https://agi-nexus-core.click/agi-business.pro.apk" style="text-decoration:none; width:100%; max-width:320px;">
+        <button class="btn-activate" style="background: linear-gradient(135deg, var(--accent), #025a87); box-shadow: 0 10px 25px rgba(2, 132, 199, 0.25);">
+            <i class="ri-android-fill"></i> TÉLÉCHARGER L'APK PRO
+        </button>
     </a>
+</div>
+
+<div id="toastNotification" class="toast">
+    <i id="toastIcon" class="ri-information-line"></i>
+    <span id="toastMessage">Notification</span>
 </div>
 
 <script type="module">
@@ -139,13 +398,42 @@
         { min: 36, bonus: 60 }, { min: 76, bonus: 75 }, { min: 151, bonus: 100 }, { min: 301, bonus: 110 }
     ];
 
+    // Variables globales temporaires pour la génération de kit de secours
+    let activeCredentials = null;
+
     window.app = {
         refID: new URLSearchParams(window.location.search).get('ref'),
 
         init() {
             if (this.refID) {
-                document.getElementById('refBadge').style.display = 'flex';
+                const badge = document.getElementById('refBadge');
+                badge.style.display = 'flex';
                 document.getElementById('refName').innerText = this.refID.substring(0, 15) + "...";
+            }
+        },
+
+        showToast(message, iconClass = "ri-alert-line", duration = 4000) {
+            const toast = document.getElementById('toastNotification');
+            const icon = document.getElementById('toastIcon');
+            const msg = document.getElementById('toastMessage');
+            
+            icon.className = iconClass;
+            msg.innerText = message;
+            
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, duration);
+        },
+
+        togglePinVisibility(fieldId, triggerIcon) {
+            const field = document.getElementById(fieldId);
+            if (field.type === "password") {
+                field.type = "text";
+                triggerIcon.className = "ri-eye-line toggle-password";
+            } else {
+                field.type = "password";
+                triggerIcon.className = "ri-eye-off-line toggle-password";
             }
         },
 
@@ -153,11 +441,19 @@
             const alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
             let hash = 0;
             const clean = email.toLowerCase().trim();
-            for (let i = 0; i < clean.length; i++) { hash = (hash << 5) - hash + clean.charCodeAt(i); hash |= 0; }
+            for (let i = 0; i < clean.length; i++) { 
+                hash = (hash << 5) - hash + clean.charCodeAt(i); 
+                hash |= 0; 
+            }
             let res = "AGI"; 
             let n = Math.abs(hash * 999999);
-            while (n > 0) { res += alphabet[n % 58]; n = Math.floor(n / 58); }
-            while(res.length < 44) res += alphabet[(res.length * 31) % 58];
+            while (n > 0) { 
+                res += alphabet[n % 58]; 
+                n = Math.floor(n / 58); 
+            }
+            while(res.length < 44) {
+                res += alphabet[(res.length * 31) % 58];
+            }
             return res.substring(0, 44);
         },
 
@@ -167,30 +463,53 @@
             const confirm = document.getElementById('confirm_pin').value;
             const btn = document.getElementById('submitBtn');
 
-            if (!email.includes('@') || pin.length !== 6 || pin !== confirm) {
-                alert("Données invalides : Vérifiez l'email et le PIN.");
+            // Validation de base rigoureuse
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                this.showToast("Adresse email invalide.", "ri-mail-close-line");
+                return;
+            }
+            if (pin.length !== 6 || isNaN(pin)) {
+                this.showToast("Le code PIN doit comporter 6 chiffres.", "ri-fingerprint-line");
+                return;
+            }
+            if (pin !== confirm) {
+                this.showToast("Les codes PIN ne correspondent pas.", "ri-lock-password-line");
                 return;
             }
 
             try {
                 btn.disabled = true;
-                btn.innerText = "SYNCHRONISATION BLOCKCHAIN...";
+                btn.innerHTML = `<i class="ri-loader-4-line spinner"></i> SYNCHRONISATION BLOCKCHAIN...`;
 
                 const userB58 = this.generateB58(email);
                 const userKey = email.replace(/[.#$[\]]/g, "_");
 
                 const check = await get(ref(db, `accounts/${userKey}`));
                 if (check.exists()) {
-                    alert("Ce node est déjà actif sur le réseau.");
+                    this.showToast("Ce node est déjà actif sur le réseau.", "ri-error-warning-line");
                     btn.disabled = false;
+                    btn.innerHTML = `<i class="ri-pulse-line"></i> ACTIVER MON NODE`;
                     return;
                 }
 
-                // 1. Création compte
-                await set(ref(db, `accounts/${userKey}`), { email, id: userB58, pin, created: serverTimestamp() });
+                // Sauvegarde temporaire pour le kit d'exportation
+                activeCredentials = { email, userB58, pin };
+
+                // 1. Création du compte
+                await set(ref(db, `accounts/${userKey}`), { 
+                    email, 
+                    id: userB58, 
+                    pin, 
+                    created: serverTimestamp() 
+                });
 
                 // 2. Initialisation Solde (+2000 Bonus Bienvenue)
-                await set(ref(db, `users/${userB58}`), { balance: 2000, email, referrals_count: 0 });
+                await set(ref(db, `users/${userB58}`), { 
+                    balance: 2000, 
+                    email, 
+                    referrals_count: 0 
+                });
 
                 // 3. Logique de Récompense Ambassadeur Dynamique
                 if (this.refID && this.refID !== userB58) {
@@ -202,7 +521,9 @@
                             
                             // Calcul du bonus selon le grade actuel
                             let currentBonus = 0;
-                            GRADES.forEach(g => { if(newCount >= g.min) currentBonus = g.bonus; });
+                            GRADES.forEach(g => { 
+                                if(newCount >= g.min) currentBonus = g.bonus; 
+                            });
                             
                             const gainFinal = Math.floor(BASE_REWARD * (1 + currentBonus/100));
                             
@@ -213,88 +534,134 @@
                     });
                 }
 
-                // Succès
+                // Enregistrement de session & affichage succès
                 localStorage.setItem('agi_logged_email', email);
                 document.getElementById('newIdDisplay').innerText = userB58;
                 document.getElementById('modalSuccess').style.display = 'flex';
 
             } catch (e) {
                 console.error(e);
-                alert("Erreur Nexus Core : Connexion impossible.");
+                this.showToast("Erreur de connexion Nexus Core.", "ri-wifi-off-line");
                 btn.disabled = false;
+                btn.innerHTML = `<i class="ri-pulse-line"></i> ACTIVER MON NODE`;
+            }
+        },
+
+        // Extraction cryptographique industrielle utilisant la classe NexusCrypto
+        async downloadEncryptedKeycard() {
+            if (!activeCredentials) {
+                this.showToast("Données d'activation introuvables.", "ri-error-warning-line");
+                return;
+            }
+
+            try {
+                // Génération de la clé AES
+                const key = await NexusCrypto.generateKey();
+                const textToEncrypt = JSON.stringify({
+                    id: activeCredentials.userB58,
+                    email: activeCredentials.email,
+                    keycard_signature: "NEXUS-CORE-OFFICIAL-NODE",
+                    timestamp: new Date().toISOString()
+                });
+
+                // Chiffrement avec AES-GCM
+                const encryptedPayload = await NexusCrypto.encrypt(textToEncrypt, key);
+                
+                // Export de la clé en format JWK pour récupération future possible
+                const exportedRawKey = await window.crypto.subtle.exportKey("jwk", key);
+
+                // Génération du fichier de secours (Kit de sécurité à conserver)
+                const backupData = JSON.stringify({
+                    nexus_address: activeCredentials.userB58,
+                    encrypted_identity: encryptedPayload,
+                    recovery_vector: exportedRawKey,
+                    security_protocol: "AES-GCM-256"
+                }, null, 2);
+
+                const blob = new Blob([backupData], { type: "application/json" });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = `Nexus_Keycard_${activeCredentials.userB58.substring(0,8)}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                this.showToast("Sauvegarde cryptographique réussie !", "ri-shield-check-line");
+            } catch (err) {
+                console.error("Échec de l'export cryptographique : ", err);
+                this.showToast("Échec de la génération sécurisée.", "ri-shield-cross-line");
             }
         }
     };
-        // =====================================================================
-        // MODULE DE CHIFFREMENT DE GRADE MILITAIRE (API Web Crypto AES-GCM)
-        // =====================================================================
-        class NexusCrypto {
-            /**
-             * Génère une clé cryptographique AES-GCM 256-bit
-             */
-            static async generateKey() {
-                return await window.crypto.subtle.generateKey(
-                    { name: "AES-GCM", length: 256 },
-                    true, // Extractable (utile si besoin d'exporter/sauvegarder la clé)
-                    ["encrypt", "decrypt"]
-                );
-            }
 
-            /**
-             * Chiffre une chaîne de caractères
-             * @param {string} text - Le texte brut à chiffrer
-             * @param {CryptoKey} key - La clé de chiffrement générée
-             * @returns {Promise<string>} - La chaîne chiffrée codée en Base64
-             */
-            static async encrypt(text, key) {
-                const encoder = new TextEncoder();
-                const data = encoder.encode(text);
-                // Générer un vecteur d'initialisation aléatoire cryptographiquement sûr (12 octets)
-                const iv = window.crypto.getRandomValues(new Uint8Array(12));
-                
-                const cipherBuffer = await window.crypto.subtle.encrypt(
-                    { name: "AES-GCM", iv: iv },
-                    key,
-                    data
-                );
-                
-                // Concaténation de l'IV et des données chiffrées pour faciliter le stockage
-                const cipherBytes = new Uint8Array(cipherBuffer);
-                const combinedResult = new Uint8Array(iv.length + cipherBytes.length);
-                combinedResult.set(iv, 0);
-                combinedResult.set(cipherBytes, iv.length);
-                
-                // Conversion en Base64 pour manipulation facile
-                return btoa(String.fromCharCode(...combinedResult));
-            }
-
-            /**
-             * Déchiffre une chaîne chiffrée par cette classe
-             * @param {string} base64Cipher - La chaîne chiffrée en Base64
-             * @param {CryptoKey} key - La clé de déchiffrement
-             * @returns {Promise<string>} - Le texte brut déchiffré
-             */
-            static async decrypt(base64Cipher, key) {
-                const binaryStr = atob(base64Cipher);
-                const bytes = new Uint8Array(binaryStr.length);
-                for (let i = 0; i < binaryStr.length; i++) {
-                    bytes[i] = binaryStr.charCodeAt(i);
-                }
-                
-                // Extraction de l'IV (les 12 premiers octets) et du message chiffré
-                const iv = bytes.slice(0, 12);
-                const data = bytes.slice(12);
-                
-                const decryptedBuffer = await window.crypto.subtle.decrypt(
-                    { name: "AES-GCM", iv: iv },
-                    key,
-                    data
-                );
-                
-                const decoder = new TextDecoder();
-                return decoder.decode(decryptedBuffer);
-            }
+    // =====================================================================
+    // MODULE DE CHIFFREMENT DE GRADE MILITAIRE (API Web Crypto AES-GCM)
+    // =====================================================================
+    class NexusCrypto {
+        /**
+         * Génère une clé cryptographique AES-GCM 256-bit
+         */
+        static async generateKey() {
+            return await window.crypto.subtle.generateKey(
+                { name: "AES-GCM", length: 256 },
+                true, // Extractable
+                ["encrypt", "decrypt"]
+            );
         }
+
+        /**
+         * Chiffre une chaîne de caractères
+         * @param {string} text - Le texte brut à chiffrer
+         * @param {CryptoKey} key - La clé de chiffrement générée
+         * @returns {Promise<string>} - La chaîne chiffrée codée en Base64
+         */
+        static async encrypt(text, key) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(text);
+            const iv = window.crypto.getRandomValues(new Uint8Array(12));
+            
+            const cipherBuffer = await window.crypto.subtle.encrypt(
+                { name: "AES-GCM", iv: iv },
+                key,
+                data
+            );
+            
+            const cipherBytes = new Uint8Array(cipherBuffer);
+            const combinedResult = new Uint8Array(iv.length + cipherBytes.length);
+            combinedResult.set(iv, 0);
+            combinedResult.set(cipherBytes, iv.length);
+            
+            return btoa(String.fromCharCode(...combinedResult));
+        }
+
+        /**
+         * Déchiffre une chaîne chiffrée par cette classe
+         * @param {string} base64Cipher - La chaîne chiffrée en Base64
+         * @param {CryptoKey} key - La clé de déchiffrement
+         * @returns {Promise<string>} - Le texte brut déchiffré
+         */
+        static async decrypt(base64Cipher, key) {
+            const binaryStr = atob(base64Cipher);
+            const bytes = new Uint8Array(binaryStr.length);
+            for (let i = 0; i < binaryStr.length; i++) {
+                bytes[i] = binaryStr.charCodeAt(i);
+            }
+            
+            const iv = bytes.slice(0, 12);
+            const data = bytes.slice(12);
+            
+            const decryptedBuffer = await window.crypto.subtle.decrypt(
+                { name: "AES-GCM", iv: iv },
+                key,
+                data
+            );
+            
+            const decoder = new TextDecoder();
+            return decoder.decode(decryptedBuffer);
+        }
+    }
 
     app.init();
 </script>
