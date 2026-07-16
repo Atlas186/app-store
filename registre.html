@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>ATLAS NEXUS CORE | Enregistrement Citoyen & KYC</title>
+    <title>ATLAS NEXUS | Inscription Rapide</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-    
-    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2 family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -19,7 +17,6 @@
             --accent: #0284c7; 
             --text-main: #0f172a; 
             --text-dim: #64748b; 
-            --danger: #ef4444; 
             --success: #16a34a;
             --agi-gold: #d97706; 
             --glow: 0 4px 20px rgba(14, 165, 233, 0.15);
@@ -31,230 +28,49 @@
         .app-container { width: 100%; max-width: 450px; min-height: 100vh; background: var(--bg); position: relative; border-left: 1px solid var(--border); border-right: 1px solid var(--border); display: flex; flex-direction: column; }
         .bg-glow { position: fixed; inset: 0; background: radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.15), transparent 60%); z-index: 0; pointer-events: none; }
 
-        header { padding: 25px 20px 15px; position: relative; z-index: 10; text-align: center; }
-        .back-btn { position: absolute; left: 20px; top: 30px; color: var(--text-main); font-size: 1.2rem; cursor: pointer; text-decoration: none; }
-        .logo { width: 60px; height: 60px; border-radius: 12px; border: 2px solid var(--agi-gold); box-shadow: var(--glow); margin-bottom: 10px; }
-        h1 { font-size: 1.2rem; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: var(--text-main); }
-        p.subtitle { font-size: 0.75rem; color: var(--text-dim); margin-top: 5px; }
+        header { padding: 35px 20px 20px; position: relative; z-index: 10; text-align: center; }
+        .logo { width: 65px; height: 65px; border-radius: 14px; border: 2px solid var(--agi-gold); box-shadow: var(--glow); margin-bottom: 12px; }
+        h1 { font-size: 1.3rem; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: var(--text-main); }
+        p.subtitle { font-size: 0.8rem; color: var(--text-dim); margin-top: 5px; }
 
-        .ref-badge {
-            background: rgba(2, 132, 199, 0.08); 
-            color: var(--accent);
-            padding: 10px 16px; 
-            border-radius: 12px; 
-            font-size: 0.72rem;
-            border: 1px solid rgba(2, 132, 199, 0.15); 
-            margin: 15px auto 5px;
-            display: none; 
-            align-items: center; 
-            justify-content: center;
-            gap: 8px;
-            font-weight: 700;
-            max-width: 90%;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-            100% { transform: scale(1); }
-        }
-
-        .progress-container { padding: 0 20px; margin-bottom: 25px; position: relative; z-index: 10; }
-        .progress-track { height: 6px; background: rgba(14, 165, 233, 0.1); border-radius: 10px; position: relative; overflow: hidden; }
-        .progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: var(--agi-gold); width: 25%; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        .steps-labels { display: flex; justify-content: space-between; margin-top: 8px; font-size: 0.6rem; font-weight: 800; color: var(--text-dim); text-transform: uppercase; }
-        .step-label.active { color: var(--agi-gold); }
-
-        main { flex: 1; padding: 0 20px 30px; position: relative; z-index: 10; }
-        .step-section { display: none; animation: slideIn 0.4s ease forwards; }
-        .step-section.active { display: block; }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .section-title { font-size: 0.95rem; font-weight: 800; margin-bottom: 20px; color: var(--accent); display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
-        .section-title i { color: var(--agi-gold); }
+        main { flex: 1; padding: 10px 20px 30px; position: relative; z-index: 10; }
+        .register-card { background: var(--surface); border: 2px solid var(--border); border-radius: 20px; padding: 25px 20px; box-shadow: var(--glow); }
 
         .input-group { margin-bottom: 18px; position: relative; }
         .input-group label { display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-main); margin-bottom: 6px; }
         .input-wrapper { position: relative; }
         .input-wrapper i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-dim); font-size: 1rem; }
         
-        .form-control { width: 100%; background: var(--surface); border: 2px solid var(--border); padding: 14px 14px 14px 40px; border-radius: 12px; color: var(--text-main); font-size: 0.9rem; font-weight: 600; font-family: inherit; transition: 0.3s; }
-        .form-control:focus { border-color: var(--agi-gold); box-shadow: 0 0 0 4px rgba(217, 119, 6, 0.1); }
-        select.form-control { appearance: none; padding-right: 35px; }
-        .select-arrow { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--text-dim); pointer-events: none; }
+        .form-control { width: 100%; background: var(--bg); border: 2px solid var(--border); padding: 14px 14px 14px 40px; border-radius: 12px; color: var(--text-main); font-size: 0.9rem; font-weight: 600; font-family: inherit; transition: 0.3s; }
+        .form-control:focus { border-color: var(--agi-gold); background: var(--surface); box-shadow: 0 0 0 4px rgba(217, 119, 6, 0.1); }
 
-        .pin-input { text-align: center; padding: 14px 0; font-size: 1.2rem; font-weight: 800; letter-spacing: 2px; }
+        .pin-input { text-align: center; padding: 14px 0; font-size: 1.2rem; font-weight: 800; letter-spacing: 4px; }
 
-        .upload-zone { border: 2px dashed var(--border); background: rgba(14, 165, 233, 0.02); border-radius: 15px; padding: 25px 20px; text-align: center; cursor: pointer; transition: 0.3s; margin-bottom: 15px; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 140px; background-size: cover; background-position: center; }
-        .upload-zone:hover { border-color: var(--agi-gold); background-color: rgba(217, 119, 6, 0.03); }
-        .upload-content { transition: 0.2s; pointer-events: none; }
-        .upload-zone i { font-size: 2rem; color: var(--accent); margin-bottom: 10px; }
-        .upload-zone p { font-size: 0.75rem; font-weight: 600; color: var(--text-dim); }
-        .upload-zone input[type="file"] { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
-        .file-status { margin-top: 8px; font-size: 0.7rem; font-weight: 800; color: var(--success); display: none; z-index: 2; background: rgba(255, 255, 255, 0.9); padding: 4px 8px; border-radius: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .security-notice { background: rgba(2, 132, 199, 0.05); border: 1px solid rgba(2, 132, 199, 0.15); border-radius: 12px; padding: 12px; display: flex; gap: 10px; align-items: flex-start; margin-bottom: 20px; }
+        .security-notice i { color: var(--accent); font-size: 1.1rem; margin-top: 2px; }
+        .security-notice p { font-size: 0.7rem; color: var(--text-dim); line-height: 1.4; font-weight: 600; }
 
-        .security-notice { background: rgba(22, 163, 74, 0.08); border: 1px solid var(--success); border-radius: 12px; padding: 15px; display: flex; gap: 12px; align-items: flex-start; margin-bottom: 25px; }
-        .security-notice i { color: var(--success); font-size: 1.2rem; margin-top: 2px; }
-        .security-notice p { font-size: 0.7rem; color: var(--text-main); line-height: 1.5; font-weight: 600; }
-
-        .nav-buttons { display: flex; gap: 10px; margin-top: 30px; }
-        .btn { flex: 1; padding: 16px; border-radius: 14px; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; cursor: pointer; border: none; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 8px; }
-        .btn-prev { background: var(--surface); border: 2px solid var(--border); color: var(--text-dim); }
-        .btn-prev:hover { background: rgba(0,0,0,0.02); color: var(--text-main); }
-        .btn-next { background: var(--accent); color: #fff; box-shadow: 0 4px 15px rgba(2, 132, 199, 0.2); }
-        .btn-next:active { transform: scale(0.98); }
-        .btn-submit { background: var(--agi-gold); color: #fff; box-shadow: 0 4px 15px rgba(217, 119, 6, 0.3); }
+        .btn-submit { width: 100%; padding: 16px; border-radius: 14px; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; cursor: pointer; border: none; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 8px; background: var(--agi-gold); color: #fff; box-shadow: 0 4px 15px rgba(217, 119, 6, 0.3); margin-top: 25px; }
+        .btn-submit:active { transform: scale(0.98); }
 
         #loader-overlay { position: fixed; inset: 0; background: var(--glass); backdrop-filter: blur(10px); z-index: 9999; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px;}
         .spinner { width: 50px; height: 50px; border: 4px solid var(--border); border-top-color: var(--agi-gold); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
         .loader-text { font-weight: 800; font-size: 0.9rem; color: var(--text-main); letter-spacing: 1px; }
-        .loader-subtext { font-size: 0.7rem; color: var(--text-dim); margin-top: 8px; max-width: 80%; }
         @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* SUCCESS MODAL */
+        .modal { position: fixed; inset: 0; background: rgba(240, 249, 255, 0.98); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 10000; padding: 24px; text-align: center; backdrop-filter: blur(10px); }
+        .success-icon-container { width: 80px; height: 80px; background: #ecfdf5; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; border: 2px dashed var(--success); }
+        .uid-box { background: var(--surface); padding: 16px; border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--accent); font-weight: 700; border: 2px solid var(--border); margin: 15px 0; word-break: break-all; max-width: 100%; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+        .bonus-pill { background: #ecfdf5; color: var(--success); padding: 12px 24px; border-radius: 12px; font-weight: 800; margin-bottom: 15px; display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(22, 163, 74, 0.2); font-size: 0.9rem; }
         
-        #camera-container { display: none; margin-bottom: 15px; position: relative; border-radius: 12px; overflow: hidden; border: 2px solid var(--accent); background: #000; }
-        #webcam { width: 100%; display: block; transform: scaleX(-1); }
-        #canvas { display: none; }
+        .btn-backup { background: var(--surface); color: var(--text-main); border: 2px solid var(--border); padding: 12px 20px; border-radius: 12px; font-weight: 700; font-size: 0.8rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 25px; transition: 0.3s; }
+        .btn-backup:hover { background: rgba(14, 165, 233, 0.05); color: var(--accent); border-color: var(--accent); }
+        .btn-download { width: 100%; max-width: 320px; padding: 18px; border-radius: 16px; background: linear-gradient(135deg, var(--accent), #025a87); color: #fff; border: none; font-weight: 800; font-size: 0.95rem; cursor: pointer; box-shadow: 0 10px 25px rgba(2, 132, 199, 0.25); display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; }
 
-        .face-guideline { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
-        .face-oval { width: 60%; height: 75%; border: 2px dashed rgba(255, 255, 255, 0.6); border-radius: 50%; box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5); }
-
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: #0f172a;
-            color: #fff;
-            padding: 14px 24px;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            z-index: 10001;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            width: 90%;
-            max-width: 400px;
-        }
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
-        }
-
-        .modal {
-            position: fixed; 
-            inset: 0; 
-            background: rgba(240, 249, 255, 0.98);
-            display: none; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center;
-            z-index: 10000; 
-            padding: 24px; 
-            text-align: center;
-            backdrop-filter: blur(10px);
-            animation: fadeIn 0.4s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .success-icon-container {
-            width: 90px;
-            height: 90px;
-            background: #ecfdf5;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            border: 2px dashed var(--success);
-        }
-
-        .uid-box {
-            background: var(--surface); 
-            padding: 16px; 
-            border-radius: 12px;
-            font-family: 'JetBrains Mono', monospace; 
-            font-size: 0.75rem; 
-            color: var(--accent);
-            font-weight: 700;
-            border: 2px solid var(--border); 
-            margin: 15px 0; 
-            word-break: break-all;
-            max-width: 100%;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
-        }
-
-        .bonus-pill {
-            background: #ecfdf5; 
-            color: var(--success); 
-            padding: 12px 24px; 
-            border-radius: 12px; 
-            font-weight: 800; 
-            margin-bottom: 15px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            border: 1px solid rgba(22, 163, 74, 0.2);
-            font-size: 0.9rem;
-        }
-
-        .btn-backup {
-            background: var(--surface);
-            color: var(--text-main);
-            border: 2px solid var(--border);
-            padding: 12px 20px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 0.8rem;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 25px;
-            transition: 0.3s;
-        }
-
-        .btn-backup:hover {
-            background: rgba(14, 165, 233, 0.05);
-            color: var(--accent);
-            border-color: var(--accent);
-        }
-
-        .btn-download {
-            width: 100%; 
-            max-width: 320px;
-            padding: 18px; 
-            border-radius: 16px; 
-            background: linear-gradient(135deg, var(--accent), #025a87);
-            color: #fff; 
-            border: none; 
-            font-weight: 800; 
-            font-size: 0.95rem;
-            cursor: pointer; 
-            box-shadow: 0 10px 25px rgba(2, 132, 199, 0.25);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: 0.3s;
-        }
-        .btn-download:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 14px 30px rgba(2, 132, 199, 0.35);
-        }
+        /* TOAST */
+        .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background: #0f172a; color: #fff; padding: 14px 24px; border-radius: 12px; font-weight: 600; font-size: 0.85rem; box-shadow: 0 10px 30px rgba(0,0,0,0.2); z-index: 10001; display: flex; align-items: center; gap: 10px; opacity: 0; pointer-events: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); width: 90%; max-width: 400px; }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
     </style>
 </head>
 <body>
@@ -263,104 +79,20 @@
         <div class="bg-glow"></div>
 
         <header>
-            <a href="atlas.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
             <img src="https://i.imgur.com/NyWnYFN.jpeg" alt="AGI Logo" class="logo">
-            <h1>Registre Citoyen</h1>
-            <p class="subtitle">Protocole KYC - Blockchain Nexus Core</p>
-            
-            <div id="refBadge" class="ref-badge">
-                <i class="fa-solid fa-satellite-dish"></i>
-                <span>Invitation détectée : <b id="refName" style="font-family:'JetBrains Mono'">--</b></span>
-            </div>
+            <h1>Nexus Register</h1>
+            <p class="subtitle">Création rapide d'Identifiant Citoyen</p>
         </header>
 
-        <div class="progress-container">
-            <div class="progress-track">
-                <div class="progress-fill" id="progress-bar"></div>
-            </div>
-            <div class="steps-labels">
-                <span class="step-label active" id="lbl-1">Identité</span>
-                <span class="step-label" id="lbl-2">Sécurité</span>
-                <span class="step-label" id="lbl-3">Documents</span>
-                <span class="step-label" id="lbl-4">Vérification</span>
-            </div>
-        </div>
-
         <main>
-            <form id="registration-form" onsubmit="event.preventDefault();">
-                
-                <!-- STEP 1 -->
-                <div class="step-section active" id="step-1">
-                    <h2 class="section-title"><i class="fas fa-id-card"></i> Identité Civile</h2>
+            <div class="register-card">
+                <form id="registration-form" onsubmit="submitRegistration(event)">
                     
-                    <div class="input-group">
-                        <label>Nom de famille</label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-user"></i>
-                            <input type="text" id="reg-nom" class="form-control" placeholder="Entrez votre nom tel que sur la pièce" required>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Prénom(s)</label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-user-tag"></i>
-                            <input type="text" id="reg-prenom" class="form-control" placeholder="Entrez votre prénom" required>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Date de naissance</label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-calendar-alt"></i>
-                            <input type="date" id="reg-dob" class="form-control" required>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Sexe</label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-venus-mars"></i>
-                            <select id="reg-sexe" class="form-control" required>
-                                <option value="" disabled selected>Sélectionnez...</option>
-                                <option value="M">Masculin</option>
-                                <option value="F">Féminin</option>
-                            </select>
-                            <i class="fas fa-chevron-down select-arrow"></i>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Pays de Résidence</label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-globe-africa"></i>
-                            <select id="reg-pays" class="form-control" required>
-                                <option value="BF" selected>Burkina Faso</option>
-                                <option value="CI">Côte d'Ivoire</option>
-                                <option value="ML">Mali</option>
-                                <option value="NE">Niger</option>
-                                <option value="TG">Togo</option>
-                                <option value="SN">Sénégal</option>
-                                <option value="OTHER">Autre</option>
-                            </select>
-                            <i class="fas fa-chevron-down select-arrow"></i>
-                        </div>
-                    </div>
-
-                    <div class="nav-buttons">
-                        <button type="button" class="btn btn-next" onclick="nextStep(2)">Continuer <i class="fas fa-arrow-right"></i></button>
-                    </div>
-                </div>
-
-                <!-- STEP 2 -->
-                <div class="step-section" id="step-2">
-                    <h2 class="section-title"><i class="fas fa-shield-halved"></i> Coordonnées & Sécurité</h2>
-
                     <div class="security-notice">
-                        <i class="fas fa-lock"></i>
-                        <p>Vos identifiants seront cryptés selon la norme <b>AES-256</b>. Le code PIN servira de signature numérique pour toutes vos transactions sur la blockchain Nexus Core.</p>
+                        <i class="fas fa-shield-halved"></i>
+                        <p>Votre code PIN sécurisera vos transactions futures et servira de clé de signature cryptographique.</p>
                     </div>
-                    
+
                     <div class="input-group">
                         <label>Identifiant Citoyen (Email)</label>
                         <div class="input-wrapper">
@@ -370,150 +102,42 @@
                     </div>
 
                     <div class="input-group">
-                        <label>Numéro de Téléphone (WhatsApp)</label>
-                        <div class="input-wrapper">
-                            <i class="fab fa-whatsapp"></i>
-                            <input type="tel" id="reg-tel" class="form-control" placeholder="+226 XX XX XX XX" required>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Mot de passe d'accès</label>
+                        <label>Code PIN de Sécurité (6 chiffres)</label>
                         <div class="input-wrapper">
                             <i class="fas fa-key"></i>
-                            <input type="password" id="reg-pwd" class="form-control" placeholder="Minimum 8 caractères" required autocomplete="new-password">
-                            <i class="fas fa-eye-slash" onclick="togglePasswordVisibility('reg-pwd', this)" style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--text-dim);"></i>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Code PIN de Transaction (6 chiffres)</label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-th"></i>
                             <input type="password" id="reg-pin" class="form-control pin-input" maxlength="6" inputmode="numeric" pattern="\d{6}" placeholder="••••••" required autocomplete="new-password">
-                            <i class="fas fa-eye-slash" onclick="togglePasswordVisibility('reg-pin', this)" style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--text-dim);"></i>
-                        </div>
-                    </div>
-
-                    <div class="nav-buttons">
-                        <button type="button" class="btn btn-prev" onclick="prevStep(1)"><i class="fas fa-arrow-left"></i> Retour</button>
-                        <button type="button" class="btn btn-next" onclick="nextStep(3)">Continuer <i class="fas fa-arrow-right"></i></button>
-                    </div>
-                </div>
-
-                <!-- STEP 3 -->
-                <div class="step-section" id="step-3">
-                    <h2 class="section-title"><i class="fas fa-file-contract"></i> Pièces Justificatives</h2>
-                    
-                    <div class="input-group">
-                        <label>Type de Document</label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-passport"></i>
-                            <select id="reg-doc-type" class="form-control" required>
-                                <option value="" disabled selected>Sélectionnez un document...</option>
-                                <option value="CNIB">Carte Nationale d'Identité (CNIB)</option>
-                                <option value="PASSPORT">Passeport</option>
-                                <option value="PRO_MILITARY">Carte Professionnelle / Militaire</option>
-                            </select>
-                            <i class="fas fa-chevron-down select-arrow"></i>
+                            <i class="fas fa-eye-slash" onclick="togglePin('reg-pin', this)" style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--text-dim);"></i>
                         </div>
                     </div>
 
                     <div class="input-group">
-                        <label>Numéro du Document</label>
+                        <label>Confirmez votre Code PIN</label>
                         <div class="input-wrapper">
-                            <i class="fas fa-hashtag"></i>
-                            <input type="text" id="reg-doc-num" class="form-control" placeholder="Ex: B1234567" required>
+                            <i class="fas fa-check-double"></i>
+                            <input type="password" id="reg-pin-confirm" class="form-control pin-input" maxlength="6" inputmode="numeric" pattern="\d{6}" placeholder="••••••" required autocomplete="new-password">
+                            <i class="fas fa-eye-slash" onclick="togglePin('reg-pin-confirm', this)" style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--text-dim);"></i>
                         </div>
                     </div>
 
-                    <label style="font-size: 0.75rem; font-weight: 700; color: var(--text-main); margin-bottom: 6px; display: block;">Copie Recto du Document (Clair et lisible)</label>
-                    <div class="upload-zone" id="zone-recto" onclick="document.getElementById('file-recto').click()">
-                        <div class="upload-content" id="content-recto">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <p>Appuyez pour photographier ou importer le Recto</p>
-                        </div>
-                        <input type="file" id="file-recto" accept="image/*" onchange="updateFileStatus(this, 'status-recto', 'zone-recto', 'content-recto')">
-                        <div class="file-status" id="status-recto"><i class="fas fa-check-circle"></i> Recto Chargé</div>
-                    </div>
-
-                    <label style="font-size: 0.75rem; font-weight: 700; color: var(--text-main); margin-bottom: 6px; display: block;">Copie Verso du Document</label>
-                    <div class="upload-zone" id="zone-verso" onclick="document.getElementById('file-verso').click()">
-                        <div class="upload-content" id="content-verso">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <p>Appuyez pour photographier ou importer le Verso</p>
-                        </div>
-                        <input type="file" id="file-verso" accept="image/*" onchange="updateFileStatus(this, 'status-verso', 'zone-verso', 'content-verso')">
-                        <div class="file-status" id="status-verso"><i class="fas fa-check-circle"></i> Verso Chargé</div>
-                    </div>
-
-                    <div class="nav-buttons">
-                        <button type="button" class="btn btn-prev" onclick="prevStep(2)"><i class="fas fa-arrow-left"></i> Retour</button>
-                        <button type="button" class="btn btn-next" onclick="nextStep(4)">Continuer <i class="fas fa-arrow-right"></i></button>
-                    </div>
-                </div>
-
-                <!-- STEP 4 -->
-                <div class="step-section" id="step-4">
-                    <h2 class="section-title"><i class="fas fa-face-viewfinder"></i> Biométrie & Consentement</h2>
-
-                    <div style="background: var(--surface); border: 2px solid var(--border); border-radius: 15px; padding: 20px; text-align: center; margin-bottom: 20px;">
-                        
-                        <div id="camera-container">
-                            <video id="webcam" autoplay playsinline></video>
-                            <div class="face-guideline">
-                                <div class="face-oval"></div>
-                            </div>
-                            <canvas id="canvas"></canvas>
-                        </div>
-
-                        <div id="camera-icon-wrapper" style="width: 100px; height: 100px; border-radius: 50%; background: rgba(14, 165, 233, 0.1); margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; border: 2px dashed var(--accent);">
-                            <i class="fas fa-camera" style="font-size: 2.5rem; color: var(--accent);"></i>
-                        </div>
-                        
-                        <h3 style="font-size: 0.9rem; font-weight: 800; margin-bottom: 8px;">Vérification de Vivacité (Selfie)</h3>
-                        <p style="font-size: 0.75rem; color: var(--text-dim); margin-bottom: 15px;">Autorisez l'accès à votre caméra pour une capture biométrique en temps réel.</p>
-                        
-                        <button type="button" id="btn-camera" class="btn" style="background: rgba(14, 165, 233, 0.1); color: var(--accent); width: 100%; border: 1px solid var(--accent);" onclick="startCamera()">
-                            <i class="fas fa-video"></i> ACTIVER LA CAMÉRA
-                        </button>
-                        
-                        <div id="liveness-status" style="display: none; margin-top: 10px; font-size: 0.8rem; font-weight: 800; color: var(--success);">
-                            <i class="fas fa-check-double"></i> Photo Capturée et Validée
-                        </div>
-                    </div>
-
-                    <div style="margin-bottom: 20px; display: flex; align-items: flex-start; gap: 10px;">
-                        <input type="checkbox" id="reg-consent" style="width: 20px; height: 20px; accent-color: var(--agi-gold); margin-top: 2px;" required>
-                        <label for="reg-consent" style="font-size: 0.7rem; color: var(--text-main); line-height: 1.5;">
-                            Je certifie l'exactitude des informations fournies et j'accepte que mes données soient traitées et cryptées conformément aux clauses de souveraineté numérique d'Atlas Groupe.
-                        </label>
-                    </div>
-
-                    <div class="nav-buttons">
-                        <button type="button" class="btn btn-prev" onclick="prevStep(3)"><i class="fas fa-arrow-left"></i> Retour</button>
-                        <button type="button" class="btn btn-submit" onclick="submitRegistration()"><i class="fas fa-fingerprint"></i> CRÉER LE NEXUS ID</button>
-                    </div>
-                </div>
-
-            </form>
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-fingerprint"></i> Générer mon Nexus ID
+                    </button>
+                </form>
+            </div>
         </main>
     </div>
 
-    <!-- LOADER OVERLAY -->
     <div id="loader-overlay">
         <div class="spinner"></div>
-        <div class="loader-text" id="loader-msg">TRAITEMENT EN COURS...</div>
-        <div class="loader-subtext" id="loader-submsg"></div>
+        <div class="loader-text">GÉNÉRATION DU CRYPTO-NODE EN COURS...</div>
     </div>
 
-    <!-- SUCCESS MODAL -->
     <div id="modalSuccess" class="modal">
         <div class="success-icon-container">
-            <i class="fas fa-check-circle" style="font-size: 4rem; color: var(--success);"></i>
+            <i class="fas fa-check-circle" style="font-size: 3.5rem; color: var(--success);"></i>
         </div>
-        <h1 style="margin-top:0; font-weight: 900; color: var(--text-main); letter-spacing: -1px;">NODE ACTIVÉ !</h1>
-        <p style="color:var(--text-dim); margin-top: 5px; font-size: 0.85rem; font-weight: 600;">Votre identité décentralisée (Base58) :</p>
+        <h1 style="margin-top:0; font-weight: 900; color: var(--text-main); letter-spacing: -1px;">INSCRIPTION RÉUSSIE</h1>
+        <p style="color:var(--text-dim); margin-top: 5px; font-size: 0.85rem; font-weight: 600;">Votre identifiant décentralisé (Base58) :</p>
         
         <div class="uid-box" id="newIdDisplay">--</div>
         
@@ -522,23 +146,19 @@
         </div>
 
         <div>
-            <button class="btn-backup" onclick="downloadEncryptedKeycard()"><i class="fas fa-cloud-download"></i> Télécharger le Kit Secours Chiffré</button>
+            <button class="btn-backup" onclick="downloadEncryptedKeycard()"><i class="fas fa-file-invoice"></i> Télécharger mon Kit Secours</button>
         </div>
 
-        <a href="https://agi-nexus-core.click/agi-business.pro.apk" style="text-decoration:none; width:100%; display: flex; justify-content: center;">
-            <button class="btn-download">
-                <i class="fab fa-android"></i> TÉLÉCHARGER L'APK PRO
-            </button>
+        <a href="https://agi-nexus-core.click/agi-business.pro.apk" class="btn-download">
+            <i class="fab fa-android"></i> TÉLÉCHARGER L'APK PRO
         </a>
     </div>
 
-    <!-- TOAST NOTIFICATION -->
     <div id="toastNotification" class="toast">
         <i id="toastIcon" class="fas fa-circle-info"></i>
         <span id="toastMessage">Notification</span>
     </div>
 
-    <!-- CRYPTOGRAPHIC CLASS DEFINITION -->
     <script>
         class NexusCrypto {
             static async generateKey() {
@@ -548,60 +168,39 @@
                     ["encrypt", "decrypt"]
                 );
             }
-
             static async encrypt(text, key) {
                 const encoder = new TextEncoder();
                 const data = encoder.encode(text);
                 const iv = window.crypto.getRandomValues(new Uint8Array(12));
-                
                 const cipherBuffer = await window.crypto.subtle.encrypt(
                     { name: "AES-GCM", iv: iv },
                     key,
                     data
                 );
-                
                 const cipherBytes = new Uint8Array(cipherBuffer);
                 const combinedResult = new Uint8Array(iv.length + cipherBytes.length);
                 combinedResult.set(iv, 0);
                 combinedResult.set(cipherBytes, iv.length);
-                
                 return btoa(String.fromCharCode(...combinedResult));
             }
         }
         window.NexusCrypto = NexusCrypto;
     </script>
 
-    <!-- MODULE DE GESTION APPLICATIVE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, set, get, runTransaction, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, set, get, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // ==========================================
-        //  CONFIGURATION DE CONFORMITÉ INDUSTRIELLE
-        // ==========================================
-        const KYC_CONFIG = {
-            mode: "PRODUCTION", 
-            complianceApiUrl: "https://9b07e57b9082fad3-154-66-165-10.serveousercontent.com/api/kyc/verify", 
-            firebase: {
-                databaseURL: "https://atlasgroupebusiness-default-rtdb.firebaseio.com"
-            }
+        const FIREBASE_CONFIG = {
+            databaseURL: "https://atlasgroupebusiness-default-rtdb.firebaseio.com"
         };
 
-        // Initialisation Firebase
-        const app = initializeApp({ databaseURL: KYC_CONFIG.firebase.databaseURL });
+        const app = initializeApp(FIREBASE_CONFIG);
         const db = getDatabase(app);
 
-        // Réglages parrainage AG-COIN
-        const BASE_REWARD = 500;
-        const GRADES = [
-            { min: 0, bonus: 0 }, { min: 6, bonus: 15 }, { min: 16, bonus: 35 },
-            { min: 36, bonus: 60 }, { min: 76, bonus: 75 }, { min: 151, bonus: 100 }, { min: 301, bonus: 110 }
-        ];
-
-        // Stockage local temporaire pour activation
         let activeCredentials = null;
 
-        // Algorithme de dérivation Base58 pour ID décentralisé unique
+        // Base58 Generator (AGI Standard)
         const generateB58 = (email) => {
             const alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
             let hash = 0;
@@ -624,36 +223,17 @@
 
         const sanitizeEmail = (e) => e.toLowerCase().replace(/[.#$[\]]/g, "_").trim();
 
-        let currentStep = 1;
-        let livenessValidated = false;
-        let videoStream = null;
-        let selfieBlob = null; 
-
-        // --- EXPOSITION DES FONCTIONS ET INTERFACES UTILES ---
-        window.initReferral = function() {
-            const refID = new URLSearchParams(window.location.search).get('ref');
-            if (refID) {
-                const badge = document.getElementById('refBadge');
-                badge.style.display = 'flex';
-                document.getElementById('refName').innerText = refID.substring(0, 15) + "...";
-            }
-        };
-
-        window.showToast = function(message, iconClass = "fas fa-circle-exclamation", duration = 4000) {
+        window.showToast = function(message, iconClass = "fas fa-circle-exclamation") {
             const toast = document.getElementById('toastNotification');
             const icon = document.getElementById('toastIcon');
             const msg = document.getElementById('toastMessage');
-            
             icon.className = iconClass;
             msg.innerText = message;
-            
             toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, duration);
+            setTimeout(() => { toast.classList.remove('show'); }, 4000);
         };
 
-        window.togglePasswordVisibility = function(fieldId, icon) {
+        window.togglePin = function(fieldId, icon) {
             const field = document.getElementById(fieldId);
             if (field.type === "password") {
                 field.type = "text";
@@ -664,329 +244,83 @@
             }
         };
 
-        window.nextStep = function(step) {
-            if (currentStep === 1) {
-                if (!document.getElementById('reg-nom').value || !document.getElementById('reg-prenom').value || !document.getElementById('reg-dob').value || !document.getElementById('reg-sexe').value) {
-                    showToast("Veuillez remplir tous les champs d'identité.", "fas fa-id-card"); return;
-                }
-            } else if (currentStep === 2) {
-                const email = document.getElementById('reg-email').value;
-                const pin = document.getElementById('reg-pin').value;
-                if (!email.includes('@')) { showToast("Email invalide.", "fas fa-envelope"); return; }
-                if (pin.length !== 6 || isNaN(pin)) { showToast("Le code PIN doit contenir exactement 6 chiffres.", "fas fa-key"); return; }
-                if (!document.getElementById('reg-pwd').value) { showToast("Veuillez définir un mot de passe.", "fas fa-lock"); return; }
-            } else if (currentStep === 3) {
-                if (!document.getElementById('reg-doc-type').value || !document.getElementById('reg-doc-num').value) {
-                    showToast("Veuillez renseigner les informations de votre document.", "fas fa-file-signature"); return;
-                }
-                if (!document.getElementById('file-recto').files[0]) {
-                    showToast("Le document Recto est obligatoire.", "fas fa-file-arrow-up"); return;
-                }
+        window.submitRegistration = async function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('reg-email').value.trim();
+            const pin = document.getElementById('reg-pin').value;
+            const pinConfirm = document.getElementById('reg-pin-confirm').value;
+
+            // Form validations
+            if (!email.includes('@')) {
+                showToast("Veuillez saisir un e-mail valide.", "fas fa-envelope");
+                return;
             }
-
-            document.getElementById(`step-${currentStep}`).classList.remove('active');
-            document.getElementById(`lbl-${currentStep}`).classList.remove('active');
-            
-            currentStep = step;
-            
-            document.getElementById(`step-${currentStep}`).classList.add('active');
-            document.getElementById(`lbl-${currentStep}`).classList.add('active');
-            
-            const progress = ((currentStep - 1) / 3) * 100;
-            document.getElementById('progress-bar').style.width = progress === 0 ? '25%' : progress + '%';
-        };
-
-        window.prevStep = function(step) {
-            document.getElementById(`step-${currentStep}`).classList.remove('active');
-            document.getElementById(`lbl-${currentStep}`).classList.remove('active');
-            currentStep = step;
-            document.getElementById(`step-${currentStep}`).classList.add('active');
-            document.getElementById(`lbl-${currentStep}`).classList.add('active');
-            
-            const progress = ((currentStep - 1) / 3) * 100;
-            document.getElementById('progress-bar').style.width = progress === 0 ? '25%' : progress + '%';
-        };
-
-        window.updateFileStatus = function(input, statusId, zoneId, contentId) {
-            if (input.files && input.files[0]) {
-                const file = input.files[0];
-                const reader = new FileReader();
-                
-                reader.onload = function(e) {
-                    const zone = document.getElementById(zoneId);
-                    const content = document.getElementById(contentId);
-                    
-                    zone.style.backgroundImage = `url(${e.target.result})`;
-                    content.style.opacity = '0.15'; 
-                    
-                    document.getElementById(statusId).style.display = 'block';
-                };
-                reader.readAsDataURL(file);
+            if (pin.length !== 6 || isNaN(pin) || pinConfirm.length !== 6 || isNaN(pinConfirm)) {
+                showToast("Le code PIN doit contenir exactement 6 chiffres.", "fas fa-key");
+                return;
             }
-        };
-
-        window.startCamera = async function() {
-            try {
-                videoStream = await navigator.mediaDevices.getUserMedia({ 
-                    video: { 
-                        facingMode: "user",
-                        width: { ideal: 640 },
-                        height: { ideal: 480 }
-                    } 
-                });
-                const videoElement = document.getElementById('webcam');
-                videoElement.srcObject = videoStream;
-                
-                document.getElementById('camera-icon-wrapper').style.display = 'none';
-                document.getElementById('camera-container').style.display = 'block';
-                
-                const btn = document.getElementById('btn-camera');
-                btn.innerHTML = '<i class="fas fa-camera"></i> CAPTURER LA PHOTO';
-                btn.setAttribute('onclick', 'takeSnapshot()');
-                btn.style.background = 'var(--accent)';
-                btn.style.color = '#fff';
-
-            } catch (err) {
-                console.error("Erreur Caméra:", err);
-                showToast("Impossible d'accéder à la caméra. Autorisez l'accès.", "fas fa-video-slash");
-            }
-        };
-
-        window.takeSnapshot = function() {
-            const video = document.getElementById('webcam');
-            const canvas = document.getElementById('canvas');
-            const context = canvas.getContext('2d');
-            
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            
-            context.translate(canvas.width, 0);
-            context.scale(-1, 1);
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            context.setTransform(1, 0, 0, 1, 0, 0);
-            
-            canvas.toBlob(function(blob) {
-                selfieBlob = blob;
-            }, 'image/jpeg', 0.9);
-
-            if (videoStream) {
-                videoStream.getTracks().forEach(track => track.stop());
-            }
-            document.getElementById('webcam').style.display = 'none';
-            document.getElementById('camera-container').style.display = 'none';
-            document.getElementById('btn-camera').style.display = 'none';
-            
-            document.getElementById('liveness-status').style.display = 'block';
-            document.getElementById('camera-icon-wrapper').style.display = 'flex';
-            document.getElementById('camera-icon-wrapper').style.borderColor = 'var(--success)';
-            document.getElementById('camera-icon-wrapper').innerHTML = '<i class="fas fa-user-check" style="font-size: 2.5rem; color: var(--success);"></i>';
-            
-            livenessValidated = true;
-        };
-
-        window.submitRegistration = async function() {
-            if (!livenessValidated) {
-                showToast("Veuillez effectuer la capture biométrique.", "fas fa-camera"); return;
-            }
-            if (!document.getElementById('reg-consent').checked) {
-                showToast("Vous devez accepter les clauses de souveraineté.", "fas fa-file-contract"); return;
+            if (pin !== pinConfirm) {
+                showToast("Les codes PIN saisis ne correspondent pas.", "fas fa-triangle-exclamation");
+                return;
             }
 
             const loader = document.getElementById('loader-overlay');
-            const loaderMsg = document.getElementById('loader-msg');
-            const loaderSubMsg = document.getElementById('loader-submsg');
             loader.style.display = 'flex';
 
-            const email = document.getElementById('reg-email').value.trim();
             const safeEmail = sanitizeEmail(email);
             const b58_id = generateB58(email);
-            
-            const inputNom = document.getElementById('reg-nom').value.trim().toUpperCase();
-            const inputPrenom = document.getElementById('reg-prenom').value.trim();
-            const inputDocNum = document.getElementById('reg-doc-num').value.trim().toUpperCase();
-            const pin = document.getElementById('reg-pin').value;
-            const password = document.getElementById('reg-pwd').value;
-
-            const rectoFile = document.getElementById('file-recto').files[0];
-            const versoFile = document.getElementById('file-verso').files[0];
 
             activeCredentials = { email, userB58: b58_id, pin };
 
-            const saveRecordsInFirebase = async (kyc_status) => {
+            try {
+                // Check redundancy
                 const checkRef = ref(db, `accounts/${safeEmail}`);
                 const snap = await get(checkRef);
                 
                 if (snap.exists()) {
-                    throw new Error("Un compte existe déjà avec cet Identifiant Citoyen.");
+                    throw new Error("Un compte est déjà associé à cet e-mail.");
                 }
 
+                // Node data structure
                 const userData = {
                     email: email,
                     id: b58_id,
                     nexus_id: b58_id,
-                    nom: inputNom,
-                    prenom: inputPrenom,
-                    dob: document.getElementById('reg-dob').value,
-                    sexe: document.getElementById('reg-sexe').value,
-                    pays: document.getElementById('reg-pays').value,
-                    telephone: document.getElementById('reg-tel').value.trim(),
                     pin: pin,
-                    password: password,
-                    kyc_status: kyc_status,
-                    doc_type: document.getElementById('reg-doc-type').value,
-                    doc_num: inputDocNum,
                     created_at: serverTimestamp(),
-                    created: serverTimestamp()
+                    kyc_status: "ENREGISTRE_SIMPLE"
                 };
 
+                // Save basic registration data
                 await set(ref(db, `accounts/${safeEmail}`), userData);
 
-                // Initialisation balance utilisateur en AG-COIN
+                // Initialize token balance 
                 await set(ref(db, `users/${b58_id}`), {
                     email: email,
                     balance: 1000, 
-                    referrals_count: 0,
                     status: 'active',
                     joined: serverTimestamp()
                 });
 
-                const refID = new URLSearchParams(window.location.search).get('ref');
-                if (refID && refID !== b58_id) {
-                    const parrainRef = ref(db, `users/${refID}`);
-                    try {
-                        await runTransaction(parrainRef, (userData) => {
-                            if (userData) {
-                                const newCount = (userData.referrals_count || 0) + 1;
-                                
-                                let currentBonus = 0;
-                                GRADES.forEach(g => { 
-                                    if(newCount >= g.min) currentBonus = g.bonus; 
-                                });
-                                
-                                const gainFinal = Math.floor(BASE_REWARD * (1 + currentBonus/100));
-                                
-                                userData.balance = (userData.balance || 0) + gainFinal;
-                                userData.referrals_count = newCount;
-                            }
-                            return userData;
-                        });
-                    } catch (txErr) {
-                        console.error("Erreur de parrainage :", txErr);
-                    }
-                }
-
                 localStorage.setItem('agi_logged_email', email);
-            };
 
-            if (KYC_CONFIG.mode === "PRODUCTION") {
-                loaderMsg.innerText = "TRANSMISSION SÉCURISÉE...";
-                loaderSubMsg.innerText = "Chiffrement et envoi des données biométriques vers le serveur de conformité.";
-
-                const formData = new FormData();
-                formData.append("email", email);
-                formData.append("nexus_id", b58_id);
-                formData.append("nom", inputNom);
-                formData.append("prenom", inputPrenom);
-                formData.append("dob", document.getElementById('reg-dob').value);
-                formData.append("sexe", document.getElementById('reg-sexe').value);
-                formData.append("pays", document.getElementById('reg-pays').value);
-                formData.append("telephone", document.getElementById('reg-tel').value.trim());
-                formData.append("pin", pin);
-                formData.append("password", password);
-                formData.append("doc_type", document.getElementById('reg-doc-type').value);
-                formData.append("doc_num", inputDocNum);
-                
-                formData.append("document_recto", rectoFile);
-                if (versoFile) formData.append("document_verso", versoFile);
-                if (selfieBlob) formData.append("selfie_biometrique", selfieBlob, "selfie.jpg");
-
-                try {
-                    const response = await fetch(KYC_CONFIG.complianceApiUrl, {
-                        method: "POST",
-                        body: formData,
-                        headers: {
-                            "X-App-Client": "ATLAS-NEXUS-FRONTEND"
-                        }
-                    });
-
-                    const result = await response.json();
-
-                    if (!response.ok || !result.success) {
-                        throw new Error(result.message || "Le serveur de conformité a rejeté votre demande.");
-                    }
-
-                    await saveRecordsInFirebase("VERIFIE_PAR_SERVEUR");
-
-                    loaderMsg.innerText = "CONFORMITÉ VALIDÉE !";
-                    loaderSubMsg.innerText = "Initialisation de votre Node Atlas Nexus...";
-
-                    setTimeout(() => {
-                        loader.style.display = 'none';
-                        document.getElementById('newIdDisplay').innerText = b58_id;
-                        document.getElementById('modalSuccess').style.display = 'flex';
-                    }, 2000);
-
-                } catch (apiError) {
-                    console.error("Erreur de conformité serveur:", apiError);
+                setTimeout(() => {
                     loader.style.display = 'none';
-                    showToast(`Conformité échouée : ${apiError.message}`, "fas fa-triangle-exclamation");
-                }
-            } else {
-                loaderMsg.innerText = "ANALYSE DE CONFORMITÉ LOCALE (OCR)...";
-                loaderSubMsg.innerText = "Vérification cryptographique locale de concordance de votre pièce d'identité.";
+                    document.getElementById('newIdDisplay').innerText = b58_id;
+                    document.getElementById('modalSuccess').style.display = 'flex';
+                }, 1500);
 
-                try {
-                    const worker = await Tesseract.createWorker('fra');
-                    const ret = await worker.recognize(rectoFile);
-                    const extractedText = ret.data.text.toUpperCase();
-                    await worker.terminate();
-
-                    const cleanExtractedText = extractedText.replace(/[^A-Z0-9]/g, '');
-                    const cleanInputNom = inputNom.replace(/[^A-Z0-9]/g, '');
-                    const cleanInputDocNum = inputDocNum.replace(/[^A-Z0-9]/g, '');
-
-                    const isNomValid = cleanExtractedText.includes(cleanInputNom);
-                    const isDocNumValid = cleanExtractedText.includes(cleanInputDocNum);
-                    const prenomParts = inputPrenom.toUpperCase().split(' ');
-                    const isPrenomValid = prenomParts.some(p => cleanExtractedText.includes(p.replace(/[^A-Z0-9]/g, '')));
-
-                    if (!isNomValid || !isPrenomValid || !isDocNumValid) {
-                        loader.style.display = 'none';
-                        showToast("Échec KYC local : Les informations ne correspondent pas à la pièce.", "fas fa-user-xmark");
-                        return;
-                    }
-
-                    loaderMsg.innerText = "SÉCURISATION & INSCRIPTION...";
-                    loaderSubMsg.innerText = "Génération de votre signature numérique sur la blockchain...";
-
-                    await saveRecordsInFirebase("VERIFIE_PAR_IA");
-
-                    loaderMsg.innerText = "SYNCHRONISATION TERMINÉE";
-                    loaderSubMsg.innerText = "Bienvenue citoyen ! Redirection...";
-
-                    setTimeout(() => {
-                        loader.style.display = 'none';
-                        document.getElementById('newIdDisplay').innerText = b58_id;
-                        document.getElementById('modalSuccess').style.display = 'flex';
-                    }, 1500);
-
-                } catch (ocrError) {
-                    console.error("Erreur validation locale:", ocrError);
-                    loader.style.display = 'none';
-                    showToast("Échec OCR de l'image. Veuillez utiliser une image plus nette.", "fas fa-image");
-                }
+            } catch (err) {
+                loader.style.display = 'none';
+                showToast(err.message, "fas fa-triangle-exclamation");
             }
         };
 
-        // --- PROTOCOLE DE SÉCURITÉ AES-GCM-256 (TÉLÉCHARGEMENT KIT SECOURS) ---
+        // Encryption Backup Card
         window.downloadEncryptedKeycard = async function() {
-            if (!activeCredentials) {
-                showToast("Données d'activation introuvables.", "fas fa-shield-halved");
-                return;
-            }
-
+            if (!activeCredentials) return;
             try {
-                // Utilisation de la classe globale sécurisée
                 const key = await window.NexusCrypto.generateKey();
                 const textToEncrypt = JSON.stringify({
                     id: activeCredentials.userB58,
@@ -1015,15 +349,11 @@
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
 
-                showToast("Sauvegarde cryptographique réussie !", "fas fa-circle-check");
+                showToast("Kit de secours téléchargé !", "fas fa-circle-check");
             } catch (err) {
-                console.error("Échec de l'export cryptographique : ", err);
-                showToast("Échec de la génération sécurisée.", "fas fa-triangle-exclamation");
+                showToast("Échec de la génération du kit secours.", "fas fa-triangle-exclamation");
             }
         };
-
-        // Démarrage initial global
-        window.initReferral();
     </script>
 </body>
 </html>
