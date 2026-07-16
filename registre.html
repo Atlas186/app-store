@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>ATLAS NEXUS | Inscription Rapide</title>
+    <title>ATLAS NEXUS CORE | Inscription Bonus Quotidien</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2 family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --bg: #f0f9ff; 
@@ -17,127 +17,137 @@
             --accent: #0284c7; 
             --text-main: #0f172a; 
             --text-dim: #64748b; 
+            --danger: #ef4444; 
             --success: #16a34a;
             --agi-gold: #d97706; 
             --glow: 0 4px 20px rgba(14, 165, 233, 0.15);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; }
-        body { background-color: #bae6fd; color: var(--text-main); font-family: 'Plus Jakarta Sans', sans-serif; display: flex; justify-content: center; overflow-x: hidden; min-height: 100vh; }
+        body { background-color: #bae6fd; color: var(--text-main); font-family: 'Plus Jakarta Sans', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow-x: hidden; }
 
-        .app-container { width: 100%; max-width: 450px; min-height: 100vh; background: var(--bg); position: relative; border-left: 1px solid var(--border); border-right: 1px solid var(--border); display: flex; flex-direction: column; }
+        .app-container { width: 100%; max-width: 400px; background: var(--surface); border-radius: 20px; box-shadow: 0 10px 40px rgba(2, 132, 199, 0.1); position: relative; display: flex; flex-direction: column; overflow: hidden; margin: 20px; z-index: 10; border: 1px solid var(--border); }
         .bg-glow { position: fixed; inset: 0; background: radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.15), transparent 60%); z-index: 0; pointer-events: none; }
 
-        header { padding: 35px 20px 20px; position: relative; z-index: 10; text-align: center; }
-        .logo { width: 65px; height: 65px; border-radius: 14px; border: 2px solid var(--agi-gold); box-shadow: var(--glow); margin-bottom: 12px; }
+        header { padding: 30px 20px 20px; text-align: center; border-bottom: 1px solid var(--border); background: var(--bg); }
+        .logo { width: 70px; height: 70px; border-radius: 14px; border: 2px solid var(--agi-gold); box-shadow: var(--glow); margin-bottom: 15px; }
         h1 { font-size: 1.3rem; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: var(--text-main); }
         p.subtitle { font-size: 0.8rem; color: var(--text-dim); margin-top: 5px; }
 
-        main { flex: 1; padding: 10px 20px 30px; position: relative; z-index: 10; }
-        .register-card { background: var(--surface); border: 2px solid var(--border); border-radius: 20px; padding: 25px 20px; box-shadow: var(--glow); }
+        .ref-badge {
+            background: rgba(2, 132, 199, 0.08); 
+            color: var(--accent);
+            padding: 10px 16px; 
+            border-radius: 12px; 
+            font-size: 0.75rem;
+            border: 1px solid rgba(2, 132, 199, 0.15); 
+            margin: 15px auto 0;
+            display: none; 
+            align-items: center; 
+            justify-content: center;
+            gap: 8px;
+            font-weight: 700;
+            max-width: 90%;
+            animation: pulse 2s infinite;
+        }
 
-        .input-group { margin-bottom: 18px; position: relative; }
-        .input-group label { display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-main); margin-bottom: 6px; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+
+        main { padding: 30px 20px; }
+
+        .input-group { margin-bottom: 20px; position: relative; }
+        .input-group label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px; }
         .input-wrapper { position: relative; }
-        .input-wrapper i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-dim); font-size: 1rem; }
+        .input-wrapper i.icon-left { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-dim); font-size: 1.1rem; }
+        .input-wrapper i.icon-right { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--text-dim); font-size: 1.1rem; cursor: pointer; }
         
-        .form-control { width: 100%; background: var(--bg); border: 2px solid var(--border); padding: 14px 14px 14px 40px; border-radius: 12px; color: var(--text-main); font-size: 0.9rem; font-weight: 600; font-family: inherit; transition: 0.3s; }
-        .form-control:focus { border-color: var(--agi-gold); background: var(--surface); box-shadow: 0 0 0 4px rgba(217, 119, 6, 0.1); }
+        .form-control { width: 100%; background: var(--bg); border: 2px solid var(--border); padding: 14px 40px; border-radius: 12px; color: var(--text-main); font-size: 0.95rem; font-weight: 600; font-family: inherit; transition: 0.3s; }
+        .form-control:focus { border-color: var(--agi-gold); box-shadow: 0 0 0 4px rgba(217, 119, 6, 0.1); background: var(--surface); }
+        .pin-input { text-align: center; letter-spacing: 4px; font-weight: 800; font-size: 1.2rem; }
 
-        .pin-input { text-align: center; padding: 14px 0; font-size: 1.2rem; font-weight: 800; letter-spacing: 4px; }
-
-        .security-notice { background: rgba(2, 132, 199, 0.05); border: 1px solid rgba(2, 132, 199, 0.15); border-radius: 12px; padding: 12px; display: flex; gap: 10px; align-items: flex-start; margin-bottom: 20px; }
-        .security-notice i { color: var(--accent); font-size: 1.1rem; margin-top: 2px; }
-        .security-notice p { font-size: 0.7rem; color: var(--text-dim); line-height: 1.4; font-weight: 600; }
-
-        .btn-submit { width: 100%; padding: 16px; border-radius: 14px; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; cursor: pointer; border: none; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 8px; background: var(--agi-gold); color: #fff; box-shadow: 0 4px 15px rgba(217, 119, 6, 0.3); margin-top: 25px; }
+        .btn-submit { width: 100%; padding: 16px; border-radius: 14px; background: var(--agi-gold); color: #fff; font-size: 0.9rem; font-weight: 800; text-transform: uppercase; cursor: pointer; border: none; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(217, 119, 6, 0.3); margin-top: 10px; }
         .btn-submit:active { transform: scale(0.98); }
 
-        #loader-overlay { position: fixed; inset: 0; background: var(--glass); backdrop-filter: blur(10px); z-index: 9999; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px;}
+        #loader-overlay { position: fixed; inset: 0; background: var(--glass); backdrop-filter: blur(10px); z-index: 9999; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; }
         .spinner { width: 50px; height: 50px; border: 4px solid var(--border); border-top-color: var(--agi-gold); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
-        .loader-text { font-weight: 800; font-size: 0.9rem; color: var(--text-main); letter-spacing: 1px; }
+        .loader-text { font-weight: 800; font-size: 0.95rem; color: var(--text-main); letter-spacing: 1px; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* SUCCESS MODAL */
-        .modal { position: fixed; inset: 0; background: rgba(240, 249, 255, 0.98); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 10000; padding: 24px; text-align: center; backdrop-filter: blur(10px); }
-        .success-icon-container { width: 80px; height: 80px; background: #ecfdf5; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; border: 2px dashed var(--success); }
-        .uid-box { background: var(--surface); padding: 16px; border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--accent); font-weight: 700; border: 2px solid var(--border); margin: 15px 0; word-break: break-all; max-width: 100%; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
-        .bonus-pill { background: #ecfdf5; color: var(--success); padding: 12px 24px; border-radius: 12px; font-weight: 800; margin-bottom: 15px; display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(22, 163, 74, 0.2); font-size: 0.9rem; }
-        
-        .btn-backup { background: var(--surface); color: var(--text-main); border: 2px solid var(--border); padding: 12px 20px; border-radius: 12px; font-weight: 700; font-size: 0.8rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 25px; transition: 0.3s; }
-        .btn-backup:hover { background: rgba(14, 165, 233, 0.05); color: var(--accent); border-color: var(--accent); }
-        .btn-download { width: 100%; max-width: 320px; padding: 18px; border-radius: 16px; background: linear-gradient(135deg, var(--accent), #025a87); color: #fff; border: none; font-weight: 800; font-size: 0.95rem; cursor: pointer; box-shadow: 0 10px 25px rgba(2, 132, 199, 0.25); display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; }
-
-        /* TOAST */
         .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background: #0f172a; color: #fff; padding: 14px 24px; border-radius: 12px; font-weight: 600; font-size: 0.85rem; box-shadow: 0 10px 30px rgba(0,0,0,0.2); z-index: 10001; display: flex; align-items: center; gap: 10px; opacity: 0; pointer-events: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); width: 90%; max-width: 400px; }
         .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+        .modal { position: fixed; inset: 0; background: rgba(240, 249, 255, 0.98); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 10000; padding: 24px; text-align: center; backdrop-filter: blur(10px); animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .success-icon-container { width: 90px; height: 90px; background: #ecfdf5; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; border: 2px dashed var(--success); }
+        .uid-box { background: var(--surface); padding: 16px; border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--accent); font-weight: 700; border: 2px solid var(--border); margin: 15px 0; word-break: break-all; width: 100%; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+        .bonus-pill { background: #ecfdf5; color: var(--success); padding: 12px 24px; border-radius: 12px; font-weight: 800; margin-bottom: 25px; display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(22, 163, 74, 0.2); font-size: 0.9rem; }
+        .btn-continue { width: 100%; max-width: 320px; padding: 18px; border-radius: 16px; background: linear-gradient(135deg, var(--accent), #025a87); color: #fff; border: none; font-weight: 800; font-size: 0.95rem; cursor: pointer; box-shadow: 0 10px 25px rgba(2, 132, 199, 0.25); display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s; text-decoration: none; }
+        .btn-continue:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(2, 132, 199, 0.35); }
     </style>
 </head>
 <body>
 
-    <div class="app-container">
-        <div class="bg-glow"></div>
+    <div class="bg-glow"></div>
 
+    <div class="app-container">
         <header>
             <img src="https://i.imgur.com/NyWnYFN.jpeg" alt="AGI Logo" class="logo">
-            <h1>Nexus Register</h1>
-            <p class="subtitle">Création rapide d'Identifiant Citoyen</p>
+            <h1>Inscription Bonus Quotidien</h1>
+            <p class="subtitle">Création de compte - Nexus Core</p>
+            
+            <div id="refBadge" class="ref-badge">
+                <i class="fa-solid fa-satellite-dish"></i>
+                <span>Invitation détectée : <b id="refName" style="font-family:'JetBrains Mono'">--</b></span>
+            </div>
         </header>
 
         <main>
-            <div class="register-card">
-                <form id="registration-form" onsubmit="submitRegistration(event)">
-                    
-                    <div class="security-notice">
-                        <i class="fas fa-shield-halved"></i>
-                        <p>Votre code PIN sécurisera vos transactions futures et servira de clé de signature cryptographique.</p>
+            <form id="registration-form" onsubmit="event.preventDefault(); submitRegistration();">
+                
+                <div class="input-group">
+                    <label>Identifiant (Adresse E-mail)</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-envelope icon-left"></i>
+                        <input type="email" id="reg-email" class="form-control" placeholder="adresse@email.com" required autocomplete="email">
                     </div>
+                </div>
 
-                    <div class="input-group">
-                        <label>Identifiant Citoyen (Email)</label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-envelope"></i>
-                            <input type="email" id="reg-email" class="form-control" placeholder="adresse@email.com" required autocomplete="email">
-                        </div>
+                <div class="input-group">
+                    <label>Code PIN (6 chiffres)</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock icon-left"></i>
+                        <input type="password" id="reg-pin" class="form-control pin-input" maxlength="6" inputmode="numeric" pattern="\d{6}" placeholder="••••••" required autocomplete="new-password">
+                        <i class="fas fa-eye-slash icon-right" onclick="togglePasswordVisibility('reg-pin', this)"></i>
                     </div>
+                </div>
 
-                    <div class="input-group">
-                        <label>Code PIN de Sécurité (6 chiffres)</label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-key"></i>
-                            <input type="password" id="reg-pin" class="form-control pin-input" maxlength="6" inputmode="numeric" pattern="\d{6}" placeholder="••••••" required autocomplete="new-password">
-                            <i class="fas fa-eye-slash" onclick="togglePin('reg-pin', this)" style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--text-dim);"></i>
-                        </div>
+                <div class="input-group">
+                    <label>Confirmer le Code PIN</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-check-circle icon-left"></i>
+                        <input type="password" id="reg-pin-confirm" class="form-control pin-input" maxlength="6" inputmode="numeric" pattern="\d{6}" placeholder="••••••" required autocomplete="new-password">
+                        <i class="fas fa-eye-slash icon-right" onclick="togglePasswordVisibility('reg-pin-confirm', this)"></i>
                     </div>
+                </div>
 
-                    <div class="input-group">
-                        <label>Confirmez votre Code PIN</label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-check-double"></i>
-                            <input type="password" id="reg-pin-confirm" class="form-control pin-input" maxlength="6" inputmode="numeric" pattern="\d{6}" placeholder="••••••" required autocomplete="new-password">
-                            <i class="fas fa-eye-slash" onclick="togglePin('reg-pin-confirm', this)" style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--text-dim);"></i>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn-submit">
-                        <i class="fas fa-fingerprint"></i> Générer mon Nexus ID
-                    </button>
-                </form>
-            </div>
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-fingerprint"></i> CRÉER MON COMPTE
+                </button>
+            </form>
         </main>
     </div>
 
     <div id="loader-overlay">
         <div class="spinner"></div>
-        <div class="loader-text">GÉNÉRATION DU CRYPTO-NODE EN COURS...</div>
+        <div class="loader-text" id="loader-msg">CRÉATION EN COURS...</div>
     </div>
 
     <div id="modalSuccess" class="modal">
         <div class="success-icon-container">
-            <i class="fas fa-check-circle" style="font-size: 3.5rem; color: var(--success);"></i>
+            <i class="fas fa-check-circle" style="font-size: 4rem; color: var(--success);"></i>
         </div>
-        <h1 style="margin-top:0; font-weight: 900; color: var(--text-main); letter-spacing: -1px;">INSCRIPTION RÉUSSIE</h1>
-        <p style="color:var(--text-dim); margin-top: 5px; font-size: 0.85rem; font-weight: 600;">Votre identifiant décentralisé (Base58) :</p>
+        <h1 style="margin-top:0; font-weight: 900; color: var(--text-main); letter-spacing: -1px;">COMPTE ACTIVÉ !</h1>
+        <p style="color:var(--text-dim); margin-top: 5px; font-size: 0.85rem; font-weight: 600;">Votre identifiant Base58 :</p>
         
         <div class="uid-box" id="newIdDisplay">--</div>
         
@@ -145,12 +155,8 @@
             🎁 +1000 AG-COIN CRÉDITÉS
         </div>
 
-        <div>
-            <button class="btn-backup" onclick="downloadEncryptedKeycard()"><i class="fas fa-file-invoice"></i> Télécharger mon Kit Secours</button>
-        </div>
-
-        <a href="https://agi-nexus-core.click/agi-business.pro.apk" class="btn-download">
-            <i class="fab fa-android"></i> TÉLÉCHARGER L'APK PRO
+        <a href="dashboard.html" class="btn-continue">
+            ACCÉDER AU TABLEAU DE BORD <i class="fas fa-arrow-right"></i>
         </a>
     </div>
 
@@ -159,37 +165,9 @@
         <span id="toastMessage">Notification</span>
     </div>
 
-    <script>
-        class NexusCrypto {
-            static async generateKey() {
-                return await window.crypto.subtle.generateKey(
-                    { name: "AES-GCM", length: 256 },
-                    true,
-                    ["encrypt", "decrypt"]
-                );
-            }
-            static async encrypt(text, key) {
-                const encoder = new TextEncoder();
-                const data = encoder.encode(text);
-                const iv = window.crypto.getRandomValues(new Uint8Array(12));
-                const cipherBuffer = await window.crypto.subtle.encrypt(
-                    { name: "AES-GCM", iv: iv },
-                    key,
-                    data
-                );
-                const cipherBytes = new Uint8Array(cipherBuffer);
-                const combinedResult = new Uint8Array(iv.length + cipherBytes.length);
-                combinedResult.set(iv, 0);
-                combinedResult.set(cipherBytes, iv.length);
-                return btoa(String.fromCharCode(...combinedResult));
-            }
-        }
-        window.NexusCrypto = NexusCrypto;
-    </script>
-
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, set, get, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, set, get, runTransaction, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const FIREBASE_CONFIG = {
             databaseURL: "https://atlasgroupebusiness-default-rtdb.firebaseio.com"
@@ -198,9 +176,14 @@
         const app = initializeApp(FIREBASE_CONFIG);
         const db = getDatabase(app);
 
-        let activeCredentials = null;
+        // Réglages parrainage AG-COIN
+        const BASE_REWARD = 500;
+        const GRADES = [
+            { min: 0, bonus: 0 }, { min: 6, bonus: 15 }, { min: 16, bonus: 35 },
+            { min: 36, bonus: 60 }, { min: 76, bonus: 75 }, { min: 151, bonus: 100 }, { min: 301, bonus: 110 }
+        ];
 
-        // Base58 Generator (AGI Standard)
+        // Générateur Base58 conservé
         const generateB58 = (email) => {
             const alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
             let hash = 0;
@@ -223,47 +206,43 @@
 
         const sanitizeEmail = (e) => e.toLowerCase().replace(/[.#$[\]]/g, "_").trim();
 
-        window.showToast = function(message, iconClass = "fas fa-circle-exclamation") {
-            const toast = document.getElementById('toastNotification');
-            const icon = document.getElementById('toastIcon');
-            const msg = document.getElementById('toastMessage');
-            icon.className = iconClass;
-            msg.innerText = message;
-            toast.classList.add('show');
-            setTimeout(() => { toast.classList.remove('show'); }, 4000);
-        };
-
-        window.togglePin = function(fieldId, icon) {
-            const field = document.getElementById(fieldId);
-            if (field.type === "password") {
-                field.type = "text";
-                icon.className = "fas fa-eye";
-            } else {
-                field.type = "password";
-                icon.className = "fas fa-eye-slash";
+        window.initReferral = function() {
+            const refID = new URLSearchParams(window.location.search).get('ref');
+            if (refID) {
+                const badge = document.getElementById('refBadge');
+                badge.style.display = 'flex';
+                document.getElementById('refName').innerText = refID.substring(0, 15) + "...";
             }
         };
 
-        window.submitRegistration = async function(event) {
-            event.preventDefault();
+        window.showToast = function(message, iconClass = "fas fa-circle-exclamation") {
+            const toast = document.getElementById('toastNotification');
+            document.getElementById('toastIcon').className = iconClass;
+            document.getElementById('toastMessage').innerText = message;
+            
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 4000);
+        };
 
+        window.togglePasswordVisibility = function(fieldId, icon) {
+            const field = document.getElementById(fieldId);
+            if (field.type === "password") {
+                field.type = "text";
+                icon.className = "fas fa-eye icon-right";
+            } else {
+                field.type = "password";
+                icon.className = "fas fa-eye-slash icon-right";
+            }
+        };
+
+        window.submitRegistration = async function() {
             const email = document.getElementById('reg-email').value.trim();
             const pin = document.getElementById('reg-pin').value;
             const pinConfirm = document.getElementById('reg-pin-confirm').value;
 
-            // Form validations
-            if (!email.includes('@')) {
-                showToast("Veuillez saisir un e-mail valide.", "fas fa-envelope");
-                return;
-            }
-            if (pin.length !== 6 || isNaN(pin) || pinConfirm.length !== 6 || isNaN(pinConfirm)) {
-                showToast("Le code PIN doit contenir exactement 6 chiffres.", "fas fa-key");
-                return;
-            }
-            if (pin !== pinConfirm) {
-                showToast("Les codes PIN saisis ne correspondent pas.", "fas fa-triangle-exclamation");
-                return;
-            }
+            if (!email.includes('@')) return showToast("Veuillez entrer un email valide.", "fas fa-envelope");
+            if (!/^\d{6}$/.test(pin)) return showToast("Le code PIN doit contenir exactement 6 chiffres.", "fas fa-key");
+            if (pin !== pinConfirm) return showToast("Les codes PIN ne correspondent pas.", "fas fa-triangle-exclamation");
 
             const loader = document.getElementById('loader-overlay');
             loader.style.display = 'flex';
@@ -271,89 +250,72 @@
             const safeEmail = sanitizeEmail(email);
             const b58_id = generateB58(email);
 
-            activeCredentials = { email, userB58: b58_id, pin };
-
             try {
-                // Check redundancy
+                // Vérifier l'existence
                 const checkRef = ref(db, `accounts/${safeEmail}`);
                 const snap = await get(checkRef);
                 
                 if (snap.exists()) {
-                    throw new Error("Un compte est déjà associé à cet e-mail.");
+                    loader.style.display = 'none';
+                    return showToast("Cet identifiant (E-mail) est déjà utilisé.", "fas fa-user-xmark");
                 }
 
-                // Node data structure
-                const userData = {
+                // Sauvegarder les credentials de base
+                await set(ref(db, `accounts/${safeEmail}`), {
                     email: email,
                     id: b58_id,
                     nexus_id: b58_id,
                     pin: pin,
-                    created_at: serverTimestamp(),
-                    kyc_status: "ENREGISTRE_SIMPLE"
-                };
+                    created_at: serverTimestamp()
+                });
 
-                // Save basic registration data
-                await set(ref(db, `accounts/${safeEmail}`), userData);
-
-                // Initialize token balance 
+                // Initialisation balance
                 await set(ref(db, `users/${b58_id}`), {
                     email: email,
                     balance: 1000, 
+                    referrals_count: 0,
                     status: 'active',
                     joined: serverTimestamp()
                 });
 
-                localStorage.setItem('agi_logged_email', email);
+                // Gestion Parrainage
+                const refID = new URLSearchParams(window.location.search).get('ref');
+                if (refID && refID !== b58_id) {
+                    const parrainRef = ref(db, `users/${refID}`);
+                    try {
+                        await runTransaction(parrainRef, (userData) => {
+                            if (userData) {
+                                const newCount = (userData.referrals_count || 0) + 1;
+                                let currentBonus = 0;
+                                GRADES.forEach(g => { if(newCount >= g.min) currentBonus = g.bonus; });
+                                const gainFinal = Math.floor(BASE_REWARD * (1 + currentBonus/100));
+                                
+                                userData.balance = (userData.balance || 0) + gainFinal;
+                                userData.referrals_count = newCount;
+                            }
+                            return userData;
+                        });
+                    } catch (txErr) {
+                        console.error("Erreur de transaction parrainage ignorée pour ne pas bloquer l'inscription:", txErr);
+                    }
+                }
 
-                setTimeout(() => {
-                    loader.style.display = 'none';
-                    document.getElementById('newIdDisplay').innerText = b58_id;
-                    document.getElementById('modalSuccess').style.display = 'flex';
-                }, 1500);
+                // Conservation du state local
+                localStorage.setItem('agi_logged_email', email);
+                localStorage.setItem('agi_b58_id', b58_id);
+
+                loader.style.display = 'none';
+                document.getElementById('newIdDisplay').innerText = b58_id;
+                document.getElementById('modalSuccess').style.display = 'flex';
 
             } catch (err) {
                 loader.style.display = 'none';
-                showToast(err.message, "fas fa-triangle-exclamation");
+                console.error(err);
+                showToast("Une erreur réseau est survenue. Veuillez réessayer.", "fas fa-wifi");
             }
         };
 
-        // Encryption Backup Card
-        window.downloadEncryptedKeycard = async function() {
-            if (!activeCredentials) return;
-            try {
-                const key = await window.NexusCrypto.generateKey();
-                const textToEncrypt = JSON.stringify({
-                    id: activeCredentials.userB58,
-                    email: activeCredentials.email,
-                    keycard_signature: "ATLAS-NEXUS-CORE-OFFICIAL-NODE",
-                    timestamp: new Date().toISOString()
-                });
-
-                const encryptedPayload = await window.NexusCrypto.encrypt(textToEncrypt, key);
-                const exportedRawKey = await window.crypto.subtle.exportKey("jwk", key);
-
-                const backupData = JSON.stringify({
-                    nexus_address: activeCredentials.userB58,
-                    encrypted_identity: encryptedPayload,
-                    recovery_vector: exportedRawKey,
-                    security_protocol: "AES-GCM-256"
-                }, null, 2);
-
-                const blob = new Blob([backupData], { type: "application/json" });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement("a");
-                a.href = url;
-                a.download = `Nexus_Keycard_${activeCredentials.userB58.substring(0,8)}.json`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-
-                showToast("Kit de secours téléchargé !", "fas fa-circle-check");
-            } catch (err) {
-                showToast("Échec de la génération du kit secours.", "fas fa-triangle-exclamation");
-            }
-        };
+        window.initReferral();
     </script>
 </body>
 </html>
