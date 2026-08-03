@@ -183,7 +183,7 @@
             { min: 36, bonus: 60 }, { min: 76, bonus: 75 }, { min: 151, bonus: 100 }, { min: 301, bonus: 110 }
         ];
 
-        // Générateur Base58 conservé
+        // Générateur Base58 conservé pour la structure utilisateur
         const generateB58 = (email) => {
             const alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
             let hash = 0;
@@ -207,11 +207,13 @@
         const sanitizeEmail = (e) => e.toLowerCase().replace(/[.#$[\]]/g, "_").trim();
 
         window.initReferral = function() {
-            const refID = new URLSearchParams(window.location.search).get('ref');
+            const urlParams = new URLSearchParams(window.location.search);
+            const refID = urlParams.get('ref');
             if (refID) {
                 const badge = document.getElementById('refBadge');
                 badge.style.display = 'flex';
-                document.getElementById('refName').innerText = refID.substring(0, 15) + "...";
+                // Affiche le code court NC-XXXXXX ou le code détecté proprement
+                document.getElementById('refName').innerText = refID;
             }
         };
 
@@ -251,7 +253,7 @@
             const b58_id = generateB58(email);
 
             try {
-                // Vérifier l'existence
+                // Vérifier l'existence de l'email
                 const checkRef = ref(db, `accounts/${safeEmail}`);
                 const snap = await get(checkRef);
                 
@@ -269,7 +271,7 @@
                     created_at: serverTimestamp()
                 });
 
-                // Initialisation balance
+                // Initialisation balance utilisateur
                 await set(ref(db, `users/${b58_id}`), {
                     email: email,
                     balance: 1000, 
@@ -278,25 +280,62 @@
                     joined: serverTimestamp()
                 });
 
-                // Gestion Parrainage
-                const refID = new URLSearchParams(window.location.search).get('ref');
-                if (refID && refID !== b58_id) {
-                    const parrainRef = ref(db, `users/${refID}`);
-                    try {
-                        await runTransaction(parrainRef, (userData) => {
-                            if (userData) {
-                                const newCount = (userData.referrals_count || 0) + 1;
-                                let currentBonus = 0;
-                                GRADES.forEach(g => { if(newCount >= g.min) currentBonus = g.bonus; });
-                                const gainFinal = Math.floor(BASE_REWARD * (1 + currentBonus/100));
+                // Gestion Parrainage - Résolution et synchronisation parfaite avec le refID (ex: NC-XXXXXX) ou Base58
+                const urlParams = new URLSearchParams(window.location.search);
+                const refCode = urlParams.get('ref');
+                
+                if (refCode) {
+                    let targetUserKey = refCode;
+                    
+                    // Si le code commence par "NC-", on cherche dans la base de données quel utilisateur possède ce refID ou on tente de faire correspondre
+                    if (refCode.startsWith("NC-")) {
+                        // Recherche dynamique du parrain via son refID dans l'arborescence des utilisateurs
+                        const usersSnap = await get(ref(db, 'users'));
+                        if (usersSnap.exists()) {
+                            const usersData = usersSnap.val();
+                            for (const [uKey, uVal] of Object.entries(usersData)) {
+                                // On génère ou vérifie la correspondance du refID pour chaque utilisateur
+                                const alphabet = "123456789ABCDEFGHJKMNPQRSTUVWXYZ"; 
+                                let hash = 2166136261;
+                                const testStr = (uVal.email || "").trim().toLowerCase();
+                                for (let i = 0; i < testStr.length; i++) {
+                                    hash ^= testStr.charCodeAt(i);
+                                    hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
+                                }
+                                hash = Math.abs(hash >>> 0);
+                                let computedId = "NC-";
+                                for (let i = 0; i < 6; i++) {
+                                    computedId += alphabet[hash % alphabet.length];
+                                    hash = Math.floor(hash / alphabet.length);
+                                    if (hash === 0) hash = 2166136261 * (i + 1);
+                                }
                                 
-                                userData.balance = (userData.balance || 0) + gainFinal;
-                                userData.referrals_count = newCount;
+                                if (computedId === refCode) {
+                                    targetUserKey = uKey;
+                                    break;
+                                }
                             }
-                            return userData;
-                        });
-                    } catch (txErr) {
-                        console.error("Erreur de transaction parrainage ignorée pour ne pas bloquer l'inscription:", txErr);
+                        }
+                    }
+
+                    if (targetUserKey && targetUserKey !== b58_id) {
+                        const parrainRef = ref(db, `users/${targetUserKey}`);
+                        try {
+                            await runTransaction(parrainRef, (userData) => {
+                                if (userData) {
+                                    const newCount = (userData.referrals_count || 0) + 1;
+                                    let currentBonus = 0;
+                                    GRADES.forEach(g => { if(newCount >= g.min) currentBonus = g.bonus; });
+                                    const gainFinal = Math.floor(BASE_REWARD * (1 + currentBonus/100));
+                                    
+                                    userData.balance = (userData.balance || 0) + gainFinal;
+                                    userData.referrals_count = newCount;
+                                }
+                                return userData;
+                            });
+                        } catch (txErr) {
+                            console.error("Erreur de transaction parrainage ignorée :", txErr);
+                        }
                     }
                 }
 
