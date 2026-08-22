@@ -3,23 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="NEXUS CORE UPDATE - Atlas Group International">
     <meta name="theme-color" content="#ffffff">
-    <title id="t-page-title">NEXUS CORE UPDATE - Atlas Group International</title>
+    <title id="t-page-title">NEXUS CORE UPDATE</title>
     
-    <!-- Police premium (Inter) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            /* Palette de couleurs Industrielle/Premium */
-            --bg-body: #f8fafc; /* Slate 50 */
-            --bg-surface: #ffffff;
-            --primary: #0f172a; /* Slate 900 - Très professionnel */
-            --primary-hover: #1e293b;
-            --accent: #0284c7; /* Sky 600 - Bleu AGI */
+            --bg-body: #f8fafc;
+            --primary: #0f172a;
+            --accent: #0284c7;
             --accent-hover: #0369a1;
             --text-main: #334155;
             --text-muted: #64748b;
@@ -31,14 +26,10 @@
             --transition: all 0.2s ease-in-out;
         }
         
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body { 
-            font-family: 'Inter', system-ui, -apple-system, sans-serif; 
+            font-family: 'Inter', system-ui, sans-serif; 
             background-color: var(--bg-body); 
             color: var(--text-main); 
             font-size: 14px; 
@@ -46,19 +37,13 @@
             -webkit-font-smoothing: antialiased;
         }
         
-        /* HEADER FIXE (NAVBAR) */
         .navbar {
-            position: sticky;
-            top: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(8px);
+            background: #ffffff;
             border-bottom: 1px solid var(--border-color);
             padding: 12px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 1000;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.03);
         }
 
         .nav-brand {
@@ -68,43 +53,17 @@
             text-decoration: none;
         }
 
-        .nav-logo {
-            height: 36px;
-            width: auto;
-            border-radius: 4px;
-        }
-
-        .nav-title-group {
-            display: flex;
-            flex-direction: column;
-        }
-
+        .nav-logo { height: 36px; border-radius: 4px; }
+        
         .nav-title {
             font-size: 1.1rem;
             font-weight: 700;
             color: var(--primary);
             letter-spacing: 0.5px;
-            line-height: 1.2;
         }
 
-        .nav-subtitle {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        /* SÉLECTEUR DE LANGUE */
         .lang-switcher {
             display: flex;
-            background: var(--bg-body);
             border: 1px solid var(--border-color);
             border-radius: 6px;
             overflow: hidden;
@@ -121,85 +80,13 @@
             transition: var(--transition);
         }
 
-        .lang-btn:hover {
-            color: var(--primary);
-        }
+        .lang-btn:hover { color: var(--primary); }
+        .lang-btn.active { background: var(--primary); color: #ffffff; }
 
-        .lang-btn.active {
-            background: var(--primary);
-            color: #ffffff;
-        }
-
-        /* BOUTONS DE TÉLÉCHARGEMENT */
-        .btn-download {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            background-color: var(--accent);
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            border-radius: var(--radius);
-            transition: var(--transition);
-            border: none;
-            cursor: pointer;
-            font-family: inherit;
-        }
-
-        .btn-download:hover:not(:disabled) {
-            background-color: var(--accent-hover);
-            transform: translateY(-1px);
-        }
-
-        /* État désactivé pendant le téléchargement */
-        .btn-download:disabled {
-            background-color: #94a3b8;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        /* Bouton Header */
-        .btn-header {
-            padding: 8px 16px;
-            font-size: 0.85rem;
-            box-shadow: 0 2px 4px rgba(2, 132, 199, 0.2);
-        }
-
-        /* Bouton Corps (Main) */
-        .btn-main {
-            padding: 16px 32px;
-            font-size: 1rem;
-            width: 100%;
-            max-width: 350px;
-            flex-direction: column;
-            gap: 4px;
-            margin: 24px auto;
-            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
-        }
-
-        .btn-main-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn-size {
-            font-size: 0.75rem;
-            font-weight: 500;
-            opacity: 0.9;
-        }
-
-        /* CONTENEUR PRINCIPAL */
         .container { 
-            max-width: 640px; 
-            margin: 40px auto; 
+            max-width: 500px; 
+            margin: 60px auto; 
             padding: 0 20px; 
-        }
-        
-        .page-header {
-            margin-bottom: 24px;
             text-align: center;
         }
         
@@ -207,60 +94,60 @@
             color: var(--primary); 
             font-size: 1.5rem; 
             font-weight: 900;
-            letter-spacing: -0.02em;
+            margin-bottom: 24px;
         }
         
-        /* ALERTES & CARTES */
         .alert-box { 
             background-color: var(--alert-bg); 
             color: var(--alert-text); 
             padding: 16px; 
             border: 1px solid var(--alert-border);
-            border-left: 4px solid #ef4444;
             border-radius: var(--radius); 
-            margin-bottom: 24px; 
+            margin-bottom: 32px; 
             font-weight: 500; 
-            font-size: 0.9rem;
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
+            text-align: left;
         }
 
-        .alert-icon {
-            flex-shrink: 0;
-            margin-top: 2px;
+        .btn-main {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            background-color: var(--accent);
+            color: white;
+            font-weight: 600;
+            border-radius: var(--radius);
+            border: none;
+            cursor: pointer;
+            padding: 16px 32px;
+            font-size: 1rem;
+            width: 100%;
+            transition: var(--transition);
         }
-        
+
+        .btn-main:hover:not(:disabled) { background-color: var(--accent-hover); }
+        .btn-main:disabled { background-color: #94a3b8; cursor: not-allowed; }
+
+        .btn-size { font-size: 0.75rem; font-weight: 500; opacity: 0.9; }
+
         .card { 
-            background-color: var(--bg-surface); 
+            background-color: #ffffff; 
             border: 1px solid var(--border-color); 
             padding: 24px; 
             border-radius: var(--radius); 
-            margin-bottom: 24px; 
+            margin-top: 32px; 
+            text-align: left;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
         }
         
         .card h3 { 
             color: var(--primary); 
             font-size: 1.05rem;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            margin-bottom: 16px;
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 12px;
         }
         
-        .card p {
-            margin-bottom: 12px;
-            color: var(--text-main);
-        }
-
-        .card p:last-child {
-            margin-bottom: 0;
-        }
-        
-        /* INSTRUCTIONS */
         .instructions ol { 
             padding-left: 20px; 
             color: var(--text-main);
@@ -271,189 +158,206 @@
             padding-left: 8px;
         }
         
-        /* FOOTER */
-        .footer { 
-            margin-top: 40px; 
-            padding-top: 24px;
-            margin-bottom: 40px;
-            font-size: 0.8rem; 
-            color: var(--text-muted); 
-            border-top: 1px solid var(--border-color);
-            text-align: center;
+        .instructions li:last-child {
+            margin-bottom: 0;
         }
 
-        /* RESPONSIVE */
-        @media (max-width: 480px) {
-            .nav-subtitle { display: none; }
-            .btn-header-text { display: none; } 
-            .btn-header { padding: 8px 12px; }
-            .container { margin: 24px auto; }
-            h1 { font-size: 1.25rem; }
-            .card { padding: 20px; }
+        .footer { 
+            margin-top: 40px; 
+            font-size: 0.8rem; 
+            color: var(--text-muted); 
+        }
+
+        /* --- STYLES DE L'OVERLAY DE TÉLÉCHARGEMENT --- */
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 1;
+            transition: opacity 0.3s ease, visibility 0.3s;
+        }
+
+        .overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .overlay-card {
+            background: #ffffff;
+            padding: 32px;
+            border-radius: var(--radius);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .overlay-card h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.15rem;
+        }
+
+        .progress-container {
+            background: var(--border-color);
+            width: 100%;
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .progress-fill {
+            background: var(--accent);
+            width: 0%;
+            height: 100%;
+            transition: width 0.2s ease;
+        }
+
+        .progress-text {
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+        }
+
+        .overlay-desc {
+            color: var(--text-muted);
+            font-size: 0.85rem;
         }
     </style>
 </head>
 <body>
     
-    <!-- HEADER FIXE -->
+    <!-- OVERLAY DE PROGRESSION -->
+    <div id="download-overlay" class="overlay hidden">
+        <div class="overlay-card">
+            <h3 id="t-overlay-title">Téléchargement en cours...</h3>
+            <div class="progress-container">
+                <div id="progress-bar" class="progress-fill"></div>
+            </div>
+            <div id="progress-text" class="progress-text">0%</div>
+            <p id="t-overlay-desc" class="overlay-desc">Veuillez ne pas quitter cette page.</p>
+        </div>
+    </div>
+
     <nav class="navbar">
-        <a href="#" class="nav-brand">
+        <div class="nav-brand">
             <img src="https://i.imgur.com/NyWnYFN.jpeg" alt="Logo AGI" class="nav-logo">
-            <div class="nav-title-group">
-                <span class="nav-title">NEXUS</span>
-                <span class="nav-subtitle">Atlas Group International</span>
-            </div>
-        </a>
-        <div class="nav-actions">
-            <div class="lang-switcher">
-                <button class="lang-btn active" id="btn-fr" onclick="setLang('fr')">FR</button>
-                <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
-            </div>
-            <!-- Bouton Téléchargement Header -->
-            <button id="btn-header-action" onclick="startUpdate('https://agi-nexus-core.click/agi-business.pro.apk')" class="btn-download btn-header">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="7 10 12 15 17 10"></polyline>
-                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                </svg>
-                <span class="btn-header-text" id="t-header-btn">Mettre à jour</span>
-            </button>
+            <span class="nav-title">NEXUS CORE UPDATE</span>
+        </div>
+        <div class="lang-switcher">
+            <button class="lang-btn active" id="btn-fr" onclick="setLang('fr')">FR</button>
+            <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
         </div>
     </nav>
 
     <main class="container">
-        
-        <div class="page-header">
-            <h1 id="t-title">NEXUS CORE UPDATE</h1>
+        <h1 id="t-title">NEXUS CORE UPDATE</h1>
+
+        <div class="alert-box" id="t-alert">
+            <strong>⚠️ Mise à jour requise :</strong> Conformément aux normes de sécurité, la mise à jour de vos protocoles est requise pour continuer à échanger vos AG-COIN.
         </div>
 
-        <div class="alert-box">
-            <div class="alert-icon">⚠️</div>
-            <div id="t-alert">
-                <strong>Conformité & Sécurité :</strong> Conformément aux normes en vigueur au Burkina Faso et à la réglementation Web3, la mise à jour de vos protocoles de sécurité est requise pour continuer à trader et échanger vos AG-COIN.
-            </div>
-        </div>
-
-        <div class="card">
-            <h3 id="t-version-title">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                Détails du Patch L1
-            </h3>
-            <p id="t-version-desc1">Cette mise à jour majeure du réseau Nexus Core optimise les nœuds de transaction, intègre le nouveau système de Bonus Quotidien et renforce la cryptographie de vos portefeuilles AG-COIN.</p>
-            <p id="t-version-desc2"><strong>Note :</strong> Le déploiement du protocole d'installation se fera de manière fluide et automatique directement depuis cette interface.</p>
-        </div>
-
-        <!-- Bouton Téléchargement Corps de page -->
-        <div style="text-align: center;">
-            <button id="btn-main-action" onclick="startUpdate('https://agi-nexus-core.click/agi-business.pro.apk')" class="btn-download btn-main">
-                <div class="btn-main-row">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="icon-download-main">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                        <polyline points="7 10 12 15 17 10"></polyline>
-                        <line x1="12" y1="15" x2="12" y2="3"></line>
-                    </svg>
-                    <span id="t-main-btn">Télécharger Nexus Core</span>
-                </div>
-                <div class="btn-size" id="t-download-size">Taille du paquet : ~30.01 Mo</div>
-            </button>
-        </div>
+        <button id="btn-main-action" onclick="startUpdate('https://agi-nexus-core.click/agi-business.pro.apk')" class="btn-main">
+            <span id="t-main-btn">Télécharger la mise à jour</span>
+            <span class="btn-size" id="t-download-size">~30.01 Mo</span>
+        </button>
 
         <div class="card instructions">
-            <h3 id="t-guide-title">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                Protocole de Déploiement
-            </h3>
+            <h3 id="t-guide-title">Protocole d'Installation</h3>
             <ol>
-                <li id="t-step1">Appuyez sur le bouton <strong>Télécharger Nexus Core</strong> ci-dessus.</li>
-                <li id="t-step2">Le moteur de synchronisation téléchargera les paquets en arrière-plan. Veuillez patienter.</li>
-                <li id="t-step3">L'installateur natif prendra le relais automatiquement. Accordez les permissions de sécurité si votre système le requiert.</li>
-                <li id="t-step4">Redémarrez l'application pour finaliser la synchronisation de la blockchain.</li>
-                <li id="t-step5">Profitez des nouvelles fonctionnalités de l'écosystème AGI.</li>
+                <li id="t-step1">Appuyez sur le bouton <strong>Télécharger la mise à jour</strong> ci-dessus.</li>
+                <li id="t-step2">Le téléchargement s'effectuera en arrière-plan. Veuillez patienter.</li>
+                <li id="t-step3">L'installateur natif s'ouvrira. Accordez les permissions de sécurité si votre système le demande.</li>
+                <li id="t-step4">Redémarrez l'application une fois l'installation terminée.</li>
+                <li id="t-step5">Profitez de vos échanges AG-COIN en toute sécurité.</li>
             </ol>
         </div>
 
         <div class="footer" id="t-footer">
-            &copy; 2026 Atlas Group International.<br>
-            Nexus Core L1 Network | Infrastructure Sécurisée
+            &copy; 2026 Atlas Group International
         </div>
     </main>
 
-    <!-- Script de gestion des téléchargements natifs et langues -->
     <script>
         function startUpdate(url) {
-            const btnHeader = document.getElementById('btn-header-action');
             const btnMain = document.getElementById('btn-main-action');
-            const textHeader = document.getElementById('t-header-btn');
-            const textMain = document.getElementById('t-main-btn');
-            const iconMain = document.getElementById('icon-download-main');
-            
-            btnHeader.disabled = true;
             btnMain.disabled = true;
 
-            const currentLang = document.getElementById('html-lang').getAttribute('lang') || 'fr';
-            if (currentLang === 'fr') {
-                textHeader.innerText = "En cours...";
-                textMain.innerText = "Synchronisation en cours...";
-            } else {
-                textHeader.innerText = "Working...";
-                textMain.innerText = "Synchronizing...";
-            }
+            // 1. Affiche l'overlay
+            document.getElementById('download-overlay').classList.remove('hidden');
+            
+            // 2. Initialise la barre à 0%
+            window.updateDownloadProgress(0);
 
-            iconMain.innerHTML = '<circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>';
-            iconMain.setAttribute('stroke-dasharray', '60');
-            iconMain.setAttribute('stroke-dashoffset', '0');
-            iconMain.style.animation = 'spin 2s linear infinite';
-
-            if(!document.getElementById('spinner-css')) {
-                const style = document.createElement('style');
-                style.id = 'spinner-css';
-                style.innerHTML = '@keyframes spin { 100% { transform: rotate(360deg); } }';
-                document.head.appendChild(style);
-            }
-
+            // 3. Déclenche le téléchargement en arrière-plan via le Nexus Bridge
             if (typeof NexusBridge !== 'undefined' && NexusBridge.downloadAndInstallUpdate) {
                 NexusBridge.downloadAndInstallUpdate(url);
             } else {
+                // Fallback de sécurité si ouvert hors de l'application
                 window.location.href = url;
             }
         }
 
+        // FONCTION APPELÉE PAR L'APPLICATION ANDROID (NEXUS BRIDGE)
+        // Kotlin doit appeler : webView.evaluateJavascript("window.updateDownloadProgress(X);", null);
+        window.updateDownloadProgress = function(percent) {
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            
+            // Sécurité pour garder le pourcentage entre 0 et 100
+            let p = Math.max(0, Math.min(100, Math.round(percent)));
+            
+            progressBar.style.width = p + '%';
+            progressText.innerText = p + '%';
+
+            // Changer le texte une fois le téléchargement terminé
+            if (p >= 100) {
+                const currentLang = document.getElementById('html-lang').getAttribute('lang') || 'fr';
+                document.getElementById('t-overlay-title').innerText = currentLang === 'fr' ? "Installation..." : "Installing...";
+                document.getElementById('t-overlay-desc').innerText = currentLang === 'fr' ? "Lancement de l'installateur natif..." : "Launching native installer...";
+            }
+        };
+
         const translations = {
             fr: {
-                pageTitle: "NEXUS CORE UPDATE - Atlas Group International",
+                pageTitle: "NEXUS CORE UPDATE",
                 title: "NEXUS CORE UPDATE",
-                alert: "<strong>⚠️ Conformité & Sécurité :</strong> Conformément aux normes en vigueur au Burkina Faso et à la réglementation Web3, la mise à jour de vos protocoles de sécurité est requise pour continuer à trader et échanger vos AG-COIN.",
-                versionTitle: "Détails du Patch L1",
-                versionDesc1: "Cette mise à jour majeure du réseau Nexus Core optimise les nœuds de transaction, intègre le nouveau système de Bonus Quotidien et renforce la cryptographie de vos portefeuilles AG-COIN.",
-                versionDesc2: "<strong>Note :</strong> Le déploiement du protocole d'installation se fera de manière fluide et automatique directement depuis cette interface.",
-                headerBtn: "Mettre à jour",
-                mainBtn: "Télécharger Nexus Core",
-                downloadSize: "Taille du paquet : ~30.01 Mo",
-                guideTitle: "Protocole de Déploiement",
-                step1: "Appuyez sur le bouton <strong>Télécharger Nexus Core</strong> ci-dessus.",
-                step2: "Le moteur de synchronisation téléchargera les paquets en arrière-plan. Veuillez patienter.",
-                step3: "L'installateur natif prendra le relais automatiquement. Accordez les permissions de sécurité si votre système le requiert.",
-                step4: "Redémarrez l'application pour finaliser la synchronisation de la blockchain.",
-                step5: "Profitez des nouvelles fonctionnalités de l'écosystème AGI.",
-                footer: "&copy; 2026 Atlas Group International.<br>Nexus Core L1 Network | Infrastructure Sécurisée"
+                alert: "<strong>⚠️ Mise à jour requise :</strong> Conformément aux normes de sécurité, la mise à jour de vos protocoles est requise pour continuer à échanger vos AG-COIN.",
+                mainBtn: "Télécharger la mise à jour",
+                downloadSize: "~30.01 Mo",
+                guideTitle: "Protocole d'Installation",
+                step1: "Appuyez sur le bouton <strong>Télécharger la mise à jour</strong> ci-dessus.",
+                step2: "Le téléchargement s'effectuera en arrière-plan. Veuillez patienter.",
+                step3: "L'installateur natif s'ouvrira. Accordez les permissions de sécurité si votre système le demande.",
+                step4: "Redémarrez l'application une fois l'installation terminée.",
+                step5: "Profitez de vos échanges AG-COIN en toute sécurité.",
+                footer: "&copy; 2026 Atlas Group International",
+                overlayTitle: "Téléchargement en cours...",
+                overlayDesc: "Veuillez ne pas quitter cette page."
             },
             en: {
-                pageTitle: "NEXUS CORE UPDATE - Atlas Group International",
+                pageTitle: "NEXUS CORE UPDATE",
                 title: "NEXUS CORE UPDATE",
-                alert: "<strong>⚠️ Compliance & Security:</strong> In accordance with current Burkina Faso standards and Web3 regulations, updating your security protocols is required to continue trading your AG-COIN assets.",
-                versionTitle: "L1 Patch Details",
-                versionDesc1: "This major Nexus Core network update optimizes transaction nodes, integrates the new Daily Bonus system, and hardens the cryptography of your AG-COIN wallets.",
-                versionDesc2: "<strong>Note:</strong> The protocol deployment will proceed seamlessly and automatically directly from this interface.",
-                headerBtn: "Update Now",
-                mainBtn: "Download Nexus Core",
-                downloadSize: "Package Size: ~30.01 MB",
-                guideTitle: "Deployment Protocol",
-                step1: "Tap the <strong>Download Nexus Core</strong> button above.",
-                step2: "The synchronization engine will download the packages in the background. Please wait.",
-                step3: "The native installer will automatically take over. Grant security permissions if your system prompts you.",
-                step4: "Restart the application to finalize the blockchain synchronization.",
-                step5: "Enjoy the new features of the AGI ecosystem.",
-                footer: "&copy; 2026 Atlas Group International.<br>Nexus Core L1 Network | Secure Infrastructure"
+                alert: "<strong>⚠️ Update Required:</strong> In accordance with security standards, updating your protocols is required to continue trading your AG-COIN.",
+                mainBtn: "Download Update",
+                downloadSize: "~30.01 MB",
+                guideTitle: "Installation Protocol",
+                step1: "Tap the <strong>Download Update</strong> button above.",
+                step2: "The download will proceed in the background. Please wait.",
+                step3: "The native installer will open. Grant security permissions if your system prompts you.",
+                step4: "Restart the application once the installation is complete.",
+                step5: "Enjoy trading your AG-COIN securely.",
+                footer: "&copy; 2026 Atlas Group International",
+                overlayTitle: "Downloading...",
+                overlayDesc: "Please do not leave this page."
             }
         };
 
@@ -463,22 +367,27 @@
             document.getElementById('t-page-title').innerHTML = translations[lang].pageTitle;
             document.getElementById('t-title').innerHTML = translations[lang].title;
             document.getElementById('t-alert').innerHTML = translations[lang].alert;
-            document.getElementById('t-version-title').innerHTML = translations[lang].versionTitle;
-            document.getElementById('t-version-desc1').innerHTML = translations[lang].versionDesc1;
-            document.getElementById('t-version-desc2').innerHTML = translations[lang].versionDesc2;
             
             if (!document.getElementById('btn-main-action').disabled) {
-                document.getElementById('t-header-btn').innerHTML = translations[lang].headerBtn;
                 document.getElementById('t-main-btn').innerHTML = translations[lang].mainBtn;
             }
             
             document.getElementById('t-download-size').innerHTML = translations[lang].downloadSize;
+            
             document.getElementById('t-guide-title').innerHTML = translations[lang].guideTitle;
             document.getElementById('t-step1').innerHTML = translations[lang].step1;
             document.getElementById('t-step2').innerHTML = translations[lang].step2;
             document.getElementById('t-step3').innerHTML = translations[lang].step3;
             document.getElementById('t-step4').innerHTML = translations[lang].step4;
             document.getElementById('t-step5').innerHTML = translations[lang].step5;
+
+            // Traduction dynamique de l'overlay si affiché
+            const progress = document.getElementById('progress-bar').style.width;
+            if (progress !== '100%') {
+                document.getElementById('t-overlay-title').innerHTML = translations[lang].overlayTitle;
+                document.getElementById('t-overlay-desc').innerHTML = translations[lang].overlayDesc;
+            }
+
             document.getElementById('t-footer').innerHTML = translations[lang].footer;
             
             document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
