@@ -159,110 +159,10 @@
         .instructions li { margin-bottom: 12px; padding-left: 8px; }
         .instructions li:last-child { margin-bottom: 0; }
         .footer { margin-top: 40px; font-size: 0.8rem; color: var(--text-muted); }
-
-        .overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(8px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            opacity: 1;
-            transition: opacity 0.3s ease, visibility 0.3s;
-        }
-
-        .overlay.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .overlay-card {
-            background: #ffffff;
-            padding: 32px;
-            border-radius: 16px;
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            transform: translateY(0);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .overlay.hidden .overlay-card { transform: translateY(20px); }
-
-        .overlay-card h3 {
-            color: var(--primary);
-            margin-bottom: 24px;
-            font-size: 1.2rem;
-            font-weight: 700;
-        }
-
-        .progress-container {
-            background: var(--border-color);
-            width: 100%;
-            height: 14px;
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 16px;
-            position: relative;
-        }
-
-        .progress-fill {
-            background: var(--accent);
-            width: 0%;
-            height: 100%;
-            transition: width 0.3s ease, background-color 0.3s ease;
-        }
-
-        @keyframes pulse-install {
-            0% { opacity: 1; }
-            50% { opacity: 0.6; }
-            100% { opacity: 1; }
-        }
-
-        .progress-fill.installing {
-            background-color: var(--success);
-            animation: pulse-install 1.5s infinite;
-        }
-
-        .progress-fill.error {
-            background-color: var(--alert-text);
-        }
-
-        .progress-text {
-            font-weight: 800;
-            color: var(--primary);
-            font-size: 1.5rem;
-            margin-bottom: 8px;
-            transition: color 0.3s;
-        }
-
-        .progress-text.installing { color: var(--success); }
-        .progress-text.error { color: var(--alert-text); }
-
-        .overlay-desc {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
     </style>
 </head>
 <body>
     
-    <div id="download-overlay" class="overlay hidden">
-        <div class="overlay-card">
-            <h3 id="t-overlay-title">Initialisation...</h3>
-            <div class="progress-container">
-                <div id="progress-bar" class="progress-fill"></div>
-            </div>
-            <div id="progress-text" class="progress-text">0%</div>
-            <p id="t-overlay-desc" class="overlay-desc">Préparation du téléchargement.</p>
-        </div>
-    </div>
-
     <nav class="navbar">
         <div class="nav-brand">
             <img src="https://i.imgur.com/NyWnYFN.jpeg" alt="Logo AGI" class="nav-logo">
@@ -303,10 +203,6 @@
     </main>
 
     <script>
-        const State = { IDLE: 0, DOWNLOADING: 1, INSTALLING: 2, ERROR: 3 };
-        let currentState = State.IDLE;
-        let simulatorInterval = null;
-
         function safeVibrate(ms) {
             if (window.NexusBridge && typeof window.NexusBridge.vibrate === 'function') {
                 window.NexusBridge.vibrate(ms);
@@ -319,31 +215,8 @@
             }
         }
 
-        function updateUIDownloading() {
-            const lang = document.getElementById('html-lang').getAttribute('lang') || 'fr';
-            document.getElementById('t-overlay-title').innerText = lang === 'fr' ? "Téléchargement en cours..." : "Downloading...";
-            document.getElementById('progress-bar').style.width = '0%';
-            document.getElementById('progress-text').innerText = '0%';
-        }
-
-        function simulateDownloadForTesting() {
-            let progress = 0;
-            simulatorInterval = setInterval(() => {
-                progress += Math.floor(Math.random() * 5) + 1;
-                if (progress >= 100) {
-                    progress = 100;
-                    clearInterval(simulatorInterval);
-                }
-                window.updateDownloadProgress(progress);
-            }, 300);
-        }
-
         window.startUpdate = function(url) {
-            if (currentState !== State.IDLE) return;
-            currentState = State.DOWNLOADING;
             document.getElementById('btn-main-action').disabled = true;
-            document.getElementById('download-overlay').classList.remove('hidden');
-            updateUIDownloading();
 
             try {
                 if (window.NexusBridge && typeof window.NexusBridge.downloadAndInstallUpdate === 'function') {
@@ -351,7 +224,6 @@
                     window.NexusBridge.downloadAndInstallUpdate(url);
                 } else {
                     safeToast("Mode Web Actif");
-                    simulateDownloadForTesting();
                     window.location.href = url;
                 }
             } catch (error) {
@@ -360,62 +232,18 @@
         };
 
         window.updateDownloadProgress = function(percent) {
-            if (currentState === State.ERROR || currentState === State.INSTALLING) return;
-            
-            const p = Math.max(0, Math.min(100, Math.round(percent)));
-            document.getElementById('progress-bar').style.width = p + '%';
-            document.getElementById('progress-text').innerText = p + '%';
-            
-            if(p > 0 && p < 100) {
-                const lang = document.getElementById('html-lang').getAttribute('lang') || 'fr';
-                document.getElementById('t-overlay-desc').innerText = lang === 'fr' ? "Veuillez ne pas quitter cette page." : "Please do not leave this page.";
-            }
-
-            if (p >= 100) window.onDownloadComplete();
         };
 
         window.onDownloadComplete = function() {
-            if(currentState === State.ERROR) return;
-            currentState = State.INSTALLING;
-            
             safeVibrate(500);
-            const lang = document.getElementById('html-lang').getAttribute('lang') || 'fr';
-            
-            document.getElementById('progress-bar').style.width = '100%';
-            document.getElementById('progress-bar').classList.add('installing');
-            document.getElementById('progress-text').classList.add('installing');
-            
-            document.getElementById('progress-text').innerText = lang === 'fr' ? "PRÊT" : "READY";
-            document.getElementById('t-overlay-title').innerText = lang === 'fr' ? "Installation en cours..." : "Installing...";
-            document.getElementById('t-overlay-desc').innerText = lang === 'fr' ? "Veuillez autoriser l'installation dans l'invite système." : "Please allow the installation in the system prompt.";
         };
 
         window.onDownloadError = function(errorMsg) {
-            currentState = State.ERROR;
-            clearInterval(simulatorInterval);
-            
             safeVibrate(200);
             safeToast(errorMsg || "Erreur de téléchargement");
-            const lang = document.getElementById('html-lang').getAttribute('lang') || 'fr';
             
-            document.getElementById('progress-bar').classList.remove('installing');
-            document.getElementById('progress-text').classList.remove('installing');
-            document.getElementById('progress-bar').classList.add('error');
-            document.getElementById('progress-text').classList.add('error');
-            
-            document.getElementById('t-overlay-title').innerText = lang === 'fr' ? "Échec du téléchargement" : "Download Failed";
-            document.getElementById('progress-text').innerText = "Erreur";
-            document.getElementById('t-overlay-desc').innerText = errorMsg || (lang === 'fr' ? "Vérifiez votre connexion internet." : "Check your internet connection.");
-
             setTimeout(() => {
-                document.getElementById('download-overlay').classList.add('hidden');
                 document.getElementById('btn-main-action').disabled = false;
-                
-                document.getElementById('progress-bar').className = 'progress-fill';
-                document.getElementById('progress-text').className = 'progress-text';
-                document.getElementById('progress-bar').style.width = '0%';
-                
-                currentState = State.IDLE;
             }, 4000);
         };
 
@@ -465,15 +293,6 @@
             document.getElementById('t-step5').innerHTML = t.step5;
             document.getElementById('t-footer').innerHTML = t.footer;
 
-            if (currentState === State.DOWNLOADING) {
-                document.getElementById('t-overlay-title').innerText = lang === 'fr' ? "Téléchargement en cours..." : "Downloading...";
-                document.getElementById('t-overlay-desc').innerText = lang === 'fr' ? "Veuillez ne pas quitter cette page." : "Please do not leave this page.";
-            } else if (currentState === State.INSTALLING) {
-                document.getElementById('t-overlay-title').innerText = lang === 'fr' ? "Installation en cours..." : "Installing...";
-                document.getElementById('t-overlay-desc').innerText = lang === 'fr' ? "Veuillez autoriser l'installation dans l'invite système." : "Please allow the installation in the system prompt.";
-                document.getElementById('progress-text').innerText = lang === 'fr' ? "PRÊT" : "READY";
-            }
-            
             document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
             document.getElementById('btn-en').classList.toggle('active', lang === 'en');
         };
