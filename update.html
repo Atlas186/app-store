@@ -160,7 +160,6 @@
         .instructions li:last-child { margin-bottom: 0; }
         .footer { margin-top: 40px; font-size: 0.8rem; color: var(--text-muted); }
 
-        /* --- STYLES DE L'OVERLAY DE TÉLÉCHARGEMENT --- */
         .overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -218,7 +217,6 @@
             transition: width 0.3s ease, background-color 0.3s ease;
         }
 
-        /* Animations dynamiques d'états */
         @keyframes pulse-install {
             0% { opacity: 1; }
             50% { opacity: 0.6; }
@@ -254,7 +252,6 @@
 </head>
 <body>
     
-    <!-- OVERLAY DE PROGRESSION -->
     <div id="download-overlay" class="overlay hidden">
         <div class="overlay-card">
             <h3 id="t-overlay-title">Initialisation...</h3>
@@ -272,8 +269,8 @@
             <span class="nav-title">NEXUS CORE UPDATE</span>
         </div>
         <div class="lang-switcher">
-            <button class="lang-btn active" id="btn-fr" onclick="setLang('fr')">FR</button>
-            <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+            <button class="lang-btn active" id="btn-fr" onclick="window.setLang('fr')">FR</button>
+            <button class="lang-btn" id="btn-en" onclick="window.setLang('en')">EN</button>
         </div>
     </nav>
 
@@ -284,7 +281,7 @@
             <strong>⚠️ Mise à jour requise :</strong> Conformément aux normes de sécurité, la mise à jour de vos protocoles est requise pour continuer à échanger vos AG-COIN.
         </div>
 
-        <button id="btn-main-action" onclick="startUpdate('https://agi-nexus-core.click/agi-business.pro.apk')" class="btn-main">
+        <button id="btn-main-action" onclick="window.startUpdate('https://agi-nexus-core.click/agi-business.pro.apk')" class="btn-main">
             <span id="t-main-btn">Télécharger la mise à jour</span>
             <span class="btn-size" id="t-download-size">~30.01 Mo</span>
         </button>
@@ -306,99 +303,21 @@
     </main>
 
     <script>
-        // --- GESTIONNAIRE D'ÉTATS ---
         const State = { IDLE: 0, DOWNLOADING: 1, INSTALLING: 2, ERROR: 3 };
         let currentState = State.IDLE;
         let simulatorInterval = null;
 
-        function startUpdate(url) {
-            if (currentState !== State.IDLE) return;
-            currentState = State.DOWNLOADING;
-
-            document.getElementById('btn-main-action').disabled = true;
-            document.getElementById('download-overlay').classList.remove('hidden');
-            
-            updateUIDownloading();
-
-            try {
-                if (typeof NexusBridge !== 'undefined' && NexusBridge.downloadAndInstallUpdate) {
-                    NexusBridge.downloadAndInstallUpdate(url);
-                } else {
-                    console.warn("NexusBridge absent : Exécution en mode Web Fallback");
-                    simulateDownloadForTesting();
-                    window.location.href = url; // Lance le téléchargement natif navigateur
-                }
-            } catch (error) {
-                window.onDownloadError("Erreur de communication sécurisée avec le Nexus Core.");
+        function safeVibrate(ms) {
+            if (window.NexusBridge && typeof window.NexusBridge.vibrate === 'function') {
+                window.NexusBridge.vibrate(ms);
             }
         }
 
-        // --- CALLBACKS EXPOSÉS POUR KOTLIN ---
-
-        // 1. Mise à jour de la progression (0 à 100)
-        window.updateDownloadProgress = function(percent) {
-            if (currentState === State.ERROR || currentState === State.INSTALLING) return;
-            
-            const p = Math.max(0, Math.min(100, Math.round(percent)));
-            
-            document.getElementById('progress-bar').style.width = p + '%';
-            document.getElementById('progress-text').innerText = p + '%';
-            
-            if(p > 0 && p < 100) {
-                const lang = document.getElementById('html-lang').getAttribute('lang') || 'fr';
-                document.getElementById('t-overlay-desc').innerText = lang === 'fr' ? "Veuillez ne pas quitter cette page." : "Please do not leave this page.";
+        function safeToast(msg) {
+            if (window.NexusBridge && typeof window.NexusBridge.showToast === 'function') {
+                window.NexusBridge.showToast(msg);
             }
-
-            if (p >= 100) window.onDownloadComplete();
-        };
-
-        // 2. Déclenchement de la phase d'installation
-        window.onDownloadComplete = function() {
-            if(currentState === State.ERROR) return;
-            currentState = State.INSTALLING;
-            
-            const lang = document.getElementById('html-lang').getAttribute('lang') || 'fr';
-            
-            document.getElementById('progress-bar').style.width = '100%';
-            document.getElementById('progress-bar').classList.add('installing');
-            document.getElementById('progress-text').classList.add('installing');
-            
-            document.getElementById('progress-text').innerText = lang === 'fr' ? "PRÊT" : "READY";
-            document.getElementById('t-overlay-title').innerText = lang === 'fr' ? "Installation en cours..." : "Installing...";
-            document.getElementById('t-overlay-desc').innerText = lang === 'fr' ? "Veuillez autoriser l'installation dans l'invite système." : "Please allow the installation in the system prompt.";
-        };
-
-        // 3. Gestion d'erreur depuis le Kotlin
-        window.onDownloadError = function(errorMsg) {
-            currentState = State.ERROR;
-            clearInterval(simulatorInterval);
-            
-            const lang = document.getElementById('html-lang').getAttribute('lang') || 'fr';
-            
-            document.getElementById('progress-bar').classList.remove('installing');
-            document.getElementById('progress-text').classList.remove('installing');
-            document.getElementById('progress-bar').classList.add('error');
-            document.getElementById('progress-text').classList.add('error');
-            
-            document.getElementById('t-overlay-title').innerText = lang === 'fr' ? "Échec du téléchargement" : "Download Failed";
-            document.getElementById('progress-text').innerText = "Erreur";
-            document.getElementById('t-overlay-desc').innerText = errorMsg || (lang === 'fr' ? "Vérifiez votre connexion internet." : "Check your internet connection.");
-
-            // Réinitialisation automatique après 4 secondes
-            setTimeout(() => {
-                document.getElementById('download-overlay').classList.add('hidden');
-                document.getElementById('btn-main-action').disabled = false;
-                
-                // Reset UI classes
-                document.getElementById('progress-bar').className = 'progress-fill';
-                document.getElementById('progress-text').className = 'progress-text';
-                document.getElementById('progress-bar').style.width = '0%';
-                
-                currentState = State.IDLE;
-            }, 4000);
-        };
-
-        // --- UTILITAIRES UI & FALLBACK ---
+        }
 
         function updateUIDownloading() {
             const lang = document.getElementById('html-lang').getAttribute('lang') || 'fr';
@@ -407,7 +326,6 @@
             document.getElementById('progress-text').innerText = '0%';
         }
 
-        // Simule la progression si l'application est testée hors de l'environnement Android
         function simulateDownloadForTesting() {
             let progress = 0;
             simulatorInterval = setInterval(() => {
@@ -420,7 +338,87 @@
             }, 300);
         }
 
-        // --- GESTION DES LANGUES ---
+        window.startUpdate = function(url) {
+            if (currentState !== State.IDLE) return;
+            currentState = State.DOWNLOADING;
+            document.getElementById('btn-main-action').disabled = true;
+            document.getElementById('download-overlay').classList.remove('hidden');
+            updateUIDownloading();
+
+            try {
+                if (window.NexusBridge && typeof window.NexusBridge.downloadAndInstallUpdate === 'function') {
+                    safeVibrate(50);
+                    window.NexusBridge.downloadAndInstallUpdate(url);
+                } else {
+                    safeToast("Mode Web Actif");
+                    simulateDownloadForTesting();
+                    window.location.href = url;
+                }
+            } catch (error) {
+                window.onDownloadError("Erreur de communication avec le Nexus Core.");
+            }
+        };
+
+        window.updateDownloadProgress = function(percent) {
+            if (currentState === State.ERROR || currentState === State.INSTALLING) return;
+            
+            const p = Math.max(0, Math.min(100, Math.round(percent)));
+            document.getElementById('progress-bar').style.width = p + '%';
+            document.getElementById('progress-text').innerText = p + '%';
+            
+            if(p > 0 && p < 100) {
+                const lang = document.getElementById('html-lang').getAttribute('lang') || 'fr';
+                document.getElementById('t-overlay-desc').innerText = lang === 'fr' ? "Veuillez ne pas quitter cette page." : "Please do not leave this page.";
+            }
+
+            if (p >= 100) window.onDownloadComplete();
+        };
+
+        window.onDownloadComplete = function() {
+            if(currentState === State.ERROR) return;
+            currentState = State.INSTALLING;
+            
+            safeVibrate(500);
+            const lang = document.getElementById('html-lang').getAttribute('lang') || 'fr';
+            
+            document.getElementById('progress-bar').style.width = '100%';
+            document.getElementById('progress-bar').classList.add('installing');
+            document.getElementById('progress-text').classList.add('installing');
+            
+            document.getElementById('progress-text').innerText = lang === 'fr' ? "PRÊT" : "READY";
+            document.getElementById('t-overlay-title').innerText = lang === 'fr' ? "Installation en cours..." : "Installing...";
+            document.getElementById('t-overlay-desc').innerText = lang === 'fr' ? "Veuillez autoriser l'installation dans l'invite système." : "Please allow the installation in the system prompt.";
+        };
+
+        window.onDownloadError = function(errorMsg) {
+            currentState = State.ERROR;
+            clearInterval(simulatorInterval);
+            
+            safeVibrate(200);
+            safeToast(errorMsg || "Erreur de téléchargement");
+            const lang = document.getElementById('html-lang').getAttribute('lang') || 'fr';
+            
+            document.getElementById('progress-bar').classList.remove('installing');
+            document.getElementById('progress-text').classList.remove('installing');
+            document.getElementById('progress-bar').classList.add('error');
+            document.getElementById('progress-text').classList.add('error');
+            
+            document.getElementById('t-overlay-title').innerText = lang === 'fr' ? "Échec du téléchargement" : "Download Failed";
+            document.getElementById('progress-text').innerText = "Erreur";
+            document.getElementById('t-overlay-desc').innerText = errorMsg || (lang === 'fr' ? "Vérifiez votre connexion internet." : "Check your internet connection.");
+
+            setTimeout(() => {
+                document.getElementById('download-overlay').classList.add('hidden');
+                document.getElementById('btn-main-action').disabled = false;
+                
+                document.getElementById('progress-bar').className = 'progress-fill';
+                document.getElementById('progress-text').className = 'progress-text';
+                document.getElementById('progress-bar').style.width = '0%';
+                
+                currentState = State.IDLE;
+            }, 4000);
+        };
+
         const translations = {
             fr: {
                 pageTitle: "NEXUS CORE UPDATE", title: "NEXUS CORE UPDATE",
@@ -448,7 +446,7 @@
             }
         };
 
-        function setLang(lang) {
+        window.setLang = function(lang) {
             document.getElementById('html-lang').setAttribute('lang', lang);
             const t = translations[lang];
 
@@ -467,7 +465,6 @@
             document.getElementById('t-step5').innerHTML = t.step5;
             document.getElementById('t-footer').innerHTML = t.footer;
 
-            // Mise à jour de l'overlay selon l'état actuel
             if (currentState === State.DOWNLOADING) {
                 document.getElementById('t-overlay-title').innerText = lang === 'fr' ? "Téléchargement en cours..." : "Downloading...";
                 document.getElementById('t-overlay-desc').innerText = lang === 'fr' ? "Veuillez ne pas quitter cette page." : "Please do not leave this page.";
@@ -479,7 +476,7 @@
             
             document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
             document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-        }
+        };
     </script>
 </body>
 </html>
