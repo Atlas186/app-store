@@ -22,6 +22,8 @@
             --alert-bg: #fef2f2;
             --alert-border: #fca5a5;
             --alert-text: #991b1b;
+            --success-color: #10b981;
+            --error-color: #ef4444;
             --radius: 8px;
             --transition: all 0.2s ease-in-out;
         }
@@ -157,10 +159,6 @@
             margin-bottom: 12px;
             padding-left: 8px;
         }
-        
-        .instructions li:last-child {
-            margin-bottom: 0;
-        }
 
         .footer { 
             margin-top: 40px; 
@@ -196,6 +194,11 @@
             max-width: 400px;
             text-align: center;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .overlay.hidden .overlay-card {
+            transform: scale(0.95);
         }
 
         .overlay-card h3 {
@@ -217,7 +220,7 @@
             background: var(--accent);
             width: 0%;
             height: 100%;
-            transition: width 0.2s ease;
+            transition: width 0.3s ease-out, background-color 0.3s;
         }
 
         .progress-text {
@@ -225,25 +228,62 @@
             color: var(--accent);
             font-size: 1.25rem;
             margin-bottom: 8px;
+            transition: color 0.3s;
         }
 
         .overlay-desc {
             color: var(--text-muted);
             font-size: 0.85rem;
+            margin-bottom: 16px;
         }
+        
+        .error-message {
+            color: var(--error-color);
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+            display: none;
+        }
+
+        .btn-close {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            display: none;
+            width: 100%;
+        }
+        
+        .btn-close:hover { background-color: var(--bg-body); }
+
+        /* States classes */
+        .state-error .progress-fill { background: var(--error-color); width: 100% !important; }
+        .state-error .progress-text { color: var(--error-color); }
+        .state-error .error-message, .state-error .btn-close { display: block; }
+        
+        .state-success .progress-fill { background: var(--success-color); }
+        .state-success .progress-text { color: var(--success-color); }
     </style>
 </head>
 <body>
     
     <!-- OVERLAY DE PROGRESSION -->
     <div id="download-overlay" class="overlay hidden">
-        <div class="overlay-card">
+        <div id="overlay-card" class="overlay-card">
             <h3 id="t-overlay-title">Téléchargement en cours...</h3>
+            
             <div class="progress-container">
                 <div id="progress-bar" class="progress-fill"></div>
             </div>
+            
             <div id="progress-text" class="progress-text">0%</div>
             <p id="t-overlay-desc" class="overlay-desc">Veuillez ne pas quitter cette page.</p>
+            
+            <div id="error-message" class="error-message">Erreur réseau.</div>
+            <button id="btn-close-overlay" class="btn-close" onclick="closeOverlay()">Fermer</button>
         </div>
     </div>
 
@@ -282,49 +322,99 @@
         </div>
 
         <div class="footer" id="t-footer">
-            &copy; 2026 Atlas Group International
+            &copy; 2026 Atlas Groupe International
         </div>
     </main>
 
     <script>
+        let currentLang = 'fr';
+
         function startUpdate(url) {
             const btnMain = document.getElementById('btn-main-action');
             btnMain.disabled = true;
 
-            // 1. Affiche l'overlay
-            document.getElementById('download-overlay').classList.remove('hidden');
+            // 1. Réinitialiser l'état de l'overlay
+            const overlayCard = document.getElementById('overlay-card');
+            overlayCard.className = 'overlay-card'; // Enlève les classes success/error
             
-            // 2. Initialise la barre à 0%
-            window.updateDownloadProgress(0);
+            document.getElementById('t-overlay-title').innerText = translations[currentLang].overlayTitle;
+            document.getElementById('t-overlay-desc').innerText = translations[currentLang].overlayDesc;
+            document.getElementById('error-message').style.display = 'none';
 
-            // 3. Déclenche le téléchargement en arrière-plan via le Nexus Bridge
+            // 2. Affiche l'overlay et reset la barre
+            document.getElementById('download-overlay').classList.remove('hidden');
+            window.onNexusDownloadProgress(0);
+
+            // 3. Appel sécurisé au Nexus Bridge
             if (typeof NexusBridge !== 'undefined' && NexusBridge.downloadAndInstallUpdate) {
-                NexusBridge.downloadAndInstallUpdate(url);
+                try {
+                    NexusBridge.downloadAndInstallUpdate(url);
+                } catch (error) {
+                    console.error("Erreur d'appel au NexusBridge:", error);
+                    window.onNexusDownloadError("Erreur interne du pont de communication.");
+                }
             } else {
-                // Fallback de sécurité si ouvert hors de l'application
+                console.warn("NexusBridge non détecté. Redirection classique.");
+                // Fallback classique (navigateur)
                 window.location.href = url;
+                setTimeout(() => {
+                    closeOverlay();
+                }, 3000);
             }
         }
 
-        // FONCTION APPELÉE PAR L'APPLICATION ANDROID (NEXUS BRIDGE)
-        // Kotlin doit appeler : webView.evaluateJavascript("window.updateDownloadProgress(X);", null);
-        window.updateDownloadProgress = function(percent) {
+        function closeOverlay() {
+            document.getElementById('download-overlay').classList.add('hidden');
+            document.getElementById('btn-main-action').disabled = false;
+        }
+
+        // ==============================================================
+        // API PUBLIQUE POUR LE NEXUS BRIDGE (KOTLIN -> JAVASCRIPT)
+        // ==============================================================
+
+        // 1. Mise à jour de la progression (0 à 100)
+        window.onNexusDownloadProgress = function(percent) {
             const progressBar = document.getElementById('progress-bar');
             const progressText = document.getElementById('progress-text');
             
-            // Sécurité pour garder le pourcentage entre 0 et 100
             let p = Math.max(0, Math.min(100, Math.round(percent)));
             
             progressBar.style.width = p + '%';
             progressText.innerText = p + '%';
-
-            // Changer le texte une fois le téléchargement terminé
-            if (p >= 100) {
-                const currentLang = document.getElementById('html-lang').getAttribute('lang') || 'fr';
-                document.getElementById('t-overlay-title').innerText = currentLang === 'fr' ? "Installation..." : "Installing...";
-                document.getElementById('t-overlay-desc').innerText = currentLang === 'fr' ? "Lancement de l'installateur natif..." : "Launching native installer...";
-            }
         };
+
+        // 2. Téléchargement terminé avec succès
+        window.onNexusDownloadComplete = function() {
+            const overlayCard = document.getElementById('overlay-card');
+            overlayCard.classList.add('state-success');
+            
+            window.onNexusDownloadProgress(100);
+            
+            document.getElementById('t-overlay-title').innerText = translations[currentLang].installTitle;
+            document.getElementById('t-overlay-desc').innerText = translations[currentLang].installDesc;
+        };
+
+        // 3. Erreur lors du téléchargement
+        window.onNexusDownloadError = function(customMessage) {
+            const overlayCard = document.getElementById('overlay-card');
+            overlayCard.classList.add('state-error');
+            
+            document.getElementById('t-overlay-title').innerText = translations[currentLang].errorTitle;
+            document.getElementById('progress-text').innerText = "Erreur";
+            
+            const errorElement = document.getElementById('error-message');
+            errorElement.innerText = customMessage || translations[currentLang].errorDefault;
+            errorElement.style.display = 'block';
+            
+            document.getElementById('btn-close-overlay').innerText = translations[currentLang].closeBtn;
+        };
+        
+        // Rétrocompatibilité si l'ancienne fonction est déjà codée dans le Kotlin actuel
+        window.updateDownloadProgress = window.onNexusDownloadProgress;
+
+        // ==============================================================
+        // GESTION DES LANGUES
+        // ==============================================================
 
         const translations = {
             fr: {
@@ -339,9 +429,14 @@
                 step3: "L'installateur natif s'ouvrira. Accordez les permissions de sécurité si votre système le demande.",
                 step4: "Redémarrez l'application une fois l'installation terminée.",
                 step5: "Profitez de vos échanges AG-COIN en toute sécurité.",
-                footer: "&copy; 2026 Atlas Group International",
+                footer: "&copy; 2026 Atlas Groupe International",
                 overlayTitle: "Téléchargement en cours...",
-                overlayDesc: "Veuillez ne pas quitter cette page."
+                overlayDesc: "Veuillez ne pas quitter cette page.",
+                installTitle: "Installation...",
+                installDesc: "Lancement de l'installateur natif. Suivez les instructions à l'écran.",
+                errorTitle: "Échec du téléchargement",
+                errorDefault: "Une erreur réseau est survenue. Veuillez réessayer.",
+                closeBtn: "Fermer"
             },
             en: {
                 pageTitle: "NEXUS CORE UPDATE",
@@ -357,11 +452,17 @@
                 step5: "Enjoy trading your AG-COIN securely.",
                 footer: "&copy; 2026 Atlas Group International",
                 overlayTitle: "Downloading...",
-                overlayDesc: "Please do not leave this page."
+                overlayDesc: "Please do not leave this page.",
+                installTitle: "Installing...",
+                installDesc: "Launching native installer. Follow the on-screen instructions.",
+                errorTitle: "Download Failed",
+                errorDefault: "A network error occurred. Please try again.",
+                closeBtn: "Close"
             }
         };
 
         function setLang(lang) {
+            currentLang = lang;
             document.getElementById('html-lang').setAttribute('lang', lang);
 
             document.getElementById('t-page-title').innerHTML = translations[lang].pageTitle;
@@ -380,16 +481,21 @@
             document.getElementById('t-step3').innerHTML = translations[lang].step3;
             document.getElementById('t-step4').innerHTML = translations[lang].step4;
             document.getElementById('t-step5').innerHTML = translations[lang].step5;
-
-            // Traduction dynamique de l'overlay si affiché
-            const progress = document.getElementById('progress-bar').style.width;
-            if (progress !== '100%') {
-                document.getElementById('t-overlay-title').innerHTML = translations[lang].overlayTitle;
-                document.getElementById('t-overlay-desc').innerHTML = translations[lang].overlayDesc;
-            }
-
             document.getElementById('t-footer').innerHTML = translations[lang].footer;
             
+            // Mise à jour de l'overlay s'il est visible
+            const overlayCard = document.getElementById('overlay-card');
+            if (overlayCard.classList.contains('state-error')) {
+                document.getElementById('t-overlay-title').innerText = translations[lang].errorTitle;
+                document.getElementById('btn-close-overlay').innerText = translations[lang].closeBtn;
+            } else if (overlayCard.classList.contains('state-success')) {
+                document.getElementById('t-overlay-title').innerText = translations[lang].installTitle;
+                document.getElementById('t-overlay-desc').innerText = translations[lang].installDesc;
+            } else {
+                document.getElementById('t-overlay-title').innerText = translations[lang].overlayTitle;
+                document.getElementById('t-overlay-desc').innerText = translations[lang].overlayDesc;
+            }
+
             document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
             document.getElementById('btn-en').classList.toggle('active', lang === 'en');
         }
