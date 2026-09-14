@@ -2,49 +2,71 @@
 <html lang="fr" id="html-lang">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#ffffff">
-    <title id="t-page-title">NEXUS CORE UPDATE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#f8fafc">
+    <title id="t-page-title">NEXUS CORE UPDATE | Atlas & Duc</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --bg-body: #f8fafc;
+            /* Palette Premium */
+            --bg-body: #f1f5f9;
+            --bg-surface: #ffffff;
             --primary: #0f172a;
-            --accent: #0284c7;
-            --accent-hover: #0369a1;
+            --accent: #0ea5e9;
+            --accent-hover: #0284c7;
             --success: #10b981;
-            --text-main: #334155;
+            --text-main: #1e293b;
             --text-muted: #64748b;
             --border-color: #e2e8f0;
-            --alert-bg: #fef2f2;
-            --alert-border: #fca5a5;
-            --alert-text: #991b1b;
-            --radius: 8px;
-            --transition: all 0.3s ease-in-out;
+            --alert-bg: #fff1f2;
+            --alert-border: #fecdd3;
+            --alert-text: #be123c;
+            
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.02);
+            --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            --shadow-btn: 0 10px 15px -3px rgba(14, 165, 233, 0.3);
+            
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body { 
-            font-family: 'Inter', system-ui, sans-serif; 
+            font-family: 'Inter', system-ui, -apple-system, sans-serif; 
             background-color: var(--bg-body); 
             color: var(--text-main); 
-            font-size: 14px; 
+            font-size: 15px; 
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
         
+        /* Navbar / Header */
         .navbar {
-            background: #ffffff;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-color);
-            padding: 12px 5%;
+            padding: 16px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .nav-brand {
@@ -54,120 +76,323 @@
             text-decoration: none;
         }
 
-        .nav-logo { height: 36px; border-radius: 4px; }
+        .nav-logo { 
+            height: 38px; 
+            width: 38px;
+            border-radius: 10px; 
+            object-fit: cover;
+            box-shadow: var(--shadow-sm);
+        }
         
         .nav-title {
             font-size: 1.1rem;
-            font-weight: 700;
+            font-weight: 800;
             color: var(--primary);
-            letter-spacing: 0.5px;
+            letter-spacing: -0.5px;
         }
 
+        /* Modern Segmented Control for Language */
         .lang-switcher {
             display: flex;
+            background: #f1f5f9;
+            padding: 4px;
+            border-radius: 10px;
             border: 1px solid var(--border-color);
-            border-radius: 6px;
-            overflow: hidden;
         }
 
         .lang-btn {
             background: transparent;
             border: none;
             color: var(--text-muted);
-            padding: 6px 12px;
-            font-weight: 600;
+            padding: 6px 14px;
+            font-weight: 700;
             font-size: 0.75rem;
+            border-radius: 6px;
             cursor: pointer;
             transition: var(--transition);
         }
 
-        .lang-btn:hover { color: var(--primary); }
-        .lang-btn.active { background: var(--primary); color: #ffffff; }
+        .lang-btn.active { 
+            background: var(--bg-surface); 
+            color: var(--primary); 
+            box-shadow: var(--shadow-sm);
+        }
 
+        /* Main Container */
         .container { 
-            max-width: 500px; 
-            margin: 60px auto; 
+            width: 100%;
+            max-width: 540px; 
+            margin: 40px auto; 
             padding: 0 20px; 
+            flex: 1;
+        }
+
+        /* Update Header Area */
+        .update-header {
             text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .update-icon-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .update-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--bg-surface), #f8fafc);
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: var(--accent);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .pulse-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 20px;
+            height: 20px;
+            background: var(--success);
+            border-radius: 50%;
+            border: 3px solid var(--bg-body);
+        }
+
+        .pulse-badge::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 50%;
+            background: var(--success);
+            animation: pulse 2s infinite;
+            z-index: -1;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(2.5); opacity: 0; }
         }
         
         h1 { 
             color: var(--primary); 
-            font-size: 1.5rem; 
+            font-size: 1.75rem; 
             font-weight: 900;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .version-tag {
+            display: inline-block;
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
             margin-bottom: 24px;
         }
         
+        /* Alert Box */
         .alert-box { 
             background-color: var(--alert-bg); 
-            color: var(--alert-text); 
-            padding: 16px; 
+            padding: 20px; 
             border: 1px solid var(--alert-border);
-            border-radius: var(--radius); 
-            margin-bottom: 32px; 
-            font-weight: 500; 
-            text-align: left;
+            border-radius: var(--radius-md); 
+            margin-bottom: 30px; 
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            box-shadow: var(--shadow-sm);
         }
 
+        .alert-icon {
+            color: var(--alert-text);
+            font-size: 1.25rem;
+            margin-top: 2px;
+        }
+
+        .alert-content {
+            color: var(--alert-text);
+            font-size: 0.9rem;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        .alert-content strong {
+            display: block;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+            font-weight: 800;
+        }
+
+        /* Main Action Button */
         .btn-main {
-            display: inline-flex;
+            display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             gap: 4px;
-            background-color: var(--accent);
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
             color: white;
-            font-weight: 600;
-            border-radius: var(--radius);
+            border-radius: var(--radius-md);
             border: none;
             cursor: pointer;
-            padding: 16px 32px;
-            font-size: 1rem;
+            padding: 18px 32px;
             width: 100%;
             transition: var(--transition);
+            box-shadow: var(--shadow-btn);
             position: relative;
             overflow: hidden;
         }
 
-        .btn-main:hover:not(:disabled) { background-color: var(--accent-hover); }
-        .btn-main:disabled { background-color: #94a3b8; cursor: not-allowed; opacity: 0.8; }
+        .btn-main:hover:not(:disabled) { 
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px -5px rgba(14, 165, 233, 0.4);
+        }
+        
+        .btn-main:active:not(:disabled) { transform: translateY(0); }
+        
+        .btn-main:disabled { 
+            background: var(--text-muted);
+            box-shadow: none;
+            cursor: not-allowed; 
+        }
 
-        .btn-size { font-size: 0.75rem; font-weight: 500; opacity: 0.9; }
+        .btn-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
+        .btn-size { 
+            font-size: 0.8rem; 
+            font-weight: 600; 
+            opacity: 0.9; 
+        }
+
+        /* Stepper / Instructions Card */
         .card { 
-            background-color: #ffffff; 
+            background-color: var(--bg-surface); 
             border: 1px solid var(--border-color); 
-            padding: 24px; 
-            border-radius: var(--radius); 
-            margin-top: 32px; 
-            text-align: left;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+            padding: 28px; 
+            border-radius: var(--radius-lg); 
+            margin-top: 30px; 
+            box-shadow: var(--shadow-md);
         }
         
         .card h3 { 
             color: var(--primary); 
-            font-size: 1.05rem;
-            margin-bottom: 16px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 12px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        
-        .instructions ol { 
-            padding-left: 20px; 
+
+        .stepper {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .step {
+            display: flex;
+            gap: 16px;
+            position: relative;
+        }
+
+        .step:not(:last-child)::before {
+            content: '';
+            position: absolute;
+            top: 28px;
+            bottom: -20px;
+            left: 13px;
+            width: 2px;
+            background: var(--border-color);
+        }
+
+        .step-number {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #f1f5f9;
+            border: 2px solid var(--border-color);
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+            z-index: 2;
+            transition: var(--transition);
+        }
+
+        .step-content {
+            padding-top: 2px;
+            font-size: 0.95rem;
             color: var(--text-main);
+            font-weight: 500;
         }
-        
-        .instructions li { margin-bottom: 12px; padding-left: 8px; }
-        .instructions li:last-child { margin-bottom: 0; }
-        .footer { margin-top: 40px; font-size: 0.8rem; color: var(--text-muted); }
+
+        .step-content strong { color: var(--primary); font-weight: 700; }
+
+        /* Highlight first step slightly */
+        .step:first-child .step-number {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1);
+        }
+
+        /* Footer */
+        .footer { 
+            margin-top: 40px; 
+            padding-bottom: 20px;
+            text-align: center;
+            font-size: 0.75rem; 
+            font-weight: 600;
+            color: var(--text-muted); 
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Loader inside button */
+        .loader {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .is-loading .loader { display: block; }
+        .is-loading .btn-icon { display: none; }
     </style>
 </head>
 <body>
     
     <nav class="navbar">
-        <div class="nav-brand">
-            <img src="https://i.imgur.com/NyWnYFN.jpeg" alt="Logo AGI" class="nav-logo">
-            <span class="nav-title">NEXUS CORE UPDATE</span>
-        </div>
+        <a href="#" class="nav-brand">
+            <img src="https://i.imgur.com/Tc7Jzx3.jpeg" alt="Logo Atlas & Duc" class="nav-logo">
+            <span class="nav-title">NEXUS CORE</span>
+        </a>
         <div class="lang-switcher">
             <button class="lang-btn active" id="btn-fr" onclick="window.setLang('fr')">FR</button>
             <button class="lang-btn" id="btn-en" onclick="window.setLang('en')">EN</button>
@@ -175,32 +400,66 @@
     </nav>
 
     <main class="container">
-        <h1 id="t-title">NEXUS CORE UPDATE</h1>
+        
+        <div class="update-header">
+            <div class="update-icon-wrapper">
+                <div class="update-icon">
+                    <i class="fa-solid fa-cloud-arrow-down"></i>
+                </div>
+                <div class="pulse-badge"></div>
+            </div>
+            <h1 id="t-title">Mise à jour Système</h1>
+            <span class="version-tag mono">Version 4.5.1 (Requise)</span>
+        </div>
 
-        <div class="alert-box" id="t-alert">
-            <strong>⚠️ Mise à jour requise :</strong> Conformément aux normes de sécurité, la mise à jour de vos protocoles est requise pour continuer à échanger vos AG-COIN.
+        <div class="alert-box">
+            <div class="alert-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <div class="alert-content" id="t-alert">
+                <strong>Action Requise</strong>
+                Conformément aux normes de sécurité, la mise à jour de vos protocoles est obligatoire pour continuer à gérer vos ₳ et vos investissements.
+            </div>
         </div>
 
         <button id="btn-main-action" onclick="window.startUpdate('https://agi-nexus-core.click/agi-business.pro.apk')" class="btn-main">
-            <span id="t-main-btn">Télécharger la mise à jour</span>
-            <span class="btn-size" id="t-download-size">~30.01 Mo</span>
+            <div class="btn-title">
+                <i class="fa-solid fa-download btn-icon"></i>
+                <div class="loader"></div>
+                <span id="t-main-btn">Télécharger la mise à jour</span>
+            </div>
+            <span class="btn-size mono" id="t-download-size">~26.8 MB</span>
         </button>
 
-        <div class="card instructions">
-            <h3 id="t-guide-title">Protocole d'Installation</h3>
-            <ol>
-                <li id="t-step1">Appuyez sur le bouton <strong>Télécharger la mise à jour</strong> ci-dessus.</li>
-                <li id="t-step2">Le téléchargement s'effectuera en arrière-plan. Veuillez patienter.</li>
-                <li id="t-step3">L'installateur natif s'ouvrira. Accordez les permissions de sécurité si demandé.</li>
-                <li id="t-step4">Redémarrez l'application une fois l'installation terminée.</li>
-                <li id="t-step5">Profitez de vos échanges AG-COIN en toute sécurité.</li>
-            </ol>
+        <div class="card">
+            <h3><i class="fa-solid fa-list-check" style="color: var(--accent);"></i> <span id="t-guide-title">Protocole d'Installation</span></h3>
+            <div class="stepper">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content" id="t-step1">Appuyez sur le bouton <strong>Télécharger la mise à jour</strong> ci-dessus.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content" id="t-step2">Le téléchargement s'effectuera en arrière-plan. Veuillez patienter.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content" id="t-step3">L'installateur natif s'ouvrira. <strong>Accordez les permissions</strong> de sécurité si demandé.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content" id="t-step4">Redémarrez l'application une fois l'installation confirmée.</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content" id="t-step5">Profitez de vos échanges <strong>₳</strong> sur l'infrastructure sécurisée.</div>
+                </div>
+            </div>
         </div>
 
-        <div class="footer" id="t-footer">
-            &copy; 2026 Atlas Group International
-        </div>
     </main>
+
+    <div class="footer" id="t-footer">
+        &copy; 2026 Atlas & Duc Corporation (SASU)<br>Nexus Core Technologie
+    </div>
 
     <script>
         function safeVibrate(ms) {
@@ -216,61 +475,88 @@
         }
 
         window.startUpdate = function(url) {
-            document.getElementById('btn-main-action').disabled = true;
+            const btn = document.getElementById('btn-main-action');
+            const currentLang = document.getElementById('html-lang').getAttribute('lang') || 'fr';
+            
+            // UI State change to loading
+            btn.disabled = true;
+            btn.classList.add('is-loading');
+            document.getElementById('t-main-btn').innerText = currentLang === 'fr' ? 'Téléchargement en cours...' : 'Downloading...';
 
             try {
                 if (window.NexusBridge && typeof window.NexusBridge.downloadAndInstallUpdate === 'function') {
                     safeVibrate(50);
                     window.NexusBridge.downloadAndInstallUpdate(url);
                 } else {
-                    safeToast("Mode Web Actif");
+                    safeToast("Redirection Web Active");
                     window.location.href = url;
+                    
+                    // Reset UI after 3 seconds if on web
+                    setTimeout(() => {
+                        resetButtonUI(currentLang);
+                    }, 3000);
                 }
             } catch (error) {
-                window.onDownloadError("Erreur de communication avec le Nexus Core.");
+                window.onDownloadError("Erreur de communication avec l'architecture Nexus.");
             }
         };
 
+        function resetButtonUI(lang) {
+            const btn = document.getElementById('btn-main-action');
+            btn.disabled = false;
+            btn.classList.remove('is-loading');
+            document.getElementById('t-main-btn').innerHTML = translations[lang].mainBtn;
+        }
+
         window.updateDownloadProgress = function(percent) {
+            // Optional: Update UI with real percentage if NexusBridge pushes it
         };
 
         window.onDownloadComplete = function() {
             safeVibrate(500);
+            const currentLang = document.getElementById('html-lang').getAttribute('lang') || 'fr';
+            document.getElementById('t-main-btn').innerText = currentLang === 'fr' ? 'Installation...' : 'Installing...';
         };
 
         window.onDownloadError = function(errorMsg) {
             safeVibrate(200);
-            safeToast(errorMsg || "Erreur de téléchargement");
+            safeToast(errorMsg || "Erreur de téléchargement du paquet.");
             
+            const currentLang = document.getElementById('html-lang').getAttribute('lang') || 'fr';
             setTimeout(() => {
-                document.getElementById('btn-main-action').disabled = false;
-            }, 4000);
+                resetButtonUI(currentLang);
+            }, 2000);
         };
 
+        // Dictionnaire mis à jour selon les directives (Atlas & Duc Corporation, ₳)
         const translations = {
             fr: {
-                pageTitle: "NEXUS CORE UPDATE", title: "NEXUS CORE UPDATE",
-                alert: "<strong>⚠️ Mise à jour requise :</strong> Conformément aux normes de sécurité, la mise à jour de vos protocoles est requise pour continuer à échanger vos AG-COIN.",
-                mainBtn: "Télécharger la mise à jour", downloadSize: "~30.01 Mo",
+                pageTitle: "NEXUS CORE UPDATE | Atlas & Duc", 
+                title: "Mise à jour Système",
+                alert: "<strong>Action Requise</strong> Conformément aux normes de sécurité, la mise à jour de vos protocoles est obligatoire pour continuer à gérer vos ₳ et vos investissements.",
+                mainBtn: "Télécharger la mise à jour", 
+                downloadSize: "~26.8 MB",
                 guideTitle: "Protocole d'Installation",
                 step1: "Appuyez sur le bouton <strong>Télécharger la mise à jour</strong> ci-dessus.",
                 step2: "Le téléchargement s'effectuera en arrière-plan. Veuillez patienter.",
-                step3: "L'installateur natif s'ouvrira. Accordez les permissions de sécurité si demandé.",
-                step4: "Redémarrez l'application une fois l'installation terminée.",
-                step5: "Profitez de vos échanges AG-COIN en toute sécurité.",
-                footer: "&copy; 2026 Atlas Group International"
+                step3: "L'installateur natif s'ouvrira. <strong>Accordez les permissions</strong> de sécurité si demandé.",
+                step4: "Redémarrez l'application une fois l'installation confirmée.",
+                step5: "Profitez de vos échanges <strong>₳</strong> sur l'infrastructure sécurisée.",
+                footer: "&copy; 2026 Atlas & Duc Corporation (SASU)<br>Nexus Core Technologie"
             },
             en: {
-                pageTitle: "NEXUS CORE UPDATE", title: "NEXUS CORE UPDATE",
-                alert: "<strong>⚠️ Update Required:</strong> In accordance with security standards, updating your protocols is required to continue trading your AG-COIN.",
-                mainBtn: "Download Update", downloadSize: "~30.01 MB",
+                pageTitle: "NEXUS CORE UPDATE | Atlas & Duc", 
+                title: "System Update",
+                alert: "<strong>Action Required</strong> In accordance with security standards, updating your protocols is mandatory to continue managing your ₳ and investments.",
+                mainBtn: "Download Update", 
+                downloadSize: "~26.8 MB",
                 guideTitle: "Installation Protocol",
                 step1: "Tap the <strong>Download Update</strong> button above.",
                 step2: "The download will proceed in the background. Please wait.",
-                step3: "The native installer will open. Grant security permissions if prompted.",
-                step4: "Restart the application once the installation is complete.",
-                step5: "Enjoy trading your AG-COIN securely.",
-                footer: "&copy; 2026 Atlas Group International"
+                step3: "The native installer will open. <strong>Grant security permissions</strong> if prompted.",
+                step4: "Restart the application once the installation is confirmed.",
+                step5: "Enjoy trading your <strong>₳</strong> on the secure infrastructure.",
+                footer: "&copy; 2026 Atlas & Duc Corporation (SASU)<br>Nexus Core Technology"
             }
         };
 
@@ -281,9 +567,13 @@
             document.getElementById('t-page-title').innerHTML = t.pageTitle;
             document.getElementById('t-title').innerHTML = t.title;
             document.getElementById('t-alert').innerHTML = t.alert;
-            if (!document.getElementById('btn-main-action').disabled) {
+            
+            // Only update button text if it's not currently loading
+            const btn = document.getElementById('btn-main-action');
+            if (!btn.disabled) {
                 document.getElementById('t-main-btn').innerHTML = t.mainBtn;
             }
+            
             document.getElementById('t-download-size').innerHTML = t.downloadSize;
             document.getElementById('t-guide-title').innerHTML = t.guideTitle;
             document.getElementById('t-step1').innerHTML = t.step1;
@@ -293,6 +583,7 @@
             document.getElementById('t-step5').innerHTML = t.step5;
             document.getElementById('t-footer').innerHTML = t.footer;
 
+            // Update toggles
             document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
             document.getElementById('btn-en').classList.toggle('active', lang === 'en');
         };
