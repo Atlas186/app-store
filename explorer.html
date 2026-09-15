@@ -3,26 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AGI | REGISTRE OFFICIEL</title>
+    <title>NEXUS CORE | REGISTRE OFFICIEL BLOCKCHAIN</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
     <style>
         /* =======================================================================
-           THÈME CIEL-CLAIR (Light Sky Theme) & CONSOLIDATION
+           THÈME EXPLORATEUR GLOBAL (Premium Light Theme)
            ======================================================================= */
         :root {
-            --bg: #f0f8ff; /* AliceBlue / Ciel très clair */
-            --surface: #ffffff; /* Fond des cartes blanc pur */
-            --border: rgba(15, 23, 42, 0.08); /* Bordure foncée très légère */
-            --accent: #0ea5e9; /* Bleu azur */
-            --text-main: #0f172a; /* Bleu très sombre (Slate 900) */
-            --text-dim: #64748b; /* Gris-bleu (Slate 500) */
-            --danger: #ef4444; 
-            --success: #10b981;
-            --agi-gold: #d97706; /* Or assombri pour lisibilité sur fond clair */
-            --overlay: rgba(240, 248, 255, 0.85); /* Overlay clair et flouté */
+            --bg: #f4f7f9; 
+            --surface: #ffffff; 
+            --border: rgba(15, 23, 42, 0.06); 
+            --accent: #0ea5e9; 
+            --text-main: #1e293b; 
+            --text-dim: #64748b; 
+            --danger: #e11d48; 
+            --success: #059669;
+            --transfer: #7c3aed;
+            --agi-gold: #b45309; 
+            --overlay: rgba(15, 23, 42, 0.6); 
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -35,141 +36,158 @@
             justify-content: center; 
             height: 100vh;
             overflow: hidden; 
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .app-container { 
             width: 100%; max-width: 480px; height: 100vh;
-            background: var(--bg); border-left: 1px solid var(--border); border-right: 1px solid var(--border); 
+            background: var(--bg); 
+            border-left: 1px solid var(--border); 
+            border-right: 1px solid var(--border); 
             display: flex; flex-direction: column; position: relative;
+            box-shadow: 0 0 30px rgba(0,0,0,0.02);
         }
         
         /* SECTION FIXE (HAUT) */
         .fixed-header {
             flex-shrink: 0;
-            background: var(--bg);
+            background: rgba(244, 247, 249, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             z-index: 100;
             border-bottom: 1px solid var(--border);
-            padding-bottom: 10px;
-            background-image: radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.08) 0%, transparent 70%);
+            padding-bottom: 4px;
         }
 
-        header { padding: 20px 20px 15px; text-align: center; }
+        header { padding: 16px 20px 8px; text-align: center; }
 
         .legal-badge {
-            display: inline-flex; align-items: center; gap: 6px;
-            background: rgba(217, 119, 6, 0.1); padding: 5px 14px; border-radius: 100px; margin-bottom: 10px;
-            border: 1px solid rgba(217, 119, 6, 0.2);
+            display: inline-flex; align-items: center; gap: 5px;
+            background: rgba(180, 83, 9, 0.08); padding: 4px 12px; border-radius: 100px; margin-bottom: 8px;
+            border: 1px solid rgba(180, 83, 9, 0.15);
         }
 
-        h1 { font-size: 1.1rem; font-weight: 800; letter-spacing: 2px; color: var(--text-main); text-transform: uppercase; }
+        h1 { font-size: 0.9rem; font-weight: 700; letter-spacing: 1.5px; color: var(--text-main); text-transform: uppercase; }
 
-        .registry-card {
-            margin: 0 15px 10px; padding: 15px 18px;
-            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
-            border-radius: 16px; border: 1px solid var(--border);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
-        }
-        
-        .reg-item { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.7rem; }
-        .reg-item:last-child { margin-bottom: 0; }
-        .reg-label { color: var(--text-dim); font-weight: 600; }
-        .reg-val { color: var(--text-main); font-weight: 800; }
-
-        /* PANNEAU FINANCIER CONSOLIDÉ */
+        /* PANNEAU FINANCIER CONSOLIDÉ (VAULT) */
         .financial-panel {
-            margin: 0 15px 10px; padding: 16px 20px; 
-            background: var(--surface); border-radius: 16px; 
+            margin: 0 16px 12px; padding: 12px 18px; 
+            background: var(--surface); border-radius: 12px; 
             border: 1px solid var(--border); text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            display: flex; flex-direction: column; gap: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            display: flex; flex-direction: column; gap: 6px;
         }
 
         .stat-group { display: flex; flex-direction: column; align-items: center; }
         
         .stat-label { 
-            font-size: 0.65rem; color: var(--text-dim); 
-            text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; 
+            font-size: 0.55rem; color: var(--text-dim); 
+            text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; 
         }
         
         .stat-val-static {
-            font-family: 'JetBrains Mono', monospace; font-size: 1.3rem; 
-            font-weight: 800; color: var(--text-main); margin-top: 2px;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; 
+            font-weight: 600; color: var(--text-main); margin-top: 2px;
+        }
+
+        .stat-val-vault {
+            font-family: 'JetBrains Mono', monospace; font-size: 1.05rem; 
+            font-weight: 700; color: var(--success); margin-top: 2px;
         }
 
         .stat-val-dynamic { 
-            font-family: 'JetBrains Mono', monospace; font-size: 1.7rem; 
-            font-weight: 800; color: var(--agi-gold); margin-top: 2px;
+            font-family: 'JetBrains Mono', monospace; font-size: 1.15rem; 
+            font-weight: 700; color: var(--agi-gold); margin-top: 2px;
+            display: flex; align-items: center; gap: 6px; justify-content: center;
         }
 
-        .stat-divider {
-            height: 1px; background: var(--border); width: 60%; margin: 4px auto;
-        }
+        .stat-divider { height: 1px; background: var(--border); width: 70%; margin: 4px auto; }
 
         .audit-badge {
-            font-size: 0.6rem; color: var(--success); font-weight: 800; 
-            text-transform: uppercase; margin-top: 4px; letter-spacing: 0.5px;
+            font-size: 0.55rem; color: var(--success); font-weight: 700; 
+            text-transform: uppercase; margin-top: 6px; letter-spacing: 0.5px;
+            display: flex; align-items: center; justify-content: center; gap: 4px;
         }
+        
+        .pulse-dot {
+            width: 5px; height: 5px; background-color: var(--success);
+            border-radius: 50%; animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.6); } 70% { box-shadow: 0 0 0 4px rgba(5, 150, 105, 0); } 100% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0); } }
+
+        /* FILTRES COMPACTS */
+        .filter-bar { display: flex; gap: 6px; margin: 4px 16px 8px; overflow-x: auto; padding-bottom: 4px;}
+        .filter-bar::-webkit-scrollbar { display: none; }
+
+        .filter-btn {
+            flex: 1; min-width: 90px; background: var(--surface); border: 1px solid var(--border);
+            padding: 8px 4px; border-radius: 8px; font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.6rem; font-weight: 600; color: var(--text-dim); cursor: pointer;
+            transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 5px;
+        }
+
+        .filter-btn.active { background: var(--text-main); color: #ffffff; border-color: var(--text-main); box-shadow: 0 2px 8px rgba(15, 23, 42, 0.1); }
 
         /* SECTION DÉFILABLE (BAS) */
-        .scrollable-content {
-            flex-grow: 1; overflow-y: auto; padding: 15px 0 100px; 
-            background: rgba(255,255,255,0.4);
-        }
+        .scrollable-content { flex-grow: 1; overflow-y: auto; padding: 12px 0 24px; background: transparent; }
+        .scrollable-content::-webkit-scrollbar { width: 4px; }
+        .scrollable-content::-webkit-scrollbar-thumb { background: rgba(15, 23, 42, 0.1); border-radius: 4px; }
 
-        .section-title {
-            padding: 0 20px 12px; font-size: 0.7rem; font-weight: 800; 
-            text-transform: uppercase; color: var(--text-dim); letter-spacing: 1px;
-        }
+        .section-title { padding: 0 16px 10px; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; color: var(--text-dim); letter-spacing: 0.5px; display: flex; justify-content: space-between;}
 
         .tx-card { 
             background: var(--surface); border: 1px solid var(--border); 
-            border-radius: 14px; padding: 14px 16px; margin: 0 15px 10px; 
-            display: flex; align-items: center; gap: 12px; cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02); transition: 0.2s;
+            border-radius: 10px; padding: 12px 14px; margin: 0 16px 8px; 
+            display: flex; align-items: center; gap: 10px; cursor: pointer;
+            transition: 0.2s; position: relative;
         }
-        .tx-card:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.05); }
+        .tx-card:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.03); border-color: rgba(15, 23, 42, 0.15); }
+        .tx-card.pending { opacity: 0.7; border-style: dashed; }
 
-        .tx-icon {
-            width: 40px; height: 40px; border-radius: 12px;
-            display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
-        }
-
-        .tx-info { flex: 1; min-width: 0; }
-        .tx-id { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-main); font-weight: 800; }
-        .tx-meta { font-size: 0.65rem; color: var(--text-dim); font-weight: 600; margin-top: 2px; }
-
-        .tx-amt { font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; font-weight: 800; text-align: right; }
-
-        .bg-dépôt { color: var(--success); }
-        .tx-icon.bg-dépôt { background: rgba(16, 185, 129, 0.1); }
+        .tx-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; overflow: hidden; background: var(--surface); }
+        .tx-icon img { width: 100%; height: 100%; object-fit: cover; border: 1px solid var(--border); border-radius: 8px; }
         
-        .bg-retrait { color: var(--danger); }
-        .tx-icon.bg-retrait { background: rgba(239, 68, 68, 0.1); }
+        .tx-info { flex: 1; min-width: 0; }
+        .tx-id { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-main); font-weight: 600; display: flex; align-items: center; gap: 6px;}
+        .tx-meta { font-size: 0.6rem; color: var(--text-dim); font-weight: 500; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+        .tx-amt { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; font-weight: 600; text-align: right; }
 
-        /* MODAL */
-        .modal-overlay { 
-            position: fixed; inset: 0; background: var(--overlay); 
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); 
-            display: none; z-index: 2000; align-items: center; justify-content: center; padding: 20px; 
-        }
-        .modal-overlay.active { display: flex; }
-        .modal-content { 
-            width: 100%; max-width: 400px; background: var(--surface); 
-            border-radius: 24px; border: 1px solid var(--border); padding: 25px; 
-            box-shadow: 0 25px 50px rgba(0,0,0,0.1); border-top: 4px solid var(--agi-gold);
-        }
-        .detail-row { display: flex; flex-direction: column; padding: 10px 0; border-bottom: 1px solid var(--border); gap: 4px; }
-        .detail-label { color: var(--text-dim); font-size: 0.65rem; text-transform: uppercase; font-weight: 800; }
-        .detail-value { color: var(--text-main); font-size: 0.85rem; font-weight: 800; word-break: break-all; }
+        /* COULEURS TYPES */
+        .c-depot { color: var(--success); }
+        .bg-depot { background: rgba(5, 150, 105, 0.08); color: var(--success); }
+        
+        .c-retrait { color: var(--danger); }
+        .bg-retrait { background: rgba(225, 29, 72, 0.08); color: var(--danger); }
 
-        .btn-back { 
-            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); 
-            width: 90%; max-width: 400px; background: var(--text-main); color: #ffffff; 
-            padding: 15px; border-radius: 16px; font-weight: 800; text-align: center; 
-            text-decoration: none; z-index: 1000; box-shadow: 0 10px 20px rgba(15, 23, 42, 0.2);
-            transition: 0.2s;
-        }
-        .btn-back:hover { background: #000; }
+        .c-transfert { color: var(--transfer); }
+        .bg-transfert { background: rgba(124, 58, 237, 0.08); color: var(--transfer); }
+
+        .status-badge { padding: 2px 5px; border-radius: 4px; font-size: 0.5rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Plus Jakarta Sans', sans-serif;}
+        .status-valide { background: rgba(5, 150, 105, 0.1); color: var(--success); }
+        .status-attente { background: rgba(180, 83, 9, 0.1); color: var(--agi-gold); }
+        .status-annule { background: rgba(225, 29, 72, 0.1); color: var(--danger); }
+
+        .empty-ledger { text-align: center; color: var(--text-dim); font-size: 0.75rem; font-weight: 500; padding: 40px 20px; }
+
+        /* =======================================================================
+           MODAL INDUSTRIEL & WALLET PRO STYLE (BOTTOM SHEET)
+           ======================================================================= */
+        .modal-overlay { position: fixed; inset: 0; background: var(--overlay); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); display: none; z-index: 2000; align-items: flex-end; justify-content: center; opacity: 0; transition: opacity 0.3s ease;}
+        .modal-overlay.active { display: flex; opacity: 1; }
+
+        .modal-content { width: 100%; max-width: 480px; background: var(--surface); border-radius: 24px 24px 0 0; padding: 24px; position: relative; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); max-height: 90vh; overflow-y: auto; }
+        .modal-overlay.active .modal-content { transform: translateY(0); }
+
+        .modal-pill { width: 40px; height: 5px; background: #cbd5e1; border-radius: 10px; margin: 0 auto 20px; }
+        .modal-header-title { font-size: 1.1rem; font-weight: 800; color: var(--text-main); text-align: center; }
+
+        .btn-main { width: 100%; padding: 16px; border-radius: 16px; border: none; font-weight: 800; font-size: 0.9rem; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
+        
+        /* TOAST NOTIFICATION */
+        #hdiToast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(20px); background: #1e293b; color: #fff; padding: 12px 24px; border-radius: 50px; font-size: 0.8rem; font-weight: 600; box-shadow: 0 10px 25px rgba(0,0,0,0.2); opacity: 0; transition: 0.3s; z-index: 9999; pointer-events: none; }
+        #hdiToast.active { opacity: 1; transform: translateX(-50%) translateY(0); }
+
     </style>
 </head>
 <body>
@@ -178,60 +196,84 @@
         <div class="fixed-header">
             <header>
                 <div class="legal-badge">
-                    <i class="fa-solid fa-shield-halved" style="color: var(--agi-gold)"></i>
-                    <span style="font-size: 0.6rem; font-weight: 800; color: var(--agi-gold)">ENTITÉ ENREGISTRÉE - BURKINA FASO</span>
+                    <i class="fa-solid fa-shield-halved" style="color: var(--agi-gold); font-size: 0.6rem;"></i>
+                    <span style="font-size: 0.55rem; font-weight: 700; color: var(--agi-gold)">NOEUD PUBLIC - BURKINA FASO</span>
                 </div>
-                <h1>AGI Ledger Explorer</h1>
+                <h1>NEXUS CORE Ledger Explorer</h1>
             </header>
 
-            <div class="registry-card">
-                <div class="reg-item"><span class="reg-label">Structure</span><span class="reg-val">ATLAS GROUPE INTERNATIONAL</span></div>
-                <div class="reg-item"><span class="reg-label">Récépissé</span><span class="reg-val" style="color: var(--agi-gold)">PHUE-3539/2025</span></div>
-                <div class="reg-item"><span class="reg-label">Déclaration</span><span class="reg-val">11 Juillet 2025</span></div>
-                <div class="reg-item"><span class="reg-label">Siège</span><span class="reg-val">Burkina Faso</span></div>
-            </div>
-
+            <!-- PANNEAU FINANCIER BRANCHÉ SUR LE SERVEUR VAULT -->
             <div class="financial-panel">
                 <div class="stat-group">
-                    <span class="stat-label">Offre Totale (₳)</span>
-                    <span class="stat-val-static">100 000 000 000</span>
+                    <span class="stat-label">Offre Totale (Garantie 1:1)</span>
+                    <span class="stat-val-static">
+                        <span id="total-supply"><i class="fa-solid fa-circle-notch fa-spin text-sm"></i></span> ₳
+                    </span>
                 </div>
                 
                 <div class="stat-divider"></div>
                 
                 <div class="stat-group">
-                    <span class="stat-label">Actif Circulant (₳)</span>
-                    <span class="stat-val-dynamic" id="masse-totale">0</span>
+                    <span class="stat-label">Réserve du Coffre Central (Vault)</span>
+                    <span class="stat-val-vault">
+                        <span id="vault-balance"><i class="fa-solid fa-circle-notch fa-spin text-sm"></i></span> ₳
+                    </span>
+                </div>
+
+                <div class="stat-divider"></div>
+
+                <div class="stat-group">
+                    <span class="stat-label">Volume Circulant (Temps Réel)</span>
+                    <span class="stat-val-dynamic">
+                        <span id="masse-totale"><i class="fa-solid fa-circle-notch fa-spin text-sm"></i></span> ₳
+                    </span>
                 </div>
                 
                 <div class="audit-badge">
-                    <i class="fa-solid fa-heart-pulse"></i> Audit Temps Réel Actif
+                    <div class="pulse-dot"></div> Protocoles monitorés
                 </div>
+            </div>
+
+            <div class="filter-bar">
+                <button class="filter-btn active" data-filter="all">
+                    <i class="fa-solid fa-globe"></i> GLOBAL
+                </button>
+                <button class="filter-btn" data-filter="deposit">
+                    <i class="fa-solid fa-arrow-turn-down" style="color: var(--success)"></i> ENTRANTS
+                </button>
+                <button class="filter-btn" data-filter="withdrawal">
+                    <i class="fa-solid fa-arrow-turn-up" style="color: var(--danger)"></i> SORTANTS
+                </button>
+                <button class="filter-btn" data-filter="transfer">
+                    <i class="fa-solid fa-shuffle" style="color: var(--transfer)"></i> TRANSFERTS
+                </button>
             </div>
         </div>
 
         <div class="scrollable-content">
-            <div class="section-title">Historique des Validations</div>
-            <div id="ledger-list"></div>
-        </div>
-
-        <a href="index.html" class="btn-back">
-            <i class="fa-solid fa-house" style="margin-right: 5px;"></i> RETOUR AU PORTAIL
-        </a>
-    </div>
-
-    <div class="modal-overlay" id="detailModal">
-        <div class="modal-content">
-            <div id="modalIcon" style="font-size: 2.5rem; text-align: center; margin-bottom: 10px;"></div>
-            <h3 id="modalTitle" style="text-align: center; margin-bottom: 15px; text-transform: uppercase; font-size: 1.1rem; font-weight: 800; color: var(--text-main);">Détails Transaction</h3>
-            
-            <div id="modalBody"></div>
-
-            <button style="width:100%; margin-top:20px; padding:15px; border-radius:14px; background: var(--bg); color: var(--text-main); border:1px solid var(--border); font-weight:800; cursor:pointer; transition: 0.2s;" onclick="closeModal()">
-                <i class="fa-solid fa-xmark"></i> FERMER
-            </button>
+            <div class="section-title">
+                <span id="section-title-context">Historique du Registre (Tout)</span>
+                <span id="tx-count" style="color: var(--text-main);">0 TX</span>
+            </div>
+            <div id="ledger-list">
+                <div class="empty-ledger"><i class="fa-solid fa-circle-notch fa-spin" style="font-size:1.2rem; display:block; margin-bottom:8px; color:var(--text-dim)"></i>Connexion au registre...</div>
+            </div>
         </div>
     </div>
+
+    <!-- OVERLAY TRANSACTION WALLET PRO STYLE (BOTTOM SHEET) -->
+    <div class="modal-overlay" id="txDetailModal" onclick="if(event.target.id==='txDetailModal') closeModal()">
+        <div class="modal-content" style="padding-bottom: 20px;">
+            <div class="modal-pill"></div>
+            <h3 class="modal-header-title" style="margin-bottom: 24px;">Reçu de Transaction</h3>
+            <div id="txModalBody" style="display:flex; flex-direction:column; gap:12px; font-size:0.85rem;">
+                <!-- Injection dynamique -->
+            </div>
+            <button class="btn-main" style="margin-top: 24px; background: #f1f5f9; color: var(--text-main); border: 1px solid var(--border); box-shadow: none;" onclick="closeModal()">Fermer l'inspection</button>
+        </div>
+    </div>
+
+    <div id="hdiToast">Message</div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -241,109 +283,310 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // Masse Monétaire
-        onValue(ref(db, 'users'), (snap) => {
-            let total = 0;
-            if(snap.val()) Object.values(snap.val()).forEach(u => total += Math.floor(parseFloat(u.balance || 0)));
-            document.getElementById('masse-totale').innerText = total.toLocaleString('fr-FR') + " ₳";
+        let currentFilter = 'all';
+        let rawRequestsData = null;
+
+        const CRYPTO_DATA = [
+            { name: 'BTC', img: 'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/bitcoin/info/logo.png' },
+            { name: 'ETH', img: 'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/info/logo.png' },
+            { name: 'USDT (TRC20)', img: 'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xdAC17F958D2ee523a2206206994597C13D831ec7/logo.png' },
+            { name: 'SOL', img: 'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/solana/info/logo.png' },
+            { name: 'BNB', img: 'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/smartchain/info/logo.png' },
+            { name: 'TRX', img: 'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/tron/info/logo.png' },
+            { name: 'TON', img: 'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ton/info/logo.png' },
+            { name: 'LTC', img: 'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/litecoin/info/logo.png' },
+            { name: 'ADA', img: 'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/cardano/info/logo.png' },
+            { name: 'DOGE', img: 'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/doge/info/logo.png' },
+            { name: 'XRP', img: 'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ripple/info/logo.png' },
+            { name: '₳ (Native Coin)', img: 'https://i.imgur.com/V7PDh2e.jpeg' }
+        ];
+
+        // 1. Écouteur Optimisé: Connecté directement au serveur Vault (Coffre Central)
+        onValue(ref(db, 'nexus_core_system/treasury_vault'), (snap) => {
+            const vaultData = snap.val();
+            
+            if(vaultData) {
+                const totalSupply = parseFloat(vaultData.total_supply || 100000000000);
+                const vaultBalance = parseFloat(vaultData.balance || totalSupply);
+                const circulating = parseFloat(vaultData.circulating_supply || 0);
+
+                document.getElementById('total-supply').innerText = totalSupply.toLocaleString('fr-FR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                document.getElementById('vault-balance').innerText = vaultBalance.toLocaleString('fr-FR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                document.getElementById('masse-totale').innerText = circulating.toLocaleString('fr-FR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            } else {
+                document.getElementById('total-supply').innerText = "100 000 000 000,00";
+                document.getElementById('vault-balance').innerText = "100 000 000 000,00";
+                document.getElementById('masse-totale').innerText = "0,00";
+            }
         });
 
-        // Liste des transactions
-        onValue(ref(db, 'requests'), (snap) => {
-            const data = snap.val();
-            const container = document.getElementById('ledger-list');
-            if(!data) return;
+        // Génération SHA-512 pour combler l'absence d'un hash existant
+        window.generateSHA512 = async function(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-512', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        };
 
-            const valid = Object.entries(data).filter(([_, tx]) => tx.status === 'validé');
-            const sorted = valid.sort((a,b) => (b[1].timestamp || 0) - (a[1].timestamp || 0));
+        window.showToast = function(msg) {
+            const t = document.getElementById('hdiToast');
+            t.innerText = msg; t.classList.add('active');
+            setTimeout(() => t.classList.remove('active'), 3000);
+        };
+
+        window.copyTxText = function(txt) {
+            navigator.clipboard.writeText(txt);
+            window.showToast("Copié : " + txt.substring(0,10) + "...");
+        };
+
+        // Fonction d'analyse sémantique du type de transaction
+        function getTxCategory(typeStr) {
+            const str = (typeStr || '').toLowerCase();
+            if (str.includes('envoi') || str.includes('transfert') || str.includes('p2p')) return 'transfer';
+            if (str.includes('dépôt') || str.includes('reçu') || str.includes('entrant')) return 'deposit';
+            if (str.includes('retrait') || str.includes('sortant')) return 'withdrawal';
+            return 'other'; 
+        }
+
+        // Fonction pour détecter les opérateurs Mobile Money et injecter leurs logos (Utilisation URL HTTPS Officielles)
+        function getOperatorInfo(tx) {
+            const searchStr = `${tx.provider || ''} ${tx.network || ''} ${tx.type || ''} ${tx.from || ''} ${tx.to || ''} ${tx.description || ''} ${tx.operator || ''}`.toLowerCase();
             
-            container.innerHTML = sorted.map(([id, tx]) => {
-                const isDeposit = tx.type.includes('Dépôt') || tx.type.includes('Reçu');
-                let color = isDeposit ? 'bg-dépôt' : 'bg-retrait';
-                let icon = isDeposit ? 'fa-solid fa-arrow-turn-down' : 'fa-solid fa-arrow-turn-up';
-                let prefix = isDeposit ? "+" : "-";
+            if (searchStr.includes('orange')) return { name: 'Orange Money', img: 'https://i.imgur.com/MkPE4Sx.jpeg' };
+            if (searchStr.includes('moov')) return { name: 'Moov Money', img: 'https://i.imgur.com/vHj38qS.jpeg' };
+            if (searchStr.includes('telecel')) return { name: 'Telecel', img: 'https://i.imgur.com/gK6B4tX.png' };
+            if (searchStr.includes('wave')) return { name: 'Wave', img: 'https://i.imgur.com/CWlETMI.jpeg' };
+            
+            return null;
+        }
+
+        // 2. Fonction de traitement et rendu du Ledger Global
+        function renderLedger() {
+            const container = document.getElementById('ledger-list');
+            const countEl = document.getElementById('tx-count');
+
+            if (!rawRequestsData) {
+                container.innerHTML = `<div class="empty-ledger"><i class="fa-solid fa-folder-open" style="font-size:1.2rem; display:block; margin-bottom:8px; color:var(--text-dim)"></i>Le registre est vide</div>`;
+                countEl.innerText = "0 TX";
+                return;
+            }
+
+            const allTx = Object.entries(rawRequestsData).map(([id, tx]) => ({ id, ...tx }));
+            
+            // Filtrage dynamique (Exclusion de 0 et biométrie)
+            const filteredTx = allTx.filter(tx => {
+                const amount = parseFloat(tx.amount || 0);
+                const typeStr = (tx.type || '').toLowerCase();
+
+                // Règles d'exclusion d'affichage public
+                if (amount === 0) return false;
+                if (typeStr.includes('biométrique') || typeStr.includes('biometrique')) return false;
+
+                const cat = getTxCategory(tx.type);
+                if (currentFilter === 'deposit') return cat === 'deposit';
+                if (currentFilter === 'withdrawal') return cat === 'withdrawal';
+                if (currentFilter === 'transfer') return cat === 'transfer';
+                return true;
+            });
+
+            // Tri par horodatage
+            const sorted = filteredTx.sort((a,b) => (b.timestamp || 0) - (a.timestamp || 0));
+            
+            countEl.innerText = `${sorted.length} TX`;
+
+            if (sorted.length === 0) {
+                container.innerHTML = `<div class="empty-ledger"><i class="fa-solid fa-filter-circle-xmark" style="font-size:1.2rem; display:block; margin-bottom:8px; color:var(--text-dim)"></i>Aucune opération pour ce filtre</div>`;
+                return;
+            }
+
+            container.innerHTML = sorted.map(tx => {
+                const cat = getTxCategory(tx.type);
+                const operator = getOperatorInfo(tx);
                 
+                let colorClass = 'c-depot'; let bgClass = 'bg-depot'; let icon = 'fa-arrow-turn-down'; let prefix = '+';
+                if (cat === 'withdrawal') { colorClass = 'c-retrait'; bgClass = 'bg-retrait'; icon = 'fa-arrow-turn-up'; prefix = '-'; }
+                else if (cat === 'transfer') { colorClass = 'c-transfert'; bgClass = 'bg-transfert'; icon = 'fa-shuffle'; prefix = ''; }
+
+                let iconHtml = `<i class="fa-solid ${icon}"></i>`;
+                if (operator) {
+                    iconHtml = `<img src="${operator.img}" alt="${operator.name}" style="background:#fff; padding:1px;">`;
+                    bgClass = '';
+                }
+
+                let statusHtml = '';
+                let pendingClass = '';
+                if (tx.status === 'validé' || tx.status === 'SUCCESS' || tx.status === 'COMPLETED') {
+                    statusHtml = `<span class="status-badge status-valide"><i class="fa-solid fa-check"></i></span>`;
+                } else if (tx.status === 'annulé' || tx.status === 'REJETÉ' || tx.status === 'REJECTED') {
+                    statusHtml = `<span class="status-badge status-annule"><i class="fa-solid fa-xmark"></i></span>`;
+                    pendingClass = 'pending';
+                } else {
+                    statusHtml = `<span class="status-badge status-attente"><i class="fa-solid fa-clock"></i></span>`;
+                    pendingClass = 'pending';
+                }
+
+                const dateStr = tx.timestamp ? new Date(tx.timestamp).toLocaleString('fr-FR', {day: '2-digit', month: 'short', hour: '2-digit', minute:'2-digit'}) : 'Date inconnue';
+                
+                // Encoder l'objet tx pour le passer proprement dans le onclick
+                const encodedTx = encodeURIComponent(JSON.stringify(tx));
+
                 return `
-                    <div class="tx-card" onclick='openTxModal("${id}", ${JSON.stringify(tx).replace(/"/g, '&quot;')})'>
-                        <div class="tx-icon ${color}"><i class="${icon}"></i></div>
+                    <div class="tx-card ${pendingClass}" onclick="openTxModal('${encodedTx}')">
+                        <div class="tx-icon ${bgClass}">${iconHtml}</div>
                         <div class="tx-info">
-                            <div class="tx-id">TX-${id.substring(0,8).toUpperCase()}</div>
-                            <div class="tx-meta">${tx.type} • ${new Date(tx.timestamp).toLocaleDateString('fr-FR')}</div>
+                            <div class="tx-id">
+                                TX-${tx.id.substring(0,8).toUpperCase()} ${statusHtml}
+                            </div>
+                            <div class="tx-meta">${tx.type || 'Opération'} • ${dateStr}</div>
                         </div>
-                        <div class="tx-amt ${color}">${prefix}${Math.floor(tx.amount).toLocaleString('fr-FR')} ₳</div>
+                        <div class="tx-amt ${colorClass}">${prefix}${parseFloat(tx.amount || 0).toLocaleString('fr-FR', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ₳</div>
                     </div>`;
             }).join('');
+        }
+
+        // 3. Écouteur Realtime Database sur le registre global
+        onValue(ref(db, 'requests'), (snap) => {
+            rawRequestsData = snap.val();
+            renderLedger();
         });
 
-        window.openTxModal = (id, tx) => {
-            const modal = document.getElementById('detailModal');
-            document.getElementById('modalTitle').innerText = tx.type;
-            const iconWrap = document.getElementById('modalIcon');
-            
-            const isDeposit = tx.type.includes('Dépôt') || tx.type.includes('Reçu');
-            
-            iconWrap.innerHTML = isDeposit ? 
-                '<i class="fa-solid fa-circle-check" style="color:var(--success)"></i>' : 
-                '<i class="fa-solid fa-circle-minus" style="color:var(--danger)"></i>';
+        // 4. Gestion événementielle des filtres
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                const selectedButton = e.currentTarget;
+                selectedButton.classList.add('active');
+                
+                currentFilter = selectedButton.getAttribute('data-filter');
+                
+                const labelMap = { 'all': 'Tout', 'deposit': 'Dépôts Entrants', 'withdrawal': 'Retraits Sortants', 'transfer': 'Smart-Contracts P2P' };
+                document.getElementById('section-title-context').innerText = `Registre (${labelMap[currentFilter]})`;
+                
+                renderLedger();
+            });
+        });
 
-            // Logique Origine/Destination minutieusement améliorée
-            let origine = "Non défini";
-            let destination = "Non défini";
-            let typeStr = tx.type || "";
-
-            if (isDeposit) {
-                // Pour un dépôt ou une réception : l'origine est l'extérieur ou l'envoyeur, la destination est le user
-                origine = tx.from || tx.provider || "Réseau Externe / Partenaire";
-                destination = tx.to || tx.user_id || "Mon Portefeuille (AGI)";
-            } else if (typeStr.includes('Retrait') || typeStr.includes('Envoi') || typeStr.includes('Cash')) {
-                // Pour un retrait ou un envoi : l'origine est le user, la destination est l'extérieur ou le receveur
-                origine = tx.from || tx.user_id || "Mon Portefeuille (AGI)";
-                destination = tx.to || tx.receiver_id || tx.provider || "Réseau Externe / Bénéficiaire";
-            } else {
-                // Fallback générique
-                origine = tx.from || tx.user_id || "Système AGI";
-                destination = tx.to || "Réseau Interne";
+        // 5. Inspecteur de Blocs (Fenêtre Modale façon Wallet Pro - Bottom Sheet)
+        window.openTxModal = async (txDataStr) => {
+            const tx = JSON.parse(decodeURIComponent(txDataStr));
+            const modal = document.getElementById('txDetailModal');
+            
+            let typeLabel = (tx.type || 'Transaction');
+            let rawStatus = (tx.status || '').toLowerCase();
+            
+            if (typeLabel.toLowerCase().includes('ouverture position') || typeLabel.toLowerCase().includes('buy') || 
+                typeLabel.toLowerCase().includes('déploiement') || typeLabel.toLowerCase().includes('récolte') || 
+                typeLabel.toLowerCase().includes('hardware')) {
+                rawStatus = 'validé';
             }
 
-            // Statut dynamique depuis Firebase
-            let statutCouleur = tx.status === 'validé' ? 'var(--success)' : (tx.status === 'en attente' ? 'var(--agi-gold)' : 'var(--danger)');
-            let statutIcone = tx.status === 'validé' ? 'fa-check-circle' : (tx.status === 'en attente' ? 'fa-clock' : 'fa-circle-xmark');
+            let isPending = rawStatus.includes('attente') || rawStatus.includes('cours');
+            let isRejected = rawStatus.includes('rejet') || rawStatus.includes('annul');
+            
+            let statutColor = '#10b981';
+            let statusLabel = 'Terminé';
+            if (isPending) { statutColor = '#d97706'; statusLabel = 'En attente'; }
+            if (isRejected) { statutColor = '#ef4444'; statusLabel = 'Rejeté'; }
 
-            // Génération conditionnelle des métadonnées étendues
-            let detailsHTML = `
-                <div class="detail-row"><span class="detail-label">ID Transaction</span><span class="detail-value" style="font-family:'JetBrains Mono', monospace;">${id.toUpperCase()}</span></div>
-                <div class="detail-row"><span class="detail-label">Type d'Opération</span><span class="detail-value" style="color:var(--accent);">${typeStr}</span></div>
-                <div class="detail-row"><span class="detail-label">Origine (Émetteur)</span><span class="detail-value">${origine}</span></div>
-                <div class="detail-row"><span class="detail-label">Destination (Bénéficiaire)</span><span class="detail-value">${destination}</span></div>
-            `;
+            let cat = getTxCategory(tx.type);
+            let origine, destination;
 
+            if (cat === 'deposit') {
+                origine = tx.phone_or_address || tx.from || tx.provider || "Non spécifié";
+                destination = tx.user_id ? `${tx.user_id.substring(0,8)}...` : "Protocole Interne";
+            } else if (cat === 'withdrawal') {
+                origine = tx.user_id ? `${tx.user_id.substring(0,8)}...` : "Protocole Interne";
+                destination = tx.target_id || tx.to || tx.phone_or_address || "Non spécifié";
+            } else { 
+                origine = tx.user_id ? `${tx.user_id.substring(0,8)}...` : "Inconnu";
+                destination = tx.target_id || tx.to || tx.phone_or_address || "Contrat Intelligent";
+            }
+
+            let dateStr = tx.timestamp ? new Date(tx.timestamp).toLocaleString('fr-FR', {day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute:'2-digit', second:'2-digit'}) : 'Date non disponible';
+            let amtFormat = parseFloat(tx.amount || 0).toLocaleString('fr-FR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            // Rendu SHA-512
+            let txHashDisplay = tx.tx_hash;
+            if (!txHashDisplay) {
+                txHashDisplay = await generateSHA512((tx.id || "tx") + origine + amtFormat + (tx.timestamp || Date.now()));
+            }
+
+            const txHashSection = `
+            <div style="background:#f8fafc; padding:16px; border-radius:16px; border:1px solid var(--border); display:flex; flex-direction:column; gap:8px;">
+                <span style="color:var(--text-dim); font-weight:600;">Tx Hash (SHA-512)</span>
+                <span style="font-family:'JetBrains Mono', monospace; word-break:break-all; font-size:0.65rem; font-weight:500; color: var(--text-main); cursor:pointer;" onclick="copyTxText('${txHashDisplay}')">
+                    ${txHashDisplay} <i class="fa-solid fa-copy" style="color:var(--accent); margin-left: 4px;"></i>
+                </span>
+            </div>`;
+
+            // Section Fournisseur (Provider)
+            let providerSection = '';
             if (tx.provider) {
-                detailsHTML += `<div class="detail-row"><span class="detail-label">Opérateur / Réseau</span><span class="detail-value">${tx.provider}</span></div>`;
-            }
-            if (tx.fee) {
-                detailsHTML += `<div class="detail-row"><span class="detail-label">Frais de Réseau</span><span class="detail-value" style="color:var(--danger);">${tx.fee} ₳</span></div>`;
-            }
-            if (tx.total) {
-                detailsHTML += `<div class="detail-row"><span class="detail-label">Total Débité</span><span class="detail-value">${tx.total} ₳</span></div>`;
+                let logoHTML = '';
+                const operator = getOperatorInfo(tx);
+                const crypto = CRYPTO_DATA.find(x => x.name === tx.provider);
+
+                if (crypto) {
+                    logoHTML = `<img src="${crypto.img}" alt="${tx.provider}" style="width:28px; height:28px; border-radius:50%; object-fit:cover;">`;
+                } else if (operator) {
+                    logoHTML = `<img src="${operator.img}" alt="${tx.provider}" style="width:28px; height:28px; border-radius:50%; object-fit:cover; background:#fff; padding:2px; border:1px solid #e2e8f0;">`;
+                } else {
+                    let bg = "#64748b";
+                    let initials = tx.provider.substring(0, 2).toUpperCase();
+                    logoHTML = `<div style="width:28px; height:28px; border-radius:50%; background:${bg}; color:white; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:bold;">${initials}</div>`;
+                }
+                
+                let displayRef = tx.phone_or_address || tx.to || tx.from || "Non spécifié";
+                
+                providerSection = `
+                <div style="background:#f8fafc; padding:16px; border-radius:16px; border:1px solid var(--border); display:flex; flex-direction:column; gap:12px;">
+                    <span style="color:var(--text-dim); font-weight:600;">Détails de l'Opérateur</span>
+                    <div style="display:flex; align-items:center; gap:12px; background:#fff; padding:10px 14px; border-radius:12px; border:1px solid #e2e8f0;">
+                        ${logoHTML}
+                        <span style="font-weight:800; color:var(--text-main); font-size:1rem;">${tx.provider}</span>
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:4px; margin-top:2px;">
+                        <span style="color:var(--text-dim); font-weight:600; font-size:0.75rem;">Réf. / Compte de traitement :</span>
+                        <span style="font-family:'JetBrains Mono', monospace; word-break:break-all; font-size:0.9rem; font-weight:700; color: var(--text-main);">${displayRef}</span>
+                    </div>
+                </div>`;
             }
 
-            detailsHTML += `
-                <div class="detail-row"><span class="detail-label">Montant Net</span><span class="detail-value" style="color:var(--agi-gold); font-size:1.15rem;">${Math.floor(tx.amount).toLocaleString('fr-FR')} ₳</span></div>
-                <div class="detail-row"><span class="detail-label">Date et Heure</span><span class="detail-value">${new Date(tx.timestamp).toLocaleString('fr-FR')}</span></div>
-                <div class="detail-row"><span class="detail-label">Statut du Bloc</span><span class="detail-value" style="color:${statutCouleur}; text-transform: uppercase;"><i class="fa-solid ${statutIcone}" style="margin-right: 4px;"></i> ${tx.status || 'Non Défini'}</span></div>
-                <div class="detail-row" style="border:none;"><span class="detail-label">Statut d'Audit</span><span class="detail-value" style="color:var(--success)"><i class="fa-solid fa-check-double" style="margin-right: 4px;"></i> CERTIFIÉ PAR AGI</span></div>
+            document.getElementById('txModalBody').innerHTML = `
+                <div style="background:#f8fafc; padding:16px; border-radius:16px; border:1px solid var(--border); display:flex; justify-content:space-between; align-items: center;">
+                    <span style="color:var(--text-dim); font-weight:600;">Type d'opération</span>
+                    <span style="font-weight:800; color:var(--text-main);">${typeLabel}</span>
+                </div>
+                <div style="background:#f8fafc; padding:16px; border-radius:16px; border:1px solid var(--border); display:flex; justify-content:space-between; align-items: center;">
+                    <span style="color:var(--text-dim); font-weight:600;">Statut Actuel</span>
+                    <span style="font-weight:800; color:${statutColor}; background: #ffffff; padding: 4px 10px; border-radius: 8px; border: 1px solid var(--border); text-transform:uppercase; font-size: 0.75rem;">${statusLabel}</span>
+                </div>
+                <div style="background:#f8fafc; padding:16px; border-radius:16px; border:1px solid var(--border); display:flex; justify-content:space-between; align-items: center;">
+                    <span style="color:var(--text-dim); font-weight:600;">Volume Transféré</span>
+                    <span style="font-weight:800; font-family:'JetBrains Mono', monospace; font-size: 1.1rem; color: var(--accent);">${amtFormat} ₳</span>
+                </div>
+                ${providerSection}
+                <div style="background:#f8fafc; padding:16px; border-radius:16px; border:1px solid var(--border); display:flex; flex-direction:column; gap:8px;">
+                    <span style="color:var(--text-dim); font-weight:600;">Entité Émettrice (Origine)</span>
+                    <span style="font-family:'JetBrains Mono', monospace; word-break:break-all; font-size:0.75rem; font-weight:700; color: var(--text-main);">${origine}</span>
+                </div>
+                <div style="background:#f8fafc; padding:16px; border-radius:16px; border:1px solid var(--border); display:flex; flex-direction:column; gap:8px;">
+                    <span style="color:var(--text-dim); font-weight:600;">Entité Réceptrice (Destination)</span>
+                    <span style="font-family:'JetBrains Mono', monospace; word-break:break-all; font-size:0.75rem; font-weight:700; color: var(--text-main);">${destination}</span>
+                </div>
+                ${txHashSection}
+                <div style="background:#f8fafc; padding:16px; border-radius:16px; border:1px solid var(--border); display:flex; justify-content:space-between; align-items: center;">
+                    <span style="color:var(--text-dim); font-weight:600;">Horodatage Complet</span>
+                    <span style="font-weight:700; font-size:0.8rem; color: var(--text-main);">${dateStr}</span>
+                </div>
             `;
-
-            document.getElementById('modalBody').innerHTML = detailsHTML;
             
-            modal.style.display = 'flex';
-            setTimeout(() => modal.classList.add('active'), 10);
+            modal.classList.add('active');
         };
 
         window.closeModal = () => {
-            const modal = document.getElementById('detailModal');
+            const modal = document.getElementById('txDetailModal');
             modal.classList.remove('active');
-            setTimeout(() => modal.style.display = 'none', 300);
         };
     </script>
 </body>
