@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
+    <title>Communauté A&D | Atlas & Duc Corporation</title>
+    <meta name="description" content="Hub social citoyen et gouvernance décentralisée de l'écosystème Nexus Core Layer-1.">
+    <meta name="theme-color" content="#0284c7">
+    
+    <!-- Optimisations pour WebView et PWA -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- Fonts et Icônes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Fira+Code:wght@500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #f0f9ff; 
+            --surface: #ffffff; 
+            --glass: rgba(255, 255, 255, 0.94); 
+            --border: rgba(14, 165, 233, 0.14); 
+            --accent: #0284c7; 
+            --accent-hover: #0369a1;
+            --text-main: #0f172a; 
+            --text-dim: #64748b; 
+            --danger: #ef4444; 
+            --success: #16a34a;
+            --agi-gold: #d97706; 
+            --agi-gold-light: #f59e0b;
+            --glow: 0 4px 20px rgba(14, 165, 233, 0.12);
+            --card-shadow: 0 4px 18px rgba(14, 165, 233, 0.05);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; }
+        
+        body { 
+            background-color: #bae6fd; 
+            color: var(--text-main); 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            overflow-x: hidden; 
+            scroll-behavior: smooth; 
+            font-size: 13px; 
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .app-container { 
+            width: 100%; 
+            max-width: 450px; 
+            min-height: 100vh; 
+            background: var(--bg); 
+            position: relative; 
+            display: flex; 
+            flex-direction: column; 
+            padding-bottom: 80px; 
+            margin: 0 auto; 
+            box-shadow: 0 0 40px rgba(0,0,0,0.06); 
+        }
+
+        .bg-glow { 
+            position: fixed; 
+            inset: 0; 
+            background: radial-gradient(circle at 50% -10%, rgba(14, 165, 233, 0.22), transparent 70%); 
+            z-index: 0; 
+            pointer-events: none; 
+        }
+
+        /* En-tête Navigation */
+        nav { 
+            backdrop-filter: blur(20px); 
+            -webkit-backdrop-filter: blur(20px);
+            background: var(--glass); 
+            border-bottom: 1px solid var(--border); 
+            padding: 12px 15px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02); 
+        }
+        .back-btn { 
+            background: var(--surface); 
+            border: 1px solid var(--border); 
+            color: var(--text-main); 
+            width: 36px; 
+            height: 36px; 
+            border-radius: 10px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            cursor: pointer; 
+            font-size: 1rem; 
+            transition: 0.2s; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02); 
+            text-decoration: none; 
+        }
+        .back-btn:active { transform: scale(0.92); }
+        .nav-title-group { display: flex; flex-direction: column; align-items: center; }
+        .nav-title { font-weight: 900; font-size: 0.85rem; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-main); }
+        .nav-sub { font-size: 0.58rem; color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+
+        .profile-badge { 
+            display: flex; 
+            align-items: center; 
+            gap: 6px; 
+            background: rgba(217, 119, 6, 0.08); 
+            border: 1px solid rgba(217, 119, 6, 0.25); 
+            padding: 5px 9px; 
+            border-radius: 8px; 
+            font-size: 0.6rem; 
+            font-weight: 800; 
+            color: var(--agi-gold); 
+            font-family: 'Fira Code', monospace;
+        }
+
+        /* Bannière Hero */
+        .hero-banner { width: 100%; height: 160px; position: relative; z-index: 1; overflow: hidden; }
+        .hero-banner img { width: 100%; height: 100%; object-fit: cover; }
+        .hero-overlay { 
+            position: absolute; 
+            inset: 0; 
+            background: linear-gradient(to top, var(--bg) 0%, rgba(240, 249, 255, 0.2) 60%, transparent 100%); 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: flex-end; 
+            padding: 15px; 
+        }
+        .hero-title { font-size: 1.25rem; font-weight: 900; color: var(--text-main); text-transform: uppercase; letter-spacing: -0.3px; }
+        .hero-subtitle { font-size: 0.65rem; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 1.5px; display: flex; align-items: center; gap: 6px; }
+        .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--success); display: inline-block; box-shadow: 0 0 8px var(--success); animation: pulse 1.8s infinite; }
+
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Onglets */
+        .tabs-container { display: flex; background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 61px; z-index: 999; }
+        .tab { flex: 1; text-align: center; padding: 13px 0; font-size: 0.68rem; font-weight: 800; color: var(--text-dim); text-transform: uppercase; cursor: pointer; border-bottom: 3px solid transparent; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .tab.active { color: var(--accent); border-bottom-color: var(--accent); background: rgba(2, 132, 199, 0.04); }
+
+        main { padding: 15px; position: relative; z-index: 1; }
+        .tab-content { display: none; animation: fadeIn 0.3s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Cartes de Publications */
+        .post-card { 
+            background: var(--surface); 
+            border: 1.5px solid var(--border); 
+            border-radius: 16px; 
+            padding: 16px; 
+            margin-bottom: 14px; 
+            box-shadow: var(--card-shadow); 
+            position: relative;
+            transition: all 0.25s ease;
+        }
+        .post-card.pinned { 
+            border-color: rgba(217, 119, 6, 0.4); 
+            background: linear-gradient(to bottom, #ffffff, #fffdf8); 
+        }
+        .pinned-tag {
+            position: absolute;
+            top: 12px;
+            right: 14px;
+            font-size: 0.55rem;
+            font-weight: 900;
+            background: rgba(217, 119, 6, 0.12);
+            border: 1px solid rgba(217, 119, 6, 0.3);
+            color: var(--agi-gold);
+            padding: 2px 7px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .post-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+        .post-author { display: flex; align-items: center; gap: 10px; }
+        .author-avatar { 
+            width: 38px; 
+            height: 38px; 
+            border-radius: 11px; 
+            background: linear-gradient(135deg, var(--accent), #bae6fd); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            color: #fff; 
+            font-weight: 900; 
+            font-size: 0.85rem; 
+            flex-shrink: 0;
+            border: 1px solid rgba(2, 132, 199, 0.2);
+        }
+        .author-avatar.system {
+            background: linear-gradient(135deg, var(--agi-gold), #fde68a);
+            color: #78350f;
+            border-color: var(--agi-gold);
+        }
+        .author-info h4 { font-size: 0.82rem; font-weight: 800; color: var(--text-main); margin-bottom: 1px; display: flex; align-items: center; gap: 5px; }
+        .author-info span { font-size: 0.58rem; color: var(--text-dim); font-weight: 700; background: rgba(0,0,0,0.04); padding: 2px 6px; border-radius: 4px; font-family: 'Fira Code', monospace; }
+        .post-time { font-size: 0.62rem; color: var(--text-dim); font-weight: 600; }
+        
+        .post-body { font-size: 0.82rem; color: var(--text-main); line-height: 1.6; margin-bottom: 12px; word-break: break-word; }
+        .post-body strong { color: var(--text-main); font-weight: 800; }
+        
+        .post-actions { display: flex; gap: 20px; border-top: 1px solid var(--border); padding-top: 10px; }
+        .action-btn { display: flex; align-items: center; gap: 6px; color: var(--text-dim); font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: 0.2s; background: none; border: none; }
+        .action-btn:active { transform: scale(0.9); }
+        .action-btn.liked { color: var(--danger); font-weight: 800; }
+        .action-btn i { font-size: 1rem; }
+
+        /* Cartes DAO */
+        .dao-card { 
+            background: linear-gradient(to bottom, #ffffff, #fcfdfe); 
+            border: 1.5px solid var(--border); 
+            border-radius: 18px; 
+            padding: 18px 16px; 
+            margin-bottom: 16px; 
+            box-shadow: var(--card-shadow); 
+            position: relative; 
+            overflow: hidden; 
+        }
+        .dao-status { 
+            position: absolute; 
+            top: 14px; 
+            right: 14px; 
+            font-size: 0.55rem; 
+            font-weight: 900; 
+            padding: 4px 8px; 
+            border-radius: 6px; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px;
+        }
+        .status-active { background: rgba(22, 163, 74, 0.1); color: var(--success); border: 1px solid rgba(22, 163, 74, 0.25); }
+        .status-ended { background: rgba(100, 116, 139, 0.1); color: var(--text-dim); border: 1px solid rgba(100, 116, 139, 0.2); }
+        
+        .dao-tag { font-size: 0.65rem; color: var(--agi-gold); font-weight: 900; font-family: 'Fira Code', monospace; margin-bottom: 4px; display: block; }
+        .dao-title { font-size: 0.95rem; font-weight: 800; color: var(--text-main); margin-bottom: 8px; line-height: 1.35; padding-right: 75px; }
+        .dao-desc { font-size: 0.78rem; color: var(--text-dim); line-height: 1.55; margin-bottom: 16px; }
+        
+        .dao-progress { margin-bottom: 15px; }
+        .progress-bar { width: 100%; height: 8px; background: rgba(0,0,0,0.05); border-radius: 10px; display: flex; overflow: hidden; margin-bottom: 6px; }
+        .progress-yes { height: 100%; background: var(--success); transition: width 0.4s ease; }
+        .progress-no { height: 100%; background: var(--danger); transition: width 0.4s ease; }
+        .progress-stats { display: flex; justify-content: space-between; font-size: 0.65rem; font-weight: 800; }
+        
+        .dao-buttons { display: flex; gap: 10px; }
+        .vote-btn { 
+            flex: 1; 
+            padding: 11px; 
+            border-radius: 12px; 
+            font-size: 0.75rem; 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            border: none; 
+            cursor: pointer; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            gap: 6px; 
+            transition: all 0.2s ease; 
+        }
+        .vote-btn.yes { background: rgba(22, 163, 74, 0.08); color: var(--success); border: 1.5px solid rgba(22, 163, 74, 0.3); }
+        .vote-btn.no { background: rgba(239, 68, 68, 0.08); color: var(--danger); border: 1.5px solid rgba(239, 68, 68, 0.3); }
+        .vote-btn:active { transform: scale(0.96); }
+
+        .voted-badge {
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            background: rgba(14, 165, 233, 0.08);
+            color: var(--accent);
+            border: 1px solid rgba(14, 165, 233, 0.25);
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 0.72rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        /* État Vide */
+        .empty-box {
+            text-align: center;
+            padding: 40px 20px;
+            background: var(--surface);
+            border-radius: 18px;
+            border: 1.5px dashed var(--border);
+            color: var(--text-dim);
+            margin-top: 10px;
+        }
+        .empty-box i { font-size: 2.2rem; color: var(--accent); margin-bottom: 10px; opacity: 0.5; }
+        .empty-box h3 { font-size: 0.9rem; font-weight: 800; color: var(--text-main); margin-bottom: 4px; }
+        .empty-box p { font-size: 0.72rem; line-height: 1.5; }
+
+        /* Bouton Flottant (FAB) */
+        .fab { 
+            position: fixed; 
+            bottom: 22px; 
+            right: calc(50% - 200px); 
+            width: 54px; 
+            height: 54px; 
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover)); 
+            border-radius: 50%; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            color: #fff; 
+            font-size: 1.35rem; 
+            box-shadow: 0 10px 25px rgba(2, 132, 199, 0.35); 
+            border: none; 
+            cursor: pointer; 
+            z-index: 1000; 
+            transition: 0.25s transform cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        }
+        .fab:active { transform: scale(0.9); }
+        @media (max-width: 450px) { .fab { right: 20px; } }
+
+        /* Modal Nouveau Post */
+        .modal-overlay { 
+            position: fixed; 
+            inset: 0; 
+            background: rgba(15, 23, 42, 0.5); 
+            backdrop-filter: blur(8px); 
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 2000; 
+            display: none; 
+            align-items: flex-end; 
+            opacity: 0; 
+            transition: 0.3s; 
+        }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-content { 
+            background: var(--surface); 
+            width: 100%; 
+            max-width: 450px; 
+            margin: 0 auto; 
+            border-radius: 24px 24px 0 0; 
+            padding: 22px; 
+            transform: translateY(100%); 
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
+        }
+        .modal-overlay.active .modal-content { transform: translateY(0); }
+        
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .modal-title { font-size: 0.95rem; font-weight: 800; color: var(--text-main); text-transform: uppercase; }
+        .close-modal { background: none; border: none; font-size: 1.2rem; color: var(--text-dim); cursor: pointer; }
+        
+        textarea { 
+            width: 100%; 
+            background: var(--bg); 
+            border: 1.5px solid var(--border); 
+            border-radius: 14px; 
+            padding: 14px; 
+            font-family: inherit; 
+            font-size: 0.85rem; 
+            color: var(--text-main); 
+            resize: none; 
+            outline: none; 
+            margin-bottom: 15px; 
+            height: 120px; 
+            transition: 0.2s border;
+        }
+        textarea:focus { border-color: var(--accent); }
+        
+        .btn-submit { 
+            width: 100%; 
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover)); 
+            color: #fff; 
+            border: none; 
+            padding: 14px; 
+            border-radius: 12px; 
+            font-weight: 800; 
+            font-size: 0.8rem;
+            text-transform: uppercase; 
+            cursor: pointer; 
+            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.25); 
+            transition: 0.2s;
+        }
+        .btn-submit:active { transform: scale(0.98); }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <div class="bg-glow"></div>
+
+        <!-- Navigation Haute -->
+        <nav>
+            <a href="atlas.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <div class="nav-title-group">
+                <div class="nav-title">COMMUNAUTÉ A&D</div>
+                <div class="nav-sub">Réseau Décentralisé</div>
+            </div>
+            <div class="profile-badge">
+                <i class="fas fa-fingerprint"></i>
+                <span id="nav-id">AGI...</span>
+            </div>
+        </nav>
+
+        <!-- Bannière Hero Officielle -->
+        <div class="hero-banner">
+            <img src="https://i.imgur.com/fnz6C5p.jpeg" alt="Bannière Communauté Atlas & Duc">
+            <div class="hero-overlay">
+                <div class="hero-subtitle">
+                    <span class="live-dot"></span> Gouvernance Décentralisée
+                </div>
+                <div class="hero-title">Nexus DAO</div>
+            </div>
+        </div>
+
+        <!-- Onglets -->
+        <div class="tabs-container">
+            <div class="tab active" onclick="switchTab('feed', this)">
+                <i class="fas fa-comments"></i> FLUX CITOYEN
+            </div>
+            <div class="tab" onclick="switchTab('dao', this)">
+                <i class="fas fa-landmark"></i> GOUVERNANCE DAO
+            </div>
+        </div>
+
+        <main>
+            <!-- SECTION : FLUX CITOYEN -->
+            <div id="tab-feed" class="tab-content active">
+                <div id="feed-list">
+                    <!-- Généré en direct depuis Firebase Realtime Database -->
+                    <div style="text-align:center; padding:30px; color:var(--text-dim);">
+                        <i class="fas fa-circle-notch fa-spin"></i> Synchronisation du flux citoyen...
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION : GOUVERNANCE DAO -->
+            <div id="tab-dao" class="tab-content">
+                <div id="dao-list">
+                    <!-- Généré en direct depuis Firebase Realtime Database -->
+                    <div style="text-align:center; padding:30px; color:var(--text-dim);">
+                        <i class="fas fa-circle-notch fa-spin"></i> Chargement des décrets DAO...
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Bouton flottant de publication -->
+        <button class="fab" onclick="openNewPostModal()" id="fab-btn" title="Publier">
+            <i class="fas fa-pen"></i>
+        </button>
+
+        <!-- Modale de Rédaction -->
+        <div class="modal-overlay" id="post-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Créer une Publication</h3>
+                    <button class="close-modal" onclick="closeNewPostModal()"><i class="fas fa-times"></i></button>
+                </div>
+                <textarea id="post-text" placeholder="Partagez une idée ou une information avec la communauté citoyenne Nexus..."></textarea>
+                <button class="btn-submit" id="btn-submit-post" onclick="submitPost()">
+                    PUBLIER SUR LE RÉSEAU
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Script Module Firebase Realtime Database -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, onValue, push, get, update, runTransaction } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        // Initialisation Firebase
+        const firebaseConfig = { databaseURL: "https://atlasgroupebusiness-default-rtdb.firebaseio.com" };
+        const fApp = initializeApp(firebaseConfig);
+        const db = getDatabase(fApp);
+
+        let currentUserB58 = "";
+        let currentUserName = "Citoyen Nexus";
+
+        // Algorithme Base58
+        const alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+        const generateB58 = (email) => {
+            let hash = 0; for (let i = 0; i < email.length; i++) { hash = (hash << 5) - hash + email.charCodeAt(i); hash |= 0; }
+            let res = "AGI"; let n = Math.abs(hash * 999999);
+            while (n > 0 && res.length < 44) { res += alphabet[n % 58]; n = Math.floor(n / 58); }
+            while(res.length < 44) res += alphabet[(res.length * 31) % 58];
+            return res;
+        };
+
+        const sanitizeEmail = (e) => e.toLowerCase().replace(/[.#$[\]]/g, "_").trim();
+
+        window.onload = async () => {
+            const savedEmail = localStorage.getItem('agi_logged_email');
+            if (savedEmail) {
+                currentUserB58 = generateB58(savedEmail);
+                document.getElementById('nav-id').innerText = currentUserB58.substring(0, 8) + '...';
+
+                // Récupération du profil nom si existant
+                try {
+                    const userSnap = await get(ref(db, `accounts/${sanitizeEmail(savedEmail)}`));
+                    if (userSnap.exists()) {
+                        const val = userSnap.val();
+                        currentUserName = val.nom || val.name || "Citoyen Nexus";
+                    }
+                } catch(e) {
+                    console.warn("Échec récupération nom citoyen :", e);
+                }
+            } else {
+                currentUserB58 = "AGI_GUEST_" + Math.floor(Math.random() * 8999 + 1000);
+                document.getElementById('nav-id').innerText = currentUserB58.substring(0, 8) + '...';
+            }
+
+            // Écoute temps réel des publications (gérées ou modérées par commu_admin.html)
+            listenPosts();
+
+            // Écoute temps réel des scrutins DAO (gérées par commu_admin.html)
+            listenDao();
+        };
+
+        // Gestion des Onglets
+        window.switchTab = function(tabId, element) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById('tab-' + tabId).classList.add('active');
+            element.classList.add('active');
+
+            // Afficher le FAB uniquement sur le flux citoyen
+            document.getElementById('fab-btn').style.display = (tabId === 'feed') ? 'flex' : 'none';
+        };
+
+        // Synchronisation du Flux Citoyen
+        function listenPosts() {
+            onValue(ref(db, 'community/posts'), (snap) => {
+                const feedContainer = document.getElementById('feed-list');
+                
+                if (!snap.exists()) {
+                    feedContainer.innerHTML = `
+                        <div class="empty-box">
+                            <i class="fas fa-inbox"></i>
+                            <h3>Aucune Publication Active</h3>
+                            <p>Le registre est vierge. Soyez le premier citoyen à partager une proposition avec l'écosystème !</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const data = snap.val();
+                let posts = Object.keys(data).map(key => ({ id: key, ...data[key] }));
+
+                // Tri : Épinglés en tête, puis par date décroissante
+                posts.sort((a, b) => {
+                    if (b.pinned && !a.pinned) return 1;
+                    if (a.pinned && !b.pinned) return -1;
+                    return (b.created_at || 0) - (a.created_at || 0);
+                });
+
+                const likedKeys = JSON.parse(localStorage.getItem('ad_liked_posts') || '[]');
+
+                feedContainer.innerHTML = posts.map(p => {
+                    const isLiked = likedKeys.includes(p.id);
+                    const isOfficial = p.official || p.b58 === "SYSTÈME";
+
+                    return `
+                        <div class="post-card ${p.pinned ? 'pinned' : ''}">
+                            ${p.pinned ? '<div class="pinned-tag"><i class="fas fa-thumbtack"></i> Épinglé</div>' : ''}
+                            
+                            <div class="post-header">
+                                <div class="post-author">
+                                    <div class="author-avatar ${isOfficial ? 'system' : ''}">
+                                        ${isOfficial ? '<i class="fas fa-shield-halved"></i>' : (p.author ? p.author.substring(0, 2).toUpperCase() : 'AG')}
+                                    </div>
+                                    <div class="author-info">
+                                        <h4>
+                                            ${p.author || 'Citoyen'} 
+                                            ${isOfficial ? '<i class="fas fa-check-circle" style="color:var(--agi-gold); font-size:0.75rem;"></i>' : ''}
+                                        </h4>
+                                        <span>${p.b58 || 'AGI...'}</span>
+                                    </div>
+                                </div>
+                                <div class="post-time">${p.timestamp || 'Récent'}</div>
+                            </div>
+                            
+                            <div class="post-body">${p.content || ''}</div>
+                            
+                            <div class="post-actions">
+                                <button class="action-btn ${isLiked ? 'liked' : ''}" onclick="toggleLike('${p.id}', this)">
+                                    <i class="${isLiked ? 'fas' : 'far'} fa-heart"></i>
+                                    <span class="count">${p.likes || 0}</span>
+                                </button>
+                                <button class="action-btn" onclick="alert('Partage du hachage de publication : #' + '${p.id}'.substring(0,8))">
+                                    <i class="fas fa-share-nodes"></i>
+                                    <span>Partager</span>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            });
+        }
+
+        // Synchronisation de la Gouvernance DAO
+        function listenDao() {
+            onValue(ref(db, 'community/dao'), (snap) => {
+                const daoContainer = document.getElementById('dao-list');
+                
+                if (!snap.exists()) {
+                    daoContainer.innerHTML = `
+                        <div class="empty-box">
+                            <i class="fas fa-landmark"></i>
+                            <h3>Aucun Scrutin Actif</h3>
+                            <p>Aucun décret n'est actuellement soumis au vote. Les administrateurs peuvent ouvrir un scrutin depuis la console de supervision.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const data = snap.val();
+                let proposals = Object.keys(data).map(key => ({ id: key, ...data[key] }));
+                proposals.reverse();
+
+                const votedHistory = JSON.parse(localStorage.getItem('ad_voted_dao') || '{}');
+
+                daoContainer.innerHTML = proposals.map(d => {
+                    const yes = parseInt(d.yesVotes) || 0;
+                    const no = parseInt(d.noVotes) || 0;
+                    const total = yes + no;
+                    const yesPct = total > 0 ? Math.round((yes / total) * 100) : 0;
+                    const noPct = total > 0 ? (100 - yesPct) : 0;
+                    const isOpen = d.status === 'active';
+                    const userVote = votedHistory[d.id];
+
+                    return `
+                        <div class="dao-card">
+                            <span class="dao-status ${isOpen ? 'status-active' : 'status-ended'}">
+                                ${isOpen ? 'VOTE EN COURS' : 'CLÔTURÉ / ADOPTÉ'}
+                            </span>
+                            <span class="dao-tag">${d.tag || 'NXP'}</span>
+                            <h3 class="dao-title">${d.title || ''}</h3>
+                            <p class="dao-desc">${d.desc || ''}</p>
+                            
+                            <div class="dao-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-yes" style="width: ${yesPct}%;"></div>
+                                    <div class="progress-no" style="width: ${noPct}%;"></div>
+                                </div>
+                                <div class="progress-stats">
+                                    <span style="color: var(--success);"><i class="fas fa-check"></i> ${yesPct}% (POUR : ${yes})</span>
+                                    <span style="color: var(--danger);">${noPct}% (CONTRE : ${no}) <i class="fas fa-times"></i></span>
+                                </div>
+                            </div>
+                            
+                            <div class="dao-action-container" id="vote-box-${d.id}">
+                                ${userVote ? `
+                                    <div class="voted-badge">
+                                        <i class="fas fa-check-circle"></i> VOTE ENREGISTRÉ (${userVote.toUpperCase()})
+                                    </div>
+                                ` : isOpen ? `
+                                    <div class="dao-buttons">
+                                        <button class="vote-btn yes" onclick="castVote('${d.id}', 'yes')">
+                                            <i class="fas fa-thumbs-up"></i> POUR
+                                        </button>
+                                        <button class="vote-btn no" onclick="castVote('${d.id}', 'no')">
+                                            <i class="fas fa-thumbs-down"></i> CONTRE
+                                        </button>
+                                    </div>
+                                ` : `
+                                    <div class="voted-badge" style="color:var(--text-dim); background:rgba(0,0,0,0.03); border-color:var(--border);">
+                                        <i class="fas fa-lock"></i> SCRUTIN TERMINÉ
+                                    </div>
+                                `}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            });
+        }
+
+        // Action Like connectée à Firebase
+        window.toggleLike = async function(postId, btn) {
+            let likedKeys = JSON.parse(localStorage.getItem('ad_liked_posts') || '[]');
+            const postRef = ref(db, `community/posts/${postId}/likes`);
+            const isCurrentlyLiked = likedKeys.includes(postId);
+
+            try {
+                await runTransaction(postRef, (currentLikes) => {
+                    let count = currentLikes || 0;
+                    return isCurrentlyLiked ? Math.max(0, count - 1) : count + 1;
+                });
+
+                if (isCurrentlyLiked) {
+                    likedKeys = likedKeys.filter(k => k !== postId);
+                } else {
+                    likedKeys.push(postId);
+                    if (navigator.vibrate) navigator.vibrate(50);
+                }
+                localStorage.setItem('ad_liked_posts', JSON.stringify(likedKeys));
+            } catch(e) {
+                console.error("Erreur mise à jour like :", e);
+            }
+        };
+
+        // Action Vote DAO connectée à Firebase
+        window.castVote = async function(propId, choice) {
+            let votedHistory = JSON.parse(localStorage.getItem('ad_voted_dao') || '{}');
+            if (votedHistory[propId]) return;
+
+            const voteTargetRef = ref(db, `community/dao/${propId}/${choice === 'yes' ? 'yesVotes' : 'noVotes'}`);
+
+            try {
+                await runTransaction(voteTargetRef, (currentCount) => {
+                    return (currentCount || 0) + 1;
+                });
+
+                // Enregistrement de la preuve de vote
+                votedHistory[propId] = choice;
+                localStorage.setItem('ad_voted_dao', JSON.stringify(votedHistory));
+
+                if (navigator.vibrate) navigator.vibrate([40, 60, 40]);
+            } catch (e) {
+                alert("Erreur lors de l'enregistrement du vote : " + e.message);
+            }
+        };
+
+        // Modale Nouveau Post
+        window.openNewPostModal = function() {
+            document.getElementById('post-modal').classList.add('active');
+            document.getElementById('post-text').focus();
+        };
+
+        window.closeNewPostModal = function() {
+            document.getElementById('post-modal').classList.remove('active');
+            document.getElementById('post-text').value = '';
+        };
+
+        // Publication d'un post vers Firebase (visible immédiatement chez l'admin)
+        window.submitPost = async function() {
+            const textarea = document.getElementById('post-text');
+            const submitBtn = document.getElementById('btn-submit-post');
+            const text = textarea.value.trim();
+            
+            if (!text) return;
+
+            submitBtn.disabled = true;
+            submitBtn.innerText = "ENVOI SUR LA BLOCKCHAIN...";
+
+            const postData = {
+                author: currentUserName,
+                b58: currentUserB58.substring(0, 10) + '...',
+                content: text.replace(/\n/g, '<br>'),
+                pinned: false,
+                official: false,
+                likes: 0,
+                created_at: Date.now(),
+                timestamp: "À l'instant"
+            };
+
+            try {
+                await push(ref(db, 'community/posts'), postData);
+                closeNewPostModal();
+            } catch(e) {
+                alert("Erreur réseau : " + e.message);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = "PUBLIER SUR LE RÉSEAU";
+            }
+        };
+    </script>
+</body>
+</html>

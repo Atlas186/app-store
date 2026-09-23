@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>AGI NEXUS CORE - Chat Communautaire</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    
+    <style>
+        :root {
+            --bg-main: #e0f2fe;         /* Sky 100 - Fond extérieur */
+            --bg-chat: #f0f9ff;         /* Sky 50 - Fond de discussion façon WhatsApp */
+            --bg-surface: #ffffff;
+            --primary: #0284c7;         /* Sky 600 */
+            --primary-hover: #0369a1;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: rgba(2, 132, 199, 0.15);
+            --agi-gold: #eab308;
+            --bg-bubble-user: #0284c7;  /* Bulle utilisateur */
+            --text-bubble-user: #ffffff;
+            --bg-bubble-other: #ffffff; /* Bulle reçu */
+            --text-bubble-other: #0f172a;
+            --error: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #cbd5e1;
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            overflow: hidden;
+            font-size: 0.9rem;
+        }
+
+        /* Conteneur principal mobile */
+        .app-container {
+            width: 100%;
+            max-width: 450px;
+            height: 100vh;
+            background-color: var(--bg-chat);
+            background-image: radial-gradient(rgba(2, 132, 199, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px; /* Motif de fond subtil */
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+        }
+
+        /* Header WhatsApp-like */
+        .nexus-header {
+            background: var(--bg-surface);
+            padding: 10px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .brand-zone {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 42px;
+            height: 42px;
+            background: var(--bg-surface);
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        .brand-title h1 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.2;
+        }
+
+        .brand-title span {
+            font-size: 0.7rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .user-status-card {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .user-status-email {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-main);
+            background: rgba(2, 132, 199, 0.1);
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-bottom: 2px;
+        }
+
+        .user-status-uid {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            font-family: monospace;
+        }
+
+        /* Zone de messages */
+        .messages-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .messages-container::-webkit-scrollbar { width: 5px; }
+        .messages-container::-webkit-scrollbar-thumb { background: rgba(2, 132, 199, 0.2); border-radius: 10px; }
+
+        /* Bulles WhatsApp-like */
+        .msg-block {
+            display: flex;
+            flex-direction: column;
+            max-width: 85%;
+            position: relative;
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        .msg-block.incoming { align-self: flex-start; }
+        .msg-block.outgoing { align-self: flex-end; cursor: pointer; } /* Curseur pour indiquer qu'on peut cliquer */
+
+        .msg-author {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 2px;
+            padding-left: 4px;
+        }
+        
+        .msg-block.outgoing .msg-author { display: none; } /* On cache son propre nom comme sur WA */
+
+        .msg-bubble {
+            padding: 8px 10px 8px 12px;
+            border-radius: 12px;
+            line-height: 1.4;
+            font-size: 0.95rem;
+            position: relative;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.06);
+            display: inline-block;
+            min-width: 80px;
+            padding-bottom: 20px; /* Espace pour l'heure */
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+
+        /* Queues des bulles (Tails) */
+        .incoming .msg-bubble {
+            background-color: var(--bg-bubble-other);
+            color: var(--text-bubble-other);
+            border-top-left-radius: 0;
+        }
+
+        .outgoing .msg-bubble {
+            background-color: var(--bg-bubble-user);
+            color: var(--text-bubble-user);
+            border-top-right-radius: 0;
+        }
+
+        /* Incrustation de l'heure */
+        .msg-time-inside {
+            position: absolute;
+            bottom: 4px;
+            right: 8px;
+            font-size: 0.65rem;
+            color: rgba(0,0,0,0.45);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .outgoing .msg-time-inside {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .media-content {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 6px;
+            display: block;
+            max-height: 250px;
+            object-fit: cover;
+            cursor: pointer;
+        }
+        
+        audio.media-content {
+            max-height: 40px;
+            outline: none;
+            width: 220px;
+        }
+
+        /* Barre d'entrée et contrôles WhatsApp-like */
+        .input-area {
+            background: transparent;
+            padding: 8px;
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            padding-bottom: calc(8px + env(safe-area-inset-bottom));
+        }
+
+        .input-pill {
+            flex: 1;
+            background: var(--bg-surface);
+            border-radius: 24px;
+            padding: 8px 14px;
+            display: flex;
+            align-items: flex-end;
+            gap: 12px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            min-height: 44px;
+        }
+
+        .input-box {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            max-height: 100px;
+            resize: none;
+            padding: 4px 0;
+            font-family: inherit;
+        }
+
+        .icon-btn {
+            color: var(--text-muted);
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: color 0.2s;
+            padding-bottom: 4px;
+        }
+
+        .icon-btn:hover { color: var(--primary); }
+        
+        .icon-btn.recording-active {
+            color: var(--error);
+            animation: pulseMic 1s infinite alternate;
+        }
+        
+        @keyframes pulseMic {
+            from { transform: scale(1); opacity: 1; }
+            to { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        .action-circle {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: none;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(2, 132, 199, 0.3);
+            transition: background 0.2s, transform 0.1s;
+            flex-shrink: 0;
+        }
+
+        .action-circle:active { transform: scale(0.95); }
+
+        #fileInput, #cameraInput { display: none; }
+
+        /* Modal Menu Contextuel */
+        .modal-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 200;
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .modal-content {
+            background: var(--bg-surface);
+            width: 100%;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            padding-bottom: calc(20px + env(safe-area-inset-bottom));
+        }
+
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-overlay.active .modal-content { transform: translateY(0); }
+
+        .modal-btn {
+            width: 100%;
+            background: transparent;
+            border: none;
+            padding: 16px;
+            text-align: left;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+        .modal-btn:last-child { border-bottom: none; color: var(--error); }
+        .modal-btn i { width: 20px; text-align: center; color: var(--text-muted); }
+        .modal-btn.danger i { color: var(--error); }
+
+        /* Loader */
+        .loading-overlay {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--bg-main);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 100; transition: opacity 0.3s ease;
+        }
+        .spinner {
+            width: 40px; height: 40px;
+            border: 3px solid rgba(2, 132, 199, 0.1); border-top-color: var(--primary);
+            border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 10px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-text { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+        
+        .edited-tag { font-size: 0.6rem; font-style: italic; opacity: 0.7; margin-right: 4px; }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <header class="nexus-header">
+            <div class="brand-zone">
+                <img src="https://i.imgur.com/viSqmAI.jpeg" style="width:42px; height:42px; border-radius:50%; border: 2px solid var(--agi-gold); object-fit: cover;">
+                <div class="brand-title">
+                    <h1>Nexus Communauté</h1>
+                    <span>Connecté au Core System</span>
+                </div>
+            </div>
+            <div class="user-status-card">
+                <div class="user-status-email" id="display-email">...</div>
+                <div class="user-status-uid" id="display-uid">UID: ...</div>
+            </div>
+        </header>
+
+        <main style="flex:1; display:flex; flex-direction:column; position:relative; overflow:hidden;">
+            <div class="loading-overlay" id="chat-loader">
+                <div class="spinner"></div>
+                <div class="loading-text">Synchronisation sécurisée...</div>
+            </div>
+
+            <div class="messages-container" id="messages-box"></div>
+
+            <form class="input-area" id="chat-form" autocomplete="off">
+                <div class="input-pill">
+                    <label for="fileInput" class="icon-btn" title="Joindre">
+                        <i class="fa-solid fa-paperclip"></i>
+                    </label>
+                    <input type="file" id="fileInput" accept="image/*,video/*">
+                    
+                    <input type="file" id="cameraInput" accept="image/*" capture="environment">
+                    <i class="fa-solid fa-camera icon-btn" onclick="document.getElementById('cameraInput').click()" title="Caméra"></i>
+                    
+                    <textarea id="message-input" class="input-box" placeholder="Message..." rows="1" maxlength="1000"></textarea>
+                </div>
+                
+                <button type="button" id="action-btn" class="action-circle">
+                    <i class="fa-solid fa-microphone" id="action-icon"></i>
+                </button>
+            </form>
+            
+            <div class="modal-overlay" id="msg-modal">
+                <div class="modal-content">
+                    <button class="modal-btn" id="btn-edit" onclick="handleEditMessage()">
+                        <i class="fa-solid fa-pen"></i> Modifier le message
+                    </button>
+                    <button class="modal-btn danger" onclick="handleDeleteMessage()">
+                        <i class="fa-solid fa-trash"></i> Supprimer pour tout le monde
+                    </button>
+                    <button class="modal-btn" onclick="closeModal()">
+                        <i class="fa-solid fa-xmark"></i> Annuler
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // --- SEED ET SYNCHRONISATION FIREBASE REALTIME ---
+        const firebaseConfig = { databaseURL: "https://atlasgroupebusiness-default-rtdb.firebaseio.com" };
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // --- ALGORITHME REPRIS DE VOS STATUTS (Génération UID unique) ---
+        const getSyncUID = () => {
+            const email = (localStorage.getItem('agi_logged_email') || "guest@agi.bf").toLowerCase().trim();
+            const alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+            let hash = 0;
+            for (let i = 0; i < email.length; i++) { 
+                hash = (hash << 5) - hash + email.charCodeAt(i); 
+                hash |= 0; 
+            }
+            let res = "AGI"; 
+            let n = Math.abs(hash * 999999);
+            while (n > 0) { 
+                res += alphabet[n % 58]; 
+                n = Math.floor(n / 58); 
+            }
+            while(res.length < 44) res += alphabet[(res.length * 31) % 58];
+            return res.substring(0, 44);
+        };
+
+        const uid = getSyncUID();
+        const userEmail = (localStorage.getItem('agi_logged_email') || "guest@agi.bf").toLowerCase().trim();
+        const username = userEmail.split('@')[0];
+
+        // Rendu métadonnées session de l'en-tête
+        document.getElementById('display-email').textContent = userEmail;
+        document.getElementById('display-uid').textContent = `UID: ${uid.substring(0, 6)}...${uid.substring(40)}`;
+
+        const messagesBox = document.getElementById('messages-box');
+        const messageInput = document.getElementById('message-input');
+        const chatLoader = document.getElementById('chat-loader');
+        const actionBtn = document.getElementById('action-btn');
+        const actionIcon = document.getElementById('action-icon');
+        const msgModal = document.getElementById('msg-modal');
+        const btnEdit = document.getElementById('btn-edit');
+        
+        const chatRef = db.ref('nexus_community_messages');
+
+        // Variables système
+        let audioRecorder = null;
+        let recordedChunks = [];
+        let isRecordingAudio = false;
+        let audioStreamRef = null;
+        let activeMessageKey = null; // Pour édition/suppression
+
+        const formatTime = (timestamp) => {
+            if (!timestamp) return '';
+            return new Date(timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        };
+
+        // Auto-resize du textarea
+        messageInput.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+            
+            // Switch icône Micro / Avion
+            if(this.value.trim().length > 0) {
+                actionIcon.className = "fa-solid fa-paper-plane";
+            } else {
+                actionIcon.className = "fa-solid fa-microphone";
+                this.style.height = 'auto';
+            }
+        });
+
+        // Gestion de l'appui sur "Entrée" pour envoyer
+        messageInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                processTextSubmit();
+            }
+        });
+
+        // --- ENTRÉE/MISE À JOUR DU MESSAGE DANS LE DOM ---
+        const renderMessage = (data, key) => {
+            const isMe = data.uid === uid;
+            
+            // Vérifier si la bulle existe déjà (pour update)
+            let msgBlock = document.getElementById(`msg-${key}`);
+            const isNew = !msgBlock;
+
+            if (isNew) {
+                msgBlock = document.createElement('div');
+                msgBlock.id = `msg-${key}`;
+                msgBlock.className = `msg-block ${isMe ? 'outgoing' : 'incoming'}`;
+                
+                // Clic sur ses propres messages pour ouvrir les options
+                if(isMe) {
+                    msgBlock.onclick = () => openMessageOptions(key, data.message);
+                }
+            } else {
+                msgBlock.innerHTML = ''; // Réinitialiser le contenu pour mise à jour
+            }
+
+            // Nom de l'auteur (uniquement pour les messages entrants)
+            if (!isMe) {
+                const authorDiv = document.createElement('div');
+                authorDiv.className = 'msg-author';
+                authorDiv.textContent = data.username;
+                msgBlock.appendChild(authorDiv);
+            }
+
+            const msgBubble = document.createElement('div');
+            msgBubble.className = 'msg-bubble';
+
+            // Médias
+            if (data.fileData) {
+                if (data.fileType && data.fileType.includes('video')) {
+                    msgBubble.innerHTML += `<video src="${data.fileData}" class="media-content" controls></video>`;
+                } else if (data.fileType && data.fileType.includes('audio')) {
+                    msgBubble.innerHTML += `<audio src="${data.fileData}" class="media-content" controls></audio>`;
+                } else {
+                    msgBubble.innerHTML += `<img src="${data.fileData}" class="media-content" onclick="window.open(this.src)">`;
+                }
+            }
+
+            // Texte (avec gestion des retours à la ligne)
+            if (data.message) {
+                const textSpan = document.createElement('span');
+                textSpan.textContent = data.message;
+                msgBubble.appendChild(textSpan);
+            }
+
+            // Horodatage WhatsApp style incrusté
+            const timeInside = document.createElement('div');
+            timeInside.className = 'msg-time-inside';
+            
+            // Tag (Modifié)
+            if (data.edited) {
+                timeInside.innerHTML += `<span class="edited-tag">Modifié</span>`;
+            }
+            
+            timeInside.innerHTML += `${formatTime(data.timestamp)}`;
+            
+            // Double check pour ses propres messages
+            if(isMe) {
+                timeInside.innerHTML += ` <i class="fa-solid fa-check-double" style="font-size:0.6rem; color: #38bdf8;"></i>`;
+            }
+
+            msgBubble.appendChild(timeInside);
+            msgBlock.appendChild(msgBubble);
+
+            if (isNew) {
+                messagesBox.appendChild(msgBlock);
+                messagesBox.scrollTop = messagesBox.scrollHeight;
+            }
+        };
+
+        // --- PIPELINE D'ÉCOUTE ET SYNCHRONISATION FIREBASE ---
+        chatRef.limitToLast(60).on('child_added', (snapshot) => {
+            if (snapshot.val()) renderMessage(snapshot.val(), snapshot.key);
+        });
+
+        // Écouteur pour les messages modifiés
+        chatRef.on('child_changed', (snapshot) => {
+            if (snapshot.val()) renderMessage(snapshot.val(), snapshot.key);
+        });
+
+        // Écouteur pour les messages supprimés
+        chatRef.on('child_removed', (snapshot) => {
+            const el = document.getElementById(`msg-${snapshot.key}`);
+            if(el) {
+                el.style.opacity = '0';
+                setTimeout(() => el.remove(), 200); // Animation douce avant retrait
+            }
+        });
+
+        chatRef.once('value').then(() => {
+            chatLoader.style.opacity = '0';
+            setTimeout(() => chatLoader.style.display = 'none', 300);
+        });
+
+        // --- GESTION DE LA SOUMISSION ---
+        const commitMessage = async (text = null, fileObj = null) => {
+            const payload = {
+                uid: uid,
+                email: userEmail,
+                username: username,
+                timestamp: firebase.database.ServerValue.TIMESTAMP
+            };
+
+            if (text) payload.message = text;
+            if (fileObj) {
+                payload.fileData = fileObj.data;
+                payload.fileType = fileObj.type;
+            }
+
+            if (payload.message || payload.fileData) {
+                await chatRef.push().set(payload);
+            }
+        };
+
+        const processTextSubmit = async () => {
+            const text = messageInput.value.trim();
+            if (!text) return;
+
+            messageInput.disabled = true;
+            try {
+                await commitMessage(text);
+                messageInput.value = '';
+                messageInput.style.height = 'auto';
+                actionIcon.className = "fa-solid fa-microphone";
+            } catch (err) {
+                alert("Erreur de transmission.");
+            } finally {
+                messageInput.disabled = false;
+                messageInput.focus();
+            }
+        };
+
+        // Bouton principal (Envoi Texte ou Micro)
+        actionBtn.addEventListener('click', () => {
+            if(messageInput.value.trim().length > 0) {
+                processTextSubmit();
+            } else {
+                handleVoiceRecord();
+            }
+        });
+
+        // --- MODAL & GESTION DES MESSAGES (Editer / Supprimer) ---
+        const openMessageOptions = (key, text) => {
+            activeMessageKey = key;
+            // Si le message n'a pas de texte, on grise le bouton modifier
+            btnEdit.style.display = text ? 'flex' : 'none';
+            msgModal.classList.add('active');
+        };
+
+        const closeModal = () => {
+            msgModal.classList.remove('active');
+            activeMessageKey = null;
+        };
+
+        // Fermer modal si clic en dehors
+        msgModal.addEventListener('click', (e) => {
+            if(e.target === msgModal) closeModal();
+        });
+
+        const handleDeleteMessage = async () => {
+            if(activeMessageKey && confirm("Supprimer ce message pour tout le monde ?")) {
+                try {
+                    await chatRef.child(activeMessageKey).remove();
+                } catch(e) {
+                    alert("Erreur lors de la suppression.");
+                }
+            }
+            closeModal();
+        };
+
+        const handleEditMessage = async () => {
+            if(!activeMessageKey) return;
+            
+            // Récupérer l'ancien texte
+            const msgNode = await chatRef.child(activeMessageKey).once('value');
+            const data = msgNode.val();
+            
+            if(data && data.message) {
+                const newText = prompt("Modifier le message :", data.message);
+                if(newText !== null && newText.trim() !== "" && newText !== data.message) {
+                    try {
+                        await chatRef.child(activeMessageKey).update({ 
+                            message: newText.trim(),
+                            edited: true
+                        });
+                    } catch(e) {
+                        alert("Erreur lors de la modification.");
+                    }
+                }
+            }
+            closeModal();
+        };
+
+        // --- GESTION DES FICHIERS ET PRISE DE PHOTO ---
+        const processFileCapture = function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            if (file.size > 3 * 1024 * 1024) {
+                alert("Fichier supérieur à la limite système (Max: 3Mo).");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = async function(event) {
+                try {
+                    await commitMessage(null, {
+                        data: event.target.result,
+                        type: file.type
+                    });
+                } catch (fail) {
+                    alert("Échec de la distribution du média.");
+                }
+            };
+            reader.readAsDataURL(file);
+            this.value = "";
+        };
+
+        document.getElementById('fileInput').onchange = processFileCapture;
+        document.getElementById('cameraInput').onchange = processFileCapture;
+
+        // --- SYSTEME D'ENREGISTREMENT VOCAL ---
+        const handleVoiceRecord = async () => {
+            if (!isRecordingAudio) {
+                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                    alert("L'acquisition audio n'est pas prise en charge.");
+                    return;
+                }
+
+                try {
+                    audioStreamRef = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    recordedChunks = [];
+                    
+                    let options = { mimeType: 'audio/webm' };
+                    if (!MediaRecorder.isTypeSupported('audio/webm')) {
+                        options = { mimeType: 'audio/ogg' };
+                        if (!MediaRecorder.isTypeSupported('audio/ogg')) options = { mimeType: '' };
+                    }
+
+                    audioRecorder = new MediaRecorder(audioStreamRef, options);
+                    
+                    audioRecorder.ondataavailable = (event) => {
+                        if (event.data.size > 0) recordedChunks.push(event.data);
+                    };
+
+                    audioRecorder.onstop = async () => {
+                        const audioBlob = new Blob(recordedChunks, { type: audioRecorder.mimeType || 'audio/webm' });
+                        if (audioBlob.size > 3 * 1024 * 1024) {
+                            alert("Audio trop volumineux (max 3Mo).");
+                            return;
+                        }
+
+                        const audioReader = new FileReader();
+                        audioReader.onloadend = async () => {
+                            try {
+                                actionBtn.style.pointerEvents = 'none';
+                                await commitMessage(null, { data: audioReader.result, type: audioBlob.type });
+                            } catch (error) {
+                                alert("Erreur d'envoi du message vocal.");
+                            } finally {
+                                actionBtn.style.pointerEvents = 'auto';
+                            }
+                        };
+                        audioReader.readAsDataURL(audioBlob);
+
+                        if (audioStreamRef) audioStreamRef.getTracks().forEach(track => track.stop());
+                    };
+
+                    audioRecorder.start();
+                    isRecordingAudio = true;
+                    actionIcon.className = "fa-solid fa-square icon-btn recording-active";
+                    messageInput.placeholder = "Enregistrement...";
+                    messageInput.disabled = true;
+
+                } catch (err) {
+                    alert("Microphone inaccessible. Vérifiez vos autorisations.");
+                }
+            } else {
+                if (audioRecorder && audioRecorder.state !== "inactive") {
+                    audioRecorder.stop();
+                }
+                isRecordingAudio = false;
+                actionIcon.className = "fa-solid fa-microphone";
+                messageInput.placeholder = "Message...";
+                messageInput.disabled = false;
+            }
+        };
+    </script>
+</body>
+</html>

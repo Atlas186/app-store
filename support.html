@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Support Client | NEXUS BET & AGI</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2=family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #f0f9ff;          /* Bleu ciel très clair (Sky 50) */
+            --bg-gradient: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+            --surface: #ffffff;     /* Blanc pur pour les cartes */
+            --border: rgba(2, 132, 199, 0.12);
+            --primary: #0284c7;     /* Bleu ciel profond (Sky 600) */
+            --primary-light: #38bdf8;
+            --text-main: #0f172a;   /* Slate 900 */
+            --text-dim: #64748b;    /* Slate 500 */
+            --agi-gold: #eab308;    /* Or AGI (Yellow 500) */
+            --success: #10b981;     /* Vert connecté */
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; }
+        body { background-color: #f1f5f9; color: var(--text-main); font-family: 'Plus Jakarta Sans', sans-serif; display: flex; justify-content: center; overflow-x: hidden; font-size: 0.85rem; }
+
+        .app-container { width: 100%; max-width: 450px; min-height: 100vh; background: var(--bg-gradient); position: relative; border-left: 1px solid var(--border); border-right: 1px solid var(--border); padding-bottom: 40px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); }
+        
+        .lang-btn { position: fixed; top: 20px; right: 20px; z-index: 9999; background: var(--surface); border: 1px solid var(--border); color: var(--primary); padding: 10px; border-radius: 50%; cursor: pointer; box-shadow: 0 4px 12px rgba(2,132,199,0.15); transition: 0.3s; }
+        .lang-btn:hover { transform: scale(1.1); color: var(--agi-gold); }
+
+        /* Header */
+        .support-header { background: linear-gradient(135deg, #ffffff 0%, #e0f2fe 100%); padding: 35px 20px; border-bottom: 2px solid var(--agi-gold); text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+        .support-header h1 { font-size: 1.5rem; font-weight: 800; color: var(--primary); letter-spacing: 0.5px; }
+        .support-header p { color: var(--text-dim); font-size: 0.78rem; margin-top: 10px; line-height: 1.5; }
+        
+        .status-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 6px 14px; border-radius: 20px; font-size: 0.7rem; margin-top: 15px; font-weight: 700; border: 1px solid rgba(16, 185, 129, 0.2); }
+        .status-dot { width: 7px; height: 7px; background: var(--success); border-radius: 50%; box-shadow: 0 0 8px var(--success); }
+
+        /* Sections & Title */
+        .section-title { padding: 20px 20px 8px; font-size: 0.75rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.8px; }
+
+        /* Grid & Cards */
+        .support-grid { padding: 0 15px; display: grid; gap: 10px; }
+        .contact-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 14px; display: flex; align-items: center; gap: 14px; text-decoration: none; color: inherit; transition: 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
+        .contact-card:hover { transform: translateY(-2px); border-color: var(--primary); }
+        .icon-circle { width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; background: rgba(2, 132, 199, 0.08); color: var(--primary); }
+        .contact-card:hover .icon-circle { background: var(--primary); color: #fff; }
+        .card-info { flex: 1; }
+        .card-label { font-size: 0.65rem; color: var(--text-dim); text-transform: uppercase; font-weight: 600; }
+        .card-value { font-size: 0.88rem; font-weight: 700; margin-top: 1px; color: var(--text-main); }
+
+        /* Phone Support */
+        .phone-list { background: var(--surface); border-radius: 16px; border: 1px solid var(--border); margin: 0 15px; padding: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
+        .phone-item { padding: 12px 10px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(2, 132, 199, 0.05); text-decoration: none; color: inherit; font-weight: 600; font-size: 0.85rem; }
+        .phone-item:last-child { border-bottom: none; }
+        .phone-item i { color: var(--primary); background: rgba(2, 132, 199, 0.08); width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
+
+        /* FAQ Accordion */
+        .faq-list { margin: 0 15px; display: flex; flex-direction: column; gap: 8px; }
+        .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
+        .faq-trigger { width: 100%; padding: 14px; text-align: left; background: none; border: none; font-weight: 700; font-size: 0.82rem; color: var(--text-main); display: flex; justify-content: space-between; align-items: center; cursor: pointer; gap: 10px; }
+        .faq-trigger i { color: var(--primary); transition: transform 0.2s; font-size: 0.75rem; }
+        .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.3s cubic-bezier(0, 1, 0, 1); background: #f8fafc; padding: 0 14px; color: var(--text-dim); font-size: 0.78rem; line-height: 1.5; }
+        .faq-item.active .faq-trigger i { transform: rotate(180deg); }
+        .faq-item.active .faq-content { max-height: 1000px; padding: 0 14px 14px; transition: max-height 0.3s cubic-bezier(1, 0, 1, 0); }
+    </style>
+</head>
+<body>
+
+    <button class="lang-btn" onclick="toggleLang()"><i class="fas fa-globe"></i></button>
+
+    <div class="app-container">
+        <header class="support-header">
+            <h1 data-key="title">CENTRE D'AIDE</h1>
+            <p data-key="subtitle">Assistance technique spécialisée pour la plateforme NEXUS BET et les services technologiques fournis par AGI Groupe. Notre équipe d'ingénieurs et de support client est mobilisée pour garantir une expérience de jeu fluide, sécurisée et optimale pour tous les utilisateurs internationaux à chaque instant.</p>
+            <div class="status-badge"><div class="status-dot"></div><span data-key="status">AGENTS EN LIGNE : DISPONIBLES</span></div>
+        </header>
+
+        <div class="section-title" data-key="direct_channels">Canaux Directs</div>
+        <div class="support-grid">
+            <a href="discussion.html" class="contact-card">
+                <div class="icon-circle"><i class="fas fa-comments"></i></div>
+                <div class="card-info">
+                    <div class="card-label" data-key="label_chat">Communication</div>
+                    <div class="card-value" data-key="val_chat">Chat Privé Nexus</div>
+                </div>
+            </a>
+            <!-- Lien mis à jour vers le numéro direct au lieu du groupe -->
+            <a href="https://wa.me/22676167364" class="contact-card">
+                <div class="icon-circle"><i class="fab fa-whatsapp"></i></div>
+                <div class="card-info">
+                    <div class="card-label" data-key="label_whatsapp">Assistance Rapide</div>
+                    <div class="card-value" data-key="val_whatsapp">Message WhatsApp</div>
+                </div>
+            </a>
+            <a href="mailto:atlasgroupeinter@gmail.com" class="contact-card">
+                <div class="icon-circle"><i class="fas fa-envelope"></i></div>
+                <div class="card-info">
+                    <div class="card-label" data-key="label_email">Courriel</div>
+                    <div class="card-value" style="font-size: 0.75rem;">atlasgroupeinter@gmail.com</div>
+                </div>
+            </a>
+        </div>
+
+        <div class="section-title" data-key="phone_title">Assistance Téléphonique</div>
+        <div class="phone-list">
+            <a href="tel:+22670873773" class="phone-item"><span>+226 70 87 37 73</span><i class="fas fa-phone-alt"></i></a>
+            <a href="tel:+22676203848" class="phone-item"><span>+226 76 20 38 48</span><i class="fas fa-phone-alt"></i></a>
+            <a href="tel:+22678370803" class="phone-item"><span>+226 78 37 08 03</span><i class="fas fa-phone-alt"></i></a>
+        </div>
+
+        <div class="section-title" data-key="faq_title">Foire Aux Questions (FAQ)</div>
+        <div class="faq-list">
+            <div class="faq-item">
+                <button class="faq-trigger" onclick="toggleFaq(this)"><span data-key="q1">Comment fonctionne le taux de change fixe ?</span><i class="fas fa-chevron-down"></i></button>
+                <div class="faq-content" data-key="a1">Sur notre écosystème, 1 AG-COIN (₳) est strictement égal à 1 XOF (Franc CFA), garantissant une stabilité financière absolue.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-trigger" onclick="toggleFaq(this)"><span data-key="q2">Quel est le délai de validation des dépôts ?</span><i class="fas fa-chevron-down"></i></button>
+                <div class="faq-content" data-key="a2">Les dépôts via notre service d'échange d'actifs ou en monnaie locale sont traités instantanément ou en quelques minutes après validation réseau.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-trigger" onclick="toggleFaq(this)"><span data-key="q3">Quelle blockchain est utilisée par AGI ?</span><i class="fas fa-chevron-down"></i></button>
+                <div class="faq-content" data-key="a3">Toutes nos opérations de transfert de jetons sécurisés transitent exclusivement par Nexus Core, notre infrastructure blockchain propriétaire.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-trigger" onclick="toggleFaq(this)"><span data-key="q4">Comment fonctionnent les packages d'investissement ?</span><i class="fas fa-chevron-down"></i></button>
+                <div class="faq-content" data-key="a4">Nous proposons trois rendements (5%, 10% et 25% de ROI) étalés sur une période d'immobilisation sécurisée de 30 à 180 jours complets.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-trigger" onclick="toggleFaq(this)"><span data-key="q5">Quels projets industriels financez-vous ?</span><i class="fas fa-chevron-down"></i></button>
+                <div class="faq-content" data-key="a5">Vos capitaux soutiennent directement l'économie réelle burkinabè, notamment l'usine de tissage de coton et la production d'énergie solaire.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-trigger" onclick="toggleFaq(this)"><span data-key="q6">Le casino en ligne est-il hautement sécurisé ?</span><i class="fas fa-chevron-down"></i></button>
+                <div class="faq-content" data-key="a6">Absolument. Nos machines à sous et paris sportifs Nexus Bet sont adossés à des algorithmes audités garantissant une transparence totale.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-trigger" onclick="toggleFaq(this)"><span data-key="q7">Que faire en cas d'erreur de transaction ?</span><i class="fas fa-chevron-down"></i></button>
+                <div class="faq-content" data-key="a7">Ouvrez immédiatement notre Chat Privé Nexus ou contactez-nous par téléphone pour une prise en charge par nos ingénieurs.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-trigger" onclick="toggleFaq(this)"><span data-key="q8">L'authentification biométrique est-elle requise ?</span><i class="fas fa-chevron-down"></i></button>
+                <div class="faq-content" data-key="a8">Oui, l'application intègre le protocole de sécurité native NexusBridge pour valider vos opérations financières à haut volume.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-trigger" onclick="toggleFaq(this)"><span data-key="q9">Où trouver les statuts légaux d'AGI ?</span><i class="fas fa-chevron-down"></i></button>
+                <div class="faq-content" data-key="a9">Atlas Groupe International est légalement déclaré au Burkina Faso sous le numéro de récépissé officiel PHUE-3539/2025 du 11/07/2025.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-trigger" onclick="toggleFaq(this)"><span data-key="q10">Les retraits de gains sont-ils limités ?</span><i class="fas fa-chevron-down"></i></button>
+                <div class="faq-content" data-key="a10">Les retraits s'effectuent conformément aux conditions de liquidité d'écosystème via notre passerelle d'échange d'actifs sécurisée.</div>
+            </div>
+        </div>
+
+        <div style="padding: 25px 20px 10px; text-align: center; color: var(--text-dim);">
+            <p data-key="footer_text" style="font-size: 0.72rem; line-height: 1.5;">Notre engagement est de fournir une assistance technique de premier ordre. Que ce soit pour des questions liées aux transactions blockchain, aux erreurs de dépôt, ou aux problèmes de connexion, nos experts sont formés pour diagnostiquer et résoudre vos problèmes avec une efficacité inégalée. La sécurité de vos fonds et la confidentialité de vos données restent nos priorités absolues dans cet écosystème décentralisé complexe.</p>
+        </div>
+    </div>
+
+    <script>
+        const dict = {
+            fr: {
+                title: "CENTRE D'AIDE",
+                subtitle: "Assistance technique spécialisée pour la plateforme NEXUS BET et les services technologiques fournis par AGI Groupe. Notre équipe d'ingénieurs et de support client est mobilisée pour garantir une expérience de jeu fluide, sécurisée et optimale pour tous les utilisateurs internationaux à chaque instant.",
+                status: "AGENTS EN LIGNE : DISPONIBLES",
+                direct_channels: "Canaux Directs",
+                label_chat: "Communication",
+                val_chat: "Chat Privé Nexus",
+                label_whatsapp: "Assistance Rapide",
+                val_whatsapp: "Message WhatsApp",
+                label_email: "Courriel",
+                phone_title: "Assistance Téléphonique",
+                faq_title: "Foire Aux Questions (FAQ)",
+                footer_text: "Notre engagement est de fournir une assistance technique de premier ordre. Que ce soit pour des questions liées aux transactions blockchain, aux erreurs de dépôt, ou aux problèmes de connexion, nos experts sont formés pour diagnostiquer et résoudre vos problèmes avec une efficacité inégalée. La sécurité de vos fonds et la confidentialité de vos données restent nos priorités absolues dans cet écosystème décentralisé complexe.",
+                q1: "Comment fonctionne le taux de change fixe ?",
+                a1: "Sur notre écosystème, 1 AG-COIN (₳) est strictement égal à 1 XOF (Franc CFA), garantissant une stabilité financière absolue.",
+                q2: "Quel est le délai de validation des dépôts ?",
+                a2: "Les dépôts via notre service d'échange d'actifs ou en monnaie locale sont traités instantanément ou en quelques minutes après validation réseau.",
+                q3: "Quelle blockchain est utilisée par AGI ?",
+                a3: "Toutes nos opérations de transfert de jetons sécurisés transitent exclusivement par Nexus Core, notre infrastructure blockchain propriétaire.",
+                q4: "Comment fonctionnent les packages d'investissement ?",
+                a4: "Nous proposons trois rendements (5%, 10% et 25% de ROI) étalés sur une période d'immobilisation sécurisée de 30 à 180 jours complets.",
+                q5: "Quels projets industriels financez-vous ?",
+                a5: "Vos capitaux soutiennent directement l'économie réelle burkinabè, notamment l'usine de tissage de coton et la production d'énergie solaire.",
+                q6: "Le casino en ligne est-il hautement sécurisé ?",
+                a6: "Absolument. Nos machines à sous et paris sportifs Nexus Bet sont adossés à des algorithmes audités garantissant une transparence totale.",
+                q7: "Que faire en cas d'erreur de transaction ?",
+                a7: "Ouvrez immédiatement notre Chat Privé Nexus ou contactez-nous par téléphone pour une prise en charge par nos ingénieurs.",
+                q8: "L'authentification biométrique est-elle requise ?",
+                a8: "Oui, l'application intègre le protocole de sécurité native NexusBridge pour valider vos opérations financières à haut volume.",
+                q9: "Où trouver les statuts légaux d'AGI ?",
+                a9: "Atlas Groupe International est légalement déclaré au Burkina Faso sous le numéro de récépissé officiel PHUE-3539/2025 du 11/07/2025.",
+                q10: "Les retraits de gains sont-ils limités ?",
+                a10: "Les retraits s'effectuent conformément aux conditions de liquidité d'écosystème via notre passerelle d'échange d'actifs sécurisée."
+            },
+            en: {
+                title: "HELP CENTER",
+                subtitle: "Specialized technical assistance for the NEXUS BET platform and technology services provided by AGI Group. Our team of engineers and customer support is mobilized to ensure a seamless, secure, and optimal gaming experience for all international users at all times.",
+                status: "AGENTS ONLINE: AVAILABLE",
+                direct_channels: "Direct Channels",
+                label_chat: "Communication",
+                val_chat: "Nexus Private Chat",
+                label_whatsapp: "Quick Support",
+                val_whatsapp: "WhatsApp Message",
+                label_email: "Email",
+                phone_title: "Phone Support",
+                faq_title: "Frequently Asked Questions (FAQ)",
+                footer_text: "Our commitment is to provide first-class technical assistance. Whether it's about blockchain transaction issues, deposit errors, or connection problems, our experts are trained to diagnose and resolve your issues with unmatched efficiency. The security of your funds and the confidentiality of your data remain our absolute priorities in this complex decentralized ecosystem.",
+                q1: "How does the fixed exchange rate work?",
+                a1: "In our ecosystem, 1 AG-COIN (₳) is strictly equal to 1 XOF (CFA Franc), ensuring absolute financial stability.",
+                q2: "What is the processing time for deposits?",
+                a2: "Deposits via our asset exchange service or local currency are processed instantly or within minutes after network validation.",
+                q3: "Which blockchain does AGI use?",
+                a3: "All secure token transfer operations transit exclusively through Nexus Core, our proprietary blockchain infrastructure.",
+                q4: "How do the investment packages work?",
+                a4: "We offer three returns (5%, 10%, and 25% ROI) spread over a secure lock-up period of 30 to 180 full days.",
+                q5: "Which industrial projects do you fund?",
+                a5: "Your capital directly supports the real Burkinabè economy, including the cotton weaving factory and solar energy production.",
+                q6: "Is the online casino highly secure?",
+                a6: "Absolutely. Our slots and Nexus Bet sports betting are backed by audited algorithms ensuring total transparency.",
+                q7: "What should I do in case of a transaction error?",
+                a7: "Immediately open our Nexus Private Chat or contact us by phone for immediate assistance by our engineers.",
+                q8: "Is biometric authentication required?",
+                a8: "Yes, the app integrates the native NexusBridge security protocol to validate high-volume financial operations.",
+                q9: "Where can I find AGI's legal status?",
+                a9: "Atlas Groupe International is legally registered in Burkina Faso under official receipt number PHUE-3539/2025 dated 11/07/2025.",
+                q10: "Are prize withdrawals limited?",
+                a10: "Withdrawals are carried out according to the ecosystem's liquidity terms via our secure asset exchange gateway."
+            }
+        };
+
+        let currentLang = 'fr';
+        function toggleLang() {
+            currentLang = currentLang === 'fr' ? 'en' : 'fr';
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (dict[currentLang][key]) el.innerText = dict[currentLang][key];
+            });
+        }
+
+        function toggleFaq(button) {
+            const item = button.parentElement;
+            const isActive = item.classList.contains('active');
+            
+            // Ferme tous les autres accordéons
+            document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+            
+            // Ouvre l'actuel si pas déjà actif
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>

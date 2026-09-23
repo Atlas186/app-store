@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>AG-COIN | Support Privé</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-app: #f0f9ff;          /* Bleu ciel très clair (Sky 50) */
+            --bg-chat: #e0f2fe;         /* Fond de discussion (Sky 100) */
+            --primary: #0284c7;         /* Bleu ciel profond (Sky 600) */
+            --primary-light: #0ea5e9;   /* Bleu ciel vif */
+            --primary-dark: #0369a1;    /* Bleu profond au survol */
+            --surface: #ffffff;         /* Blanc pur pour les cartes et inputs */
+            --sent-bubble: #0284c7;     /* Messages envoyés */
+            --text-main: #0f172a;       /* Slate 900 */
+            --text-dim: #64748b;        /* Slate 500 */
+            --agi-gold: #eab308;        /* Or AG-COIN (Yellow 500) */
+            --online: #10b981;          /* Vert connecté */
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
+        body { background-color: #f1f5f9; color: var(--text-main); font-family: 'Plus Jakarta Sans', sans-serif; height: 100dvh; display: flex; justify-content: center; overflow: hidden; }
+
+        .app-container { 
+            width: 100%; max-width: 600px; background-color: var(--bg-app); height: 100%; 
+            display: flex; flex-direction: column; position: relative;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+        }
+        
+        nav { 
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); padding: 14px 18px; 
+            display: flex; align-items: center; gap: 14px; z-index: 1001; border-bottom: 1px solid rgba(2, 132, 199, 0.15);
+        }
+
+        .status-badge { font-size: 0.7rem; color: var(--primary); background: rgba(2, 132, 199, 0.1); padding: 3px 10px; border-radius: 20px; font-weight: 700; display: inline-flex; align-items: center; gap: 5px; margin-top: 2px; }
+
+        #messageArea { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 12px; background-color: var(--bg-chat); }
+        .message { max-width: 80%; padding: 12px 16px; border-radius: 20px; font-size: 0.92rem; line-height: 1.4; animation: slideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1); position: relative; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .received { align-self: flex-start; background: var(--surface); color: var(--text-main); border-bottom-left-radius: 4px; border-left: 4px solid var(--agi-gold); }
+        .sent { align-self: flex-end; background: var(--sent-bubble); color: #ffffff; border-bottom-right-radius: 4px; }
+        
+        .media-content { width: 100%; border-radius: 12px; margin: 6px 0; display: block; max-height: 250px; object-fit: cover; cursor: pointer; transition: transform 0.2s; }
+        .media-content:hover { transform: scale(1.02); }
+        .timestamp { font-size: 0.65rem; color: var(--text-dim); text-align: right; display: block; margin-top: 6px; }
+        .sent .timestamp { color: rgba(255, 255, 255, 0.75); }
+
+        .input-area { padding: 12px 16px; background: var(--surface); display: flex; align-items: center; gap: 12px; border-top: 1px solid rgba(2, 132, 199, 0.1); padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
+        .input-card { flex: 1; background: #f8fafc; border-radius: 30px; padding: 4px 16px; display: flex; align-items: center; gap: 14px; border: 1px solid #e2e8f0; }
+        #messageInput { flex: 1; background: transparent; border: none; color: var(--text-main); padding: 10px 0; font-size: 0.8rem; }
+        #messageInput::placeholder { color: #94a3b8; }
+        
+        .icon-btn { color: var(--text-dim); font-size: 1.25rem; cursor: pointer; transition: color 0.2s; }
+        .icon-btn:hover { color: var(--primary); }
+        
+        .circle-btn { width: 44px; height: 44px; border-radius: 50%; background: var(--primary); border: none; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; cursor: pointer; transition: background 0.2s; }
+        .circle-btn:hover { background: var(--primary-dark); }
+
+        #fileInput, #cameraInput { display: none; }
+
+        @keyframes slideIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <nav>
+            <img src="https://i.imgur.com/6YRySSd.jpeg" style="width:42px; height:42px; border-radius:50%; border: 2px solid var(--agi-gold); object-fit: cover;" alt="Logo">
+            <div style="flex:1">
+                <h2 style="font-size:1rem; font-weight:700; color: var(--text-main);">SUPPORT AG-COIN Burkina</h2>
+                <div class="status-badge"><i class="fa-solid fa-shield-halved"></i> Canal Privé Sécurisé</div>
+            </div>
+            <i class="fa-solid fa-circle-info" style="color: var(--primary); font-size: 1.2rem;"></i>
+        </nav>
+
+        <div id="messageArea"></div>
+
+        <div class="input-area">
+            <div class="input-card">
+                <label for="fileInput" class="icon-btn" title="Joindre un fichier">
+                    <i class="fa-solid fa-paperclip"></i>
+                </label>
+                <!-- Inputs cachés pour fichiers et caméra -->
+                <input type="file" id="fileInput" accept="image/*,video/*">
+                <input type="file" id="cameraInput" accept="image/*" capture="environment">
+                
+                <input type="text" id="messageInput" placeholder="Décrivez votre problème..." autocomplete="off">
+                
+                <!-- Icône déclenchant la caméra -->
+                <i class="fa-solid fa-camera icon-btn" onclick="document.getElementById('cameraInput').click()" title="Prendre une photo"></i>
+            </div>
+            <button class="circle-btn" id="mainBtn">
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getDatabase, ref, push, onChildAdded, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+    // Configuration Firebase
+    const firebaseConfig = { databaseURL: "https://atlasgroupebusiness-default-rtdb.firebaseio.com" };
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // Configuration FCM (Variables intégrées)
+    const FCM_SERVER_URL = "https://agi-fcm-server-876963848028.us-central1.run.app/api/v1/notify/transaction";
+    const FCM_API_KEY = "AIzaSyAOExj8-x4KjGIQi2ewzU7LQP302l9pZrU";
+
+    let isFirstLoad = true;
+
+    // Fonction de génération base 58 conservée
+    const getSyncID = () => {
+        const rawEmail = localStorage.getItem('agi_logged_email') || "user_" + Math.random().toString(36).substr(2, 9);
+        const email = rawEmail.toLowerCase().trim();
+        const alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+        let hash = 0;
+        for (let i = 0; i < email.length; i++) { hash = (hash << 5) - hash + email.charCodeAt(i); hash |= 0; }
+        let res = "AGI"; 
+        let n = Math.abs(hash * 999999);
+        while (n > 0) { res += alphabet[n % 58]; n = Math.floor(n / 58); }
+        return res.substring(0, 20);
+    };
+
+    const userId = getSyncID();
+    const userEmail = localStorage.getItem('agi_logged_email') || "Client";
+    const ticketRef = ref(db, `support_tickets/${userId}`);
+
+    // Gestion de la réception en temps réel
+    onChildAdded(ticketRef, (snap) => {
+        const msg = snap.val();
+        renderMessage(msg);
+        
+        if (!isFirstLoad && msg.senderId !== userId) {
+            triggerDeviceNotification(msg.text || "Fichier multimédia reçu");
+        }
+    });
+
+    setTimeout(() => { isFirstLoad = false; }, 2000);
+
+    // Notification locale (Vibration/Bridge)
+    function triggerDeviceNotification(text) {
+        if (window.NexusBridge && typeof window.NexusBridge.shareContent === 'function') {
+            console.log("Notification via NexusBridge interceptée : " + text);
+        } else if (navigator.vibrate) {
+            navigator.vibrate(200);
+        }
+    }
+
+    // Appel au serveur FCM sécurisé par un try/catch pour éviter tout plantage
+    async function notifyFCM(messageText) {
+        try {
+            const response = await fetch(FCM_SERVER_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${FCM_API_KEY}` 
+                    // Si votre API utilise une clé personnalisée, remplacez par : 'x-api-key': FCM_API_KEY
+                },
+                body: JSON.stringify({
+                    title: "Nouveau message Support AG-COIN",
+                    body: messageText || "Un fichier a été envoyé",
+                    userId: userId,
+                    senderName: userEmail,
+                    type: "chat_message"
+                })
+            });
+
+            if (!response.ok) {
+                console.warn("FCM Server a répondu avec le statut :", response.status);
+            }
+        } catch (error) {
+            console.error("Erreur de connexion au serveur FCM (silencieuse) :", error);
+            // Le chat continue de fonctionner même si la notification échoue
+        }
+    }
+
+    window.onBiometricResult = function(success, message) {
+        console.log("Statut d'authentification Nexus Core :", success, message);
+    };
+
+    function renderMessage(msg) {
+        const isMe = msg.senderId === userId;
+        const area = document.getElementById('messageArea');
+        const div = document.createElement('div');
+        div.className = `message ${isMe ? 'sent' : 'received'}`;
+        
+        let html = !isMe ? `<span style="font-size:0.75rem; color:var(--primary); font-weight:700; display:block; margin-bottom:4px;">AGENT AG-COIN ₳</span>` : "";
+        
+        if (msg.fileData) {
+            if (msg.fileType.includes('image')) {
+                html += `<img src="${msg.fileData}" class="media-content" onclick="window.open(this.src)">`;
+            } else if (msg.fileType.includes('video')) {
+                html += `<video src="${msg.fileData}" class="media-content" controls></video>`;
+            }
+        }
+
+        if (msg.text) {
+            html += `<p style="word-break: break-word;">${msg.text}</p>`;
+        }
+        
+        const msgTime = msg.timestamp ? new Date(msg.timestamp) : new Date();
+        html += `<span class="timestamp">${msgTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>`;
+        
+        div.innerHTML = html;
+        area.appendChild(div);
+        area.scrollTo({ top: area.scrollHeight, behavior: 'smooth' });
+    }
+
+    const sendMessage = async (text = null, file = null) => {
+        const payload = {
+            senderId: userId,
+            senderName: userEmail,
+            timestamp: serverTimestamp()
+        };
+
+        if (text) payload.text = text;
+        if (file) {
+            payload.fileData = file.data;
+            payload.fileType = file.type;
+        }
+
+        if (payload.text || payload.fileData) {
+            // 1. Envoi à la base de données Firebase
+            await push(ticketRef, payload);
+            
+            // 2. Déclenchement asynchrone du Push FCM
+            notifyFCM(text);
+        }
+    };
+
+    document.getElementById('mainBtn').onclick = () => {
+        const input = document.getElementById('messageInput');
+        const text = input.value.trim();
+        if(text) {
+            sendMessage(text);
+            input.value = "";
+        }
+    };
+
+    const handleFileSelect = function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        if (file.size > 3 * 1024 * 1024) {
+            alert("Fichier trop lourd (Max 3Mo).");
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            sendMessage(null, {
+                data: event.target.result,
+                type: file.type
+            });
+        };
+        reader.readAsDataURL(file);
+        this.value = ""; 
+    };
+
+    document.getElementById('fileInput').onchange = handleFileSelect;
+    document.getElementById('cameraInput').onchange = handleFileSelect;
+
+    document.getElementById('messageInput').onkeypress = (e) => {
+        if(e.key === 'Enter') document.getElementById('mainBtn').click();
+    };
+    </script>
+</body>
+</html>
