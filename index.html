@@ -110,18 +110,19 @@
         .side-menu {
             position: fixed;
             top: 0;
-            right: -300px;
-            width: 300px;
+            right: -320px;
+            width: 320px;
             height: 100vh;
             background: #e0f2fe; /* Fond ciel clair */
             border-left: 2px solid var(--agi-azure);
             z-index: 1010;
             transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 40px 25px;
+            padding: 30px 20px;
             box-shadow: -10px 0 30px rgba(12, 74, 110, 0.15);
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: 20px;
+            overflow-y: auto;
         }
 
         .side-menu.open {
@@ -156,6 +157,36 @@
 
         .close-menu-btn:hover {
             color: var(--agi-crimson);
+        }
+
+        /* Sub-menu tree design */
+        .sub-tree-container {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sub-tree-links {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding-left: 15px;
+            border-left: 2px dashed var(--agi-azure);
+            margin-left: 10px;
+            
+            /* CSS pour l'accordéon */
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, margin-top 0.4s ease;
+            margin-top: 0;
+        }
+
+        .sub-tree-links.open {
+            max-height: 250px;
+            margin-top: 8px;
         }
 
         /* Hero Section */
@@ -245,28 +276,49 @@
     <div class="side-menu-overlay" id="menuOverlay"></div>
     <div class="side-menu" id="sideMenu">
         <button class="close-menu-btn" id="menuCloseBtn"><i class="fa-solid fa-xmark"></i></button>
-        <div style="margin-top: 20px; text-align: center;">
+        <div style="margin-top: 10px; text-align: center;">
             <h4 style="color: var(--agi-navy); font-size: 0.85rem;" class="font-black uppercase tracking-ultra data-lang" data-key="menu_title">Navigation Privée</h4>
         </div>
-        <div style="margin-top: 10px;">
-            <a href="agent_scanner.html" class="btn-core" style="background: var(--agi-navy); color: var(--agi-gold); border: 1px solid var(--agi-gold); font-size: 11px; width: 100%; justify-content: center; padding: 12px;">
-                <i class="fa-solid fa-user-tie"></i> <span class="data-lang" data-key="btn_agent">AGENT NEXUS</span>
-            </a>
-        </div>
-        <div style="margin-top: 5px; display: flex; flex-direction: column; gap: 10px;">
-            <a href="explorer.html" class="btn-core" style="background: var(--agi-gold); color: var(--agi-navy); font-size: 11px; width: 100%; justify-content: center; padding: 12px;">
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+            <a href="explorer.html" class="btn-core" style="background: var(--agi-gold); color: var(--agi-navy); font-size: 11px; width: 100%; justify-content: center; padding: 10px;">
                 <i class="fa-solid fa-database"></i> <span class="data-lang" data-key="leg_btn1">Registre Public Nexus</span>
             </a>
-            <a href="whitepaper.html" class="btn-core" style="background: var(--agi-navy); color: white; border: 1px solid var(--agi-gold); font-size: 11px; width: 100%; justify-content: center; padding: 12px;">
+            
+            <a href="commu.html" class="btn-core" style="background: #8b5cf6; color: white; font-size: 11px; width: 100%; justify-content: center; padding: 10px;">
+                <i class="fa-solid fa-users"></i> <span class="data-lang" data-key="leg_btn_commu">Communauté Nexus</span>
+            </a>
+
+            <!-- Structure Support et ses Sous-Pages Cliquable -->
+            <div class="sub-tree-container">
+                <button id="supportMenuToggle" class="btn-core" style="background: #0284c7; color: white; font-size: 11px; width: 100%; justify-content: space-between; padding: 10px; border: none; cursor: pointer; font-family: inherit;">
+                    <span style="display: flex; align-items: center; gap: 8px;">
+                        <i class="fa-solid fa-headset"></i> <span class="data-lang" data-key="leg_btn_supp">Centre de Support</span>
+                    </span>
+                    <i class="fa-solid fa-chevron-down" id="supportChevron" style="transition: transform 0.3s ease; font-size: 10px;"></i>
+                </button>
+                <div class="sub-tree-links" id="supportSubMenu">
+                    <a href="support.html" class="btn-core" style="background: white; color: var(--agi-navy); font-size: 10px; padding: 6px 10px; justify-content: flex-start; border: 1px solid #bae6fd;">
+                        <i class="fa-solid fa-house-chimney" style="color: #0284c7;"></i> <span class="data-lang" data-key="leg_btn_supp">Centre de Support (Accueil)</span>
+                    </a>
+                    <a href="discussion.html" class="btn-core" style="background: white; color: var(--agi-navy); font-size: 10px; padding: 6px 10px; justify-content: flex-start; border: 1px solid #bae6fd;">
+                        <i class="fa-solid fa-comments" style="color: var(--agi-azure);"></i> <span class="data-lang" data-key="leg_btn_chats">Chats Directs</span>
+                    </a>
+                    <a href="commu.html" class="btn-core" style="background: white; color: var(--agi-navy); font-size: 10px; padding: 6px 10px; justify-content: flex-start; border: 1px solid #bae6fd;">
+                        <i class="fa-solid fa-message" style="color: var(--agi-emerald);"></i> <span class="data-lang" data-key="leg_btn_disc">Forum Discussion</span>
+                    </a>
+                </div>
+            </div>
+
+            <a href="whitepaper.html" class="btn-core" style="background: var(--agi-navy); color: white; border: 1px solid var(--agi-gold); font-size: 11px; width: 100%; justify-content: center; padding: 10px;">
                 <i class="fa-solid fa-book-open"></i> <span class="data-lang" data-key="leg_btn2">Livre Blanc Layer-1 PDF</span>
             </a>
-            <a href="legal.html" class="btn-core" style="background: var(--agi-azure); color: white; font-size: 11px; width: 100%; justify-content: center; padding: 12px;">
+            <a href="legal.html" class="btn-core" style="background: var(--agi-azure); color: white; font-size: 11px; width: 100%; justify-content: center; padding: 10px;">
                 <i class="fa-solid fa-gavel"></i> <span class="data-lang" data-key="leg_btn3">Déclarations Légales</span>
             </a>
-            <a href="cgu.html" class="btn-core" style="background: var(--agi-crimson); color: white; font-size: 11px; width: 100%; justify-content: center; padding: 12px;">
+            <a href="cgu.html" class="btn-core" style="background: var(--agi-crimson); color: white; font-size: 11px; width: 100%; justify-content: center; padding: 10px;">
                 <i class="fa-solid fa-file-contract"></i> <span class="data-lang" data-key="leg_btn4">CGU d'Utilisation</span>
             </a>
-            <a href="politique.html" class="btn-core" style="background: var(--agi-emerald); color: white; font-size: 11px; width: 100%; justify-content: center; padding: 12px;">
+            <a href="politique.html" class="btn-core" style="background: var(--agi-emerald); color: white; font-size: 11px; width: 100%; justify-content: center; padding: 10px;">
                 <i class="fa-solid fa-user-shield"></i> <span class="data-lang" data-key="leg_btn5">Politique de Confidentialité</span>
             </a>
         </div>
@@ -554,7 +606,7 @@
                 <div class="project-item">
                     <i class="fas fa-dice" style="font-size: 24px; color: #a855f7;"></i>
                     <h4 class="txt-sm font-black uppercase data-lang" data-key="p_c7_title" style="margin: 15px 0 10px;">Casino & Premium Games Hub</h4>
-                    <p class="txt-xs data-lang" data-key="p_c7_desc" style="color: #0f172a; line-height: 1.6;">Espace ludique monétisé sur architecture distribuée. Catalogue exclusif regroupant des modules interactifs de machines à sous tactiles (Slots), d'arcade de précision et de jeux de table classiques, régis par un protocole cryptographique de transparence du taux de retour (RTP).</p>
+                    <p class="txt-xs data-lang" data-key="p_c7_desc" style="color: #0f172a; line-height: 1.6;">Espace ludique monétisé sur architecture distributed. Catalogue exclusif regroupant des modules interactifs de machines à sous tactiles (Slots), d'arcade de précision et de jeux de table classiques, régis par un protocole cryptographique de transparence du taux de retour (RTP).</p>
                 </div>
                 <div class="project-item">
                     <i class="fas fa-headphones-simple" style="font-size: 24px; color: var(--agi-gold);"></i>
@@ -582,28 +634,52 @@
             <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;">
                 <div>
                     <h3 class="txt-md font-black uppercase tracking-ultra data-lang" data-key="legal_section_title" style="margin-bottom: 25px; color: var(--agi-navy);">Conformité Constitutionnelle, Régulation & Cadre Légal</h3>
-                    <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 10px;">
-                        <a href="explorer.html" class="btn-core flex-col" style="background: var(--agi-gold); color: var(--agi-navy); text-align: center; height: 100px; justify-content: center; border-radius: 25px;">
-                            <i class="fa-solid fa-database" style="font-size: 20px; margin-bottom: 8px;"></i>
-                            <span class="txt-xs font-black uppercase data-lang" data-key="leg_btn1">Registre Public Nexus</span>
+                    
+                    <!-- Grille de navigation mise à jour avec les nouvelles pages -->
+                    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px;">
+                        <a href="explorer.html" class="btn-core flex-col" style="background: var(--agi-gold); color: var(--agi-navy); text-align: center; padding: 15px 10px; justify-content: center; border-radius: 15px;">
+                            <i class="fa-solid fa-database" style="font-size: 18px; margin-bottom: 6px;"></i>
+                            <span class="txt-xs font-black uppercase data-lang" data-key="leg_btn1">Registre Public</span>
                         </a>
-                        <a href="whitepaper.html" class="btn-core flex-col" style="background: var(--agi-navy); color: white; text-align: center; height: 100px; justify-content: center; border-radius: 25px;">
-                            <i class="fa-solid fa-book-open" style="font-size: 20px; margin-bottom: 8px; color: var(--agi-gold);"></i>
-                            <span class="txt-xs font-black uppercase data-lang" data-key="leg_btn2">Livre Blanc Layer-1 PDF</span>
+                        <a href="commu.html" class="btn-core flex-col" style="background: #8b5cf6; color: white; text-align: center; padding: 15px 10px; justify-content: center; border-radius: 15px;">
+                            <i class="fa-solid fa-users" style="font-size: 18px; margin-bottom: 6px;"></i>
+                            <span class="txt-xs font-black uppercase data-lang" data-key="leg_btn_commu">Communauté</span>
                         </a>
-                        <a href="legal.html" class="btn-core flex-col" style="background: var(--agi-azure); color: white; text-align: center; height: 100px; justify-content: center; border-radius: 25px;">
-                            <i class="fa-solid fa-gavel" style="font-size: 20px; margin-bottom: 8px;"></i>
-                            <span class="txt-xs font-black uppercase data-lang" data-key="leg_btn3">Déclarations Légales</span>
+                        <a href="support.html" class="btn-core flex-col" style="background: #0284c7; color: white; text-align: center; padding: 15px 10px; justify-content: center; border-radius: 15px;">
+                            <i class="fa-solid fa-headset" style="font-size: 18px; margin-bottom: 6px;"></i>
+                            <span class="txt-xs font-black uppercase data-lang" data-key="leg_btn_supp">Support Client</span>
                         </a>
-                        <a href="cgu.html" class="btn-core flex-col" style="background: var(--agi-crimson); color: white; text-align: center; height: 100px; justify-content: center; border-radius: 25px;">
-                            <i class="fa-solid fa-file-contract" style="font-size: 20px; margin-bottom: 8px;"></i>
-                            <span class="txt-xs font-black uppercase data-lang" data-key="leg_btn4">CGU d'Utilisation</span>
+                        <a href="whitepaper.html" class="btn-core flex-col" style="background: var(--agi-navy); color: white; text-align: center; padding: 15px 10px; justify-content: center; border-radius: 15px;">
+                            <i class="fa-solid fa-book-open" style="font-size: 18px; margin-bottom: 6px; color: var(--agi-gold);"></i>
+                            <span class="txt-xs font-black uppercase data-lang" data-key="leg_btn2">Livre Blanc</span>
                         </a>
-                        <a href="politique.html" class="btn-core flex-col" style="background: var(--agi-emerald); color: white; text-align: center; height: 100px; justify-content: center; border-radius: 25px; grid-column: span 2;">
-                            <i class="fa-solid fa-user-shield" style="font-size: 20px; margin-bottom: 8px;"></i>
+                        <a href="legal.html" class="btn-core flex-col" style="background: var(--agi-azure); color: white; text-align: center; padding: 15px 10px; justify-content: center; border-radius: 15px;">
+                            <i class="fa-solid fa-gavel" style="font-size: 18px; margin-bottom: 6px;"></i>
+                            <span class="txt-xs font-black uppercase data-lang" data-key="leg_btn3">Déclarations</span>
+                        </a>
+                        <a href="cgu.html" class="btn-core flex-col" style="background: var(--agi-crimson); color: white; text-align: center; padding: 15px 10px; justify-content: center; border-radius: 15px;">
+                            <i class="fa-solid fa-file-contract" style="font-size: 18px; margin-bottom: 6px;"></i>
+                            <span class="txt-xs font-black uppercase data-lang" data-key="leg_btn4">CGU</span>
+                        </a>
+                        <a href="politique.html" class="btn-core flex-col" style="background: var(--agi-emerald); color: white; text-align: center; padding: 15px 10px; justify-content: center; border-radius: 15px; grid-column: span 2;">
+                            <i class="fa-solid fa-user-shield" style="font-size: 18px; margin-bottom: 6px;"></i>
                             <span class="txt-xs font-black uppercase data-lang" data-key="leg_btn5">Politique de Confidentialité</span>
                         </a>
                     </div>
+
+                    <!-- Sous-bloc explicite Support : Chats & Discussion -->
+                    <div style="margin-top: 15px; background: #f0f9ff; border: 1px dashed var(--agi-azure); padding: 12px 15px; border-radius: 15px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+                        <span class="txt-xs font-black uppercase" style="color: var(--agi-navy);"><i class="fa-solid fa-circle-info" style="color: var(--agi-azure);"></i> <span class="data-lang" data-key="supp_sub_title">Espaces Support Direct :</span></span>
+                        <div style="display: flex; gap: 8px;">
+                            <a href="chats.html" class="btn-core" style="background: var(--agi-navy); color: white; font-size: 10px; padding: 6px 12px; border-radius: 8px;">
+                                <i class="fa-solid fa-comments" style="color: var(--agi-gold);"></i> <span class="data-lang" data-key="leg_btn_chats">Chats Directs</span>
+                            </a>
+                            <a href="discussion.html" class="btn-core" style="background: var(--agi-navy); color: white; font-size: 10px; padding: 6px 12px; border-radius: 8px;">
+                                <i class="fa-solid fa-message" style="color: var(--agi-slate);"></i> <span class="data-lang" data-key="leg_btn_disc">Forum Discussion</span>
+                            </a>
+                        </div>
+                    </div>
+
                     <a href="./agi-business.pro.apk" id="openTerminalBtnBottom" class="btn-core" style="width: 100%; margin-top: 15px; background: #e0f2fe; color: var(--agi-navy); border: 2px solid var(--agi-azure); padding: 20px; justify-content: center; border-radius: 20px;">
                         <div class="text-center">
                             <i class="fa-brands fa-android" style="font-size: 24px; display: block; margin-bottom: 5px;"></i>
@@ -651,7 +727,7 @@
             <div style="padding: 20px 0; font-size: 0.72rem; color: var(--agi-slate); line-height: 1.5; border-bottom: 1px solid rgba(255,255,255,0.1);">
                 <p class="font-black uppercase data-lang" data-key="foot_warn_title" style="color: var(--agi-gold); margin-bottom: 5px;"><i class="fa-solid fa-triangle-exclamation"></i> Clause Légale Obligatoire de Prévention, de Limitation des Risques et d'Accompagnement</p>
                 <p class="data-lang" data-key="foot_warn_desc">
-                    La participation aux modules de prédiction, de paris sportifs et de divertissement monétisés comporte des risques financiers et psychologiques importants, notamment le surendettement, l'isolement social progressif et le développement d'une dépendance pathologique. Pour obtenir des conseils de modération ou une assistance technique dédiée, veuillez contacter sans délai les canaux d'écoute client certifiés de Atlas & Duc Corporation (SASU). Jouez de façon responsable, raisonnable et prudente. L'accès aux plateformes de jeux d'argent est strictly interdit aux personnes mineures selon la législation nationale.
+                    La participation aux modules de prédiction, de paris sportifs et de divertissement monétisés comporte des risques financiers et psychologiques importants, notamment le surendettement, l'isolement social progressif et le développement d'une dépendance pathologique. Pour obtenir des conseils de modération ou une assistance technique dédiée, veuillez contacter sans délai les canaux d'écoute client certifiés de Atlas & Duc Corporation (SASU). Jouez de façon responsable, raisonnable et prudente. L'accès aux plateformes de jeux d'argent est strictement interdit aux personnes mineures selon la législation nationale.
                 </p>
             </div>
 
@@ -663,7 +739,7 @@
     </footer>
 
     <script>
-        // Logique de Dictionnaire Multilingue
+        // Logique de Dictionnaire Multilingue mis à jour avec les nouvelles clés de navigation
         const dictionary = {
             fr: {
                 menu_title: "Navigation Privée",
@@ -750,7 +826,7 @@
                 eco_title: "Écosystème Diversifié & Interconnecté Atlas & Duc",
                 eco_subtitle: "Solutions Concrètes et Opérationnelles pour les Défis Socio-Économiques du Burkina Faso",
                 p_c1_title: "Unité de Tissage Textile (Koupéla)",
-                p_c1_desc: "Industrialization de la filière blanche. Grand complexe de transformation situé à Koupéla, chef-lieu de la province du Kouritenga, orchestrant le tissage local du coton burkinabè pour valoriser la production nationale directement du champ de culture au tissu confectionné.",
+                p_c1_desc: "Industrialisation de la filière blanche. Grand complexe de transformation situé à Koupéla, chef-lieu de la province du Kouritenga, orchestrant le tissage local du coton burkinabè pour valoriser la production nationale directement du champ de culture au tissu confectionné.",
                 p_c2_title: "Énergie GSHA-NEXUS Autonome",
                 p_c2_desc: "Souveraineté énergétique en milieu rural. Ingénierie, assemblage et déploiement de Générateurs Solaires Hybrides Autonomes 100% électriques, garantissant une fourniture électrique continue, stable and décentralisée hors-réseau national.",
                 p_c3_title: "Ferme Avicole Automatisée",
@@ -774,6 +850,11 @@
                 leg_btn3: "Déclarations Légales",
                 leg_btn4: "CGU d'Utilisation",
                 leg_btn5: "Politique de Confidentialité",
+                leg_btn_commu: "Communauté Nexus",
+                leg_btn_supp: "Centre de Support",
+                leg_btn_chats: "Chats Directs",
+                leg_btn_disc: "Forum Discussion",
+                supp_sub_title: "Espaces Support Direct :",
                 apk_download_text: "Accédez au Terminal Nexus Business Pro",
                 foot_web_portal: "PORTAILS WEB DÉPLOYÉS : https://www.nexus-core-technology.bf | https://www.agi-nexus-core.click",
                 foot_address: "Siège Social : Koupéla, Province du Kouritenga.<br>Direction Opérationnelle : Bobo-Dioulasso, Province du Houet.<br>Expertise Terrain : Houndé, Burkina Faso.",
@@ -896,6 +977,11 @@
                 leg_btn3: "Legal Declarations",
                 leg_btn4: "Terms of Use",
                 leg_btn5: "Privacy Protection Charter",
+                leg_btn_commu: "Nexus Community",
+                leg_btn_supp: "Support Center",
+                leg_btn_chats: "Direct Chat",
+                leg_btn_disc: "Discussion Forum",
+                supp_sub_title: "Direct Support Services:",
                 apk_download_text: "Access the Nexus Business Pro Terminal",
                 foot_web_portal: "DEPLOYED WEB PORTALS: https://www.nexus-core-technology.bf | https://www.agi-nexus-core.click",
                 foot_address: "Headquarters: Koupéla, Kouritenga Province.<br>Operational Direction: Bobo-Dioulasso, Houet Province.<br>Field Expertise: Houndé, Burkina Faso.",
@@ -963,6 +1049,27 @@
             // Initialisation de la langue par défaut (fr)
             updateLanguage('fr');
         });
+
+        // ==========================================
+        // Logique Accordéon pour "Centre de Support"
+        // ==========================================
+        const supportMenuToggle = document.getElementById('supportMenuToggle');
+        const supportSubMenu = document.getElementById('supportSubMenu');
+        const supportChevron = document.getElementById('supportChevron');
+
+        if (supportMenuToggle && supportSubMenu && supportChevron) {
+            supportMenuToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                supportSubMenu.classList.toggle('open');
+                
+                // Animation de la flèche
+                if (supportSubMenu.classList.contains('open')) {
+                    supportChevron.style.transform = 'rotate(180deg)';
+                } else {
+                    supportChevron.style.transform = 'rotate(0deg)';
+                }
+            });
+        }
 
         // ==========================================
         // Logique de Détection & Deep Linking pour le Terminal (Apk Download)
