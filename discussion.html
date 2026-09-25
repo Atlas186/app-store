@@ -108,9 +108,9 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // Configuration FCM (Variables intégrées)
+    // Configuration FCM (Pointant vers votre Cloud Run)
     const FCM_SERVER_URL = "https://agi-fcm-server-876963848028.us-central1.run.app/api/v1/notify/transaction";
-    const FCM_API_KEY = "AIzaSyAOExj8-x4KjGIQi2ewzU7LQP302l9pZrU";
+    // L'API_KEY statique a été retirée pour des raisons de sécurité critiques.
 
     let isFirstLoad = true;
 
@@ -152,15 +152,15 @@
         }
     }
 
-    // Appel au serveur FCM sécurisé par un try/catch pour éviter tout plantage
+    // Appel au serveur (Sécurisé : l'en-tête d'autorisation statique a été supprimé)
     async function notifyFCM(messageText) {
         try {
             const response = await fetch(FCM_SERVER_URL, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${FCM_API_KEY}` 
-                    // Si votre API utilise une clé personnalisée, remplacez par : 'x-api-key': FCM_API_KEY
+                    'Content-Type': 'application/json'
+                    // L'authentification doit désormais être gérée via Firebase Auth Token 
+                    // ou directement côté serveur en écoutant la base de données.
                 },
                 body: JSON.stringify({
                     title: "Nouveau message Support AG-COIN",
