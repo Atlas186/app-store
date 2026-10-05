@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Scan | Explorateur L1 par Atlas & Duc Corp.</title>
+    
+    <!-- Polices Industrielles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Moteur Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        premiumDark: '#0F172A',
+                        indAccent: '#0EA5E9',
+                        indSuccess: '#10B981',
+                        indBg: '#F8FAFC',
+                        indCard: '#FFFFFF',
+                        indBorder: '#E2E8F0',
+                        indTextMuted: '#64748B',
+                        goldOrange: '#F59E0B'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Animations Premium & Industrielles */
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .live-pulse { animation: pulseGreen 2s infinite; }
+        @keyframes pulseGreen { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); } 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
+        
+        /* Skeleton Loader Industriel (Shimmer Effect) */
+        .skeleton {
+            background: #e2e8f0;
+            background-image: linear-gradient(90deg, #e2e8f0 0px, #f1f5f9 40px, #e2e8f0 80px);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite linear;
+        }
+        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+        /* Scrollbar Premium */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+    </style>
+</head>
+<body class="bg-indBg text-premiumDark font-sans antialiased flex flex-col min-h-screen">
+
+    <!-- ========================================== -->
+    <!-- 1. NAVIGATION BAR (Glassmorphism & Mobile) -->
+    <!-- ========================================== -->
+    <header class="bg-indCard/90 backdrop-blur-md border-b border-indBorder sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo & Brand -->
+                <div class="flex items-center gap-3 cursor-pointer">
+                    <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo" class="h-9 w-9 rounded-full border border-indBorder object-cover shadow-sm">
+                    <span class="font-extrabold text-xl tracking-tight text-premiumDark">NEXUS<span class="text-indAccent">SCAN</span></span>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8 items-center">
+                    <a href="#" class="text-indAccent font-bold text-sm border-b-2 border-indAccent py-5"><i class="fa-solid fa-house mr-1"></i> Accueil</a>
+                    <a href="#" class="text-indTextMuted hover:text-premiumDark font-semibold text-sm transition-colors py-5"><i class="fa-solid fa-cubes mr-1"></i> Blocs</a>
+                    <a href="#" class="text-indTextMuted hover:text-premiumDark font-semibold text-sm transition-colors py-5"><i class="fa-solid fa-list-ul mr-1"></i> Transactions</a>
+                    <a href="#" class="text-indTextMuted hover:text-premiumDark font-semibold text-sm transition-colors py-5"><i class="fa-solid fa-ranking-star mr-1"></i> Top Comptes</a>
+                </nav>
+
+                <!-- Network Status (Desktop & Mobile) -->
+                <div class="flex items-center gap-4">
+                    <div class="hidden sm:flex items-center gap-2 bg-indSuccess/10 border border-indSuccess/20 px-3 py-1.5 rounded-full">
+                        <div class="w-2 h-2 rounded-full bg-indSuccess live-pulse"></div>
+                        <span class="text-xs font-bold text-indSuccess tracking-wide">MAINNET L1</span>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuBtn" class="md:hidden text-premiumDark hover:text-indAccent focus:outline-none text-2xl">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu (Hidden by default) -->
+        <div id="mobileMenu" class="hidden md:hidden bg-indCard border-b border-indBorder px-4 pt-2 pb-4 shadow-lg absolute w-full">
+            <a href="#" class="block py-3 text-indAccent font-bold text-base border-b border-indBorder"><i class="fa-solid fa-house w-6"></i> Accueil</a>
+            <a href="#" class="block py-3 text-indTextMuted font-semibold text-base border-b border-indBorder"><i class="fa-solid fa-cubes w-6"></i> Blocs</a>
+            <a href="#" class="block py-3 text-indTextMuted font-semibold text-base border-b border-indBorder"><i class="fa-solid fa-list-ul w-6"></i> Transactions</a>
+            <a href="#" class="block py-3 text-indTextMuted font-semibold text-base"><i class="fa-solid fa-ranking-star w-6"></i> Top Comptes</a>
+            <div class="mt-2 flex items-center gap-2 bg-indSuccess/10 border border-indSuccess/20 px-3 py-2 rounded-lg w-fit">
+                <div class="w-2 h-2 rounded-full bg-indSuccess live-pulse"></div>
+                <span class="text-xs font-bold text-indSuccess uppercase">Réseau Opérationnel</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========================================== -->
+    <!-- 2. HERO SECTION & SEARCH                   -->
+    <!-- ========================================== -->
+    <section class="bg-premiumDark text-white pt-12 pb-20 px-4 relative overflow-hidden">
+        <!-- Fond décoratif industriel -->
+        <div class="absolute inset-0 bg-gradient-to-br from-premiumDark via-slate-800 to-[#0B1120] z-0"></div>
+        <div class="absolute inset-0 opacity-[0.03] z-0" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 24px 24px;"></div>
+
+        <div class="max-w-4xl mx-auto relative z-10">
+            <h1 class="text-3xl md:text-5xl font-black mb-3 text-center tracking-tight">Le Moteur de Confiance <span class="text-indAccent">Nexus</span></h1>
+            <p class="text-slate-400 text-center text-sm md:text-lg mb-8 font-medium">Explorateur Officiel Layer-1 par Atlas & Duc Corp. • 1 ₳ = 1 XOF</p>
+            
+            <!-- Search Bar Dynamique -->
+            <div class="bg-white rounded-xl p-2 flex items-center shadow-2xl focus-within:ring-4 focus-within:ring-indAccent/40 transition-all border border-slate-700">
+                <div class="pl-4 pr-3 text-slate-400">
+                    <i class="fa-solid fa-search text-lg"></i>
+                </div>
+                <input type="text" id="searchInput" placeholder="Rechercher Adresse / Hash Tx / Bloc..." 
+                       class="w-full bg-transparent text-premiumDark px-2 py-3 outline-none font-medium placeholder:text-slate-400 text-sm md:text-base">
+                <button onclick="handleSearch()" class="bg-indAccent hover:bg-sky-600 text-white px-5 md:px-8 py-3 rounded-lg font-bold text-sm md:text-base transition-colors flex items-center gap-2">
+                    <span class="hidden sm:inline">Explorer</span>
+                    <i class="fa-solid fa-arrow-right sm:hidden"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 3. DASHBOARD STATS (Premium Cards)         -->
+    <!-- ========================================== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-20">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            
+            <!-- Prix -->
+            <div class="bg-indCard rounded-xl p-5 border border-indBorder shadow-md hover:shadow-lg transition-shadow flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 border border-slate-200">
+                    <i class="fa-solid fa-coins text-xl"></i>
+                </div>
+                <div>
+                    <p class="text-xs font-bold text-indTextMuted uppercase tracking-wider">Prix AG-COIN</p>
+                    <div class="flex items-baseline gap-1 mt-1">
+                        <h3 class="text-xl font-black text-premiumDark">1 FCFA</h3>
+                        <span class="text-xs font-bold text-indAccent">/ ₳</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Transactions -->
+            <div class="bg-indCard rounded-xl p-5 border border-indBorder shadow-md hover:shadow-lg transition-shadow flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-sky-50 flex items-center justify-center text-indAccent border border-sky-100">
+                    <i class="fa-solid fa-exchange-alt text-xl"></i>
+                </div>
+                <div>
+                    <p class="text-xs font-bold text-indTextMuted uppercase tracking-wider">Transactions</p>
+                    <h3 id="statTotalTx" class="text-xl font-black text-premiumDark mt-1">
+                        <div class="skeleton h-6 w-24 rounded"></div>
+                    </h3>
+                </div>
+            </div>
+
+            <!-- Dernier Bloc -->
+            <div class="bg-indCard rounded-xl p-5 border border-indBorder shadow-md hover:shadow-lg transition-shadow flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-indSuccess border border-emerald-100">
+                    <i class="fa-solid fa-cube text-xl"></i>
+                </div>
+                <div>
+                    <p class="text-xs font-bold text-indTextMuted uppercase tracking-wider">Dernier Bloc</p>
+                    <h3 id="statLatestBlock" class="text-xl font-black text-premiumDark mt-1">
+                        <div class="skeleton h-6 w-20 rounded"></div>
+                    </h3>
+                </div>
+            </div>
+
+            <!-- Temps de Bloc Moyen -->
+            <div class="bg-indCard rounded-xl p-5 border border-indBorder shadow-md hover:shadow-lg transition-shadow flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center text-amber-500 border border-amber-100">
+                    <i class="fa-solid fa-stopwatch text-xl"></i>
+                </div>
+                <div>
+                    <p class="text-xs font-bold text-indTextMuted uppercase tracking-wider">Temps Moyen</p>
+                    <h3 class="text-xl font-black text-premiumDark mt-1">~3.0s <span class="text-xs font-semibold text-slate-400">/ bloc</span></h3>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 4. MAIN GRID (Blocs vs Transactions)       -->
+    <!-- ========================================== -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
+        
+        <!-- COLONNE : DERNIERS BLOCS -->
+        <div class="bg-indCard rounded-xl border border-indBorder shadow-sm flex flex-col h-[600px] overflow-hidden">
+            <div class="p-5 border-b border-indBorder flex justify-between items-center bg-slate-50">
+                <h2 class="font-extrabold text-premiumDark text-base md:text-lg flex items-center gap-2">
+                    <i class="fa-solid fa-cubes text-indAccent"></i> Derniers Blocs
+                </h2>
+                <button class="text-xs font-bold text-indAccent bg-indAccent/10 px-3 py-1.5 rounded-lg hover:bg-indAccent hover:text-white transition-colors">
+                    Voir Tout <i class="fa-solid fa-arrow-right ml-1"></i>
+                </button>
+            </div>
+            
+            <div class="overflow-y-auto flex-grow p-3" id="blocksContainer">
+                <!-- Skeletons par défaut -->
+                <script>
+                    for(let i=0; i<6; i++) {
+                        document.write(`
+                        <div class="flex items-center justify-between p-4 mb-2 rounded-xl border border-indBorder/50">
+                            <div class="flex items-center gap-3">
+                                <div class="skeleton w-10 h-10 rounded-lg"></div>
+                                <div><div class="skeleton h-4 w-20 mb-2 rounded"></div><div class="skeleton h-3 w-12 rounded"></div></div>
+                            </div>
+                            <div class="flex flex-col items-end"><div class="skeleton h-3 w-24 mb-2 rounded"></div><div class="skeleton h-4 w-16 rounded"></div></div>
+                        </div>`);
+                    }
+                </script>
+            </div>
+        </div>
+
+        <!-- COLONNE : DERNIÈRES TRANSACTIONS -->
+        <div class="bg-indCard rounded-xl border border-indBorder shadow-sm flex flex-col h-[600px] overflow-hidden">
+            <div class="p-5 border-b border-indBorder flex justify-between items-center bg-slate-50">
+                <h2 class="font-extrabold text-premiumDark text-base md:text-lg flex items-center gap-2">
+                    <i class="fa-solid fa-list-ul text-indAccent"></i> Dernières Transactions
+                </h2>
+                <button class="text-xs font-bold text-indAccent bg-indAccent/10 px-3 py-1.5 rounded-lg hover:bg-indAccent hover:text-white transition-colors">
+                    Voir Tout <i class="fa-solid fa-arrow-right ml-1"></i>
+                </button>
+            </div>
+            
+            <div class="overflow-y-auto flex-grow p-3" id="txsContainer">
+                <!-- Skeletons par défaut -->
+                <script>
+                    for(let i=0; i<6; i++) {
+                        document.write(`
+                        <div class="flex items-center justify-between p-4 mb-2 rounded-xl border border-indBorder/50">
+                            <div class="flex items-center gap-3">
+                                <div class="skeleton w-10 h-10 rounded-full"></div>
+                                <div><div class="skeleton h-4 w-24 mb-2 rounded"></div><div class="skeleton h-3 w-16 rounded"></div></div>
+                            </div>
+                            <div class="flex flex-col items-end"><div class="skeleton h-6 w-20 rounded-md"></div></div>
+                        </div>`);
+                    }
+                </script>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ========================================== -->
+    <!-- 5. FOOTER INDUSTRIEL CENTRÉ                -->
+    <!-- ========================================== -->
+    <footer class="bg-premiumDark border-t border-slate-800 mt-auto pt-14 pb-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
+            
+            <!-- Marque & Logo -->
+            <div class="flex flex-col items-center gap-4 mb-8">
+                <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo Atlas & Duc" class="h-16 w-16 rounded-full border-2 border-slate-700 shadow-xl">
+                <div>
+                    <h4 class="text-white font-black text-2xl tracking-tight">Atlas & Duc Corp.</h4>
+                    <p class="text-slate-400 text-sm font-medium mt-1">Infrastructure Blockchain Souveraine Layer-1</p>
+                </div>
+            </div>
+
+            <!-- Liens de Navigation -->
+            <div class="flex flex-wrap justify-center gap-6 sm:gap-10 text-sm font-semibold text-slate-400 border-b border-slate-800 pb-10 w-full max-w-2xl">
+                <a href="documentation.html" class="hover:text-indAccent hover:-translate-y-0.5 transition-all duration-200">
+                    <i class="fa-solid fa-book mr-1.5"></i> Documentation
+                </a>
+                <a href="api.html" class="hover:text-indAccent hover:-translate-y-0.5 transition-all duration-200">
+                    <i class="fa-solid fa-server mr-1.5"></i> API RPC
+                </a>
+                <a href="support.html" class="hover:text-indAccent hover:-translate-y-0.5 transition-all duration-200">
+                    <i class="fa-solid fa-headset mr-1.5"></i> Support
+                </a>
+            </div>
+
+            <!-- Statut & Copyright -->
+            <div class="flex flex-col items-center gap-5 pt-8 text-xs text-slate-500 font-medium w-full">
+                <div class="flex items-center gap-2.5 bg-slate-800/60 px-4 py-2.5 rounded-lg border border-slate-700 shadow-inner">
+                    <div class="w-2.5 h-2.5 rounded-full bg-indSuccess live-pulse"></div>
+                    <span class="text-slate-300 font-bold uppercase tracking-wide text-[10px]">Système Opérationnel L1</span>
+                </div>
+                <p>&copy; 2026 Atlas & Duc Corporation. Conçu et développé au Burkina Faso. Tous droits réservés.</p>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- ========================================== -->
+    <!-- 6. LOGIQUE JAVASCRIPT (MOTEUR WEB3)        -->
+    <!-- ========================================== -->
+    <script>
+        // --- GESTION MENU MOBILE ---
+        const btn = document.getElementById('mobileMenuBtn');
+        const menu = document.getElementById('mobileMenu');
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+            const icon = btn.querySelector('i');
+            if(menu.classList.contains('hidden')) {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            } else {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            }
+        });
+
+        // --- CONSTANTES WEB3 ---
+        const RPC_URL = "https://rpc.agi-nexus-core.click";
+        const BLOCKS_TO_FETCH = 8; 
+        
+        let latestBlockNum = 0;
+        let totalTxGlobal = 0; 
+
+        // Formateurs Utilitaires
+        function formatHash(hash, chars = 6) {
+            if (!hash) return "";
+            return hash.substring(0, chars + 2) + "..." + hash.substring(hash.length - chars);
+        }
+
+        function timeAgo(timestamp) {
+            const seconds = Math.floor((new Date() - timestamp) / 1000);
+            if (seconds < 10) return "À l'instant";
+            if (seconds < 60) return seconds + " secs";
+            const minutes = Math.floor(seconds / 60);
+            if (minutes < 60) return minutes + " mins";
+            return Math.floor(minutes / 60) + " hrs";
+        }
+
+        function formatAmount(microA) {
+            const agi = (parseInt(microA) / 1000000);
+            return new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).format(agi);
+        }
+
+        // --- MOTEUR RPC ---
+        async function rpcCall(method, params = []) {
+            try {
+                const response = await fetch(RPC_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ jsonrpc: "2.0", method: method, params: params, id: 1 })
+                });
+                if (!response.ok) throw new Error("Erreur réseau");
+                const data = await response.json();
+                return data.result;
+            } catch (error) {
+                console.error(`Erreur RPC [${method}]:`, error);
+                return null;
+            }
+        }
+
+        // --- SYNCHRONISATION ---
+        async function syncNetworkData() {
+            try {
+                const blockHex = await rpcCall("nexus_blockNumber");
+                if (!blockHex) return;
+
+                const currentBlockNum = parseInt(blockHex, 16);
+                
+                // Anti-spam update
+                if (currentBlockNum <= latestBlockNum && latestBlockNum !== 0) return;
+                latestBlockNum = currentBlockNum;
+
+                // Mise à jour des Stats
+                document.getElementById('statLatestBlock').innerText = currentBlockNum.toLocaleString('fr-FR');
+
+                const blocks = [];
+                const txs = [];
+
+                for (let i = 0; i < BLOCKS_TO_FETCH; i++) {
+                    const bNumHex = "0x" + (currentBlockNum - i).toString(16);
+                    const blockData = await rpcCall("nexus_getBlockByNumber", [bNumHex, true]);
+                    
+                    if (blockData) {
+                        blocks.push(blockData);
+                        if (blockData.transactions && blockData.transactions.length > 0) {
+                            blockData.transactions.forEach(tx => {
+                                tx.timestamp = blockData.timestamp; 
+                                txs.push(tx);
+                            });
+                        }
+                    }
+                }
+
+                // Simule un volume global de Tx basé sur la hauteur du bloc
+                totalTxGlobal = currentBlockNum * 5 + txs.length;
+                document.getElementById('statTotalTx').innerText = totalTxGlobal.toLocaleString('fr-FR');
+
+                renderBlocks(blocks);
+                renderTransactions(txs.slice(0, 10)); // Top 10 dernières
+
+            } catch (err) {
+                console.error("Échec de synchronisation:", err);
+            }
+        }
+
+        // --- RENDU UI : BLOCS ---
+        function renderBlocks(blocks) {
+            const container = document.getElementById('blocksContainer');
+            container.innerHTML = ''; 
+
+            blocks.forEach((block, index) => {
+                const blockNum = parseInt(block.number, 16);
+                const txCount = block.transactions ? block.transactions.length : 0;
+                const time = new Date(parseInt(block.timestamp) * 1000);
+                
+                const animClass = index === 0 ? 'bg-amber-50/60 border-amber-200 transition-all duration-1000' : 'hover:bg-slate-50 hover:shadow-sm border-indBorder/60';
+
+                const html = `
+                    <div class="flex items-center justify-between p-4 mb-3 rounded-xl border bg-white ${animClass}">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-slate-500 border border-slate-200">
+                                <i class="fa-solid fa-cube text-lg"></i>
+                            </div>
+                            <div>
+                                <a href="#" class="font-extrabold text-indAccent hover:text-sky-700 text-sm md:text-base">${blockNum}</a>
+                                <span class="block text-xs text-indTextMuted font-medium mt-0.5">${timeAgo(time)}</span>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-xs font-medium text-slate-500 mb-1">Validé par <a href="#" class="text-indAccent font-mono font-bold hover:underline">${formatHash(block.miner || "0xNexusMaster", 4)}</a></p>
+                            <span class="inline-block px-2 py-0.5 bg-slate-100 border border-slate-200 rounded text-xs font-bold text-premiumDark">${txCount} txns</span>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', html);
+            });
+        }
+
+        // --- RENDU UI : TRANSACTIONS (Adaptatif Mobile) ---
+        function renderTransactions(txs) {
+            const container = document.getElementById('txsContainer');
+            
+            if (txs.length === 0) {
+                container.innerHTML = `<div class="flex flex-col justify-center items-center h-full text-slate-400 gap-3"><i class="fa-solid fa-ghost text-4xl"></i><p class="text-sm font-medium">Aucune transaction dans les derniers blocs</p></div>`;
+                return;
+            }
+            
+            container.innerHTML = '';
+
+            txs.forEach((tx, index) => {
+                const time = new Date(parseInt(tx.timestamp) * 1000);
+                const amount = formatAmount(tx.amountMicro || 0);
+                const animClass = index === 0 ? 'bg-amber-50/60 border-amber-200 transition-all duration-1000' : 'hover:bg-slate-50 hover:shadow-sm border-indBorder/60';
+
+                const html = `
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 mb-3 rounded-xl border bg-white gap-3 sm:gap-0 ${animClass}">
+                        
+                        <!-- Header / Hash Tx -->
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 border border-slate-200 shrink-0">
+                                <i class="fa-solid fa-file-invoice text-lg"></i>
+                            </div>
+                            <div class="min-w-0"> <!-- min-w-0 pour forcer le truncate -->
+                                <a href="#" class="font-mono font-bold text-sm text-indAccent hover:text-sky-700 block truncate w-32 md:w-40" title="${tx.hash}">${formatHash(tx.hash, 8)}</a>
+                                <span class="block text-xs text-indTextMuted font-medium mt-0.5">${timeAgo(time)}</span>
+                            </div>
+                        </div>
+
+                        <!-- Routing (De -> A) : Vertical sur mobile, Horizontal sur Desktop -->
+                        <div class="flex sm:flex-col lg:flex-row lg:items-center gap-1 sm:gap-0.5 lg:gap-3 text-xs bg-slate-50 sm:bg-transparent p-2 sm:p-0 rounded-lg">
+                            <div class="flex items-center gap-1.5 w-full sm:w-auto">
+                                <span class="text-slate-400 font-semibold w-5 sm:w-auto">De</span>
+                                <a href="#" class="font-mono text-premiumDark font-bold hover:text-indAccent truncate w-24">${formatHash(tx.from, 4)}</a>
+                            </div>
+                            <i class="fa-solid fa-arrow-right-long text-slate-300 hidden lg:block"></i>
+                            <i class="fa-solid fa-arrow-down text-slate-300 hidden sm:block lg:hidden text-[10px] ml-1"></i>
+                            <div class="flex items-center gap-1.5 w-full sm:w-auto">
+                                <span class="text-slate-400 font-semibold w-5 sm:w-auto">À</span>
+                                <a href="#" class="font-mono text-premiumDark font-bold hover:text-indAccent truncate w-24">${formatHash(tx.to, 4)}</a>
+                            </div>
+                        </div>
+
+                        <!-- Montant -->
+                        <div class="sm:text-right mt-1 sm:mt-0 flex justify-end">
+                            <div class="bg-indSuccess/10 border border-indSuccess/20 px-3 py-1.5 rounded-lg shadow-sm">
+                                <span class="font-black text-sm text-indSuccess tracking-tight">${amount} ₳</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', html);
+            });
+        }
+
+        // Action de Recherche
+        function handleSearch() {
+            const val = document.getElementById('searchInput').value.trim();
+            if(!val) return;
+            // Animation du bouton
+            const btn = event.currentTarget;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Recherche...`;
+            setTimeout(() => {
+                alert("Redirection Nexus Core L1 pour : " + val);
+                btn.innerHTML = originalText;
+            }, 800);
+        }
+
+        // Lancement au chargement
+        document.addEventListener('DOMContentLoaded', () => {
+            // Lancement initial de la synchro
+            syncNetworkData();
+            // Polling industriel toutes les 4 secondes
+            setInterval(syncNetworkData, 4000); 
+        });
+
+    </script>
+</body>
+</html>

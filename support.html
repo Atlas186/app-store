@@ -2,169 +2,416 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Support Client | NEXUS BET & AGI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Client | Nexus Core & AGI</title>
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2=family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Polices Industrielles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <style>
-        :root {
-            --bg: #f0f9ff;          /* Bleu ciel très clair (Sky 50) */
-            --bg-gradient: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
-            --surface: #ffffff;     /* Blanc pur pour les cartes */
-            --border: rgba(2, 132, 199, 0.12);
-            --primary: #0284c7;     /* Bleu ciel profond (Sky 600) */
-            --primary-light: #38bdf8;
-            --text-main: #0f172a;   /* Slate 900 */
-            --text-dim: #64748b;    /* Slate 500 */
-            --agi-gold: #eab308;    /* Or AGI (Yellow 500) */
-            --success: #10b981;     /* Vert connecté */
+    <!-- Moteur Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        premiumDark: '#0F172A',
+                        indAccent: '#0EA5E9',
+                        indSuccess: '#10B981',
+                        indBg: '#F8FAFC',
+                        indCard: '#FFFFFF',
+                        indBorder: '#E2E8F0',
+                        indTextMuted: '#64748B',
+                        goldOrange: '#F59E0B'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace']
+                    }
+                }
+            }
         }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; }
-        body { background-color: #f1f5f9; color: var(--text-main); font-family: 'Plus Jakarta Sans', sans-serif; display: flex; justify-content: center; overflow-x: hidden; font-size: 0.85rem; }
-
-        .app-container { width: 100%; max-width: 450px; min-height: 100vh; background: var(--bg-gradient); position: relative; border-left: 1px solid var(--border); border-right: 1px solid var(--border); padding-bottom: 40px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); }
+    </script>
+    <style>
+        /* Animations & Pulse */
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         
-        .lang-btn { position: fixed; top: 20px; right: 20px; z-index: 9999; background: var(--surface); border: 1px solid var(--border); color: var(--primary); padding: 10px; border-radius: 50%; cursor: pointer; box-shadow: 0 4px 12px rgba(2,132,199,0.15); transition: 0.3s; }
-        .lang-btn:hover { transform: scale(1.1); color: var(--agi-gold); }
+        .live-pulse { animation: pulseGreen 2s infinite; }
+        @keyframes pulseGreen { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); } 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
 
-        /* Header */
-        .support-header { background: linear-gradient(135deg, #ffffff 0%, #e0f2fe 100%); padding: 35px 20px; border-bottom: 2px solid var(--agi-gold); text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
-        .support-header h1 { font-size: 1.5rem; font-weight: 800; color: var(--primary); letter-spacing: 0.5px; }
-        .support-header p { color: var(--text-dim); font-size: 0.78rem; margin-top: 10px; line-height: 1.5; }
-        
-        .status-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 6px 14px; border-radius: 20px; font-size: 0.7rem; margin-top: 15px; font-weight: 700; border: 1px solid rgba(16, 185, 129, 0.2); }
-        .status-dot { width: 7px; height: 7px; background: var(--success); border-radius: 50%; box-shadow: 0 0 8px var(--success); }
+        /* Accordéon FAQ Moderne (CSS Grid) */
+        .faq-content { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.3s ease-out; }
+        .faq-content > div { overflow: hidden; }
+        .faq-item.active .faq-content { grid-template-rows: 1fr; }
+        .faq-item.active .faq-icon { transform: rotate(180deg); }
+        .faq-item.active { border-color: #0EA5E9; box-shadow: 0 4px 6px -1px rgba(14, 165, 233, 0.1); }
 
-        /* Sections & Title */
-        .section-title { padding: 20px 20px 8px; font-size: 0.75rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.8px; }
-
-        /* Grid & Cards */
-        .support-grid { padding: 0 15px; display: grid; gap: 10px; }
-        .contact-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 14px; display: flex; align-items: center; gap: 14px; text-decoration: none; color: inherit; transition: 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
-        .contact-card:hover { transform: translateY(-2px); border-color: var(--primary); }
-        .icon-circle { width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; background: rgba(2, 132, 199, 0.08); color: var(--primary); }
-        .contact-card:hover .icon-circle { background: var(--primary); color: #fff; }
-        .card-info { flex: 1; }
-        .card-label { font-size: 0.65rem; color: var(--text-dim); text-transform: uppercase; font-weight: 600; }
-        .card-value { font-size: 0.88rem; font-weight: 700; margin-top: 1px; color: var(--text-main); }
-
-        /* Phone Support */
-        .phone-list { background: var(--surface); border-radius: 16px; border: 1px solid var(--border); margin: 0 15px; padding: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
-        .phone-item { padding: 12px 10px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(2, 132, 199, 0.05); text-decoration: none; color: inherit; font-weight: 600; font-size: 0.85rem; }
-        .phone-item:last-child { border-bottom: none; }
-        .phone-item i { color: var(--primary); background: rgba(2, 132, 199, 0.08); width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
-
-        /* FAQ Accordion */
-        .faq-list { margin: 0 15px; display: flex; flex-direction: column; gap: 8px; }
-        .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
-        .faq-trigger { width: 100%; padding: 14px; text-align: left; background: none; border: none; font-weight: 700; font-size: 0.82rem; color: var(--text-main); display: flex; justify-content: space-between; align-items: center; cursor: pointer; gap: 10px; }
-        .faq-trigger i { color: var(--primary); transition: transform 0.2s; font-size: 0.75rem; }
-        .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.3s cubic-bezier(0, 1, 0, 1); background: #f8fafc; padding: 0 14px; color: var(--text-dim); font-size: 0.78rem; line-height: 1.5; }
-        .faq-item.active .faq-trigger i { transform: rotate(180deg); }
-        .faq-item.active .faq-content { max-height: 1000px; padding: 0 14px 14px; transition: max-height 0.3s cubic-bezier(1, 0, 1, 0); }
+        /* Scrollbar Premium */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
     </style>
 </head>
-<body>
+<body class="bg-indBg text-premiumDark font-sans antialiased flex flex-col min-h-screen">
 
-    <button class="lang-btn" onclick="toggleLang()"><i class="fas fa-globe"></i></button>
+    <!-- ========================================== -->
+    <!-- BOUTON LANGUE FLOTTANT                     -->
+    <!-- ========================================== -->
+    <button onclick="toggleLang()" class="fixed bottom-6 right-6 z-50 bg-premiumDark text-white w-14 h-14 rounded-full shadow-2xl border border-slate-700 flex items-center justify-center hover:bg-indAccent hover:scale-105 transition-all duration-300 group">
+        <i class="fa-solid fa-globe text-xl group-hover:rotate-45 transition-transform"></i>
+    </button>
 
-    <div class="app-container">
-        <header class="support-header">
-            <h1 data-key="title">CENTRE D'AIDE</h1>
-            <p data-key="subtitle">Assistance technique spécialisée pour la plateforme NEXUS BET et les services technologiques fournis par AGI Groupe. Notre équipe d'ingénieurs et de support client est mobilisée pour garantir une expérience de jeu fluide, sécurisée et optimale pour tous les utilisateurs internationaux à chaque instant.</p>
-            <div class="status-badge"><div class="status-dot"></div><span data-key="status">AGENTS EN LIGNE : DISPONIBLES</span></div>
-        </header>
+    <!-- ========================================== -->
+    <!-- 1. NAVIGATION BAR                          -->
+    <!-- ========================================== -->
+    <header class="bg-indCard/90 backdrop-blur-md border-b border-indBorder sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo & Brand -->
+                <a href="index.html" class="flex items-center gap-3 cursor-pointer">
+                    <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo" class="h-9 w-9 rounded-full border border-indBorder object-cover shadow-sm">
+                    <span class="font-extrabold text-xl tracking-tight text-premiumDark">NEXUS<span class="text-indAccent">SCAN</span></span>
+                </a>
 
-        <div class="section-title" data-key="direct_channels">Canaux Directs</div>
-        <div class="support-grid">
-            <a href="discussion.html" class="contact-card">
-                <div class="icon-circle"><i class="fas fa-comments"></i></div>
-                <div class="card-info">
-                    <div class="card-label" data-key="label_chat">Communication</div>
-                    <div class="card-value" data-key="val_chat">Chat Privé Nexus</div>
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html" class="text-indTextMuted hover:text-premiumDark font-semibold text-sm transition-colors py-5"><i class="fa-solid fa-house mr-1"></i> Accueil</a>
+                    <a href="documentation.html" class="text-indTextMuted hover:text-premiumDark font-semibold text-sm transition-colors py-5"><i class="fa-solid fa-book mr-1"></i> Documentation</a>
+                    <a href="api.html" class="text-indTextMuted hover:text-premiumDark font-semibold text-sm transition-colors py-5"><i class="fa-solid fa-server mr-1"></i> API RPC</a>
+                    <a href="support.html" class="text-indAccent font-bold text-sm border-b-2 border-indAccent py-5"><i class="fa-solid fa-headset mr-1"></i> Support</a>
+                </nav>
+
+                <!-- Network Status -->
+                <div class="flex items-center gap-4">
+                    <div class="hidden sm:flex items-center gap-2 bg-indSuccess/10 border border-indSuccess/20 px-3 py-1.5 rounded-full">
+                        <div class="w-2 h-2 rounded-full bg-indSuccess live-pulse"></div>
+                        <span class="text-xs font-bold text-indSuccess tracking-wide">MAINNET L1</span>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuBtn" class="md:hidden text-premiumDark hover:text-indAccent focus:outline-none text-2xl">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
                 </div>
-            </a>
-            <!-- Lien mis à jour vers le numéro direct au lieu du groupe -->
-            <a href="https://wa.me/22676167364" class="contact-card">
-                <div class="icon-circle"><i class="fab fa-whatsapp"></i></div>
-                <div class="card-info">
-                    <div class="card-label" data-key="label_whatsapp">Assistance Rapide</div>
-                    <div class="card-value" data-key="val_whatsapp">Message WhatsApp</div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-indCard border-b border-indBorder px-4 pt-2 pb-4 shadow-lg absolute w-full">
+            <a href="index.html" class="block py-3 text-indTextMuted font-semibold text-base border-b border-indBorder"><i class="fa-solid fa-house w-6"></i> Accueil</a>
+            <a href="documentation.html" class="block py-3 text-indTextMuted font-semibold text-base border-b border-indBorder"><i class="fa-solid fa-book w-6"></i> Documentation</a>
+            <a href="api.html" class="block py-3 text-indTextMuted font-semibold text-base border-b border-indBorder"><i class="fa-solid fa-server w-6"></i> API RPC</a>
+            <a href="support.html" class="block py-3 text-indAccent font-bold text-base"><i class="fa-solid fa-headset w-6"></i> Support</a>
+        </div>
+    </header>
+
+    <!-- ========================================== -->
+    <!-- 2. HERO SECTION SUPPORT                    -->
+    <!-- ========================================== -->
+    <section class="bg-premiumDark text-white pt-10 pb-16 px-4 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-premiumDark via-slate-800 to-[#0B1120] z-0"></div>
+        <div class="absolute inset-0 opacity-[0.03] z-0" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 24px 24px;"></div>
+
+        <div class="max-w-4xl mx-auto relative z-10 text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indSuccess/20 border border-indSuccess/30 text-indSuccess text-xs font-bold mb-4">
+                <div class="w-2 h-2 rounded-full bg-indSuccess live-pulse"></div>
+                <span data-key="status">AGENTS EN LIGNE : DISPONIBLES</span>
+            </div>
+            <h1 data-key="title" class="text-3xl md:text-5xl font-black mb-4 tracking-tight">CENTRE D'<span class="text-indAccent">AIDE</span></h1>
+            <p data-key="subtitle" class="text-slate-400 text-sm md:text-base max-w-2xl mx-auto font-medium leading-relaxed">
+                Assistance technique spécialisée pour la plateforme NEXUS BET et les services technologiques fournis par AGI Groupe. Notre équipe d'ingénieurs et de support client est mobilisée pour garantir une expérience fluide, sécurisée et optimale pour tous les utilisateurs internationaux à chaque instant.
+            </p>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 3. CONTENU PRINCIPAL                       -->
+    <!-- ========================================== -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full space-y-12">
+        
+        <!-- A. Canaux Directs (Cards) -->
+        <section>
+            <h2 data-key="direct_channels" class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 pl-1">Canaux Directs</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                
+                <a href="discussion.html" class="bg-indCard border border-indBorder rounded-xl p-5 flex items-center gap-4 hover:border-indAccent hover:shadow-md transition-all group">
+                    <div class="w-12 h-12 rounded-xl bg-indAccent/10 text-indAccent flex items-center justify-center text-xl group-hover:bg-indAccent group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-comments"></i>
+                    </div>
+                    <div>
+                        <p data-key="label_chat" class="text-[10px] font-bold text-indTextMuted uppercase tracking-wider mb-0.5">Communication</p>
+                        <h3 data-key="val_chat" class="font-bold text-premiumDark">Chat Privé Nexus</h3>
+                    </div>
+                </a>
+
+                <a href="https://wa.me/22676167364" class="bg-indCard border border-indBorder rounded-xl p-5 flex items-center gap-4 hover:border-indSuccess hover:shadow-md transition-all group">
+                    <div class="w-12 h-12 rounded-xl bg-indSuccess/10 text-indSuccess flex items-center justify-center text-xl group-hover:bg-indSuccess group-hover:text-white transition-colors">
+                        <i class="fa-brands fa-whatsapp text-2xl"></i>
+                    </div>
+                    <div>
+                        <p data-key="label_whatsapp" class="text-[10px] font-bold text-indTextMuted uppercase tracking-wider mb-0.5">Assistance Rapide</p>
+                        <h3 data-key="val_whatsapp" class="font-bold text-premiumDark">Message WhatsApp</h3>
+                    </div>
+                </a>
+
+                <a href="mailto:atlasgroupeinter@gmail.com" class="bg-indCard border border-indBorder rounded-xl p-5 flex items-center gap-4 hover:border-amber-500 hover:shadow-md transition-all group">
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center text-xl group-hover:bg-amber-500 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <div class="overflow-hidden">
+                        <p data-key="label_email" class="text-[10px] font-bold text-indTextMuted uppercase tracking-wider mb-0.5">Courriel</p>
+                        <h3 class="font-bold text-premiumDark text-sm truncate">atlasgroupeinter@gmail.com</h3>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- B. Assistance Téléphonique -->
+        <section>
+            <h2 data-key="phone_title" class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 pl-1">Assistance Téléphonique</h2>
+            <div class="bg-indCard border border-indBorder rounded-xl overflow-hidden shadow-sm">
+                <div class="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-indBorder">
+                    <a href="tel:+22670873773" class="flex justify-between items-center p-5 hover:bg-slate-50 transition-colors group">
+                        <span class="font-mono font-bold text-premiumDark group-hover:text-indAccent">+226 70 87 37 73</span>
+                        <i class="fa-solid fa-phone text-indTextMuted group-hover:text-indAccent"></i>
+                    </a>
+                    <a href="tel:+22676203848" class="flex justify-between items-center p-5 hover:bg-slate-50 transition-colors group">
+                        <span class="font-mono font-bold text-premiumDark group-hover:text-indAccent">+226 76 20 38 48</span>
+                        <i class="fa-solid fa-phone text-indTextMuted group-hover:text-indAccent"></i>
+                    </a>
+                    <a href="tel:+22678370803" class="flex justify-between items-center p-5 hover:bg-slate-50 transition-colors group">
+                        <span class="font-mono font-bold text-premiumDark group-hover:text-indAccent">+226 78 37 08 03</span>
+                        <i class="fa-solid fa-phone text-indTextMuted group-hover:text-indAccent"></i>
+                    </a>
                 </div>
-            </a>
-            <a href="mailto:atlasgroupeinter@gmail.com" class="contact-card">
-                <div class="icon-circle"><i class="fas fa-envelope"></i></div>
-                <div class="card-info">
-                    <div class="card-label" data-key="label_email">Courriel</div>
-                    <div class="card-value" style="font-size: 0.75rem;">atlasgroupeinter@gmail.com</div>
+            </div>
+        </section>
+
+        <!-- C. Foire Aux Questions (FAQ) -->
+        <section>
+            <h2 data-key="faq_title" class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 pl-1">Foire Aux Questions (FAQ)</h2>
+            <div class="space-y-3">
+                
+                <!-- Items FAQ -->
+                <div class="faq-item bg-indCard border border-indBorder rounded-xl transition-colors">
+                    <button class="w-full text-left p-4 flex justify-between items-center outline-none focus:bg-slate-50 rounded-xl" onclick="toggleFaq(this)">
+                        <span data-key="q1" class="font-bold text-sm text-premiumDark">Comment fonctionne le taux de change fixe ?</span>
+                        <i class="fa-solid fa-chevron-down text-indAccent faq-icon transition-transform duration-300 text-xs"></i>
+                    </button>
+                    <div class="faq-content">
+                        <div class="px-4 pb-4 pt-1 text-sm text-indTextMuted leading-relaxed" data-key="a1">
+                            Sur notre écosystème, 1 AG-COIN (₳) est strictement égal à 1 XOF (Franc CFA), garantissant une stabilité financière absolue.
+                        </div>
+                    </div>
                 </div>
-            </a>
+
+                <div class="faq-item bg-indCard border border-indBorder rounded-xl transition-colors">
+                    <button class="w-full text-left p-4 flex justify-between items-center outline-none focus:bg-slate-50 rounded-xl" onclick="toggleFaq(this)">
+                        <span data-key="q2" class="font-bold text-sm text-premiumDark">Quel est le délai de validation des dépôts ?</span>
+                        <i class="fa-solid fa-chevron-down text-indAccent faq-icon transition-transform duration-300 text-xs"></i>
+                    </button>
+                    <div class="faq-content">
+                        <div class="px-4 pb-4 pt-1 text-sm text-indTextMuted leading-relaxed" data-key="a2">
+                            Les dépôts via notre service d'échange d'actifs ou en monnaie locale sont traités instantanément ou en quelques minutes après validation réseau.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-indCard border border-indBorder rounded-xl transition-colors">
+                    <button class="w-full text-left p-4 flex justify-between items-center outline-none focus:bg-slate-50 rounded-xl" onclick="toggleFaq(this)">
+                        <span data-key="q3" class="font-bold text-sm text-premiumDark">Quelle blockchain est utilisée par AGI ?</span>
+                        <i class="fa-solid fa-chevron-down text-indAccent faq-icon transition-transform duration-300 text-xs"></i>
+                    </button>
+                    <div class="faq-content">
+                        <div class="px-4 pb-4 pt-1 text-sm text-indTextMuted leading-relaxed" data-key="a3">
+                            Toutes nos opérations de transfert de jetons sécurisés transitent exclusivement par Nexus Core, notre infrastructure blockchain propriétaire.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-indCard border border-indBorder rounded-xl transition-colors">
+                    <button class="w-full text-left p-4 flex justify-between items-center outline-none focus:bg-slate-50 rounded-xl" onclick="toggleFaq(this)">
+                        <span data-key="q4" class="font-bold text-sm text-premiumDark">Comment fonctionnent les packages d'investissement ?</span>
+                        <i class="fa-solid fa-chevron-down text-indAccent faq-icon transition-transform duration-300 text-xs"></i>
+                    </button>
+                    <div class="faq-content">
+                        <div class="px-4 pb-4 pt-1 text-sm text-indTextMuted leading-relaxed" data-key="a4">
+                            Nous proposons trois rendements (5%, 10% et 25% de ROI) étalés sur une période d'immobilisation sécurisée de 30 à 180 jours complets.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-indCard border border-indBorder rounded-xl transition-colors">
+                    <button class="w-full text-left p-4 flex justify-between items-center outline-none focus:bg-slate-50 rounded-xl" onclick="toggleFaq(this)">
+                        <span data-key="q5" class="font-bold text-sm text-premiumDark">Quels projets industriels financez-vous ?</span>
+                        <i class="fa-solid fa-chevron-down text-indAccent faq-icon transition-transform duration-300 text-xs"></i>
+                    </button>
+                    <div class="faq-content">
+                        <div class="px-4 pb-4 pt-1 text-sm text-indTextMuted leading-relaxed" data-key="a5">
+                            Vos capitaux soutiennent directement l'économie réelle burkinabè, notamment l'usine de tissage de coton et la production d'énergie solaire.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-indCard border border-indBorder rounded-xl transition-colors">
+                    <button class="w-full text-left p-4 flex justify-between items-center outline-none focus:bg-slate-50 rounded-xl" onclick="toggleFaq(this)">
+                        <span data-key="q6" class="font-bold text-sm text-premiumDark">Le casino en ligne est-il hautement sécurisé ?</span>
+                        <i class="fa-solid fa-chevron-down text-indAccent faq-icon transition-transform duration-300 text-xs"></i>
+                    </button>
+                    <div class="faq-content">
+                        <div class="px-4 pb-4 pt-1 text-sm text-indTextMuted leading-relaxed" data-key="a6">
+                            Absolument. Nos machines à sous et paris sportifs Nexus Bet sont adossés à des algorithmes audités garantissant une transparence totale.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-indCard border border-indBorder rounded-xl transition-colors">
+                    <button class="w-full text-left p-4 flex justify-between items-center outline-none focus:bg-slate-50 rounded-xl" onclick="toggleFaq(this)">
+                        <span data-key="q7" class="font-bold text-sm text-premiumDark">Que faire en cas d'erreur de transaction ?</span>
+                        <i class="fa-solid fa-chevron-down text-indAccent faq-icon transition-transform duration-300 text-xs"></i>
+                    </button>
+                    <div class="faq-content">
+                        <div class="px-4 pb-4 pt-1 text-sm text-indTextMuted leading-relaxed" data-key="a7">
+                            Ouvrez immédiatement notre Chat Privé Nexus ou contactez-nous par téléphone pour une prise en charge par nos ingénieurs.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-indCard border border-indBorder rounded-xl transition-colors">
+                    <button class="w-full text-left p-4 flex justify-between items-center outline-none focus:bg-slate-50 rounded-xl" onclick="toggleFaq(this)">
+                        <span data-key="q8" class="font-bold text-sm text-premiumDark">L'authentification biométrique est-elle requise ?</span>
+                        <i class="fa-solid fa-chevron-down text-indAccent faq-icon transition-transform duration-300 text-xs"></i>
+                    </button>
+                    <div class="faq-content">
+                        <div class="px-4 pb-4 pt-1 text-sm text-indTextMuted leading-relaxed" data-key="a8">
+                            Oui, l'application intègre le protocole de sécurité native NexusBridge pour valider vos opérations financières à haut volume.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-indCard border border-indBorder rounded-xl transition-colors">
+                    <button class="w-full text-left p-4 flex justify-between items-center outline-none focus:bg-slate-50 rounded-xl" onclick="toggleFaq(this)">
+                        <span data-key="q9" class="font-bold text-sm text-premiumDark">Où trouver les statuts légaux d'AGI ?</span>
+                        <i class="fa-solid fa-chevron-down text-indAccent faq-icon transition-transform duration-300 text-xs"></i>
+                    </button>
+                    <div class="faq-content">
+                        <div class="px-4 pb-4 pt-1 text-sm text-indTextMuted leading-relaxed" data-key="a9">
+                            Atlas Groupe International est légalement déclaré au Burkina Faso sous le numéro de récépissé officiel PHUE-3539/2025 du 11/07/2025.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-indCard border border-indBorder rounded-xl transition-colors">
+                    <button class="w-full text-left p-4 flex justify-between items-center outline-none focus:bg-slate-50 rounded-xl" onclick="toggleFaq(this)">
+                        <span data-key="q10" class="font-bold text-sm text-premiumDark">Les retraits de gains sont-ils limités ?</span>
+                        <i class="fa-solid fa-chevron-down text-indAccent faq-icon transition-transform duration-300 text-xs"></i>
+                    </button>
+                    <div class="faq-content">
+                        <div class="px-4 pb-4 pt-1 text-sm text-indTextMuted leading-relaxed" data-key="a10">
+                            Les retraits s'effectuent conformément aux conditions de liquidité d'écosystème via notre passerelle d'échange d'actifs sécurisée.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Message de bas de page -->
+        <div class="bg-indAccent/5 border border-indAccent/20 rounded-xl p-6 text-center max-w-3xl mx-auto">
+            <i class="fa-solid fa-shield-halved text-indAccent text-2xl mb-3"></i>
+            <p data-key="footer_text" class="text-sm text-slate-600 font-medium leading-relaxed">
+                Notre engagement est de fournir une assistance technique de premier ordre. Que ce soit pour des questions liées aux transactions blockchain, aux erreurs de dépôt, ou aux problèmes de connexion, nos experts sont formés pour diagnostiquer et résoudre vos problèmes avec une efficacité inégalée. La sécurité de vos fonds et la confidentialité de vos données restent nos priorités absolues dans cet écosystème décentralisé complexe.
+            </p>
         </div>
 
-        <div class="section-title" data-key="phone_title">Assistance Téléphonique</div>
-        <div class="phone-list">
-            <a href="tel:+22670873773" class="phone-item"><span>+226 70 87 37 73</span><i class="fas fa-phone-alt"></i></a>
-            <a href="tel:+22676203848" class="phone-item"><span>+226 76 20 38 48</span><i class="fas fa-phone-alt"></i></a>
-            <a href="tel:+22678370803" class="phone-item"><span>+226 78 37 08 03</span><i class="fas fa-phone-alt"></i></a>
-        </div>
+    </main>
 
-        <div class="section-title" data-key="faq_title">Foire Aux Questions (FAQ)</div>
-        <div class="faq-list">
-            <div class="faq-item">
-                <button class="faq-trigger" onclick="toggleFaq(this)"><span data-key="q1">Comment fonctionne le taux de change fixe ?</span><i class="fas fa-chevron-down"></i></button>
-                <div class="faq-content" data-key="a1">Sur notre écosystème, 1 AG-COIN (₳) est strictement égal à 1 XOF (Franc CFA), garantissant une stabilité financière absolue.</div>
+    <!-- ========================================== -->
+    <!-- 4. FOOTER INDUSTRIEL CENTRÉ                -->
+    <!-- ========================================== -->
+    <footer class="bg-premiumDark border-t border-slate-800 mt-auto pt-14 pb-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
+            
+            <!-- Marque & Logo -->
+            <div class="flex flex-col items-center gap-4 mb-8">
+                <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo Atlas & Duc" class="h-16 w-16 rounded-full border-2 border-slate-700 shadow-xl">
+                <div>
+                    <h4 class="text-white font-black text-2xl tracking-tight">Atlas & Duc Corp.</h4>
+                    <p class="text-slate-400 text-sm font-medium mt-1">Infrastructure Blockchain Souveraine Layer-1</p>
+                </div>
             </div>
-            <div class="faq-item">
-                <button class="faq-trigger" onclick="toggleFaq(this)"><span data-key="q2">Quel est le délai de validation des dépôts ?</span><i class="fas fa-chevron-down"></i></button>
-                <div class="faq-content" data-key="a2">Les dépôts via notre service d'échange d'actifs ou en monnaie locale sont traités instantanément ou en quelques minutes après validation réseau.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-trigger" onclick="toggleFaq(this)"><span data-key="q3">Quelle blockchain est utilisée par AGI ?</span><i class="fas fa-chevron-down"></i></button>
-                <div class="faq-content" data-key="a3">Toutes nos opérations de transfert de jetons sécurisés transitent exclusivement par Nexus Core, notre infrastructure blockchain propriétaire.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-trigger" onclick="toggleFaq(this)"><span data-key="q4">Comment fonctionnent les packages d'investissement ?</span><i class="fas fa-chevron-down"></i></button>
-                <div class="faq-content" data-key="a4">Nous proposons trois rendements (5%, 10% et 25% de ROI) étalés sur une période d'immobilisation sécurisée de 30 à 180 jours complets.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-trigger" onclick="toggleFaq(this)"><span data-key="q5">Quels projets industriels financez-vous ?</span><i class="fas fa-chevron-down"></i></button>
-                <div class="faq-content" data-key="a5">Vos capitaux soutiennent directement l'économie réelle burkinabè, notamment l'usine de tissage de coton et la production d'énergie solaire.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-trigger" onclick="toggleFaq(this)"><span data-key="q6">Le casino en ligne est-il hautement sécurisé ?</span><i class="fas fa-chevron-down"></i></button>
-                <div class="faq-content" data-key="a6">Absolument. Nos machines à sous et paris sportifs Nexus Bet sont adossés à des algorithmes audités garantissant une transparence totale.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-trigger" onclick="toggleFaq(this)"><span data-key="q7">Que faire en cas d'erreur de transaction ?</span><i class="fas fa-chevron-down"></i></button>
-                <div class="faq-content" data-key="a7">Ouvrez immédiatement notre Chat Privé Nexus ou contactez-nous par téléphone pour une prise en charge par nos ingénieurs.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-trigger" onclick="toggleFaq(this)"><span data-key="q8">L'authentification biométrique est-elle requise ?</span><i class="fas fa-chevron-down"></i></button>
-                <div class="faq-content" data-key="a8">Oui, l'application intègre le protocole de sécurité native NexusBridge pour valider vos opérations financières à haut volume.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-trigger" onclick="toggleFaq(this)"><span data-key="q9">Où trouver les statuts légaux d'AGI ?</span><i class="fas fa-chevron-down"></i></button>
-                <div class="faq-content" data-key="a9">Atlas Groupe International est légalement déclaré au Burkina Faso sous le numéro de récépissé officiel PHUE-3539/2025 du 11/07/2025.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-trigger" onclick="toggleFaq(this)"><span data-key="q10">Les retraits de gains sont-ils limités ?</span><i class="fas fa-chevron-down"></i></button>
-                <div class="faq-content" data-key="a10">Les retraits s'effectuent conformément aux conditions de liquidité d'écosystème via notre passerelle d'échange d'actifs sécurisée.</div>
-            </div>
-        </div>
 
-        <div style="padding: 25px 20px 10px; text-align: center; color: var(--text-dim);">
-            <p data-key="footer_text" style="font-size: 0.72rem; line-height: 1.5;">Notre engagement est de fournir une assistance technique de premier ordre. Que ce soit pour des questions liées aux transactions blockchain, aux erreurs de dépôt, ou aux problèmes de connexion, nos experts sont formés pour diagnostiquer et résoudre vos problèmes avec une efficacité inégalée. La sécurité de vos fonds et la confidentialité de vos données restent nos priorités absolues dans cet écosystème décentralisé complexe.</p>
-        </div>
-    </div>
+            <!-- Liens de Navigation -->
+            <div class="flex flex-wrap justify-center gap-6 sm:gap-10 text-sm font-semibold text-slate-400 border-b border-slate-800 pb-10 w-full max-w-2xl">
+                <a href="documentation.html" class="hover:text-indAccent hover:-translate-y-0.5 transition-all duration-200">
+                    <i class="fa-solid fa-book mr-1.5"></i> Documentation
+                </a>
+                <a href="api.html" class="hover:text-indAccent hover:-translate-y-0.5 transition-all duration-200">
+                    <i class="fa-solid fa-server mr-1.5"></i> API RPC
+                </a>
+                <a href="support.html" class="text-indAccent hover:-translate-y-0.5 transition-all duration-200">
+                    <i class="fa-solid fa-headset mr-1.5"></i> Support
+                </a>
+            </div>
 
+            <!-- Statut & Copyright -->
+            <div class="flex flex-col items-center gap-5 pt-8 text-xs text-slate-500 font-medium w-full">
+                <div class="flex items-center gap-2.5 bg-slate-800/60 px-4 py-2.5 rounded-lg border border-slate-700 shadow-inner">
+                    <div class="w-2.5 h-2.5 rounded-full bg-indSuccess live-pulse"></div>
+                    <span class="text-slate-300 font-bold uppercase tracking-wide text-[10px]">Système Opérationnel L1</span>
+                </div>
+                <p>&copy; 2026 Atlas & Duc Corporation. Conçu et développé au Burkina Faso. Tous droits réservés.</p>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- ========================================== -->
+    <!-- 5. LOGIQUE JAVASCRIPT                      -->
+    <!-- ========================================== -->
     <script>
+        // --- GESTION MENU MOBILE ---
+        const btn = document.getElementById('mobileMenuBtn');
+        const menu = document.getElementById('mobileMenu');
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+            const icon = btn.querySelector('i');
+            if(menu.classList.contains('hidden')) {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            } else {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            }
+        });
+
+        // --- GESTION ACCORDÉON FAQ ---
+        function toggleFaq(button) {
+            const item = button.parentElement;
+            const isActive = item.classList.contains('active');
+            
+            // Ferme tous les autres
+            document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+            
+            // Ouvre ou ferme le cliqué
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        }
+
+        // --- GESTION MULTILINGUE ---
         const dict = {
             fr: {
-                title: "CENTRE D'AIDE",
-                subtitle: "Assistance technique spécialisée pour la plateforme NEXUS BET et les services technologiques fournis par AGI Groupe. Notre équipe d'ingénieurs et de support client est mobilisée pour garantir une expérience de jeu fluide, sécurisée et optimale pour tous les utilisateurs internationaux à chaque instant.",
+                title: "CENTRE D'<span class='text-indAccent'>AIDE</span>",
+                subtitle: "Assistance technique spécialisée pour la plateforme NEXUS BET et les services technologiques fournis par AGI Groupe. Notre équipe d'ingénieurs et de support client est mobilisée pour garantir une expérience fluide, sécurisée et optimale pour tous les utilisateurs internationaux à chaque instant.",
                 status: "AGENTS EN LIGNE : DISPONIBLES",
                 direct_channels: "Canaux Directs",
                 label_chat: "Communication",
@@ -197,7 +444,7 @@
                 a10: "Les retraits s'effectuent conformément aux conditions de liquidité d'écosystème via notre passerelle d'échange d'actifs sécurisée."
             },
             en: {
-                title: "HELP CENTER",
+                title: "HELP <span class='text-indAccent'>CENTER</span>",
                 subtitle: "Specialized technical assistance for the NEXUS BET platform and technology services provided by AGI Group. Our team of engineers and customer support is mobilized to ensure a seamless, secure, and optimal gaming experience for all international users at all times.",
                 status: "AGENTS ONLINE: AVAILABLE",
                 direct_channels: "Direct Channels",
@@ -237,21 +484,10 @@
             currentLang = currentLang === 'fr' ? 'en' : 'fr';
             document.querySelectorAll('[data-key]').forEach(el => {
                 const key = el.getAttribute('data-key');
-                if (dict[currentLang][key]) el.innerText = dict[currentLang][key];
+                if (dict[currentLang][key]) {
+                    el.innerHTML = dict[currentLang][key]; // innerHTML utilisé pour supporter le span coloré du titre
+                }
             });
-        }
-
-        function toggleFaq(button) {
-            const item = button.parentElement;
-            const isActive = item.classList.contains('active');
-            
-            // Ferme tous les autres accordéons
-            document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
-            
-            // Ouvre l'actuel si pas déjà actif
-            if (!isActive) {
-                item.classList.add('active');
-            }
         }
     </script>
 </body>
