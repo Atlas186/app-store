@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Support Client | Nexus Core & AGI</title>
+    <title>Support B2B | Nexus Core L1 par Atlas & Duc</title>
     
     <!-- Polices Industrielles -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -20,14 +20,13 @@
             theme: {
                 extend: {
                     colors: {
-                        premiumDark: '#0F172A',
+                        premiumDark: '#0B1120',
                         indAccent: '#0EA5E9',
                         indSuccess: '#10B981',
                         indBg: '#F8FAFC',
                         indCard: '#FFFFFF',
                         indBorder: '#E2E8F0',
-                        indTextMuted: '#64748B',
-                        goldOrange: '#F59E0B'
+                        indTextMuted: '#64748B'
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -43,60 +42,59 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         
         .live-pulse { animation: pulseGreen 2s infinite; }
-        @keyframes pulseGreen { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); } 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
+        @keyframes pulseGreen { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); } 70% { box-shadow: 0 0 0 4px rgba(16, 185, 129, 0); } 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
 
-        /* Accordéon FAQ Moderne (CSS Grid) */
-        .faq-content { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.3s ease-out; }
+        /* Accordéon FAQ Dense */
+        .faq-content { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.2s ease-out; }
         .faq-content > div { overflow: hidden; }
         .faq-item.active .faq-content { grid-template-rows: 1fr; }
         .faq-item.active .faq-icon { transform: rotate(180deg); }
-        .faq-item.active { border-color: #0EA5E9; box-shadow: 0 4px 6px -1px rgba(14, 165, 233, 0.1); }
+        .faq-item.active { border-color: #0EA5E9; background-color: #F0F9FF; }
 
-        /* Scrollbar Premium */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        /* Scrollbar Fine Industrielle */
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
     </style>
 </head>
-<body class="bg-indBg text-premiumDark font-sans antialiased flex flex-col min-h-screen">
+<body class="bg-indBg text-premiumDark font-sans antialiased flex flex-col min-h-screen text-[13px]">
 
     <!-- ========================================== -->
     <!-- BOUTON LANGUE FLOTTANT                     -->
     <!-- ========================================== -->
-    <button onclick="toggleLang()" class="fixed bottom-6 right-6 z-50 bg-premiumDark text-white w-14 h-14 rounded-full shadow-2xl border border-slate-700 flex items-center justify-center hover:bg-indAccent hover:scale-105 transition-all duration-300 group">
-        <i class="fa-solid fa-globe text-xl group-hover:rotate-45 transition-transform"></i>
+    <button onclick="toggleLang()" class="fixed bottom-6 right-6 z-50 bg-premiumDark text-white w-10 h-10 rounded shadow-xl border border-slate-700 flex items-center justify-center hover:bg-indAccent transition-colors group focus:outline-none">
+        <i class="fa-solid fa-globe text-sm group-hover:rotate-45 transition-transform"></i>
     </button>
 
     <!-- ========================================== -->
-    <!-- 1. NAVIGATION BAR                          -->
+    <!-- 1. NAVIGATION BAR (Compacte)               -->
     <!-- ========================================== -->
-    <header class="bg-indCard/90 backdrop-blur-md border-b border-indBorder sticky top-0 z-50 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
+    <header class="bg-indCard/95 backdrop-blur-md border-b border-indBorder sticky top-0 z-40 shadow-sm">
+        <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-14">
+                
                 <!-- Logo & Brand -->
-                <a href="index.html" class="flex items-center gap-3 cursor-pointer">
-                    <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo" class="h-9 w-9 rounded-full border border-indBorder object-cover shadow-sm">
-                    <span class="font-extrabold text-xl tracking-tight text-premiumDark">NEXUS<span class="text-indAccent">SCAN</span></span>
+                <a href="NexusScan.html" class="flex items-center gap-2 cursor-pointer group">
+                    <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo" class="h-7 w-7 rounded-full border border-indBorder object-cover shadow-sm group-hover:border-indAccent transition-colors">
+                    <span class="font-extrabold text-lg tracking-tight text-premiumDark">NEXUS<span class="text-indAccent">SCAN</span></span>
                 </a>
 
                 <!-- Desktop Navigation -->
-                <nav class="hidden md:flex space-x-8 items-center">
-                    <a href="index.html" class="text-indTextMuted hover:text-premiumDark font-semibold text-sm transition-colors py-5"><i class="fa-solid fa-house mr-1"></i> Accueil</a>
-                    <a href="documentation.html" class="text-indTextMuted hover:text-premiumDark font-semibold text-sm transition-colors py-5"><i class="fa-solid fa-book mr-1"></i> Documentation</a>
-                    <a href="api.html" class="text-indTextMuted hover:text-premiumDark font-semibold text-sm transition-colors py-5"><i class="fa-solid fa-server mr-1"></i> API RPC</a>
-                    <a href="support.html" class="text-indAccent font-bold text-sm border-b-2 border-indAccent py-5"><i class="fa-solid fa-headset mr-1"></i> Support</a>
+                <nav class="hidden md:flex space-x-6 items-center">
+                    <a href="NexusScan.html" class="text-indTextMuted hover:text-premiumDark font-semibold text-[13px] transition-colors py-4"><i class="fa-solid fa-house mr-1"></i> Accueil</a>
+                    <a href="documentation.html" class="text-indTextMuted hover:text-premiumDark font-semibold text-[13px] transition-colors py-4"><i class="fa-solid fa-book mr-1"></i> Documentation</a>
+                    <a href="api.html" class="text-indTextMuted hover:text-premiumDark font-semibold text-[13px] transition-colors py-4"><i class="fa-solid fa-server mr-1"></i> API RPC</a>
+                    <a href="support.html" class="text-indAccent font-bold text-[13px] border-b-2 border-indAccent py-4"><i class="fa-solid fa-headset mr-1"></i> Support B2B</a>
                 </nav>
 
-                <!-- Network Status -->
-                <div class="flex items-center gap-4">
-                    <div class="hidden sm:flex items-center gap-2 bg-indSuccess/10 border border-indSuccess/20 px-3 py-1.5 rounded-full">
-                        <div class="w-2 h-2 rounded-full bg-indSuccess live-pulse"></div>
-                        <span class="text-xs font-bold text-indSuccess tracking-wide">MAINNET L1</span>
+                <!-- Status & Mobile Menu -->
+                <div class="flex items-center gap-3">
+                    <div class="hidden sm:flex items-center gap-1.5 bg-indSuccess/10 border border-indSuccess/20 px-2.5 py-1 rounded-full">
+                        <div class="w-1.5 h-1.5 rounded-full bg-indSuccess live-pulse"></div>
+                        <span class="text-[10px] font-bold text-indSuccess tracking-wide">MAINNET L1</span>
                     </div>
-                    
-                    <!-- Mobile Menu Button -->
-                    <button id="mobileMenuBtn" class="md:hidden text-premiumDark hover:text-indAccent focus:outline-none text-2xl">
+                    <button id="mobileMenuBtn" class="md:hidden text-premiumDark hover:text-indAccent focus:outline-none text-xl">
                         <i class="fa-solid fa-bars"></i>
                     </button>
                 </div>
@@ -104,29 +102,29 @@
         </div>
 
         <!-- Mobile Navigation Menu -->
-        <div id="mobileMenu" class="hidden md:hidden bg-indCard border-b border-indBorder px-4 pt-2 pb-4 shadow-lg absolute w-full">
-            <a href="index.html" class="block py-3 text-indTextMuted font-semibold text-base border-b border-indBorder"><i class="fa-solid fa-house w-6"></i> Accueil</a>
-            <a href="documentation.html" class="block py-3 text-indTextMuted font-semibold text-base border-b border-indBorder"><i class="fa-solid fa-book w-6"></i> Documentation</a>
-            <a href="api.html" class="block py-3 text-indTextMuted font-semibold text-base border-b border-indBorder"><i class="fa-solid fa-server w-6"></i> API RPC</a>
-            <a href="support.html" class="block py-3 text-indAccent font-bold text-base"><i class="fa-solid fa-headset w-6"></i> Support</a>
+        <div id="mobileMenu" class="hidden md:hidden bg-indCard border-b border-indBorder px-4 pt-2 pb-4 shadow-lg absolute w-full z-50">
+            <a href="NexusScan.html" class="block py-2.5 text-indTextMuted font-semibold text-[13px] border-b border-indBorder"><i class="fa-solid fa-house w-6 text-center"></i> Accueil</a>
+            <a href="documentation.html" class="block py-2.5 text-indTextMuted font-semibold text-[13px] border-b border-indBorder"><i class="fa-solid fa-book w-6 text-center"></i> Documentation</a>
+            <a href="api.html" class="block py-2.5 text-indTextMuted font-semibold text-[13px] border-b border-indBorder"><i class="fa-solid fa-server w-6 text-center"></i> API RPC</a>
+            <a href="support.html" class="block py-2.5 text-indAccent font-bold text-[13px] bg-sky-50 px-2 rounded mt-1"><i class="fa-solid fa-headset w-6 text-center"></i> Support B2B</a>
         </div>
     </header>
 
     <!-- ========================================== -->
-    <!-- 2. HERO SECTION SUPPORT                    -->
+    <!-- 2. HERO SECTION SUPPORT (Dense)            -->
     <!-- ========================================== -->
-    <section class="bg-premiumDark text-white pt-10 pb-16 px-4 relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-premiumDark via-slate-800 to-[#0B1120] z-0"></div>
-        <div class="absolute inset-0 opacity-[0.03] z-0" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 24px 24px;"></div>
+    <section class="bg-premiumDark text-white pt-10 pb-12 px-4 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-[#0f172a] via-slate-800 to-[#020617] z-0"></div>
+        <div class="absolute inset-0 opacity-[0.04]" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 16px 16px;"></div>
 
-        <div class="max-w-4xl mx-auto relative z-10 text-center">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indSuccess/20 border border-indSuccess/30 text-indSuccess text-xs font-bold mb-4">
-                <div class="w-2 h-2 rounded-full bg-indSuccess live-pulse"></div>
-                <span data-key="status">AGENTS EN LIGNE : DISPONIBLES</span>
+        <div class="max-w-4xl mx-auto relative z-10 text-center fade-in">
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-indSuccess/20 border border-indSuccess/30 text-indSuccess text-[10px] font-bold mb-3 uppercase tracking-widest">
+                <div class="w-1.5 h-1.5 rounded-full bg-indSuccess live-pulse"></div>
+                <span data-key="status">Opérations L1 : Agents Disponibles</span>
             </div>
-            <h1 data-key="title" class="text-3xl md:text-5xl font-black mb-4 tracking-tight">CENTRE D'<span class="text-indAccent">AIDE</span></h1>
-            <p data-key="subtitle" class="text-slate-400 text-sm md:text-base max-w-2xl mx-auto font-medium leading-relaxed">
-                Assistance technique spécialisée pour la plateforme NEXUS BET et les services technologiques fournis par AGI Groupe. Notre équipe d'ingénieurs et de support client est mobilisée pour garantir une expérience fluide, sécurisée et optimale pour tous les utilisateurs internationaux à chaque instant.
+            <h1 data-key="title" class="text-2xl md:text-3xl lg:text-4xl font-black mb-3 tracking-tight">PORTAIL DE <span class="text-indAccent">SUPPORT B2B</span></h1>
+            <p data-key="subtitle" class="text-slate-400 text-[11px] md:text-[13px] max-w-2xl mx-auto font-medium leading-relaxed">
+                Assistance technique et administrative dédiée à l'infrastructure Nexus Core L1. Nos départements d'ingénierie et de direction sont mobilisés pour garantir la continuité de vos opérations sur le réseau souverain d'Atlas & Duc Corporation.
             </p>
         </div>
     </section>
@@ -134,189 +132,147 @@
     <!-- ========================================== -->
     <!-- 3. CONTENU PRINCIPAL                       -->
     <!-- ========================================== -->
-    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full space-y-12">
+    <main class="max-w-[64rem] mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full space-y-8 fade-in">
         
-        <!-- A. Canaux Directs (Cards) -->
+        <!-- A. ANNUAIRE CORPORATIF (Nouveau Design Industriel) -->
         <section>
-            <h2 data-key="direct_channels" class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 pl-1">Canaux Directs</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <h2 data-key="corp_dir" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3 pl-1 border-b border-indBorder pb-1.5">Départements & Annuaire Corporatif L1</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <!-- Card 1 : Présidence & Direction -->
+                <div class="bg-white border border-indBorder rounded p-4 shadow-sm hover:border-indAccent hover:shadow-md transition-all">
+                    <div class="flex items-center gap-2 mb-3 border-b border-slate-100 pb-2.5">
+                        <div class="w-6 h-6 rounded bg-indAccent/10 flex items-center justify-center text-indAccent text-xs"><i class="fa-solid fa-building-user"></i></div>
+                        <h3 data-key="dir_title" class="font-bold text-[13px] text-premiumDark">Présidence & Direction</h3>
+                    </div>
+                    <div class="space-y-3 text-[11px]">
+                        <div>
+                            <p data-key="dir_pres" class="text-slate-400 font-bold uppercase text-[9px] mb-0.5">Présidence (Téléphone)</p>
+                            <a href="tel:+22676203848" class="font-mono font-bold text-premiumDark hover:text-indAccent flex items-center gap-1.5 transition-colors"><i class="fa-solid fa-phone text-[9px] text-slate-300"></i> +226 76 20 38 48</a>
+                        </div>
+                        <div>
+                            <p data-key="dir_email" class="text-slate-400 font-bold uppercase text-[9px] mb-0.5">Direction (Courriel)</p>
+                            <a href="mailto:mr.yougma@agi-nexus-core.click" class="font-mono font-bold text-indAccent hover:text-sky-700 flex items-center gap-1.5 transition-colors truncate" title="mr.yougma@agi-nexus-core.click"><i class="fa-solid fa-envelope text-[9px]"></i> mr.yougma@agi-nexus-core...</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 : CTO & Administration -->
+                <div class="bg-white border border-indBorder rounded p-4 shadow-sm hover:border-indAccent hover:shadow-md transition-all">
+                    <div class="flex items-center gap-2 mb-3 border-b border-slate-100 pb-2.5">
+                        <div class="w-6 h-6 rounded bg-amber-500/10 flex items-center justify-center text-amber-600 text-xs"><i class="fa-solid fa-server"></i></div>
+                        <h3 data-key="admin_title" class="font-bold text-[13px] text-premiumDark">CTO & Administration</h3>
+                    </div>
+                    <div class="space-y-3 text-[11px]">
+                        <div>
+                            <p data-key="admin_cto" class="text-slate-400 font-bold uppercase text-[9px] mb-0.5">Direction Technique (CTO)</p>
+                            <a href="tel:+22670873773" class="font-mono font-bold text-premiumDark hover:text-amber-600 flex items-center gap-1.5 transition-colors"><i class="fa-solid fa-phone text-[9px] text-slate-300"></i> +226 70 87 37 73</a>
+                        </div>
+                        <div>
+                            <p data-key="admin_email" class="text-slate-400 font-bold uppercase text-[9px] mb-0.5">Administration (Courriel)</p>
+                            <a href="mailto:administration@agi-nexus-core.click" class="font-mono font-bold text-amber-600 hover:text-amber-700 flex items-center gap-1.5 transition-colors truncate" title="administration@agi-nexus-core.click"><i class="fa-solid fa-envelope text-[9px]"></i> administration@agi-nexus...</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 : Support & Assistance -->
+                <div class="bg-white border border-indBorder rounded p-4 shadow-sm hover:border-indAccent hover:shadow-md transition-all">
+                    <div class="flex items-center gap-2 mb-3 border-b border-slate-100 pb-2.5">
+                        <div class="w-6 h-6 rounded bg-indSuccess/10 flex items-center justify-center text-indSuccess text-xs"><i class="fa-solid fa-headset"></i></div>
+                        <h3 data-key="tech_title" class="font-bold text-[13px] text-premiumDark">Support & Assistance</h3>
+                    </div>
+                    <div class="space-y-3 text-[11px]">
+                        <div>
+                            <p data-key="tech_phone" class="text-slate-400 font-bold uppercase text-[9px] mb-0.5">Assistance Technique (Tel)</p>
+                            <a href="tel:+22678370803" class="font-mono font-bold text-premiumDark hover:text-indSuccess flex items-center gap-1.5 transition-colors"><i class="fa-solid fa-phone text-[9px] text-slate-300"></i> +226 78 37 08 03</a>
+                        </div>
+                        <div>
+                            <p data-key="tech_email" class="text-slate-400 font-bold uppercase text-[9px] mb-0.5">Support Technique (Courriel)</p>
+                            <a href="mailto:support@agi-nexus-core.click" class="font-mono font-bold text-indSuccess hover:text-emerald-700 flex items-center gap-1.5 transition-colors truncate" title="support@agi-nexus-core.click"><i class="fa-solid fa-envelope text-[9px]"></i> support@agi-nexus-core.click</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- B. Canaux Rapides -->
+        <section>
+            <h2 data-key="direct_channels" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3 pl-1 border-b border-indBorder pb-1.5">Messagerie Rapide</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 
-                <a href="discussion.html" class="bg-indCard border border-indBorder rounded-xl p-5 flex items-center gap-4 hover:border-indAccent hover:shadow-md transition-all group">
-                    <div class="w-12 h-12 rounded-xl bg-indAccent/10 text-indAccent flex items-center justify-center text-xl group-hover:bg-indAccent group-hover:text-white transition-colors">
+                <a href="discussion.html" class="bg-slate-50 border border-slate-200 rounded p-4 flex items-center gap-3 hover:border-indAccent hover:bg-white transition-all group">
+                    <div class="w-8 h-8 rounded bg-indAccent/10 text-indAccent flex items-center justify-center text-sm group-hover:bg-indAccent group-hover:text-white transition-colors">
                         <i class="fa-solid fa-comments"></i>
                     </div>
                     <div>
-                        <p data-key="label_chat" class="text-[10px] font-bold text-indTextMuted uppercase tracking-wider mb-0.5">Communication</p>
-                        <h3 data-key="val_chat" class="font-bold text-premiumDark">Chat Privé Nexus</h3>
+                        <p data-key="label_chat" class="text-[9px] font-bold text-indTextMuted uppercase tracking-widest mb-0.5">Portail Sécurisé</p>
+                        <h3 data-key="val_chat" class="font-bold text-[13px] text-premiumDark">Ouvrir un Ticket Interne</h3>
                     </div>
                 </a>
 
-                <a href="https://wa.me/22676167364" class="bg-indCard border border-indBorder rounded-xl p-5 flex items-center gap-4 hover:border-indSuccess hover:shadow-md transition-all group">
-                    <div class="w-12 h-12 rounded-xl bg-indSuccess/10 text-indSuccess flex items-center justify-center text-xl group-hover:bg-indSuccess group-hover:text-white transition-colors">
-                        <i class="fa-brands fa-whatsapp text-2xl"></i>
+                <a href="https://wa.me/22676167364" target="_blank" class="bg-slate-50 border border-slate-200 rounded p-4 flex items-center gap-3 hover:border-indSuccess hover:bg-white transition-all group">
+                    <div class="w-8 h-8 rounded bg-indSuccess/10 text-indSuccess flex items-center justify-center text-sm group-hover:bg-indSuccess group-hover:text-white transition-colors">
+                        <i class="fa-brands fa-whatsapp"></i>
                     </div>
                     <div>
-                        <p data-key="label_whatsapp" class="text-[10px] font-bold text-indTextMuted uppercase tracking-wider mb-0.5">Assistance Rapide</p>
-                        <h3 data-key="val_whatsapp" class="font-bold text-premiumDark">Message WhatsApp</h3>
-                    </div>
-                </a>
-
-                <a href="mailto:atlasgroupeinter@gmail.com" class="bg-indCard border border-indBorder rounded-xl p-5 flex items-center gap-4 hover:border-amber-500 hover:shadow-md transition-all group">
-                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center text-xl group-hover:bg-amber-500 group-hover:text-white transition-colors">
-                        <i class="fa-solid fa-envelope"></i>
-                    </div>
-                    <div class="overflow-hidden">
-                        <p data-key="label_email" class="text-[10px] font-bold text-indTextMuted uppercase tracking-wider mb-0.5">Courriel</p>
-                        <h3 class="font-bold text-premiumDark text-sm truncate">atlasgroupeinter@gmail.com</h3>
+                        <p data-key="label_whatsapp" class="text-[9px] font-bold text-indTextMuted uppercase tracking-widest mb-0.5">Ligne d'Urgence</p>
+                        <h3 data-key="val_whatsapp" class="font-bold text-[13px] text-premiumDark">Message WhatsApp</h3>
                     </div>
                 </a>
 
             </div>
         </section>
 
-        <!-- B. Assistance Téléphonique -->
+        <!-- C. Foire Aux Questions (FAQ Dense) -->
         <section>
-            <h2 data-key="phone_title" class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 pl-1">Assistance Téléphonique</h2>
-            <div class="bg-indCard border border-indBorder rounded-xl overflow-hidden shadow-sm">
-                <div class="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-indBorder">
-                    <a href="tel:+22670873773" class="flex justify-between items-center p-5 hover:bg-slate-50 transition-colors group">
-                        <span class="font-mono font-bold text-premiumDark group-hover:text-indAccent">+226 70 87 37 73</span>
-                        <i class="fa-solid fa-phone text-indTextMuted group-hover:text-indAccent"></i>
-                    </a>
-                    <a href="tel:+22676203848" class="flex justify-between items-center p-5 hover:bg-slate-50 transition-colors group">
-                        <span class="font-mono font-bold text-premiumDark group-hover:text-indAccent">+226 76 20 38 48</span>
-                        <i class="fa-solid fa-phone text-indTextMuted group-hover:text-indAccent"></i>
-                    </a>
-                    <a href="tel:+22678370803" class="flex justify-between items-center p-5 hover:bg-slate-50 transition-colors group">
-                        <span class="font-mono font-bold text-premiumDark group-hover:text-indAccent">+226 78 37 08 03</span>
-                        <i class="fa-solid fa-phone text-indTextMuted group-hover:text-indAccent"></i>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- C. Foire Aux Questions (FAQ) -->
-        <section>
-            <h2 data-key="faq_title" class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 pl-1">Foire Aux Questions (FAQ)</h2>
-            <div class="space-y-3">
+            <h2 data-key="faq_title" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3 pl-1 border-b border-indBorder pb-1.5">Base de Connaissances (FAQ)</h2>
+            <div class="space-y-2">
                 
                 <!-- Items FAQ -->
-                <div class="faq-item bg-indCard border border-indBorder rounded-xl transition-colors">
-                    <button class="w-full text-left p-4 flex justify-between items-center outline-none focus:bg-slate-50 rounded-xl" onclick="toggleFaq(this)">
-                        <span data-key="q1" class="font-bold text-sm text-premiumDark">Comment fonctionne le taux de change fixe ?</span>
-                        <i class="fa-solid fa-chevron-down text-indAccent faq-icon transition-transform duration-300 text-xs"></i>
+                <div class="faq-item bg-white border border-indBorder rounded transition-colors">
+                    <button class="w-full text-left p-3 flex justify-between items-center outline-none focus:bg-slate-50 rounded" onclick="toggleFaq(this)">
+                        <span data-key="q1" class="font-bold text-[13px] text-premiumDark">Comment fonctionne la parité stricte du réseau ?</span>
+                        <i class="fa-solid fa-chevron-down text-indAccent faq-icon transition-transform duration-200 text-[10px]"></i>
                     </button>
                     <div class="faq-content">
-                        <div class="px-4 pb-4 pt-1 text-sm text-indTextMuted leading-relaxed" data-key="a1">
-                            Sur notre écosystème, 1 AG-COIN (₳) est strictement égal à 1 XOF (Franc CFA), garantissant une stabilité financière absolue.
+                        <div class="px-3 pb-3 pt-0 text-[11px] text-slate-600 leading-relaxed" data-key="a1">
+                            Sur l'infrastructure Nexus Core L1, 1 AG-COIN (₳) est strictement adossé à 1 XOF (Franc CFA) via un système de réserve fractionnaire audité, garantissant une stabilité financière absolue pour les transactions B2B.
                         </div>
                     </div>
                 </div>
 
-                <div class="faq-item bg-indCard border border-indBorder rounded-xl transition-colors">
-                    <button class="w-full text-left p-4 flex justify-between items-center outline-none focus:bg-slate-50 rounded-xl" onclick="toggleFaq(this)">
-                        <span data-key="q2" class="font-bold text-sm text-premiumDark">Quel est le délai de validation des dépôts ?</span>
-                        <i class="fa-solid fa-chevron-down text-indAccent faq-icon transition-transform duration-300 text-xs"></i>
+                <div class="faq-item bg-white border border-indBorder rounded transition-colors">
+                    <button class="w-full text-left p-3 flex justify-between items-center outline-none focus:bg-slate-50 rounded" onclick="toggleFaq(this)">
+                        <span data-key="q2" class="font-bold text-[13px] text-premiumDark">Quel est le SLA (Service Level Agreement) du réseau L1 ?</span>
+                        <i class="fa-solid fa-chevron-down text-indAccent faq-icon transition-transform duration-200 text-[10px]"></i>
                     </button>
                     <div class="faq-content">
-                        <div class="px-4 pb-4 pt-1 text-sm text-indTextMuted leading-relaxed" data-key="a2">
-                            Les dépôts via notre service d'échange d'actifs ou en monnaie locale sont traités instantanément ou en quelques minutes après validation réseau.
+                        <div class="px-3 pb-3 pt-0 text-[11px] text-slate-600 leading-relaxed" data-key="a2">
+                            Atlas & Duc Corporation garantit un uptime de 99.999% grâce à l'algorithme nBFT et une architecture de serveurs redondants (Node.js/PM2/Argo Tunnels) déployée sur de multiples centres de données sécurisés.
                         </div>
                     </div>
                 </div>
 
-                <div class="faq-item bg-indCard border border-indBorder rounded-xl transition-colors">
-                    <button class="w-full text-left p-4 flex justify-between items-center outline-none focus:bg-slate-50 rounded-xl" onclick="toggleFaq(this)">
-                        <span data-key="q3" class="font-bold text-sm text-premiumDark">Quelle blockchain est utilisée par AGI ?</span>
-                        <i class="fa-solid fa-chevron-down text-indAccent faq-icon transition-transform duration-300 text-xs"></i>
+                <div class="faq-item bg-white border border-indBorder rounded transition-colors">
+                    <button class="w-full text-left p-3 flex justify-between items-center outline-none focus:bg-slate-50 rounded" onclick="toggleFaq(this)">
+                        <span data-key="q3" class="font-bold text-[13px] text-premiumDark">Comment récupérer mes accès si je perds ma phrase mnémonique ?</span>
+                        <i class="fa-solid fa-chevron-down text-indAccent faq-icon transition-transform duration-200 text-[10px]"></i>
                     </button>
                     <div class="faq-content">
-                        <div class="px-4 pb-4 pt-1 text-sm text-indTextMuted leading-relaxed" data-key="a3">
-                            Toutes nos opérations de transfert de jetons sécurisés transitent exclusivement par Nexus Core, notre infrastructure blockchain propriétaire.
+                        <div class="px-3 pb-3 pt-0 text-[11px] text-slate-600 leading-relaxed" data-key="a3">
+                            En raison de notre architecture "Non-Custodial" et de la dérivation cryptographique Argon2id, Atlas & Duc n'a aucun accès à vos clés privées. La perte de la phrase secrète entraîne la perte irréversible des accès au portefeuille.
                         </div>
                     </div>
                 </div>
 
-                <div class="faq-item bg-indCard border border-indBorder rounded-xl transition-colors">
-                    <button class="w-full text-left p-4 flex justify-between items-center outline-none focus:bg-slate-50 rounded-xl" onclick="toggleFaq(this)">
-                        <span data-key="q4" class="font-bold text-sm text-premiumDark">Comment fonctionnent les packages d'investissement ?</span>
-                        <i class="fa-solid fa-chevron-down text-indAccent faq-icon transition-transform duration-300 text-xs"></i>
+                <div class="faq-item bg-white border border-indBorder rounded transition-colors">
+                    <button class="w-full text-left p-3 flex justify-between items-center outline-none focus:bg-slate-50 rounded" onclick="toggleFaq(this)">
+                        <span data-key="q4" class="font-bold text-[13px] text-premiumDark">Où consulter le registre légal de la Corporation ?</span>
+                        <i class="fa-solid fa-chevron-down text-indAccent faq-icon transition-transform duration-200 text-[10px]"></i>
                     </button>
                     <div class="faq-content">
-                        <div class="px-4 pb-4 pt-1 text-sm text-indTextMuted leading-relaxed" data-key="a4">
-                            Nous proposons trois rendements (5%, 10% et 25% de ROI) étalés sur une période d'immobilisation sécurisée de 30 à 180 jours complets.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="faq-item bg-indCard border border-indBorder rounded-xl transition-colors">
-                    <button class="w-full text-left p-4 flex justify-between items-center outline-none focus:bg-slate-50 rounded-xl" onclick="toggleFaq(this)">
-                        <span data-key="q5" class="font-bold text-sm text-premiumDark">Quels projets industriels financez-vous ?</span>
-                        <i class="fa-solid fa-chevron-down text-indAccent faq-icon transition-transform duration-300 text-xs"></i>
-                    </button>
-                    <div class="faq-content">
-                        <div class="px-4 pb-4 pt-1 text-sm text-indTextMuted leading-relaxed" data-key="a5">
-                            Vos capitaux soutiennent directement l'économie réelle burkinabè, notamment l'usine de tissage de coton et la production d'énergie solaire.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="faq-item bg-indCard border border-indBorder rounded-xl transition-colors">
-                    <button class="w-full text-left p-4 flex justify-between items-center outline-none focus:bg-slate-50 rounded-xl" onclick="toggleFaq(this)">
-                        <span data-key="q6" class="font-bold text-sm text-premiumDark">Le casino en ligne est-il hautement sécurisé ?</span>
-                        <i class="fa-solid fa-chevron-down text-indAccent faq-icon transition-transform duration-300 text-xs"></i>
-                    </button>
-                    <div class="faq-content">
-                        <div class="px-4 pb-4 pt-1 text-sm text-indTextMuted leading-relaxed" data-key="a6">
-                            Absolument. Nos machines à sous et paris sportifs Nexus Bet sont adossés à des algorithmes audités garantissant une transparence totale.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="faq-item bg-indCard border border-indBorder rounded-xl transition-colors">
-                    <button class="w-full text-left p-4 flex justify-between items-center outline-none focus:bg-slate-50 rounded-xl" onclick="toggleFaq(this)">
-                        <span data-key="q7" class="font-bold text-sm text-premiumDark">Que faire en cas d'erreur de transaction ?</span>
-                        <i class="fa-solid fa-chevron-down text-indAccent faq-icon transition-transform duration-300 text-xs"></i>
-                    </button>
-                    <div class="faq-content">
-                        <div class="px-4 pb-4 pt-1 text-sm text-indTextMuted leading-relaxed" data-key="a7">
-                            Ouvrez immédiatement notre Chat Privé Nexus ou contactez-nous par téléphone pour une prise en charge par nos ingénieurs.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="faq-item bg-indCard border border-indBorder rounded-xl transition-colors">
-                    <button class="w-full text-left p-4 flex justify-between items-center outline-none focus:bg-slate-50 rounded-xl" onclick="toggleFaq(this)">
-                        <span data-key="q8" class="font-bold text-sm text-premiumDark">L'authentification biométrique est-elle requise ?</span>
-                        <i class="fa-solid fa-chevron-down text-indAccent faq-icon transition-transform duration-300 text-xs"></i>
-                    </button>
-                    <div class="faq-content">
-                        <div class="px-4 pb-4 pt-1 text-sm text-indTextMuted leading-relaxed" data-key="a8">
-                            Oui, l'application intègre le protocole de sécurité native NexusBridge pour valider vos opérations financières à haut volume.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="faq-item bg-indCard border border-indBorder rounded-xl transition-colors">
-                    <button class="w-full text-left p-4 flex justify-between items-center outline-none focus:bg-slate-50 rounded-xl" onclick="toggleFaq(this)">
-                        <span data-key="q9" class="font-bold text-sm text-premiumDark">Où trouver les statuts légaux d'AGI ?</span>
-                        <i class="fa-solid fa-chevron-down text-indAccent faq-icon transition-transform duration-300 text-xs"></i>
-                    </button>
-                    <div class="faq-content">
-                        <div class="px-4 pb-4 pt-1 text-sm text-indTextMuted leading-relaxed" data-key="a9">
-                            Atlas Groupe International est légalement déclaré au Burkina Faso sous le numéro de récépissé officiel PHUE-3539/2025 du 11/07/2025.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="faq-item bg-indCard border border-indBorder rounded-xl transition-colors">
-                    <button class="w-full text-left p-4 flex justify-between items-center outline-none focus:bg-slate-50 rounded-xl" onclick="toggleFaq(this)">
-                        <span data-key="q10" class="font-bold text-sm text-premiumDark">Les retraits de gains sont-ils limités ?</span>
-                        <i class="fa-solid fa-chevron-down text-indAccent faq-icon transition-transform duration-300 text-xs"></i>
-                    </button>
-                    <div class="faq-content">
-                        <div class="px-4 pb-4 pt-1 text-sm text-indTextMuted leading-relaxed" data-key="a10">
-                            Les retraits s'effectuent conformément aux conditions de liquidité d'écosystème via notre passerelle d'échange d'actifs sécurisée.
+                        <div class="px-3 pb-3 pt-0 text-[11px] text-slate-600 leading-relaxed" data-key="a4">
+                            Atlas & Duc Corporation est officiellement enregistrée et régulée au Burkina Faso sous le numéro de récépissé PHUE-3539/2025 du 11/07/2025. Les documents légaux peuvent être requis via l'adresse de l'Administration.
                         </div>
                     </div>
                 </div>
@@ -324,53 +280,41 @@
             </div>
         </section>
 
-        <!-- Message de bas de page -->
-        <div class="bg-indAccent/5 border border-indAccent/20 rounded-xl p-6 text-center max-w-3xl mx-auto">
-            <i class="fa-solid fa-shield-halved text-indAccent text-2xl mb-3"></i>
-            <p data-key="footer_text" class="text-sm text-slate-600 font-medium leading-relaxed">
-                Notre engagement est de fournir une assistance technique de premier ordre. Que ce soit pour des questions liées aux transactions blockchain, aux erreurs de dépôt, ou aux problèmes de connexion, nos experts sont formés pour diagnostiquer et résoudre vos problèmes avec une efficacité inégalée. La sécurité de vos fonds et la confidentialité de vos données restent nos priorités absolues dans cet écosystème décentralisé complexe.
+        <!-- Message de bas de page industriel -->
+        <div class="bg-slate-50 border border-slate-200 rounded p-5 text-center mt-6">
+            <i class="fa-solid fa-server text-slate-400 text-xl mb-2"></i>
+            <p data-key="footer_text" class="text-[11px] text-slate-500 font-medium leading-relaxed max-w-2xl mx-auto">
+                Notre engagement est de fournir une infrastructure L1 résiliente et une assistance technique de premier ordre. Que ce soit pour des questions d'intégration JSON-RPC, des requêtes de nœuds validateurs ou de l'ingénierie de smart contracts, le pôle technique d'Atlas & Duc est à votre disposition 24/7.
             </p>
         </div>
 
     </main>
 
     <!-- ========================================== -->
-    <!-- 4. FOOTER INDUSTRIEL CENTRÉ                -->
+    <!-- 4. FOOTER INDUSTRIEL COMPACT               -->
     <!-- ========================================== -->
-    <footer class="bg-premiumDark border-t border-slate-800 mt-auto pt-14 pb-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
+    <footer class="bg-premiumDark border-t border-slate-800 mt-auto pt-10 pb-8">
+        <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
             
-            <!-- Marque & Logo -->
-            <div class="flex flex-col items-center gap-4 mb-8">
-                <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo Atlas & Duc" class="h-16 w-16 rounded-full border-2 border-slate-700 shadow-xl">
-                <div>
-                    <h4 class="text-white font-black text-2xl tracking-tight">Atlas & Duc Corp.</h4>
-                    <p class="text-slate-400 text-sm font-medium mt-1">Infrastructure Blockchain Souveraine Layer-1</p>
+            <div class="flex items-center gap-3 mb-6">
+                <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo Atlas & Duc" class="h-10 w-10 rounded-full border border-slate-700 shadow-xl">
+                <div class="text-left">
+                    <h4 class="text-white font-black text-base tracking-tight leading-none mb-1">Atlas & Duc Corp.</h4>
+                    <p class="text-slate-400 text-[10px] font-medium uppercase tracking-widest">Infrastructure Layer-1</p>
                 </div>
             </div>
 
-            <!-- Liens de Navigation -->
-            <div class="flex flex-wrap justify-center gap-6 sm:gap-10 text-sm font-semibold text-slate-400 border-b border-slate-800 pb-10 w-full max-w-2xl">
-                <a href="documentation.html" class="hover:text-indAccent hover:-translate-y-0.5 transition-all duration-200">
-                    <i class="fa-solid fa-book mr-1.5"></i> Documentation
-                </a>
-                <a href="api.html" class="hover:text-indAccent hover:-translate-y-0.5 transition-all duration-200">
-                    <i class="fa-solid fa-server mr-1.5"></i> API RPC
-                </a>
-                <a href="support.html" class="text-indAccent hover:-translate-y-0.5 transition-all duration-200">
-                    <i class="fa-solid fa-headset mr-1.5"></i> Support
-                </a>
+            <div class="flex flex-wrap justify-center gap-6 text-xs font-semibold text-slate-400 border-b border-slate-800 pb-6 w-full max-w-md mb-6">
+                <a href="documentation.html" class="hover:text-indAccent transition-colors"><i class="fa-solid fa-book mr-1"></i> Docs</a>
+                <a href="api.html" class="hover:text-indAccent transition-colors"><i class="fa-solid fa-server mr-1"></i> API RPC</a>
+                <a href="support.html" class="text-indAccent transition-colors"><i class="fa-solid fa-headset mr-1"></i> Support B2B</a>
             </div>
 
-            <!-- Statut & Copyright -->
-            <div class="flex flex-col items-center gap-5 pt-8 text-xs text-slate-500 font-medium w-full">
-                <div class="flex items-center gap-2.5 bg-slate-800/60 px-4 py-2.5 rounded-lg border border-slate-700 shadow-inner">
-                    <div class="w-2.5 h-2.5 rounded-full bg-indSuccess live-pulse"></div>
-                    <span class="text-slate-300 font-bold uppercase tracking-wide text-[10px]">Système Opérationnel L1</span>
-                </div>
-                <p>&copy; 2026 Atlas & Duc Corporation. Conçu et développé au Burkina Faso. Tous droits réservés.</p>
+            <div class="flex items-center gap-2 bg-slate-800/60 px-3 py-1.5 rounded border border-slate-700 shadow-inner mb-3">
+                <div class="w-1.5 h-1.5 rounded-full bg-indSuccess live-pulse"></div>
+                <span class="text-slate-300 font-bold uppercase tracking-widest text-[8px]">Système L1 Opérationnel</span>
             </div>
-
+            <p class="text-[9px] text-slate-500 font-medium">&copy; 2026 Atlas & Duc Corporation. Burkina Faso. Tous droits réservés.</p>
         </div>
     </footer>
 
@@ -398,84 +342,71 @@
             const item = button.parentElement;
             const isActive = item.classList.contains('active');
             
-            // Ferme tous les autres
             document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
-            
-            // Ouvre ou ferme le cliqué
-            if (!isActive) {
-                item.classList.add('active');
-            }
+            if (!isActive) item.classList.add('active');
         }
 
-        // --- GESTION MULTILINGUE ---
+        // --- GESTION MULTILINGUE B2B ---
         const dict = {
             fr: {
-                title: "CENTRE D'<span class='text-indAccent'>AIDE</span>",
-                subtitle: "Assistance technique spécialisée pour la plateforme NEXUS BET et les services technologiques fournis par AGI Groupe. Notre équipe d'ingénieurs et de support client est mobilisée pour garantir une expérience fluide, sécurisée et optimale pour tous les utilisateurs internationaux à chaque instant.",
-                status: "AGENTS EN LIGNE : DISPONIBLES",
-                direct_channels: "Canaux Directs",
-                label_chat: "Communication",
-                val_chat: "Chat Privé Nexus",
-                label_whatsapp: "Assistance Rapide",
+                title: "PORTAIL DE <span class='text-indAccent'>SUPPORT B2B</span>",
+                subtitle: "Assistance technique et administrative dédiée à l'infrastructure Nexus Core L1. Nos départements d'ingénierie et de direction sont mobilisés pour garantir la continuité de vos opérations sur le réseau souverain d'Atlas & Duc Corporation.",
+                status: "Opérations L1 : Agents Disponibles",
+                corp_dir: "Départements & Annuaire Corporatif L1",
+                dir_title: "Présidence & Direction",
+                dir_pres: "Présidence (Téléphone)",
+                dir_email: "Direction (Courriel)",
+                admin_title: "CTO & Administration",
+                admin_cto: "Direction Technique (CTO)",
+                admin_email: "Administration (Courriel)",
+                tech_title: "Support & Assistance",
+                tech_phone: "Assistance Technique (Tel)",
+                tech_email: "Support Technique (Courriel)",
+                direct_channels: "Messagerie Rapide",
+                label_chat: "Portail Sécurisé",
+                val_chat: "Ouvrir un Ticket Interne",
+                label_whatsapp: "Ligne d'Urgence",
                 val_whatsapp: "Message WhatsApp",
-                label_email: "Courriel",
-                phone_title: "Assistance Téléphonique",
-                faq_title: "Foire Aux Questions (FAQ)",
-                footer_text: "Notre engagement est de fournir une assistance technique de premier ordre. Que ce soit pour des questions liées aux transactions blockchain, aux erreurs de dépôt, ou aux problèmes de connexion, nos experts sont formés pour diagnostiquer et résoudre vos problèmes avec une efficacité inégalée. La sécurité de vos fonds et la confidentialité de vos données restent nos priorités absolues dans cet écosystème décentralisé complexe.",
-                q1: "Comment fonctionne le taux de change fixe ?",
-                a1: "Sur notre écosystème, 1 AG-COIN (₳) est strictement égal à 1 XOF (Franc CFA), garantissant une stabilité financière absolue.",
-                q2: "Quel est le délai de validation des dépôts ?",
-                a2: "Les dépôts via notre service d'échange d'actifs ou en monnaie locale sont traités instantanément ou en quelques minutes après validation réseau.",
-                q3: "Quelle blockchain est utilisée par AGI ?",
-                a3: "Toutes nos opérations de transfert de jetons sécurisés transitent exclusivement par Nexus Core, notre infrastructure blockchain propriétaire.",
-                q4: "Comment fonctionnent les packages d'investissement ?",
-                a4: "Nous proposons trois rendements (5%, 10% et 25% de ROI) étalés sur une période d'immobilisation sécurisée de 30 à 180 jours complets.",
-                q5: "Quels projets industriels financez-vous ?",
-                a5: "Vos capitaux soutiennent directement l'économie réelle burkinabè, notamment l'usine de tissage de coton et la production d'énergie solaire.",
-                q6: "Le casino en ligne est-il hautement sécurisé ?",
-                a6: "Absolument. Nos machines à sous et paris sportifs Nexus Bet sont adossés à des algorithmes audités garantissant une transparence totale.",
-                q7: "Que faire en cas d'erreur de transaction ?",
-                a7: "Ouvrez immédiatement notre Chat Privé Nexus ou contactez-nous par téléphone pour une prise en charge par nos ingénieurs.",
-                q8: "L'authentification biométrique est-elle requise ?",
-                a8: "Oui, l'application intègre le protocole de sécurité native NexusBridge pour valider vos opérations financières à haut volume.",
-                q9: "Où trouver les statuts légaux d'AGI ?",
-                a9: "Atlas Groupe International est légalement déclaré au Burkina Faso sous le numéro de récépissé officiel PHUE-3539/2025 du 11/07/2025.",
-                q10: "Les retraits de gains sont-ils limités ?",
-                a10: "Les retraits s'effectuent conformément aux conditions de liquidité d'écosystème via notre passerelle d'échange d'actifs sécurisée."
+                faq_title: "Base de Connaissances (FAQ)",
+                q1: "Comment fonctionne la parité stricte du réseau ?",
+                a1: "Sur l'infrastructure Nexus Core L1, 1 AG-COIN (₳) est strictement adossé à 1 XOF (Franc CFA) via un système de réserve fractionnaire audité, garantissant une stabilité financière absolue pour les transactions B2B.",
+                q2: "Quel est le SLA (Service Level Agreement) du réseau L1 ?",
+                a2: "Atlas & Duc Corporation garantit un uptime de 99.999% grâce à l'algorithme nBFT et une architecture de serveurs redondants (Node.js/PM2/Argo Tunnels) déployée sur de multiples centres de données sécurisés.",
+                q3: "Comment récupérer mes accès si je perds ma phrase mnémonique ?",
+                a3: "En raison de notre architecture 'Non-Custodial' et de la dérivation cryptographique Argon2id, Atlas & Duc n'a aucun accès à vos clés privées. La perte de la phrase secrète entraîne la perte irréversible des accès au portefeuille.",
+                q4: "Où consulter le registre légal de la Corporation ?",
+                a4: "Atlas & Duc Corporation est officiellement enregistrée et régulée au Burkina Faso sous le numéro de récépissé PHUE-3539/2025 du 11/07/2025. Les documents légaux peuvent être requis via l'adresse de l'Administration.",
+                footer_text: "Notre engagement est de fournir une infrastructure L1 résiliente et une assistance technique de premier ordre. Que ce soit pour des questions d'intégration JSON-RPC, des requêtes de nœuds validateurs ou de l'ingénierie de smart contracts, le pôle technique d'Atlas & Duc est à votre disposition 24/7."
             },
             en: {
-                title: "HELP <span class='text-indAccent'>CENTER</span>",
-                subtitle: "Specialized technical assistance for the NEXUS BET platform and technology services provided by AGI Group. Our team of engineers and customer support is mobilized to ensure a seamless, secure, and optimal gaming experience for all international users at all times.",
-                status: "AGENTS ONLINE: AVAILABLE",
-                direct_channels: "Direct Channels",
-                label_chat: "Communication",
-                val_chat: "Nexus Private Chat",
-                label_whatsapp: "Quick Support",
+                title: "B2B <span class='text-indAccent'>SUPPORT PORTAL</span>",
+                subtitle: "Dedicated technical and administrative assistance for the Nexus Core L1 infrastructure. Our engineering and management departments are mobilized to ensure the continuity of your operations on the sovereign network of Atlas & Duc Corporation.",
+                status: "L1 Operations: Agents Available",
+                corp_dir: "Departments & L1 Corporate Directory",
+                dir_title: "Presidency & Management",
+                dir_pres: "Presidency (Phone)",
+                dir_email: "Management (Email)",
+                admin_title: "CTO & Administration",
+                admin_cto: "Technical Direction (CTO)",
+                admin_email: "Administration (Email)",
+                tech_title: "Support & Assistance",
+                tech_phone: "Technical Assistance (Tel)",
+                tech_email: "Technical Support (Email)",
+                direct_channels: "Quick Messaging",
+                label_chat: "Secure Portal",
+                val_chat: "Open an Internal Ticket",
+                label_whatsapp: "Emergency Line",
                 val_whatsapp: "WhatsApp Message",
-                label_email: "Email",
-                phone_title: "Phone Support",
-                faq_title: "Frequently Asked Questions (FAQ)",
-                footer_text: "Our commitment is to provide first-class technical assistance. Whether it's about blockchain transaction issues, deposit errors, or connection problems, our experts are trained to diagnose and resolve your issues with unmatched efficiency. The security of your funds and the confidentiality of your data remain our absolute priorities in this complex decentralized ecosystem.",
-                q1: "How does the fixed exchange rate work?",
-                a1: "In our ecosystem, 1 AG-COIN (₳) is strictly equal to 1 XOF (CFA Franc), ensuring absolute financial stability.",
-                q2: "What is the processing time for deposits?",
-                a2: "Deposits via our asset exchange service or local currency are processed instantly or within minutes after network validation.",
-                q3: "Which blockchain does AGI use?",
-                a3: "All secure token transfer operations transit exclusively through Nexus Core, our proprietary blockchain infrastructure.",
-                q4: "How do the investment packages work?",
-                a4: "We offer three returns (5%, 10%, and 25% ROI) spread over a secure lock-up period of 30 to 180 full days.",
-                q5: "Which industrial projects do you fund?",
-                a5: "Your capital directly supports the real Burkinabè economy, including the cotton weaving factory and solar energy production.",
-                q6: "Is the online casino highly secure?",
-                a6: "Absolutely. Our slots and Nexus Bet sports betting are backed by audited algorithms ensuring total transparency.",
-                q7: "What should I do in case of a transaction error?",
-                a7: "Immediately open our Nexus Private Chat or contact us by phone for immediate assistance by our engineers.",
-                q8: "Is biometric authentication required?",
-                a8: "Yes, the app integrates the native NexusBridge security protocol to validate high-volume financial operations.",
-                q9: "Where can I find AGI's legal status?",
-                a9: "Atlas Groupe International is legally registered in Burkina Faso under official receipt number PHUE-3539/2025 dated 11/07/2025.",
-                q10: "Are prize withdrawals limited?",
-                a10: "Withdrawals are carried out according to the ecosystem's liquidity terms via our secure asset exchange gateway."
+                faq_title: "Knowledge Base (FAQ)",
+                q1: "How does the network's strict parity work?",
+                a1: "On the Nexus Core L1 infrastructure, 1 AG-COIN (₳) is strictly pegged to 1 XOF (CFA Franc) via an audited fractional reserve system, ensuring absolute financial stability for B2B transactions.",
+                q2: "What is the L1 network's SLA (Service Level Agreement)?",
+                a2: "Atlas & Duc Corporation guarantees a 99.999% uptime thanks to the nBFT algorithm and a redundant server architecture (Node.js/PM2/Argo Tunnels) deployed across multiple secure data centers.",
+                q3: "How to recover my access if I lose my mnemonic phrase?",
+                a3: "Due to our 'Non-Custodial' architecture and Argon2id cryptographic derivation, Atlas & Duc has no access to your private keys. Losing the secret phrase results in an irreversible loss of wallet access.",
+                q4: "Where to view the Corporation's legal registry?",
+                a4: "Atlas & Duc Corporation is officially registered and regulated in Burkina Faso under receipt number PHUE-3539/2025 dated 07/11/2025. Legal documents can be requested via the Administration address.",
+                footer_text: "Our commitment is to provide a resilient L1 infrastructure and first-class technical assistance. Whether it's for JSON-RPC integration questions, validator node requests, or smart contract engineering, the Atlas & Duc technical hub is at your disposal 24/7."
             }
         };
 
@@ -485,7 +416,7 @@
             document.querySelectorAll('[data-key]').forEach(el => {
                 const key = el.getAttribute('data-key');
                 if (dict[currentLang][key]) {
-                    el.innerHTML = dict[currentLang][key]; // innerHTML utilisé pour supporter le span coloré du titre
+                    el.innerHTML = dict[currentLang][key]; 
                 }
             });
         }
