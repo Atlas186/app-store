@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API RPC | Documentation Nexus Core L1</title>
+    <title>API RPC | Nexus Core L1 Developer Portal</title>
     
     <!-- Polices Industrielles -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,283 +20,507 @@
             theme: {
                 extend: {
                     colors: {
-                        premiumDark: '#0F172A',
+                        premiumDark: '#0B1120',
                         indAccent: '#0EA5E9',
                         indSuccess: '#10B981',
                         indBg: '#F8FAFC',
                         indCard: '#FFFFFF',
                         indBorder: '#E2E8F0',
-                        indTextMuted: '#64748B',
-                        goldOrange: '#F59E0B'
+                        indTextMuted: '#64748B'
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                         mono: ['Fira Code', 'monospace']
+                    },
+                    fontSize: {
+                        'xxs': '0.65rem',
+                        'xs': '0.75rem',
+                        '13px': '0.8125rem',
+                        'sm': '0.875rem',
+                        'base': '1rem',
+                        'lg': '1.125rem',
+                        'xl': '1.25rem',
+                        '2xl': '1.5rem',
                     }
                 }
             }
         }
     </script>
     <style>
-        /* Animations Premium & Industrielles */
-        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        /* Animations Premium */
+        .fade-in { animation: fadeIn 0.3s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         
         .live-pulse { animation: pulseGreen 2s infinite; }
-        @keyframes pulseGreen { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); } 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
+        @keyframes pulseGreen { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); } 70% { box-shadow: 0 0 0 4px rgba(16, 185, 129, 0); } 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
         
-        /* Scrollbar Premium */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        /* Scrollbar Industrielle Fine */
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+        
+        html { scroll-behavior: smooth; }
 
-        /* Code Block Styles */
-        .code-block {
-            background-color: #0B1120;
-            border: 1px solid #1E293B;
-            border-radius: 0.75rem;
-            position: relative;
+        /* Style Developer Portal (Thème VS Code Dark) */
+        .dev-code-block {
+            background-color: #1e1e1e;
+            border: 1px solid #2d2d2d;
+            border-radius: 6px;
             overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
         }
-        .code-header {
-            background-color: #0F172A;
-            border-bottom: 1px solid #1E293B;
-            padding: 0.5rem 1rem;
+        .dev-code-header {
+            background-color: #252526;
+            border-bottom: 1px solid #333333;
+            padding: 6px 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+        .syntax-key { color: #9cdcfe; }
+        .syntax-string { color: #ce9178; }
+        .syntax-number { color: #b5cea8; }
+        .syntax-keyword { color: #569cd6; }
+        .syntax-comment { color: #6a9955; }
     </style>
 </head>
 <body class="bg-indBg text-premiumDark font-sans antialiased flex flex-col min-h-screen">
 
     <!-- ========================================== -->
-    <!-- 1. NAVIGATION BAR                          -->
+    <!-- 1. NAVIGATION BAR (Compacte)               -->
     <!-- ========================================== -->
-    <header class="bg-indCard/90 backdrop-blur-md border-b border-indBorder sticky top-0 z-50 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
+    <header class="bg-indCard/95 backdrop-blur-md border-b border-indBorder sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-14">
                 <!-- Logo & Brand -->
-                <a href="index.html" class="flex items-center gap-3 cursor-pointer">
-                    <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo" class="h-9 w-9 rounded-full border border-indBorder object-cover shadow-sm">
-                    <span class="font-extrabold text-xl tracking-tight text-premiumDark">NEXUS<span class="text-indAccent">SCAN</span></span>
+                <a href="index.html" class="flex items-center gap-2 cursor-pointer group">
+                    <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo" class="h-7 w-7 rounded-full border border-indBorder object-cover shadow-sm group-hover:border-indAccent transition-colors">
+                    <span class="font-extrabold text-lg tracking-tight text-premiumDark">NEXUS<span class="text-indAccent">SCAN</span></span>
                 </a>
 
                 <!-- Desktop Navigation -->
-                <nav class="hidden md:flex space-x-8 items-center">
-                    <a href="index.html" class="text-indTextMuted hover:text-premiumDark font-semibold text-sm transition-colors py-5"><i class="fa-solid fa-house mr-1"></i> Accueil</a>
-                    <a href="documentation.html" class="text-indTextMuted hover:text-premiumDark font-semibold text-sm transition-colors py-5"><i class="fa-solid fa-book mr-1"></i> Documentation</a>
-                    <a href="api.html" class="text-indAccent font-bold text-sm border-b-2 border-indAccent py-5"><i class="fa-solid fa-server mr-1"></i> API RPC</a>
+                <nav class="hidden md:flex space-x-6 items-center">
+                    <a href="index.html" class="text-indTextMuted hover:text-premiumDark font-semibold text-13px transition-colors py-4"><i class="fa-solid fa-house mr-1"></i> Accueil</a>
+                    <a href="documentation.html" class="text-indTextMuted hover:text-premiumDark font-semibold text-13px transition-colors py-4"><i class="fa-solid fa-book mr-1"></i> Documentation</a>
+                    <a href="api.html" class="text-indAccent font-bold text-13px border-b-2 border-indAccent py-4"><i class="fa-solid fa-server mr-1"></i> API RPC</a>
                 </nav>
 
                 <!-- Network Status -->
-                <div class="flex items-center gap-4">
-                    <div class="hidden sm:flex items-center gap-2 bg-indSuccess/10 border border-indSuccess/20 px-3 py-1.5 rounded-full">
-                        <div class="w-2 h-2 rounded-full bg-indSuccess live-pulse"></div>
-                        <span class="text-xs font-bold text-indSuccess tracking-wide">MAINNET L1</span>
+                <div class="flex items-center gap-3">
+                    <div class="hidden sm:flex items-center gap-1.5 bg-indSuccess/10 border border-indSuccess/20 px-2.5 py-1 rounded-full">
+                        <div class="w-1.5 h-1.5 rounded-full bg-indSuccess live-pulse"></div>
+                        <span class="text-[10px] font-bold text-indSuccess tracking-wide">MAINNET L1</span>
                     </div>
-                    
                     <!-- Mobile Menu Button -->
-                    <button id="mobileMenuBtn" class="md:hidden text-premiumDark hover:text-indAccent focus:outline-none text-2xl">
+                    <button id="mobileMenuBtn" class="md:hidden text-premiumDark hover:text-indAccent focus:outline-none text-xl">
                         <i class="fa-solid fa-bars"></i>
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- Mobile Navigation Menu -->
-        <div id="mobileMenu" class="hidden md:hidden bg-indCard border-b border-indBorder px-4 pt-2 pb-4 shadow-lg absolute w-full">
-            <a href="index.html" class="block py-3 text-indTextMuted font-semibold text-base border-b border-indBorder"><i class="fa-solid fa-house w-6"></i> Accueil</a>
-            <a href="documentation.html" class="block py-3 text-indTextMuted font-semibold text-base border-b border-indBorder"><i class="fa-solid fa-book w-6"></i> Documentation</a>
-            <a href="api.html" class="block py-3 text-indAccent font-bold text-base border-b border-indBorder"><i class="fa-solid fa-server w-6"></i> API RPC</a>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-indCard border-b border-indBorder px-4 pt-2 pb-4 shadow-lg absolute w-full z-50">
+            <a href="NexusScan.html" class="block py-2.5 text-indTextMuted font-semibold text-13px border-b border-indBorder"><i class="fa-solid fa-house w-6 text-center"></i> </a>
+            <a href="documentation.html" class="block py-2.5 text-indTextMuted font-semibold text-13px border-b border-indBorder"><i class="fa-solid fa-book w-6 text-center"></i> Documentation</a>
+            <a href="api.html" class="block py-2.5 text-indAccent font-bold text-13px bg-sky-50 px-2 rounded mt-1"><i class="fa-solid fa-server w-6 text-center"></i> API RPC</a>
         </div>
     </header>
 
     <!-- ========================================== -->
-    <!-- 2. HERO SECTION API                        -->
+    <!-- 2. HERO SECTION API (B2B Focus - Dense)    -->
     <!-- ========================================== -->
-    <section class="bg-premiumDark text-white pt-10 pb-16 px-4 relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-premiumDark via-slate-800 to-[#0B1120] z-0"></div>
-        <div class="absolute inset-0 opacity-[0.03] z-0" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 24px 24px;"></div>
+    <section class="bg-premiumDark text-white pt-10 pb-12 px-4 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-[#0f172a] via-slate-800 to-[#020617] z-0"></div>
+        <div class="absolute inset-0 opacity-[0.04]" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 16px 16px;"></div>
 
-        <div class="max-w-5xl mx-auto relative z-10 text-center">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indAccent/20 border border-indAccent/30 text-indAccent text-xs font-bold mb-4">
-                <i class="fa-solid fa-bolt"></i> JSON-RPC 2.0
+        <div class="max-w-4xl mx-auto relative z-10 text-center fade-in">
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-indAccent/20 border border-indAccent/40 text-indAccent text-[10px] font-black tracking-widest uppercase mb-4">
+                <i class="fa-solid fa-satellite-dish"></i> Endpoints Industriels
             </div>
-            <h1 class="text-3xl md:text-5xl font-black mb-4 tracking-tight">API RPC <span class="text-indAccent">Nexus Core</span></h1>
-            <p class="text-slate-400 text-sm md:text-lg max-w-2xl mx-auto font-medium">Connectez vos dApps, wallets et plateformes d'échange directement à l'infrastructure souveraine L1 d'Atlas & Duc Corporation.</p>
+            <h1 class="text-2xl md:text-3xl lg:text-4xl font-black mb-3 tracking-tight leading-tight">Connectivité RPC <span class="text-indAccent">Haute Performance</span></h1>
+            <p class="text-slate-400 text-xs md:text-13px max-w-2xl mx-auto font-medium leading-relaxed">
+                Interfacez vos plateformes d'échange, dApps et systèmes institutionnels avec l'infrastructure souveraine Nexus Core L1. SLA de 99.99% garanti par Atlas & Duc Corporation.
+            </p>
+            
+            <div class="mt-6 flex flex-wrap justify-center gap-3">
+                <a href="#endpoints" class="bg-indAccent hover:bg-sky-600 text-white px-5 py-2 rounded text-xs font-bold transition-colors shadow-lg shadow-indAccent/20">Démarrer l'intégration</a>
+                <a href="support.html" class="bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white px-5 py-2 rounded text-xs font-bold transition-colors">Contacter le pôle B2B</a>
+            </div>
         </div>
     </section>
 
     <!-- ========================================== -->
     <!-- 3. MAIN DOCUMENTATION LAYOUT               -->
     <!-- ========================================== -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full flex flex-col lg:flex-row gap-8">
+    <main class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full flex flex-col lg:flex-row gap-8">
         
-        <!-- SIDEBAR (Sommaire) -->
-        <aside class="w-full lg:w-64 shrink-0">
-            <div class="lg:sticky lg:top-24 bg-indCard rounded-xl border border-indBorder p-5 shadow-sm">
-                <h3 class="font-bold text-premiumDark uppercase tracking-wider text-xs mb-4">Sommaire</h3>
-                <ul class="space-y-3 text-sm font-medium text-indTextMuted">
-                    <li><a href="#network-config" class="hover:text-indAccent transition-colors flex items-center gap-2"><i class="fa-solid fa-network-wired w-4"></i> Configuration Réseau</a></li>
-                    <li><a href="#auth" class="hover:text-indAccent transition-colors flex items-center gap-2"><i class="fa-solid fa-shield-halved w-4"></i> Authentification & Limites</a></li>
-                    
-                    <li class="pt-3 pb-1 uppercase text-[10px] font-extrabold text-slate-400 tracking-widest">Méthodes Core</li>
-                    <li><a href="#nexus-blocknumber" class="hover:text-indAccent transition-colors block pl-2 border-l-2 border-transparent hover:border-indAccent">nexus_blockNumber</a></li>
-                    <li><a href="#nexus-getbalance" class="hover:text-indAccent transition-colors block pl-2 border-l-2 border-transparent hover:border-indAccent">nexus_getBalance</a></li>
-                    <li><a href="#nexus-sendrawtransaction" class="hover:text-indAccent transition-colors block pl-2 border-l-2 border-transparent hover:border-indAccent">nexus_sendRawTx</a></li>
-                </ul>
+        <!-- SIDEBAR (Navigation Rapide Compacte) -->
+        <aside class="w-full lg:w-60 shrink-0">
+            <div class="lg:sticky lg:top-20 bg-indCard rounded-lg border border-indBorder p-4 shadow-sm">
+                <h3 class="font-black text-premiumDark uppercase tracking-widest text-[10px] mb-4 border-b border-indBorder pb-2">Sommaire d'Intégration</h3>
+                
+                <div class="space-y-5">
+                    <!-- Config -->
+                    <div>
+                        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Configuration</p>
+                        <ul class="space-y-1.5 text-xs font-medium text-slate-600">
+                            <li><a href="#endpoints" class="hover:text-indAccent transition-colors flex items-center gap-2"><i class="fa-solid fa-network-wired w-3 text-center"></i> Environnements (URL)</a></li>
+                            <li><a href="#auth" class="hover:text-indAccent transition-colors flex items-center gap-2"><i class="fa-solid fa-shield-halved w-3 text-center"></i> Sécurité & SLA</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Methods -->
+                    <div>
+                        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Méthodes JSON-RPC</p>
+                        <ul class="space-y-1.5 text-xs font-medium text-slate-600 border-l-2 border-slate-100 ml-1.5 pl-2.5">
+                            <li><a href="#nexus-blocknumber" class="hover:text-indAccent transition-colors block truncate">nexus_blockNumber</a></li>
+                            <li><a href="#nexus-getbalance" class="hover:text-indAccent transition-colors block truncate">nexus_getBalance</a></li>
+                            <li><a href="#nexus-estimategas" class="hover:text-indAccent transition-colors block flex items-center justify-between">nexus_estimateGas <span class="bg-indAccent/10 text-indAccent text-[8px] px-1 rounded">New</span></a></li>
+                            <li><a href="#nexus-sendrawtransaction" class="hover:text-indAccent transition-colors block truncate">nexus_sendRawTransaction</a></li>
+                            <li><a href="#nexus-getreceipt" class="hover:text-indAccent transition-colors block truncate">nexus_getTransactionReceipt</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- WebSockets -->
+                    <div>
+                        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Temps Réel</p>
+                        <ul class="space-y-1.5 text-xs font-medium text-slate-600">
+                            <li><a href="#websockets" class="hover:text-indAccent transition-colors flex items-center gap-2"><i class="fa-solid fa-plug w-3 text-center"></i> WebSockets (WSS)</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Annexes -->
+                    <div>
+                        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Annexes</p>
+                        <ul class="space-y-1.5 text-xs font-medium text-slate-600">
+                            <li><a href="#errors" class="hover:text-indAccent transition-colors flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation w-3 text-center"></i> Codes d'Erreur</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </aside>
 
-        <!-- CONTENU PRINCIPAL -->
-        <div class="flex-1 space-y-10 min-w-0">
+        <!-- CONTENU PRINCIPAL (Documentation Dense) -->
+        <div class="flex-1 min-w-0 pb-16">
             
-            <!-- SECTION : Configuration -->
-            <section id="network-config" class="scroll-mt-24">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="w-10 h-10 rounded-lg bg-indAccent/10 text-indAccent flex items-center justify-center text-lg"><i class="fa-solid fa-network-wired"></i></div>
-                    <h2 class="text-2xl font-extrabold text-premiumDark">Configuration Réseau</h2>
+            <!-- SECTION : Environnements -->
+            <section id="endpoints" class="scroll-mt-20 mb-10">
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="w-8 h-8 rounded bg-indAccent/10 text-indAccent flex items-center justify-center text-sm shadow-inner"><i class="fa-solid fa-network-wired"></i></div>
+                    <div>
+                        <h2 class="text-lg md:text-xl font-black text-premiumDark leading-tight">Environnements & Endpoints</h2>
+                        <p class="text-slate-500 font-medium text-[11px] mt-0.5">Paramètres réseaux pour l'intégration des clients Web3.</p>
+                    </div>
                 </div>
-                <p class="text-slate-600 mb-6 leading-relaxed">Pour interagir avec la blockchain Nexus Core L1, vous devez configurer votre client Web3 (Ethers.js, Web3.js ou appels HTTP natifs) avec les paramètres industriels suivants :</p>
                 
-                <div class="bg-indCard rounded-xl border border-indBorder shadow-sm overflow-hidden">
-                    <div class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-indBorder">
-                        <div class="p-5">
-                            <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">URL du Endpoint RPC</p>
-                            <div class="flex items-center gap-2">
-                                <span class="font-mono text-premiumDark font-bold text-sm">https://rpc.agi-nexus-core.click</span>
-                                <button onclick="copyText('https://rpc.agi-nexus-core.click')" class="text-indAccent hover:text-sky-700 p-1"><i class="fa-solid fa-copy"></i></button>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <!-- Mainnet -->
+                    <div class="bg-white border border-indBorder rounded-lg p-4 shadow-sm relative overflow-hidden">
+                        <div class="absolute top-0 right-0 bg-indSuccess text-white text-[9px] font-bold px-2 py-0.5 rounded-bl uppercase tracking-widest">Production</div>
+                        <h3 class="font-bold text-premiumDark text-sm mb-3 flex items-center gap-1.5"><i class="fa-solid fa-globe text-indSuccess text-xs"></i> Mainnet L1</h3>
+                        
+                        <div class="space-y-2.5 text-[11px]">
+                            <div>
+                                <p class="text-slate-400 text-[9px] font-bold uppercase mb-0.5">RPC HTTPS</p>
+                                <div class="flex justify-between items-center bg-slate-50 border border-slate-200 rounded px-2 py-1.5">
+                                    <code class="font-mono text-premiumDark font-bold">https://rpc.agi-nexus-core.click</code>
+                                    <button onclick="copyCodeText('https://rpc.agi-nexus-core.click', this)" class="text-slate-400 hover:text-indAccent transition-colors"><i class="fa-regular fa-copy"></i></button>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <p class="text-slate-400 text-[9px] font-bold uppercase mb-0.5">Chain ID</p>
+                                    <p class="font-mono font-bold">226 <span class="text-[10px] text-slate-500">(0xe2)</span></p>
+                                </div>
+                                <div>
+                                    <p class="text-slate-400 text-[9px] font-bold uppercase mb-0.5">Devise Native</p>
+                                    <p class="font-bold">AG-COIN (₳)</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="p-5">
-                            <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Chain ID (BFA)</p>
-                            <p class="font-mono text-premiumDark font-bold text-sm">226 <span class="text-xs font-normal text-slate-500 ml-2">(Mainnet)</span></p>
-                        </div>
-                        <div class="p-5 border-t divide-indBorder">
-                            <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Symbole Devise</p>
-                            <p class="font-bold text-premiumDark text-sm">AGI <span class="text-indAccent">(₳)</span></p>
-                        </div>
-                        <div class="p-5 border-t divide-indBorder">
-                            <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Explorateur de Blocs</p>
-                            <a href="https://explorer.agi-nexus-core.click" class="font-mono text-indAccent font-bold text-sm hover:underline">explorer.agi-nexus-core.click</a>
+                    </div>
+
+                    <!-- Testnet -->
+                    <div class="bg-white border border-indBorder rounded-lg p-4 shadow-sm relative overflow-hidden">
+                        <div class="absolute top-0 right-0 bg-amber-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-bl uppercase tracking-widest">Dev</div>
+                        <h3 class="font-bold text-premiumDark text-sm mb-3 flex items-center gap-1.5"><i class="fa-solid fa-flask text-amber-500 text-xs"></i> Testnet L1</h3>
+                        
+                        <div class="space-y-2.5 text-[11px]">
+                            <div>
+                                <p class="text-slate-400 text-[9px] font-bold uppercase mb-0.5">RPC HTTPS</p>
+                                <div class="flex justify-between items-center bg-slate-50 border border-slate-200 rounded px-2 py-1.5">
+                                    <code class="font-mono text-premiumDark font-bold">https://testnet-rpc.agi-nexus-core.click</code>
+                                    <button onclick="copyCodeText('https://testnet-rpc.agi-nexus-core.click', this)" class="text-slate-400 hover:text-indAccent transition-colors"><i class="fa-regular fa-copy"></i></button>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <p class="text-slate-400 text-[9px] font-bold uppercase mb-0.5">Chain ID</p>
+                                    <p class="font-mono font-bold">227 <span class="text-[10px] text-slate-500">(0xe3)</span></p>
+                                </div>
+                                <div>
+                                    <p class="text-slate-400 text-[9px] font-bold uppercase mb-0.5">Faucet</p>
+                                    <a href="#" class="text-indAccent font-bold hover:underline">Demander des AGI</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- SECTION : Auth & Limites -->
-            <section id="auth" class="scroll-mt-24">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="w-10 h-10 rounded-lg bg-amber-500/10 text-amber-600 flex items-center justify-center text-lg"><i class="fa-solid fa-shield-halved"></i></div>
-                    <h2 class="text-2xl font-extrabold text-premiumDark">Authentification & Limites</h2>
+            <!-- SECTION : Auth & Sécurité -->
+            <section id="auth" class="scroll-mt-20 mb-10">
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="w-8 h-8 rounded bg-amber-500/10 text-amber-600 flex items-center justify-center text-sm shadow-inner"><i class="fa-solid fa-shield-halved"></i></div>
+                    <div>
+                        <h2 class="text-lg md:text-xl font-black text-premiumDark leading-tight">Sécurité & SLA</h2>
+                        <p class="text-slate-500 font-medium text-[11px] mt-0.5">Limitation de requêtes et protection Anti-DDoS.</p>
+                    </div>
                 </div>
-                <div class="bg-amber-50 border border-amber-200 rounded-xl p-5 text-amber-900">
-                    <p class="text-sm leading-relaxed mb-3">Le nœud RPC public est <strong>ouvert et sans clé d'API requise</strong> pour faciliter l'intégration industrielle de l'écosystème. Cependant, un pare-feu matériel Atlas & Duc applique un Rate Limiting strict pour prévenir les attaques DDoS.</p>
-                    <ul class="list-disc list-inside text-sm font-semibold space-y-1">
-                        <li>Limite par IP : <span class="font-mono bg-white px-1 rounded border border-amber-200">100 requêtes / seconde</span></li>
-                        <li>Taille max du payload : <span class="font-mono bg-white px-1 rounded border border-amber-200">2 MB</span></li>
-                    </ul>
+                
+                <div class="bg-white border border-indBorder rounded-lg shadow-sm overflow-hidden text-xs">
+                    <div class="p-4 border-b border-indBorder bg-slate-50/50">
+                        <p class="text-slate-600 leading-relaxed mb-3">
+                            L'API publique est protégée par le système <strong>Atlas & Duc Shield™</strong> (Cloudflare Argo Tunnels). Flux chiffrés en <strong>TLS 1.3</strong>.
+                        </p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-white p-3 rounded border border-slate-200 shadow-sm">
+                                <div class="flex items-center gap-1.5 mb-1.5">
+                                    <i class="fa-solid fa-users text-slate-400 text-[10px]"></i>
+                                    <h4 class="font-bold text-premiumDark">Accès Public (Gratuit)</h4>
+                                </div>
+                                <ul class="text-slate-600 space-y-0.5">
+                                    <li>• Aucune clé API requise</li>
+                                    <li>• <strong class="text-premiumDark">100 req/sec</strong> par IP</li>
+                                </ul>
+                            </div>
+                            <div class="bg-indigo-50 p-3 rounded border border-indigo-100 shadow-sm">
+                                <div class="flex items-center gap-1.5 mb-1.5">
+                                    <i class="fa-solid fa-building text-indigo-600 text-[10px]"></i>
+                                    <h4 class="font-bold text-indigo-900">Accès Entreprise (B2B)</h4>
+                                </div>
+                                <ul class="text-indigo-800 space-y-0.5 mb-2">
+                                    <li>• Authentification par clé API/IP</li>
+                                    <li>• <strong class="text-indigo-950">Requêtes illimitées</strong></li>
+                                </ul>
+                                <a href="support.html" class="inline-block text-[10px] font-bold bg-indigo-600 text-white px-2 py-1 rounded hover:bg-indigo-700 transition-colors">Contacter le support</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            <hr class="border-indBorder">
+            <!-- SECTION : MÉTHODES API -->
+            <div class="mb-6 border-b border-slate-200 pb-2">
+                <h2 class="text-xl md:text-2xl font-black text-premiumDark">Référence des Méthodes (JSON-RPC)</h2>
+                <p class="text-slate-500 font-medium text-xs mt-1">Format standard Web3. Les appels requièrent <code>"jsonrpc": "2.0"</code>.</p>
+            </div>
 
-            <!-- SECTION : nexus_blockNumber -->
-            <section id="nexus-blocknumber" class="scroll-mt-24">
-                <div class="mb-4">
-                    <h2 class="text-xl font-extrabold text-premiumDark flex items-center gap-3">
-                        <span class="bg-premiumDark text-white text-xs px-2 py-1 rounded font-mono">POST</span> 
-                        nexus_blockNumber
-                    </h2>
-                    <p class="text-slate-600 text-sm mt-2">Retourne le numéro du bloc le plus récent synchronisé sur le réseau L1.</p>
+            <!-- Method 1: nexus_blockNumber -->
+            <section id="nexus-blocknumber" class="scroll-mt-20 mb-8">
+                <div class="flex items-baseline gap-2 mb-2">
+                    <span class="bg-sky-100 text-sky-700 border border-sky-200 text-[9px] font-black px-1.5 py-0.5 rounded tracking-widest">POST</span>
+                    <h3 class="text-sm font-bold font-mono text-premiumDark">nexus_blockNumber</h3>
                 </div>
-
-                <div class="code-block mb-6">
-                    <div class="code-header">
-                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Exemple cURL</span>
-                        <button onclick="copyCode(this, 'curl1')" class="text-slate-400 hover:text-white transition-colors text-xs font-semibold flex items-center gap-1"><i class="fa-solid fa-copy"></i> Copier</button>
+                <p class="text-xs text-slate-600 mb-3">Retourne le numéro hexadécimal du bloc le plus récent synchronisé.</p>
+                
+                <div class="dev-code-block">
+                    <div class="dev-code-header">
+                        <span class="text-[9px] font-bold text-slate-400 uppercase">Requête (cURL)</span>
+                        <button onclick="copyCodeTextFromElement('code-bn-req', this)" class="text-slate-400 hover:text-white transition-colors text-[10px] font-semibold"><i class="fa-regular fa-copy"></i> Copier</button>
                     </div>
-                    <pre class="p-4 text-sm font-mono text-slate-300 overflow-x-auto"><code id="curl1">curl -X POST https://rpc.agi-nexus-core.click \
-  -H "Content-Type: application/json" \
-  -d '{"jsonrpc":"2.0","method":"nexus_blockNumber","params":[],"id":1}'</code></pre>
+                    <pre class="p-3 text-[11px] font-mono overflow-x-auto" id="code-bn-req"><code class="text-slate-300">curl -X POST https://rpc.agi-nexus-core.click \
+  -H <span class="syntax-string">"Content-Type: application/json"</span> \
+  -d <span class="syntax-string">'{"jsonrpc":"2.0","method":"nexus_blockNumber","params":[],"id":1}'</span></code></pre>
                 </div>
-
-                <div class="bg-indCard rounded-xl border border-indBorder p-4 shadow-sm">
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Réponse JSON (Succès)</p>
-                    <pre class="font-mono text-sm text-indSuccess bg-slate-50 p-3 rounded-lg border border-indBorder overflow-x-auto"><code>{
-  "jsonrpc": "2.0",
-  "id": 1,
-  "result": "0x12b4" // Bloc #4788
+                <div class="dev-code-block">
+                    <div class="dev-code-header"><span class="text-[9px] font-bold text-slate-400 uppercase">Réponse</span></div>
+                    <pre class="p-3 text-[11px] font-mono overflow-x-auto"><code class="text-slate-300">{
+  <span class="syntax-key">"jsonrpc"</span>: <span class="syntax-string">"2.0"</span>,
+  <span class="syntax-key">"id"</span>: <span class="syntax-number">1</span>,
+  <span class="syntax-key">"result"</span>: <span class="syntax-string">"0x12b4"</span> <span class="syntax-comment">// Décimal: 4788</span>
 }</code></pre>
                 </div>
             </section>
 
-            <!-- SECTION : nexus_getBalance -->
-            <section id="nexus-getbalance" class="scroll-mt-24">
-                <div class="mb-4">
-                    <h2 class="text-xl font-extrabold text-premiumDark flex items-center gap-3">
-                        <span class="bg-premiumDark text-white text-xs px-2 py-1 rounded font-mono">POST</span> 
-                        nexus_getBalance
-                    </h2>
-                    <p class="text-slate-600 text-sm mt-2">Retourne le solde d'une adresse donnée. Le montant est retourné en <strong>microA</strong> (1 AGI = 1,000,000 microA).</p>
+            <!-- Method 2: nexus_getBalance -->
+            <section id="nexus-getbalance" class="scroll-mt-20 mb-8">
+                <div class="flex items-baseline gap-2 mb-2">
+                    <span class="bg-sky-100 text-sky-700 border border-sky-200 text-[9px] font-black px-1.5 py-0.5 rounded tracking-widest">POST</span>
+                    <h3 class="text-sm font-bold font-mono text-premiumDark">nexus_getBalance</h3>
                 </div>
-
-                <div class="bg-slate-50 border border-indBorder rounded-xl p-4 mb-4">
-                    <h4 class="font-bold text-sm text-premiumDark mb-2">Paramètres (Array)</h4>
-                    <ol class="list-decimal list-inside text-sm text-slate-600 space-y-1 font-mono">
-                        <li><span class="text-indAccent">"DATA"</span> : 20 Bytes - L'adresse à interroger.</li>
-                        <li><span class="text-indAccent">"QUANTITY|TAG"</span> : (Optionnel) "latest", "earliest" ou numéro de bloc.</li>
-                    </ol>
-                </div>
-
-                <div class="code-block mb-6">
-                    <div class="code-header">
-                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Exemple cURL</span>
-                        <button onclick="copyCode(this, 'curl2')" class="text-slate-400 hover:text-white transition-colors text-xs font-semibold flex items-center gap-1"><i class="fa-solid fa-copy"></i> Copier</button>
+                <p class="text-xs text-slate-600 mb-3">Retourne le solde d'une adresse en <strong>microA</strong> (1 ₳ = 1,000,000 microA).</p>
+                
+                <div class="dev-code-block">
+                    <div class="dev-code-header">
+                        <span class="text-[9px] font-bold text-slate-400 uppercase">Requête JSON-RPC</span>
+                        <button onclick="copyCodeTextFromElement('code-bal-req', this)" class="text-slate-400 hover:text-white transition-colors text-[10px] font-semibold"><i class="fa-regular fa-copy"></i> Copier</button>
                     </div>
-                    <pre class="p-4 text-sm font-mono text-slate-300 overflow-x-auto"><code id="curl2">curl -X POST https://rpc.agi-nexus-core.click \
-  -H "Content-Type: application/json" \
-  -d '{"jsonrpc":"2.0","method":"nexus_getBalance","params":["0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7", "latest"],"id":1}'</code></pre>
+                    <pre class="p-3 text-[11px] font-mono overflow-x-auto" id="code-bal-req"><code class="text-slate-300">{
+  <span class="syntax-key">"jsonrpc"</span>: <span class="syntax-string">"2.0"</span>,
+  <span class="syntax-key">"method"</span>: <span class="syntax-string">"nexus_getBalance"</span>,
+  <span class="syntax-key">"params"</span>: [
+    <span class="syntax-string">"0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7"</span>,
+    <span class="syntax-string">"latest"</span>
+  ],
+  <span class="syntax-key">"id"</span>: <span class="syntax-number">1</span>
+}</code></pre>
                 </div>
             </section>
 
-            <!-- SECTION : nexus_sendRawTransaction -->
-            <section id="nexus-sendrawtransaction" class="scroll-mt-24">
-                <div class="mb-4">
-                    <h2 class="text-xl font-extrabold text-premiumDark flex items-center gap-3">
-                        <span class="bg-indAccent text-white text-xs px-2 py-1 rounded font-mono">POST</span> 
-                        nexus_sendRawTransaction
-                    </h2>
-                    <p class="text-slate-600 text-sm mt-2">Soumet une transaction pré-signée (chiffrée) au réseau pour validation L1 et minage.</p>
+            <!-- Method 3: nexus_estimateGas -->
+            <section id="nexus-estimategas" class="scroll-mt-20 mb-8">
+                <div class="flex items-baseline gap-2 mb-2">
+                    <span class="bg-emerald-100 text-emerald-700 border border-emerald-200 text-[9px] font-black px-1.5 py-0.5 rounded tracking-widest">POST</span>
+                    <h3 class="text-sm font-bold font-mono text-premiumDark">nexus_estimateGas</h3>
                 </div>
-
-                <div class="bg-red-50 border border-red-200 rounded-xl p-4 mb-4 flex gap-3 text-red-900">
-                    <i class="fa-solid fa-triangle-exclamation mt-0.5"></i>
-                    <p class="text-sm font-medium">Les données doivent être signées avec une clé privée ECDSA valide. L'API RPC du nœud L1 ne signe jamais les transactions pour vous des raisons de sécurité industrielle.</p>
-                </div>
-
-                <div class="code-block mb-6">
-                    <div class="code-header">
-                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Exemple JavaScript (Fetch)</span>
-                        <button onclick="copyCode(this, 'js1')" class="text-slate-400 hover:text-white transition-colors text-xs font-semibold flex items-center gap-1"><i class="fa-solid fa-copy"></i> Copier</button>
+                <p class="text-xs text-slate-600 mb-3">Exécute une transaction simulée pour estimer le coût en gaz.</p>
+                
+                <div class="dev-code-block">
+                    <div class="dev-code-header">
+                        <span class="text-[9px] font-bold text-slate-400 uppercase">Requête</span>
+                        <button onclick="copyCodeTextFromElement('code-gas-req', this)" class="text-slate-400 hover:text-white transition-colors text-[10px] font-semibold"><i class="fa-regular fa-copy"></i> Copier</button>
                     </div>
-                    <pre class="p-4 text-sm font-mono overflow-x-auto"><code id="js1" class="text-green-400">const</code> <code class="text-slate-300">signedTx = </code><code class="text-yellow-300">"0xf86c098504a817c80082520894353535..."</code><code class="text-slate-300">;
+                    <pre class="p-3 text-[11px] font-mono overflow-x-auto" id="code-gas-req"><code class="text-slate-300">{
+  <span class="syntax-key">"jsonrpc"</span>: <span class="syntax-string">"2.0"</span>,
+  <span class="syntax-key">"method"</span>: <span class="syntax-string">"nexus_estimateGas"</span>,
+  <span class="syntax-key">"params"</span>: [{
+    <span class="syntax-key">"from"</span>: <span class="syntax-string">"0x..."</span>,
+    <span class="syntax-key">"to"</span>: <span class="syntax-string">"0x..."</span>,
+    <span class="syntax-key">"value"</span>: <span class="syntax-string">"0xf4240"</span> <span class="syntax-comment">// 1 AGI</span>
+  }],
+  <span class="syntax-key">"id"</span>: <span class="syntax-number">1</span>
+}</code></pre>
+                </div>
+            </section>
 
-</code><code class="text-green-400">const</code> <code class="text-slate-300">response = </code><code class="text-green-400">await</code> <code class="text-sky-300">fetch</code><code class="text-slate-300">(</code><code class="text-yellow-300">"https://rpc.agi-nexus-core.click"</code><code class="text-slate-300">, {
-  method: </code><code class="text-yellow-300">'POST'</code><code class="text-slate-300">,
-  headers: { </code><code class="text-yellow-300">'Content-Type'</code><code class="text-slate-300">: </code><code class="text-yellow-300">'application/json'</code> <code class="text-slate-300">},
-  body: </code><code class="text-sky-300">JSON</code><code class="text-slate-300">.</code><code class="text-sky-300">stringify</code><code class="text-slate-300">({
-    jsonrpc: </code><code class="text-yellow-300">"2.0"</code><code class="text-slate-300">,
-    method: </code><code class="text-yellow-300">"nexus_sendRawTransaction"</code><code class="text-slate-300">,
-    params: [signedTx],
-    id: 1
-  })
-});
+            <!-- Method 4: nexus_sendRawTransaction -->
+            <section id="nexus-sendrawtransaction" class="scroll-mt-20 mb-8">
+                <div class="flex items-baseline gap-2 mb-2">
+                    <span class="bg-amber-100 text-amber-700 border border-amber-200 text-[9px] font-black px-1.5 py-0.5 rounded tracking-widest">POST</span>
+                    <h3 class="text-sm font-bold font-mono text-premiumDark">nexus_sendRawTransaction</h3>
+                </div>
+                <p class="text-xs text-slate-600 mb-2">Soumet une transaction pré-signée (ECDSA secp256k1) au réseau L1.</p>
+                <p class="text-[10px] text-red-700 bg-red-50 border border-red-200 p-2 rounded mb-3 font-medium"><i class="fa-solid fa-triangle-exclamation"></i> Le nœud RPC ne stocke pas de clés privées et refuse les requêtes non signées.</p>
 
-</code><code class="text-green-400">const</code> <code class="text-slate-300">data = </code><code class="text-green-400">await</code> <code class="text-slate-300">response.</code><code class="text-sky-300">json</code><code class="text-slate-300">();
-console.</code><code class="text-sky-300">log</code><code class="text-slate-300">(</code><code class="text-yellow-300">"Tx Hash:"</code><code class="text-slate-300">, data.result);</code></pre>
+                <div class="dev-code-block">
+                    <div class="dev-code-header">
+                        <span class="text-[9px] font-bold text-slate-400 uppercase">Requête (Web3.js)</span>
+                        <button onclick="copyCodeTextFromElement('code-send-req', this)" class="text-slate-400 hover:text-white transition-colors text-[10px] font-semibold"><i class="fa-regular fa-copy"></i> Copier</button>
+                    </div>
+                    <pre class="p-3 text-[11px] font-mono overflow-x-auto" id="code-send-req"><code class="text-slate-300"><span class="syntax-keyword">const</span> tx = {
+  to: <span class="syntax-string">'0xDestination...'</span>,
+  value: web3.utils.toWei(<span class="syntax-string">'1'</span>, <span class="syntax-string">'ether'</span>), <span class="syntax-comment">// 1 AGI</span>
+  gas: <span class="syntax-number">21000</span>
+};
+<span class="syntax-keyword">const</span> signedTx = <span class="syntax-keyword">await</span> web3.eth.accounts.signTransaction(tx, privateKey);
+web3.eth.sendSignedTransaction(signedTx.rawTransaction)
+  .on(<span class="syntax-string">'receipt'</span>, console.log);</code></pre>
+                </div>
+            </section>
+
+            <!-- Method 5: nexus_getTransactionReceipt -->
+            <section id="nexus-getreceipt" class="scroll-mt-20 mb-10">
+                <div class="flex items-baseline gap-2 mb-2">
+                    <span class="bg-sky-100 text-sky-700 border border-sky-200 text-[9px] font-black px-1.5 py-0.5 rounded tracking-widest">POST</span>
+                    <h3 class="text-sm font-bold font-mono text-premiumDark">nexus_getTransactionReceipt</h3>
+                </div>
+                <p class="text-xs text-slate-600 mb-3">Retourne le reçu d'une transaction via son hash. (Succès : `status: "0x1"`).</p>
+                <div class="dev-code-block">
+                    <div class="dev-code-header">
+                        <span class="text-[9px] font-bold text-slate-400 uppercase">Requête JSON-RPC</span>
+                        <button onclick="copyCodeTextFromElement('code-receipt', this)" class="text-slate-400 hover:text-white transition-colors text-[10px] font-semibold"><i class="fa-regular fa-copy"></i> Copier</button>
+                    </div>
+                    <pre class="p-3 text-[11px] font-mono overflow-x-auto" id="code-receipt"><code class="text-slate-300">{
+  <span class="syntax-key">"jsonrpc"</span>: <span class="syntax-string">"2.0"</span>,
+  <span class="syntax-key">"method"</span>: <span class="syntax-string">"nexus_getTransactionReceipt"</span>,
+  <span class="syntax-key">"params"</span>: [<span class="syntax-string">"0x0b8a36...a2c1"</span>],
+  <span class="syntax-key">"id"</span>: <span class="syntax-number">1</span>
+}</code></pre>
+                </div>
+            </section>
+
+            <hr class="border-indBorder mb-10">
+
+            <!-- SECTION : WebSockets -->
+            <section id="websockets" class="scroll-mt-20 mb-10">
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="w-8 h-8 rounded bg-purple-500/10 text-purple-600 flex items-center justify-center text-sm shadow-inner"><i class="fa-solid fa-plug"></i></div>
+                    <div>
+                        <h2 class="text-lg md:text-xl font-black text-premiumDark leading-tight">Flux Temps Réel (WSS)</h2>
+                        <p class="text-slate-500 font-medium text-[11px] mt-0.5">Écoutez le réseau Nexus Core L1 en temps réel.</p>
+                    </div>
+                </div>
+                <div class="bg-slate-50 border border-slate-200 rounded px-2.5 py-1.5 mb-3 inline-block font-mono text-[11px] font-bold text-premiumDark">
+                    wss://ws.agi-nexus-core.click
+                </div>
+                <div class="dev-code-block">
+                    <div class="dev-code-header">
+                        <span class="text-[9px] font-bold text-slate-400 uppercase">Souscription aux blocs (newHeads)</span>
+                        <button onclick="copyCodeTextFromElement('code-ws', this)" class="text-slate-400 hover:text-white transition-colors text-[10px] font-semibold"><i class="fa-regular fa-copy"></i> Copier</button>
+                    </div>
+                    <pre class="p-3 text-[11px] font-mono overflow-x-auto" id="code-ws"><code class="text-slate-300">{
+  <span class="syntax-key">"id"</span>: <span class="syntax-number">1</span>,
+  <span class="syntax-key">"jsonrpc"</span>: <span class="syntax-string">"2.0"</span>,
+  <span class="syntax-key">"method"</span>: <span class="syntax-string">"nexus_subscribe"</span>,
+  <span class="syntax-key">"params"</span>: [<span class="syntax-string">"newHeads"</span>]
+}</code></pre>
+                </div>
+            </section>
+
+            <!-- SECTION : Codes d'Erreur -->
+            <section id="errors" class="scroll-mt-20">
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="w-8 h-8 rounded bg-red-500/10 text-red-600 flex items-center justify-center text-sm shadow-inner"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                    <div>
+                        <h2 class="text-lg md:text-xl font-black text-premiumDark leading-tight">Codes d'Erreur Standardisés</h2>
+                        <p class="text-slate-500 font-medium text-[11px] mt-0.5">Gestion des exceptions et dépannage technique.</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg border border-indBorder overflow-hidden shadow-sm">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-[11px]">
+                            <thead>
+                                <tr class="bg-slate-50 border-b border-indBorder text-[9px] text-slate-500 uppercase tracking-widest">
+                                    <th class="py-2.5 px-4 font-bold w-1/5">Code</th>
+                                    <th class="py-2.5 px-4 font-bold w-1/4">Message</th>
+                                    <th class="py-2.5 px-4 font-bold">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                <tr class="hover:bg-slate-50 transition-colors">
+                                    <td class="py-2.5 px-4 font-mono font-bold text-red-600">-32700</td>
+                                    <td class="py-2.5 px-4 font-semibold text-slate-700">Parse error</td>
+                                    <td class="py-2.5 px-4 text-slate-500">JSON invalide. Vérifiez la syntaxe (virgules, guillemets).</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 transition-colors">
+                                    <td class="py-2.5 px-4 font-mono font-bold text-red-600">-32600</td>
+                                    <td class="py-2.5 px-4 font-semibold text-slate-700">Invalid Request</td>
+                                    <td class="py-2.5 px-4 text-slate-500">Objet JSON invalide. <code>jsonrpc: "2.0"</code> manquant.</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 transition-colors">
+                                    <td class="py-2.5 px-4 font-mono font-bold text-red-600">-32601</td>
+                                    <td class="py-2.5 px-4 font-semibold text-slate-700">Method not found</td>
+                                    <td class="py-2.5 px-4 text-slate-500">La méthode invoquée n'est pas supportée par l'API L1.</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 transition-colors">
+                                    <td class="py-2.5 px-4 font-mono font-bold text-red-600">-32000</td>
+                                    <td class="py-2.5 px-4 font-semibold text-slate-700">Execution error</td>
+                                    <td class="py-2.5 px-4 text-slate-500">Erreur réseau (ex: fonds insuffisants, nonce trop bas). Lisez <code>data</code>.</td>
+                                </tr>
+                                <tr class="hover:bg-amber-50/50 transition-colors bg-amber-50/30">
+                                    <td class="py-2.5 px-4 font-mono font-bold text-amber-600">429 (HTTP)</td>
+                                    <td class="py-2.5 px-4 font-semibold text-slate-700">Too Many Requests</td>
+                                    <td class="py-2.5 px-4 text-slate-500">Rate Limit dépassé. Ralentissez ou passez au Forfait B2B.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
 
@@ -304,50 +528,38 @@ console.</code><code class="text-sky-300">log</code><code class="text-slate-300"
     </main>
 
     <!-- ========================================== -->
-    <!-- 4. FOOTER INDUSTRIEL CENTRÉ                -->
+    <!-- 4. FOOTER INDUSTRIEL COMPACT               -->
     <!-- ========================================== -->
-    <footer class="bg-premiumDark border-t border-slate-800 mt-auto pt-14 pb-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
+    <footer class="bg-premiumDark border-t border-slate-800 mt-auto pt-10 pb-8">
+        <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
             
-            <!-- Marque & Logo -->
-            <div class="flex flex-col items-center gap-4 mb-8">
-                <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo Atlas & Duc" class="h-16 w-16 rounded-full border-2 border-slate-700 shadow-xl">
-                <div>
-                    <h4 class="text-white font-black text-2xl tracking-tight">Atlas & Duc Corp.</h4>
-                    <p class="text-slate-400 text-sm font-medium mt-1">Infrastructure Blockchain Souveraine Layer-1</p>
+            <div class="flex items-center gap-3 mb-6">
+                <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo Atlas & Duc" class="h-10 w-10 rounded-full border border-slate-700 shadow-xl">
+                <div class="text-left">
+                    <h4 class="text-white font-black text-base tracking-tight leading-none mb-1">Atlas & Duc Corp.</h4>
+                    <p class="text-slate-400 text-[10px] font-medium uppercase tracking-widest">Infrastructure Layer-1</p>
                 </div>
             </div>
 
-            <!-- Liens de Navigation -->
-            <div class="flex flex-wrap justify-center gap-6 sm:gap-10 text-sm font-semibold text-slate-400 border-b border-slate-800 pb-10 w-full max-w-2xl">
-                <a href="documentation.html" class="hover:text-indAccent hover:-translate-y-0.5 transition-all duration-200">
-                    <i class="fa-solid fa-book mr-1.5"></i> Documentation
-                </a>
-                <a href="api.html" class="text-indAccent hover:-translate-y-0.5 transition-all duration-200">
-                    <i class="fa-solid fa-server mr-1.5"></i> API RPC
-                </a>
-                <a href="support.html" class="hover:text-indAccent hover:-translate-y-0.5 transition-all duration-200">
-                    <i class="fa-solid fa-headset mr-1.5"></i> Support
-                </a>
+            <div class="flex flex-wrap justify-center gap-6 text-xs font-semibold text-slate-400 border-b border-slate-800 pb-6 w-full max-w-md mb-6">
+                <a href="documentation.html" class="hover:text-indAccent transition-colors"><i class="fa-solid fa-book mr-1"></i> Docs</a>
+                <a href="api.html" class="text-indAccent transition-colors"><i class="fa-solid fa-server mr-1"></i> API RPC</a>
+                <a href="support.html" class="hover:text-indAccent transition-colors"><i class="fa-solid fa-headset mr-1"></i> Support B2B</a>
             </div>
 
-            <!-- Statut & Copyright -->
-            <div class="flex flex-col items-center gap-5 pt-8 text-xs text-slate-500 font-medium w-full">
-                <div class="flex items-center gap-2.5 bg-slate-800/60 px-4 py-2.5 rounded-lg border border-slate-700 shadow-inner">
-                    <div class="w-2.5 h-2.5 rounded-full bg-indSuccess live-pulse"></div>
-                    <span class="text-slate-300 font-bold uppercase tracking-wide text-[10px]">Système Opérationnel L1</span>
-                </div>
-                <p>&copy; 2026 Atlas & Duc Corporation. Conçu et développé au Burkina Faso. Tous droits réservés.</p>
+            <div class="flex items-center gap-2 bg-slate-800/60 px-3 py-1.5 rounded border border-slate-700 shadow-inner mb-3">
+                <div class="w-1.5 h-1.5 rounded-full bg-indSuccess live-pulse"></div>
+                <span class="text-slate-300 font-bold uppercase tracking-widest text-[8px]">Système L1 Opérationnel</span>
             </div>
-
+            <p class="text-[9px] text-slate-500 font-medium">&copy; 2026 Atlas & Duc Corporation. Burkina Faso. Tous droits réservés.</p>
         </div>
     </footer>
 
     <!-- ========================================== -->
-    <!-- 5. LOGIQUE JAVASCRIPT UI                   -->
+    <!-- 5. LOGIQUE JAVASCRIPT UI & COPY            -->
     <!-- ========================================== -->
     <script>
-        // --- GESTION MENU MOBILE ---
+        // Gestion Menu Mobile
         const btn = document.getElementById('mobileMenuBtn');
         const menu = document.getElementById('mobileMenu');
         btn.addEventListener('click', () => {
@@ -362,33 +574,30 @@ console.</code><code class="text-sky-300">log</code><code class="text-slate-300"
             }
         });
 
-        // --- FONCTION DE COPIE (Presse-papier) ---
-        function copyText(text) {
+        // Copie simple (URLs)
+        function copyCodeText(text, btnElement) {
             navigator.clipboard.writeText(text).then(() => {
-                alert("URL copiée : " + text);
+                const originalHtml = btnElement.innerHTML;
+                btnElement.innerHTML = '<i class="fa-solid fa-check text-indSuccess"></i>';
+                setTimeout(() => { btnElement.innerHTML = originalHtml; }, 2000);
             });
         }
 
-        // Fonction pour copier le contenu d'un bloc de code
-        function copyCode(buttonElement, targetId) {
-            const codeElement = document.getElementById(targetId);
-            if (!codeElement) return;
+        // Copie depuis un bloc de code
+        function copyCodeTextFromElement(targetId, btnElement) {
+            const el = document.getElementById(targetId);
+            if (!el) return;
+            const textToCopy = el.innerText || el.textContent;
 
-            // Extraire le texte brut (sans les balises HTML de syntaxe)
-            const codeText = codeElement.innerText || codeElement.textContent;
-            
-            navigator.clipboard.writeText(codeText).then(() => {
-                const originalHtml = buttonElement.innerHTML;
-                buttonElement.innerHTML = '<i class="fa-solid fa-check text-indSuccess"></i> Copié';
-                buttonElement.classList.add('text-white');
-                
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalHtml = btnElement.innerHTML;
+                btnElement.innerHTML = '<i class="fa-solid fa-check text-indSuccess"></i> Copié';
+                btnElement.classList.add('text-white');
                 setTimeout(() => {
-                    buttonElement.innerHTML = originalHtml;
-                    buttonElement.classList.remove('text-white');
+                    btnElement.innerHTML = originalHtml;
+                    btnElement.classList.remove('text-white');
                 }, 2000);
-            }).catch(err => {
-                console.error('Erreur lors de la copie :', err);
-            });
+            }).catch(err => alert("Erreur lors de la copie."));
         }
     </script>
 </body>
