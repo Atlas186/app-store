@@ -8,7 +8,7 @@
     <!-- Polices Industrielles -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -354,7 +354,7 @@
     </footer>
 
     <!-- ========================================== -->
-    <!-- 5. MODALS PLEIN ÉCRAN (DENSITÉ MAXIMALE)   -->
+    <!-- 5. MODALS PLEIN ÉCRAN (DENSITÉ & HASHS)    -->
     <!-- ========================================== -->
     
     <!-- Modal Transaction (Plein Écran Z-[99999]) -->
@@ -365,7 +365,7 @@
             <div class="flex justify-between items-center px-4 md:px-6 py-3 md:py-4 border-b border-slate-200 bg-white shrink-0 shadow-sm">
                 <div class="max-w-4xl mx-auto w-full flex justify-between items-center">
                     <h3 class="text-base md:text-lg font-black text-premiumDark flex items-center gap-2"><i class="fa-solid fa-file-invoice text-indAccent"></i> Détails Transaction</h3>
-                    <button onclick="closeModal('txModal')" class="text-slate-500 hover:text-white hover:bg-red-500 px-3 py-1.5 rounded-md transition-colors focus:outline-none flex items-center gap-1.5 font-bold text-xs bg-slate-100 border border-slate-200 hover:border-red-500">
+                    <button onclick="closeModal('txModal')" class="text-slate-500 hover:text-white hover:bg-red-500 px-3 py-1.5 rounded-md transition-colors focus:outline-none flex items-center gap-1.5 font-bold text-xs bg-slate-100 border border-slate-200 hover:border-red-500 shadow-sm">
                         <span class="hidden sm:inline">Fermer</span> <i class="fa-solid fa-xmark text-sm"></i>
                     </button>
                 </div>
@@ -389,7 +389,7 @@
             <div class="flex justify-between items-center px-4 md:px-6 py-3 md:py-4 border-b border-slate-200 bg-white shrink-0 shadow-sm">
                 <div class="max-w-4xl mx-auto w-full flex justify-between items-center">
                     <h3 class="text-base md:text-lg font-black text-premiumDark flex items-center gap-2"><i class="fa-solid fa-cube text-indAccent"></i> Bloc <span id="blockModalTitleNum" class="text-slate-500 font-mono text-sm ml-1"></span></h3>
-                    <button onclick="closeModal('blockModal')" class="text-slate-500 hover:text-white hover:bg-red-500 px-3 py-1.5 rounded-md transition-colors focus:outline-none flex items-center gap-1.5 font-bold text-xs bg-slate-100 border border-slate-200 hover:border-red-500">
+                    <button onclick="closeModal('blockModal')" class="text-slate-500 hover:text-white hover:bg-red-500 px-3 py-1.5 rounded-md transition-colors focus:outline-none flex items-center gap-1.5 font-bold text-xs bg-slate-100 border border-slate-200 hover:border-red-500 shadow-sm">
                         <span class="hidden sm:inline">Fermer</span> <i class="fa-solid fa-xmark text-sm"></i>
                     </button>
                 </div>
@@ -516,6 +516,7 @@
                         bData.transactions.forEach(tx => {
                             tx.timestamp = bData.timestamp; 
                             tx.blockNumberDec = parseInt(bData.number, 16);
+                            tx.blockHash = bData.hash; // Injection explicite du Hash du Bloc d'inclusion
                             txCache.set(tx.hash, tx);
                             txs.push(tx);
                         });
@@ -612,14 +613,14 @@
             });
         }
 
-        // --- ARCHITECTURE RESPONSIVE DES MODALES (DENSE) ---
+        // --- ARCHITECTURE RESPONSIVE DES MODALES (DENSE AVEC HASHS DE BLOC) ---
         function createGridRow(label, displayValue, rawValueToCopy = null) {
             return `
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-1.5 md:gap-4 py-3 md:py-3.5 border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-colors px-2 md:px-3 rounded-md items-center">
                     <div class="md:col-span-3 text-[11px] uppercase tracking-widest font-bold text-slate-400 flex items-center"><i class="fa-solid fa-caret-right text-slate-300 mr-1.5 hidden md:inline"></i> ${label}</div>
                     <div class="md:col-span-9 flex items-center justify-between gap-3 overflow-hidden">
                         <div class="text-xs md:text-sm font-medium text-premiumDark w-full min-w-0 hash-break">${displayValue}</div>
-                        ${rawValueToCopy ? `<button onclick="copyToClipboard('${rawValueToCopy}')" class="shrink-0 bg-white border border-slate-200 hover:border-indAccent hover:bg-sky-50 text-slate-400 hover:text-indAccent rounded p-1.5 shadow-sm transition-all focus:outline-none" title="Copier"><i class="fa-regular fa-copy text-sm"></i></button>` : ''}
+                        ${rawValueToCopy ? `<button onclick="copyToClipboard('${rawValueToCopy}')" class="shrink-0 bg-white border border-slate-200 hover:border-indAccent hover:bg-sky-50 text-slate-400 hover:text-indAccent rounded p-1.5 shadow-sm transition-all focus:outline-none" title="Copier la valeur complète"><i class="fa-regular fa-copy text-sm"></i></button>` : ''}
                     </div>
                 </div>`;
         }
@@ -638,29 +639,34 @@
             const nonce = tx.nonce ? parseInt(tx.nonce, 16) : 0;
             const txIndex = tx.transactionIndex ? parseInt(tx.transactionIndex, 16) : 0;
             
+            // Calcul des confirmations en temps réel
+            const confirmations = latestBlockNum - tx.blockNumberDec + 1;
+            const blockHashData = tx.blockHash || "Hash non répertorié";
+            
             document.getElementById('txModalBody').innerHTML = `
                 <div class="bg-white rounded-lg border border-slate-200 p-2 sm:p-4 mb-4 shadow-sm">
                     ${createGridRow("TxHash", `<span class="font-mono text-xs md:text-sm text-indAccent font-bold">${tx.hash}</span>`, tx.hash)}
-                    ${createGridRow("Statut", `<span class="inline-flex items-center gap-1 bg-indSuccess/10 border border-indSuccess/20 text-indSuccess px-2 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider"><i class="fa-solid fa-check"></i> Confirmée</span>`)}
-                    ${createGridRow("Bloc", `<button onclick="openBlockModal('${tx.blockNumberDec}')" class="text-indAccent hover:text-white font-bold bg-sky-50 hover:bg-indAccent border border-sky-100 transition-colors px-2 py-0.5 rounded text-sm"><i class="fa-solid fa-cube mr-1"></i> #${tx.blockNumberDec}</button>`)}
+                    ${createGridRow("Statut", `<span class="inline-flex items-center gap-1 bg-indSuccess/10 border border-indSuccess/20 text-indSuccess px-2 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider"><i class="fa-solid fa-check-double"></i> Succès (${confirmations} Conf.)</span>`)}
+                    ${createGridRow("Bloc d'inclusion", `<button onclick="openBlockModal('${tx.blockNumberDec}')" class="text-indAccent hover:text-white font-bold bg-sky-50 hover:bg-indAccent border border-sky-100 transition-colors px-2 py-0.5 rounded text-sm shadow-sm"><i class="fa-solid fa-cube mr-1"></i> #${tx.blockNumberDec}</button>`)}
+                    ${createGridRow("Identifiant Bloc", `<span class="font-mono text-xs text-slate-500 bg-slate-50 px-2 py-1 rounded border border-slate-100">${blockHashData}</span>`, blockHashData)}
                     ${createGridRow("Horodatage", `<span class="text-slate-700 font-semibold text-xs"><i class="fa-regular fa-clock text-slate-400 mr-1"></i> ${timeAgo(new Date(parseInt(tx.timestamp)*1000))}</span> <span class="text-[11px] text-slate-400 ml-2">(${formatDateFull(parseInt(tx.timestamp)*1000)})</span>`)}
                 </div>
                 
                 <div class="bg-white rounded-lg border border-slate-200 p-2 sm:p-4 mb-4 shadow-sm">
-                    ${createGridRow("De (Exp)", `<span class="font-mono text-xs md:text-sm text-slate-700 bg-slate-50 px-2 py-1 rounded border border-slate-100">${tx.from}</span>`, tx.from)}
-                    ${createGridRow("À (Dest)", tx.to ? `<span class="font-mono text-xs md:text-sm text-slate-700 bg-slate-50 px-2 py-1 rounded border border-slate-100">${tx.to}</span>` : `<span class="text-xs font-bold text-indTextMuted bg-slate-100 px-2 py-1 rounded border border-slate-200">Création Contrat</span>`, tx.to)}
+                    ${createGridRow("De (Expéditeur)", `<span class="font-mono text-xs md:text-sm text-slate-700 bg-slate-50 px-2 py-1 rounded border border-slate-100">${tx.from}</span>`, tx.from)}
+                    ${createGridRow("À (Destinataire)", tx.to ? `<span class="font-mono text-xs md:text-sm text-slate-700 bg-slate-50 px-2 py-1 rounded border border-slate-100">${tx.to}</span>` : `<span class="text-xs font-bold text-indTextMuted bg-slate-100 px-2 py-1 rounded border border-slate-200"><i class="fa-solid fa-file-code mr-1"></i> Création Contrat</span>`, tx.to)}
                 </div>
                 
                 <div class="bg-white rounded-lg border border-slate-200 p-2 sm:p-4 mb-4 shadow-sm">
-                    ${createGridRow("Montant", `<span class="bg-sky-50 border border-sky-100 px-2.5 py-1 rounded font-black text-lg text-premiumDark shadow-sm">${amt} ₳</span> <span class="text-[11px] text-slate-500 font-bold ml-2 uppercase bg-slate-100 px-1.5 py-0.5 rounded">≈ ${amt} XOF</span>`)}
-                    ${createGridRow("Frais Rész.", `<span class="text-slate-600 font-mono text-xs bg-slate-50 px-2 py-1 rounded border border-slate-100">${feeMicro} ₳</span>`)}
+                    ${createGridRow("Montant Transféré", `<span class="bg-sky-50 border border-sky-100 px-2.5 py-1 rounded font-black text-lg text-premiumDark shadow-sm">${amt} ₳</span> <span class="text-[11px] text-slate-500 font-bold ml-2 uppercase bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200">≈ ${amt} XOF</span>`)}
+                    ${createGridRow("Frais de Réseau", `<span class="text-slate-600 font-mono text-xs bg-slate-50 px-2 py-1 rounded border border-slate-100">${feeMicro} ₳</span>`)}
                     ${createGridRow("Nonce/Idx", `<span class="text-slate-600 font-mono font-semibold bg-slate-50 px-2 py-0.5 rounded border border-slate-100 text-xs">N: ${nonce}</span> <span class="text-slate-300 mx-2">|</span> <span class="text-slate-600 font-mono font-semibold bg-slate-50 px-2 py-0.5 rounded border border-slate-100 text-xs">I: ${txIndex}</span>`)}
                 </div>
                 
                 <div class="bg-white rounded-lg border border-slate-200 p-3 sm:p-5 shadow-sm">
                     <div class="flex items-center justify-between mb-2">
                         <div class="text-[11px] uppercase tracking-widest font-bold text-slate-400">Data (Input)</div>
-                        <button onclick="copyToClipboard('${inputData}')" class="text-[11px] font-bold text-slate-500 hover:text-indAccent bg-slate-100 hover:bg-sky-50 px-2 py-1 rounded border border-slate-200 transition-colors">Copier</button>
+                        <button onclick="copyToClipboard('${inputData}')" class="text-[11px] font-bold text-slate-500 hover:text-indAccent bg-slate-100 hover:bg-sky-50 px-2 py-1 rounded border border-slate-200 transition-colors">Copier Payload</button>
                     </div>
                     <div class="text-[11px] text-slate-600 bg-slate-50 p-3 rounded-md border border-slate-200 max-h-32 overflow-y-auto font-mono shadow-inner hash-break">
                         ${inputData}
@@ -680,18 +686,19 @@
             const gasUsed = b.gasUsed ? parseInt(b.gasUsed, 16).toLocaleString('fr-FR') : "0";
             const gasPercentage = b.gasLimit && b.gasUsed ? ((parseInt(b.gasUsed, 16) / parseInt(b.gasLimit, 16)) * 100).toFixed(2) : "0.00";
             const extraData = (b.extraData && b.extraData !== "0x") ? b.extraData : "0x (Vide)";
+            const confirmations = latestBlockNum - parseInt(numStr) + 1;
 
             document.getElementById('blockModalBody').innerHTML = `
                 <div class="bg-white rounded-lg border border-slate-200 p-2 sm:p-4 mb-4 shadow-sm">
-                    ${createGridRow("Hauteur", `<span class="font-black text-indAccent text-xl">#${numStr}</span>`)}
+                    ${createGridRow("Hauteur", `<span class="font-black text-indAccent text-xl">#${numStr}</span> <span class="ml-3 text-[11px] font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded border border-slate-200">${confirmations} Confirmations</span>`)}
                     ${createGridRow("Horodatage", `<span class="text-slate-700 font-semibold text-xs"><i class="fa-regular fa-clock text-slate-400 mr-1"></i> ${timeAgo(new Date(parseInt(b.timestamp)*1000))}</span> <span class="text-[11px] text-slate-400 ml-2">(${formatDateFull(parseInt(b.timestamp)*1000)})</span>`)}
                     ${createGridRow("Tx Incluses", `<span class="font-bold text-indSuccess bg-indSuccess/10 border border-indSuccess/20 px-2 py-0.5 rounded text-xs">${b.transactions ? b.transactions.length : 0} Tx</span>`)}
                     ${createGridRow("Validateur", `<span class="font-mono text-xs md:text-sm text-slate-700 bg-slate-50 px-2 py-1 rounded border border-slate-100">${b.miner || b.validator || "0xNexusMasterOracle"}</span>`, b.miner || b.validator)}
                 </div>
                 
                 <div class="bg-white rounded-lg border border-slate-200 p-2 sm:p-4 mb-4 shadow-sm">
-                    ${createGridRow("Block Hash", `<span class="font-mono text-xs md:text-sm text-slate-500 bg-slate-50 px-2 py-1 rounded border border-slate-100">${b.hash}</span>`, b.hash)}
-                    ${createGridRow("Parent Hash", `<span class="font-mono text-xs md:text-sm text-slate-500 bg-slate-50 px-2 py-1 rounded border border-slate-100">${b.parentHash || "Genesis"}</span>`, b.parentHash)}
+                    ${createGridRow("Identifiant (Hash)", `<span class="font-mono text-xs md:text-sm font-bold text-indAccent bg-sky-50 px-2 py-1 rounded border border-sky-100">${b.hash}</span>`, b.hash)}
+                    ${createGridRow("Hash Parent", `<span class="font-mono text-xs md:text-sm text-slate-500 bg-slate-50 px-2 py-1 rounded border border-slate-100">${b.parentHash || "Genesis"}</span>`, b.parentHash)}
                 </div>
                 
                 <div class="bg-white rounded-lg border border-slate-200 p-2 sm:p-4 mb-4 shadow-sm">
