@@ -60,24 +60,26 @@
         ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 8px; }
         ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
 
-        /* Modals & Menus Optimisés pour Web/Mobile */
+        /* ========================================== */
+        /* MODALS PLEIN ÉCRAN (NOUVELLE ARCHITECTURE) */
+        /* ========================================== */
         .modal-overlay { 
             opacity: 0; 
             visibility: hidden; 
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
+            background-color: #F1F5F9; /* Fond solide pour le plein écran */
         }
         .modal-overlay.active { opacity: 1; visibility: visible; }
         
         .modal-content { 
-            transform: scale(0.95) translateY(20px); 
+            transform: translateY(100%); /* Animation d'apparition par le bas type iOS/Android */
             opacity: 0; 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            max-height: calc(100vh - 2rem);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            height: 100dvh; /* 100% de la hauteur dynamique (gère la barre d'URL mobile) */
+            width: 100vw;
         }
         .modal-overlay.active .modal-content { 
-            transform: scale(1) translateY(0); 
+            transform: translateY(0); 
             opacity: 1; 
         }
 
@@ -87,8 +89,8 @@
             overflow-wrap: anywhere;
         }
 
-        /* Toasts */
-        #toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 99999; display: flex; flex-direction: column; gap: 10px; }
+        /* Toasts - Doit toujours être au-dessus des modales plein écran */
+        #toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 999999; display: flex; flex-direction: column; gap: 10px; }
         .toast { 
             background: #070B14; color: white; padding: 12px 20px; border-radius: 8px; 
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); 
@@ -355,35 +357,53 @@
     </footer>
 
     <!-- ========================================== -->
-    <!-- 5. MODALS ULTRA-DÉTAILLÉS & RESPONSIVES    -->
+    <!-- 5. MODALS PLEIN ÉCRAN (FULL SCREEN)        -->
     <!-- ========================================== -->
     
-    <!-- Modal Transaction -->
-    <div id="txModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4">
-        <div class="modal-content bg-indBg w-full max-w-4xl rounded-2xl shadow-2xl flex flex-col border border-slate-300">
-            <!-- Header Fixe -->
-            <div class="flex justify-between items-center px-5 py-4 border-b border-slate-200 bg-white rounded-t-2xl shrink-0">
-                <h3 class="text-lg font-black text-premiumDark flex items-center gap-3"><i class="fa-solid fa-file-invoice text-indAccent"></i> Bilan de la Transaction</h3>
-                <button onclick="closeModal('txModal')" class="text-slate-400 hover:text-white hover:bg-red-500 p-2 rounded-lg transition-colors focus:outline-none"><i class="fa-solid fa-xmark text-xl"></i></button>
+    <!-- Modal Transaction (Plein Écran Z-[99999]) -->
+    <div id="txModal" class="modal-overlay fixed inset-0 z-[99999] flex flex-col">
+        <div class="modal-content bg-indBg w-full h-full max-w-full rounded-none flex flex-col shadow-none">
+            
+            <!-- Header Fixe Plein Écran -->
+            <div class="flex justify-between items-center px-6 py-5 border-b border-slate-200 bg-white shrink-0 shadow-sm">
+                <div class="max-w-5xl mx-auto w-full flex justify-between items-center">
+                    <h3 class="text-xl font-black text-premiumDark flex items-center gap-3"><i class="fa-solid fa-file-invoice text-indAccent"></i> Bilan de la Transaction</h3>
+                    <button onclick="closeModal('txModal')" class="text-slate-500 hover:text-white hover:bg-red-500 px-4 py-2 rounded-lg transition-colors focus:outline-none flex items-center gap-2 font-bold text-sm bg-slate-100 border border-slate-200 hover:border-red-500">
+                        <span class="hidden sm:inline">Fermer</span> <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
             </div>
-            <!-- Corps Scrollable -->
-            <div class="p-4 sm:p-6 overflow-y-auto flex-grow" id="txModalBody">
-                <!-- Injection JS -->
+            
+            <!-- Corps Scrollable Plein Écran -->
+            <div class="p-4 sm:p-8 overflow-y-auto flex-grow w-full">
+                <!-- Wrapper central pour garder la lisibilité sur les grands écrans PC -->
+                <div class="max-w-5xl mx-auto w-full" id="txModalBody">
+                    <!-- Injection JS -->
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal Bloc -->
-    <div id="blockModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4">
-        <div class="modal-content bg-indBg w-full max-w-4xl rounded-2xl shadow-2xl flex flex-col border border-slate-300">
-            <!-- Header Fixe -->
-            <div class="flex justify-between items-center px-5 py-4 border-b border-slate-200 bg-white rounded-t-2xl shrink-0">
-                <h3 class="text-lg font-black text-premiumDark flex items-center gap-3"><i class="fa-solid fa-cube text-indAccent"></i> Détails du Bloc <span id="blockModalTitleNum" class="text-slate-500 font-mono text-base ml-1"></span></h3>
-                <button onclick="closeModal('blockModal')" class="text-slate-400 hover:text-white hover:bg-red-500 p-2 rounded-lg transition-colors focus:outline-none"><i class="fa-solid fa-xmark text-xl"></i></button>
+    <!-- Modal Bloc (Plein Écran Z-[99999]) -->
+    <div id="blockModal" class="modal-overlay fixed inset-0 z-[99999] flex flex-col">
+        <div class="modal-content bg-indBg w-full h-full max-w-full rounded-none flex flex-col shadow-none">
+            
+            <!-- Header Fixe Plein Écran -->
+            <div class="flex justify-between items-center px-6 py-5 border-b border-slate-200 bg-white shrink-0 shadow-sm">
+                <div class="max-w-5xl mx-auto w-full flex justify-between items-center">
+                    <h3 class="text-xl font-black text-premiumDark flex items-center gap-3"><i class="fa-solid fa-cube text-indAccent"></i> Détails du Bloc <span id="blockModalTitleNum" class="text-slate-500 font-mono text-lg ml-2"></span></h3>
+                    <button onclick="closeModal('blockModal')" class="text-slate-500 hover:text-white hover:bg-red-500 px-4 py-2 rounded-lg transition-colors focus:outline-none flex items-center gap-2 font-bold text-sm bg-slate-100 border border-slate-200 hover:border-red-500">
+                        <span class="hidden sm:inline">Fermer</span> <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
             </div>
-            <!-- Corps Scrollable -->
-            <div class="p-4 sm:p-6 overflow-y-auto flex-grow" id="blockModalBody">
-                <!-- Injection JS -->
+            
+            <!-- Corps Scrollable Plein Écran -->
+            <div class="p-4 sm:p-8 overflow-y-auto flex-grow w-full">
+                <!-- Wrapper central pour garder la lisibilité sur les grands écrans PC -->
+                <div class="max-w-5xl mx-auto w-full" id="blockModalBody">
+                    <!-- Injection JS -->
+                </div>
             </div>
         </div>
     </div>
@@ -467,7 +487,7 @@
             const c = document.getElementById('toast-container');
             const t = document.createElement('div');
             t.className = 'toast';
-            t.innerHTML = `<i class="fa-solid fa-${type === 'success' ? 'circle-check text-indSuccess' : (type === 'error' ? 'circle-xmark text-red-500' : 'circle-info text-indAccent')} text-lg"></i> <span>${msg}</span>`;
+            t.innerHTML = `<i class="fa-solid fa-${type === 'success' ? 'circle-check text-indSuccess' : (type === 'error' ? 'circle-xmark text-red-500' : 'circle-info text-indAccent')} text-xl"></i> <span>${msg}</span>`;
             c.appendChild(t);
             setTimeout(() => { if(t.parentElement) t.remove(); }, 3800);
         }
@@ -604,15 +624,14 @@
             });
         }
 
-        // --- 6. ARCHITECTURE RESPONSIVE DES MODALES (CSS GRID) ---
-        // Le générateur de ligne garantit l'alignement parfait et empêche le débordement des textes
+        // --- 6. ARCHITECTURE RESPONSIVE DES MODALES (CSS GRID PLEIN ÉCRAN) ---
         function createGridRow(label, displayValue, rawValueToCopy = null) {
             return `
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-4 py-4 border-b border-slate-100 last:border-0 hover:bg-slate-50/50 transition-colors px-2 rounded-lg items-center">
-                    <div class="md:col-span-3 text-xs uppercase tracking-widest font-bold text-slate-500 flex items-center"><i class="fa-solid fa-caret-right text-slate-300 mr-2 hidden md:inline"></i> ${label}</div>
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-6 py-4 md:py-5 border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-colors px-2 md:px-4 rounded-lg items-center">
+                    <div class="md:col-span-3 text-sm uppercase tracking-widest font-bold text-slate-500 flex items-center"><i class="fa-solid fa-caret-right text-slate-300 mr-2 hidden md:inline"></i> ${label}</div>
                     <div class="md:col-span-9 flex items-center justify-between gap-4 overflow-hidden">
-                        <div class="text-sm font-medium text-premiumDark w-full min-w-0 hash-break">${displayValue}</div>
-                        ${rawValueToCopy ? `<button onclick="copyToClipboard('${rawValueToCopy}')" class="shrink-0 bg-white border border-slate-200 hover:border-indAccent hover:bg-sky-50 text-slate-500 hover:text-indAccent rounded-md p-2 shadow-sm transition-all focus:ring-2 focus:ring-indAccent focus:outline-none" title="Copier la valeur complète"><i class="fa-regular fa-copy text-base"></i></button>` : ''}
+                        <div class="text-base font-medium text-premiumDark w-full min-w-0 hash-break">${displayValue}</div>
+                        ${rawValueToCopy ? `<button onclick="copyToClipboard('${rawValueToCopy}')" class="shrink-0 bg-white border border-slate-200 hover:border-indAccent hover:bg-sky-50 text-slate-500 hover:text-indAccent rounded-lg p-2.5 shadow-sm transition-all focus:ring-2 focus:ring-indAccent focus:outline-none" title="Copier la valeur complète"><i class="fa-regular fa-copy text-lg"></i></button>` : ''}
                     </div>
                 </div>`;
         }
@@ -632,30 +651,30 @@
             const txIndex = tx.transactionIndex ? parseInt(tx.transactionIndex, 16) : 0;
             
             document.getElementById('txModalBody').innerHTML = `
-                <div class="bg-white rounded-xl border border-slate-200 p-2 sm:p-5 mb-5 shadow-sm">
-                    ${createGridRow("Hash Transaction", `<span class="font-mono text-sm text-indAccent font-bold">${tx.hash}</span>`, tx.hash)}
-                    ${createGridRow("Statut", `<span class="inline-flex items-center gap-1.5 bg-indSuccess/10 border border-indSuccess/20 text-indSuccess px-3 py-1 rounded-md text-xs font-bold uppercase tracking-wider shadow-sm"><i class="fa-solid fa-check-circle"></i> Confirmée</span>`)}
-                    ${createGridRow("Bloc d'inclusion", `<button onclick="openBlockModal('${tx.blockNumberDec}')" class="text-indAccent hover:text-white font-bold bg-sky-50 hover:bg-indAccent border border-sky-100 transition-colors px-3 py-1 rounded-md shadow-sm"><i class="fa-solid fa-cube mr-1"></i> #${tx.blockNumberDec}</button>`)}
-                    ${createGridRow("Horodatage", `<span class="text-slate-700 font-semibold"><i class="fa-regular fa-clock text-slate-400 mr-1.5"></i> ${timeAgo(new Date(parseInt(tx.timestamp)*1000))}</span> <span class="text-xs text-slate-400 ml-2 hidden sm:inline-block">(${formatDateFull(parseInt(tx.timestamp)*1000)})</span>`)}
+                <div class="bg-white rounded-2xl border border-slate-200 p-2 sm:p-6 mb-6 shadow-sm">
+                    ${createGridRow("Hash Transaction", `<span class="font-mono text-base text-indAccent font-bold">${tx.hash}</span>`, tx.hash)}
+                    ${createGridRow("Statut", `<span class="inline-flex items-center gap-2 bg-indSuccess/10 border border-indSuccess/20 text-indSuccess px-3 py-1.5 rounded-md text-sm font-bold uppercase tracking-wider shadow-sm"><i class="fa-solid fa-check-circle text-lg"></i> Confirmée</span>`)}
+                    ${createGridRow("Bloc d'inclusion", `<button onclick="openBlockModal('${tx.blockNumberDec}')" class="text-indAccent hover:text-white font-bold bg-sky-50 hover:bg-indAccent border border-sky-100 transition-colors px-4 py-1.5 rounded-md shadow-sm text-base"><i class="fa-solid fa-cube mr-2"></i> #${tx.blockNumberDec}</button>`)}
+                    ${createGridRow("Horodatage", `<span class="text-slate-700 font-semibold text-base"><i class="fa-regular fa-clock text-slate-400 mr-2"></i> ${timeAgo(new Date(parseInt(tx.timestamp)*1000))}</span> <span class="text-sm text-slate-400 ml-3 hidden sm:inline-block">(${formatDateFull(parseInt(tx.timestamp)*1000)})</span>`)}
                 </div>
                 
-                <div class="bg-white rounded-xl border border-slate-200 p-2 sm:p-5 mb-5 shadow-sm">
-                    ${createGridRow("De (Expéditeur)", `<span class="font-mono text-sm text-slate-700 bg-slate-50 px-2 py-1 rounded border border-slate-100">${tx.from}</span>`, tx.from)}
-                    ${createGridRow("À (Destinataire)", tx.to ? `<span class="font-mono text-sm text-slate-700 bg-slate-50 px-2 py-1 rounded border border-slate-100">${tx.to}</span>` : `<span class="text-xs font-bold text-indTextMuted bg-slate-100 px-3 py-1 rounded border border-slate-200"><i class="fa-solid fa-file-code mr-1"></i> Déploiement de Contrat</span>`, tx.to)}
+                <div class="bg-white rounded-2xl border border-slate-200 p-2 sm:p-6 mb-6 shadow-sm">
+                    ${createGridRow("De (Expéditeur)", `<span class="font-mono text-base text-slate-700 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">${tx.from}</span>`, tx.from)}
+                    ${createGridRow("À (Destinataire)", tx.to ? `<span class="font-mono text-base text-slate-700 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">${tx.to}</span>` : `<span class="text-sm font-bold text-indTextMuted bg-slate-100 px-4 py-2 rounded-lg border border-slate-200"><i class="fa-solid fa-file-code mr-2"></i> Déploiement de Contrat</span>`, tx.to)}
                 </div>
                 
-                <div class="bg-white rounded-xl border border-slate-200 p-2 sm:p-5 mb-5 shadow-sm">
-                    ${createGridRow("Montant Transféré", `<span class="bg-sky-50 border border-sky-100 px-3 py-1.5 rounded-md font-black text-lg text-premiumDark shadow-sm">${amt} ₳</span> <span class="text-xs text-slate-500 font-bold ml-3 uppercase tracking-wide bg-slate-100 px-2 py-1 rounded">≈ ${amt} XOF</span>`)}
-                    ${createGridRow("Frais de Réseau", `<span class="text-slate-600 font-mono text-sm bg-slate-50 px-2 py-1 rounded border border-slate-100">${feeMicro} ₳</span>`)}
-                    ${createGridRow("Position (Nonce/Idx)", `<span class="text-slate-700 font-mono font-semibold bg-slate-50 px-2 py-1 rounded border border-slate-100">N: ${nonce}</span> <span class="text-slate-300 mx-2">|</span> <span class="text-slate-700 font-mono font-semibold bg-slate-50 px-2 py-1 rounded border border-slate-100">I: ${txIndex}</span>`)}
+                <div class="bg-white rounded-2xl border border-slate-200 p-2 sm:p-6 mb-6 shadow-sm">
+                    ${createGridRow("Montant Transféré", `<span class="bg-sky-50 border border-sky-100 px-4 py-2 rounded-lg font-black text-2xl text-premiumDark shadow-sm">${amt} ₳</span> <span class="text-sm text-slate-500 font-bold ml-4 uppercase tracking-wide bg-slate-100 px-3 py-1.5 rounded-md">≈ ${amt} XOF</span>`)}
+                    ${createGridRow("Frais de Réseau", `<span class="text-slate-600 font-mono text-base bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">${feeMicro} ₳</span>`)}
+                    ${createGridRow("Position (Nonce/Idx)", `<span class="text-slate-700 font-mono font-semibold bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">N: ${nonce}</span> <span class="text-slate-300 mx-3">|</span> <span class="text-slate-700 font-mono font-semibold bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">I: ${txIndex}</span>`)}
                 </div>
                 
-                <div class="bg-white rounded-xl border border-slate-200 p-4 sm:p-5 shadow-sm">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="text-xs uppercase tracking-widest font-bold text-slate-500"><i class="fa-solid fa-code text-slate-300 mr-2"></i> Données Brutes (Input)</div>
-                        <button onclick="copyToClipboard('${inputData}')" class="text-xs font-bold text-slate-500 hover:text-indAccent bg-slate-100 hover:bg-sky-50 px-3 py-1.5 rounded border border-slate-200 transition-colors"><i class="fa-solid fa-copy mr-1"></i> Copier Payload</button>
+                <div class="bg-white rounded-2xl border border-slate-200 p-5 sm:p-8 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="text-sm uppercase tracking-widest font-bold text-slate-500"><i class="fa-solid fa-code text-slate-300 mr-2"></i> Données Brutes (Input)</div>
+                        <button onclick="copyToClipboard('${inputData}')" class="text-sm font-bold text-slate-500 hover:text-indAccent bg-slate-100 hover:bg-sky-50 px-4 py-2 rounded-lg border border-slate-200 transition-colors"><i class="fa-solid fa-copy mr-2"></i> Copier Payload</button>
                     </div>
-                    <div class="text-xs text-slate-600 bg-slate-50 p-4 rounded-lg border border-slate-200 max-h-40 overflow-y-auto font-mono leading-relaxed shadow-inner hash-break">
+                    <div class="text-sm text-slate-600 bg-slate-50 p-5 rounded-xl border border-slate-200 max-h-64 overflow-y-auto font-mono leading-relaxed shadow-inner hash-break">
                         ${inputData}
                     </div>
                 </div>`;
@@ -675,27 +694,27 @@
             const extraData = (b.extraData && b.extraData !== "0x") ? b.extraData : "0x (Aucune donnée)";
 
             document.getElementById('blockModalBody').innerHTML = `
-                <div class="bg-white rounded-xl border border-slate-200 p-2 sm:p-5 mb-5 shadow-sm">
-                    ${createGridRow("Hauteur du Bloc", `<span class="font-black text-indAccent text-xl">#${numStr}</span>`)}
-                    ${createGridRow("Horodatage", `<span class="text-slate-700 font-semibold"><i class="fa-regular fa-clock text-slate-400 mr-1.5"></i> ${timeAgo(new Date(parseInt(b.timestamp)*1000))}</span> <span class="text-xs text-slate-400 ml-2 hidden sm:inline-block">(${formatDateFull(parseInt(b.timestamp)*1000)})</span>`)}
-                    ${createGridRow("Transactions Incluses", `<span class="font-bold text-indSuccess bg-indSuccess/10 border border-indSuccess/20 px-3 py-1 rounded-md text-sm shadow-sm">${b.transactions ? b.transactions.length : 0} Txns</span>`)}
-                    ${createGridRow("Nœud Validateur", `<span class="font-mono text-sm text-slate-700 bg-slate-50 px-2 py-1 rounded border border-slate-100">${b.miner || b.validator || "0xNexusMasterOracle"}</span>`, b.miner || b.validator)}
+                <div class="bg-white rounded-2xl border border-slate-200 p-2 sm:p-6 mb-6 shadow-sm">
+                    ${createGridRow("Hauteur du Bloc", `<span class="font-black text-indAccent text-3xl">#${numStr}</span>`)}
+                    ${createGridRow("Horodatage", `<span class="text-slate-700 font-semibold text-base"><i class="fa-regular fa-clock text-slate-400 mr-2"></i> ${timeAgo(new Date(parseInt(b.timestamp)*1000))}</span> <span class="text-sm text-slate-400 ml-3 hidden sm:inline-block">(${formatDateFull(parseInt(b.timestamp)*1000)})</span>`)}
+                    ${createGridRow("Transactions Incluses", `<span class="font-bold text-indSuccess bg-indSuccess/10 border border-indSuccess/20 px-4 py-1.5 rounded-lg text-base shadow-sm">${b.transactions ? b.transactions.length : 0} Txns</span>`)}
+                    ${createGridRow("Nœud Validateur", `<span class="font-mono text-base text-slate-700 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">${b.miner || b.validator || "0xNexusMasterOracle"}</span>`, b.miner || b.validator)}
                 </div>
                 
-                <div class="bg-white rounded-xl border border-slate-200 p-2 sm:p-5 mb-5 shadow-sm">
-                    ${createGridRow("Hash du Bloc", `<span class="font-mono text-sm text-slate-500 bg-slate-50 px-2 py-1 rounded border border-slate-100">${b.hash}</span>`, b.hash)}
-                    ${createGridRow("Hash Parent", `<span class="font-mono text-sm text-slate-500 bg-slate-50 px-2 py-1 rounded border border-slate-100">${b.parentHash || "Genesis"}</span>`, b.parentHash)}
+                <div class="bg-white rounded-2xl border border-slate-200 p-2 sm:p-6 mb-6 shadow-sm">
+                    ${createGridRow("Hash du Bloc", `<span class="font-mono text-base text-slate-500 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">${b.hash}</span>`, b.hash)}
+                    ${createGridRow("Hash Parent", `<span class="font-mono text-base text-slate-500 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">${b.parentHash || "Genesis"}</span>`, b.parentHash)}
                 </div>
                 
-                <div class="bg-white rounded-xl border border-slate-200 p-2 sm:p-5 mb-5 shadow-sm">
-                    ${createGridRow("Consommation Gaz", `<span class="font-bold text-premiumDark text-base">${gasUsed}</span> <span class="text-xs bg-slate-100 border border-slate-200 px-2 py-1 rounded-md text-slate-600 font-bold ml-2">${gasPercentage}% utilisé</span>`)}
-                    ${createGridRow("Plafond (Gas Limit)", `<span class="font-mono text-sm text-slate-600 bg-slate-50 px-2 py-1 rounded border border-slate-100">${gasLimit}</span>`)}
-                    ${createGridRow("Taille Physique", `<span class="font-mono text-sm text-slate-600 bg-slate-50 px-2 py-1 rounded border border-slate-100">${b.size ? parseInt(b.size, 16).toLocaleString('fr-FR') + " octets" : "N/A"}</span>`)}
+                <div class="bg-white rounded-2xl border border-slate-200 p-2 sm:p-6 mb-6 shadow-sm">
+                    ${createGridRow("Consommation Gaz", `<span class="font-bold text-premiumDark text-xl">${gasUsed}</span> <span class="text-sm bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-md text-slate-600 font-bold ml-3">${gasPercentage}% utilisé</span>`)}
+                    ${createGridRow("Plafond (Gas Limit)", `<span class="font-mono text-base text-slate-600 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">${gasLimit}</span>`)}
+                    ${createGridRow("Taille Physique", `<span class="font-mono text-base text-slate-600 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">${b.size ? parseInt(b.size, 16).toLocaleString('fr-FR') + " octets" : "N/A"}</span>`)}
                 </div>
                 
-                <div class="bg-white rounded-xl border border-slate-200 p-4 sm:p-5 shadow-sm">
-                    <div class="text-xs uppercase tracking-widest font-bold text-slate-500 mb-3"><i class="fa-solid fa-server text-slate-300 mr-2"></i> Extra Data (Hex)</div>
-                    <div class="text-xs text-slate-600 bg-slate-50 p-4 rounded-lg border border-slate-200 max-h-24 overflow-y-auto font-mono shadow-inner hash-break">
+                <div class="bg-white rounded-2xl border border-slate-200 p-5 sm:p-8 shadow-sm">
+                    <div class="text-sm uppercase tracking-widest font-bold text-slate-500 mb-4"><i class="fa-solid fa-server text-slate-300 mr-2"></i> Extra Data (Hex)</div>
+                    <div class="text-sm text-slate-600 bg-slate-50 p-5 rounded-xl border border-slate-200 max-h-40 overflow-y-auto font-mono shadow-inner hash-break">
                         ${extraData}
                     </div>
                 </div>`;
@@ -711,7 +730,6 @@
             document.body.style.overflow = ''; 
         }
         
-        window.onclick = e => { if (e.target.classList.contains('modal-overlay')) closeModal(e.target.id); }
         document.addEventListener('keydown', e => { if (e.key === "Escape") { closeModal('txModal'); closeModal('blockModal'); } });
 
         // Moteur de recherche
