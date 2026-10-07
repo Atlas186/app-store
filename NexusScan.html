@@ -173,12 +173,12 @@
                 <div class="absolute inset-0 opacity-[0.03] z-0" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 16px 16px;"></div>
                 
                 <div class="max-w-4xl mx-auto relative z-10">
-                    <h1 class="text-2xl md:text-4xl font-black mb-4 text-center tracking-tight">Le Moteur de Confiance <span class="text-indAccent">Nexus</span></h1>
+                    <h1 class="text-2xl md:text-4xl font-black mb-4 text-center tracking-tight">Le Moteur de Confiance <span class="text-indAccent">NEXUS CORE L1</span></h1>
                     
                     <!-- Disposition des informations personnalisée -->
                     <div class="text-center mb-8 flex flex-col items-center gap-1">
                         <p class="text-slate-300 text-sm md:text-base font-bold uppercase tracking-wider">Explorateur Officiel Layer-1</p>
-                        <p class="text-slate-400 text-xs md:text-sm font-medium">par Atlas & Duc Corp.</p>
+                        <p class="text-slate-400 text-xs md:text-sm font-medium">par Atlas & Duc Corporation</p>
                         <div class="mt-3 bg-indAccent/10 border border-indAccent/20 px-5 py-2 rounded-full shadow-inner">
                             <p class="text-indAccent font-black text-sm md:text-base tracking-wide">1 ₳ (AG-COIN) = 1 FCFA (XOF)</p>
                         </div>
@@ -364,23 +364,23 @@
     
     <!-- Modal Transaction -->
     <div id="txModal" class="modal-overlay fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="modal-content bg-white w-full max-w-3xl rounded-xl shadow-2xl flex flex-col max-h-[90vh]">
-            <div class="flex justify-between items-center p-4 border-b border-slate-100 bg-slate-50/80 rounded-t-xl">
-                <h3 class="text-base font-black text-premiumDark flex items-center gap-2"><i class="fa-solid fa-file-invoice text-indAccent"></i> Détails Transaction</h3>
-                <button onclick="closeModal('txModal')" class="text-slate-400 hover:text-slate-700 hover:bg-slate-200 p-1.5 rounded transition-colors"><i class="fa-solid fa-xmark text-lg"></i></button>
+        <div class="modal-content bg-slate-50 w-full max-w-3xl rounded-xl shadow-2xl flex flex-col max-h-[90vh] overflow-hidden">
+            <div class="flex justify-between items-center p-4 border-b border-slate-200 bg-white">
+                <h3 class="text-base font-black text-premiumDark flex items-center gap-2"><i class="fa-solid fa-file-invoice text-indAccent"></i> Détails de la Transaction</h3>
+                <button onclick="closeModal('txModal')" class="text-slate-400 hover:text-slate-700 hover:bg-slate-100 p-1.5 rounded transition-colors"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
-            <div class="p-4 md:p-5 overflow-y-auto" id="txModalBody"></div>
+            <div class="p-4 md:p-6 overflow-y-auto" id="txModalBody"></div>
         </div>
     </div>
 
     <!-- Modal Bloc -->
     <div id="blockModal" class="modal-overlay fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="modal-content bg-white w-full max-w-3xl rounded-xl shadow-2xl flex flex-col max-h-[90vh]">
-            <div class="flex justify-between items-center p-4 border-b border-slate-100 bg-slate-50/80 rounded-t-xl">
+        <div class="modal-content bg-slate-50 w-full max-w-3xl rounded-xl shadow-2xl flex flex-col max-h-[90vh] overflow-hidden">
+            <div class="flex justify-between items-center p-4 border-b border-slate-200 bg-white">
                 <h3 class="text-base font-black text-premiumDark flex items-center gap-2"><i class="fa-solid fa-cube text-indAccent"></i> Détails du Bloc <span id="blockModalTitleNum" class="text-slate-500 font-mono text-sm ml-1"></span></h3>
-                <button onclick="closeModal('blockModal')" class="text-slate-400 hover:text-slate-700 hover:bg-slate-200 p-1.5 rounded transition-colors"><i class="fa-solid fa-xmark text-lg"></i></button>
+                <button onclick="closeModal('blockModal')" class="text-slate-400 hover:text-slate-700 hover:bg-slate-100 p-1.5 rounded transition-colors"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
-            <div class="p-4 md:p-5 overflow-y-auto" id="blockModalBody"></div>
+            <div class="p-4 md:p-6 overflow-y-auto" id="blockModalBody"></div>
         </div>
     </div>
 
@@ -613,14 +613,15 @@
             });
         }
 
-        // --- GESTION DES MODALS ---
-        function createRow(lbl, val, copy=false, html=false) {
+        // --- NOUVELLE GESTION DES MODALS (CORRECTION DU BUG DE COPIE) ---
+        // Utilisation d'un paramètre 'copyRawVal' propre, pour éviter les conflits HTML
+        function createRow(lbl, displayVal, copyRawVal = null) {
             return `
-                <div class="flex flex-col sm:flex-row py-3 border-b border-slate-100 last:border-0 gap-1 sm:gap-4">
-                    <div class="sm:w-1/3 text-xs font-semibold text-slate-400">${lbl}:</div>
-                    <div class="sm:w-2/3 text-sm text-premiumDark font-medium flex items-center break-all">
-                        ${html ? val : val} 
-                        ${copy ? `<button onclick="copyToClipboard('${val}')" class="ml-2 text-slate-300 hover:text-indAccent"><i class="fa-regular fa-copy"></i></button>` : ''}
+                <div class="flex flex-col md:flex-row py-3 border-b border-slate-100 last:border-0 md:items-center gap-1 md:gap-4 hover:bg-slate-50/50 transition-colors px-1">
+                    <div class="md:w-1/3 text-[11px] uppercase tracking-wider font-bold text-slate-400 shrink-0">${lbl}</div>
+                    <div class="md:w-2/3 text-sm text-premiumDark font-medium flex items-center justify-between gap-2">
+                        <div class="break-words max-w-full leading-relaxed">${displayVal}</div>
+                        ${copyRawVal ? `<button onclick="copyToClipboard('${copyRawVal}')" class="text-slate-400 hover:text-indAccent transition-colors shrink-0 p-1.5 bg-slate-50 hover:bg-sky-50 rounded border border-slate-200" title="Copier"><i class="fa-regular fa-copy"></i></button>` : ''}
                     </div>
                 </div>`;
         }
@@ -628,22 +629,52 @@
         function openTxModal(hash) {
             const tx = txCache.get(hash);
             if(!tx) return showToast("Détails non trouvés", "error");
-            const amt = formatAmount(tx.amountMicro||tx.value);
             
+            const amt = formatAmount(tx.amountMicro || tx.value);
+            
+            // Calcul ou récupération précise des frais (Gas * GasPrice)
+            let feeMicro = tx.feeMicro ? formatAmount(tx.feeMicro) : "0.00";
+            if (!tx.feeMicro && tx.gas && tx.gasPrice) {
+                const gasInt = parseInt(tx.gas, 16);
+                const gasPriceInt = parseInt(tx.gasPrice, 16);
+                feeMicro = ((gasInt * gasPriceInt) / 1e18).toFixed(8); // Fallback standard EVM
+            }
+
+            const inputData = (tx.input && tx.input !== "0x") ? tx.input : "0x (Transfert standard L1)";
+            const nonce = tx.nonce ? parseInt(tx.nonce, 16) : 0;
+            const txIndex = tx.transactionIndex ? parseInt(tx.transactionIndex, 16) : 0;
+            const gasPriceVal = tx.gasPrice ? parseInt(tx.gasPrice, 16).toLocaleString('fr-FR') + " wei" : "Non spécifié";
+            const gasLimitVal = tx.gas ? parseInt(tx.gas, 16).toLocaleString('fr-FR') : "Automatique";
+
+            // Ajout du bouton Copier en utilisant le paramètre copyRawVal (tx.from, tx.to, tx.hash)
             document.getElementById('txModalBody').innerHTML = `
-                <div class="bg-white rounded border border-slate-200 p-2 mb-3 shadow-sm">
-                    ${createRow("Hash", tx.hash, true)}
-                    ${createRow("Statut", `<span class="bg-indSuccess/10 text-indSuccess px-2 py-0.5 rounded text-xs font-bold"><i class="fa-solid fa-check"></i> Succès</span>`, false, true)}
-                    ${createRow("Bloc", `<a href="#" onclick="openBlockModal('${tx.blockNumberDec}')" class="text-indAccent hover:underline">#${tx.blockNumberDec}</a>`, false, true)}
-                    ${createRow("Date", `${timeAgo(new Date(parseInt(tx.timestamp)*1000))} (${formatDateFull(parseInt(tx.timestamp)*1000)})`)}
+                <div class="bg-white rounded-lg border border-slate-200 p-4 mb-4 shadow-sm">
+                    ${createRow("Hash de la Tx", `<span class="font-mono text-xs text-indAccent font-bold break-all">${tx.hash}</span>`, tx.hash)}
+                    ${createRow("Statut", `<span class="bg-indSuccess/10 border border-indSuccess/20 text-indSuccess px-2 py-1 rounded text-[11px] font-bold uppercase tracking-wide"><i class="fa-solid fa-check-circle mr-1"></i> Validée</span>`)}
+                    ${createRow("Bloc", `<button onclick="openBlockModal('${tx.blockNumberDec}')" class="text-indAccent hover:underline font-bold bg-slate-50 border border-slate-200 px-2 py-0.5 rounded shadow-sm">#${tx.blockNumberDec}</button>`)}
+                    ${createRow("Horodatage", `<span class="text-slate-600"><i class="fa-regular fa-clock mr-1"></i> ${timeAgo(new Date(parseInt(tx.timestamp)*1000))}</span> <span class="text-[11px] text-slate-400 font-normal ml-1">(${formatDateFull(parseInt(tx.timestamp)*1000)})</span>`)}
                 </div>
-                <div class="bg-white rounded border border-slate-200 p-2 mb-3 shadow-sm">
-                    ${createRow("De (From)", tx.from, true)}
-                    ${createRow("À (To)", tx.to, true)}
+                
+                <div class="bg-white rounded-lg border border-slate-200 p-4 mb-4 shadow-sm">
+                    ${createRow("De (Expéditeur)", `<span class="font-mono text-xs text-slate-600 break-all">${tx.from}</span>`, tx.from)}
+                    ${createRow("À (Destinataire)", tx.to ? `<span class="font-mono text-xs text-slate-600 break-all">${tx.to}</span>` : `<span class="text-xs font-bold text-indTextMuted bg-slate-100 px-2 py-1 rounded border border-slate-200">Création de Contrat</span>`, tx.to)}
                 </div>
-                <div class="bg-white rounded border border-slate-200 p-2 shadow-sm">
-                    ${createRow("Valeur", `<span class="bg-slate-100 px-2 py-0.5 rounded font-bold">${amt} ₳</span> <span class="text-xs text-slate-400 ml-1">≈ ${amt} XOF</span>`, false, true)}
-                    ${createRow("Gaz", parseInt(tx.gas||"0x0", 16))}
+                
+                <div class="bg-white rounded-lg border border-slate-200 p-4 mb-4 shadow-sm">
+                    ${createRow("Valeur", `<span class="bg-sky-50 border border-sky-100 px-2 py-1 rounded font-black text-premiumDark">${amt} ₳</span> <span class="text-[11px] text-slate-400 font-bold ml-2">≈ ${amt} XOF</span>`)}
+                    ${createRow("Frais de réseau", `<span class="text-slate-600 font-mono text-xs">${feeMicro} ₳</span>`)}
+                    ${createRow("Prix du Gaz", `<span class="text-slate-600 font-mono text-xs">${gasPriceVal}</span>`)}
+                    ${createRow("Limite de Gaz", `<span class="text-slate-600 font-mono text-xs">${gasLimitVal}</span>`)}
+                    ${createRow("Nonce / Index", `<span class="text-slate-600 font-mono text-xs">${nonce}</span> <span class="text-slate-300 mx-2">|</span> <span class="text-slate-600 font-mono text-xs">${txIndex}</span>`)}
+                </div>
+                
+                <div class="bg-white rounded-lg border border-slate-200 p-4 shadow-sm">
+                    <div class="flex flex-col gap-2">
+                        <div class="text-[11px] uppercase tracking-wider font-bold text-slate-400">Données d'Entrée (Input)</div>
+                        <div class="text-[11px] text-slate-600 bg-slate-50 p-3 rounded border border-slate-200 break-all max-h-32 overflow-y-auto font-mono leading-relaxed shadow-inner">
+                            ${inputData}
+                        </div>
+                    </div>
                 </div>`;
             
             document.getElementById('txModal').classList.add('active');
@@ -653,21 +684,45 @@
         function openBlockModal(numStr) {
             const b = blockCache.get(numStr.toString());
             if(!b) return showToast("Chargement...", "info");
+            
             document.getElementById('blockModalTitleNum').innerText = "#" + numStr;
             
+            const gasLimit = b.gasLimit ? parseInt(b.gasLimit, 16).toLocaleString('fr-FR') : "N/A";
+            const gasUsed = b.gasUsed ? parseInt(b.gasUsed, 16).toLocaleString('fr-FR') : "0";
+            const gasPercentage = b.gasLimit && b.gasUsed ? ((parseInt(b.gasUsed, 16) / parseInt(b.gasLimit, 16)) * 100).toFixed(2) : "0.00";
+            
+            const extraData = (b.extraData && b.extraData !== "0x") ? b.extraData : "Aucune donnée supplémentaire";
+            const parentHash = b.parentHash || "Genesis";
+            const stateRoot = b.stateRoot || "N/A";
+            const sizeBytes = b.size ? parseInt(b.size, 16).toLocaleString('fr-FR') + " octets" : "N/A";
+
             document.getElementById('blockModalBody').innerHTML = `
-                <div class="bg-white rounded border border-slate-200 p-2 mb-3 shadow-sm">
-                    ${createRow("Hauteur", `<span class="font-bold">${numStr}</span>`, false, true)}
-                    ${createRow("Date", `${timeAgo(new Date(parseInt(b.timestamp)*1000))} (${formatDateFull(parseInt(b.timestamp)*1000)})`)}
-                    ${createRow("Transactions", `<span class="font-bold text-indAccent">${b.transactions?b.transactions.length:0} txns</span>`, false, true)}
+                <div class="bg-white rounded-lg border border-slate-200 p-4 mb-4 shadow-sm">
+                    ${createRow("Hauteur", `<span class="font-black text-indAccent text-base">#${numStr}</span>`)}
+                    ${createRow("Horodatage", `<span class="text-slate-600"><i class="fa-regular fa-clock mr-1"></i> ${timeAgo(new Date(parseInt(b.timestamp)*1000))}</span> <span class="text-[11px] text-slate-400 font-normal ml-1">(${formatDateFull(parseInt(b.timestamp)*1000)})</span>`)}
+                    ${createRow("Transactions", `<span class="font-bold text-indSuccess bg-indSuccess/10 border border-indSuccess/20 px-2 py-0.5 rounded text-xs">${b.transactions ? b.transactions.length : 0} txns</span> dans ce bloc`)}
+                    ${createRow("Validateur", `<span class="font-mono text-xs text-indAccent break-all">${b.miner || b.validator || "0xNexusMasterOracle"}</span>`, b.miner || b.validator)}
                 </div>
-                <div class="bg-white rounded border border-slate-200 p-2 mb-3 shadow-sm">
-                    ${createRow("Validateur", `<span class="font-mono text-xs text-indAccent break-all">${b.miner||b.validator||"0x000"}</span>`, true, true)}
-                    ${createRow("Hash du Bloc", b.hash, true)}
+                
+                <div class="bg-white rounded-lg border border-slate-200 p-4 mb-4 shadow-sm">
+                    ${createRow("Hash du Bloc", `<span class="font-mono text-xs text-slate-600 break-all">${b.hash}</span>`, b.hash)}
+                    ${createRow("Hash Parent", `<span class="font-mono text-xs text-slate-500 break-all">${parentHash}</span>`, parentHash !== "Genesis" ? parentHash : null)}
+                    ${createRow("State Root", `<span class="font-mono text-xs text-slate-500 break-all">${stateRoot}</span>`, stateRoot !== "N/A" ? stateRoot : null)}
                 </div>
-                <div class="bg-white rounded border border-slate-200 p-2 shadow-sm">
-                    ${createRow("Gaz Utilisé", parseInt(b.gasUsed||"0x0", 16).toLocaleString('fr-FR'))}
-                    ${createRow("Taille", b.size ? parseInt(b.size, 16) + " bytes" : "N/A")}
+                
+                <div class="bg-white rounded-lg border border-slate-200 p-4 mb-4 shadow-sm">
+                    ${createRow("Gaz Utilisé", `<span class="font-bold text-premiumDark">${gasUsed}</span> <span class="text-[10px] bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded text-slate-500 ml-1">${gasPercentage}%</span>`)}
+                    ${createRow("Limite de Gaz", `<span class="font-mono text-xs text-slate-600">${gasLimit}</span>`)}
+                    ${createRow("Taille", `<span class="font-mono text-xs text-slate-600">${sizeBytes}</span>`)}
+                </div>
+                
+                <div class="bg-white rounded-lg border border-slate-200 p-4 shadow-sm">
+                    <div class="flex flex-col gap-2">
+                        <div class="text-[11px] uppercase tracking-wider font-bold text-slate-400">Données Supplémentaires</div>
+                        <div class="text-[11px] text-slate-600 bg-slate-50 p-3 rounded border border-slate-200 break-all max-h-24 overflow-y-auto font-mono shadow-inner">
+                            ${extraData}
+                        </div>
+                    </div>
                 </div>`;
             
             closeModal('txModal');
