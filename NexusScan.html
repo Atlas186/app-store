@@ -39,6 +39,8 @@
                         'base': '0.85rem',
                         'lg': '0.95rem',
                         'xl': '1.1rem',
+                        '2xl': '1.35rem',
+                        '3xl': '1.75rem',
                     }
                 }
             }
@@ -47,7 +49,7 @@
     <style>
         /* Animations & Transitions Premium */
         .fade-in { animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
         .live-pulse { animation: pulseGreen 2s infinite; }
         @keyframes pulseGreen { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); } 70% { box-shadow: 0 0 0 5px rgba(16, 185, 129, 0); } 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
@@ -129,6 +131,9 @@
 
     <!-- CONTENEUR PRINCIPAL -->
     <main class="flex-grow flex flex-col relative">
+        
+        <!-- BARRE DE PROGRESSION SYNCHRONISATION -->
+        <div id="syncProgressBar" class="absolute top-0 left-0 h-1 bg-indAccent transition-all duration-300 z-30 w-0 opacity-0"></div>
 
         <!-- VUE : ACCUEIL -->
         <div id="view-home" class="view-section flex-grow flex flex-col fade-in">
@@ -183,7 +188,7 @@
                         <div class="w-8 h-8 rounded bg-indigo-50 flex items-center justify-center text-indigo-500 border border-indigo-100"><i class="fa-solid fa-bolt text-sm"></i></div>
                         <div>
                             <p class="text-[9px] font-bold text-indTextMuted uppercase tracking-wider mb-0.5">Mempool</p>
-                            <h3 id="statMempool" class="text-sm font-black text-premiumDark">0</h3>
+                            <h3 id="statMempool" class="text-sm font-black text-premiumDark"><div class="skeleton h-4 w-8 rounded"></div></h3>
                         </div>
                     </div>
                 </div>
@@ -192,7 +197,7 @@
             <section class="max-w-[95rem] w-full mx-auto px-3 sm:px-6 lg:px-8 py-6 flex-grow grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <!-- Blocs Récents -->
                 <div class="bg-indCard rounded-lg border border-indBorder shadow-sm flex flex-col h-[450px]">
-                    <div class="p-3 border-b border-indBorder flex justify-between items-center bg-slate-50/80 rounded-t-lg shrink-0">
+                    <div class="p-3 border-b border-indBorder flex justify-between items-center bg-slate-50/80 rounded-t-lg">
                         <h2 class="font-extrabold text-premiumDark text-xs flex items-center gap-1.5"><i class="fa-solid fa-cube text-indAccent"></i> Blocs Récents</h2>
                         <button onclick="switchView('blocks')" class="text-[10px] font-bold text-indAccent bg-sky-50 px-2 py-1 rounded hover:bg-indAccent hover:text-white transition-colors border border-sky-100 hover:border-indAccent shadow-sm">Tout voir <i class="fa-solid fa-arrow-right ml-1"></i></button>
                     </div>
@@ -201,7 +206,7 @@
 
                 <!-- Transactions Récentes -->
                 <div class="bg-indCard rounded-lg border border-indBorder shadow-sm flex flex-col h-[450px]">
-                    <div class="p-3 border-b border-indBorder flex justify-between items-center bg-slate-50/80 rounded-t-lg shrink-0">
+                    <div class="p-3 border-b border-indBorder flex justify-between items-center bg-slate-50/80 rounded-t-lg">
                         <h2 class="font-extrabold text-premiumDark text-xs flex items-center gap-1.5"><i class="fa-solid fa-list-ul text-indAccent"></i> Transactions Récentes</h2>
                         <button onclick="switchView('txs')" class="text-[10px] font-bold text-indAccent bg-sky-50 px-2 py-1 rounded hover:bg-indAccent hover:text-white transition-colors border border-sky-100 hover:border-indAccent shadow-sm">Tout voir <i class="fa-solid fa-arrow-right ml-1"></i></button>
                     </div>
@@ -212,10 +217,10 @@
 
         <!-- VUE : BLOCS COMPLETS -->
         <div id="view-blocks" class="view-section hidden flex-grow bg-indBg fade-in">
-            <div class="max-w-[95rem] mx-auto px-3 sm:px-6 lg:px-8 py-5 md:py-6 flex flex-col h-full">
-                <h1 class="text-lg font-black text-premiumDark flex items-center gap-2 mb-4 shrink-0"><i class="fa-solid fa-layer-group text-indAccent"></i> Registre Complet des Blocs</h1>
-                <div class="bg-white rounded-lg border border-indBorder shadow-sm overflow-hidden flex-grow flex flex-col">
-                    <div class="overflow-x-auto overflow-y-auto h-[70vh]">
+            <div class="max-w-[95rem] mx-auto px-3 sm:px-6 lg:px-8 py-5 md:py-6">
+                <h1 class="text-lg font-black text-premiumDark flex items-center gap-2 mb-4"><i class="fa-solid fa-layer-group text-indAccent"></i> Registre Complet des Blocs</h1>
+                <div class="bg-white rounded-lg border border-indBorder shadow-sm overflow-hidden">
+                    <div class="overflow-x-auto max-h-[75vh]">
                         <table class="w-full text-left border-collapse min-w-[700px]">
                             <thead class="sticky top-0 bg-slate-50 z-10 shadow-sm">
                                 <tr class="border-b border-indBorder text-[10px] text-slate-500 uppercase tracking-wider">
@@ -235,10 +240,10 @@
 
         <!-- VUE : TRANSACTIONS COMPLÈTES -->
         <div id="view-txs" class="view-section hidden flex-grow bg-indBg fade-in">
-            <div class="max-w-[95rem] mx-auto px-3 sm:px-6 lg:px-8 py-5 md:py-6 flex flex-col h-full">
-                <h1 class="text-lg font-black text-premiumDark flex items-center gap-2 mb-4 shrink-0"><i class="fa-solid fa-right-left text-indAccent"></i> Registre Complet des Transactions</h1>
-                <div class="bg-white rounded-lg border border-indBorder shadow-sm overflow-hidden flex-grow flex flex-col">
-                    <div class="overflow-x-auto overflow-y-auto h-[70vh]">
+            <div class="max-w-[95rem] mx-auto px-3 sm:px-6 lg:px-8 py-5 md:py-6">
+                <h1 class="text-lg font-black text-premiumDark flex items-center gap-2 mb-4"><i class="fa-solid fa-right-left text-indAccent"></i> Registre Complet des Transactions</h1>
+                <div class="bg-white rounded-lg border border-indBorder shadow-sm overflow-hidden">
+                    <div class="overflow-x-auto max-h-[75vh]">
                         <table class="w-full text-left border-collapse min-w-[900px]">
                             <thead class="sticky top-0 bg-slate-50 z-10 shadow-sm">
                                 <tr class="border-b border-indBorder text-[10px] text-slate-500 uppercase tracking-wider">
@@ -259,7 +264,7 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="bg-premiumDark border-t border-slate-800 pt-6 pb-6 mt-auto shrink-0">
+    <footer class="bg-premiumDark border-t border-slate-800 pt-6 pb-6 mt-auto">
         <div class="max-w-[95rem] mx-auto px-4 text-center flex flex-col items-center">
             
             <div class="flex items-center gap-2.5 mb-3">
@@ -278,7 +283,7 @@
                 <a href="#" class="hover:text-indAccent transition-colors flex items-center gap-1.5"><i class="fa-solid fa-shield-halved"></i> Shield</a>
             </div>
 
-            <p class="text-[9px] text-slate-500 font-medium uppercase tracking-wider mb-1.5">Connecté via Nœud Local</p>
+            <p class="text-[9px] text-slate-500 font-medium uppercase tracking-wider mb-1.5">Connecté via Noeud Local</p>
             <p class="text-[9px] text-slate-600 font-bold">&copy; 2026 Atlas & Duc Corporation.</p>
         </div>
     </footer>
@@ -319,14 +324,16 @@
     <script>
         /* --- CONFIGURATION --- */
         const RPC_URL = "https://rpc.agi-nexus-core.click";
-        const BLOCKS_TO_FETCH = 40; // Augmenté pour un historique riche
+        
+        /* Modifiez cette constante pour choisir le nombre de blocs à afficher dans l'historique complet */
+        const BLOCKS_TO_FETCH = 25; 
         
         /* --- BASES DE DONNÉES LOCALES --- */
-        let latestBlockNum = 0; 
-        let totalTxGlobal = 0; 
-        
-        const blockCache = new Map(); 
-        const txCache = new Map();    
+        let latestBlockNum = 0;          
+        let totalTxGlobal = 0;          
+
+        const blockCache = new Map();   
+        const txCache = new Map();      
 
         /* --- FONCTIONS UTILITAIRES --- */
         function formatHash(hash, chars = 6) { return hash ? hash.substring(0, chars + 2) + "..." + hash.substring(hash.length - chars) : ""; }
@@ -350,100 +357,119 @@
             const c = document.getElementById('toast-container');
             const t = document.createElement('div');
             t.className = 'toast';
-            t.innerHTML = `<i class="fa-solid fa-${type === 'success' ? 'circle-check text-indSuccess' : (type === 'error' ? 'circle-xmark text-red-500' : 'circle-info text-indAccent')}"></i> <span>${msg}</span>`;
+            t.innerHTML = `<i class="fa-solid fa-${type === 'success' ? 'circle-check text-indSuccess' : (type === 'error' ? 'circle-xmark text-red-500' : 'circle-notch fa-spin text-indAccent')}"></i> <span>${msg}</span>`;
             c.appendChild(t);
             setTimeout(() => { if(t.parentElement) t.remove(); }, 3500);
         }
         
         async function copyToClipboard(txt) { 
-            try { await navigator.clipboard.writeText(txt); showToast("Copié !"); } 
-            catch(e){ showToast("Erreur copie", "error"); } 
+            try { await navigator.clipboard.writeText(txt); showToast("Copié dans le presse-papier !"); } 
+            catch(e){ showToast("Erreur lors de la copie", "error"); } 
         }
 
-        /* --- MOTEUR RPC L1 (MÉTHODE ORIGINALE) --- */
+        function parseTimestamp(ts) {
+            const parsed = typeof ts === 'string' && ts.startsWith('0x') ? parseInt(ts, 16) : parseInt(ts);
+            return parsed > 1e11 ? parsed : parsed * 1000;
+        }
+
+        /* --- MOTEUR RPC --- */
         async function rpcCall(method, params = []) {
             try {
-                const res = await fetch(RPC_URL, { 
-                    method: 'POST', 
-                    headers: { 'Content-Type': 'application/json' }, 
-                    body: JSON.stringify({ jsonrpc: "2.0", method: method, params: params, id: 1 }) 
+                const res = await fetch(RPC_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ jsonrpc: "2.0", method: method, params: params, id: Date.now() })
                 });
-                return res.ok ? (await res.json()).result : null;
+                if (!res.ok) return null;
+                const data = await res.json();
+                return data.result !== undefined ? data.result : null;
             } catch (e) { return null; }
         }
 
+        /* --- MÉTHODE EXACTE DEMANDÉE PAR L'UTILISATEUR --- */
         async function syncNetworkData() {
-            // 1. Obtenir la hauteur actuelle avec nexus_blockNumber
+            const pb = document.getElementById('syncProgressBar');
+            pb.style.opacity = '1';
+            pb.style.width = '30%';
+
+            // 1. Obtenir la hauteur du réseau
             const blockHex = await rpcCall("nexus_blockNumber");
+            
             if (!blockHex) {
                 document.getElementById('networkStatusIndicator').innerHTML = `<div class="w-1.5 h-1.5 rounded-full bg-red-500"></div><span class="text-[10px] font-bold text-red-500 uppercase tracking-wide">Hors Ligne</span>`;
+                pb.style.opacity = '0';
                 return;
             }
-            
+
             document.getElementById('networkStatusIndicator').innerHTML = `<div class="w-1.5 h-1.5 rounded-full bg-indSuccess live-pulse"></div><span class="text-[10px] font-bold text-indSuccess uppercase tracking-wide">L1 En Ligne</span>`;
-
+            
             const currentBlockNum = parseInt(blockHex, 16);
-            if (currentBlockNum <= latestBlockNum && latestBlockNum !== 0) return;
+            
+            // Si pas de nouveau bloc, on ne fait rien
+            if (currentBlockNum <= latestBlockNum && latestBlockNum !== 0) {
+                pb.style.width = '100%';
+                setTimeout(() => { pb.style.opacity = '0'; pb.style.width = '0%'; }, 300);
+                return;
+            }
             latestBlockNum = currentBlockNum;
-
             document.getElementById('statLatestBlock').innerText = currentBlockNum.toLocaleString('fr-FR');
             
-            // 2. Synchronisation et mise en cache des blocs (MÉTHODE ORIGINALE)
+            pb.style.width = '60%';
+
+            // 2. Boucle de récupération des N derniers blocs
+            const blocks = []; 
+            const txs = [];
+            
             for (let i = 0; i < BLOCKS_TO_FETCH; i++) {
                 const target = currentBlockNum - i;
                 if(target < 0) break;
                 
-                // Vérifier si le bloc est déjà dans le cache local
-                if (!blockCache.has(target.toString())) {
-                    const bData = await rpcCall("nexus_getBlockByNumber", ["0x" + target.toString(16), true]);
-                    if (bData) {
-                        blockCache.set(target.toString(), bData);
-                        if (bData.transactions) {
-                            bData.transactions.forEach(tx => {
-                                tx.timestamp = bData.timestamp; 
-                                tx.blockNumberDec = target;
-                                tx.blockHash = bData.hash;
-                                txCache.set(tx.hash, tx);
-                            });
-                        }
+                const bData = await rpcCall("nexus_getBlockByNumber", ["0x" + target.toString(16), true]);
+                if (bData) {
+                    blockCache.set(parseInt(bData.number, 16).toString(), bData);
+                    blocks.push(bData);
+                    
+                    if (bData.transactions) {
+                        bData.transactions.forEach(tx => {
+                            tx.timestamp = bData.timestamp; 
+                            tx.blockNumberDec = parseInt(bData.number, 16);
+                            tx.blockHash = bData.hash; // Injection du Hash du Bloc
+                            txCache.set(tx.hash, tx);
+                            txs.push(tx);
+                        });
                     }
                 }
             }
-
-            // 3. Préparer les tableaux intégraux pour le rendu (SANS COUPURE)
-            const blocks = [];
-            const txs = [];
             
-            // Tri décroissant
-            const sortedBlockNums = Array.from(blockCache.keys()).map(Number).sort((a, b) => b - a);
-            sortedBlockNums.forEach(num => blocks.push(blockCache.get(num.toString())));
-            
-            const sortedTxs = Array.from(txCache.values()).sort((a, b) => b.blockNumberDec - a.blockNumberDec);
-            sortedTxs.forEach(tx => txs.push(tx));
+            pb.style.width = '90%';
 
-            // Logique de comptage original adaptée
+            // 3. Stats Globales
             totalTxGlobal = currentBlockNum * 5 + txs.length; 
             document.getElementById('statTotalTx').innerText = totalTxGlobal.toLocaleString('fr-FR');
+            document.getElementById('statMempool').innerText = "0"; 
 
-            // 4. Lancement du rendu INTÉGRAL (tous les blocs dans toutes les vues)
+            // 4. Affichage de TOUTES les données récupérées (aucun '.slice')
             renderData(blocks, txs);
+            
+            pb.style.width = '100%';
+            setTimeout(() => { pb.style.opacity = '0'; pb.style.width = '0%'; }, 300);
         }
 
         function renderData(blocks, txs) {
-            renderBlocksPreview(blocks);  // Affiche TOUS les blocs dans l'accueil
-            renderTxsPreview(txs);        // Affiche TOUTES les txs dans l'accueil
-            renderBlocksTable(blocks);    // Affiche TOUS les blocs dans "Voir Tout"
-            renderTxsTable(txs);          // Affiche TOUTES les txs dans "Voir Tout"
+            renderBlocksPreview(blocks);
+            renderTxsPreview(txs);
+            renderBlocksTable(blocks);
+            renderTxsTable(txs);
         }
 
-        // --- AFFICHAGE UI DENSE ---
+        /* --- RENDU UI DENSE --- */
         function renderBlocksPreview(blocks) {
             const c = document.getElementById('blocksContainerPreview'); 
             if(blocks.length === 0) { c.innerHTML = '<div class="text-center p-4 text-slate-400 font-medium text-xs">En attente des blocs...</div>'; return; }
             
             c.innerHTML = '';
             blocks.forEach((b, i) => {
-                const num = parseInt(b.number, 16);
+                const num = typeof b.number === 'string' && b.number.startsWith('0x') ? parseInt(b.number, 16) : Number(b.number);
                 const txCount = b.transactions ? b.transactions.length : 0;
                 
                 const html = `
@@ -452,7 +478,7 @@
                             <div class="w-8 h-8 rounded bg-slate-50 flex items-center justify-center border border-slate-200 text-slate-500 shrink-0 shadow-sm"><i class="fa-solid fa-cube text-xs"></i></div>
                             <div>
                                 <span class="font-black text-indAccent text-xs hover:underline">Bloc #${num}</span>
-                                <span class="block text-[10px] text-slate-500 font-medium mt-0.5"><i class="fa-regular fa-clock text-slate-400 mr-1"></i>${timeAgo(new Date(parseInt(b.timestamp)*1000))}</span>
+                                <span class="block text-[10px] text-slate-500 font-medium mt-0.5"><i class="fa-regular fa-clock text-slate-400 mr-1"></i>${timeAgo(parseTimestamp(b.timestamp))}</span>
                             </div>
                         </div>
                         <div class="text-right shrink-0">
@@ -496,14 +522,14 @@
             const tb = document.getElementById('allBlocksTable'); 
             tb.innerHTML = '';
             blocks.forEach(b => {
-                const num = parseInt(b.number, 16);
+                const num = typeof b.number === 'string' && b.number.startsWith('0x') ? parseInt(b.number, 16) : Number(b.number);
                 tb.insertAdjacentHTML('beforeend', `
                     <tr class="hover:bg-sky-50/50 cursor-pointer transition-colors border-b border-slate-100 last:border-0" onclick="openBlockModal('${num}')">
                         <td class="py-2.5 px-4"><span class="bg-sky-50 text-indAccent border border-sky-100 px-2 py-0.5 rounded font-black text-xs shadow-sm hover:underline">#${num}</span></td>
-                        <td class="py-2.5 px-4 text-slate-600 font-medium text-[11px]"><i class="fa-regular fa-clock text-slate-400 mr-1"></i> ${timeAgo(new Date(parseInt(b.timestamp)*1000))}</td>
+                        <td class="py-2.5 px-4 text-slate-600 font-medium text-[11px]"><i class="fa-regular fa-clock text-slate-400 mr-1"></i> ${timeAgo(parseTimestamp(b.timestamp))}</td>
                         <td class="py-2.5 px-4 font-bold text-premiumDark"><span class="bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200 text-[11px]">${b.transactions?b.transactions.length:0} Tx</span></td>
                         <td class="py-2.5 px-4"><span class="bg-slate-50 text-slate-700 px-2 py-0.5 rounded border border-slate-200 font-mono text-xs">${formatHash(b.miner||b.validator||"0xNexusMaster", 6)}</span></td>
-                        <td class="py-2.5 px-4 text-right font-mono text-slate-500 text-xs"><i class="fa-solid fa-fire text-orange-400 mr-1.5"></i>${parseInt(b.gasUsed||"0x0", 16).toLocaleString('fr-FR')}</td>
+                        <td class="py-2.5 px-4 text-right font-mono text-slate-500 text-xs"><i class="fa-solid fa-fire text-orange-400 mr-1.5"></i>${b.gasUsed ? parseInt(b.gasUsed, 16).toLocaleString('fr-FR') : "0"}</td>
                     </tr>`);
             });
         }
@@ -517,8 +543,8 @@
                 tb.insertAdjacentHTML('beforeend', `
                     <tr class="hover:bg-emerald-50/30 cursor-pointer transition-colors border-b border-slate-100 last:border-0" onclick="openTxModal('${tx.hash}')">
                         <td class="py-2.5 px-4"><span class="bg-slate-50 text-slate-700 px-2 py-0.5 rounded border border-slate-200 font-mono text-xs font-bold shadow-sm">${formatHash(tx.hash, 5)}</span></td>
-                        <td class="py-2.5 px-4"><span class="font-black text-slate-700 bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded text-[11px] hover:text-indAccent hover:bg-sky-50 transition-colors" onclick="event.stopPropagation(); openBlockModal('${tx.blockNumberDec}')">#${tx.blockNumberDec}</span></td>
-                        <td class="py-2.5 px-4 text-slate-500 text-[11px] font-medium"><i class="fa-regular fa-clock text-slate-400 mr-1"></i> ${timeAgo(new Date(parseInt(tx.timestamp)*1000))}</td>
+                        <td class="py-2.5 px-4"><span class="font-black text-slate-700 bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded text-[11px] hover:text-indAccent hover:bg-sky-50 transition-colors" onclick="event.stopPropagation(); openBlockModal('${tx.blockNumberDec}')">${tx.blockNumberDec}</span></td>
+                        <td class="py-2.5 px-4 text-slate-500 text-[11px] font-medium"><i class="fa-regular fa-clock text-slate-400 mr-1"></i> ${timeAgo(parseTimestamp(tx.timestamp))}</td>
                         <td class="py-2.5 px-4"><span class="font-mono text-[11px] text-slate-600 bg-slate-50 border border-slate-200 px-1.5 py-0.5 rounded">${formatHash(tx.from, 4)}</span></td>
                         <td class="py-2.5 px-4"><span class="font-mono text-[11px] text-slate-600 bg-slate-50 border border-slate-200 px-1.5 py-0.5 rounded">${tx.to ? formatHash(tx.to, 4) : 'Contrat'}</span></td>
                         <td class="py-2.5 px-4 text-right"><span class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded shadow-sm font-black text-xs">${formatAmount(tx.amountMicro||tx.value)} ₳</span></td>
@@ -526,7 +552,7 @@
             });
         }
 
-        // --- MODALES DENSES ---
+        /* --- MODALES --- */
         function createGridRow(label, displayValue, rawValueToCopy = null) {
             return `
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-1.5 md:gap-3 py-2.5 border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-colors px-2 rounded items-center">
@@ -551,18 +577,20 @@
             const inputData = (tx.input && tx.input !== "0x") ? tx.input : "0x (Transfert direct)";
             const nonce = tx.nonce ? parseInt(tx.nonce, 16) : 0;
             const blockHashData = tx.blockHash || "Non répertorié";
-            const confirmations = latestBlockNum - tx.blockNumberDec + 1;
+            
+            // Calcul confirmations avec la hauteur actuelle du réseau
+            const confirmations = Math.max(0, latestBlockNum - tx.blockNumberDec + 1);
             
             document.getElementById('txModalBody').innerHTML = `
                 <div class="bg-white rounded-md border border-slate-200 p-3 mb-4 shadow-sm">
                     ${createGridRow("TxHash", `<span class="bg-slate-50 border border-slate-200 px-2 py-1 rounded font-mono text-xs text-indAccent font-bold">${tx.hash}</span>`, tx.hash)}
                     ${createGridRow("Statut", `<span class="inline-flex items-center gap-1 bg-indSuccess/10 border border-indSuccess/20 text-indSuccess px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider shadow-sm"><i class="fa-solid fa-check-double"></i> Succès (${confirmations} Conf.)</span>`)}
                     
-                    <!-- NUMÉRO DE BLOC -->
+                    <!-- MISE EN VALEUR DU NUMÉRO DE BLOC -->
                     ${createGridRow("Numéro de Bloc", `<button onclick="openBlockModal('${tx.blockNumberDec}')" class="text-indAccent hover:text-white font-black bg-sky-50 hover:bg-indAccent border border-sky-100 transition-colors px-2.5 py-1 rounded shadow-sm text-xs"><i class="fa-solid fa-cube mr-1"></i> #${tx.blockNumberDec}</button>`)}
                     
                     ${createGridRow("Hash Bloc", `<span class="font-mono text-xs text-slate-500 bg-slate-50 px-1.5 py-0.5 rounded border border-slate-100">${blockHashData}</span>`, blockHashData)}
-                    ${createGridRow("Horodatage", `<span class="text-slate-700 font-semibold text-xs"><i class="fa-regular fa-clock text-slate-400 mr-1.5"></i> ${timeAgo(new Date(parseInt(tx.timestamp)*1000))}</span> <span class="text-[10px] text-slate-400 ml-2">(${formatDateFull(parseInt(tx.timestamp)*1000)})</span>`)}
+                    ${createGridRow("Horodatage", `<span class="text-slate-700 font-semibold text-xs"><i class="fa-regular fa-clock text-slate-400 mr-1.5"></i> ${timeAgo(parseTimestamp(tx.timestamp))}</span> <span class="text-[10px] text-slate-400 ml-2">(${formatDateFull(parseTimestamp(tx.timestamp))})</span>`)}
                 </div>
                 
                 <div class="bg-white rounded-md border border-slate-200 p-3 mb-4 shadow-sm">
@@ -593,19 +621,23 @@
         function openBlockModal(numStr) {
             const num = parseInt(numStr);
             const b = blockCache.get(num.toString());
-            if(!b) { showToast("Bloc non synchronisé.", "info"); return; }
+            if(!b) { showToast("Bloc en cours de synchronisation...", "info"); return; }
             
             document.getElementById('blockModalTitleNum').innerText = "#" + num;
             const gasLimit = b.gasLimit ? parseInt(b.gasLimit, 16).toLocaleString('fr-FR') : "N/A";
             const gasUsed = b.gasUsed ? parseInt(b.gasUsed, 16).toLocaleString('fr-FR') : "0";
-            const gasPercentage = b.gasLimit && b.gasUsed ? ((parseInt(b.gasUsed, 16) / parseInt(b.gasLimit, 16)) * 100).toFixed(2) : "0.00";
+            let gasPercentage = "0.00";
+            if (b.gasLimit && b.gasUsed && parseInt(b.gasLimit, 16) > 0) {
+                gasPercentage = ((parseInt(b.gasUsed, 16) / parseInt(b.gasLimit, 16)) * 100).toFixed(2);
+            }
+            
             const extraData = (b.extraData && b.extraData !== "0x") ? b.extraData : "0x";
-            const confirmations = latestBlockNum - num + 1;
+            const confirmations = Math.max(0, latestBlockNum - num + 1);
 
             document.getElementById('blockModalBody').innerHTML = `
                 <div class="bg-white rounded-md border border-slate-200 p-3 mb-4 shadow-sm">
                     ${createGridRow("Numéro", `<span class="font-black text-indAccent text-base bg-sky-50 border border-sky-100 px-2.5 py-0.5 rounded shadow-sm">#${num}</span> <span class="ml-3 text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded border border-slate-200 shadow-sm">${confirmations} Confirmations</span>`)}
-                    ${createGridRow("Horodatage", `<span class="text-slate-700 font-semibold text-xs"><i class="fa-regular fa-clock text-slate-400 mr-1.5"></i> ${timeAgo(new Date(parseInt(b.timestamp)*1000))}</span> <span class="text-[10px] text-slate-400 ml-2">(${formatDateFull(parseInt(b.timestamp)*1000)})</span>`)}
+                    ${createGridRow("Horodatage", `<span class="text-slate-700 font-semibold text-xs"><i class="fa-regular fa-clock text-slate-400 mr-1.5"></i> ${timeAgo(parseTimestamp(b.timestamp))}</span> <span class="text-[10px] text-slate-400 ml-2">(${formatDateFull(parseTimestamp(b.timestamp))})</span>`)}
                     ${createGridRow("Transactions", `<span class="font-bold text-indSuccess bg-indSuccess/10 border border-indSuccess/20 px-2 py-0.5 rounded text-[11px] shadow-sm">${b.transactions ? b.transactions.length : 0} Incluses</span>`)}
                     ${createGridRow("Validateur", `<span class="font-mono text-xs text-slate-700 bg-slate-50 px-2 py-1 rounded border border-slate-200 shadow-sm">${b.miner || b.validator || "0xNexusMasterOracle"}</span>`, b.miner || b.validator)}
                 </div>
@@ -618,7 +650,7 @@
                 <div class="bg-white rounded-md border border-slate-200 p-3 mb-4 shadow-sm border-l-4 border-l-orange-300">
                     ${createGridRow("Consommation Gaz", `<span class="font-black text-orange-600 text-sm bg-orange-50 px-2 py-0.5 rounded border border-orange-200 shadow-sm"><i class="fa-solid fa-fire mr-1 opacity-70"></i>${gasUsed}</span> <span class="text-[10px] bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded text-slate-600 font-bold ml-2 shadow-sm">${gasPercentage}%</span>`)}
                     ${createGridRow("Limite Gaz", `<span class="font-mono text-[11px] text-slate-600 bg-slate-50 px-2 py-0.5 rounded border border-slate-100">${gasLimit}</span>`)}
-                    ${createGridRow("Taille", `<span class="font-mono text-[11px] text-slate-600 bg-slate-50 px-2 py-0.5 rounded border border-slate-100"><i class="fa-solid fa-hard-drive mr-1 text-slate-400"></i>${b.size ? parseInt(b.size, 16).toLocaleString('fr-FR') + " octets" : "N/A"}</span>`)}
+                    ${createGridRow("Taille Globale", `<span class="font-mono text-[11px] text-slate-600 bg-slate-50 px-2 py-0.5 rounded border border-slate-100"><i class="fa-solid fa-hard-drive mr-1 text-slate-400"></i>${b.size ? parseInt(b.size, 16).toLocaleString('fr-FR') + " octets" : "Non spécifié"}</span>`)}
                 </div>
                 
                 <div class="bg-white rounded-md border border-slate-200 p-4 shadow-sm">
@@ -652,7 +684,7 @@
                     const num = parseInt(val);
                     if(blockCache.has(num.toString())) openBlockModal(num);
                     else {
-                        showToast("Recherche sur le réseau...", "info");
+                        showToast("Recherche...", "info");
                         const bData = await rpcCall("nexus_getBlockByNumber", ["0x" + num.toString(16), true]);
                         if(bData) { blockCache.set(num.toString(), bData); openBlockModal(num); } 
                         else showToast("Bloc introuvable.", "error");
@@ -661,9 +693,9 @@
                 else if (val.startsWith('0x') && val.length === 42 || val.startsWith('AGI')) {
                     const userTxs = Array.from(txCache.values()).filter(tx => tx.from === val || tx.to === val);
                     if (userTxs.length > 0) {
-                        showToast(`${userTxs.length} Tx trouvée(s)`, "success");
+                        showToast(`${userTxs.length} Tx locale(s) trouvée(s)`, "success");
                         openTxModal(userTxs[0].hash);
-                    } else showToast("Aucune Tx pour cette adresse.", "error");
+                    } else showToast("Aucune Tx locale pour cette adresse.", "error");
                 } else showToast("Format incorrect.", "error");
             } finally {
                 btn.innerHTML = originalHTML;
