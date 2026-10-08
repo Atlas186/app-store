@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Nexus Scan | Explorateur L1 par Atlas & Duc Corp.</title>
+    <title>Nexus Scan | Explorateur L1 Blockchain</title>
     
     <!-- Polices Industrielles -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,8 +26,7 @@
                         indBg: '#F1F5F9',
                         indCard: '#FFFFFF',
                         indBorder: '#E2E8F0',
-                        indTextMuted: '#64748B',
-                        goldOrange: '#F59E0B'
+                        indTextMuted: '#64748B'
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -38,18 +37,13 @@
         }
     </script>
     <style>
-        /* Animations & Transitions Premium */
+        /* Animations & Transitions */
         .fade-in { animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
         .live-pulse { animation: pulseGreen 2s infinite; }
         @keyframes pulseGreen { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); } 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
         
-        /* Loading Overlay */
-        #global-loader { transition: opacity 0.5s ease, visibility 0.5s ease; }
-        .spinner { border: 3px solid rgba(14, 165, 233, 0.2); border-left-color: #0EA5E9; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
         /* Skeleton Loader Industriel */
         .skeleton {
             background: #e2e8f0;
@@ -59,52 +53,46 @@
         }
         @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
 
-        /* Scrollbar Premium */
+        /* Scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 8px; }
+        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
 
         /* Modals */
         .modal-overlay { 
-            opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-            background-color: rgba(7, 11, 20, 0.85); backdrop-filter: blur(4px);
+            opacity: 0; visibility: hidden; transition: all 0.3s ease; background-color: #F8FAFC;
         }
         .modal-overlay.active { opacity: 1; visibility: visible; }
         .modal-content { 
-            transform: translateY(20px) scale(0.98); opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(20px); opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); height: 100dvh; width: 100vw;
         }
-        .modal-overlay.active .modal-content { transform: translateY(0) scale(1); opacity: 1; }
+        .modal-overlay.active .modal-content { transform: translateY(0); opacity: 1; }
 
         .hash-break { word-break: break-all; overflow-wrap: anywhere; }
 
         /* Toasts */
         #toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 999999; display: flex; flex-direction: column; gap: 10px; }
         .toast { 
-            background: #070B14; color: white; padding: 12px 18px; border-radius: 8px; border: 1px solid #1e293b;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3); 
-            font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 10px; 
-            animation: slideInRight 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards, fadeOut 0.4s ease-in 4s forwards; 
+            background: #070B14; color: white; padding: 12px 18px; border-radius: 8px; 
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2); 
+            font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 10px; 
+            animation: slideInRight 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards, fadeOut 0.3s ease-in 4s forwards; 
         }
         @keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        @keyframes fadeOut { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(100%); } }
+        @keyframes fadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(10px); } }
     </style>
 </head>
 <body class="bg-indBg text-premiumDark font-sans antialiased flex flex-col min-h-screen">
 
-    <!-- Écran de chargement initial -->
-    <div id="global-loader" class="fixed inset-0 bg-indBg z-[100000] flex flex-col items-center justify-center">
-        <div class="spinner mb-4"></div>
-        <h2 class="text-premiumDark font-bold text-lg animate-pulse tracking-wide">Synchronisation Web3...</h2>
-        <p class="text-indTextMuted text-xs font-mono mt-2">Connexion à rpc.agi-nexus-core.click</p>
-    </div>
-
     <!-- HEADER -->
-    <header class="bg-white/90 backdrop-blur-md border-b border-indBorder sticky top-0 z-40 shadow-sm">
+    <header class="bg-white/95 backdrop-blur-md border-b border-indBorder sticky top-0 z-40 shadow-sm">
         <div class="max-w-[95rem] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-14">
                 <div class="flex items-center gap-3 cursor-pointer select-none" onclick="switchView('home')">
-                    <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo" class="h-8 w-8 rounded-full border border-indBorder object-cover shadow-sm">
+                    <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-indAccent to-blue-800 flex items-center justify-center text-white shadow-md">
+                        <i class="fa-solid fa-network-wired text-[10px]"></i>
+                    </div>
                     <span class="font-extrabold text-lg tracking-tight text-premiumDark">NEXUS<span class="text-indAccent">SCAN</span></span>
                 </div>
 
@@ -112,15 +100,17 @@
                     <button id="nav-home" onclick="switchView('home')" class="desktop-nav-item h-full flex items-center text-indAccent font-bold text-sm border-b-2 border-indAccent transition-colors"><i class="fa-solid fa-house mr-2"></i> Accueil</button>
                     <button id="nav-blocks" onclick="switchView('blocks')" class="desktop-nav-item h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-sm border-b-2 border-transparent transition-colors"><i class="fa-solid fa-cubes mr-2"></i> Blocs</button>
                     <button id="nav-txs" onclick="switchView('txs')" class="desktop-nav-item h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-sm border-b-2 border-transparent transition-colors"><i class="fa-solid fa-list-ul mr-2"></i> Transactions</button>
-                    <button id="nav-accounts" onclick="switchView('accounts')" class="desktop-nav-item h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-sm border-b-2 border-transparent transition-colors"><i class="fa-solid fa-ranking-star mr-2"></i> Top Comptes</button>
+                    <button id="nav-accounts" onclick="switchView('accounts')" class="desktop-nav-item h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-sm border-b-2 border-transparent transition-colors"><i class="fa-solid fa-fire mr-2"></i> Comptes Actifs</button>
                 </nav>
 
                 <div class="flex items-center gap-4">
-                    <div class="hidden sm:flex items-center gap-2 bg-indSuccess/10 border border-indSuccess/20 px-3 py-1.5 rounded-full">
+                    <div class="hidden sm:flex items-center gap-2 bg-indSuccess/10 border border-indSuccess/20 px-3 py-1.5 rounded-full" title="Réseau Connecté">
                         <div class="w-2 h-2 rounded-full bg-indSuccess live-pulse"></div>
-                        <span class="text-xs font-bold text-indSuccess tracking-wider uppercase">Mainnet L1</span>
+                        <span class="text-xs font-bold text-indSuccess tracking-wide uppercase" id="networkStatus">Synchronisation...</span>
                     </div>
-                    <button id="mobileMenuOpenBtn" class="md:hidden text-premiumDark hover:text-indAccent focus:outline-none text-xl p-1 transition-colors"><i class="fa-solid fa-bars"></i></button>
+                    <button id="mobileMenuOpenBtn" class="md:hidden text-premiumDark hover:text-indAccent focus:outline-none text-xl p-1 transition-colors">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -130,32 +120,36 @@
     <div id="mobileMenu" class="fixed inset-0 bg-white z-50 hidden flex-col transition-opacity">
         <div class="flex justify-between items-center p-4 border-b border-indBorder shadow-sm bg-white">
             <div class="flex items-center gap-3">
-                <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo" class="h-8 w-8 rounded-full border border-indBorder object-cover">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-indAccent to-blue-800 flex items-center justify-center text-white">
+                    <i class="fa-solid fa-network-wired text-[10px]"></i>
+                </div>
                 <span class="font-extrabold text-lg tracking-tight text-premiumDark">NEXUS<span class="text-indAccent">SCAN</span></span>
             </div>
-            <button id="mobileMenuCloseBtn" class="text-indTextMuted hover:text-premiumDark focus:outline-none text-2xl font-bold p-2 transition-colors"><i class="fa-solid fa-xmark"></i></button>
+            <button id="mobileMenuCloseBtn" class="text-indTextMuted hover:text-premiumDark focus:outline-none text-2xl font-bold p-2">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
         </div>
         <div class="flex flex-col pt-2 flex-grow overflow-y-auto">
-            <button id="mob-nav-home" onclick="switchView('home')" class="mobile-nav-item py-4 px-6 text-left font-bold text-base border-b border-indBorder flex items-center gap-3 text-indAccent bg-sky-50/50 border-l-4 border-indAccent"><i class="fa-solid fa-house w-6 text-center"></i> Accueil</button>
-            <button id="mob-nav-blocks" onclick="switchView('blocks')" class="mobile-nav-item py-4 px-6 text-left font-semibold text-base border-b border-indBorder flex items-center gap-3 text-slate-600 border-l-4 border-transparent hover:bg-slate-50"><i class="fa-solid fa-cubes w-6 text-center"></i> Blocs</button>
-            <button id="mob-nav-txs" onclick="switchView('txs')" class="mobile-nav-item py-4 px-6 text-left font-semibold text-base border-b border-indBorder flex items-center gap-3 text-slate-600 border-l-4 border-transparent hover:bg-slate-50"><i class="fa-solid fa-list-ul w-6 text-center"></i> Transactions</button>
-            <button id="mob-nav-accounts" onclick="switchView('accounts')" class="mobile-nav-item py-4 px-6 text-left font-semibold text-base border-b border-indBorder flex items-center gap-3 text-slate-600 border-l-4 border-transparent hover:bg-slate-50"><i class="fa-solid fa-ranking-star w-6 text-center"></i> Top Comptes</button>
+            <button id="mob-nav-home" onclick="switchView('home')" class="mobile-nav-item py-4 px-6 text-left font-bold text-base border-b border-indBorder flex items-center gap-4 text-indAccent bg-sky-50/50 border-l-4 border-indAccent transition-colors"><i class="fa-solid fa-house w-6 text-center"></i> Accueil</button>
+            <button id="mob-nav-blocks" onclick="switchView('blocks')" class="mobile-nav-item py-4 px-6 text-left font-semibold text-base border-b border-indBorder flex items-center gap-4 text-slate-600 border-l-4 border-transparent hover:bg-slate-50 transition-colors"><i class="fa-solid fa-cubes w-6 text-center"></i> Blocs</button>
+            <button id="mob-nav-txs" onclick="switchView('txs')" class="mobile-nav-item py-4 px-6 text-left font-semibold text-base border-b border-indBorder flex items-center gap-4 text-slate-600 border-l-4 border-transparent hover:bg-slate-50 transition-colors"><i class="fa-solid fa-list-ul w-6 text-center"></i> Transactions</button>
+            <button id="mob-nav-accounts" onclick="switchView('accounts')" class="mobile-nav-item py-4 px-6 text-left font-semibold text-base border-b border-indBorder flex items-center gap-4 text-slate-600 border-l-4 border-transparent hover:bg-slate-50 transition-colors"><i class="fa-solid fa-fire w-6 text-center"></i> Comptes Actifs</button>
         </div>
     </div>
 
     <!-- MAIN CONTENT -->
     <main id="main-content" class="flex-grow flex flex-col">
-        <!-- VUE ACCUEIL -->
+        
+        <!-- VUE : ACCUEIL -->
         <div id="view-home" class="view-section flex-grow flex flex-col fade-in">
             <section class="bg-premiumDark text-white pt-10 pb-16 px-4 relative overflow-hidden">
                 <div class="absolute inset-0 bg-gradient-to-br from-premiumDark via-[#0f172a] to-[#1e293b] z-0"></div>
-                <div class="absolute inset-0 opacity-10 z-0" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 24px 24px;"></div>
+                <div class="absolute inset-0 opacity-5 z-0" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 24px 24px;"></div>
                 
                 <div class="max-w-4xl mx-auto relative z-10 flex flex-col items-center">
-                    <h1 class="text-3xl md:text-5xl font-black mb-4 text-center tracking-tight">Le Moteur de Confiance <span class="text-indAccent">NEXUS CORE</span></h1>
+                    <h1 class="text-3xl md:text-5xl font-black mb-4 text-center tracking-tight">Explorateur <span class="text-indAccent">NEXUS CORE</span></h1>
                     <div class="text-center mb-10 flex flex-col items-center gap-2">
-                        <p class="text-slate-300 text-sm font-bold uppercase tracking-widest">Explorateur Web3 Layer-1</p>
-                        <p class="text-slate-400 text-xs font-medium">Déployé et sécurisé par Atlas & Duc Corporation</p>
+                        <p class="text-slate-300 text-sm font-bold uppercase tracking-widest">Moteur d'Analyse L1 Temps Réel</p>
                         <div class="mt-4 bg-indAccent/10 border border-indAccent/20 px-5 py-2 rounded-full shadow-inner backdrop-blur-sm">
                             <p class="text-indAccent font-black text-sm tracking-wide">1 ₳ (AG-COIN) = 1 FCFA (XOF)</p>
                         </div>
@@ -163,7 +157,7 @@
                     
                     <form onsubmit="handleSearch(event)" class="w-full max-w-2xl bg-white rounded-xl p-2 flex items-center shadow-2xl focus-within:ring-4 focus-within:ring-indAccent/30 transition-all border border-slate-700">
                         <div class="pl-4 pr-3 text-slate-400 text-lg"><i class="fa-solid fa-search"></i></div>
-                        <input type="text" id="searchInput" placeholder="Recherche par Adresse / TxHash / Numéro de Bloc..." class="w-full bg-transparent text-premiumDark px-2 py-3 outline-none font-medium placeholder:text-slate-400 text-sm md:text-base">
+                        <input type="text" id="searchInput" placeholder="Rechercher par Adresse, TxHash ou Numéro de Bloc..." class="w-full bg-transparent text-premiumDark px-2 py-3 outline-none font-medium placeholder:text-slate-400 text-sm md:text-base">
                         <button type="submit" id="searchBtn" class="bg-indAccent hover:bg-[#0284c7] text-white px-6 py-3 rounded-lg font-bold text-sm transition-colors flex items-center gap-2 shadow-md">
                             <span class="hidden sm:inline">Rechercher</span><i class="fa-solid fa-arrow-right sm:hidden"></i>
                         </button>
@@ -176,29 +170,29 @@
                     <div class="bg-indCard rounded-xl p-5 border border-indBorder shadow-lg flex items-center gap-4">
                         <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 border border-slate-200"><i class="fa-solid fa-coins text-lg"></i></div>
                         <div>
-                            <p class="text-xs font-bold text-indTextMuted uppercase tracking-wider mb-1">Prix AG-COIN</p>
-                            <h3 class="text-lg font-black text-premiumDark">1 FCFA <span class="text-sm font-bold text-indAccent">/ ₳</span></h3>
+                            <p class="text-xs font-bold text-indTextMuted uppercase tracking-wider mb-1">Valeur Native</p>
+                            <h3 class="text-lg font-black text-premiumDark">1.00 <span class="text-sm font-bold text-indAccent">XOF</span></h3>
                         </div>
                     </div>
                     <div class="bg-indCard rounded-xl p-5 border border-indBorder shadow-lg flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-full bg-sky-50 flex items-center justify-center text-indAccent border border-sky-100"><i class="fa-solid fa-server text-lg"></i></div>
+                        <div class="w-12 h-12 rounded-full bg-sky-50 flex items-center justify-center text-indAccent border border-sky-100"><i class="fa-solid fa-gauge-high text-lg"></i></div>
+                        <div>
+                            <p class="text-xs font-bold text-indTextMuted uppercase tracking-wider mb-1">Activité (TPS)</p>
+                            <h3 id="statTPS" class="text-lg font-black text-premiumDark"><div class="skeleton h-5 w-16 rounded"></div></h3>
+                        </div>
+                    </div>
+                    <div class="bg-indCard rounded-xl p-5 border border-indBorder shadow-lg flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-indSuccess border border-emerald-100"><i class="fa-solid fa-cube text-lg"></i></div>
                         <div>
                             <p class="text-xs font-bold text-indTextMuted uppercase tracking-wider mb-1">Dernier Bloc</p>
                             <h3 id="statLatestBlock" class="text-lg font-black text-premiumDark"><div class="skeleton h-5 w-20 rounded"></div></h3>
                         </div>
                     </div>
                     <div class="bg-indCard rounded-xl p-5 border border-indBorder shadow-lg flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-indSuccess border border-emerald-100"><i class="fa-solid fa-stopwatch text-lg"></i></div>
+                        <div class="w-12 h-12 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-500 border border-indigo-100"><i class="fa-solid fa-stopwatch text-lg"></i></div>
                         <div>
-                            <p class="text-xs font-bold text-indTextMuted uppercase tracking-wider mb-1">Temps Finalité</p>
+                            <p class="text-xs font-bold text-indTextMuted uppercase tracking-wider mb-1">Temps de Bloc</p>
                             <h3 id="statBlockTime" class="text-lg font-black text-premiumDark"><div class="skeleton h-5 w-16 rounded"></div></h3>
-                        </div>
-                    </div>
-                    <div class="bg-indCard rounded-xl p-5 border border-indBorder shadow-lg flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-500 border border-indigo-100"><i class="fa-solid fa-bolt text-lg"></i></div>
-                        <div>
-                            <p class="text-xs font-bold text-indTextMuted uppercase tracking-wider mb-1">Tx Récentes (Cache)</p>
-                            <h3 id="statTotalTx" class="text-lg font-black text-premiumDark"><div class="skeleton h-5 w-16 rounded"></div></h3>
                         </div>
                     </div>
                 </div>
@@ -206,7 +200,7 @@
 
             <section class="max-w-[95rem] w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <!-- Blocs Récents -->
-                <div class="bg-indCard rounded-xl border border-indBorder shadow-sm flex flex-col h-[500px]">
+                <div class="bg-indCard rounded-xl border border-indBorder shadow-sm flex flex-col h-[550px]">
                     <div class="p-5 border-b border-indBorder flex justify-between items-center bg-slate-50/80 rounded-t-xl">
                         <h2 class="font-extrabold text-premiumDark text-base flex items-center gap-2"><i class="fa-solid fa-cubes text-indAccent"></i> Blocs Récents</h2>
                         <button onclick="switchView('blocks')" class="text-xs font-bold text-indAccent bg-sky-50 px-3 py-1.5 rounded-md hover:bg-indAccent hover:text-white transition-colors border border-sky-100 hover:border-indAccent">Voir Tout <i class="fa-solid fa-arrow-right ml-1"></i></button>
@@ -215,7 +209,7 @@
                 </div>
 
                 <!-- Transactions Récentes -->
-                <div class="bg-indCard rounded-xl border border-indBorder shadow-sm flex flex-col h-[500px]">
+                <div class="bg-indCard rounded-xl border border-indBorder shadow-sm flex flex-col h-[550px]">
                     <div class="p-5 border-b border-indBorder flex justify-between items-center bg-slate-50/80 rounded-t-xl">
                         <h2 class="font-extrabold text-premiumDark text-base flex items-center gap-2"><i class="fa-solid fa-list-ul text-indAccent"></i> Transactions Récentes</h2>
                         <button onclick="switchView('txs')" class="text-xs font-bold text-indAccent bg-sky-50 px-3 py-1.5 rounded-md hover:bg-indAccent hover:text-white transition-colors border border-sky-100 hover:border-indAccent">Voir Tout <i class="fa-solid fa-arrow-right ml-1"></i></button>
@@ -225,11 +219,12 @@
             </section>
         </div>
 
-        <!-- VUE BLOCS -->
+        <!-- VUE : BLOCS COMPLETS -->
         <div id="view-blocks" class="view-section hidden flex-grow bg-indBg fade-in">
             <div class="max-w-[95rem] mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div class="mb-6">
-                    <h1 class="text-xl font-black text-premiumDark flex items-center gap-2"><i class="fa-solid fa-cubes text-indAccent"></i> Registre des Blocs</h1>
+                    <h1 class="text-2xl font-black text-premiumDark flex items-center gap-3"><i class="fa-solid fa-cubes text-indAccent"></i> Registre des Blocs</h1>
+                    <p class="text-sm text-slate-500 mt-1">Exploration des derniers blocs minés sur le réseau.</p>
                 </div>
                 <div class="bg-white rounded-xl border border-indBorder shadow-sm overflow-hidden">
                     <div class="overflow-x-auto">
@@ -237,57 +232,72 @@
                             <thead>
                                 <tr class="bg-slate-50 border-b border-indBorder text-xs text-slate-500 uppercase tracking-wider">
                                     <th class="py-4 px-5 font-bold">Bloc</th>
-                                    <th class="py-4 px-5 font-bold">Horodatage</th>
+                                    <th class="py-4 px-5 font-bold">Âge</th>
                                     <th class="py-4 px-5 font-bold">Txns</th>
-                                    <th class="py-4 px-5 font-bold">Nœud Validateur</th>
-                                    <th class="py-4 px-5 font-bold text-right">Gaz Utilisé</th>
+                                    <th class="py-4 px-5 font-bold">Validateur</th>
+                                    <th class="py-4 px-5 font-bold text-right">Gaz Consommé</th>
                                 </tr>
                             </thead>
-                            <tbody id="allBlocksTable" class="text-sm divide-y divide-slate-100"></tbody>
+                            <tbody id="allBlocksTable" class="text-sm divide-y divide-slate-100">
+                                <!-- JS Injection -->
+                            </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- VUE TRANSACTIONS -->
+        <!-- VUE : TRANSACTIONS COMPLÈTES -->
         <div id="view-txs" class="view-section hidden flex-grow bg-indBg fade-in">
             <div class="max-w-[95rem] mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div class="mb-6">
-                    <h1 class="text-xl font-black text-premiumDark flex items-center gap-2"><i class="fa-solid fa-list-ul text-indAccent"></i> Registre des Transactions</h1>
+                    <h1 class="text-2xl font-black text-premiumDark flex items-center gap-3"><i class="fa-solid fa-list-ul text-indAccent"></i> Registre des Transactions</h1>
+                    <p class="text-sm text-slate-500 mt-1">Dernières transactions validées sur le réseau L1.</p>
                 </div>
                 <div class="bg-white rounded-xl border border-indBorder shadow-sm overflow-hidden">
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse min-w-[1000px]">
+                        <table class="w-full text-left border-collapse min-w-[950px]">
                             <thead>
                                 <tr class="bg-slate-50 border-b border-indBorder text-xs text-slate-500 uppercase tracking-wider">
                                     <th class="py-4 px-5 font-bold">TxHash</th>
                                     <th class="py-4 px-5 font-bold">Bloc</th>
-                                    <th class="py-4 px-5 font-bold">Horodatage</th>
-                                    <th class="py-4 px-5 font-bold">De (Expéditeur)</th>
-                                    <th class="py-4 px-5 font-bold">À (Bénéficiaire)</th>
+                                    <th class="py-4 px-5 font-bold">Âge</th>
+                                    <th class="py-4 px-5 font-bold">Expéditeur</th>
+                                    <th class="py-4 px-5 font-bold">Bénéficiaire</th>
                                     <th class="py-4 px-5 font-bold text-right">Montant (₳)</th>
                                 </tr>
                             </thead>
-                            <tbody id="allTxsTable" class="text-sm divide-y divide-slate-100"></tbody>
+                            <tbody id="allTxsTable" class="text-sm divide-y divide-slate-100">
+                                <!-- JS Injection -->
+                            </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- VUE TOP COMPTES -->
+        <!-- VUE : COMPTES ACTIFS -->
         <div id="view-accounts" class="view-section hidden flex-grow bg-indBg fade-in">
             <div class="max-w-[95rem] mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div class="mb-6">
-                    <h1 class="text-xl font-black text-premiumDark flex items-center gap-2"><i class="fa-solid fa-ranking-star text-indAccent"></i> Top Comptes</h1>
+                    <h1 class="text-2xl font-black text-premiumDark flex items-center gap-3"><i class="fa-solid fa-fire text-indAccent"></i> Comptes Récemment Actifs</h1>
+                    <p class="text-sm text-slate-500 mt-1">Adresses ayant interagi dans les derniers blocs synchronisés.</p>
                 </div>
-                <div class="bg-white rounded-xl border border-indBorder shadow-sm flex flex-col items-center justify-center p-16 text-center">
-                    <div class="w-16 h-16 bg-sky-50 rounded-full flex items-center justify-center mb-5 border border-sky-100 shadow-inner">
-                        <i class="fa-solid fa-server text-2xl text-indAccent"></i>
+                <div class="bg-white rounded-xl border border-indBorder shadow-sm overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse min-w-[600px]">
+                            <thead>
+                                <tr class="bg-slate-50 border-b border-indBorder text-xs text-slate-500 uppercase tracking-wider">
+                                    <th class="py-4 px-5 font-bold">Adresse</th>
+                                    <th class="py-4 px-5 font-bold text-center">Interactions Récentes</th>
+                                    <th class="py-4 px-5 font-bold text-right">Type</th>
+                                </tr>
+                            </thead>
+                            <tbody id="activeAccountsTable" class="text-sm divide-y divide-slate-100">
+                                <!-- JS Injection -->
+                            </tbody>
+                        </table>
                     </div>
-                    <h3 class="text-lg font-bold text-premiumDark mb-2">Module d'Indexation Requis</h3>
-                    <p class="text-sm text-slate-500 max-w-md leading-relaxed">Le classement des comptes nécessite l'infrastructure d'indexation globale (Graph Node). En cours de déploiement par Atlas & Duc Corp.</p>
                 </div>
             </div>
         </div>
@@ -295,349 +305,389 @@
 
     <!-- FOOTER -->
     <footer class="bg-premiumDark border-t border-slate-800 pt-8 pb-8 mt-auto">
-        <div class="max-w-[95rem] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="flex items-center gap-3">
-                <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo" class="h-10 w-10 rounded-full border border-slate-700 shadow-sm">
-                <div>
+        <div class="max-w-[95rem] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
+            <div class="flex items-center gap-4 mb-6">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-indAccent to-blue-800 flex items-center justify-center text-white shadow-md border border-slate-700">
+                    <i class="fa-solid fa-network-wired text-sm"></i>
+                </div>
+                <div class="text-left">
                     <h4 class="text-white font-black text-base tracking-tight leading-none">Atlas & Duc Corp.</h4>
                     <span class="text-slate-400 text-xs font-semibold tracking-wide">Web3 Enterprise Infrastructure</span>
                 </div>
             </div>
-            <div class="flex gap-6 text-sm font-bold text-slate-400">
-                <a href="#" class="hover:text-indAccent transition-colors"><i class="fa-solid fa-server mr-2"></i>RPC Public</a>
-                <a href="#" class="hover:text-indAccent transition-colors"><i class="fa-solid fa-code mr-2"></i>API REST</a>
-            </div>
-            <p class="text-xs text-slate-500 font-medium tracking-wider">&copy; 2026 Atlas & Duc Corporation.</p>
+            <p class="text-xs text-slate-500 font-medium uppercase tracking-wider mb-2">Connecté au réseau officiel <span class="text-indAccent font-bold">Nexus Core</span></p>
+            <p class="text-[11px] text-slate-600">&copy; 2026 Atlas & Duc Corporation. Tous droits réservés.</p>
         </div>
     </footer>
 
-    <!-- MODAL TRANSACTION -->
-    <div id="txModal" class="modal-overlay fixed inset-0 z-[99999] flex flex-col items-center justify-center p-4 sm:p-6">
-        <div class="modal-content bg-white w-full max-w-4xl max-h-[90vh] rounded-xl flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
-            <div class="flex justify-between items-center px-6 py-4 border-b border-slate-200 bg-slate-50 shrink-0">
-                <h3 class="text-lg font-black text-premiumDark flex items-center gap-2"><i class="fa-solid fa-file-invoice text-indAccent"></i> Détails de la Transaction</h3>
-                <button onclick="closeModal('txModal')" class="text-slate-500 hover:text-white hover:bg-red-500 w-8 h-8 rounded-full transition-colors flex items-center justify-center focus:outline-none bg-white border border-slate-200 shadow-sm"><i class="fa-solid fa-xmark"></i></button>
+    <!-- MODALES PLEIN ÉCRAN -->
+    
+    <!-- Modal Transaction -->
+    <div id="txModal" class="modal-overlay fixed inset-0 z-[99999] flex flex-col">
+        <div class="modal-content bg-indBg w-full h-full max-w-full rounded-none flex flex-col shadow-none">
+            <div class="flex justify-between items-center px-4 md:px-8 py-4 border-b border-slate-200 bg-white shrink-0 shadow-sm">
+                <div class="max-w-5xl mx-auto w-full flex justify-between items-center">
+                    <h3 class="text-lg md:text-xl font-black text-premiumDark flex items-center gap-3"><i class="fa-solid fa-file-invoice text-indAccent"></i> Détails de la Transaction</h3>
+                    <button onclick="closeModal('txModal')" class="text-slate-500 hover:text-white hover:bg-red-500 px-4 py-2 rounded-lg transition-colors focus:outline-none flex items-center gap-2 font-bold text-sm bg-slate-100 border border-slate-200 hover:border-red-500 shadow-sm">
+                        <span class="hidden sm:inline">Fermer</span> <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
             </div>
-            <div class="p-6 overflow-y-auto flex-grow bg-indBg/50" id="txModalBody"></div>
+            <div class="p-4 md:p-8 overflow-y-auto flex-grow w-full">
+                <div class="max-w-5xl mx-auto w-full" id="txModalBody"></div>
+            </div>
         </div>
     </div>
 
-    <!-- MODAL BLOC -->
-    <div id="blockModal" class="modal-overlay fixed inset-0 z-[99999] flex flex-col items-center justify-center p-4 sm:p-6">
-        <div class="modal-content bg-white w-full max-w-4xl max-h-[90vh] rounded-xl flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
-            <div class="flex justify-between items-center px-6 py-4 border-b border-slate-200 bg-slate-50 shrink-0">
-                <h3 class="text-lg font-black text-premiumDark flex items-center gap-2"><i class="fa-solid fa-cube text-indAccent"></i> Bloc <span id="blockModalTitleNum" class="text-slate-500 font-mono ml-1"></span></h3>
-                <button onclick="closeModal('blockModal')" class="text-slate-500 hover:text-white hover:bg-red-500 w-8 h-8 rounded-full transition-colors flex items-center justify-center focus:outline-none bg-white border border-slate-200 shadow-sm"><i class="fa-solid fa-xmark"></i></button>
+    <!-- Modal Bloc -->
+    <div id="blockModal" class="modal-overlay fixed inset-0 z-[99999] flex flex-col">
+        <div class="modal-content bg-indBg w-full h-full max-w-full rounded-none flex flex-col shadow-none">
+            <div class="flex justify-between items-center px-4 md:px-8 py-4 border-b border-slate-200 bg-white shrink-0 shadow-sm">
+                <div class="max-w-5xl mx-auto w-full flex justify-between items-center">
+                    <h3 class="text-lg md:text-xl font-black text-premiumDark flex items-center gap-3"><i class="fa-solid fa-cube text-indAccent"></i> Bloc <span id="blockModalTitleNum" class="text-slate-500 font-mono"></span></h3>
+                    <button onclick="closeModal('blockModal')" class="text-slate-500 hover:text-white hover:bg-red-500 px-4 py-2 rounded-lg transition-colors focus:outline-none flex items-center gap-2 font-bold text-sm bg-slate-100 border border-slate-200 hover:border-red-500 shadow-sm">
+                        <span class="hidden sm:inline">Fermer</span> <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
             </div>
-            <div class="p-6 overflow-y-auto flex-grow bg-indBg/50" id="blockModalBody"></div>
+            <div class="p-4 md:p-8 overflow-y-auto flex-grow w-full">
+                <div class="max-w-5xl mx-auto w-full" id="blockModalBody"></div>
+            </div>
         </div>
     </div>
 
     <div id="toast-container"></div>
 
-    <!-- MOTEUR JAVASCRIPT WEB3 -->
+    <!-- MOTEUR JAVASCRIPT PRINCIPAL -->
     <script>
-        // --- ROUTAGE SPA ---
-        function switchView(viewId) {
-            document.querySelectorAll('.view-section').forEach(el => { el.classList.add('hidden'); el.classList.remove('fade-in'); });
-            const target = document.getElementById('view-' + viewId);
-            if(target) { target.classList.remove('hidden'); setTimeout(() => target.classList.add('fade-in'), 10); }
-            closeMobileMenu();
-            
-            document.querySelectorAll('.desktop-nav-item').forEach(el => el.className = 'desktop-nav-item h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-sm border-b-2 border-transparent transition-colors');
-            const navBtn = document.getElementById('nav-' + viewId);
-            if(navBtn) navBtn.className = 'desktop-nav-item h-full flex items-center text-indAccent font-bold text-sm border-b-2 border-indAccent transition-colors';
-
-            document.querySelectorAll('.mobile-nav-item').forEach(el => el.className = 'mobile-nav-item py-4 px-6 text-left font-semibold text-base border-b border-indBorder flex items-center gap-3 text-slate-600 border-l-4 border-transparent hover:bg-slate-50');
-            const mobBtn = document.getElementById('mob-nav-' + viewId);
-            if(mobBtn) mobBtn.className = 'mobile-nav-item py-4 px-6 text-left font-bold text-base border-b border-indBorder flex items-center gap-3 text-indAccent bg-sky-50/50 border-l-4 border-indAccent';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // --- MENU MOBILE ---
-        document.getElementById('mobileMenuOpenBtn').addEventListener('click', () => { document.getElementById('mobileMenu').classList.replace('hidden', 'flex'); document.body.style.overflow = 'hidden'; });
-        const closeMobileMenu = () => { document.getElementById('mobileMenu').classList.replace('flex', 'hidden'); document.body.style.overflow = ''; };
-        document.getElementById('mobileMenuCloseBtn').addEventListener('click', closeMobileMenu);
-
-        // --- CONFIGURATION RPC EVM STANDARD ---
+        // === CONFIGURATION WEB3 ===
         const RPC_URL = "https://rpc.agi-nexus-core.click";
+        const RPC_PREFIX = "eth_"; // Utilisation du standard EVM universel
+        const DECIMALS = 18; // Standard Ethereum/EVM
         const BLOCKS_TO_FETCH = 15; 
         
         let latestBlockNum = 0; 
-        let globalBlocks = []; 
-        let globalTxs = [];
         const txCache = new Map(); 
         const blockCache = new Map();
-        let isInitialLoad = true;
 
-        // --- UTILITAIRES ---
-        const formatHash = (hash, chars = 6) => hash ? `${hash.substring(0, chars + 2)}...${hash.substring(hash.length - chars)}` : "";
+        // === UTILITAIRES ===
+        const hexToDec = (hex) => parseInt(hex, 16);
+        const formatHash = (hash, chars = 8) => hash ? `${hash.substring(0, chars + 2)}...${hash.substring(hash.length - chars)}` : "";
         
-        function timeAgo(timestamp) {
-            const secs = Math.floor((Date.now() - timestamp) / 1000);
-            if (secs < 15) return "À l'instant";
-            if (secs < 60) return `${secs} sec`;
-            const mins = Math.floor(secs / 60);
-            if (mins < 60) return `${mins} min`;
-            const hrs = Math.floor(mins / 60);
-            if (hrs < 24) return `${hrs} h`;
-            return `${Math.floor(hrs / 24)} j`;
-        }
-
-        function hexToEther(hexWei) {
-            if(!hexWei || hexWei === '0x' || hexWei === '0x0') return "0.00";
+        // Conversion sécurisée Wei -> Native sans perte de précision
+        const weiToEth = (hexWei) => {
+            if (!hexWei || hexWei === "0x" || hexWei === "0x0") return "0.00";
             try {
-                let str = BigInt(hexWei).toString();
-                if(str.length <= 18) str = str.padStart(19, '0');
-                let intPart = str.slice(0, -18) || '0';
-                let decPart = str.slice(-18).slice(0, 6); // Garder 6 décimales pour l'UI
-                return `${parseInt(intPart).toLocaleString('fr-FR')},${decPart}`;
-            } catch(e) { return "0.00"; }
+                const num = Number(BigInt(hexWei)) / (10 ** DECIMALS);
+                return new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 6 }).format(num);
+            } catch (e) { return "0.00"; }
+        };
+
+        function timeAgo(timestamp) {
+            const secs = Math.floor((new Date() - timestamp) / 1000);
+            if (secs < 15) return "À l'instant";
+            if (secs < 60) return `${secs}s`;
+            const mins = Math.floor(secs / 60);
+            if (mins < 60) return `${mins} m`;
+            return `${Math.floor(mins / 60)} h`;
         }
 
+        function formatDateFull(ts) { 
+            return new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long', timeStyle: 'medium' }).format(new Date(ts)); 
+        }
+        
         function showToast(msg, type = 'success') {
             const c = document.getElementById('toast-container');
             const t = document.createElement('div');
             t.className = 'toast';
-            const icon = type === 'success' ? 'circle-check text-indSuccess' : (type === 'error' ? 'circle-xmark text-red-500' : 'circle-info text-indAccent');
-            t.innerHTML = `<i class="fa-solid fa-${icon} text-lg"></i> <span>${msg}</span>`;
+            t.innerHTML = `<i class="fa-solid fa-${type === 'success' ? 'circle-check text-indSuccess' : (type === 'error' ? 'circle-xmark text-red-500' : 'circle-info text-indAccent')} text-lg"></i> <span>${msg}</span>`;
             c.appendChild(t);
-            setTimeout(() => { if(t.parentElement) t.remove(); }, 4000);
+            setTimeout(() => { if(t.parentElement) t.remove(); }, 3800);
         }
-
+        
         async function copyToClipboard(txt) { 
             try { await navigator.clipboard.writeText(txt); showToast("Copié dans le presse-papier !"); } 
             catch(e){ showToast("Erreur lors de la copie", "error"); } 
         }
 
-        // --- MOTEUR WEB3 CORE ---
+        // === MOTEUR RPC ===
         async function rpcCall(method, params = []) {
             try {
                 const res = await fetch(RPC_URL, { 
                     method: 'POST', 
                     headers: { 'Content-Type': 'application/json' }, 
-                    body: JSON.stringify({ jsonrpc: "2.0", method: method, params: params, id: 1 }) 
+                    body: JSON.stringify({ jsonrpc: "2.0", method: method, params: params, id: new Date().getTime() }) 
                 });
-                const json = await res.json();
-                return json.result;
+                if (!res.ok) throw new Error("HTTP Error");
+                const data = await res.json();
+                if (data.error) throw new Error(data.error.message);
+                return data.result;
             } catch (e) { 
-                console.error("RPC Error:", e);
+                console.error(`[RPC Error] ${method}:`, e);
                 return null; 
             }
         }
 
+        // === SYNCHRONISATION DES DONNÉES RÉELLES ===
         async function syncNetworkData() {
-            // Utilisation des standards EVM (eth_blockNumber)
-            const blockHex = await rpcCall("eth_blockNumber") || await rpcCall("nexus_blockNumber");
-            if (!blockHex) return;
-            const currentBlockNum = parseInt(blockHex, 16);
+            const blockHex = await rpcCall(`${RPC_PREFIX}blockNumber`);
+            if (!blockHex) {
+                document.getElementById('networkStatus').innerHTML = "Erreur Réseau";
+                document.getElementById('networkStatus').className = "text-xs font-bold text-red-500 tracking-wide uppercase";
+                return;
+            }
             
-            if (currentBlockNum <= latestBlockNum) return; // Pas de nouveau bloc
+            document.getElementById('networkStatus').innerHTML = "Mainnet L1 Connecté";
+            const currentBlockNum = hexToDec(blockHex);
+            
+            // Éviter le re-rendu si aucun nouveau bloc
+            if (currentBlockNum <= latestBlockNum && latestBlockNum !== 0) return;
             latestBlockNum = currentBlockNum;
+
             document.getElementById('statLatestBlock').innerText = currentBlockNum.toLocaleString('fr-FR');
             
-            // Requêtes parallèles pour récupérer les blocs rapidement
-            const fetchPromises = [];
+            // Récupération asynchrone et parallèle pour des performances professionnelles
+            const blockPromises = [];
             for (let i = 0; i < BLOCKS_TO_FETCH; i++) {
                 const target = currentBlockNum - i;
                 if(target < 0) break;
-                // Si non en cache, on prépare la requête
-                if(!blockCache.has(target.toString())) {
-                    // Standard EVM eth_getBlockByNumber(hex, true pour les tx complètes)
-                    fetchPromises.push(rpcCall("eth_getBlockByNumber", ["0x" + target.toString(16), true]).then(b => b || rpcCall("nexus_getBlockByNumber", ["0x" + target.toString(16), true])));
-                }
+                blockPromises.push(rpcCall(`${RPC_PREFIX}getBlockByNumber`, ["0x" + target.toString(16), true]));
             }
-
-            const newBlocksRaw = await Promise.all(fetchPromises);
             
-            newBlocksRaw.forEach(bData => {
-                if (bData && bData.number) {
-                    const decNum = parseInt(bData.number, 16).toString();
-                    blockCache.set(decNum, bData);
-                    if (bData.transactions && Array.isArray(bData.transactions)) {
-                        bData.transactions.forEach(tx => {
-                            tx.timestamp = bData.timestamp; 
-                            tx.blockNumberDec = decNum;
-                            tx.blockHash = bData.hash;
-                            txCache.set(tx.hash, tx);
-                        });
-                    }
+            const rawBlocks = await Promise.all(blockPromises);
+            const blocks = rawBlocks.filter(b => b !== null);
+            const txs = [];
+            const accountsMap = new Map();
+            let totalRecentTxs = 0;
+
+            blocks.forEach(b => {
+                blockCache.set(hexToDec(b.number).toString(), b);
+                if (b.transactions && Array.isArray(b.transactions)) {
+                    totalRecentTxs += b.transactions.length;
+                    
+                    // Enregistrer le validateur
+                    const miner = b.miner || "0x0000000000000000000000000000000000000000";
+                    accountsMap.set(miner, (accountsMap.get(miner) || 0) + 1);
+
+                    b.transactions.forEach(tx => {
+                        tx.timestamp = b.timestamp; 
+                        tx.blockNumberDec = hexToDec(b.number);
+                        tx.blockHash = b.hash;
+                        txCache.set(tx.hash, tx);
+                        txs.push(tx);
+                        
+                        // Analyse des comptes actifs
+                        if(tx.from) accountsMap.set(tx.from, (accountsMap.get(tx.from) || 0) + 1);
+                        if(tx.to) accountsMap.set(tx.to, (accountsMap.get(tx.to) || 0) + 1);
+                    });
                 }
             });
 
-            // Reconstruire les tableaux globaux triés
-            globalBlocks = []; globalTxs = [];
-            for (let i = 0; i < BLOCKS_TO_FETCH; i++) {
-                const b = blockCache.get((currentBlockNum - i).toString());
-                if(b) {
-                    globalBlocks.push(b);
-                    if(b.transactions) {
-                        // Inverser pour avoir les tx les plus récentes en haut
-                        globalTxs.push(...[...b.transactions].reverse());
-                    }
-                }
+            // Calcul TPS & Temps de Bloc
+            if (blocks.length > 1) {
+                const timeDiff = hexToDec(blocks[0].timestamp) - hexToDec(blocks[blocks.length - 1].timestamp);
+                const avgBlockTime = timeDiff / (blocks.length - 1);
+                const tps = timeDiff > 0 ? (totalRecentTxs / timeDiff).toFixed(2) : "0.00";
+                
+                document.getElementById('statTPS').innerText = `${tps} tx/s`;
+                document.getElementById('statBlockTime').innerText = `${avgBlockTime.toFixed(1)}s`;
             }
 
-            // Calcul du temps de bloc réel
-            if (globalBlocks.length >= 2) {
-                const latestTs = parseInt(globalBlocks[0].timestamp, 16);
-                const oldestTs = parseInt(globalBlocks[globalBlocks.length - 1].timestamp, 16);
-                const avg = (latestTs - oldestTs) / (globalBlocks.length - 1);
-                document.getElementById('statBlockTime').innerHTML = `~${avg.toFixed(1)}s <span class="text-xs font-semibold text-slate-400">/ bloc</span>`;
-            }
-
-            // Statistiques réelles des transactions en cache
-            document.getElementById('statTotalTx').innerText = txCache.size.toLocaleString('fr-FR');
-
-            // Mise à jour de l'UI
-            renderBlocksPreview(globalBlocks.slice(0, 6));
-            renderTxsPreview(globalTxs.slice(0, 7));
-            renderBlocksTable(globalBlocks);
-            renderTxsTable(globalTxs);
-
-            if(isInitialLoad) {
-                document.getElementById('global-loader').style.opacity = '0';
-                setTimeout(() => document.getElementById('global-loader').style.display = 'none', 500);
-                isInitialLoad = false;
-            }
+            renderData(blocks, txs, accountsMap);
         }
 
-        // --- MOTEUR DE RENDU UI ---
+        // === RENDU UI ===
+        function renderData(blocks, txs, accountsMap) {
+            renderBlocksPreview(blocks.slice(0, 7));
+            renderTxsPreview(txs.slice(0, 8));
+            renderBlocksTable(blocks);
+            renderTxsTable(txs);
+            renderActiveAccounts(accountsMap);
+        }
+
         function renderBlocksPreview(blocks) {
             const c = document.getElementById('blocksContainerPreview'); c.innerHTML = '';
             blocks.forEach((b, i) => {
-                const num = parseInt(b.number, 16);
-                const ts = parseInt(b.timestamp, 16) * 1000;
-                c.insertAdjacentHTML('beforeend', `
-                    <div onclick="openBlockModal('${num}')" class="flex items-center justify-between p-4 mb-2 rounded-lg border bg-white shadow-sm hover:border-indAccent cursor-pointer transition-all hover:shadow-md ${i===0?'bg-sky-50/40 border-sky-100':''}">
+                const num = hexToDec(b.number);
+                const html = `
+                    <div onclick="openBlockModal('${num}')" class="flex items-center justify-between p-4 mb-2 rounded-lg border bg-white shadow-sm hover:border-indAccent/50 cursor-pointer transition-all hover:shadow-md ${i===0?'bg-sky-50/30 border-sky-200':''}">
                         <div class="flex items-center gap-4">
-                            <div class="w-10 h-10 rounded-lg bg-slate-50 flex items-center justify-center border border-slate-100 text-slate-500 shrink-0"><i class="fa-solid fa-cube text-base"></i></div>
+                            <div class="w-10 h-10 rounded-lg bg-slate-50 flex items-center justify-center border border-slate-100 text-slate-400 shrink-0"><i class="fa-solid fa-cube"></i></div>
                             <div>
-                                <span class="font-black text-indAccent text-sm block">#${num.toLocaleString('fr-FR')}</span>
-                                <span class="text-xs text-slate-500 font-medium">${timeAgo(ts)}</span>
+                                <span class="font-black text-indAccent text-sm md:text-base">#${num}</span>
+                                <span class="block text-xs text-slate-500 font-medium mt-0.5">${timeAgo(new Date(hexToDec(b.timestamp)*1000))}</span>
                             </div>
                         </div>
-                        <div class="text-right">
-                            <p class="text-xs text-slate-400 mb-1">Par <span class="text-premiumDark font-mono font-bold">${formatHash(b.miner||"0xNexusMaster", 5)}</span></p>
+                        <div class="text-right shrink-0">
+                            <p class="text-xs text-slate-400 mb-1">Par <span class="text-premiumDark font-mono font-bold">${formatHash(b.miner, 4)}</span></p>
                             <span class="text-[11px] font-bold bg-slate-100 px-2 py-1 rounded text-slate-600 border border-slate-200">${b.transactions?b.transactions.length:0} Txns</span>
                         </div>
-                    </div>`);
+                    </div>`;
+                c.insertAdjacentHTML('beforeend', html);
             });
         }
 
         function renderTxsPreview(txs) {
             const c = document.getElementById('txsContainerPreview'); 
-            if(txs.length===0){ c.innerHTML=`<div class="flex flex-col items-center justify-center h-full text-slate-400"><i class="fa-solid fa-inbox text-3xl mb-2"></i><p class="text-sm font-medium">Aucune transaction récente</p></div>`; return; }
+            if(txs.length===0){ c.innerHTML=`<div class="p-8 text-center text-slate-400 text-sm font-medium">Aucune transaction récente.</div>`; return; }
             c.innerHTML = '';
             txs.forEach((tx, i) => {
-                c.insertAdjacentHTML('beforeend', `
-                    <div onclick="openTxModal('${tx.hash}')" class="flex items-center justify-between p-4 mb-2 rounded-lg border bg-white shadow-sm hover:border-indAccent cursor-pointer transition-all hover:shadow-md ${i===0?'bg-emerald-50/30 border-emerald-100':''}">
-                        <div class="flex items-center gap-4">
-                            <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center border border-slate-100 text-slate-500 shrink-0"><i class="fa-solid fa-arrow-right-arrow-left text-sm"></i></div>
+                const html = `
+                    <div onclick="openTxModal('${tx.hash}')" class="flex items-center justify-between p-4 mb-2 rounded-lg border bg-white shadow-sm hover:border-indAccent/50 cursor-pointer transition-all hover:shadow-md ${i===0?'bg-emerald-50/20 border-emerald-200':''}">
+                        <div class="flex items-center gap-4 min-w-0">
+                            <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center border border-slate-100 text-slate-400 shrink-0"><i class="fa-solid fa-money-bill-transfer"></i></div>
                             <div class="min-w-0">
-                                <span class="font-mono font-bold text-sm text-indAccent block truncate">${formatHash(tx.hash, 6)}</span>
-                                <span class="block text-xs text-slate-500 font-medium mt-0.5">De ${formatHash(tx.from,4)} à ${tx.to ? formatHash(tx.to,4) : 'Contrat'}</span>
+                                <span class="font-mono font-bold text-sm text-indAccent block truncate w-32 md:w-48">${tx.hash}</span>
+                                <span class="block text-xs text-slate-500 font-medium mt-0.5 truncate">De ${formatHash(tx.from,4)} à ${tx.to ? formatHash(tx.to,4) : 'Contrat'}</span>
                             </div>
                         </div>
                         <div class="text-right shrink-0 ml-2">
-                            <span class="font-black text-sm text-premiumDark bg-slate-50 px-2 py-1.5 rounded-md border border-slate-200">${hexToEther(tx.value)} ₳</span>
+                            <span class="font-black text-sm text-premiumDark bg-slate-50 px-3 py-1.5 rounded border border-slate-200">${weiToEth(tx.value)} ₳</span>
                         </div>
-                    </div>`);
+                    </div>`;
+                c.insertAdjacentHTML('beforeend', html);
             });
         }
 
         function renderBlocksTable(blocks) {
             const tb = document.getElementById('allBlocksTable'); tb.innerHTML = '';
             blocks.forEach(b => {
-                const num = parseInt(b.number, 16);
+                const num = hexToDec(b.number);
                 tb.insertAdjacentHTML('beforeend', `
-                    <tr class="hover:bg-sky-50/50 cursor-pointer transition-colors border-b border-slate-100 last:border-0" onclick="openBlockModal('${num}')">
-                        <td class="py-4 px-5 font-black text-indAccent">#${num.toLocaleString('fr-FR')}</td>
-                        <td class="py-4 px-5 text-slate-600 font-medium text-sm">${timeAgo(parseInt(b.timestamp, 16)*1000)}</td>
-                        <td class="py-4 px-5"><span class="font-bold text-premiumDark bg-slate-100 px-2 py-1 rounded text-xs border border-slate-200">${b.transactions?b.transactions.length:0} Tx</span></td>
-                        <td class="py-4 px-5 font-mono text-sm text-slate-700">${formatHash(b.miner||"0xNexusMaster", 8)}</td>
-                        <td class="py-4 px-5 text-right font-mono text-slate-500 text-sm">${parseInt(b.gasUsed||"0x0", 16).toLocaleString('fr-FR')}</td>
+                    <tr class="hover:bg-sky-50/50 cursor-pointer transition-colors" onclick="openBlockModal('${num}')">
+                        <td class="py-4 px-5 font-black text-indAccent">#${num}</td>
+                        <td class="py-4 px-5 text-slate-600 font-medium text-sm">${timeAgo(new Date(hexToDec(b.timestamp)*1000))}</td>
+                        <td class="py-4 px-5 font-bold text-premiumDark"><span class="bg-slate-100 px-2 py-1 rounded text-xs border border-slate-200">${b.transactions?b.transactions.length:0} Tx</span></td>
+                        <td class="py-4 px-5 font-mono text-sm text-slate-700">${formatHash(b.miner, 8)}</td>
+                        <td class="py-4 px-5 text-right font-mono text-slate-500 text-sm">${hexToDec(b.gasUsed).toLocaleString('fr-FR')}</td>
                     </tr>`);
             });
         }
 
         function renderTxsTable(txs) {
             const tb = document.getElementById('allTxsTable'); 
-            if(txs.length===0){ tb.innerHTML=`<tr><td colspan="6" class="py-12 text-center text-slate-400 font-medium">Le registre des transactions est vide.</td></tr>`; return;}
+            if(txs.length===0){ tb.innerHTML=`<tr><td colspan="6" class="py-12 text-center text-slate-400">Aucune transaction trouvée.</td></tr>`; return;}
             tb.innerHTML = '';
             txs.forEach(tx => {
                 tb.insertAdjacentHTML('beforeend', `
-                    <tr class="hover:bg-emerald-50/30 cursor-pointer transition-colors border-b border-slate-100 last:border-0" onclick="openTxModal('${tx.hash}')">
+                    <tr class="hover:bg-emerald-50/30 cursor-pointer transition-colors" onclick="openTxModal('${tx.hash}')">
                         <td class="py-4 px-5 font-mono font-bold text-indAccent text-sm">${formatHash(tx.hash, 8)}</td>
-                        <td class="py-4 px-5 font-bold text-slate-700 hover:text-indAccent" onclick="event.stopPropagation(); openBlockModal('${tx.blockNumberDec}')">${tx.blockNumberDec.toLocaleString('fr-FR')}</td>
-                        <td class="py-4 px-5 text-slate-500 text-sm font-medium">${timeAgo(parseInt(tx.timestamp, 16)*1000)}</td>
-                        <td class="py-4 px-5 font-mono text-sm text-slate-600">${formatHash(tx.from, 6)}</td>
-                        <td class="py-4 px-5 font-mono text-sm text-slate-600">${tx.to ? formatHash(tx.to, 6) : '<span class="text-xs bg-slate-100 px-1 py-0.5 rounded">Création Contrat</span>'}</td>
-                        <td class="py-4 px-5 text-right font-black text-premiumDark text-sm"><span class="bg-slate-50 border border-slate-200 px-2 py-1 rounded">${hexToEther(tx.value)} ₳</span></td>
+                        <td class="py-4 px-5 font-bold text-slate-700 hover:text-indAccent transition-colors" onclick="event.stopPropagation(); openBlockModal('${tx.blockNumberDec}')">${tx.blockNumberDec}</td>
+                        <td class="py-4 px-5 text-slate-500 text-sm font-medium">${timeAgo(new Date(hexToDec(tx.timestamp)*1000))}</td>
+                        <td class="py-4 px-5 font-mono text-sm text-slate-600 bg-slate-50/50">${formatHash(tx.from, 6)}</td>
+                        <td class="py-4 px-5 font-mono text-sm text-slate-600">${tx.to ? formatHash(tx.to, 6) : '<span class="text-xs bg-slate-200 px-2 py-1 rounded font-sans font-bold">Création Contrat</span>'}</td>
+                        <td class="py-4 px-5 text-right font-black text-premiumDark text-sm"><span class="bg-slate-100 border border-slate-200 px-2 py-1 rounded">${weiToEth(tx.value)} ₳</span></td>
                     </tr>`);
             });
         }
 
-        // --- MODALS & DETAILS ---
-        const createGridRow = (label, displayValue, copyValue = null) => `
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-2 md:gap-4 py-3 md:py-4 border-b border-slate-200 last:border-0 items-center">
-                <div class="text-xs uppercase tracking-widest font-bold text-slate-500 flex items-center md:col-span-1"><i class="fa-solid fa-chevron-right text-slate-300 mr-2"></i> ${label}</div>
-                <div class="md:col-span-3 flex items-center justify-between gap-3 overflow-hidden bg-white p-2 md:p-3 rounded-lg border border-slate-100 shadow-sm">
-                    <div class="text-sm font-medium text-premiumDark w-full min-w-0 hash-break">${displayValue}</div>
-                    ${copyValue ? `<button onclick="copyToClipboard('${copyValue}')" class="shrink-0 bg-slate-50 border border-slate-200 hover:border-indAccent hover:bg-sky-50 text-slate-400 hover:text-indAccent rounded p-2 transition-all focus:outline-none" title="Copier"><i class="fa-regular fa-copy"></i></button>` : ''}
-                </div>
-            </div>`;
+        function renderActiveAccounts(accountsMap) {
+            const tb = document.getElementById('activeAccountsTable');
+            tb.innerHTML = '';
+            
+            // Trier par nombre d'interactions
+            const sortedAccounts = [...accountsMap.entries()].sort((a, b) => b[1] - a[1]).slice(0, 15);
+            
+            if(sortedAccounts.length === 0){ tb.innerHTML=`<tr><td colspan="3" class="py-12 text-center text-slate-400">Réseau inactif.</td></tr>`; return;}
+            
+            sortedAccounts.forEach(([address, count], idx) => {
+                tb.insertAdjacentHTML('beforeend', `
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="py-4 px-5 flex items-center gap-3">
+                            <span class="text-xs font-bold text-slate-400 w-4">${idx + 1}.</span>
+                            <span class="font-mono font-bold text-indAccent text-sm bg-sky-50 px-2 py-1 rounded border border-sky-100">${address}</span>
+                        </td>
+                        <td class="py-4 px-5 text-center">
+                            <span class="bg-indSuccess/10 text-indSuccess border border-indSuccess/20 px-3 py-1 rounded-full text-xs font-bold">${count} Interactions</span>
+                        </td>
+                        <td class="py-4 px-5 text-right font-medium text-slate-500 text-sm">
+                            ${address === "0x0000000000000000000000000000000000000000" ? 'Génèse / Burn' : 'Portefeuille standard'}
+                        </td>
+                    </tr>
+                `);
+            });
+        }
+
+        // === COMPOSANTS DES MODALES ===
+        function createGridRow(label, displayValue, rawValueToCopy = null) {
+            return `
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-6 py-4 border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-colors px-3 md:px-4 rounded-lg items-center">
+                    <div class="md:col-span-3 text-xs uppercase tracking-widest font-bold text-slate-400 flex items-center"><i class="fa-solid fa-caret-right text-slate-300 mr-2 hidden md:inline"></i> ${label}</div>
+                    <div class="md:col-span-9 flex items-center justify-between gap-4 overflow-hidden">
+                        <div class="text-sm md:text-base font-medium text-premiumDark w-full min-w-0 hash-break">${displayValue}</div>
+                        ${rawValueToCopy ? `<button onclick="copyToClipboard('${rawValueToCopy}')" class="shrink-0 bg-white border border-slate-200 hover:border-indAccent hover:bg-sky-50 text-slate-400 hover:text-indAccent rounded-md p-2 shadow-sm transition-all focus:outline-none" title="Copier"><i class="fa-regular fa-copy"></i></button>` : ''}
+                    </div>
+                </div>`;
+        }
 
         async function openTxModal(hash) {
             let tx = txCache.get(hash);
             
-            // Si pas en cache, chercher sur le réseau (Recherche)
-            if(!tx) {
-                showToast("Recherche de la transaction sur le réseau...", "info");
-                tx = await rpcCall("eth_getTransactionByHash", [hash]);
-                if(!tx) return showToast("Transaction introuvable sur le réseau L1.", "error");
-                
-                // Récupérer le timestamp du bloc si manquant
-                if(tx.blockNumber && !tx.timestamp) {
-                    const b = await rpcCall("eth_getBlockByNumber", [tx.blockNumber, false]);
-                    if(b) {
-                        tx.timestamp = b.timestamp;
-                        tx.blockNumberDec = parseInt(tx.blockNumber, 16).toString();
-                    }
+            // Si pas dans le cache, recherche dynamique sur le RPC
+            if (!tx) {
+                showToast("Recherche sur le réseau...", "info");
+                tx = await rpcCall(`${RPC_PREFIX}getTransactionByHash`, [hash]);
+                if (!tx) {
+                    showToast("Transaction introuvable", "error");
+                    return;
+                }
+                // Récupération des infos du bloc pour la date
+                if(tx.blockNumber) {
+                    const b = await rpcCall(`${RPC_PREFIX}getBlockByNumber`, [tx.blockNumber, false]);
+                    if(b) tx.timestamp = b.timestamp;
+                    tx.blockNumberDec = hexToDec(tx.blockNumber);
                 }
             }
             
-            const amt = hexToEther(tx.value);
-            const feeEth = tx.gas && tx.gasPrice ? hexToEther("0x" + (BigInt(tx.gas) * BigInt(tx.gasPrice)).toString(16)) : "0.00";
-            const confirmations = tx.blockNumberDec ? (latestBlockNum - parseInt(tx.blockNumberDec) + 1) : 0;
-            const statusHtml = confirmations > 0 
-                ? `<span class="inline-flex items-center gap-1.5 bg-indSuccess/10 border border-indSuccess/20 text-indSuccess px-3 py-1 rounded text-xs font-bold uppercase"><i class="fa-solid fa-check-double"></i> Succès (${confirmations} Conf.)</span>`
-                : `<span class="inline-flex items-center gap-1.5 bg-goldOrange/10 border border-goldOrange/20 text-goldOrange px-3 py-1 rounded text-xs font-bold uppercase"><i class="fa-solid fa-spinner fa-spin"></i> En attente</span>`;
+            const amt = weiToEth(tx.value);
+            
+            // Calcul des frais : gas * gasPrice
+            let feeEth = "0.00";
+            if (tx.gas && tx.gasPrice) {
+                try {
+                    const feeWei = BigInt(tx.gas) * BigInt(tx.gasPrice);
+                    feeEth = weiToEth("0x" + feeWei.toString(16));
+                } catch(e) {}
+            }
 
+            const inputData = (tx.input && tx.input !== "0x") ? tx.input : "0x (Transfert standard)";
+            const nonce = tx.nonce ? hexToDec(tx.nonce) : 0;
+            const txIndex = tx.transactionIndex ? hexToDec(tx.transactionIndex) : 0;
+            
+            let statusBadge = '<span class="inline-flex items-center gap-1 bg-amber-100 text-amber-700 border border-amber-200 px-2 py-1 rounded text-xs font-bold uppercase tracking-wider"><i class="fa-solid fa-clock"></i> En Attente</span>';
+            let confirmations = 0;
+
+            if (tx.blockNumberDec) {
+                confirmations = latestBlockNum - tx.blockNumberDec + 1;
+                statusBadge = `<span class="inline-flex items-center gap-1 bg-indSuccess/10 border border-indSuccess/20 text-indSuccess px-2 py-1 rounded text-xs font-bold uppercase tracking-wider"><i class="fa-solid fa-check-double"></i> Validé (${confirmations} Conf.)</span>`;
+            }
+            
             document.getElementById('txModalBody').innerHTML = `
-                <div class="bg-white rounded-xl border border-slate-200 p-4 sm:p-6 mb-5 shadow-sm">
-                    ${createGridRow("TxHash", `<span class="font-mono text-sm text-indAccent font-bold">${tx.hash}</span>`, tx.hash)}
-                    ${createGridRow("Statut", statusHtml)}
-                    ${createGridRow("Bloc", tx.blockNumberDec ? `<button onclick="openBlockModal('${tx.blockNumberDec}')" class="text-indAccent hover:text-white font-bold bg-sky-50 hover:bg-indAccent border border-sky-100 transition-colors px-3 py-1 rounded-md shadow-sm"><i class="fa-solid fa-cube mr-2"></i> #${tx.blockNumberDec}</button>` : "En attente")}
-                    ${createGridRow("Horodatage", tx.timestamp ? `<span class="text-slate-700 font-semibold text-sm"><i class="fa-regular fa-clock text-slate-400 mr-2"></i> ${new Date(parseInt(tx.timestamp)*1000).toLocaleString('fr-FR')}</span>` : "N/A")}
+                <div class="bg-white rounded-xl border border-slate-200 p-3 md:p-5 mb-5 shadow-sm">
+                    ${createGridRow("TxHash", `<span class="font-mono text-sm md:text-base text-indAccent font-bold">${tx.hash}</span>`, tx.hash)}
+                    ${createGridRow("Statut", statusBadge)}
+                    ${tx.blockNumberDec ? createGridRow("Bloc d'inclusion", `<button onclick="openBlockModal('${tx.blockNumberDec}')" class="text-indAccent hover:text-white font-bold bg-sky-50 hover:bg-indAccent border border-sky-100 transition-colors px-3 py-1 rounded shadow-sm"><i class="fa-solid fa-cube mr-1"></i> #${tx.blockNumberDec}</button>`) : ''}
+                    ${tx.timestamp ? createGridRow("Horodatage", `<span class="text-slate-700 font-semibold text-sm"><i class="fa-regular fa-clock text-slate-400 mr-2"></i> ${timeAgo(new Date(hexToDec(tx.timestamp)*1000))}</span> <span class="text-xs text-slate-400 ml-3">(${formatDateFull(hexToDec(tx.timestamp)*1000)})</span>`) : ''}
                 </div>
                 
-                <div class="bg-white rounded-xl border border-slate-200 p-4 sm:p-6 mb-5 shadow-sm">
-                    ${createGridRow("De", `<span class="font-mono text-sm text-slate-700">${tx.from}</span>`, tx.from)}
-                    ${createGridRow("À", tx.to ? `<span class="font-mono text-sm text-slate-700">${tx.to}</span>` : `<span class="text-sm font-bold text-indTextMuted"><i class="fa-solid fa-file-code mr-2"></i> Déploiement de Contrat</span>`, tx.to)}
+                <div class="bg-white rounded-xl border border-slate-200 p-3 md:p-5 mb-5 shadow-sm">
+                    ${createGridRow("De (Expéditeur)", `<span class="font-mono text-sm text-slate-700 bg-slate-50 px-3 py-1.5 rounded border border-slate-200">${tx.from}</span>`, tx.from)}
+                    ${createGridRow("À (Destinataire)", tx.to ? `<span class="font-mono text-sm text-slate-700 bg-slate-50 px-3 py-1.5 rounded border border-slate-200">${tx.to}</span>` : `<span class="text-sm font-bold text-indTextMuted bg-slate-100 px-3 py-1.5 rounded border border-slate-200"><i class="fa-solid fa-file-code mr-2"></i> Création de Contrat</span>`, tx.to)}
                 </div>
                 
-                <div class="bg-white rounded-xl border border-slate-200 p-4 sm:p-6 mb-5 shadow-sm">
-                    ${createGridRow("Valeur", `<span class="font-black text-lg text-premiumDark">${amt} ₳</span> <span class="text-xs text-slate-500 font-bold ml-3 bg-slate-100 px-2 py-1 rounded border border-slate-200">≈ ${amt} XOF</span>`)}
-                    ${createGridRow("Frais Estimés", `<span class="text-slate-600 font-mono text-sm">${feeEth} ₳</span>`)}
+                <div class="bg-white rounded-xl border border-slate-200 p-3 md:p-5 mb-5 shadow-sm">
+                    ${createGridRow("Montant", `<span class="bg-sky-50 border border-sky-200 px-3 py-1.5 rounded font-black text-xl text-premiumDark shadow-sm">${amt} ₳</span> <span class="text-xs text-slate-500 font-bold ml-3 uppercase bg-slate-100 px-2 py-1 rounded border border-slate-200">≈ ${amt} XOF</span>`)}
+                    ${createGridRow("Frais (Est.)", `<span class="text-slate-600 font-mono text-sm bg-slate-50 px-3 py-1.5 rounded border border-slate-200">${feeEth} ₳</span>`)}
+                    ${createGridRow("Nonce & Index", `<span class="text-slate-600 font-mono font-semibold bg-slate-50 px-3 py-1 rounded border border-slate-200 text-sm">Nonce: ${nonce}</span> <span class="text-slate-300 mx-3">|</span> <span class="text-slate-600 font-mono font-semibold bg-slate-50 px-3 py-1 rounded border border-slate-200 text-sm">Index: ${txIndex}</span>`)}
                 </div>
                 
-                <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+                <div class="bg-white rounded-xl border border-slate-200 p-4 md:p-6 shadow-sm">
                     <div class="flex items-center justify-between mb-3">
-                        <div class="text-xs uppercase tracking-widest font-bold text-slate-500">Données d'entrée (Input Data)</div>
+                        <div class="text-xs uppercase tracking-widest font-bold text-slate-400">Données Brutes (Input Data)</div>
+                        <button onclick="copyToClipboard('${inputData}')" class="text-xs font-bold text-slate-600 hover:text-indAccent bg-slate-100 hover:bg-sky-50 px-3 py-1.5 rounded border border-slate-200 transition-colors"><i class="fa-solid fa-copy mr-1"></i> Copier Payload</button>
                     </div>
-                    <div class="text-xs text-slate-600 bg-slate-50 p-4 rounded-lg border border-slate-200 max-h-40 overflow-y-auto font-mono shadow-inner hash-break">
-                        ${tx.input && tx.input !== '0x' ? tx.input : '0x (Transfert Standard)'}
+                    <div class="text-sm text-slate-600 bg-slate-50 p-4 rounded-lg border border-slate-200 max-h-48 overflow-y-auto font-mono shadow-inner hash-break">
+                        ${inputData}
                     </div>
                 </div>`;
             
@@ -648,35 +698,45 @@
         async function openBlockModal(numStr) {
             let b = blockCache.get(numStr.toString());
             
-            if(!b) {
-                showToast("Recherche du bloc sur le réseau...", "info");
-                b = await rpcCall("eth_getBlockByNumber", ["0x" + parseInt(numStr).toString(16), false]);
-                if(!b) return showToast("Bloc introuvable.", "error");
+            if (!b) {
+                showToast("Recherche du bloc...", "info");
+                b = await rpcCall(`${RPC_PREFIX}getBlockByNumber`, ["0x" + parseInt(numStr).toString(16), true]);
+                if(!b) return showToast("Bloc introuvable", "error");
+                blockCache.set(numStr.toString(), b);
             }
             
             document.getElementById('blockModalTitleNum').innerText = numStr;
-            const gasUsed = b.gasUsed ? parseInt(b.gasUsed, 16).toLocaleString('fr-FR') : "0";
-            const gasLimit = b.gasLimit ? parseInt(b.gasLimit, 16).toLocaleString('fr-FR') : "N/A";
-            const gasPct = b.gasLimit && b.gasUsed ? ((parseInt(b.gasUsed, 16) / parseInt(b.gasLimit, 16)) * 100).toFixed(2) : "0";
+            const gasLimit = b.gasLimit ? hexToDec(b.gasLimit).toLocaleString('fr-FR') : "N/A";
+            const gasUsed = b.gasUsed ? hexToDec(b.gasUsed).toLocaleString('fr-FR') : "0";
+            const gasPercentage = b.gasLimit && b.gasUsed ? ((hexToDec(b.gasUsed) / hexToDec(b.gasLimit)) * 100).toFixed(2) : "0.00";
+            const extraData = (b.extraData && b.extraData !== "0x") ? b.extraData : "0x (Vide)";
             const confirmations = latestBlockNum - parseInt(numStr) + 1;
+            const miner = b.miner || "0x0000000000000000000000000000000000000000";
 
             document.getElementById('blockModalBody').innerHTML = `
-                <div class="bg-white rounded-xl border border-slate-200 p-4 sm:p-6 mb-5 shadow-sm">
-                    ${createGridRow("Hauteur", `<span class="font-black text-indAccent text-xl">#${numStr}</span> <span class="ml-4 text-xs font-bold text-slate-600 bg-slate-100 px-3 py-1.5 rounded-md border border-slate-200">${confirmations} Confirmations</span>`)}
-                    ${createGridRow("Horodatage", `<span class="text-slate-700 font-semibold text-sm"><i class="fa-regular fa-clock text-slate-400 mr-2"></i> ${new Date(parseInt(b.timestamp, 16)*1000).toLocaleString('fr-FR')}</span>`)}
-                    ${createGridRow("Transactions", `<span class="font-bold text-indSuccess bg-indSuccess/10 border border-indSuccess/20 px-3 py-1 rounded text-sm">${b.transactions ? b.transactions.length : 0} Tx Incluses</span>`)}
-                    ${createGridRow("Nœud Validateur", `<span class="font-mono text-sm text-slate-700">${b.miner || "0xNexusMasterOracle"}</span>`, b.miner)}
+                <div class="bg-white rounded-xl border border-slate-200 p-3 md:p-5 mb-5 shadow-sm">
+                    ${createGridRow("Hauteur du Bloc", `<span class="font-black text-indAccent text-2xl">#${numStr}</span> <span class="ml-4 text-xs font-bold text-slate-600 bg-slate-100 px-3 py-1.5 rounded border border-slate-200"><i class="fa-solid fa-shield-halved text-indSuccess mr-1"></i> ${confirmations} Confirmations</span>`)}
+                    ${createGridRow("Horodatage", `<span class="text-slate-700 font-semibold text-sm"><i class="fa-regular fa-clock text-slate-400 mr-2"></i> ${timeAgo(new Date(hexToDec(b.timestamp)*1000))}</span> <span class="text-xs text-slate-400 ml-3">(${formatDateFull(hexToDec(b.timestamp)*1000)})</span>`)}
+                    ${createGridRow("Transactions", `<span class="font-bold text-indSuccess bg-indSuccess/10 border border-indSuccess/20 px-3 py-1 rounded text-sm">${b.transactions ? b.transactions.length : 0} Tx incluses</span>`)}
+                    ${createGridRow("Nœud Validateur", `<span class="font-mono text-sm text-slate-700 bg-slate-50 px-3 py-1.5 rounded border border-slate-200">${miner}</span>`, miner)}
                 </div>
                 
-                <div class="bg-white rounded-xl border border-slate-200 p-4 sm:p-6 mb-5 shadow-sm">
-                    ${createGridRow("Hash du Bloc", `<span class="font-mono text-sm font-bold text-indAccent">${b.hash}</span>`, b.hash)}
-                    ${createGridRow("Hash Parent", `<span class="font-mono text-sm text-slate-500">${b.parentHash || "Genesis"}</span>`, b.parentHash)}
+                <div class="bg-white rounded-xl border border-slate-200 p-3 md:p-5 mb-5 shadow-sm">
+                    ${createGridRow("Hash du Bloc", `<span class="font-mono text-sm font-bold text-indAccent bg-sky-50 px-3 py-1.5 rounded border border-sky-200">${b.hash}</span>`, b.hash)}
+                    ${createGridRow("Hash Parent", `<span class="font-mono text-sm text-slate-500 bg-slate-50 px-3 py-1.5 rounded border border-slate-200">${b.parentHash || "Genesis"}</span>`, b.parentHash)}
                 </div>
                 
-                <div class="bg-white rounded-xl border border-slate-200 p-4 sm:p-6 shadow-sm">
-                    ${createGridRow("Gaz Utilisé", `<span class="font-bold text-premiumDark text-base">${gasUsed}</span> <span class="text-xs bg-slate-100 border border-slate-200 px-2 py-1 rounded text-slate-600 font-bold ml-3">${gasPct}% de la limite</span>`)}
-                    ${createGridRow("Limite de Gaz", `<span class="font-mono text-sm text-slate-600">${gasLimit}</span>`)}
-                    ${createGridRow("Taille", `<span class="font-mono text-sm text-slate-600">${b.size ? parseInt(b.size, 16).toLocaleString('fr-FR') + " octets" : "N/A"}</span>`)}
+                <div class="bg-white rounded-xl border border-slate-200 p-3 md:p-5 mb-5 shadow-sm">
+                    ${createGridRow("Gaz Utilisé", `<span class="font-bold text-premiumDark text-base">${gasUsed}</span> <span class="text-xs bg-slate-100 border border-slate-200 px-2 py-1 rounded text-slate-600 font-bold ml-3">${gasPercentage}%</span>`)}
+                    ${createGridRow("Limite de Gaz", `<span class="font-mono text-sm text-slate-600 bg-slate-50 px-3 py-1 rounded border border-slate-200">${gasLimit}</span>`)}
+                    ${createGridRow("Taille", `<span class="font-mono text-sm text-slate-600 bg-slate-50 px-3 py-1 rounded border border-slate-200">${b.size ? hexToDec(b.size).toLocaleString('fr-FR') + " octets" : "N/A"}</span>`)}
+                </div>
+                
+                <div class="bg-white rounded-xl border border-slate-200 p-4 md:p-6 shadow-sm">
+                    <div class="text-xs uppercase tracking-widest font-bold text-slate-400 mb-3">Extra Data (Hex)</div>
+                    <div class="text-sm text-slate-600 bg-slate-50 p-4 rounded-lg border border-slate-200 max-h-32 overflow-y-auto font-mono shadow-inner hash-break">
+                        ${extraData}
+                    </div>
                 </div>`;
             
             closeModal('txModal');
@@ -684,13 +744,48 @@
             document.body.style.overflow = 'hidden';
         }
 
-        const closeModal = (id) => { 
+        // === NAVIGATION & UI ===
+        function switchView(viewId) {
+            document.querySelectorAll('.view-section').forEach(el => {
+                el.classList.add('hidden'); el.classList.remove('fade-in');
+            });
+            const target = document.getElementById('view-' + viewId);
+            if(target) {
+                target.classList.remove('hidden');
+                setTimeout(() => target.classList.add('fade-in'), 10);
+            }
+            closeMobileMenu();
+            
+            document.querySelectorAll('.desktop-nav-item').forEach(el => {
+                el.className = 'desktop-nav-item h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-sm border-b-2 border-transparent transition-colors';
+            });
+            const navBtn = document.getElementById('nav-' + viewId);
+            if(navBtn) navBtn.className = 'desktop-nav-item h-full flex items-center text-indAccent font-bold text-sm border-b-2 border-indAccent transition-colors';
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function closeModal(id) { 
             document.getElementById(id).classList.remove('active'); 
             document.body.style.overflow = ''; 
-        };
+        }
+        
         document.addEventListener('keydown', e => { if (e.key === "Escape") { closeModal('txModal'); closeModal('blockModal'); } });
 
-        // --- MOTEUR DE RECHERCHE ---
+        document.getElementById('mobileMenuOpenBtn').addEventListener('click', () => {
+            document.getElementById('mobileMenu').classList.remove('hidden');
+            document.getElementById('mobileMenu').classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        });
+
+        function closeMobileMenu() {
+            document.getElementById('mobileMenu').classList.add('hidden');
+            document.getElementById('mobileMenu').classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+        document.getElementById('mobileMenuCloseBtn').addEventListener('click', closeMobileMenu);
+
+        // === MOTEUR DE RECHERCHE DYNAMIQUE ===
         async function handleSearch(e) {
             e.preventDefault();
             const val = document.getElementById('searchInput').value.trim();
@@ -698,40 +793,39 @@
             
             const btn = document.getElementById('searchBtn');
             const original = btn.innerHTML;
-            btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin text-lg"></i>`;
+            btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i>`;
             
-            try {
-                if (val.length === 66 && val.startsWith('0x')) {
-                    // C'est un hash (Tx ou Bloc)
-                    const tx = await rpcCall("eth_getTransactionByHash", [val]);
-                    if(tx) { openTxModal(val); }
-                    else {
-                        const b = await rpcCall("eth_getBlockByHash", [val, false]);
-                        if(b) openBlockModal(parseInt(b.number, 16).toString());
-                        else showToast("Hash introuvable sur le réseau.", "error");
-                    }
-                } else if (!isNaN(val) && val.length < 20) {
-                    // C'est un numéro de bloc
-                    openBlockModal(val);
-                } else if (val.length === 42 && val.startsWith('0x')) {
-                    // C'est une adresse
-                    showToast("Recherche d'adresse : Nécessite le Graph Node (En cours)", "info");
+            // 1. Recherche par Hash de Transaction ou de Bloc (66 caractères)
+            if (val.length === 66 && val.startsWith('0x')) {
+                const txCheck = await rpcCall(`${RPC_PREFIX}getTransactionByHash`, [val]);
+                if (txCheck) {
+                    openTxModal(val);
                 } else {
-                    showToast("Format d'entrée non reconnu (TxHash, Adresse, Bloc)", "error");
+                    const blockCheck = await rpcCall(`${RPC_PREFIX}getBlockByHash`, [val, false]);
+                    if (blockCheck) openBlockModal(hexToDec(blockCheck.number));
+                    else showToast("Aucun résultat trouvé pour ce Hash", "error");
                 }
-            } catch(err) {
-                showToast("Erreur lors de la recherche.", "error");
-            } finally {
-                btn.innerHTML = original;
-                document.getElementById('searchInput').value = '';
+            } 
+            // 2. Recherche par Numéro de bloc
+            else if (!isNaN(val) && val !== '') {
+                const blockNum = parseInt(val);
+                if(blockNum <= latestBlockNum) openBlockModal(blockNum);
+                else showToast("Ce bloc n'a pas encore été miné", "error");
+            } 
+            // 3. Format non supporté (Les adresses nécessitent un indexeur lourd pour voir l'historique complet)
+            else { 
+                showToast("Format invalide. Entrez un numéro de bloc ou un TxHash complet.", "error"); 
             }
+            
+            btn.innerHTML = original;
+            document.getElementById('searchInput').value = '';
         }
 
-        // --- AMORÇAGE ---
+        // === INITIALISATION ===
         document.addEventListener('DOMContentLoaded', () => {
             syncNetworkData();
-            // Rafraîchissement automatique toutes les 5 secondes (Standard EVM)
-            setInterval(syncNetworkData, 5000); 
+            // Polling réseau toutes les 4 secondes
+            setInterval(syncNetworkData, 4000); 
         });
     </script>
 </body>
