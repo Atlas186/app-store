@@ -32,14 +32,6 @@
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                         mono: ['Fira Code', 'monospace']
-                    },
-                    fontSize: {
-                        'xxs': '0.65rem', /* 10.4px pour tags extrêmes */
-                        'xs': '0.75rem',  /* 12px */
-                        'sm': '0.8125rem',/* 13px - Base Dense */
-                        'base': '0.875rem',/* 14px */
-                        'lg': '1rem',
-                        'xl': '1.125rem',
                     }
                 }
             }
@@ -47,12 +39,17 @@
     </script>
     <style>
         /* Animations & Transitions Premium */
-        .fade-in { animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
         .live-pulse { animation: pulseGreen 2s infinite; }
-        @keyframes pulseGreen { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); } 70% { box-shadow: 0 0 0 5px rgba(16, 185, 129, 0); } 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
+        @keyframes pulseGreen { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); } 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
         
+        /* Loading Overlay */
+        #global-loader { transition: opacity 0.5s ease, visibility 0.5s ease; }
+        .spinner { border: 3px solid rgba(14, 165, 233, 0.2); border-left-color: #0EA5E9; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
         /* Skeleton Loader Industriel */
         .skeleton {
             background: #e2e8f0;
@@ -62,522 +59,490 @@
         }
         @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
 
-        /* Scrollbar Premium Fine */
-        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        /* Scrollbar Premium */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 8px; }
         ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
 
-        /* ========================================== */
-        /* MODALS PLEIN ÉCRAN (Z-INDEX ABSOLU 99999)  */
-        /* ========================================== */
+        /* Modals */
         .modal-overlay { 
-            opacity: 0; 
-            visibility: hidden; 
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); 
-            background-color: #F8FAFC;
+            opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            background-color: rgba(7, 11, 20, 0.85); backdrop-filter: blur(4px);
         }
         .modal-overlay.active { opacity: 1; visibility: visible; }
-        
         .modal-content { 
-            transform: translateY(100%); 
-            opacity: 0; 
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-            height: 100dvh; 
-            width: 100vw;
+            transform: translateY(20px) scale(0.98); opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .modal-overlay.active .modal-content { 
-            transform: translateY(0); 
-            opacity: 1; 
-        }
+        .modal-overlay.active .modal-content { transform: translateY(0) scale(1); opacity: 1; }
 
-        /* Classes utilitaires Hashs */
-        .hash-break {
-            word-break: break-all;
-            overflow-wrap: anywhere;
-        }
+        .hash-break { word-break: break-all; overflow-wrap: anywhere; }
 
         /* Toasts */
-        #toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 999999; display: flex; flex-direction: column; gap: 8px; }
+        #toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 999999; display: flex; flex-direction: column; gap: 10px; }
         .toast { 
-            background: #070B14; color: white; padding: 10px 16px; border-radius: 6px; 
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); 
-            font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 8px; 
-            animation: slideInRight 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards, fadeOut 0.3s ease-in 3.5s forwards; 
+            background: #070B14; color: white; padding: 12px 18px; border-radius: 8px; border: 1px solid #1e293b;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3); 
+            font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 10px; 
+            animation: slideInRight 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards, fadeOut 0.4s ease-in 4s forwards; 
         }
         @keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        @keyframes fadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(10px); } }
+        @keyframes fadeOut { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(100%); } }
     </style>
 </head>
 <body class="bg-indBg text-premiumDark font-sans antialiased flex flex-col min-h-screen">
 
-    <!-- ========================================== -->
-    <!-- 1. NAVIGATION BAR (Desktop & Mobile)       -->
-    <!-- ========================================== -->
-    <header class="bg-white/95 backdrop-blur-md border-b border-indBorder sticky top-0 z-40 shadow-sm">
+    <!-- Écran de chargement initial -->
+    <div id="global-loader" class="fixed inset-0 bg-indBg z-[100000] flex flex-col items-center justify-center">
+        <div class="spinner mb-4"></div>
+        <h2 class="text-premiumDark font-bold text-lg animate-pulse tracking-wide">Synchronisation Web3...</h2>
+        <p class="text-indTextMuted text-xs font-mono mt-2">Connexion à rpc.agi-nexus-core.click</p>
+    </div>
+
+    <!-- HEADER -->
+    <header class="bg-white/90 backdrop-blur-md border-b border-indBorder sticky top-0 z-40 shadow-sm">
         <div class="max-w-[95rem] mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-12">
-                <!-- Logo & Brand -->
-                <div class="flex items-center gap-2.5 cursor-pointer select-none" onclick="switchView('home')">
-                    <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo" class="h-7 w-7 rounded-full border border-indBorder object-cover shadow-sm">
-                    <span class="font-extrabold text-base tracking-tight text-premiumDark">NEXUS<span class="text-indAccent">SCAN</span></span>
+            <div class="flex justify-between items-center h-14">
+                <div class="flex items-center gap-3 cursor-pointer select-none" onclick="switchView('home')">
+                    <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo" class="h-8 w-8 rounded-full border border-indBorder object-cover shadow-sm">
+                    <span class="font-extrabold text-lg tracking-tight text-premiumDark">NEXUS<span class="text-indAccent">SCAN</span></span>
                 </div>
 
-                <!-- Desktop Navigation -->
-                <nav class="hidden md:flex space-x-6 items-center h-full">
-                    <button id="nav-home" onclick="switchView('home')" class="desktop-nav-item h-full flex items-center text-indAccent font-bold text-xs border-b-2 border-indAccent transition-colors"><i class="fa-solid fa-house mr-1.5"></i> Accueil</button>
-                    <button id="nav-blocks" onclick="switchView('blocks')" class="desktop-nav-item h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-xs border-b-2 border-transparent transition-colors"><i class="fa-solid fa-cubes mr-1.5"></i> Blocs</button>
-                    <button id="nav-txs" onclick="switchView('txs')" class="desktop-nav-item h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-xs border-b-2 border-transparent transition-colors"><i class="fa-solid fa-list-ul mr-1.5"></i> Transactions</button>
-                    <button id="nav-accounts" onclick="switchView('accounts')" class="desktop-nav-item h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-xs border-b-2 border-transparent transition-colors"><i class="fa-solid fa-ranking-star mr-1.5"></i> Top Comptes</button>
+                <nav class="hidden md:flex space-x-8 items-center h-full">
+                    <button id="nav-home" onclick="switchView('home')" class="desktop-nav-item h-full flex items-center text-indAccent font-bold text-sm border-b-2 border-indAccent transition-colors"><i class="fa-solid fa-house mr-2"></i> Accueil</button>
+                    <button id="nav-blocks" onclick="switchView('blocks')" class="desktop-nav-item h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-sm border-b-2 border-transparent transition-colors"><i class="fa-solid fa-cubes mr-2"></i> Blocs</button>
+                    <button id="nav-txs" onclick="switchView('txs')" class="desktop-nav-item h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-sm border-b-2 border-transparent transition-colors"><i class="fa-solid fa-list-ul mr-2"></i> Transactions</button>
+                    <button id="nav-accounts" onclick="switchView('accounts')" class="desktop-nav-item h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-sm border-b-2 border-transparent transition-colors"><i class="fa-solid fa-ranking-star mr-2"></i> Top Comptes</button>
                 </nav>
 
-                <!-- Network Status & Mobile Toggle -->
-                <div class="flex items-center gap-3">
-                    <div class="hidden sm:flex items-center gap-1.5 bg-indSuccess/10 border border-indSuccess/20 px-2.5 py-1 rounded-full">
-                        <div class="w-1.5 h-1.5 rounded-full bg-indSuccess live-pulse"></div>
-                        <span class="text-xxs font-bold text-indSuccess tracking-wide uppercase">Mainnet L1</span>
+                <div class="flex items-center gap-4">
+                    <div class="hidden sm:flex items-center gap-2 bg-indSuccess/10 border border-indSuccess/20 px-3 py-1.5 rounded-full">
+                        <div class="w-2 h-2 rounded-full bg-indSuccess live-pulse"></div>
+                        <span class="text-xs font-bold text-indSuccess tracking-wider uppercase">Mainnet L1</span>
                     </div>
-                    <button id="mobileMenuOpenBtn" class="md:hidden text-premiumDark hover:text-indAccent focus:outline-none text-lg p-1 transition-colors">
-                        <i class="fa-solid fa-bars"></i>
-                    </button>
+                    <button id="mobileMenuOpenBtn" class="md:hidden text-premiumDark hover:text-indAccent focus:outline-none text-xl p-1 transition-colors"><i class="fa-solid fa-bars"></i></button>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- ========================================== -->
-    <!-- 2. MENU MOBILE PLEIN ÉCRAN                 -->
-    <!-- ========================================== -->
+    <!-- MENU MOBILE -->
     <div id="mobileMenu" class="fixed inset-0 bg-white z-50 hidden flex-col transition-opacity">
-        <div class="flex justify-between items-center p-3 border-b border-indBorder shadow-sm bg-white">
-            <div class="flex items-center gap-2.5">
-                <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo" class="h-7 w-7 rounded-full border border-indBorder object-cover">
-                <span class="font-extrabold text-base tracking-tight text-premiumDark">NEXUS<span class="text-indAccent">SCAN</span></span>
+        <div class="flex justify-between items-center p-4 border-b border-indBorder shadow-sm bg-white">
+            <div class="flex items-center gap-3">
+                <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo" class="h-8 w-8 rounded-full border border-indBorder object-cover">
+                <span class="font-extrabold text-lg tracking-tight text-premiumDark">NEXUS<span class="text-indAccent">SCAN</span></span>
             </div>
-            <button id="mobileMenuCloseBtn" class="text-indTextMuted hover:text-premiumDark focus:outline-none text-2xl font-bold p-2 transition-colors">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
+            <button id="mobileMenuCloseBtn" class="text-indTextMuted hover:text-premiumDark focus:outline-none text-2xl font-bold p-2 transition-colors"><i class="fa-solid fa-xmark"></i></button>
         </div>
-        
-        <div class="flex flex-col pt-1 flex-grow overflow-y-auto">
-            <button id="mob-nav-home" onclick="switchView('home')" class="mobile-nav-item py-4 px-5 text-left font-bold text-sm border-b border-indBorder flex items-center gap-3 text-indAccent bg-sky-50/50 border-l-4 border-indAccent transition-colors">
-                <i class="fa-solid fa-house w-5 text-center"></i> Accueil
-            </button>
-            <button id="mob-nav-blocks" onclick="switchView('blocks')" class="mobile-nav-item py-4 px-5 text-left font-semibold text-sm border-b border-indBorder flex items-center gap-3 text-slate-600 border-l-4 border-transparent hover:bg-slate-50 transition-colors">
-                <i class="fa-solid fa-cubes w-5 text-center"></i> Blocs
-            </button>
-            <button id="mob-nav-txs" onclick="switchView('txs')" class="mobile-nav-item py-4 px-5 text-left font-semibold text-sm border-b border-indBorder flex items-center gap-3 text-slate-600 border-l-4 border-transparent hover:bg-slate-50 transition-colors">
-                <i class="fa-solid fa-list-ul w-5 text-center"></i> Transactions
-            </button>
-            <button id="mob-nav-accounts" onclick="switchView('accounts')" class="mobile-nav-item py-4 px-5 text-left font-semibold text-sm border-b border-indBorder flex items-center gap-3 text-slate-600 border-l-4 border-transparent hover:bg-slate-50 transition-colors">
-                <i class="fa-solid fa-ranking-star w-5 text-center"></i> Top Comptes
-            </button>
+        <div class="flex flex-col pt-2 flex-grow overflow-y-auto">
+            <button id="mob-nav-home" onclick="switchView('home')" class="mobile-nav-item py-4 px-6 text-left font-bold text-base border-b border-indBorder flex items-center gap-3 text-indAccent bg-sky-50/50 border-l-4 border-indAccent"><i class="fa-solid fa-house w-6 text-center"></i> Accueil</button>
+            <button id="mob-nav-blocks" onclick="switchView('blocks')" class="mobile-nav-item py-4 px-6 text-left font-semibold text-base border-b border-indBorder flex items-center gap-3 text-slate-600 border-l-4 border-transparent hover:bg-slate-50"><i class="fa-solid fa-cubes w-6 text-center"></i> Blocs</button>
+            <button id="mob-nav-txs" onclick="switchView('txs')" class="mobile-nav-item py-4 px-6 text-left font-semibold text-base border-b border-indBorder flex items-center gap-3 text-slate-600 border-l-4 border-transparent hover:bg-slate-50"><i class="fa-solid fa-list-ul w-6 text-center"></i> Transactions</button>
+            <button id="mob-nav-accounts" onclick="switchView('accounts')" class="mobile-nav-item py-4 px-6 text-left font-semibold text-base border-b border-indBorder flex items-center gap-3 text-slate-600 border-l-4 border-transparent hover:bg-slate-50"><i class="fa-solid fa-ranking-star w-6 text-center"></i> Top Comptes</button>
         </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- 3. CONTENEUR PRINCIPAL DES VUES (SPA)      -->
-    <!-- ========================================== -->
+    <!-- MAIN CONTENT -->
     <main id="main-content" class="flex-grow flex flex-col">
-        
-        <!-- VUE : ACCUEIL -->
+        <!-- VUE ACCUEIL -->
         <div id="view-home" class="view-section flex-grow flex flex-col fade-in">
-            <section class="bg-premiumDark text-white pt-8 pb-12 px-4 relative overflow-hidden">
+            <section class="bg-premiumDark text-white pt-10 pb-16 px-4 relative overflow-hidden">
                 <div class="absolute inset-0 bg-gradient-to-br from-premiumDark via-[#0f172a] to-[#1e293b] z-0"></div>
-                <div class="absolute inset-0 opacity-5 z-0" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 20px 20px;"></div>
+                <div class="absolute inset-0 opacity-10 z-0" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 24px 24px;"></div>
                 
-                <div class="max-w-3xl mx-auto relative z-10 flex flex-col items-center">
-                    <h1 class="text-2xl md:text-3xl font-black mb-3 text-center tracking-tight">Le Moteur de Confiance <span class="text-indAccent">NEXUS CORE</span></h1>
-                    <div class="text-center mb-8 flex flex-col items-center gap-1">
-                        <p class="text-slate-300 text-xs font-bold uppercase tracking-widest">Explorateur Layer-1</p>
-                        <p class="text-slate-400 text-[11px] font-medium">Développé par Atlas & Duc Corporation</p>
-                        <div class="mt-3 bg-indAccent/10 border border-indAccent/20 px-4 py-1.5 rounded-full shadow-inner backdrop-blur-sm">
-                            <p class="text-indAccent font-black text-xs tracking-wide">1 ₳ (AG-COIN) = 1 FCFA (XOF)</p>
+                <div class="max-w-4xl mx-auto relative z-10 flex flex-col items-center">
+                    <h1 class="text-3xl md:text-5xl font-black mb-4 text-center tracking-tight">Le Moteur de Confiance <span class="text-indAccent">NEXUS CORE</span></h1>
+                    <div class="text-center mb-10 flex flex-col items-center gap-2">
+                        <p class="text-slate-300 text-sm font-bold uppercase tracking-widest">Explorateur Web3 Layer-1</p>
+                        <p class="text-slate-400 text-xs font-medium">Déployé et sécurisé par Atlas & Duc Corporation</p>
+                        <div class="mt-4 bg-indAccent/10 border border-indAccent/20 px-5 py-2 rounded-full shadow-inner backdrop-blur-sm">
+                            <p class="text-indAccent font-black text-sm tracking-wide">1 ₳ (AG-COIN) = 1 FCFA (XOF)</p>
                         </div>
                     </div>
                     
-                    <form onsubmit="handleSearch(event)" class="w-full max-w-xl bg-white rounded-lg p-1.5 flex items-center shadow-xl focus-within:ring-2 focus-within:ring-indAccent/30 transition-all border border-slate-700">
-                        <div class="pl-3 pr-2 text-slate-400 text-sm"><i class="fa-solid fa-search"></i></div>
-                        <input type="text" id="searchInput" placeholder="Recherche par Adresse / TxHash / Bloc..." class="w-full bg-transparent text-premiumDark px-2 py-1.5 outline-none font-medium placeholder:text-slate-400 text-xs md:text-sm">
-                        <button type="submit" id="searchBtn" class="bg-indAccent hover:bg-[#0284c7] text-white px-5 py-2 rounded-md font-bold text-xs transition-colors flex items-center gap-1.5 shadow-sm">
-                            <span class="hidden sm:inline">Chercher</span><i class="fa-solid fa-arrow-right sm:hidden"></i>
+                    <form onsubmit="handleSearch(event)" class="w-full max-w-2xl bg-white rounded-xl p-2 flex items-center shadow-2xl focus-within:ring-4 focus-within:ring-indAccent/30 transition-all border border-slate-700">
+                        <div class="pl-4 pr-3 text-slate-400 text-lg"><i class="fa-solid fa-search"></i></div>
+                        <input type="text" id="searchInput" placeholder="Recherche par Adresse / TxHash / Numéro de Bloc..." class="w-full bg-transparent text-premiumDark px-2 py-3 outline-none font-medium placeholder:text-slate-400 text-sm md:text-base">
+                        <button type="submit" id="searchBtn" class="bg-indAccent hover:bg-[#0284c7] text-white px-6 py-3 rounded-lg font-bold text-sm transition-colors flex items-center gap-2 shadow-md">
+                            <span class="hidden sm:inline">Rechercher</span><i class="fa-solid fa-arrow-right sm:hidden"></i>
                         </button>
                     </form>
                 </div>
             </section>
 
-            <section class="max-w-[95rem] w-full mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-20">
-                <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                    <div class="bg-indCard rounded-lg p-3.5 border border-indBorder shadow-sm flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 border border-slate-200"><i class="fa-solid fa-coins text-sm"></i></div>
+            <section class="max-w-[95rem] w-full mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-indCard rounded-xl p-5 border border-indBorder shadow-lg flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 border border-slate-200"><i class="fa-solid fa-coins text-lg"></i></div>
                         <div>
-                            <p class="text-[10px] font-bold text-indTextMuted uppercase tracking-wider mb-0.5">Prix AG-COIN</p>
-                            <h3 class="text-sm font-black text-premiumDark">1 FCFA <span class="text-xs font-bold text-indAccent">/ ₳</span></h3>
+                            <p class="text-xs font-bold text-indTextMuted uppercase tracking-wider mb-1">Prix AG-COIN</p>
+                            <h3 class="text-lg font-black text-premiumDark">1 FCFA <span class="text-sm font-bold text-indAccent">/ ₳</span></h3>
                         </div>
                     </div>
-                    <div class="bg-indCard rounded-lg p-3.5 border border-indBorder shadow-sm flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-full bg-sky-50 flex items-center justify-center text-indAccent border border-sky-100"><i class="fa-solid fa-globe text-sm"></i></div>
+                    <div class="bg-indCard rounded-xl p-5 border border-indBorder shadow-lg flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-sky-50 flex items-center justify-center text-indAccent border border-sky-100"><i class="fa-solid fa-server text-lg"></i></div>
                         <div>
-                            <p class="text-[10px] font-bold text-indTextMuted uppercase tracking-wider mb-0.5">Transactions</p>
-                            <h3 id="statTotalTx" class="text-sm font-black text-premiumDark"><div class="skeleton h-4 w-16 rounded"></div></h3>
+                            <p class="text-xs font-bold text-indTextMuted uppercase tracking-wider mb-1">Dernier Bloc</p>
+                            <h3 id="statLatestBlock" class="text-lg font-black text-premiumDark"><div class="skeleton h-5 w-20 rounded"></div></h3>
                         </div>
                     </div>
-                    <div class="bg-indCard rounded-lg p-3.5 border border-indBorder shadow-sm flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-full bg-emerald-50 flex items-center justify-center text-indSuccess border border-emerald-100"><i class="fa-solid fa-cube text-sm"></i></div>
+                    <div class="bg-indCard rounded-xl p-5 border border-indBorder shadow-lg flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-indSuccess border border-emerald-100"><i class="fa-solid fa-stopwatch text-lg"></i></div>
                         <div>
-                            <p class="text-[10px] font-bold text-indTextMuted uppercase tracking-wider mb-0.5">Dernier Bloc</p>
-                            <h3 id="statLatestBlock" class="text-sm font-black text-premiumDark"><div class="skeleton h-4 w-14 rounded"></div></h3>
+                            <p class="text-xs font-bold text-indTextMuted uppercase tracking-wider mb-1">Temps Finalité</p>
+                            <h3 id="statBlockTime" class="text-lg font-black text-premiumDark"><div class="skeleton h-5 w-16 rounded"></div></h3>
                         </div>
                     </div>
-                    <div class="bg-indCard rounded-lg p-3.5 border border-indBorder shadow-sm flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-500 border border-indigo-100"><i class="fa-solid fa-stopwatch text-sm"></i></div>
+                    <div class="bg-indCard rounded-xl p-5 border border-indBorder shadow-lg flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-500 border border-indigo-100"><i class="fa-solid fa-bolt text-lg"></i></div>
                         <div>
-                            <p class="text-[10px] font-bold text-indTextMuted uppercase tracking-wider mb-0.5">Temps Finalité</p>
-                            <h3 class="text-sm font-black text-premiumDark">~0.4s <span class="text-[10px] font-semibold text-slate-400">/ bloc</span></h3>
+                            <p class="text-xs font-bold text-indTextMuted uppercase tracking-wider mb-1">Tx Récentes (Cache)</p>
+                            <h3 id="statTotalTx" class="text-lg font-black text-premiumDark"><div class="skeleton h-5 w-16 rounded"></div></h3>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section class="max-w-[95rem] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <section class="max-w-[95rem] w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <!-- Blocs Récents -->
-                <div class="bg-indCard rounded-lg border border-indBorder shadow-sm flex flex-col h-[450px]">
-                    <div class="p-4 border-b border-indBorder flex justify-between items-center bg-slate-50/80 rounded-t-lg">
-                        <h2 class="font-extrabold text-premiumDark text-sm flex items-center gap-2"><i class="fa-solid fa-cubes text-indAccent"></i> Blocs Récents</h2>
-                        <button onclick="switchView('blocks')" class="text-[11px] font-bold text-indAccent bg-sky-50 px-2.5 py-1 rounded hover:bg-indAccent hover:text-white transition-colors border border-sky-100 hover:border-indAccent">Voir Tout <i class="fa-solid fa-arrow-right ml-1"></i></button>
+                <div class="bg-indCard rounded-xl border border-indBorder shadow-sm flex flex-col h-[500px]">
+                    <div class="p-5 border-b border-indBorder flex justify-between items-center bg-slate-50/80 rounded-t-xl">
+                        <h2 class="font-extrabold text-premiumDark text-base flex items-center gap-2"><i class="fa-solid fa-cubes text-indAccent"></i> Blocs Récents</h2>
+                        <button onclick="switchView('blocks')" class="text-xs font-bold text-indAccent bg-sky-50 px-3 py-1.5 rounded-md hover:bg-indAccent hover:text-white transition-colors border border-sky-100 hover:border-indAccent">Voir Tout <i class="fa-solid fa-arrow-right ml-1"></i></button>
                     </div>
-                    <div class="overflow-y-auto flex-grow p-2" id="blocksContainerPreview"></div>
+                    <div class="overflow-y-auto flex-grow p-3" id="blocksContainerPreview"></div>
                 </div>
 
                 <!-- Transactions Récentes -->
-                <div class="bg-indCard rounded-lg border border-indBorder shadow-sm flex flex-col h-[450px]">
-                    <div class="p-4 border-b border-indBorder flex justify-between items-center bg-slate-50/80 rounded-t-lg">
-                        <h2 class="font-extrabold text-premiumDark text-sm flex items-center gap-2"><i class="fa-solid fa-list-ul text-indAccent"></i> Transactions Récentes</h2>
-                        <button onclick="switchView('txs')" class="text-[11px] font-bold text-indAccent bg-sky-50 px-2.5 py-1 rounded hover:bg-indAccent hover:text-white transition-colors border border-sky-100 hover:border-indAccent">Voir Tout <i class="fa-solid fa-arrow-right ml-1"></i></button>
+                <div class="bg-indCard rounded-xl border border-indBorder shadow-sm flex flex-col h-[500px]">
+                    <div class="p-5 border-b border-indBorder flex justify-between items-center bg-slate-50/80 rounded-t-xl">
+                        <h2 class="font-extrabold text-premiumDark text-base flex items-center gap-2"><i class="fa-solid fa-list-ul text-indAccent"></i> Transactions Récentes</h2>
+                        <button onclick="switchView('txs')" class="text-xs font-bold text-indAccent bg-sky-50 px-3 py-1.5 rounded-md hover:bg-indAccent hover:text-white transition-colors border border-sky-100 hover:border-indAccent">Voir Tout <i class="fa-solid fa-arrow-right ml-1"></i></button>
                     </div>
-                    <div class="overflow-y-auto flex-grow p-2" id="txsContainerPreview"></div>
+                    <div class="overflow-y-auto flex-grow p-3" id="txsContainerPreview"></div>
                 </div>
             </section>
         </div>
 
-        <!-- VUE : BLOCS COMPLETS -->
+        <!-- VUE BLOCS -->
         <div id="view-blocks" class="view-section hidden flex-grow bg-indBg fade-in">
-            <div class="max-w-[95rem] mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                <div class="mb-4">
-                    <h1 class="text-lg font-black text-premiumDark flex items-center gap-2"><i class="fa-solid fa-cubes text-indAccent"></i> Registre des Blocs</h1>
+            <div class="max-w-[95rem] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div class="mb-6">
+                    <h1 class="text-xl font-black text-premiumDark flex items-center gap-2"><i class="fa-solid fa-cubes text-indAccent"></i> Registre des Blocs</h1>
                 </div>
-                <div class="bg-white rounded-lg border border-indBorder shadow-sm overflow-hidden">
+                <div class="bg-white rounded-xl border border-indBorder shadow-sm overflow-hidden">
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse min-w-[700px]">
+                        <table class="w-full text-left border-collapse min-w-[800px]">
                             <thead>
-                                <tr class="bg-slate-50 border-b border-indBorder text-[11px] text-slate-500 uppercase tracking-wider">
-                                    <th class="py-3 px-4 font-bold">Bloc</th>
-                                    <th class="py-3 px-4 font-bold">Validation</th>
-                                    <th class="py-3 px-4 font-bold">Txns</th>
-                                    <th class="py-3 px-4 font-bold">Nœud Validateur</th>
-                                    <th class="py-3 px-4 font-bold text-right">Gaz Consommé</th>
+                                <tr class="bg-slate-50 border-b border-indBorder text-xs text-slate-500 uppercase tracking-wider">
+                                    <th class="py-4 px-5 font-bold">Bloc</th>
+                                    <th class="py-4 px-5 font-bold">Horodatage</th>
+                                    <th class="py-4 px-5 font-bold">Txns</th>
+                                    <th class="py-4 px-5 font-bold">Nœud Validateur</th>
+                                    <th class="py-4 px-5 font-bold text-right">Gaz Utilisé</th>
                                 </tr>
                             </thead>
-                            <tbody id="allBlocksTable" class="text-xs divide-y divide-slate-100">
-                                <!-- JS Injection -->
-                            </tbody>
+                            <tbody id="allBlocksTable" class="text-sm divide-y divide-slate-100"></tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- VUE : TRANSACTIONS COMPLÈTES -->
+        <!-- VUE TRANSACTIONS -->
         <div id="view-txs" class="view-section hidden flex-grow bg-indBg fade-in">
-            <div class="max-w-[95rem] mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                <div class="mb-4">
-                    <h1 class="text-lg font-black text-premiumDark flex items-center gap-2"><i class="fa-solid fa-list-ul text-indAccent"></i> Registre des Transactions</h1>
+            <div class="max-w-[95rem] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div class="mb-6">
+                    <h1 class="text-xl font-black text-premiumDark flex items-center gap-2"><i class="fa-solid fa-list-ul text-indAccent"></i> Registre des Transactions</h1>
                 </div>
-                <div class="bg-white rounded-lg border border-indBorder shadow-sm overflow-hidden">
+                <div class="bg-white rounded-xl border border-indBorder shadow-sm overflow-hidden">
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse min-w-[900px]">
+                        <table class="w-full text-left border-collapse min-w-[1000px]">
                             <thead>
-                                <tr class="bg-slate-50 border-b border-indBorder text-[11px] text-slate-500 uppercase tracking-wider">
-                                    <th class="py-3 px-4 font-bold">TxHash</th>
-                                    <th class="py-3 px-4 font-bold">Bloc</th>
-                                    <th class="py-3 px-4 font-bold">Horodatage</th>
-                                    <th class="py-3 px-4 font-bold">Expéditeur</th>
-                                    <th class="py-3 px-4 font-bold">Bénéficiaire</th>
-                                    <th class="py-3 px-4 font-bold text-right">Montant (₳)</th>
+                                <tr class="bg-slate-50 border-b border-indBorder text-xs text-slate-500 uppercase tracking-wider">
+                                    <th class="py-4 px-5 font-bold">TxHash</th>
+                                    <th class="py-4 px-5 font-bold">Bloc</th>
+                                    <th class="py-4 px-5 font-bold">Horodatage</th>
+                                    <th class="py-4 px-5 font-bold">De (Expéditeur)</th>
+                                    <th class="py-4 px-5 font-bold">À (Bénéficiaire)</th>
+                                    <th class="py-4 px-5 font-bold text-right">Montant (₳)</th>
                                 </tr>
                             </thead>
-                            <tbody id="allTxsTable" class="text-xs divide-y divide-slate-100">
-                                <!-- JS Injection -->
-                            </tbody>
+                            <tbody id="allTxsTable" class="text-sm divide-y divide-slate-100"></tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- VUE : TOP COMPTES -->
+        <!-- VUE TOP COMPTES -->
         <div id="view-accounts" class="view-section hidden flex-grow bg-indBg fade-in">
-            <div class="max-w-[95rem] mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                <div class="mb-4">
-                    <h1 class="text-lg font-black text-premiumDark flex items-center gap-2"><i class="fa-solid fa-ranking-star text-indAccent"></i> Top Comptes</h1>
+            <div class="max-w-[95rem] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div class="mb-6">
+                    <h1 class="text-xl font-black text-premiumDark flex items-center gap-2"><i class="fa-solid fa-ranking-star text-indAccent"></i> Top Comptes</h1>
                 </div>
-                <div class="bg-white rounded-lg border border-indBorder shadow-sm overflow-hidden flex flex-col items-center justify-center p-12 text-center">
-                    <div class="w-14 h-14 bg-sky-50 rounded-full flex items-center justify-center mb-4 border border-sky-100 shadow-inner">
-                        <i class="fa-solid fa-server text-xl text-indAccent"></i>
+                <div class="bg-white rounded-xl border border-indBorder shadow-sm flex flex-col items-center justify-center p-16 text-center">
+                    <div class="w-16 h-16 bg-sky-50 rounded-full flex items-center justify-center mb-5 border border-sky-100 shadow-inner">
+                        <i class="fa-solid fa-server text-2xl text-indAccent"></i>
                     </div>
-                    <h3 class="text-base font-bold text-premiumDark mb-2">Module d'Indexation</h3>
-                    <p class="text-xs text-slate-500 max-w-sm leading-relaxed">Infrastructure d'analyse globale en cours de déploiement par Atlas & Duc Corp.</p>
+                    <h3 class="text-lg font-bold text-premiumDark mb-2">Module d'Indexation Requis</h3>
+                    <p class="text-sm text-slate-500 max-w-md leading-relaxed">Le classement des comptes nécessite l'infrastructure d'indexation globale (Graph Node). En cours de déploiement par Atlas & Duc Corp.</p>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- ========================================== -->
-    <!-- 4. FOOTER INDUSTRIEL COMPACT               -->
-    <!-- ========================================== -->
-    <footer class="bg-premiumDark border-t border-slate-800 pt-6 pb-6 mt-auto">
-        <div class="max-w-[95rem] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
-            <div class="flex items-center gap-3 mb-4">
-                <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo" class="h-8 w-8 rounded-full border border-slate-700 shadow-sm">
-                <div class="text-left">
-                    <h4 class="text-white font-black text-sm tracking-tight leading-none">Atlas & Duc Corp.</h4>
-                    <span class="text-slate-400 text-[10px] font-semibold tracking-wide">Web3 Infrastructure</span>
+    <!-- FOOTER -->
+    <footer class="bg-premiumDark border-t border-slate-800 pt-8 pb-8 mt-auto">
+        <div class="max-w-[95rem] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3">
+                <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo" class="h-10 w-10 rounded-full border border-slate-700 shadow-sm">
+                <div>
+                    <h4 class="text-white font-black text-base tracking-tight leading-none">Atlas & Duc Corp.</h4>
+                    <span class="text-slate-400 text-xs font-semibold tracking-wide">Web3 Enterprise Infrastructure</span>
                 </div>
             </div>
-            <div class="flex flex-wrap justify-center gap-6 text-[11px] font-bold text-slate-400 w-full mb-4">
-                <a href="#" class="hover:text-indAccent transition-colors"><i class="fa-solid fa-book mr-1.5"></i> Docs</a>
-                <a href="#" class="hover:text-indAccent transition-colors"><i class="fa-solid fa-server mr-1.5"></i> API RPC</a>
-                <a href="#" class="hover:text-indAccent transition-colors"><i class="fa-solid fa-shield-halved mr-1.5"></i> Shield</a>
+            <div class="flex gap-6 text-sm font-bold text-slate-400">
+                <a href="#" class="hover:text-indAccent transition-colors"><i class="fa-solid fa-server mr-2"></i>RPC Public</a>
+                <a href="#" class="hover:text-indAccent transition-colors"><i class="fa-solid fa-code mr-2"></i>API REST</a>
             </div>
-            <p class="text-[10px] text-slate-500 font-medium uppercase tracking-wider">&copy; 2026 Atlas & Duc Corporation. Tous droits réservés.</p>
+            <p class="text-xs text-slate-500 font-medium tracking-wider">&copy; 2026 Atlas & Duc Corporation.</p>
         </div>
     </footer>
 
-    <!-- ========================================== -->
-    <!-- 5. MODALS PLEIN ÉCRAN (DENSITÉ & HASHS)    -->
-    <!-- ========================================== -->
-    
-    <!-- Modal Transaction (Plein Écran Z-[99999]) -->
-    <div id="txModal" class="modal-overlay fixed inset-0 z-[99999] flex flex-col">
-        <div class="modal-content bg-indBg w-full h-full max-w-full rounded-none flex flex-col shadow-none">
-            
-            <!-- Header Fixe Plein Écran -->
-            <div class="flex justify-between items-center px-4 md:px-6 py-3 md:py-4 border-b border-slate-200 bg-white shrink-0 shadow-sm">
-                <div class="max-w-4xl mx-auto w-full flex justify-between items-center">
-                    <h3 class="text-base md:text-lg font-black text-premiumDark flex items-center gap-2"><i class="fa-solid fa-file-invoice text-indAccent"></i> Détails Transaction</h3>
-                    <button onclick="closeModal('txModal')" class="text-slate-500 hover:text-white hover:bg-red-500 px-3 py-1.5 rounded-md transition-colors focus:outline-none flex items-center gap-1.5 font-bold text-xs bg-slate-100 border border-slate-200 hover:border-red-500 shadow-sm">
-                        <span class="hidden sm:inline">Fermer</span> <i class="fa-solid fa-xmark text-sm"></i>
-                    </button>
-                </div>
+    <!-- MODAL TRANSACTION -->
+    <div id="txModal" class="modal-overlay fixed inset-0 z-[99999] flex flex-col items-center justify-center p-4 sm:p-6">
+        <div class="modal-content bg-white w-full max-w-4xl max-h-[90vh] rounded-xl flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
+            <div class="flex justify-between items-center px-6 py-4 border-b border-slate-200 bg-slate-50 shrink-0">
+                <h3 class="text-lg font-black text-premiumDark flex items-center gap-2"><i class="fa-solid fa-file-invoice text-indAccent"></i> Détails de la Transaction</h3>
+                <button onclick="closeModal('txModal')" class="text-slate-500 hover:text-white hover:bg-red-500 w-8 h-8 rounded-full transition-colors flex items-center justify-center focus:outline-none bg-white border border-slate-200 shadow-sm"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            
-            <!-- Corps Scrollable Plein Écran -->
-            <div class="p-3 md:p-6 overflow-y-auto flex-grow w-full">
-                <!-- Wrapper central pour limiter la largeur sur PC -->
-                <div class="max-w-4xl mx-auto w-full" id="txModalBody">
-                    <!-- Injection JS -->
-                </div>
-            </div>
+            <div class="p-6 overflow-y-auto flex-grow bg-indBg/50" id="txModalBody"></div>
         </div>
     </div>
 
-    <!-- Modal Bloc (Plein Écran Z-[99999]) -->
-    <div id="blockModal" class="modal-overlay fixed inset-0 z-[99999] flex flex-col">
-        <div class="modal-content bg-indBg w-full h-full max-w-full rounded-none flex flex-col shadow-none">
-            
-            <!-- Header Fixe Plein Écran -->
-            <div class="flex justify-between items-center px-4 md:px-6 py-3 md:py-4 border-b border-slate-200 bg-white shrink-0 shadow-sm">
-                <div class="max-w-4xl mx-auto w-full flex justify-between items-center">
-                    <h3 class="text-base md:text-lg font-black text-premiumDark flex items-center gap-2"><i class="fa-solid fa-cube text-indAccent"></i> Bloc <span id="blockModalTitleNum" class="text-slate-500 font-mono text-sm ml-1"></span></h3>
-                    <button onclick="closeModal('blockModal')" class="text-slate-500 hover:text-white hover:bg-red-500 px-3 py-1.5 rounded-md transition-colors focus:outline-none flex items-center gap-1.5 font-bold text-xs bg-slate-100 border border-slate-200 hover:border-red-500 shadow-sm">
-                        <span class="hidden sm:inline">Fermer</span> <i class="fa-solid fa-xmark text-sm"></i>
-                    </button>
-                </div>
+    <!-- MODAL BLOC -->
+    <div id="blockModal" class="modal-overlay fixed inset-0 z-[99999] flex flex-col items-center justify-center p-4 sm:p-6">
+        <div class="modal-content bg-white w-full max-w-4xl max-h-[90vh] rounded-xl flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
+            <div class="flex justify-between items-center px-6 py-4 border-b border-slate-200 bg-slate-50 shrink-0">
+                <h3 class="text-lg font-black text-premiumDark flex items-center gap-2"><i class="fa-solid fa-cube text-indAccent"></i> Bloc <span id="blockModalTitleNum" class="text-slate-500 font-mono ml-1"></span></h3>
+                <button onclick="closeModal('blockModal')" class="text-slate-500 hover:text-white hover:bg-red-500 w-8 h-8 rounded-full transition-colors flex items-center justify-center focus:outline-none bg-white border border-slate-200 shadow-sm"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            
-            <!-- Corps Scrollable Plein Écran -->
-            <div class="p-3 md:p-6 overflow-y-auto flex-grow w-full">
-                <div class="max-w-4xl mx-auto w-full" id="blockModalBody">
-                    <!-- Injection JS -->
-                </div>
-            </div>
+            <div class="p-6 overflow-y-auto flex-grow bg-indBg/50" id="blockModalBody"></div>
         </div>
     </div>
 
-    <!-- Container Toasts -->
     <div id="toast-container"></div>
 
-    <!-- ========================================== -->
-    <!-- 6. MOTEUR JAVASCRIPT (LOGIQUE & RENDU)     -->
-    <!-- ========================================== -->
+    <!-- MOTEUR JAVASCRIPT WEB3 -->
     <script>
-        // --- GESTION DU ROUTAGE (SPA) ---
+        // --- ROUTAGE SPA ---
         function switchView(viewId) {
-            document.querySelectorAll('.view-section').forEach(el => {
-                el.classList.add('hidden'); el.classList.remove('fade-in');
-            });
+            document.querySelectorAll('.view-section').forEach(el => { el.classList.add('hidden'); el.classList.remove('fade-in'); });
             const target = document.getElementById('view-' + viewId);
-            if(target) {
-                target.classList.remove('hidden');
-                setTimeout(() => target.classList.add('fade-in'), 10);
-            }
+            if(target) { target.classList.remove('hidden'); setTimeout(() => target.classList.add('fade-in'), 10); }
             closeMobileMenu();
             
-            document.querySelectorAll('.desktop-nav-item').forEach(el => {
-                el.className = 'desktop-nav-item h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-xs border-b-2 border-transparent transition-colors';
-            });
+            document.querySelectorAll('.desktop-nav-item').forEach(el => el.className = 'desktop-nav-item h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-sm border-b-2 border-transparent transition-colors');
             const navBtn = document.getElementById('nav-' + viewId);
-            if(navBtn) navBtn.className = 'desktop-nav-item h-full flex items-center text-indAccent font-bold text-xs border-b-2 border-indAccent transition-colors';
+            if(navBtn) navBtn.className = 'desktop-nav-item h-full flex items-center text-indAccent font-bold text-sm border-b-2 border-indAccent transition-colors';
 
-            document.querySelectorAll('.mobile-nav-item').forEach(el => {
-                el.className = 'mobile-nav-item py-4 px-5 text-left font-semibold text-sm border-b border-indBorder flex items-center gap-3 text-slate-600 border-l-4 border-transparent hover:bg-slate-50 transition-colors';
-            });
+            document.querySelectorAll('.mobile-nav-item').forEach(el => el.className = 'mobile-nav-item py-4 px-6 text-left font-semibold text-base border-b border-indBorder flex items-center gap-3 text-slate-600 border-l-4 border-transparent hover:bg-slate-50');
             const mobBtn = document.getElementById('mob-nav-' + viewId);
-            if(mobBtn) mobBtn.className = 'mobile-nav-item py-4 px-5 text-left font-bold text-sm border-b border-indBorder flex items-center gap-3 text-indAccent bg-sky-50/50 border-l-4 border-indAccent transition-colors';
-            
+            if(mobBtn) mobBtn.className = 'mobile-nav-item py-4 px-6 text-left font-bold text-base border-b border-indBorder flex items-center gap-3 text-indAccent bg-sky-50/50 border-l-4 border-indAccent';
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // --- MENU MOBILE ---
-        function openMobileMenu() {
-            document.getElementById('mobileMenu').classList.remove('hidden');
-            document.getElementById('mobileMenu').classList.add('flex');
-            document.body.style.overflow = 'hidden';
-        }
-        function closeMobileMenu() {
-            document.getElementById('mobileMenu').classList.add('hidden');
-            document.getElementById('mobileMenu').classList.remove('flex');
-            document.body.style.overflow = '';
-        }
-        document.getElementById('mobileMenuOpenBtn').addEventListener('click', openMobileMenu);
+        document.getElementById('mobileMenuOpenBtn').addEventListener('click', () => { document.getElementById('mobileMenu').classList.replace('hidden', 'flex'); document.body.style.overflow = 'hidden'; });
+        const closeMobileMenu = () => { document.getElementById('mobileMenu').classList.replace('flex', 'hidden'); document.body.style.overflow = ''; };
         document.getElementById('mobileMenuCloseBtn').addEventListener('click', closeMobileMenu);
 
-        // --- MOTEUR RPC WEB3 ---
+        // --- CONFIGURATION RPC EVM STANDARD ---
         const RPC_URL = "https://rpc.agi-nexus-core.click";
-        const BLOCKS_TO_FETCH = 10; 
-        let latestBlockNum = 0; let totalTxGlobal = 0; 
-        const txCache = new Map(); const blockCache = new Map();
-
-        function formatHash(hash, chars = 6) { return hash ? hash.substring(0, chars + 2) + "..." + hash.substring(hash.length - chars) : ""; }
-        function timeAgo(timestamp) {
-            const secs = Math.floor((new Date() - timestamp) / 1000);
-            if (secs < 15) return "À l'instant";
-            if (secs < 60) return secs + "s";
-            const mins = Math.floor(secs / 60);
-            if (mins < 60) return mins + " m";
-            return Math.floor(mins / 60) + " h";
-        }
-        function formatDateFull(ts) { return new Date(ts).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'medium' }); }
-        function formatAmount(hexVal) {
-            if(!hexVal) return "0.00";
-            const decVal = typeof hexVal === 'string' && hexVal.startsWith('0x') ? parseInt(hexVal, 16) : parseInt(hexVal);
-            return new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 6 }).format(decVal / 1000000);
-        }
+        const BLOCKS_TO_FETCH = 15; 
         
+        let latestBlockNum = 0; 
+        let globalBlocks = []; 
+        let globalTxs = [];
+        const txCache = new Map(); 
+        const blockCache = new Map();
+        let isInitialLoad = true;
+
+        // --- UTILITAIRES ---
+        const formatHash = (hash, chars = 6) => hash ? `${hash.substring(0, chars + 2)}...${hash.substring(hash.length - chars)}` : "";
+        
+        function timeAgo(timestamp) {
+            const secs = Math.floor((Date.now() - timestamp) / 1000);
+            if (secs < 15) return "À l'instant";
+            if (secs < 60) return `${secs} sec`;
+            const mins = Math.floor(secs / 60);
+            if (mins < 60) return `${mins} min`;
+            const hrs = Math.floor(mins / 60);
+            if (hrs < 24) return `${hrs} h`;
+            return `${Math.floor(hrs / 24)} j`;
+        }
+
+        function hexToEther(hexWei) {
+            if(!hexWei || hexWei === '0x' || hexWei === '0x0') return "0.00";
+            try {
+                let str = BigInt(hexWei).toString();
+                if(str.length <= 18) str = str.padStart(19, '0');
+                let intPart = str.slice(0, -18) || '0';
+                let decPart = str.slice(-18).slice(0, 6); // Garder 6 décimales pour l'UI
+                return `${parseInt(intPart).toLocaleString('fr-FR')},${decPart}`;
+            } catch(e) { return "0.00"; }
+        }
+
         function showToast(msg, type = 'success') {
             const c = document.getElementById('toast-container');
             const t = document.createElement('div');
             t.className = 'toast';
-            t.innerHTML = `<i class="fa-solid fa-${type === 'success' ? 'circle-check text-indSuccess' : (type === 'error' ? 'circle-xmark text-red-500' : 'circle-info text-indAccent')}"></i> <span>${msg}</span>`;
+            const icon = type === 'success' ? 'circle-check text-indSuccess' : (type === 'error' ? 'circle-xmark text-red-500' : 'circle-info text-indAccent');
+            t.innerHTML = `<i class="fa-solid fa-${icon} text-lg"></i> <span>${msg}</span>`;
             c.appendChild(t);
-            setTimeout(() => { if(t.parentElement) t.remove(); }, 3500);
-        }
-        
-        async function copyToClipboard(txt) { 
-            try { await navigator.clipboard.writeText(txt); showToast("Copié !"); } 
-            catch(e){ showToast("Erreur copie", "error"); } 
+            setTimeout(() => { if(t.parentElement) t.remove(); }, 4000);
         }
 
+        async function copyToClipboard(txt) { 
+            try { await navigator.clipboard.writeText(txt); showToast("Copié dans le presse-papier !"); } 
+            catch(e){ showToast("Erreur lors de la copie", "error"); } 
+        }
+
+        // --- MOTEUR WEB3 CORE ---
         async function rpcCall(method, params = []) {
             try {
-                const res = await fetch(RPC_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ jsonrpc: "2.0", method: method, params: params, id: 1 }) });
-                return res.ok ? (await res.json()).result : null;
-            } catch (e) { return null; }
+                const res = await fetch(RPC_URL, { 
+                    method: 'POST', 
+                    headers: { 'Content-Type': 'application/json' }, 
+                    body: JSON.stringify({ jsonrpc: "2.0", method: method, params: params, id: 1 }) 
+                });
+                const json = await res.json();
+                return json.result;
+            } catch (e) { 
+                console.error("RPC Error:", e);
+                return null; 
+            }
         }
 
         async function syncNetworkData() {
-            const blockHex = await rpcCall("nexus_blockNumber");
+            // Utilisation des standards EVM (eth_blockNumber)
+            const blockHex = await rpcCall("eth_blockNumber") || await rpcCall("nexus_blockNumber");
             if (!blockHex) return;
             const currentBlockNum = parseInt(blockHex, 16);
-            if (currentBlockNum <= latestBlockNum && latestBlockNum !== 0) return;
+            
+            if (currentBlockNum <= latestBlockNum) return; // Pas de nouveau bloc
             latestBlockNum = currentBlockNum;
-
             document.getElementById('statLatestBlock').innerText = currentBlockNum.toLocaleString('fr-FR');
             
-            const blocks = []; const txs = [];
+            // Requêtes parallèles pour récupérer les blocs rapidement
+            const fetchPromises = [];
             for (let i = 0; i < BLOCKS_TO_FETCH; i++) {
                 const target = currentBlockNum - i;
                 if(target < 0) break;
-                const bData = await rpcCall("nexus_getBlockByNumber", ["0x" + target.toString(16), true]);
-                if (bData) {
-                    blockCache.set(parseInt(bData.number, 16).toString(), bData);
-                    blocks.push(bData);
-                    if (bData.transactions) {
+                // Si non en cache, on prépare la requête
+                if(!blockCache.has(target.toString())) {
+                    // Standard EVM eth_getBlockByNumber(hex, true pour les tx complètes)
+                    fetchPromises.push(rpcCall("eth_getBlockByNumber", ["0x" + target.toString(16), true]).then(b => b || rpcCall("nexus_getBlockByNumber", ["0x" + target.toString(16), true])));
+                }
+            }
+
+            const newBlocksRaw = await Promise.all(fetchPromises);
+            
+            newBlocksRaw.forEach(bData => {
+                if (bData && bData.number) {
+                    const decNum = parseInt(bData.number, 16).toString();
+                    blockCache.set(decNum, bData);
+                    if (bData.transactions && Array.isArray(bData.transactions)) {
                         bData.transactions.forEach(tx => {
                             tx.timestamp = bData.timestamp; 
-                            tx.blockNumberDec = parseInt(bData.number, 16);
-                            tx.blockHash = bData.hash; // Injection explicite du Hash du Bloc d'inclusion
+                            tx.blockNumberDec = decNum;
+                            tx.blockHash = bData.hash;
                             txCache.set(tx.hash, tx);
-                            txs.push(tx);
                         });
                     }
                 }
+            });
+
+            // Reconstruire les tableaux globaux triés
+            globalBlocks = []; globalTxs = [];
+            for (let i = 0; i < BLOCKS_TO_FETCH; i++) {
+                const b = blockCache.get((currentBlockNum - i).toString());
+                if(b) {
+                    globalBlocks.push(b);
+                    if(b.transactions) {
+                        // Inverser pour avoir les tx les plus récentes en haut
+                        globalTxs.push(...[...b.transactions].reverse());
+                    }
+                }
             }
-            totalTxGlobal = currentBlockNum * 5 + txs.length; 
-            document.getElementById('statTotalTx').innerText = totalTxGlobal.toLocaleString('fr-FR');
 
-            renderData(blocks, txs);
+            // Calcul du temps de bloc réel
+            if (globalBlocks.length >= 2) {
+                const latestTs = parseInt(globalBlocks[0].timestamp, 16);
+                const oldestTs = parseInt(globalBlocks[globalBlocks.length - 1].timestamp, 16);
+                const avg = (latestTs - oldestTs) / (globalBlocks.length - 1);
+                document.getElementById('statBlockTime').innerHTML = `~${avg.toFixed(1)}s <span class="text-xs font-semibold text-slate-400">/ bloc</span>`;
+            }
+
+            // Statistiques réelles des transactions en cache
+            document.getElementById('statTotalTx').innerText = txCache.size.toLocaleString('fr-FR');
+
+            // Mise à jour de l'UI
+            renderBlocksPreview(globalBlocks.slice(0, 6));
+            renderTxsPreview(globalTxs.slice(0, 7));
+            renderBlocksTable(globalBlocks);
+            renderTxsTable(globalTxs);
+
+            if(isInitialLoad) {
+                document.getElementById('global-loader').style.opacity = '0';
+                setTimeout(() => document.getElementById('global-loader').style.display = 'none', 500);
+                isInitialLoad = false;
+            }
         }
 
-        function renderData(blocks, txs) {
-            renderBlocksPreview(blocks.slice(0, 6));
-            renderTxsPreview(txs.slice(0, 7));
-            renderBlocksTable(blocks);
-            renderTxsTable(txs);
-        }
-
-        // --- AFFICHAGE (TEXTES DENSES) ---
+        // --- MOTEUR DE RENDU UI ---
         function renderBlocksPreview(blocks) {
             const c = document.getElementById('blocksContainerPreview'); c.innerHTML = '';
             blocks.forEach((b, i) => {
                 const num = parseInt(b.number, 16);
-                const html = `
-                    <div onclick="openBlockModal('${num}')" class="flex items-center justify-between p-3 mb-1.5 rounded-md border bg-white shadow-sm hover:border-indAccent/50 cursor-pointer transition-all hover:shadow md ${i===0?'bg-sky-50/30 border-sky-100':''}">
-                        <div class="flex items-center gap-3">
-                            <div class="w-9 h-9 rounded-md bg-slate-50 flex items-center justify-center border border-slate-100 text-slate-400 shrink-0"><i class="fa-solid fa-cube text-sm"></i></div>
+                const ts = parseInt(b.timestamp, 16) * 1000;
+                c.insertAdjacentHTML('beforeend', `
+                    <div onclick="openBlockModal('${num}')" class="flex items-center justify-between p-4 mb-2 rounded-lg border bg-white shadow-sm hover:border-indAccent cursor-pointer transition-all hover:shadow-md ${i===0?'bg-sky-50/40 border-sky-100':''}">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-slate-50 flex items-center justify-center border border-slate-100 text-slate-500 shrink-0"><i class="fa-solid fa-cube text-base"></i></div>
                             <div>
-                                <span class="font-black text-indAccent text-sm">#${num}</span>
-                                <span class="block text-[10px] text-slate-500 font-medium mt-0.5">${timeAgo(new Date(parseInt(b.timestamp)*1000))}</span>
+                                <span class="font-black text-indAccent text-sm block">#${num.toLocaleString('fr-FR')}</span>
+                                <span class="text-xs text-slate-500 font-medium">${timeAgo(ts)}</span>
                             </div>
                         </div>
-                        <div class="text-right shrink-0">
-                            <p class="text-[10px] text-slate-400 mb-1">Miné par <span class="text-premiumDark font-mono font-bold">${formatHash(b.miner||b.validator||"0xNexusMaster", 4)}</span></p>
-                            <span class="text-[10px] font-bold bg-slate-100 px-1.5 py-0.5 rounded text-slate-600 border border-slate-200">${b.transactions?b.transactions.length:0} Txns</span>
+                        <div class="text-right">
+                            <p class="text-xs text-slate-400 mb-1">Par <span class="text-premiumDark font-mono font-bold">${formatHash(b.miner||"0xNexusMaster", 5)}</span></p>
+                            <span class="text-[11px] font-bold bg-slate-100 px-2 py-1 rounded text-slate-600 border border-slate-200">${b.transactions?b.transactions.length:0} Txns</span>
                         </div>
-                    </div>`;
-                c.insertAdjacentHTML('beforeend', html);
+                    </div>`);
             });
         }
 
         function renderTxsPreview(txs) {
             const c = document.getElementById('txsContainerPreview'); 
-            if(txs.length===0){ c.innerHTML=`<div class="p-6 text-center text-slate-400 text-xs font-medium">Aucune transaction...</div>`; return; }
+            if(txs.length===0){ c.innerHTML=`<div class="flex flex-col items-center justify-center h-full text-slate-400"><i class="fa-solid fa-inbox text-3xl mb-2"></i><p class="text-sm font-medium">Aucune transaction récente</p></div>`; return; }
             c.innerHTML = '';
             txs.forEach((tx, i) => {
-                const html = `
-                    <div onclick="openTxModal('${tx.hash}')" class="flex items-center justify-between p-3 mb-1.5 rounded-md border bg-white shadow-sm hover:border-indAccent/50 cursor-pointer transition-all hover:shadow md ${i===0?'bg-emerald-50/20 border-emerald-100':''}">
-                        <div class="flex items-center gap-3">
-                            <div class="w-9 h-9 rounded-full bg-slate-50 flex items-center justify-center border border-slate-100 text-slate-400 shrink-0"><i class="fa-solid fa-arrow-right-arrow-left text-xs"></i></div>
+                c.insertAdjacentHTML('beforeend', `
+                    <div onclick="openTxModal('${tx.hash}')" class="flex items-center justify-between p-4 mb-2 rounded-lg border bg-white shadow-sm hover:border-indAccent cursor-pointer transition-all hover:shadow-md ${i===0?'bg-emerald-50/30 border-emerald-100':''}">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center border border-slate-100 text-slate-500 shrink-0"><i class="fa-solid fa-arrow-right-arrow-left text-sm"></i></div>
                             <div class="min-w-0">
-                                <span class="font-mono font-bold text-xs text-indAccent block truncate w-24 sm:w-32">${formatHash(tx.hash, 5)}</span>
-                                <span class="block text-[10px] text-slate-500 font-medium mt-0.5 truncate">De ${formatHash(tx.from,3)} à ${formatHash(tx.to,3)}</span>
+                                <span class="font-mono font-bold text-sm text-indAccent block truncate">${formatHash(tx.hash, 6)}</span>
+                                <span class="block text-xs text-slate-500 font-medium mt-0.5">De ${formatHash(tx.from,4)} à ${tx.to ? formatHash(tx.to,4) : 'Contrat'}</span>
                             </div>
                         </div>
-                        <div class="text-right shrink-0 ml-1">
-                            <span class="font-black text-xs text-premiumDark bg-slate-50 px-2 py-1 rounded border border-slate-200">${formatAmount(tx.amountMicro||tx.value)} ₳</span>
+                        <div class="text-right shrink-0 ml-2">
+                            <span class="font-black text-sm text-premiumDark bg-slate-50 px-2 py-1.5 rounded-md border border-slate-200">${hexToEther(tx.value)} ₳</span>
                         </div>
-                    </div>`;
-                c.insertAdjacentHTML('beforeend', html);
+                    </div>`);
             });
         }
 
@@ -586,90 +551,93 @@
             blocks.forEach(b => {
                 const num = parseInt(b.number, 16);
                 tb.insertAdjacentHTML('beforeend', `
-                    <tr class="hover:bg-sky-50/50 cursor-pointer transition-colors" onclick="openBlockModal('${num}')">
-                        <td class="py-3 px-4 font-black text-indAccent">#${num}</td>
-                        <td class="py-3 px-4 text-slate-600 font-medium">${timeAgo(new Date(parseInt(b.timestamp)*1000))}</td>
-                        <td class="py-3 px-4 font-bold text-premiumDark"><span class="bg-slate-100 px-1.5 py-0.5 rounded text-[11px]">${b.transactions?b.transactions.length:0} Tx</span></td>
-                        <td class="py-3 px-4 font-mono text-xs text-slate-700">${formatHash(b.miner||b.validator||"0xNexusMaster", 6)}</td>
-                        <td class="py-3 px-4 text-right font-mono text-slate-500 text-xs">${parseInt(b.gasUsed||"0x0", 16).toLocaleString('fr-FR')}</td>
+                    <tr class="hover:bg-sky-50/50 cursor-pointer transition-colors border-b border-slate-100 last:border-0" onclick="openBlockModal('${num}')">
+                        <td class="py-4 px-5 font-black text-indAccent">#${num.toLocaleString('fr-FR')}</td>
+                        <td class="py-4 px-5 text-slate-600 font-medium text-sm">${timeAgo(parseInt(b.timestamp, 16)*1000)}</td>
+                        <td class="py-4 px-5"><span class="font-bold text-premiumDark bg-slate-100 px-2 py-1 rounded text-xs border border-slate-200">${b.transactions?b.transactions.length:0} Tx</span></td>
+                        <td class="py-4 px-5 font-mono text-sm text-slate-700">${formatHash(b.miner||"0xNexusMaster", 8)}</td>
+                        <td class="py-4 px-5 text-right font-mono text-slate-500 text-sm">${parseInt(b.gasUsed||"0x0", 16).toLocaleString('fr-FR')}</td>
                     </tr>`);
             });
         }
 
         function renderTxsTable(txs) {
             const tb = document.getElementById('allTxsTable'); 
-            if(txs.length===0){ tb.innerHTML=`<tr><td colspan="6" class="py-8 text-center text-slate-400">Registre vierge.</td></tr>`; return;}
+            if(txs.length===0){ tb.innerHTML=`<tr><td colspan="6" class="py-12 text-center text-slate-400 font-medium">Le registre des transactions est vide.</td></tr>`; return;}
             tb.innerHTML = '';
             txs.forEach(tx => {
                 tb.insertAdjacentHTML('beforeend', `
-                    <tr class="hover:bg-emerald-50/30 cursor-pointer transition-colors" onclick="openTxModal('${tx.hash}')">
-                        <td class="py-3 px-4 font-mono font-bold text-indAccent text-xs">${formatHash(tx.hash, 6)}</td>
-                        <td class="py-3 px-4 font-bold text-slate-700 hover:text-indAccent" onclick="event.stopPropagation(); openBlockModal('${tx.blockNumberDec}')">${tx.blockNumberDec}</td>
-                        <td class="py-3 px-4 text-slate-500 text-xs font-medium">${timeAgo(new Date(parseInt(tx.timestamp)*1000))}</td>
-                        <td class="py-3 px-4 font-mono text-xs text-slate-600 bg-slate-50/50">${formatHash(tx.from, 5)}</td>
-                        <td class="py-3 px-4 font-mono text-xs text-slate-600">${formatHash(tx.to, 5)}</td>
-                        <td class="py-3 px-4 text-right font-black text-premiumDark text-xs"><span class="bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded">${formatAmount(tx.amountMicro||tx.value)} ₳</span></td>
+                    <tr class="hover:bg-emerald-50/30 cursor-pointer transition-colors border-b border-slate-100 last:border-0" onclick="openTxModal('${tx.hash}')">
+                        <td class="py-4 px-5 font-mono font-bold text-indAccent text-sm">${formatHash(tx.hash, 8)}</td>
+                        <td class="py-4 px-5 font-bold text-slate-700 hover:text-indAccent" onclick="event.stopPropagation(); openBlockModal('${tx.blockNumberDec}')">${tx.blockNumberDec.toLocaleString('fr-FR')}</td>
+                        <td class="py-4 px-5 text-slate-500 text-sm font-medium">${timeAgo(parseInt(tx.timestamp, 16)*1000)}</td>
+                        <td class="py-4 px-5 font-mono text-sm text-slate-600">${formatHash(tx.from, 6)}</td>
+                        <td class="py-4 px-5 font-mono text-sm text-slate-600">${tx.to ? formatHash(tx.to, 6) : '<span class="text-xs bg-slate-100 px-1 py-0.5 rounded">Création Contrat</span>'}</td>
+                        <td class="py-4 px-5 text-right font-black text-premiumDark text-sm"><span class="bg-slate-50 border border-slate-200 px-2 py-1 rounded">${hexToEther(tx.value)} ₳</span></td>
                     </tr>`);
             });
         }
 
-        // --- ARCHITECTURE RESPONSIVE DES MODALES (DENSE AVEC HASHS DE BLOC) ---
-        function createGridRow(label, displayValue, rawValueToCopy = null) {
-            return `
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-1.5 md:gap-4 py-3 md:py-3.5 border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-colors px-2 md:px-3 rounded-md items-center">
-                    <div class="md:col-span-3 text-[11px] uppercase tracking-widest font-bold text-slate-400 flex items-center"><i class="fa-solid fa-caret-right text-slate-300 mr-1.5 hidden md:inline"></i> ${label}</div>
-                    <div class="md:col-span-9 flex items-center justify-between gap-3 overflow-hidden">
-                        <div class="text-xs md:text-sm font-medium text-premiumDark w-full min-w-0 hash-break">${displayValue}</div>
-                        ${rawValueToCopy ? `<button onclick="copyToClipboard('${rawValueToCopy}')" class="shrink-0 bg-white border border-slate-200 hover:border-indAccent hover:bg-sky-50 text-slate-400 hover:text-indAccent rounded p-1.5 shadow-sm transition-all focus:outline-none" title="Copier la valeur complète"><i class="fa-regular fa-copy text-sm"></i></button>` : ''}
-                    </div>
-                </div>`;
-        }
+        // --- MODALS & DETAILS ---
+        const createGridRow = (label, displayValue, copyValue = null) => `
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-2 md:gap-4 py-3 md:py-4 border-b border-slate-200 last:border-0 items-center">
+                <div class="text-xs uppercase tracking-widest font-bold text-slate-500 flex items-center md:col-span-1"><i class="fa-solid fa-chevron-right text-slate-300 mr-2"></i> ${label}</div>
+                <div class="md:col-span-3 flex items-center justify-between gap-3 overflow-hidden bg-white p-2 md:p-3 rounded-lg border border-slate-100 shadow-sm">
+                    <div class="text-sm font-medium text-premiumDark w-full min-w-0 hash-break">${displayValue}</div>
+                    ${copyValue ? `<button onclick="copyToClipboard('${copyValue}')" class="shrink-0 bg-slate-50 border border-slate-200 hover:border-indAccent hover:bg-sky-50 text-slate-400 hover:text-indAccent rounded p-2 transition-all focus:outline-none" title="Copier"><i class="fa-regular fa-copy"></i></button>` : ''}
+                </div>
+            </div>`;
 
-        function openTxModal(hash) {
-            const tx = txCache.get(hash);
-            if(!tx) return showToast("Détails introuvables", "error");
+        async function openTxModal(hash) {
+            let tx = txCache.get(hash);
             
-            const amt = formatAmount(tx.amountMicro || tx.value);
-            let feeMicro = tx.feeMicro ? formatAmount(tx.feeMicro) : "0.00";
-            if (!tx.feeMicro && tx.gas && tx.gasPrice) {
-                feeMicro = ((parseInt(tx.gas, 16) * parseInt(tx.gasPrice, 16)) / 1e18).toFixed(8); 
+            // Si pas en cache, chercher sur le réseau (Recherche)
+            if(!tx) {
+                showToast("Recherche de la transaction sur le réseau...", "info");
+                tx = await rpcCall("eth_getTransactionByHash", [hash]);
+                if(!tx) return showToast("Transaction introuvable sur le réseau L1.", "error");
+                
+                // Récupérer le timestamp du bloc si manquant
+                if(tx.blockNumber && !tx.timestamp) {
+                    const b = await rpcCall("eth_getBlockByNumber", [tx.blockNumber, false]);
+                    if(b) {
+                        tx.timestamp = b.timestamp;
+                        tx.blockNumberDec = parseInt(tx.blockNumber, 16).toString();
+                    }
+                }
             }
+            
+            const amt = hexToEther(tx.value);
+            const feeEth = tx.gas && tx.gasPrice ? hexToEther("0x" + (BigInt(tx.gas) * BigInt(tx.gasPrice)).toString(16)) : "0.00";
+            const confirmations = tx.blockNumberDec ? (latestBlockNum - parseInt(tx.blockNumberDec) + 1) : 0;
+            const statusHtml = confirmations > 0 
+                ? `<span class="inline-flex items-center gap-1.5 bg-indSuccess/10 border border-indSuccess/20 text-indSuccess px-3 py-1 rounded text-xs font-bold uppercase"><i class="fa-solid fa-check-double"></i> Succès (${confirmations} Conf.)</span>`
+                : `<span class="inline-flex items-center gap-1.5 bg-goldOrange/10 border border-goldOrange/20 text-goldOrange px-3 py-1 rounded text-xs font-bold uppercase"><i class="fa-solid fa-spinner fa-spin"></i> En attente</span>`;
 
-            const inputData = (tx.input && tx.input !== "0x") ? tx.input : "0x (Transfert standard)";
-            const nonce = tx.nonce ? parseInt(tx.nonce, 16) : 0;
-            const txIndex = tx.transactionIndex ? parseInt(tx.transactionIndex, 16) : 0;
-            
-            // Calcul des confirmations en temps réel
-            const confirmations = latestBlockNum - tx.blockNumberDec + 1;
-            const blockHashData = tx.blockHash || "Hash non répertorié";
-            
             document.getElementById('txModalBody').innerHTML = `
-                <div class="bg-white rounded-lg border border-slate-200 p-2 sm:p-4 mb-4 shadow-sm">
-                    ${createGridRow("TxHash", `<span class="font-mono text-xs md:text-sm text-indAccent font-bold">${tx.hash}</span>`, tx.hash)}
-                    ${createGridRow("Statut", `<span class="inline-flex items-center gap-1 bg-indSuccess/10 border border-indSuccess/20 text-indSuccess px-2 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider"><i class="fa-solid fa-check-double"></i> Succès (${confirmations} Conf.)</span>`)}
-                    ${createGridRow("Bloc d'inclusion", `<button onclick="openBlockModal('${tx.blockNumberDec}')" class="text-indAccent hover:text-white font-bold bg-sky-50 hover:bg-indAccent border border-sky-100 transition-colors px-2 py-0.5 rounded text-sm shadow-sm"><i class="fa-solid fa-cube mr-1"></i> #${tx.blockNumberDec}</button>`)}
-                    ${createGridRow("Identifiant Bloc", `<span class="font-mono text-xs text-slate-500 bg-slate-50 px-2 py-1 rounded border border-slate-100">${blockHashData}</span>`, blockHashData)}
-                    ${createGridRow("Horodatage", `<span class="text-slate-700 font-semibold text-xs"><i class="fa-regular fa-clock text-slate-400 mr-1"></i> ${timeAgo(new Date(parseInt(tx.timestamp)*1000))}</span> <span class="text-[11px] text-slate-400 ml-2">(${formatDateFull(parseInt(tx.timestamp)*1000)})</span>`)}
+                <div class="bg-white rounded-xl border border-slate-200 p-4 sm:p-6 mb-5 shadow-sm">
+                    ${createGridRow("TxHash", `<span class="font-mono text-sm text-indAccent font-bold">${tx.hash}</span>`, tx.hash)}
+                    ${createGridRow("Statut", statusHtml)}
+                    ${createGridRow("Bloc", tx.blockNumberDec ? `<button onclick="openBlockModal('${tx.blockNumberDec}')" class="text-indAccent hover:text-white font-bold bg-sky-50 hover:bg-indAccent border border-sky-100 transition-colors px-3 py-1 rounded-md shadow-sm"><i class="fa-solid fa-cube mr-2"></i> #${tx.blockNumberDec}</button>` : "En attente")}
+                    ${createGridRow("Horodatage", tx.timestamp ? `<span class="text-slate-700 font-semibold text-sm"><i class="fa-regular fa-clock text-slate-400 mr-2"></i> ${new Date(parseInt(tx.timestamp)*1000).toLocaleString('fr-FR')}</span>` : "N/A")}
                 </div>
                 
-                <div class="bg-white rounded-lg border border-slate-200 p-2 sm:p-4 mb-4 shadow-sm">
-                    ${createGridRow("De (Expéditeur)", `<span class="font-mono text-xs md:text-sm text-slate-700 bg-slate-50 px-2 py-1 rounded border border-slate-100">${tx.from}</span>`, tx.from)}
-                    ${createGridRow("À (Destinataire)", tx.to ? `<span class="font-mono text-xs md:text-sm text-slate-700 bg-slate-50 px-2 py-1 rounded border border-slate-100">${tx.to}</span>` : `<span class="text-xs font-bold text-indTextMuted bg-slate-100 px-2 py-1 rounded border border-slate-200"><i class="fa-solid fa-file-code mr-1"></i> Création Contrat</span>`, tx.to)}
+                <div class="bg-white rounded-xl border border-slate-200 p-4 sm:p-6 mb-5 shadow-sm">
+                    ${createGridRow("De", `<span class="font-mono text-sm text-slate-700">${tx.from}</span>`, tx.from)}
+                    ${createGridRow("À", tx.to ? `<span class="font-mono text-sm text-slate-700">${tx.to}</span>` : `<span class="text-sm font-bold text-indTextMuted"><i class="fa-solid fa-file-code mr-2"></i> Déploiement de Contrat</span>`, tx.to)}
                 </div>
                 
-                <div class="bg-white rounded-lg border border-slate-200 p-2 sm:p-4 mb-4 shadow-sm">
-                    ${createGridRow("Montant Transféré", `<span class="bg-sky-50 border border-sky-100 px-2.5 py-1 rounded font-black text-lg text-premiumDark shadow-sm">${amt} ₳</span> <span class="text-[11px] text-slate-500 font-bold ml-2 uppercase bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200">≈ ${amt} XOF</span>`)}
-                    ${createGridRow("Frais de Réseau", `<span class="text-slate-600 font-mono text-xs bg-slate-50 px-2 py-1 rounded border border-slate-100">${feeMicro} ₳</span>`)}
-                    ${createGridRow("Nonce/Idx", `<span class="text-slate-600 font-mono font-semibold bg-slate-50 px-2 py-0.5 rounded border border-slate-100 text-xs">N: ${nonce}</span> <span class="text-slate-300 mx-2">|</span> <span class="text-slate-600 font-mono font-semibold bg-slate-50 px-2 py-0.5 rounded border border-slate-100 text-xs">I: ${txIndex}</span>`)}
+                <div class="bg-white rounded-xl border border-slate-200 p-4 sm:p-6 mb-5 shadow-sm">
+                    ${createGridRow("Valeur", `<span class="font-black text-lg text-premiumDark">${amt} ₳</span> <span class="text-xs text-slate-500 font-bold ml-3 bg-slate-100 px-2 py-1 rounded border border-slate-200">≈ ${amt} XOF</span>`)}
+                    ${createGridRow("Frais Estimés", `<span class="text-slate-600 font-mono text-sm">${feeEth} ₳</span>`)}
                 </div>
                 
-                <div class="bg-white rounded-lg border border-slate-200 p-3 sm:p-5 shadow-sm">
-                    <div class="flex items-center justify-between mb-2">
-                        <div class="text-[11px] uppercase tracking-widest font-bold text-slate-400">Data (Input)</div>
-                        <button onclick="copyToClipboard('${inputData}')" class="text-[11px] font-bold text-slate-500 hover:text-indAccent bg-slate-100 hover:bg-sky-50 px-2 py-1 rounded border border-slate-200 transition-colors">Copier Payload</button>
+                <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="text-xs uppercase tracking-widest font-bold text-slate-500">Données d'entrée (Input Data)</div>
                     </div>
-                    <div class="text-[11px] text-slate-600 bg-slate-50 p-3 rounded-md border border-slate-200 max-h-32 overflow-y-auto font-mono shadow-inner hash-break">
-                        ${inputData}
+                    <div class="text-xs text-slate-600 bg-slate-50 p-4 rounded-lg border border-slate-200 max-h-40 overflow-y-auto font-mono shadow-inner hash-break">
+                        ${tx.input && tx.input !== '0x' ? tx.input : '0x (Transfert Standard)'}
                     </div>
                 </div>`;
             
@@ -677,41 +645,38 @@
             document.body.style.overflow = 'hidden';
         }
 
-        function openBlockModal(numStr) {
-            const b = blockCache.get(numStr.toString());
-            if(!b) return showToast("Chargement...", "info");
+        async function openBlockModal(numStr) {
+            let b = blockCache.get(numStr.toString());
+            
+            if(!b) {
+                showToast("Recherche du bloc sur le réseau...", "info");
+                b = await rpcCall("eth_getBlockByNumber", ["0x" + parseInt(numStr).toString(16), false]);
+                if(!b) return showToast("Bloc introuvable.", "error");
+            }
             
             document.getElementById('blockModalTitleNum').innerText = numStr;
-            const gasLimit = b.gasLimit ? parseInt(b.gasLimit, 16).toLocaleString('fr-FR') : "N/A";
             const gasUsed = b.gasUsed ? parseInt(b.gasUsed, 16).toLocaleString('fr-FR') : "0";
-            const gasPercentage = b.gasLimit && b.gasUsed ? ((parseInt(b.gasUsed, 16) / parseInt(b.gasLimit, 16)) * 100).toFixed(2) : "0.00";
-            const extraData = (b.extraData && b.extraData !== "0x") ? b.extraData : "0x (Vide)";
+            const gasLimit = b.gasLimit ? parseInt(b.gasLimit, 16).toLocaleString('fr-FR') : "N/A";
+            const gasPct = b.gasLimit && b.gasUsed ? ((parseInt(b.gasUsed, 16) / parseInt(b.gasLimit, 16)) * 100).toFixed(2) : "0";
             const confirmations = latestBlockNum - parseInt(numStr) + 1;
 
             document.getElementById('blockModalBody').innerHTML = `
-                <div class="bg-white rounded-lg border border-slate-200 p-2 sm:p-4 mb-4 shadow-sm">
-                    ${createGridRow("Hauteur", `<span class="font-black text-indAccent text-xl">#${numStr}</span> <span class="ml-3 text-[11px] font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded border border-slate-200">${confirmations} Confirmations</span>`)}
-                    ${createGridRow("Horodatage", `<span class="text-slate-700 font-semibold text-xs"><i class="fa-regular fa-clock text-slate-400 mr-1"></i> ${timeAgo(new Date(parseInt(b.timestamp)*1000))}</span> <span class="text-[11px] text-slate-400 ml-2">(${formatDateFull(parseInt(b.timestamp)*1000)})</span>`)}
-                    ${createGridRow("Tx Incluses", `<span class="font-bold text-indSuccess bg-indSuccess/10 border border-indSuccess/20 px-2 py-0.5 rounded text-xs">${b.transactions ? b.transactions.length : 0} Tx</span>`)}
-                    ${createGridRow("Validateur", `<span class="font-mono text-xs md:text-sm text-slate-700 bg-slate-50 px-2 py-1 rounded border border-slate-100">${b.miner || b.validator || "0xNexusMasterOracle"}</span>`, b.miner || b.validator)}
+                <div class="bg-white rounded-xl border border-slate-200 p-4 sm:p-6 mb-5 shadow-sm">
+                    ${createGridRow("Hauteur", `<span class="font-black text-indAccent text-xl">#${numStr}</span> <span class="ml-4 text-xs font-bold text-slate-600 bg-slate-100 px-3 py-1.5 rounded-md border border-slate-200">${confirmations} Confirmations</span>`)}
+                    ${createGridRow("Horodatage", `<span class="text-slate-700 font-semibold text-sm"><i class="fa-regular fa-clock text-slate-400 mr-2"></i> ${new Date(parseInt(b.timestamp, 16)*1000).toLocaleString('fr-FR')}</span>`)}
+                    ${createGridRow("Transactions", `<span class="font-bold text-indSuccess bg-indSuccess/10 border border-indSuccess/20 px-3 py-1 rounded text-sm">${b.transactions ? b.transactions.length : 0} Tx Incluses</span>`)}
+                    ${createGridRow("Nœud Validateur", `<span class="font-mono text-sm text-slate-700">${b.miner || "0xNexusMasterOracle"}</span>`, b.miner)}
                 </div>
                 
-                <div class="bg-white rounded-lg border border-slate-200 p-2 sm:p-4 mb-4 shadow-sm">
-                    ${createGridRow("Identifiant (Hash)", `<span class="font-mono text-xs md:text-sm font-bold text-indAccent bg-sky-50 px-2 py-1 rounded border border-sky-100">${b.hash}</span>`, b.hash)}
-                    ${createGridRow("Hash Parent", `<span class="font-mono text-xs md:text-sm text-slate-500 bg-slate-50 px-2 py-1 rounded border border-slate-100">${b.parentHash || "Genesis"}</span>`, b.parentHash)}
+                <div class="bg-white rounded-xl border border-slate-200 p-4 sm:p-6 mb-5 shadow-sm">
+                    ${createGridRow("Hash du Bloc", `<span class="font-mono text-sm font-bold text-indAccent">${b.hash}</span>`, b.hash)}
+                    ${createGridRow("Hash Parent", `<span class="font-mono text-sm text-slate-500">${b.parentHash || "Genesis"}</span>`, b.parentHash)}
                 </div>
                 
-                <div class="bg-white rounded-lg border border-slate-200 p-2 sm:p-4 mb-4 shadow-sm">
-                    ${createGridRow("Gaz Utilisé", `<span class="font-bold text-premiumDark text-sm">${gasUsed}</span> <span class="text-[11px] bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded text-slate-600 font-bold ml-2">${gasPercentage}%</span>`)}
-                    ${createGridRow("Gas Limit", `<span class="font-mono text-xs text-slate-600 bg-slate-50 px-2 py-0.5 rounded border border-slate-100">${gasLimit}</span>`)}
-                    ${createGridRow("Taille", `<span class="font-mono text-xs text-slate-600 bg-slate-50 px-2 py-0.5 rounded border border-slate-100">${b.size ? parseInt(b.size, 16).toLocaleString('fr-FR') + " bytes" : "N/A"}</span>`)}
-                </div>
-                
-                <div class="bg-white rounded-lg border border-slate-200 p-3 sm:p-5 shadow-sm">
-                    <div class="text-[11px] uppercase tracking-widest font-bold text-slate-400 mb-2">Extra Data (Hex)</div>
-                    <div class="text-[11px] text-slate-600 bg-slate-50 p-3 rounded-md border border-slate-200 max-h-24 overflow-y-auto font-mono shadow-inner hash-break">
-                        ${extraData}
-                    </div>
+                <div class="bg-white rounded-xl border border-slate-200 p-4 sm:p-6 shadow-sm">
+                    ${createGridRow("Gaz Utilisé", `<span class="font-bold text-premiumDark text-base">${gasUsed}</span> <span class="text-xs bg-slate-100 border border-slate-200 px-2 py-1 rounded text-slate-600 font-bold ml-3">${gasPct}% de la limite</span>`)}
+                    ${createGridRow("Limite de Gaz", `<span class="font-mono text-sm text-slate-600">${gasLimit}</span>`)}
+                    ${createGridRow("Taille", `<span class="font-mono text-sm text-slate-600">${b.size ? parseInt(b.size, 16).toLocaleString('fr-FR') + " octets" : "N/A"}</span>`)}
                 </div>`;
             
             closeModal('txModal');
@@ -719,41 +684,54 @@
             document.body.style.overflow = 'hidden';
         }
 
-        // Fermeture
-        function closeModal(id) { 
+        const closeModal = (id) => { 
             document.getElementById(id).classList.remove('active'); 
             document.body.style.overflow = ''; 
-        }
-        
+        };
         document.addEventListener('keydown', e => { if (e.key === "Escape") { closeModal('txModal'); closeModal('blockModal'); } });
 
-        // Recherche
+        // --- MOTEUR DE RECHERCHE ---
         async function handleSearch(e) {
             e.preventDefault();
             const val = document.getElementById('searchInput').value.trim();
             if(!val) return;
+            
             const btn = document.getElementById('searchBtn');
             const original = btn.innerHTML;
-            btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i>`;
+            btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin text-lg"></i>`;
             
-            setTimeout(() => {
+            try {
                 if (val.length === 66 && val.startsWith('0x')) {
-                    if(txCache.has(val)) openTxModal(val); else showToast("Recherche sur le Layer-1...", "info");
-                } else if (!isNaN(val)) {
-                    if(blockCache.has(val)) openBlockModal(val); else showToast("Recherche du bloc...", "info");
-                } else { showToast("Format d'entrée invalide", "error"); }
+                    // C'est un hash (Tx ou Bloc)
+                    const tx = await rpcCall("eth_getTransactionByHash", [val]);
+                    if(tx) { openTxModal(val); }
+                    else {
+                        const b = await rpcCall("eth_getBlockByHash", [val, false]);
+                        if(b) openBlockModal(parseInt(b.number, 16).toString());
+                        else showToast("Hash introuvable sur le réseau.", "error");
+                    }
+                } else if (!isNaN(val) && val.length < 20) {
+                    // C'est un numéro de bloc
+                    openBlockModal(val);
+                } else if (val.length === 42 && val.startsWith('0x')) {
+                    // C'est une adresse
+                    showToast("Recherche d'adresse : Nécessite le Graph Node (En cours)", "info");
+                } else {
+                    showToast("Format d'entrée non reconnu (TxHash, Adresse, Bloc)", "error");
+                }
+            } catch(err) {
+                showToast("Erreur lors de la recherche.", "error");
+            } finally {
                 btn.innerHTML = original;
                 document.getElementById('searchInput').value = '';
-            }, 500);
+            }
         }
 
-        // Amorçage
+        // --- AMORÇAGE ---
         document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('blocksContainerPreview').innerHTML = `<div class="p-3"><div class="skeleton h-10 w-full mb-2 rounded-md"></div><div class="skeleton h-10 w-full rounded-md"></div></div>`;
-            document.getElementById('txsContainerPreview').innerHTML = `<div class="p-3"><div class="skeleton h-10 w-full mb-2 rounded-md"></div><div class="skeleton h-10 w-full rounded-md"></div></div>`;
-            
             syncNetworkData();
-            setInterval(syncNetworkData, 4000); 
+            // Rafraîchissement automatique toutes les 5 secondes (Standard EVM)
+            setInterval(syncNetworkData, 5000); 
         });
     </script>
 </body>
