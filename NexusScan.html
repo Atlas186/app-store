@@ -273,11 +273,11 @@
                 </div>
             </div>
 
-            <!-- LIENS D'INTÉGRATION (DOCS, API, SUPPORT) -->
-            <div class="flex flex-wrap justify-center gap-4 md:gap-8 text-xs font-bold text-slate-400 w-full mb-6">
-                <a href="#" class="hover:text-indAccent transition-colors flex items-center gap-1.5"><i class="fa-solid fa-book"></i> Documentation</a>
-                <a href="#" class="hover:text-indAccent transition-colors flex items-center gap-1.5"><i class="fa-solid fa-server"></i> API RPC</a>
-                <a href="#" class="hover:text-indAccent transition-colors flex items-center gap-1.5"><i class="fa-solid fa-headset"></i> Support</a>
+            <!-- LIENS D'INTÉGRATION OFFICIELS -->
+            <div class="flex flex-wrap justify-center gap-5 md:gap-8 text-xs font-bold text-slate-400 w-full mb-6">
+                <a href="documentation.html" class="hover:text-indAccent transition-colors flex items-center gap-1.5"><i class="fa-solid fa-book"></i> Documentation</a>
+                <a href="api.html" class="hover:text-indAccent transition-colors flex items-center gap-1.5"><i class="fa-solid fa-server"></i> API RPC</a>
+                <a href="support.html" class="hover:text-indAccent transition-colors flex items-center gap-1.5"><i class="fa-solid fa-headset"></i> Support</a>
                 <a href="#" class="hover:text-indAccent transition-colors flex items-center gap-1.5"><i class="fa-solid fa-shield-halved"></i> Shield</a>
             </div>
 
@@ -291,7 +291,7 @@
         <div class="modal-content bg-indBg w-full h-full rounded-none flex flex-col">
             <div class="flex justify-between items-center px-4 md:px-8 py-4 border-b border-slate-200 bg-white shadow-sm shrink-0">
                 <div class="max-w-5xl mx-auto w-full flex justify-between items-center">
-                    <h3 class="text-lg md:text-xl font-black text-premiumDark flex items-center gap-2"><i class="fa-solid fa-file-invoice text-indAccent"></i> Détails de la Transaction</h3>
+                    <h3 class="text-lg md:text-xl font-black text-premiumDark flex items-center gap-2"><i class="fa-solid fa-file-invoice text-indAccent"></i> Détails Transaction</h3>
                     <button onclick="closeModal('txModal')" class="bg-slate-100 hover:bg-red-500 text-slate-600 hover:text-white border border-slate-200 hover:border-red-500 px-4 py-2 rounded-lg font-bold text-sm transition-colors flex items-center gap-2 shadow-sm"><span class="hidden sm:inline">Fermer</span> <i class="fa-solid fa-xmark"></i></button>
                 </div>
             </div>
@@ -306,7 +306,7 @@
         <div class="modal-content bg-indBg w-full h-full rounded-none flex flex-col">
             <div class="flex justify-between items-center px-4 md:px-8 py-4 border-b border-slate-200 bg-white shadow-sm shrink-0">
                 <div class="max-w-5xl mx-auto w-full flex justify-between items-center">
-                    <h3 class="text-lg md:text-xl font-black text-premiumDark flex items-center gap-2"><i class="fa-solid fa-cube text-indAccent"></i> Bloc <span id="blockModalTitleNum" class="text-slate-500 font-mono ml-2 border border-slate-200 bg-slate-50 px-2 rounded"></span></h3>
+                    <h3 class="text-lg md:text-xl font-black text-premiumDark flex items-center gap-2"><i class="fa-solid fa-cube text-indAccent"></i> Bloc <span id="blockModalTitleNum" class="text-indAccent font-black ml-2 bg-sky-50 px-2 rounded border border-sky-100 shadow-sm"></span></h3>
                     <button onclick="closeModal('blockModal')" class="bg-slate-100 hover:bg-red-500 text-slate-600 hover:text-white border border-slate-200 hover:border-red-500 px-4 py-2 rounded-lg font-bold text-sm transition-colors flex items-center gap-2 shadow-sm"><span class="hidden sm:inline">Fermer</span> <i class="fa-solid fa-xmark"></i></button>
                 </div>
             </div>
@@ -323,13 +323,13 @@
         /* --- CONFIGURATION --- */
         const RPC_URL = "https://rpc.agi-nexus-core.click";
         
-        /* --- BASES DE DONNÉES LOCALES (Moteur d'indexation en mémoire) --- */
-        let networkHeight = 0;          // Hauteur officielle sur le serveur
-        let highestFetchedBlock = -1;   // Le bloc le plus récent téléchargé
-        let totalTxGlobal = 0;          // Compteur RÉEL calculé
+        /* --- BASES DE DONNÉES LOCALES --- */
+        let networkHeight = 0;          
+        let highestFetchedBlock = -1;   
+        let totalTxGlobal = 0;          
 
-        const blockCache = new Map();   // key: numéro décimal (int)
-        const txCache = new Map();      // key: hash (string)
+        const blockCache = new Map();   
+        const txCache = new Map();      
 
         let isSyncing = false;
 
@@ -366,12 +366,11 @@
         }
 
         function parseTimestamp(ts) {
-            // Gère à la fois les timestamps en secondes (EVM standard) et en millisecondes (JS Date.now())
             const parsed = typeof ts === 'string' && ts.startsWith('0x') ? parseInt(ts, 16) : parseInt(ts);
             return parsed > 1e11 ? parsed : parsed * 1000;
         }
 
-        /* --- MOTEUR DE COMMUNICATION RPC --- */
+        /* --- MOTEUR RPC --- */
         async function fetchNodeInfo() {
             try {
                 const res = await fetch(RPC_URL, { method: 'GET', timeout: 5000 });
@@ -393,14 +392,13 @@
             } catch (e) { return null; }
         }
 
-        /* --- MOTEUR DE SYNCHRONISATION (INDEXER) --- */
+        /* --- SYNCHRONISATION --- */
         async function syncNetworkData() {
             if (isSyncing) return;
             isSyncing = true;
             const pb = document.getElementById('syncProgressBar');
 
             try {
-                // 1. Lire la racine du noeud pour obtenir l'état absolu
                 const nodeInfo = await fetchNodeInfo();
                 
                 if (!nodeInfo) {
@@ -409,23 +407,17 @@
                     return;
                 }
 
-                // Node est en ligne
                 document.getElementById('networkStatusIndicator').innerHTML = `<div class="w-2 h-2 rounded-full bg-indSuccess live-pulse"></div><span class="text-xs font-bold text-indSuccess uppercase tracking-wide">L1 En Ligne</span>`;
                 
                 const officialBlocksCount = nodeInfo.blocks; 
                 document.getElementById('statLatestBlock').innerText = officialBlocksCount.toLocaleString('fr-FR');
                 document.getElementById('statMempool').innerText = nodeInfo.mempoolTxs !== undefined ? nodeInfo.mempoolTxs : "0";
 
-                // 2. Synchronisation incrémentale des blocs
-                // S'il y a de nouveaux blocs, on les télécharge depuis le serveur
                 if (officialBlocksCount > highestFetchedBlock + 1) {
                     pb.style.opacity = '1';
                     
-                    // Limiter la requête pour ne pas exploser le navigateur si la blockchain est énorme.
-                    // On télécharge au maximum les 100 derniers blocs.
                     const startDownloadIndex = Math.max(0, officialBlocksCount - 100, highestFetchedBlock + 1);
                     const totalToDownload = officialBlocksCount - startDownloadIndex;
-                    
                     let downloaded = 0;
 
                     for (let i = startDownloadIndex; i < officialBlocksCount; i++) {
@@ -434,7 +426,6 @@
                             const bNum = Number(typeof blockData.number === 'string' && blockData.number.startsWith('0x') ? parseInt(blockData.number, 16) : blockData.number);
                             blockCache.set(bNum, blockData);
                             
-                            // Indexer les transactions de ce bloc
                             if (blockData.transactions && blockData.transactions.length > 0) {
                                 blockData.transactions.forEach(tx => {
                                     tx.timestamp = blockData.timestamp;
@@ -443,7 +434,7 @@
                                     
                                     if (!txCache.has(tx.hash)) {
                                         txCache.set(tx.hash, tx);
-                                        totalTxGlobal++; // Incrémentation RÉELLE
+                                        totalTxGlobal++;
                                     }
                                 });
                             }
@@ -455,7 +446,6 @@
                     }
                 }
 
-                // 3. Mise à jour de l'affichage
                 document.getElementById('statTotalTx').innerText = totalTxGlobal.toLocaleString('fr-FR') + (officialBlocksCount > 100 && highestFetchedBlock < officialBlocksCount - 1 ? '+' : '');
                 renderAll();
 
@@ -468,9 +458,8 @@
             }
         }
 
-        /* --- FONCTIONS DE RENDU (UI) --- */
+        /* --- RENDU UI (AMÉLIORÉ) --- */
         function renderAll() {
-            // Transformer les maps en tableaux triés (plus récent au plus ancien)
             const sortedBlocks = Array.from(blockCache.values()).sort((a, b) => {
                 const numA = typeof a.number === 'string' && a.number.startsWith('0x') ? parseInt(a.number, 16) : Number(a.number);
                 const numB = typeof b.number === 'string' && b.number.startsWith('0x') ? parseInt(b.number, 16) : Number(b.number);
@@ -494,16 +483,16 @@
                 const txCount = b.transactions ? b.transactions.length : 0;
                 
                 const html = `
-                    <div onclick="openBlockModal('${num}')" class="flex items-center justify-between p-3.5 mb-2 rounded-lg border bg-white shadow-sm hover:border-indAccent/50 cursor-pointer transition-all hover:shadow-md ${i===0?'bg-sky-50/20 border-sky-100':''}">
+                    <div onclick="openBlockModal('${num}')" class="flex items-center justify-between p-3.5 mb-2 rounded-lg border bg-white shadow-sm hover:border-indAccent/50 cursor-pointer transition-all hover:shadow-md ${i===0?'bg-sky-50/30 border-sky-200':''}">
                         <div class="flex items-center gap-4">
-                            <div class="w-10 h-10 rounded-lg bg-slate-50 flex items-center justify-center border border-slate-100 text-slate-500 shrink-0"><i class="fa-solid fa-cube"></i></div>
+                            <div class="w-10 h-10 rounded-lg bg-slate-50 flex items-center justify-center border border-slate-200 text-slate-500 shrink-0 shadow-sm"><i class="fa-solid fa-cube"></i></div>
                             <div>
                                 <span class="font-black text-indAccent text-sm md:text-base hover:underline">Bloc #${num}</span>
-                                <span class="block text-xs text-slate-500 font-medium mt-0.5">${timeAgo(parseTimestamp(b.timestamp))}</span>
+                                <span class="block text-xs text-slate-500 font-medium mt-0.5"><i class="fa-regular fa-clock text-slate-400 mr-1"></i> ${timeAgo(parseTimestamp(b.timestamp))}</span>
                             </div>
                         </div>
                         <div class="text-right shrink-0">
-                            <p class="text-xs text-slate-400 mb-1.5">Validateur <span class="text-premiumDark font-mono font-bold ml-1">${formatHash(b.miner||b.validator||"0xNexusMaster", 5)}</span></p>
+                            <p class="text-xs text-slate-400 mb-1.5">Validateur <span class="text-premiumDark bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded font-mono font-bold ml-1">${formatHash(b.miner||b.validator||"0xNexusMaster", 4)}</span></p>
                             <span class="text-xs font-bold ${txCount > 0 ? 'bg-indSuccess/10 text-indSuccess border border-indSuccess/20' : 'bg-slate-100 text-slate-500 border border-slate-200'} px-2 py-1 rounded shadow-sm">${txCount} Txns</span>
                         </div>
                     </div>`;
@@ -519,20 +508,20 @@
             txs.forEach((tx, i) => {
                 const amt = formatAmount(tx.amountMicro || tx.value);
                 const html = `
-                    <div onclick="openTxModal('${tx.hash}')" class="flex items-center justify-between p-3.5 mb-2 rounded-lg border bg-white shadow-sm hover:border-indAccent/50 cursor-pointer transition-all hover:shadow-md ${i===0?'bg-emerald-50/10 border-emerald-100':''}">
+                    <div onclick="openTxModal('${tx.hash}')" class="flex items-center justify-between p-3.5 mb-2 rounded-lg border bg-white shadow-sm hover:border-emerald-300 cursor-pointer transition-all hover:shadow-md ${i===0?'bg-emerald-50/20 border-emerald-200':''}">
                         <div class="flex items-center gap-4 min-w-0">
-                            <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center border border-slate-100 text-slate-500 shrink-0"><i class="fa-solid fa-arrow-right-arrow-left text-sm"></i></div>
+                            <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center border border-slate-200 text-slate-500 shrink-0 shadow-sm"><i class="fa-solid fa-arrow-right-arrow-left text-sm"></i></div>
                             <div class="min-w-0 flex-grow">
                                 <span class="font-mono font-bold text-sm text-indAccent block truncate hover:underline">${tx.hash}</span>
-                                <div class="flex items-center gap-2 mt-1 text-xs text-slate-500 font-medium">
-                                    <span class="truncate">De ${formatHash(tx.from,4)}</span>
+                                <div class="flex items-center gap-1.5 mt-1.5 text-xs text-slate-500 font-medium">
+                                    <span class="bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded truncate font-mono">${formatHash(tx.from,4)}</span>
                                     <i class="fa-solid fa-arrow-right-long text-slate-300"></i>
-                                    <span class="truncate">${tx.to ? formatHash(tx.to,4) : 'Création Contrat'}</span>
+                                    <span class="bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded truncate font-mono">${tx.to ? formatHash(tx.to,4) : 'Contrat'}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="text-right shrink-0 ml-3">
-                            <span class="font-black text-sm text-premiumDark bg-slate-50 px-2.5 py-1.5 rounded border border-slate-200 shadow-sm">${amt} ₳</span>
+                            <span class="font-black text-sm text-emerald-700 bg-emerald-50 px-2.5 py-1.5 rounded border border-emerald-200 shadow-sm">${amt} ₳</span>
                         </div>
                     </div>`;
                 c.insertAdjacentHTML('beforeend', html);
@@ -545,12 +534,12 @@
             blocks.forEach(b => {
                 const num = typeof b.number === 'string' && b.number.startsWith('0x') ? parseInt(b.number, 16) : Number(b.number);
                 tb.insertAdjacentHTML('beforeend', `
-                    <tr class="hover:bg-sky-50/50 cursor-pointer transition-colors" onclick="openBlockModal('${num}')">
-                        <td class="py-4 px-5 font-black text-indAccent text-sm hover:underline">#${num}</td>
-                        <td class="py-4 px-5 text-slate-600 font-medium">${timeAgo(parseTimestamp(b.timestamp))}</td>
-                        <td class="py-4 px-5 font-bold text-premiumDark"><span class="bg-slate-100 px-2 py-1 rounded text-xs border border-slate-200">${b.transactions?b.transactions.length:0} Tx</span></td>
-                        <td class="py-4 px-5 font-mono text-sm text-slate-700">${formatHash(b.miner||b.validator||"0xNexusMaster", 8)}</td>
-                        <td class="py-4 px-5 text-right font-mono text-slate-500 text-sm">${b.gasUsed ? parseInt(b.gasUsed, 16).toLocaleString('fr-FR') : "0"}</td>
+                    <tr class="hover:bg-sky-50/50 cursor-pointer transition-colors border-b border-slate-100 last:border-0" onclick="openBlockModal('${num}')">
+                        <td class="py-4 px-5"><span class="bg-sky-50 text-indAccent border border-sky-100 px-2.5 py-1 rounded font-black text-sm shadow-sm hover:underline">#${num}</span></td>
+                        <td class="py-4 px-5 text-slate-600 font-medium text-xs"><i class="fa-regular fa-clock text-slate-400 mr-1"></i> ${timeAgo(parseTimestamp(b.timestamp))}</td>
+                        <td class="py-4 px-5 font-bold text-premiumDark"><span class="bg-slate-100 px-2 py-1 rounded border border-slate-200 text-xs">${b.transactions?b.transactions.length:0} Tx</span></td>
+                        <td class="py-4 px-5"><span class="bg-slate-50 text-slate-700 px-2.5 py-1 rounded border border-slate-200 font-mono text-sm">${formatHash(b.miner||b.validator||"0xNexusMaster", 6)}</span></td>
+                        <td class="py-4 px-5 text-right font-mono text-slate-500 text-sm"><i class="fa-solid fa-fire text-orange-400 mr-1.5"></i>${b.gasUsed ? parseInt(b.gasUsed, 16).toLocaleString('fr-FR') : "0"}</td>
                     </tr>`);
             });
         }
@@ -562,18 +551,18 @@
             tb.innerHTML = '';
             txs.forEach(tx => {
                 tb.insertAdjacentHTML('beforeend', `
-                    <tr class="hover:bg-emerald-50/30 cursor-pointer transition-colors" onclick="openTxModal('${tx.hash}')">
-                        <td class="py-4 px-5 font-mono font-bold text-indAccent text-sm hover:underline">${formatHash(tx.hash, 8)}</td>
-                        <td class="py-4 px-5 font-black text-slate-700 hover:text-indAccent" onclick="event.stopPropagation(); openBlockModal('${tx.blockNumberDec}')">${tx.blockNumberDec}</td>
-                        <td class="py-4 px-5 text-slate-500 text-xs font-medium">${timeAgo(parseTimestamp(tx.timestamp))}</td>
-                        <td class="py-4 px-5 font-mono text-sm text-slate-600 bg-slate-50/50">${formatHash(tx.from, 6)}</td>
-                        <td class="py-4 px-5 font-mono text-sm text-slate-600">${tx.to ? formatHash(tx.to, 6) : 'Contrat'}</td>
-                        <td class="py-4 px-5 text-right font-black text-premiumDark text-sm"><span class="bg-slate-100 border border-slate-200 px-2 py-1 rounded shadow-sm">${formatAmount(tx.amountMicro||tx.value)} ₳</span></td>
+                    <tr class="hover:bg-emerald-50/30 cursor-pointer transition-colors border-b border-slate-100 last:border-0" onclick="openTxModal('${tx.hash}')">
+                        <td class="py-4 px-5"><span class="bg-slate-50 text-slate-700 px-2.5 py-1 rounded border border-slate-200 font-mono text-sm font-bold shadow-sm">${formatHash(tx.hash, 6)}</span></td>
+                        <td class="py-4 px-5"><span class="font-black text-slate-700 bg-slate-100 border border-slate-200 px-2 py-1 rounded text-xs hover:text-indAccent hover:bg-sky-50 transition-colors" onclick="event.stopPropagation(); openBlockModal('${tx.blockNumberDec}')">${tx.blockNumberDec}</span></td>
+                        <td class="py-4 px-5 text-slate-500 text-xs font-medium"><i class="fa-regular fa-clock text-slate-400 mr-1"></i> ${timeAgo(parseTimestamp(tx.timestamp))}</td>
+                        <td class="py-4 px-5"><span class="font-mono text-xs text-slate-600 bg-slate-50 border border-slate-200 px-2 py-1 rounded">${formatHash(tx.from, 4)}</span></td>
+                        <td class="py-4 px-5"><span class="font-mono text-xs text-slate-600 bg-slate-50 border border-slate-200 px-2 py-1 rounded">${tx.to ? formatHash(tx.to, 4) : 'Contrat'}</span></td>
+                        <td class="py-4 px-5 text-right"><span class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-1 rounded shadow-sm font-black text-sm">${formatAmount(tx.amountMicro||tx.value)} ₳</span></td>
                     </tr>`);
             });
         }
 
-        /* --- VUES DÉTAILLÉES (MODALES) --- */
+        /* --- MODALES --- */
         function createGridRow(label, displayValue, rawValueToCopy = null) {
             return `
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-4 py-4 border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-colors px-3 rounded-lg items-center">
@@ -599,12 +588,11 @@
             const nonce = tx.nonce ? parseInt(tx.nonce, 16) : 0;
             const blockHashData = tx.blockHash || "Non répertorié";
             
-            // Calcul confirmations réelles
             const confirmations = Math.max(0, highestFetchedBlock - tx.blockNumberDec + 1);
             
             document.getElementById('txModalBody').innerHTML = `
                 <div class="bg-white rounded-xl border border-slate-200 p-4 mb-6 shadow-sm">
-                    ${createGridRow("TxHash", `<span class="font-mono text-sm md:text-base text-indAccent font-bold">${tx.hash}</span>`, tx.hash)}
+                    ${createGridRow("TxHash", `<span class="bg-slate-50 border border-slate-200 px-3 py-1.5 rounded font-mono text-sm md:text-base text-indAccent font-bold">${tx.hash}</span>`, tx.hash)}
                     ${createGridRow("Statut", `<span class="inline-flex items-center gap-1.5 bg-indSuccess/10 border border-indSuccess/20 text-indSuccess px-3 py-1 rounded text-xs font-bold uppercase tracking-wider shadow-sm"><i class="fa-solid fa-check-double"></i> Succès (${confirmations} Conf.)</span>`)}
                     ${createGridRow("Bloc", `<button onclick="openBlockModal('${tx.blockNumberDec}')" class="text-indAccent hover:text-white font-bold bg-sky-50 hover:bg-indAccent border border-sky-100 transition-colors px-3 py-1 rounded shadow-sm text-sm"><i class="fa-solid fa-cube mr-1.5"></i> #${tx.blockNumberDec}</button>`)}
                     ${createGridRow("Hash Bloc", `<span class="font-mono text-sm text-slate-500 bg-slate-50 px-2 py-1 rounded border border-slate-100">${blockHashData}</span>`, blockHashData)}
@@ -612,13 +600,13 @@
                 </div>
                 
                 <div class="bg-white rounded-xl border border-slate-200 p-4 mb-6 shadow-sm">
-                    ${createGridRow("Expéditeur", `<span class="font-mono text-sm md:text-base text-slate-700 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">${tx.from}</span>`, tx.from)}
-                    ${createGridRow("Destinataire", tx.to ? `<span class="font-mono text-sm md:text-base text-slate-700 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">${tx.to}</span>` : `<span class="text-sm font-bold text-indTextMuted bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200"><i class="fa-solid fa-file-code mr-2"></i> Création de Contrat Smart</span>`, tx.to)}
+                    ${createGridRow("Expéditeur", `<span class="font-mono text-sm md:text-base text-slate-700 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200 shadow-sm">${tx.from}</span>`, tx.from)}
+                    ${createGridRow("Destinataire", tx.to ? `<span class="font-mono text-sm md:text-base text-slate-700 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200 shadow-sm">${tx.to}</span>` : `<span class="text-sm font-bold text-indTextMuted bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200"><i class="fa-solid fa-file-code mr-2"></i> Création de Contrat Smart</span>`, tx.to)}
                 </div>
                 
-                <div class="bg-white rounded-xl border border-slate-200 p-4 mb-6 shadow-sm">
-                    ${createGridRow("Montant", `<span class="bg-sky-50 border border-sky-100 px-3 py-1.5 rounded-lg font-black text-xl text-premiumDark shadow-sm">${amt} ₳</span> <span class="text-xs text-slate-500 font-bold ml-3 uppercase bg-slate-100 px-2 py-1 rounded border border-slate-200 shadow-sm">≈ ${amt} FCFA</span>`)}
-                    ${createGridRow("Frais (Gaz)", `<span class="text-slate-600 font-mono text-sm bg-slate-50 px-3 py-1.5 rounded border border-slate-100">${feeMicro} ₳</span>`)}
+                <div class="bg-white rounded-xl border border-slate-200 p-4 mb-6 shadow-sm border-l-4 border-l-emerald-400">
+                    ${createGridRow("Montant", `<span class="bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-lg font-black text-xl text-emerald-700 shadow-sm">${amt} ₳</span> <span class="text-xs text-slate-500 font-bold ml-3 uppercase bg-slate-100 px-2 py-1 rounded border border-slate-200 shadow-sm">≈ ${amt} FCFA</span>`)}
+                    ${createGridRow("Frais (Gaz)", `<span class="text-orange-600 font-mono text-sm bg-orange-50 px-3 py-1.5 rounded border border-orange-200 shadow-sm"><i class="fa-solid fa-fire mr-1.5 opacity-70"></i>${feeMicro} ₳</span>`)}
                     ${createGridRow("Nonce", `<span class="text-slate-600 font-mono font-bold bg-slate-50 px-3 py-1 rounded border border-slate-100 text-sm">${nonce}</span>`)}
                 </div>
                 
@@ -641,7 +629,7 @@
             const b = blockCache.get(num);
             if(!b) { showToast("Bloc en cours de synchronisation...", "info"); return; }
             
-            document.getElementById('blockModalTitleNum').innerText = num;
+            document.getElementById('blockModalTitleNum').innerText = "#" + num;
             const gasLimit = b.gasLimit ? parseInt(b.gasLimit, 16).toLocaleString('fr-FR') : "N/A";
             const gasUsed = b.gasUsed ? parseInt(b.gasUsed, 16).toLocaleString('fr-FR') : "0";
             let gasPercentage = "0.00";
@@ -654,21 +642,21 @@
 
             document.getElementById('blockModalBody').innerHTML = `
                 <div class="bg-white rounded-xl border border-slate-200 p-4 mb-6 shadow-sm">
-                    ${createGridRow("Hauteur", `<span class="font-black text-indAccent text-2xl">#${num}</span> <span class="ml-4 text-xs font-bold text-slate-500 bg-slate-100 px-3 py-1.5 rounded border border-slate-200 shadow-sm">${confirmations} Confirmations</span>`)}
+                    ${createGridRow("Hauteur", `<span class="font-black text-indAccent text-2xl bg-sky-50 border border-sky-100 px-3 py-1 rounded shadow-sm">#${num}</span> <span class="ml-4 text-xs font-bold text-slate-500 bg-slate-100 px-3 py-1.5 rounded border border-slate-200 shadow-sm">${confirmations} Confirmations</span>`)}
                     ${createGridRow("Horodatage", `<span class="text-slate-700 font-semibold text-sm"><i class="fa-regular fa-clock text-slate-400 mr-2"></i> ${timeAgo(parseTimestamp(b.timestamp))}</span> <span class="text-xs text-slate-400 ml-3">(${formatDateFull(parseTimestamp(b.timestamp))})</span>`)}
                     ${createGridRow("Transactions", `<span class="font-bold text-indSuccess bg-indSuccess/10 border border-indSuccess/20 px-3 py-1 rounded text-sm shadow-sm">${b.transactions ? b.transactions.length : 0} Incluses</span>`)}
-                    ${createGridRow("Nœud Validateur", `<span class="font-mono text-sm md:text-base text-slate-700 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">${b.miner || b.validator || "0xNexusMasterOracle"}</span>`, b.miner || b.validator)}
+                    ${createGridRow("Nœud Validateur", `<span class="font-mono text-sm md:text-base text-slate-700 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200 shadow-sm">${b.miner || b.validator || "0xNexusMasterOracle"}</span>`, b.miner || b.validator)}
                 </div>
                 
                 <div class="bg-white rounded-xl border border-slate-200 p-4 mb-6 shadow-sm">
-                    ${createGridRow("Identifiant (Hash)", `<span class="font-mono text-sm md:text-base font-bold text-indAccent bg-sky-50 px-3 py-1.5 rounded-lg border border-sky-100">${b.hash}</span>`, b.hash)}
-                    ${createGridRow("Hash Parent", `<span class="font-mono text-sm md:text-base text-slate-500 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">${b.parentHash || "Genesis"}</span>`, b.parentHash)}
+                    ${createGridRow("Identifiant (Hash)", `<span class="font-mono text-sm md:text-base font-bold text-indAccent bg-sky-50 px-3 py-1.5 rounded-lg border border-sky-200 shadow-sm">${b.hash}</span>`, b.hash)}
+                    ${createGridRow("Hash Parent", `<span class="font-mono text-sm md:text-base text-slate-500 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200 shadow-sm">${b.parentHash || "Genesis"}</span>`, b.parentHash)}
                 </div>
                 
-                <div class="bg-white rounded-xl border border-slate-200 p-4 mb-6 shadow-sm">
-                    ${createGridRow("Consommation Gaz", `<span class="font-black text-premiumDark text-base">${gasUsed}</span> <span class="text-xs bg-slate-100 border border-slate-200 px-2 py-1 rounded text-slate-600 font-bold ml-3 shadow-sm">${gasPercentage}%</span>`)}
+                <div class="bg-white rounded-xl border border-slate-200 p-4 mb-6 shadow-sm border-l-4 border-l-orange-300">
+                    ${createGridRow("Consommation Gaz", `<span class="font-black text-orange-600 text-base bg-orange-50 px-3 py-1 rounded border border-orange-200 shadow-sm"><i class="fa-solid fa-fire mr-1.5 opacity-70"></i>${gasUsed}</span> <span class="text-xs bg-slate-100 border border-slate-200 px-2 py-1 rounded text-slate-600 font-bold ml-3 shadow-sm">${gasPercentage}%</span>`)}
                     ${createGridRow("Limite Gaz", `<span class="font-mono text-sm text-slate-600 bg-slate-50 px-3 py-1 rounded border border-slate-100">${gasLimit}</span>`)}
-                    ${createGridRow("Taille Globale", `<span class="font-mono text-sm text-slate-600 bg-slate-50 px-3 py-1 rounded border border-slate-100">${b.size ? parseInt(b.size, 16).toLocaleString('fr-FR') + " octets" : "Non spécifié"}</span>`)}
+                    ${createGridRow("Taille Globale", `<span class="font-mono text-sm text-slate-600 bg-slate-50 px-3 py-1 rounded border border-slate-100"><i class="fa-solid fa-hard-drive mr-1.5 text-slate-400"></i>${b.size ? parseInt(b.size, 16).toLocaleString('fr-FR') + " octets" : "Non spécifié"}</span>`)}
                 </div>
                 
                 <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
@@ -683,7 +671,7 @@
             document.body.style.overflow = 'hidden';
         }
 
-        /* --- MOTEUR DE RECHERCHE --- */
+        /* --- RECHERCHE --- */
         async function handleSearch(e) {
             e.preventDefault();
             const val = document.getElementById('searchInput').value.trim();
@@ -694,91 +682,61 @@
             btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i>`;
             
             try {
-                // Recherche par Hash de Transaction (66 caractères, commence par 0x)
                 if (val.length === 66 && val.startsWith('0x')) {
-                    if(txCache.has(val)) {
-                        openTxModal(val);
-                    } else {
-                        showToast("Transaction introuvable ou trop ancienne.", "error");
-                    }
+                    if(txCache.has(val)) openTxModal(val);
+                    else showToast("Transaction introuvable.", "error");
                 } 
-                // Recherche par Numéro de bloc
                 else if (!isNaN(val) && !val.startsWith('0x')) {
                     const num = parseInt(val);
-                    if(blockCache.has(num)) {
-                        openBlockModal(num);
-                    } else {
-                        showToast("Recherche du bloc sur le réseau...", "info");
+                    if(blockCache.has(num)) openBlockModal(num);
+                    else {
+                        showToast("Recherche...", "info");
                         const bData = await rpcCall("nexus_getBlockByNumber", ["0x" + num.toString(16), true]);
-                        if(bData) {
-                            blockCache.set(num, bData);
-                            openBlockModal(num);
-                        } else {
-                            showToast("Bloc introuvable.", "error");
-                        }
+                        if(bData) { blockCache.set(num, bData); openBlockModal(num); } 
+                        else showToast("Bloc introuvable.", "error");
                     }
                 } 
-                // Recherche par Adresse (Historique local)
                 else if (val.startsWith('0x') && val.length === 42 || val.startsWith('AGI')) {
                     const userTxs = Array.from(txCache.values()).filter(tx => tx.from === val || tx.to === val);
                     if (userTxs.length > 0) {
-                        showToast(`${userTxs.length} transaction(s) locale(s) trouvée(s)`, "success");
-                        // On pourrait ici ouvrir une modale spécifique Adresse, mais pour l'instant on ouvre la dernière Tx
+                        showToast(`${userTxs.length} Tx locale(s) trouvée(s)`, "success");
                         openTxModal(userTxs[0].hash);
-                    } else {
-                        showToast("Aucune transaction trouvée pour cette adresse.", "error");
-                    }
-                } else {
-                    showToast("Format de recherche non reconnu.", "error");
-                }
+                    } else showToast("Aucune Tx locale pour cette adresse.", "error");
+                } else showToast("Format incorrect.", "error");
             } finally {
                 btn.innerHTML = originalHTML;
                 document.getElementById('searchInput').value = '';
             }
         }
 
-        /* --- NAVIGATION UI --- */
+        /* --- UI & EVENTS --- */
         function switchView(viewId) {
-            document.querySelectorAll('.view-section').forEach(el => {
-                el.classList.add('hidden'); el.classList.remove('fade-in');
-            });
+            document.querySelectorAll('.view-section').forEach(el => { el.classList.add('hidden'); el.classList.remove('fade-in'); });
             const target = document.getElementById('view-' + viewId);
-            if(target) {
-                target.classList.remove('hidden');
-                setTimeout(() => target.classList.add('fade-in'), 10);
-            }
+            if(target) { target.classList.remove('hidden'); setTimeout(() => target.classList.add('fade-in'), 10); }
             
             document.getElementById('mobileMenu').classList.add('hidden');
             document.getElementById('mobileMenu').classList.remove('flex');
             document.body.style.overflow = '';
             
-            document.querySelectorAll('.desktop-nav-item').forEach(el => {
-                el.className = 'desktop-nav-item h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-sm border-b-2 border-transparent transition-colors';
-            });
+            document.querySelectorAll('.desktop-nav-item').forEach(el => el.className = 'desktop-nav-item h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-sm border-b-2 border-transparent transition-colors');
             const navBtn = document.getElementById('nav-' + viewId);
             if(navBtn) navBtn.className = 'desktop-nav-item h-full flex items-center text-indAccent font-bold text-sm border-b-2 border-indAccent transition-colors';
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function closeModal(id) { 
-            document.getElementById(id).classList.remove('active'); 
-            document.body.style.overflow = ''; 
-        }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); document.body.style.overflow = ''; }
         document.addEventListener('keydown', e => { if (e.key === "Escape") { closeModal('txModal'); closeModal('blockModal'); } });
         document.getElementById('mobileMenuOpenBtn').addEventListener('click', () => { document.getElementById('mobileMenu').classList.remove('hidden'); document.getElementById('mobileMenu').classList.add('flex'); document.body.style.overflow = 'hidden'; });
         document.getElementById('mobileMenuCloseBtn').addEventListener('click', () => { document.getElementById('mobileMenu').classList.add('hidden'); document.getElementById('mobileMenu').classList.remove('flex'); document.body.style.overflow = ''; });
 
         /* --- INITIALISATION --- */
         document.addEventListener('DOMContentLoaded', () => {
-            // Skeleton par défaut
             document.getElementById('blocksContainerPreview').innerHTML = `<div class="p-4"><div class="skeleton h-12 w-full mb-3 rounded-lg"></div><div class="skeleton h-12 w-full rounded-lg"></div></div>`;
             document.getElementById('txsContainerPreview').innerHTML = `<div class="p-4"><div class="skeleton h-12 w-full mb-3 rounded-lg"></div><div class="skeleton h-12 w-full rounded-lg"></div></div>`;
             
-            // Premier lancement
             syncNetworkData();
-            
-            // Boucle de synchronisation (toutes les 4 secondes)
             setInterval(syncNetworkData, 4000); 
         });
     </script>
