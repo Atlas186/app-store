@@ -88,8 +88,8 @@
         <div class="max-w-[95rem] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-14">
                 <div class="flex items-center gap-3 cursor-pointer select-none" onclick="switchView('home')">
-                    <div class="h-8 w-8 rounded-full bg-premiumDark flex items-center justify-center border border-slate-700 shadow-inner">
-                        <i class="fa-solid fa-link text-indAccent text-sm"></i>
+                    <div class="h-8 w-8 rounded-full bg-premiumDark flex items-center justify-center border border-slate-700 shadow-inner overflow-hidden">
+                        <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo" class="w-full h-full object-cover">
                     </div>
                     <span class="font-extrabold text-lg tracking-tight text-premiumDark">NEXUS<span class="text-indAccent">SCAN</span></span>
                 </div>
@@ -114,7 +114,10 @@
     <!-- MENU MOBILE -->
     <div id="mobileMenu" class="fixed inset-0 bg-white z-50 hidden flex-col">
         <div class="flex justify-between items-center p-4 border-b border-indBorder shadow-sm bg-white">
-            <span class="font-extrabold text-lg tracking-tight text-premiumDark">NEXUS<span class="text-indAccent">SCAN</span></span>
+            <div class="flex items-center gap-2">
+                <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo" class="w-6 h-6 rounded-full border border-slate-200">
+                <span class="font-extrabold text-lg tracking-tight text-premiumDark">NEXUS<span class="text-indAccent">SCAN</span></span>
+            </div>
             <button id="mobileMenuCloseBtn" class="text-slate-500 hover:text-red-500 text-2xl p-2 transition-colors"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="flex flex-col pt-2 flex-grow">
@@ -261,11 +264,24 @@
     <!-- FOOTER -->
     <footer class="bg-premiumDark border-t border-slate-800 pt-8 pb-8 mt-auto">
         <div class="max-w-[95rem] mx-auto px-4 text-center flex flex-col items-center">
-            <div class="flex flex-col items-center gap-1 mb-4">
-                <h4 class="text-white font-black text-base tracking-tight">Atlas & Duc Corporation</h4>
-                <span class="text-slate-400 text-xs font-semibold tracking-wide">Infrastructures Web3 de Haute Sécurité</span>
+            
+            <div class="flex items-center gap-3 mb-4">
+                <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo Atlas & Duc" class="h-8 w-8 rounded-full border border-slate-700 shadow-sm object-cover">
+                <div class="text-left">
+                    <h4 class="text-white font-black text-base tracking-tight leading-none mb-1">Atlas & Duc Corporation</h4>
+                    <span class="text-slate-400 text-[10px] font-semibold tracking-wide">Infrastructures Web3 de Haute Sécurité</span>
+                </div>
             </div>
-            <p class="text-xs text-slate-500 font-medium uppercase tracking-wider mb-2">Connecté via Noeud Local (RPC Unifié)</p>
+
+            <!-- LIENS D'INTÉGRATION (DOCS, API, SUPPORT) -->
+            <div class="flex flex-wrap justify-center gap-4 md:gap-8 text-xs font-bold text-slate-400 w-full mb-6">
+                <a href="#" class="hover:text-indAccent transition-colors flex items-center gap-1.5"><i class="fa-solid fa-book"></i> Documentation</a>
+                <a href="#" class="hover:text-indAccent transition-colors flex items-center gap-1.5"><i class="fa-solid fa-server"></i> API RPC</a>
+                <a href="#" class="hover:text-indAccent transition-colors flex items-center gap-1.5"><i class="fa-solid fa-headset"></i> Support</a>
+                <a href="#" class="hover:text-indAccent transition-colors flex items-center gap-1.5"><i class="fa-solid fa-shield-halved"></i> Shield</a>
+            </div>
+
+            <p class="text-[11px] text-slate-500 font-medium uppercase tracking-wider mb-2">Connecté via Noeud Local (RPC Unifié)</p>
             <p class="text-[10px] text-slate-600 font-bold">&copy; 2026 Atlas & Duc Corporation. Tous droits réservés.</p>
         </div>
     </footer>
