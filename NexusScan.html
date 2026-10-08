@@ -47,7 +47,7 @@
         }
     </script>
     <style>
-        /* Animations & Transitions Premium */
+        /* Animations & Transitions */
         .fade-in { animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
@@ -63,17 +63,17 @@
         }
         @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
 
-        /* Scrollbar Premium Fine */
-        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        /* Scrollbar Premium */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 8px; }
         ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
 
-        /* Modales */
-        .modal-overlay { opacity: 0; visibility: hidden; transition: all 0.2s ease; background-color: #F8FAFC; }
-        .modal-overlay.active { opacity: 1; visibility: visible; }
-        .modal-content { transform: translateY(100%); opacity: 0; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); height: 100dvh; width: 100vw; }
-        .modal-overlay.active .modal-content { transform: translateY(0); opacity: 1; }
+        /* Modales Plein Écran Premium */
+        .modal-overlay { opacity: 0; visibility: hidden; transition: all 0.3s ease; background-color: rgba(7, 11, 20, 0.7); backdrop-filter: blur(4px); }
+        .modal-overlay.active { opacity: 1; visibility: visible; z-index: 100000; }
+        .modal-content { transform: scale(0.98) translateY(20px); opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); height: 100dvh; width: 100vw; background: #F8FAFC; }
+        .modal-overlay.active .modal-content { transform: scale(1) translateY(0); opacity: 1; }
         .hash-break { word-break: break-all; overflow-wrap: anywhere; }
 
         /* Toasts */
@@ -85,11 +85,11 @@
 </head>
 <body class="bg-indBg text-premiumDark font-sans antialiased flex flex-col min-h-screen">
 
-    <!-- NAVIGATION -->
+    <!-- NAVIGATION PRINCIPALE -->
     <header class="bg-white/95 backdrop-blur-md border-b border-indBorder sticky top-0 z-40 shadow-sm">
         <div class="max-w-[95rem] mx-auto px-3 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-12">
-                <div class="flex items-center gap-2 cursor-pointer select-none" onclick="switchView('home')">
+                <div class="flex items-center gap-2 cursor-pointer select-none" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
                     <div class="h-7 w-7 rounded-full bg-premiumDark flex items-center justify-center border border-slate-700 shadow-inner overflow-hidden">
                         <img src="https://i.imgur.com/9pIdsgM.jpeg" alt="Logo" class="w-full h-full object-cover">
                     </div>
@@ -97,9 +97,9 @@
                 </div>
 
                 <nav class="hidden md:flex space-x-6 items-center h-full">
-                    <button id="nav-home" onclick="switchView('home')" class="desktop-nav-item h-full flex items-center text-indAccent font-bold text-xs border-b-2 border-indAccent transition-colors"><i class="fa-solid fa-house mr-1.5"></i> Accueil</button>
-                    <button id="nav-blocks" onclick="switchView('blocks')" class="desktop-nav-item h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-xs border-b-2 border-transparent transition-colors"><i class="fa-solid fa-cubes mr-1.5"></i> Blocs</button>
-                    <button id="nav-txs" onclick="switchView('txs')" class="desktop-nav-item h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-xs border-b-2 border-transparent transition-colors"><i class="fa-solid fa-list-ul mr-1.5"></i> Transactions</button>
+                    <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="h-full flex items-center text-indAccent font-bold text-xs border-b-2 border-transparent hover:border-indAccent transition-colors"><i class="fa-solid fa-house mr-1.5"></i> Accueil</button>
+                    <button onclick="openFullModal('allBlocksModal')" class="h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-xs border-b-2 border-transparent transition-colors"><i class="fa-solid fa-cubes mr-1.5"></i> Blocs</button>
+                    <button onclick="openFullModal('allTxsModal')" class="h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-xs border-b-2 border-transparent transition-colors"><i class="fa-solid fa-list-ul mr-1.5"></i> Transactions</button>
                 </nav>
 
                 <div class="flex items-center gap-2.5">
@@ -120,23 +120,21 @@
                 <img src="https://i.imgur.com/9pIdsgM.jpeg" alt="Logo" class="w-5 h-5 rounded-full border border-slate-200">
                 <span class="font-extrabold text-base tracking-tight text-premiumDark">NEXUS<span class="text-indAccent">SCAN</span></span>
             </div>
-            <button id="mobileMenuCloseBtn" class="text-slate-500 hover:text-red-500 text-xl p-2 transition-colors"><i class="fa-solid fa-xmark"></i></button>
+            <button onclick="closeMobileMenu()" class="text-slate-500 hover:text-red-500 text-xl p-2 transition-colors"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="flex flex-col pt-1 flex-grow">
-            <button id="mob-nav-home" onclick="switchView('home')" class="mobile-nav-item py-3 px-5 text-left font-bold text-sm border-b border-indBorder text-indAccent bg-sky-50/50 border-l-4 border-indAccent"><i class="fa-solid fa-house w-5 text-center"></i> Accueil</button>
-            <button id="mob-nav-blocks" onclick="switchView('blocks')" class="mobile-nav-item py-3 px-5 text-left font-semibold text-sm border-b border-indBorder text-slate-600 border-l-4 border-transparent"><i class="fa-solid fa-cubes w-5 text-center"></i> Blocs</button>
-            <button id="mob-nav-txs" onclick="switchView('txs')" class="mobile-nav-item py-3 px-5 text-left font-semibold text-sm border-b border-indBorder text-slate-600 border-l-4 border-transparent"><i class="fa-solid fa-list-ul w-5 text-center"></i> Transactions</button>
+            <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); closeMobileMenu()" class="py-3 px-5 text-left font-bold text-sm border-b border-indBorder text-indAccent bg-sky-50/50 border-l-4 border-indAccent"><i class="fa-solid fa-house w-5 text-center"></i> Accueil</button>
+            <button onclick="openFullModal('allBlocksModal'); closeMobileMenu()" class="py-3 px-5 text-left font-semibold text-sm border-b border-indBorder text-slate-600 border-l-4 border-transparent"><i class="fa-solid fa-cubes w-5 text-center"></i> Blocs</button>
+            <button onclick="openFullModal('allTxsModal'); closeMobileMenu()" class="py-3 px-5 text-left font-semibold text-sm border-b border-indBorder text-slate-600 border-l-4 border-transparent"><i class="fa-solid fa-list-ul w-5 text-center"></i> Transactions</button>
         </div>
     </div>
 
     <!-- CONTENEUR PRINCIPAL -->
     <main class="flex-grow flex flex-col relative">
-        
-        <!-- BARRE DE PROGRESSION SYNCHRONISATION -->
         <div id="syncProgressBar" class="absolute top-0 left-0 h-1 bg-indAccent transition-all duration-300 z-30 w-0 opacity-0"></div>
 
-        <!-- VUE : ACCUEIL -->
-        <div id="view-home" class="view-section flex-grow flex flex-col fade-in">
+        <div class="flex-grow flex flex-col fade-in">
+            <!-- HEADER ACCUEIL -->
             <section class="bg-premiumDark text-white pt-8 pb-10 px-4 relative overflow-hidden">
                 <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-800 via-premiumDark to-premiumDark z-0"></div>
                 <div class="absolute inset-0 opacity-10 z-0" style="background-image: linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg, #ffffff 1px, transparent 1px); background-size: 20px 20px;"></div>
@@ -159,7 +157,6 @@
                         </button>
                     </form>
 
-                    <!-- Spécificités de la monnaie (6 Décimales & Supply Réel) -->
                     <div class="mt-6 flex flex-wrap justify-center gap-3 w-full max-w-2xl">
                         <div class="bg-slate-800/60 border border-slate-700 rounded px-3 py-2 flex items-center gap-2 backdrop-blur-sm">
                             <i class="fa-solid fa-coins text-indAccent"></i>
@@ -186,6 +183,7 @@
                 </div>
             </section>
 
+            <!-- STATISTIQUES -->
             <section class="max-w-[95rem] w-full mx-auto px-3 sm:px-6 lg:px-8 -mt-6 relative z-20">
                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
                     <div class="bg-indCard rounded-lg p-3 border border-indBorder shadow flex items-center gap-3">
@@ -209,7 +207,6 @@
                             <h3 id="statLatestBlock" class="text-sm font-black text-premiumDark"><div class="skeleton h-4 w-12 rounded"></div></h3>
                         </div>
                     </div>
-                    <!-- Volume 24H Analytique Réel -->
                     <div class="bg-indCard rounded-lg p-3 border border-indBorder shadow flex items-center gap-3">
                         <div class="w-8 h-8 rounded bg-indigo-50 flex items-center justify-center text-indigo-500 border border-indigo-100"><i class="fa-solid fa-chart-line text-sm"></i></div>
                         <div>
@@ -220,105 +217,212 @@
                 </div>
             </section>
 
+            <!-- SECTIONS DES 5 DERNIERS ÉLÉMENTS (ACCUEIL) -->
             <section class="max-w-[95rem] w-full mx-auto px-3 sm:px-6 lg:px-8 py-6 flex-grow grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <!-- Blocs Récents -->
-                <div class="bg-indCard rounded-lg border border-indBorder shadow-sm flex flex-col h-[450px]">
+                <!-- Blocs Récents (5 max) -->
+                <div class="bg-indCard rounded-lg border border-indBorder shadow-sm flex flex-col h-[400px]">
                     <div class="p-3 border-b border-indBorder flex justify-between items-center bg-slate-50/80 rounded-t-lg">
                         <h2 class="font-extrabold text-premiumDark text-xs flex items-center gap-1.5"><i class="fa-solid fa-cube text-indAccent"></i> Blocs Récents</h2>
-                        <button onclick="switchView('blocks')" class="text-[10px] font-bold text-indAccent bg-sky-50 px-2 py-1 rounded hover:bg-indAccent hover:text-white transition-colors border border-sky-100 hover:border-indAccent shadow-sm">Tout voir <i class="fa-solid fa-arrow-right ml-1"></i></button>
+                        <!-- OUVRE LA PAGE COMPLÈTE -->
+                        <button onclick="openFullModal('allBlocksModal')" class="text-[10px] font-bold text-indAccent bg-sky-50 px-2 py-1 rounded hover:bg-indAccent hover:text-white transition-colors border border-sky-100 hover:border-indAccent shadow-sm">Tout voir <i class="fa-solid fa-arrow-right ml-1"></i></button>
                     </div>
                     <div class="overflow-y-auto flex-grow p-2" id="blocksContainerPreview"></div>
                 </div>
 
-                <!-- Transactions Récentes -->
-                <div class="bg-indCard rounded-lg border border-indBorder shadow-sm flex flex-col h-[450px]">
+                <!-- Transactions Récentes (5 max) -->
+                <div class="bg-indCard rounded-lg border border-indBorder shadow-sm flex flex-col h-[400px]">
                     <div class="p-3 border-b border-indBorder flex justify-between items-center bg-slate-50/80 rounded-t-lg">
                         <h2 class="font-extrabold text-premiumDark text-xs flex items-center gap-1.5"><i class="fa-solid fa-list-ul text-indAccent"></i> Transactions Récentes</h2>
-                        <button onclick="switchView('txs')" class="text-[10px] font-bold text-indAccent bg-sky-50 px-2 py-1 rounded hover:bg-indAccent hover:text-white transition-colors border border-sky-100 hover:border-indAccent shadow-sm">Tout voir <i class="fa-solid fa-arrow-right ml-1"></i></button>
+                        <!-- OUVRE LA PAGE COMPLÈTE -->
+                        <button onclick="openFullModal('allTxsModal')" class="text-[10px] font-bold text-indAccent bg-sky-50 px-2 py-1 rounded hover:bg-indAccent hover:text-white transition-colors border border-sky-100 hover:border-indAccent shadow-sm">Tout voir <i class="fa-solid fa-arrow-right ml-1"></i></button>
                     </div>
                     <div class="overflow-y-auto flex-grow p-2" id="txsContainerPreview"></div>
                 </div>
             </section>
         </div>
-
-        <!-- VUE : BLOCS COMPLETS -->
-        <div id="view-blocks" class="view-section hidden flex-grow bg-indBg fade-in">
-            <div class="max-w-[95rem] mx-auto px-3 sm:px-6 lg:px-8 py-5 md:py-6">
-                <h1 class="text-lg font-black text-premiumDark flex items-center gap-2 mb-4"><i class="fa-solid fa-layer-group text-indAccent"></i> Registre Complet des Blocs</h1>
-                <div class="bg-white rounded-lg border border-indBorder shadow-sm overflow-hidden">
-                    <div class="overflow-x-auto max-h-[75vh]">
-                        <table class="w-full text-left border-collapse min-w-[700px]">
-                            <thead class="sticky top-0 bg-slate-50 z-10 shadow-sm">
-                                <tr class="border-b border-indBorder text-[10px] text-slate-500 uppercase tracking-wider">
-                                    <th class="py-2.5 px-4 font-bold">Bloc (Hex)</th>
-                                    <th class="py-2.5 px-4 font-bold">Horodatage</th>
-                                    <th class="py-2.5 px-4 font-bold">Txns</th>
-                                    <th class="py-2.5 px-4 font-bold">Nœud Validateur (PoA)</th>
-                                    <th class="py-2.5 px-4 font-bold text-right">Gaz Utilisé</th>
-                                </tr>
-                            </thead>
-                            <tbody id="allBlocksTable" class="text-xs divide-y divide-slate-100"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- VUE : TRANSACTIONS COMPLÈTES -->
-        <div id="view-txs" class="view-section hidden flex-grow bg-indBg fade-in">
-            <div class="max-w-[95rem] mx-auto px-3 sm:px-6 lg:px-8 py-5 md:py-6">
-                <h1 class="text-lg font-black text-premiumDark flex items-center gap-2 mb-4"><i class="fa-solid fa-right-left text-indAccent"></i> Registre Complet des Transactions</h1>
-                <div class="bg-white rounded-lg border border-indBorder shadow-sm overflow-hidden">
-                    <div class="overflow-x-auto max-h-[75vh]">
-                        <table class="w-full text-left border-collapse min-w-[900px]">
-                            <thead class="sticky top-0 bg-slate-50 z-10 shadow-sm">
-                                <tr class="border-b border-indBorder text-[10px] text-slate-500 uppercase tracking-wider">
-                                    <th class="py-2.5 px-4 font-bold">TxHash</th>
-                                    <th class="py-2.5 px-4 font-bold">N° Bloc (Hex)</th>
-                                    <th class="py-2.5 px-4 font-bold">Date & Heure</th>
-                                    <th class="py-2.5 px-4 font-bold">Expéditeur</th>
-                                    <th class="py-2.5 px-4 font-bold">Destinataire</th>
-                                    <th class="py-2.5 px-4 font-bold text-right">Montant (₳)</th>
-                                </tr>
-                            </thead>
-                            <tbody id="allTxsTable" class="text-xs divide-y divide-slate-100"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="bg-premiumDark border-t border-slate-800 pt-6 pb-6 mt-auto">
-        <div class="max-w-[95rem] mx-auto px-4 text-center flex flex-col items-center">
+    <!-- FOOTER BIEN CENTRÉ INDUSTRIEL ET PREMIUM -->
+    <footer class="bg-premiumDark border-t border-slate-800 pt-10 pb-8 mt-auto z-10 w-full flex flex-col items-center justify-center relative overflow-hidden">
+        <!-- Effet de fond subtil -->
+        <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 20px 20px;"></div>
+        
+        <div class="w-full max-w-3xl mx-auto px-4 flex flex-col items-center justify-center text-center relative z-10">
             
-            <div class="flex items-center gap-2.5 mb-3">
-                <img src="https://i.imgur.com/9pIdsgM.jpeg" alt="Logo Atlas & Duc" class="h-6 w-6 rounded-full border border-slate-700 shadow-sm object-cover">
-                <div class="text-left">
-                    <h4 class="text-white font-black text-sm tracking-tight leading-none mb-0.5">Atlas & Duc Corp.</h4>
-                    <span class="text-slate-400 text-[9px] font-semibold tracking-wide">Web3 Infrastructure</span>
+            <!-- Logo & Brand (Centré) -->
+            <div class="flex flex-col items-center justify-center gap-3 mb-6">
+                <img src="https://i.imgur.com/Tc7Jzx3.jpeg" alt="Logo Atlas & Duc" class="h-16 w-16 rounded-full border-2 border-slate-700 shadow-lg object-cover">
+                <div class="flex flex-col items-center justify-center">
+                    <h4 class="text-white font-black text-sm md:text-base tracking-widest uppercase leading-none mb-1.5">Atlas & Duc Corporation</h4>
+                    <span class="text-indAccent text-[9px] font-bold tracking-[0.2em] uppercase">Infrastructure WEB3 Industrielle</span>
                 </div>
             </div>
-
-            <div class="flex flex-wrap justify-center gap-4 md:gap-6 text-[11px] font-bold text-slate-400 w-full mb-4">
-                <a href="documentation.html" class="hover:text-indAccent transition-colors flex items-center gap-1.5"><i class="fa-solid fa-book"></i> Documentation</a>
-                <a href="api.html" class="hover:text-indAccent transition-colors flex items-center gap-1.5"><i class="fa-solid fa-server"></i> API RPC</a>
-                <a href="support.html" class="hover:text-indAccent transition-colors flex items-center gap-1.5"><i class="fa-solid fa-headset"></i> Support</a>
+            
+            <!-- Liens de Navigation (Centrés) -->
+            <div class="flex flex-wrap items-center justify-center gap-5 md:gap-8 text-[11px] font-bold text-slate-400 w-full mb-6">
+                <a href="documentation.html" class="hover:text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-book"></i> Documentation</a>
+                <a href="api.html" class="hover:text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-server"></i> API RPC</a>
+                <a href="support.html" class="hover:text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-headset"></i> Support</a>
             </div>
-
-            <p class="text-[9px] text-slate-500 font-medium uppercase tracking-wider mb-1.5">Connecté via Noeud Local</p>
-            <p class="text-[9px] text-slate-600 font-bold">&copy; 2026 Atlas & Duc Corporation.</p>
+            
+            <!-- Mentions Légales et Statut (Centrées) -->
+            <div class="flex flex-col items-center justify-center border-t border-slate-800/80 w-full pt-5 max-w-sm">
+                <div class="flex items-center justify-center gap-2 mb-2 bg-slate-900/50 px-3 py-1 rounded-full border border-slate-800">
+                    <div class="w-1.5 h-1.5 rounded-full bg-indSuccess live-pulse"></div>
+                    <p class="text-[9px] text-slate-400 font-bold uppercase tracking-widest">Connecté via Nœud Local</p>
+                </div>
+                <p class="text-[9px] text-slate-600 font-bold tracking-wider">&copy; 2026 Atlas & Duc Corporation. Tous droits réservés.</p>
+            </div>
+            
         </div>
     </footer>
 
-    <!-- MODAL TRANSACTION -->
-    <div id="txModal" class="modal-overlay fixed inset-0 z-[99999] flex flex-col">
-        <div class="modal-content bg-indBg w-full h-full rounded-none flex flex-col">
+
+    <!-- ========================================================================= -->
+    <!-- FENÊTRES PLEIN ÉCRAN (MODALES) PROFESSIONNELLES - "TOUT VOIR"             -->
+    <!-- ========================================================================= -->
+
+    <!-- 1. EXPLORATEUR DE BLOCS (PAGINATION 25/PAGE) -->
+    <div id="allBlocksModal" class="modal-overlay fixed inset-0 flex flex-col">
+        <div class="modal-content flex flex-col overflow-hidden rounded-md shadow-2xl">
+            <!-- Header Premium -->
+            <div class="bg-white border-b border-slate-200 px-4 md:px-6 py-3 flex justify-between items-center shrink-0 z-20">
+                <div class="flex items-center gap-3">
+                    <img src="https://i.imgur.com/9pIdsgM.jpeg" class="w-8 h-8 md:w-10 md:h-10 rounded-full border border-slate-300 shadow-sm object-cover">
+                    <div>
+                        <h2 class="text-sm md:text-base font-black text-premiumDark leading-none">Explorateur de Blocs</h2>
+                        <span class="text-[10px] font-bold text-indAccent uppercase tracking-widest">Registre L1 complet</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button onclick="closeModal('allBlocksModal')" class="bg-slate-100 hover:bg-red-500 text-slate-600 hover:text-white border border-slate-200 hover:border-red-500 px-3 md:px-4 py-1.5 rounded-full font-bold text-[10px] md:text-xs transition-colors shadow-sm"><i class="fa-solid fa-xmark mr-1"></i> Fermer</button>
+                </div>
+            </div>
+
+            <!-- Toolbar (Recherche, Filtres, Pagination Haut) -->
+            <div class="bg-slate-50 px-4 md:px-6 py-2.5 border-b border-slate-200 flex flex-col md:flex-row justify-between items-center gap-3 shrink-0 z-10">
+                <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
+                    <!-- Recherche Interne -->
+                    <div class="relative w-full sm:w-64">
+                        <i class="fa-solid fa-search absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                        <input type="text" id="blockModalSearch" onkeyup="handleBlockModalSearch()" placeholder="Rechercher Validateur, Hash..." class="w-full bg-white border border-slate-200 text-xs text-slate-700 rounded-md pl-8 pr-3 py-1.5 focus:outline-none focus:border-indAccent focus:ring-1 focus:ring-indAccent shadow-sm transition-all">
+                    </div>
+                    <!-- Filtres -->
+                    <select id="blockModalFilter" onchange="handleBlockModalFilter()" class="w-full sm:w-auto bg-white border border-slate-200 text-[11px] font-bold text-slate-600 rounded-md px-2 py-1.5 shadow-sm outline-none cursor-pointer focus:border-indAccent">
+                        <option value="all">Tous les blocs</option>
+                        <option value="with_tx">Avec Transactions</option>
+                        <option value="empty">Blocs Vides</option>
+                    </select>
+                </div>
+                <!-- Contrôles Pagination -->
+                <div class="flex items-center gap-2 text-[11px] font-bold text-slate-600 bg-white border border-slate-200 rounded-md p-1 shadow-sm shrink-0">
+                    <button onclick="prevBlockPage()" class="px-2.5 py-1 hover:bg-sky-50 hover:text-indAccent rounded transition-colors"><i class="fa-solid fa-chevron-left"></i></button>
+                    <span id="blockPageInfo" class="px-2 min-w-[70px] text-center">Page 1 / 1</span>
+                    <button onclick="nextBlockPage()" class="px-2.5 py-1 hover:bg-sky-50 hover:text-indAccent rounded transition-colors"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Contenu Scrollable -->
+            <div class="flex-grow overflow-y-auto bg-white p-4 md:p-6">
+                <div class="border border-slate-200 rounded-lg overflow-hidden shadow-sm">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse min-w-[700px]">
+                            <thead class="bg-slate-50 border-b border-slate-200">
+                                <tr class="text-[10px] text-slate-500 uppercase tracking-wider">
+                                    <th class="py-3 px-4 font-bold">Bloc (Hex)</th>
+                                    <th class="py-3 px-4 font-bold">Horodatage</th>
+                                    <th class="py-3 px-4 font-bold">Txns</th>
+                                    <th class="py-3 px-4 font-bold">Nœud Validateur (PoA)</th>
+                                    <th class="py-3 px-4 font-bold text-right">Gaz Utilisé</th>
+                                </tr>
+                            </thead>
+                            <tbody id="allBlocksTable" class="text-xs divide-y divide-slate-100">
+                                <!-- Injecté par JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. EXPLORATEUR DE TRANSACTIONS (PAGINATION 25/PAGE) -->
+    <div id="allTxsModal" class="modal-overlay fixed inset-0 flex flex-col">
+        <div class="modal-content flex flex-col overflow-hidden rounded-md shadow-2xl">
+            <!-- Header Premium -->
+            <div class="bg-white border-b border-slate-200 px-4 md:px-6 py-3 flex justify-between items-center shrink-0 z-20">
+                <div class="flex items-center gap-3">
+                    <img src="https://i.imgur.com/9pIdsgM.jpeg" class="w-8 h-8 md:w-10 md:h-10 rounded-full border border-slate-300 shadow-sm object-cover">
+                    <div>
+                        <h2 class="text-sm md:text-base font-black text-premiumDark leading-none">Registre des Transactions</h2>
+                        <span class="text-[10px] font-bold text-indAccent uppercase tracking-widest">Historique du réseau</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button onclick="closeModal('allTxsModal')" class="bg-slate-100 hover:bg-red-500 text-slate-600 hover:text-white border border-slate-200 hover:border-red-500 px-3 md:px-4 py-1.5 rounded-full font-bold text-[10px] md:text-xs transition-colors shadow-sm"><i class="fa-solid fa-xmark mr-1"></i> Fermer</button>
+                </div>
+            </div>
+
+            <!-- Toolbar (Recherche, Filtres, Pagination Haut) -->
+            <div class="bg-slate-50 px-4 md:px-6 py-2.5 border-b border-slate-200 flex flex-col md:flex-row justify-between items-center gap-3 shrink-0 z-10">
+                <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
+                    <!-- Recherche Interne -->
+                    <div class="relative w-full sm:w-64">
+                        <i class="fa-solid fa-search absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                        <input type="text" id="txModalSearch" onkeyup="handleTxModalSearch()" placeholder="Rechercher Hash, Adresse..." class="w-full bg-white border border-slate-200 text-xs text-slate-700 rounded-md pl-8 pr-3 py-1.5 focus:outline-none focus:border-indAccent focus:ring-1 focus:ring-indAccent shadow-sm transition-all">
+                    </div>
+                    <!-- Filtres -->
+                    <select id="txModalFilter" onchange="handleTxModalFilter()" class="w-full sm:w-auto bg-white border border-slate-200 text-[11px] font-bold text-slate-600 rounded-md px-2 py-1.5 shadow-sm outline-none cursor-pointer focus:border-indAccent">
+                        <option value="all">Toutes les transactions</option>
+                        <option value="value">Transferts de Valeur (> 0 ₳)</option>
+                        <option value="contract">Créations de Contrat</option>
+                    </select>
+                </div>
+                <!-- Contrôles Pagination -->
+                <div class="flex items-center gap-2 text-[11px] font-bold text-slate-600 bg-white border border-slate-200 rounded-md p-1 shadow-sm shrink-0">
+                    <button onclick="prevTxPage()" class="px-2.5 py-1 hover:bg-sky-50 hover:text-indAccent rounded transition-colors"><i class="fa-solid fa-chevron-left"></i></button>
+                    <span id="txPageInfo" class="px-2 min-w-[70px] text-center">Page 1 / 1</span>
+                    <button onclick="nextTxPage()" class="px-2.5 py-1 hover:bg-sky-50 hover:text-indAccent rounded transition-colors"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Contenu Scrollable -->
+            <div class="flex-grow overflow-y-auto bg-white p-4 md:p-6">
+                <div class="border border-slate-200 rounded-lg overflow-hidden shadow-sm">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse min-w-[900px]">
+                            <thead class="bg-slate-50 border-b border-slate-200">
+                                <tr class="text-[10px] text-slate-500 uppercase tracking-wider">
+                                    <th class="py-3 px-4 font-bold">TxHash</th>
+                                    <th class="py-3 px-4 font-bold">N° Bloc (Hex)</th>
+                                    <th class="py-3 px-4 font-bold">Date & Heure</th>
+                                    <th class="py-3 px-4 font-bold">Expéditeur</th>
+                                    <th class="py-3 px-4 font-bold">Destinataire</th>
+                                    <th class="py-3 px-4 font-bold text-right">Montant (₳)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="allTxsTable" class="text-xs divide-y divide-slate-100">
+                                <!-- Injecté par JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ============================================== -->
+    <!-- MODALES DE DÉTAILS INDIVIDUELS (Superposées)   -->
+    <!-- ============================================== -->
+
+    <!-- FENÊTRE DÉTAIL : TRANSACTION -->
+    <div id="txModal" class="modal-overlay fixed inset-0 flex flex-col">
+        <div class="modal-content flex flex-col h-full bg-indBg">
             <div class="flex justify-between items-center px-4 py-3 border-b border-slate-200 bg-white shadow-sm shrink-0">
                 <div class="max-w-4xl mx-auto w-full flex justify-between items-center">
                     <h3 class="text-base md:text-lg font-black text-premiumDark flex items-center gap-1.5"><i class="fa-solid fa-file-invoice text-indAccent"></i> Détails Transaction</h3>
-                    <button onclick="closeModal('txModal')" class="bg-slate-100 hover:bg-red-500 text-slate-600 hover:text-white border border-slate-200 hover:border-red-500 px-3 py-1.5 rounded font-bold text-xs transition-colors flex items-center gap-1.5 shadow-sm"><span class="hidden sm:inline">Fermer</span> <i class="fa-solid fa-xmark"></i></button>
+                    <button onclick="closeModal('txModal')" class="bg-slate-100 hover:bg-red-500 text-slate-600 hover:text-white border border-slate-200 hover:border-red-500 px-3 py-1.5 rounded font-bold text-xs transition-colors flex items-center gap-1.5 shadow-sm"><span class="hidden sm:inline">Retour</span> <i class="fa-solid fa-xmark"></i></button>
                 </div>
             </div>
             <div class="p-3 md:p-5 overflow-y-auto flex-grow w-full">
@@ -327,16 +431,16 @@
         </div>
     </div>
 
-    <!-- MODAL BLOC -->
-    <div id="blockModal" class="modal-overlay fixed inset-0 z-[99999] flex flex-col">
-        <div class="modal-content bg-indBg w-full h-full rounded-none flex flex-col">
+    <!-- FENÊTRE DÉTAIL : BLOC -->
+    <div id="blockModal" class="modal-overlay fixed inset-0 flex flex-col">
+        <div class="modal-content flex flex-col h-full bg-indBg">
             <div class="flex justify-between items-center px-4 py-3 border-b border-slate-200 bg-white shadow-sm shrink-0">
                 <div class="max-w-4xl mx-auto w-full flex justify-between items-center">
                     <h3 class="text-base md:text-lg font-black text-premiumDark flex items-center gap-1.5">
                         <i class="fa-solid fa-cube text-indAccent"></i> Détails du Bloc 
                         <span id="blockModalTitleNum" class="text-slate-400 font-mono text-sm ml-1"></span>
                     </h3>
-                    <button onclick="closeModal('blockModal')" class="bg-slate-100 hover:bg-red-500 text-slate-600 hover:text-white border border-slate-200 hover:border-red-500 px-3 py-1.5 rounded font-bold text-xs transition-colors flex items-center gap-1.5 shadow-sm"><span class="hidden sm:inline">Fermer</span> <i class="fa-solid fa-xmark"></i></button>
+                    <button onclick="closeModal('blockModal')" class="bg-slate-100 hover:bg-red-500 text-slate-600 hover:text-white border border-slate-200 hover:border-red-500 px-3 py-1.5 rounded font-bold text-xs transition-colors flex items-center gap-1.5 shadow-sm"><span class="hidden sm:inline">Retour</span> <i class="fa-solid fa-xmark"></i></button>
                 </div>
             </div>
             <div class="p-3 md:p-5 overflow-y-auto flex-grow w-full">
@@ -352,8 +456,9 @@
         /* --- CONFIGURATION --- */
         const RPC_URL = "https://rpc.agi-nexus-core.click";
         
-        /* Modifiez cette constante pour choisir le nombre de blocs à afficher dans l'historique complet */
-        const BLOCKS_TO_FETCH = 25; 
+        /* On charge 100 blocs en cache pour permettre une belle pagination dans les fenêtres "Tout voir" (4 pages de 25) */
+        const BLOCKS_TO_FETCH = 100; 
+        const ITEMS_PER_PAGE = 25;
         
         /* --- BASES DE DONNÉES LOCALES --- */
         let latestBlockNum = 0;          
@@ -361,9 +466,16 @@
 
         const blockCache = new Map();   
         const txCache = new Map();      
-        
-        // Registre global pour le calcul exact des transactions
         const globalTxHashes = new Set();
+
+        /* --- ÉTATS DE PAGINATION ET FILTRES DES MODALES --- */
+        let currentBlockPage = 1;
+        let blockSearchQuery = '';
+        let blockFilterVal = 'all';
+
+        let currentTxPage = 1;
+        let txSearchQuery = '';
+        let txFilterVal = 'all';
 
         /* --- FONCTIONS UTILITAIRES --- */
         function formatHash(hash, chars = 6) { 
@@ -385,14 +497,17 @@
             return new Date(ts).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'medium' }); 
         }
         
-        // CORRECTION MAJEURE: 6 DÉCIMALES (Micro-₳)
         function formatAmount(hexVal) {
             if(!hexVal) return "0.00";
             const decVal = typeof hexVal === 'string' && hexVal.startsWith('0x') ? parseInt(hexVal, 16) : parseInt(hexVal, 10);
             return new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 6 }).format(decVal / 1e6);
         }
+
+        function getDecAmount(hexVal) {
+            if(!hexVal) return 0;
+            return typeof hexVal === 'string' && hexVal.startsWith('0x') ? parseInt(hexVal, 16) : parseInt(hexVal, 10);
+        }
         
-        // Conversion décimal en Hexadécimal
         function toHexFormat(num) {
             if(num === undefined || num === null) return "0x0";
             return "0x" + Number(num).toString(16);
@@ -417,6 +532,62 @@
             return parsed > 1e11 ? parsed : parsed * 1000;
         }
 
+        /* --- FONCTIONS MENU MOBILE --- */
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.remove('flex');
+            menu.classList.add('hidden');
+        }
+
+        /* --- PERSISTANCE DE SESSION --- */
+        function saveSessionData() {
+            try {
+                // Pour éviter le dépassement de quota (sessionStorage ~5MB), 
+                // on limite prudemment à 100 blocs et 500 transactions en cache max
+                const blocksArray = Array.from(blockCache.entries()).slice(0, 100);
+                const txsArray = Array.from(txCache.entries()).slice(0, 500);
+                const hashesArray = Array.from(globalTxHashes).slice(0, 500);
+                
+                const sessionData = {
+                    latestBlockNum,
+                    totalTxGlobal,
+                    blocks: blocksArray,
+                    txs: txsArray,
+                    hashes: hashesArray,
+                    timestamp: Date.now()
+                };
+                sessionStorage.setItem('nexusScanSession', JSON.stringify(sessionData));
+            } catch (e) {
+                console.warn("Erreur de sauvegarde de session:", e);
+            }
+        }
+
+        function loadSessionData() {
+            try {
+                const data = sessionStorage.getItem('nexusScanSession');
+                if (data) {
+                    const parsed = JSON.parse(data);
+                    // Expiration après 1 heure (3600000 ms)
+                    if (Date.now() - parsed.timestamp > 3600000) {
+                        sessionStorage.removeItem('nexusScanSession');
+                        return false;
+                    }
+                    
+                    latestBlockNum = parsed.latestBlockNum || 0;
+                    totalTxGlobal = parsed.totalTxGlobal || 0;
+                    
+                    if (parsed.blocks) parsed.blocks.forEach(([k, v]) => blockCache.set(k, v));
+                    if (parsed.txs) parsed.txs.forEach(([k, v]) => txCache.set(k, v));
+                    if (parsed.hashes) parsed.hashes.forEach(h => globalTxHashes.add(h));
+                    
+                    return true;
+                }
+            } catch (e) {
+                console.warn("Erreur de chargement de session:", e);
+            }
+            return false;
+        }
+
         /* --- MOTEUR RPC --- */
         async function rpcCall(method, params = []) {
             try {
@@ -431,13 +602,12 @@
             } catch (e) { return null; }
         }
 
-        /* --- SYNCHRONISATION ET CALCUL RÉEL --- */
+        /* --- SYNCHRONISATION PRINCIPALE --- */
         async function syncNetworkData() {
             const pb = document.getElementById('syncProgressBar');
             pb.style.opacity = '1';
             pb.style.width = '30%';
 
-            // 1. Obtenir la hauteur du réseau
             const blockHex = await rpcCall("nexus_blockNumber");
             
             if (!blockHex) {
@@ -451,7 +621,7 @@
             const currentBlockNum = parseInt(blockHex, 16);
             
             if (currentBlockNum <= latestBlockNum && latestBlockNum !== 0) {
-                document.getElementById('statTotalTx').innerText = globalTxHashes.size.toLocaleString('fr-FR');
+                document.getElementById('statTotalTx').innerText = totalTxGlobal > 0 ? totalTxGlobal.toLocaleString('fr-FR') : globalTxHashes.size.toLocaleString('fr-FR');
                 pb.style.width = '100%';
                 setTimeout(() => { pb.style.opacity = '0'; pb.style.width = '0%'; }, 300);
                 return;
@@ -461,20 +631,17 @@
             document.getElementById('statLatestBlock').innerText = toHexFormat(currentBlockNum);
             pb.style.width = '60%';
 
-            // 2. Boucle de récupération 
             const blocks = []; 
             const txs = [];
             let recentVolumeMicro = 0; 
             
-            for (let i = 0; i <= currentBlockNum; i++) {
-                if (i >= BLOCKS_TO_FETCH && currentBlockNum - i > 0) continue; 
-
+            // On récupère les BLOCKS_TO_FETCH derniers blocs
+            for (let i = 0; i < BLOCKS_TO_FETCH; i++) {
                 const target = currentBlockNum - i;
                 if(target < 0) break;
                 
                 const bData = await rpcCall("nexus_getBlockByNumber", ["0x" + target.toString(16), true]);
                 if (bData) {
-                    /* SOLUTION DE SÉCURITÉ : Fixe le bug NaN des blocs introuvables */
                     bData.decNumber = target; 
                     bData.hexNumber = toHexFormat(target);
                     
@@ -484,9 +651,7 @@
                     if (bData.transactions && Array.isArray(bData.transactions)) {
                         bData.transactions.forEach(tx => {
                             globalTxHashes.add(tx.hash);
-                            
-                            const amtDec = typeof tx.amountMicro === 'string' && tx.amountMicro.startsWith('0x') ? parseInt(tx.amountMicro, 16) : parseInt(tx.amountMicro || tx.value || 0, 10);
-                            recentVolumeMicro += amtDec;
+                            recentVolumeMicro += getDecAmount(tx.amountMicro || tx.value);
                             
                             tx.timestamp = bData.timestamp; 
                             tx.blockNumberDec = target;
@@ -501,12 +666,12 @@
             
             pb.style.width = '80%';
 
-            // 3. STATS ET VOLUME 24H
             await updateTotalTransactions();
             
+            // Calcul Volume Analytique 24H lissé
             const blocksScannedCount = Math.min(BLOCKS_TO_FETCH, currentBlockNum + 1) || 1;
             const avgVolumePerBlockMicro = recentVolumeMicro / blocksScannedCount;
-            let estimated24hVolumeMicro = avgVolumePerBlockMicro * 43200; // 2s block time
+            let estimated24hVolumeMicro = avgVolumePerBlockMicro * 43200;
             
             if (estimated24hVolumeMicro === 0) {
                estimated24hVolumeMicro = (10000 + Math.random() * 5000) * 1e6; 
@@ -519,8 +684,16 @@
             const volume24hA = estimated24hVolumeMicro / 1e6;
             document.getElementById('statVolume24h').innerText = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 }).format(volume24hA) + " ₳";
 
-            // 4. Rendu Final
-            renderData(blocks, txs);
+            // Mise à jour de l'accueil (5 éléments MAX)
+            renderBlocksPreview(blocks);
+            renderTxsPreview(txs);
+            
+            // Mise à jour des modales si elles sont ouvertes
+            updateBlockModalView();
+            updateTxModalView();
+            
+            // Sauvegarde de l'état en fin de cycle de sync
+            saveSessionData();
             
             pb.style.width = '100%';
             setTimeout(() => { pb.style.opacity = '0'; pb.style.width = '0%'; }, 300);
@@ -536,30 +709,25 @@
             }
         }
 
-        function renderData(blocks, txs) {
-            renderBlocksPreview(blocks);
-            renderTxsPreview(txs);
-            renderBlocksTable(blocks);
-            renderTxsTable(txs);
-        }
 
-        /* --- RENDU UI DENSE --- */
+        /* ========================================================= */
+        /* RENDU UI : ACCUEIL (5 ÉLÉMENTS MAX STRICTEMENT)           */
+        /* ========================================================= */
         function renderBlocksPreview(blocks) {
             const c = document.getElementById('blocksContainerPreview'); 
             if(blocks.length === 0) { c.innerHTML = '<div class="text-center p-4 text-slate-400 font-medium text-xs">En attente des blocs...</div>'; return; }
             
             c.innerHTML = '';
-            blocks.slice(0, 8).forEach((b, i) => {
+            blocks.slice(0, 5).forEach((b, i) => {
                 const decNum = b.decNumber;
-                const hexIndex = b.hexNumber;
                 const txCount = b.transactions ? b.transactions.length : 0;
                 
                 const html = `
-                    <div onclick="openBlockModal(${decNum})" class="flex items-center justify-between p-2 mb-1.5 rounded border bg-white shadow-sm hover:border-indAccent/50 cursor-pointer transition-all hover:shadow md ${i===0?'bg-sky-50/30 border-sky-200':''}">
+                    <div onclick="openBlockDetail(${decNum})" class="flex items-center justify-between p-2 mb-1.5 rounded border bg-white shadow-sm hover:border-indAccent/50 cursor-pointer transition-all hover:shadow md ${i===0?'bg-sky-50/30 border-sky-200':''}">
                         <div class="flex items-center gap-2.5">
                             <div class="w-8 h-8 rounded bg-slate-50 flex items-center justify-center border border-slate-200 text-slate-500 shrink-0 shadow-sm"><i class="fa-solid fa-cube text-xs"></i></div>
                             <div>
-                                <span class="font-black text-indAccent text-xs hover:underline font-mono">Bloc ${hexIndex}</span>
+                                <span class="font-black text-indAccent text-xs hover:underline font-mono">Bloc ${b.hexNumber}</span>
                                 <span class="block text-[10px] text-slate-500 font-medium mt-0.5"><i class="fa-regular fa-clock text-slate-400 mr-1"></i>${timeAgo(parseTimestamp(b.timestamp))}</span>
                             </div>
                         </div>
@@ -577,10 +745,10 @@
             if(txs.length===0){ c.innerHTML=`<div class="p-6 text-center text-slate-400 text-xs font-medium"><i class="fa-solid fa-wind text-xl mb-2 block opacity-50"></i>Registre vierge</div>`; return; }
             
             c.innerHTML = '';
-            txs.slice(0, 8).forEach((tx, i) => {
+            txs.slice(0, 5).forEach((tx, i) => {
                 const amt = formatAmount(tx.amountMicro || tx.value);
                 const html = `
-                    <div onclick="openTxModal('${tx.hash}')" class="flex items-center justify-between p-2 mb-1.5 rounded border bg-white shadow-sm hover:border-emerald-300 cursor-pointer transition-all hover:shadow md ${i===0?'bg-emerald-50/20 border-emerald-200':''}">
+                    <div onclick="openTxDetail('${tx.hash}')" class="flex items-center justify-between p-2 mb-1.5 rounded border bg-white shadow-sm hover:border-emerald-300 cursor-pointer transition-all hover:shadow md ${i===0?'bg-emerald-50/20 border-emerald-200':''}">
                         <div class="flex items-center gap-2.5 min-w-0">
                             <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center border border-slate-200 text-slate-500 shrink-0 shadow-sm"><i class="fa-solid fa-arrow-right-arrow-left text-[10px]"></i></div>
                             <div class="min-w-0 flex-grow">
@@ -600,34 +768,151 @@
             });
         }
 
-        function renderBlocksTable(blocks) {
+
+        /* ========================================================= */
+        /* LOGIQUE DES FENÊTRES PLEIN ÉCRAN (MODALES "TOUT VOIR")    */
+        /* ========================================================= */
+        
+        function openFullModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            document.body.style.overflow = 'hidden';
+            if (modalId === 'allBlocksModal') updateBlockModalView();
+            if (modalId === 'allTxsModal') updateTxModalView();
+        }
+
+        /* --- BLOCS : FILTRES ET PAGINATION --- */
+        function handleBlockModalSearch() {
+            blockSearchQuery = document.getElementById('blockModalSearch').value.toLowerCase();
+            currentBlockPage = 1; // Reset à la page 1
+            updateBlockModalView();
+        }
+        
+        function handleBlockModalFilter() {
+            blockFilterVal = document.getElementById('blockModalFilter').value;
+            currentBlockPage = 1; // Reset à la page 1
+            updateBlockModalView();
+        }
+
+        function prevBlockPage() { if (currentBlockPage > 1) { currentBlockPage--; updateBlockModalView(); } }
+        function nextBlockPage() { 
+            const allBlocks = getFilteredBlocks();
+            const totalPages = Math.ceil(allBlocks.length / ITEMS_PER_PAGE) || 1;
+            if (currentBlockPage < totalPages) { currentBlockPage++; updateBlockModalView(); }
+        }
+
+        function getFilteredBlocks() {
+            let data = Array.from(blockCache.values()).sort((a, b) => b.decNumber - a.decNumber);
+            
+            // Filtre dropdown
+            if (blockFilterVal === 'with_tx') data = data.filter(b => b.transactions && b.transactions.length > 0);
+            else if (blockFilterVal === 'empty') data = data.filter(b => !b.transactions || b.transactions.length === 0);
+            
+            // Recherche
+            if (blockSearchQuery) {
+                data = data.filter(b => 
+                    b.hexNumber.toLowerCase().includes(blockSearchQuery) || 
+                    b.decNumber.toString().includes(blockSearchQuery) || 
+                    (b.miner && b.miner.toLowerCase().includes(blockSearchQuery)) || 
+                    (b.hash && b.hash.toLowerCase().includes(blockSearchQuery))
+                );
+            }
+            return data;
+        }
+
+        function updateBlockModalView() {
+            const allBlocks = getFilteredBlocks();
+            const totalPages = Math.ceil(allBlocks.length / ITEMS_PER_PAGE) || 1;
+            if (currentBlockPage > totalPages) currentBlockPage = totalPages;
+            
+            document.getElementById('blockPageInfo').innerText = `Page ${currentBlockPage} / ${totalPages}`;
+            
+            const start = (currentBlockPage - 1) * ITEMS_PER_PAGE;
+            const paginated = allBlocks.slice(start, start + ITEMS_PER_PAGE);
+            
             const tb = document.getElementById('allBlocksTable'); 
+            if(!tb) return;
             tb.innerHTML = '';
-            blocks.forEach(b => {
-                const decNum = b.decNumber;
-                const hexIndex = b.hexNumber;
-                
+            
+            if (paginated.length === 0) {
+                tb.innerHTML = `<tr><td colspan="5" class="py-12 text-center text-slate-400 font-medium text-xs"><i class="fa-solid fa-folder-open text-2xl mb-2 block opacity-30"></i> Aucun bloc trouvé pour ces critères.</td></tr>`;
+                return;
+            }
+
+            paginated.forEach(b => {
                 tb.insertAdjacentHTML('beforeend', `
-                    <tr class="hover:bg-sky-50/50 cursor-pointer transition-colors border-b border-slate-100 last:border-0" onclick="openBlockModal(${decNum})">
-                        <td class="py-2.5 px-4"><span class="bg-sky-50 text-indAccent border border-sky-100 px-2 py-0.5 rounded font-black font-mono text-xs shadow-sm hover:underline">${hexIndex}</span></td>
+                    <tr class="hover:bg-sky-50/50 cursor-pointer transition-colors border-b border-slate-100 last:border-0" onclick="openBlockDetail(${b.decNumber})">
+                        <td class="py-2.5 px-4"><span class="bg-sky-50 text-indAccent border border-sky-100 px-2 py-0.5 rounded font-black font-mono text-xs shadow-sm hover:underline">${b.hexNumber}</span></td>
                         <td class="py-2.5 px-4 text-slate-600 font-medium text-[11px]"><i class="fa-regular fa-clock text-slate-400 mr-1"></i> ${timeAgo(parseTimestamp(b.timestamp))}</td>
-                        <td class="py-2.5 px-4 font-bold text-premiumDark"><span class="bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200 text-[11px]">${b.transactions?b.transactions.length:0} Tx</span></td>
+                        <td class="py-2.5 px-4 font-bold text-premiumDark"><span class="${b.transactions && b.transactions.length > 0 ? 'bg-indSuccess/10 text-indSuccess border-indSuccess/20' : 'bg-slate-100 border-slate-200 text-slate-500'} px-2 py-0.5 rounded border text-[11px]">${b.transactions?b.transactions.length:0} Tx</span></td>
                         <td class="py-2.5 px-4"><span class="bg-slate-50 text-slate-700 px-2 py-0.5 rounded border border-slate-200 font-mono text-xs">${formatHash(b.miner||b.validator||"0xNexusMaster", 6)}</span></td>
                         <td class="py-2.5 px-4 text-right font-mono text-slate-500 text-xs"><i class="fa-solid fa-fire text-orange-400 mr-1.5"></i>${b.gasUsed ? parseInt(b.gasUsed, 16).toLocaleString('fr-FR') : "0"}</td>
                     </tr>`);
             });
         }
 
-        function renderTxsTable(txs) {
-            const tb = document.getElementById('allTxsTable'); 
-            if(txs.length===0){ tb.innerHTML=`<tr><td colspan="6" class="py-8 text-center text-slate-400 font-medium text-xs">Registre des transactions vierge.</td></tr>`; return;}
+
+        /* --- TRANSACTIONS : FILTRES ET PAGINATION --- */
+        function handleTxModalSearch() {
+            txSearchQuery = document.getElementById('txModalSearch').value.toLowerCase();
+            currentTxPage = 1;
+            updateTxModalView();
+        }
+        
+        function handleTxModalFilter() {
+            txFilterVal = document.getElementById('txModalFilter').value;
+            currentTxPage = 1;
+            updateTxModalView();
+        }
+
+        function prevTxPage() { if (currentTxPage > 1) { currentTxPage--; updateTxModalView(); } }
+        function nextTxPage() { 
+            const allTxs = getFilteredTxs();
+            const totalPages = Math.ceil(allTxs.length / ITEMS_PER_PAGE) || 1;
+            if (currentTxPage < totalPages) { currentTxPage++; updateTxModalView(); }
+        }
+
+        function getFilteredTxs() {
+            let data = Array.from(txCache.values()).sort((a, b) => parseTimestamp(b.timestamp) - parseTimestamp(a.timestamp));
             
+            // Filtre dropdown
+            if (txFilterVal === 'value') data = data.filter(tx => getDecAmount(tx.amountMicro || tx.value) > 0);
+            else if (txFilterVal === 'contract') data = data.filter(tx => !tx.to);
+            
+            // Recherche
+            if (txSearchQuery) {
+                data = data.filter(tx => 
+                    tx.hash.toLowerCase().includes(txSearchQuery) || 
+                    (tx.from && tx.from.toLowerCase().includes(txSearchQuery)) || 
+                    (tx.to && tx.to.toLowerCase().includes(txSearchQuery))
+                );
+            }
+            return data;
+        }
+
+        function updateTxModalView() {
+            const allTxs = getFilteredTxs();
+            const totalPages = Math.ceil(allTxs.length / ITEMS_PER_PAGE) || 1;
+            if (currentTxPage > totalPages) currentTxPage = totalPages;
+            
+            document.getElementById('txPageInfo').innerText = `Page ${currentTxPage} / ${totalPages}`;
+            
+            const start = (currentTxPage - 1) * ITEMS_PER_PAGE;
+            const paginated = allTxs.slice(start, start + ITEMS_PER_PAGE);
+            
+            const tb = document.getElementById('allTxsTable'); 
+            if(!tb) return;
             tb.innerHTML = '';
-            txs.forEach(tx => {
+            
+            if (paginated.length === 0) {
+                tb.innerHTML = `<tr><td colspan="6" class="py-12 text-center text-slate-400 font-medium text-xs"><i class="fa-solid fa-folder-open text-2xl mb-2 block opacity-30"></i> Aucune transaction trouvée.</td></tr>`;
+                return;
+            }
+
+            paginated.forEach(tx => {
                 tb.insertAdjacentHTML('beforeend', `
-                    <tr class="hover:bg-emerald-50/30 cursor-pointer transition-colors border-b border-slate-100 last:border-0" onclick="openTxModal('${tx.hash}')">
+                    <tr class="hover:bg-emerald-50/30 cursor-pointer transition-colors border-b border-slate-100 last:border-0" onclick="openTxDetail('${tx.hash}')">
                         <td class="py-2.5 px-4"><span class="bg-slate-50 text-slate-700 px-2 py-0.5 rounded border border-slate-200 font-mono text-xs font-bold shadow-sm">${formatHash(tx.hash, 5)}</span></td>
-                        <td class="py-2.5 px-4"><span class="font-black font-mono text-slate-700 bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded text-[11px] hover:text-indAccent hover:bg-sky-50 transition-colors" onclick="event.stopPropagation(); openBlockModal(${tx.blockNumberDec})">${tx.blockNumberHex}</span></td>
+                        <td class="py-2.5 px-4"><span class="font-black font-mono text-slate-700 bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded text-[11px] hover:text-indAccent hover:bg-sky-50 transition-colors" onclick="event.stopPropagation(); openBlockDetail(${tx.blockNumberDec})">${tx.blockNumberHex}</span></td>
                         <td class="py-2.5 px-4 text-slate-500 text-[11px] font-medium"><i class="fa-regular fa-clock text-slate-400 mr-1"></i> ${timeAgo(parseTimestamp(tx.timestamp))}</td>
                         <td class="py-2.5 px-4"><span class="font-mono text-[11px] text-slate-600 bg-slate-50 border border-slate-200 px-1.5 py-0.5 rounded">${formatHash(tx.from, 4)}</span></td>
                         <td class="py-2.5 px-4"><span class="font-mono text-[11px] text-slate-600 bg-slate-50 border border-slate-200 px-1.5 py-0.5 rounded">${tx.to ? formatHash(tx.to, 4) : 'Contrat'}</span></td>
@@ -636,7 +921,20 @@
             });
         }
 
-        /* --- MODALES --- */
+
+        /* ========================================================= */
+        /* MODALES INDIVIDUELLES (DÉTAIL BLOC ET DÉTAIL TX)          */
+        /* ========================================================= */
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+            // Réactive le scroll de l'accueil UNIQUEMENT si plus aucune modale n'est ouverte
+            const activeModals = document.querySelectorAll('.modal-overlay.active');
+            if (activeModals.length === 0) {
+                document.body.style.overflow = '';
+            }
+        }
+
         function createGridRow(label, displayValue, rawValueToCopy = null) {
             return `
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-1.5 md:gap-3 py-2.5 border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-colors px-2 rounded items-center">
@@ -648,7 +946,7 @@
                 </div>`;
         }
 
-        function openTxModal(hash) {
+        function openTxDetail(hash) {
             const tx = txCache.get(hash);
             if(!tx) { showToast("Transaction introuvable.", "error"); return; }
             
@@ -661,14 +959,13 @@
             const inputData = (tx.input && tx.input !== "0x") ? tx.input : "0x (Transfert direct)";
             const nonce = tx.nonce ? parseInt(tx.nonce, 16) : 0;
             const blockHashData = tx.blockHash || "Non répertorié";
-            
             const confirmations = Math.max(0, latestBlockNum - tx.blockNumberDec + 1);
             
             document.getElementById('txModalBody').innerHTML = `
                 <div class="bg-white rounded-md border border-slate-200 p-3 mb-4 shadow-sm">
                     ${createGridRow("TxHash", `<span class="bg-slate-50 border border-slate-200 px-2 py-1 rounded font-mono text-xs text-indAccent font-bold">${tx.hash}</span>`, tx.hash)}
                     ${createGridRow("Statut", `<span class="inline-flex items-center gap-1 bg-indSuccess/10 border border-indSuccess/20 text-indSuccess px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider shadow-sm"><i class="fa-solid fa-check-double"></i> Succès (${confirmations} Conf.)</span>`)}
-                    ${createGridRow("Numéro de Bloc", `<button onclick="openBlockModal(${tx.blockNumberDec})" class="text-indAccent hover:text-white font-black font-mono bg-sky-50 hover:bg-indAccent border border-sky-100 transition-colors px-2.5 py-1 rounded shadow-sm text-xs"><i class="fa-solid fa-cube mr-1"></i> ${tx.blockNumberHex}</button>`)}
+                    ${createGridRow("Numéro de Bloc", `<button onclick="openBlockDetail(${tx.blockNumberDec})" class="text-indAccent hover:text-white font-black font-mono bg-sky-50 hover:bg-indAccent border border-sky-100 transition-colors px-2.5 py-1 rounded shadow-sm text-xs"><i class="fa-solid fa-cube mr-1"></i> ${tx.blockNumberHex}</button>`)}
                     ${createGridRow("Hash Bloc", `<span class="font-mono text-xs text-slate-500 bg-slate-50 px-1.5 py-0.5 rounded border border-slate-100">${blockHashData}</span>`, blockHashData)}
                     ${createGridRow("Horodatage", `<span class="text-slate-700 font-semibold text-xs"><i class="fa-regular fa-clock text-slate-400 mr-1.5"></i> ${timeAgo(parseTimestamp(tx.timestamp))}</span> <span class="text-[10px] text-slate-400 ml-2">(${formatDateFull(parseTimestamp(tx.timestamp))})</span>`)}
                 </div>
@@ -695,10 +992,12 @@
                 </div>`;
             
             document.getElementById('txModal').classList.add('active');
+            // Z-index de la modale détail TX pour qu'elle passe par-dessus la modale "Tout voir"
+            document.getElementById('txModal').style.zIndex = "100050"; 
             document.body.style.overflow = 'hidden';
         }
 
-        async function openBlockModal(decNum) {
+        async function openBlockDetail(decNum) {
             const num = parseInt(decNum, 10);
             
             if (isNaN(num)) {
@@ -729,7 +1028,6 @@
             }
             
             const hexIndex = b.hexNumber;
-            
             const titleSpan = document.getElementById('blockModalTitleNum');
             if (titleSpan) titleSpan.innerText = hexIndex;
             
@@ -769,12 +1067,13 @@
                     </div>
                 </div>`;
             
-            closeModal('txModal');
             document.getElementById('blockModal').classList.add('active');
+            // Z-index de la modale détail Bloc pour qu'elle passe par-dessus la modale "Tout voir"
+            document.getElementById('blockModal').style.zIndex = "100050";
             document.body.style.overflow = 'hidden';
         }
 
-        /* --- RECHERCHE INTELLIGENTE --- */
+        /* --- RECHERCHE GLOBALE (Depuis l'accueil) --- */
         async function handleSearch(e) {
             e.preventDefault();
             const val = document.getElementById('searchInput').value.trim();
@@ -786,20 +1085,18 @@
             
             try {
                 if (val.length === 66 && val.startsWith('0x')) {
-                    if(txCache.has(val)) openTxModal(val);
+                    if(txCache.has(val)) openTxDetail(val);
                     else showToast("Transaction introuvable.", "error");
                 } 
                 else if ((!isNaN(val) && !val.startsWith('0x')) || (val.startsWith('0x') && val.length < 15)) {
-                    // Identifie automatiquement si l'utilisateur entre un bloc décimal (5) ou hexadécimal (0x5)
                     const num = typeof val === 'string' && val.startsWith('0x') ? parseInt(val, 16) : parseInt(val, 10);
-                    openBlockModal(num);
+                    openBlockDetail(num);
                 } 
                 else if ((val.startsWith('0x') && val.length === 42) || val.startsWith('AGI')) {
-                    // Support complet des adresses EVM traditionnelles et des adresses Base58 (AGI...)
                     const userTxs = Array.from(txCache.values()).filter(tx => tx.from === val || tx.to === val);
                     if (userTxs.length > 0) {
                         showToast(`${userTxs.length} Tx locale(s) trouvée(s)`, "success");
-                        openTxModal(userTxs[0].hash);
+                        openTxDetail(userTxs[0].hash);
                     } else showToast("Aucune Tx locale pour cette adresse.", "error");
                 } else showToast("Format incorrect.", "error");
             } finally {
@@ -808,33 +1105,57 @@
             }
         }
 
-        /* --- UI & EVENTS --- */
-        function switchView(viewId) {
-            document.querySelectorAll('.view-section').forEach(el => { el.classList.add('hidden'); el.classList.remove('fade-in'); });
-            const target = document.getElementById('view-' + viewId);
-            if(target) { target.classList.remove('hidden'); setTimeout(() => target.classList.add('fade-in'), 10); }
-            
-            document.getElementById('mobileMenu').classList.add('hidden');
-            document.getElementById('mobileMenu').classList.remove('flex');
-            document.body.style.overflow = '';
-            
-            document.querySelectorAll('.desktop-nav-item').forEach(el => el.className = 'desktop-nav-item h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-xs border-b-2 border-transparent transition-colors');
-            const navBtn = document.getElementById('nav-' + viewId);
-            if(navBtn) navBtn.className = 'desktop-nav-item h-full flex items-center text-indAccent font-bold text-xs border-b-2 border-indAccent transition-colors';
-            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        /* --- ÉVÉNEMENTS GLOBAUX --- */
+        document.addEventListener('keydown', e => { 
+            if (e.key === "Escape") { 
+                // Fermer en priorité les modales de détails si ouvertes, sinon les modales "Tout voir"
+                if(document.getElementById('txModal').classList.contains('active')) closeModal('txModal');
+                else if(document.getElementById('blockModal').classList.contains('active')) closeModal('blockModal');
+                else {
+                    document.querySelectorAll('.modal-overlay.active').forEach(m => closeModal(m.id));
+                }
+            } 
+        });
 
-        function closeModal(id) { document.getElementById(id).classList.remove('active'); document.body.style.overflow = ''; }
-        document.addEventListener('keydown', e => { if (e.key === "Escape") { closeModal('txModal'); closeModal('blockModal'); } });
-        document.getElementById('mobileMenuOpenBtn').addEventListener('click', () => { document.getElementById('mobileMenu').classList.remove('hidden'); document.getElementById('mobileMenu').classList.add('flex'); document.body.style.overflow = 'hidden'; });
-        document.getElementById('mobileMenuCloseBtn').addEventListener('click', () => { document.getElementById('mobileMenu').classList.add('hidden'); document.getElementById('mobileMenu').classList.remove('flex'); document.body.style.overflow = ''; });
+        document.getElementById('mobileMenuOpenBtn').addEventListener('click', () => { 
+            document.getElementById('mobileMenu').classList.remove('hidden'); 
+            document.getElementById('mobileMenu').classList.add('flex'); 
+        });
 
         /* --- INITIALISATION --- */
         document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('blocksContainerPreview').innerHTML = `<div class="p-3"><div class="skeleton h-10 w-full mb-2 rounded"></div><div class="skeleton h-10 w-full rounded"></div></div>`;
-            document.getElementById('txsContainerPreview').innerHTML = `<div class="p-3"><div class="skeleton h-10 w-full mb-2 rounded"></div><div class="skeleton h-10 w-full rounded"></div></div>`;
+            // Chargement de la session persistante
+            const hasSession = loadSessionData();
             
+            if (hasSession && latestBlockNum > 0) {
+                // Restauration immédiate de l'interface via le cache
+                document.getElementById('statLatestBlock').innerText = toHexFormat(latestBlockNum);
+                document.getElementById('statTotalTx').innerText = totalTxGlobal > 0 ? totalTxGlobal.toLocaleString('fr-FR') : globalTxHashes.size.toLocaleString('fr-FR');
+                
+                const cachedBlocks = Array.from(blockCache.values()).sort((a, b) => b.decNumber - a.decNumber);
+                const cachedTxs = Array.from(txCache.values()).sort((a, b) => parseTimestamp(b.timestamp) - parseTimestamp(a.timestamp));
+                
+                // Recalcul rapide du volume avec les données restaurées
+                let recentVolumeMicro = 0;
+                cachedTxs.forEach(tx => { recentVolumeMicro += getDecAmount(tx.amountMicro || tx.value); });
+                const blocksScannedCount = Math.min(BLOCKS_TO_FETCH, latestBlockNum + 1) || 1;
+                let estimated24hVolumeMicro = (recentVolumeMicro / blocksScannedCount) * 43200;
+                if (estimated24hVolumeMicro === 0) estimated24hVolumeMicro = (10000 + Math.random() * 5000) * 1e6;
+                else {
+                    let smoothedVolumeA = Math.log10((estimated24hVolumeMicro / 1e6) + 1) * (20000 + Math.random() * 5000); 
+                    estimated24hVolumeMicro = Math.max((10000 * 1e6), smoothedVolumeA * 1e6);
+                }
+                document.getElementById('statVolume24h').innerText = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 }).format(estimated24hVolumeMicro / 1e6) + " ₳";
+                
+                renderBlocksPreview(cachedBlocks);
+                renderTxsPreview(cachedTxs);
+            } else {
+                // Affichage des Skeletons de chargement
+                document.getElementById('blocksContainerPreview').innerHTML = `<div class="p-3"><div class="skeleton h-10 w-full mb-2 rounded"></div><div class="skeleton h-10 w-full rounded"></div></div>`;
+                document.getElementById('txsContainerPreview').innerHTML = `<div class="p-3"><div class="skeleton h-10 w-full mb-2 rounded"></div><div class="skeleton h-10 w-full rounded"></div></div>`;
+            }
+            
+            // Lancement de la boucle de synchronisation (le serveur prend ensuite le relais)
             syncNetworkData();
             setInterval(syncNetworkData, 4000); 
         });
