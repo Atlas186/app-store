@@ -95,14 +95,14 @@
         <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-14">
                 <!-- Logo & Brand -->
-                <a href="index.html" class="flex items-center gap-2 cursor-pointer group">
+                <a href="NexusScan.html" class="flex items-center gap-2 cursor-pointer group">
                     <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo" class="h-7 w-7 rounded-full border border-indBorder object-cover shadow-sm group-hover:border-indAccent transition-colors">
                     <span class="font-extrabold text-lg tracking-tight text-premiumDark">NEXUS<span class="text-indAccent">SCAN</span></span>
                 </a>
 
                 <!-- Desktop Navigation -->
                 <nav class="hidden md:flex space-x-6 items-center">
-                    <a href="index.html" class="text-indTextMuted hover:text-premiumDark font-semibold text-13px transition-colors py-4"><i class="fa-solid fa-house mr-1"></i> Accueil</a>
+                    <a href="NexusScan.html" class="text-indTextMuted hover:text-premiumDark font-semibold text-13px transition-colors py-4"><i class="fa-solid fa-house mr-1"></i> Accueil</a>
                     <a href="documentation.html" class="text-indTextMuted hover:text-premiumDark font-semibold text-13px transition-colors py-4"><i class="fa-solid fa-book mr-1"></i> Documentation</a>
                     <a href="api.html" class="text-indAccent font-bold text-13px border-b-2 border-indAccent py-4"><i class="fa-solid fa-server mr-1"></i> API RPC</a>
                 </nav>
@@ -123,9 +123,10 @@
 
         <!-- Mobile Menu -->
         <div id="mobileMenu" class="hidden md:hidden bg-indCard border-b border-indBorder px-4 pt-2 pb-4 shadow-lg absolute w-full z-50">
-            <a href="NexusScan.html" class="block py-2.5 text-indTextMuted font-semibold text-13px border-b border-indBorder"><i class="fa-solid fa-house w-6 text-center"></i> </a>
+            <a href="NexusScan.html" class="block py-2.5 text-indTextMuted font-semibold text-13px border-b border-indBorder"><i class="fa-solid fa-house w-6 text-center"></i> Accueil</a>
             <a href="documentation.html" class="block py-2.5 text-indTextMuted font-semibold text-13px border-b border-indBorder"><i class="fa-solid fa-book w-6 text-center"></i> Documentation</a>
             <a href="api.html" class="block py-2.5 text-indAccent font-bold text-13px bg-sky-50 px-2 rounded mt-1"><i class="fa-solid fa-server w-6 text-center"></i> API RPC</a>
+            <a href="support.html" class="block py-2.5 text-indTextMuted font-semibold text-13px border-b border-indBorder mt-1"><i class="fa-solid fa-headset w-6 text-center"></i> Support B2B</a>
         </div>
     </header>
 
@@ -157,53 +158,7 @@
     <!-- ========================================== -->
     <main class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full flex flex-col lg:flex-row gap-8">
         
-        <!-- SIDEBAR (Navigation Rapide Compacte) -->
-        <aside class="w-full lg:w-60 shrink-0">
-            <div class="lg:sticky lg:top-20 bg-indCard rounded-lg border border-indBorder p-4 shadow-sm">
-                <h3 class="font-black text-premiumDark uppercase tracking-widest text-[10px] mb-4 border-b border-indBorder pb-2">Sommaire d'Intégration</h3>
-                
-                <div class="space-y-5">
-                    <!-- Config -->
-                    <div>
-                        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Configuration</p>
-                        <ul class="space-y-1.5 text-xs font-medium text-slate-600">
-                            <li><a href="#endpoints" class="hover:text-indAccent transition-colors flex items-center gap-2"><i class="fa-solid fa-network-wired w-3 text-center"></i> Environnements (URL)</a></li>
-                            <li><a href="#auth" class="hover:text-indAccent transition-colors flex items-center gap-2"><i class="fa-solid fa-shield-halved w-3 text-center"></i> Sécurité & SLA</a></li>
-                        </ul>
-                    </div>
-
-                    <!-- Methods -->
-                    <div>
-                        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Méthodes JSON-RPC</p>
-                        <ul class="space-y-1.5 text-xs font-medium text-slate-600 border-l-2 border-slate-100 ml-1.5 pl-2.5">
-                            <li><a href="#nexus-blocknumber" class="hover:text-indAccent transition-colors block truncate">nexus_blockNumber</a></li>
-                            <li><a href="#nexus-getbalance" class="hover:text-indAccent transition-colors block truncate">nexus_getBalance</a></li>
-                            <li><a href="#nexus-estimategas" class="hover:text-indAccent transition-colors block flex items-center justify-between">nexus_estimateGas <span class="bg-indAccent/10 text-indAccent text-[8px] px-1 rounded">New</span></a></li>
-                            <li><a href="#nexus-sendrawtransaction" class="hover:text-indAccent transition-colors block truncate">nexus_sendRawTransaction</a></li>
-                            <li><a href="#nexus-getreceipt" class="hover:text-indAccent transition-colors block truncate">nexus_getTransactionReceipt</a></li>
-                        </ul>
-                    </div>
-
-                    <!-- WebSockets -->
-                    <div>
-                        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Temps Réel</p>
-                        <ul class="space-y-1.5 text-xs font-medium text-slate-600">
-                            <li><a href="#websockets" class="hover:text-indAccent transition-colors flex items-center gap-2"><i class="fa-solid fa-plug w-3 text-center"></i> WebSockets (WSS)</a></li>
-                        </ul>
-                    </div>
-
-                    <!-- Annexes -->
-                    <div>
-                        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Annexes</p>
-                        <ul class="space-y-1.5 text-xs font-medium text-slate-600">
-                            <li><a href="#errors" class="hover:text-indAccent transition-colors flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation w-3 text-center"></i> Codes d'Erreur</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </aside>
-
-        <!-- CONTENU PRINCIPAL (Documentation Dense) -->
+        <!-- CONTENU PRINCIPAL (Documentation Dense - Désormais à gauche) -->
         <div class="flex-1 min-w-0 pb-16">
             
             <!-- SECTION : Environnements -->
@@ -525,33 +480,101 @@ web3.eth.sendSignedTransaction(signedTx.rawTransaction)
             </section>
 
         </div>
+
+        <!-- SIDEBAR (Menu Latéral Droit) -->
+        <aside class="w-full lg:w-60 shrink-0">
+            <div class="lg:sticky lg:top-20 bg-indCard rounded-lg border border-indBorder p-4 shadow-sm">
+                <h3 class="font-black text-premiumDark uppercase tracking-widest text-[10px] mb-4 border-b border-indBorder pb-2">Sommaire d'Intégration</h3>
+                
+                <div class="space-y-5">
+                    <!-- Navigation Générale Ajoutée -->
+                    <div>
+                        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Navigation Générale</p>
+                        <ul class="space-y-1.5 text-xs font-medium text-slate-600 border-b border-slate-100 pb-4">
+                            <li><a href="NexusScan.html" class="hover:text-indAccent transition-colors flex items-center gap-2"><i class="fa-solid fa-house w-3 text-center"></i> Accueil (Scan)</a></li>
+                            <li><a href="documentation.html" class="hover:text-indAccent transition-colors flex items-center gap-2"><i class="fa-solid fa-book w-3 text-center"></i> Documentation</a></li>
+                            <li><a href="support.html" class="hover:text-indAccent transition-colors flex items-center gap-2"><i class="fa-solid fa-headset w-3 text-center"></i> Support B2B</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Config -->
+                    <div>
+                        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 mt-2">Configuration</p>
+                        <ul class="space-y-1.5 text-xs font-medium text-slate-600">
+                            <li><a href="#endpoints" class="hover:text-indAccent transition-colors flex items-center gap-2"><i class="fa-solid fa-network-wired w-3 text-center"></i> Environnements (URL)</a></li>
+                            <li><a href="#auth" class="hover:text-indAccent transition-colors flex items-center gap-2"><i class="fa-solid fa-shield-halved w-3 text-center"></i> Sécurité & SLA</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Methods -->
+                    <div>
+                        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Méthodes JSON-RPC</p>
+                        <ul class="space-y-1.5 text-xs font-medium text-slate-600 border-l-2 border-slate-100 ml-1.5 pl-2.5">
+                            <li><a href="#nexus-blocknumber" class="hover:text-indAccent transition-colors block truncate">nexus_blockNumber</a></li>
+                            <li><a href="#nexus-getbalance" class="hover:text-indAccent transition-colors block truncate">nexus_getBalance</a></li>
+                            <li><a href="#nexus-estimategas" class="hover:text-indAccent transition-colors block flex items-center justify-between">nexus_estimateGas <span class="bg-indAccent/10 text-indAccent text-[8px] px-1 rounded">New</span></a></li>
+                            <li><a href="#nexus-sendrawtransaction" class="hover:text-indAccent transition-colors block truncate">nexus_sendRawTransaction</a></li>
+                            <li><a href="#nexus-getreceipt" class="hover:text-indAccent transition-colors block truncate">nexus_getTransactionReceipt</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- WebSockets -->
+                    <div>
+                        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Temps Réel</p>
+                        <ul class="space-y-1.5 text-xs font-medium text-slate-600">
+                            <li><a href="#websockets" class="hover:text-indAccent transition-colors flex items-center gap-2"><i class="fa-solid fa-plug w-3 text-center"></i> WebSockets (WSS)</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Annexes -->
+                    <div>
+                        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Annexes</p>
+                        <ul class="space-y-1.5 text-xs font-medium text-slate-600">
+                            <li><a href="#errors" class="hover:text-indAccent transition-colors flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation w-3 text-center"></i> Codes d'Erreur</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
     </main>
 
     <!-- ========================================== -->
     <!-- 4. FOOTER INDUSTRIEL COMPACT               -->
     <!-- ========================================== -->
-    <footer class="bg-premiumDark border-t border-slate-800 mt-auto pt-10 pb-8">
-        <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
+    <footer class="bg-premiumDark border-t border-slate-800 pt-10 pb-8 mt-auto z-10 w-full flex flex-col items-center justify-center relative overflow-hidden">
+        <!-- Effet de fond subtil -->
+        <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 20px 20px;"></div>
+        
+        <div class="w-full max-w-3xl mx-auto px-4 flex flex-col items-center justify-center text-center relative z-10">
             
-            <div class="flex items-center gap-3 mb-6">
-                <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo Atlas & Duc" class="h-10 w-10 rounded-full border border-slate-700 shadow-xl">
-                <div class="text-left">
-                    <h4 class="text-white font-black text-base tracking-tight leading-none mb-1">Atlas & Duc Corp.</h4>
-                    <p class="text-slate-400 text-[10px] font-medium uppercase tracking-widest">Infrastructure Layer-1</p>
+            <!-- Logo & Brand (Centré) -->
+            <div class="flex flex-col items-center justify-center gap-3 mb-6">
+                <!-- J'ai conservé l'image de l'API pour cohérence avec le header, mais appliqué le style du footer Nexus Scan -->
+                <img src="https://i.imgur.com/Tc7Jzx3.jpeg" alt="Logo Atlas & Duc" class="h-14 w-14 rounded-full border-2 border-slate-700 shadow-lg object-cover">
+                <div class="flex flex-col items-center justify-center">
+                    <h4 class="text-white font-black text-sm md:text-base tracking-widest uppercase leading-none mb-1.5">Atlas & Duc Corporation</h4>
+                    <span class="text-indAccent text-[9px] font-bold tracking-[0.2em] uppercase">Infrastructure WEB3 Industrielle</span>
                 </div>
             </div>
-
-            <div class="flex flex-wrap justify-center gap-6 text-xs font-semibold text-slate-400 border-b border-slate-800 pb-6 w-full max-w-md mb-6">
-                <a href="documentation.html" class="hover:text-indAccent transition-colors"><i class="fa-solid fa-book mr-1"></i> Docs</a>
-                <a href="api.html" class="text-indAccent transition-colors"><i class="fa-solid fa-server mr-1"></i> API RPC</a>
-                <a href="support.html" class="hover:text-indAccent transition-colors"><i class="fa-solid fa-headset mr-1"></i> Support B2B</a>
+            
+            <!-- Liens de Navigation (Centrés) -->
+            <div class="flex flex-wrap items-center justify-center gap-5 md:gap-8 text-[11px] font-bold text-slate-400 w-full mb-6">
+                <a href="NexusScan.html" class="hover:text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-house"></i> Accueil</a>
+                <a href="documentation.html" class="hover:text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-book"></i> DOCS.</a>
+                <a href="api.html" class="hover:text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-server"></i> API RPC</a>
+                <a href="support.html" class="hover:text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-headset"></i> Support</a>
             </div>
-
-            <div class="flex items-center gap-2 bg-slate-800/60 px-3 py-1.5 rounded border border-slate-700 shadow-inner mb-3">
-                <div class="w-1.5 h-1.5 rounded-full bg-indSuccess live-pulse"></div>
-                <span class="text-slate-300 font-bold uppercase tracking-widest text-[8px]">Système L1 Opérationnel</span>
+            
+            <!-- Mentions Légales et Statut (Centrées) -->
+            <div class="flex flex-col items-center justify-center border-t border-slate-800/80 w-full pt-5 max-w-sm">
+                <div class="flex items-center justify-center gap-2 mb-2 bg-slate-900/50 px-3 py-1 rounded-full border border-slate-800">
+                    <div class="w-1.5 h-1.5 rounded-full bg-indSuccess live-pulse"></div>
+                    <p class="text-[9px] text-slate-400 font-bold uppercase tracking-widest">Connecté via Nœud Local</p>
+                </div>
+                <p class="text-[9px] text-slate-600 font-bold tracking-wider">&copy; 2026 Atlas & Duc Corporation. Tous droits réservés.</p>
             </div>
-            <p class="text-[9px] text-slate-500 font-medium">&copy; 2026 Atlas & Duc Corporation. Burkina Faso. Tous droits réservés.</p>
+            
         </div>
     </footer>
 
