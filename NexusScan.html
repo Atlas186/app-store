@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Nexus Scan | Explorateur L1 Industriel | Atlas & Duc Corp.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encyclopédie L1 Core | Atlas & Duc Developer Portal</title>
     
-    <!-- Polices Industrielles -->
+    <!-- Polices Industrielles (Chasse fixe & Sans-serif) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -20,286 +20,534 @@
             theme: {
                 extend: {
                     colors: {
-                        premiumDark: '#030712', /* Plus profond pour un contraste terminal */
-                        indAccent: '#0284C7', /* Bleu industriel plus saturé */
-                        indSuccess: '#059669', /* Vert émeraude institutionnel */
+                        premiumDark: '#030712', /* Noir absolu industriel */
+                        indAccent: '#0284C7', /* Bleu technique profond */
+                        indSuccess: '#059669', /* Vert émeraude de validation */
+                        indWarning: '#D97706',
                         indBg: '#F8FAFC',
                         indCard: '#FFFFFF',
-                        indBorder: '#CBD5E1',
-                        indTextMuted: '#64748B'
+                        indBorder: '#CBD5E1', /* Bordure plus nette */
+                        indTextMuted: '#475569'
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                         mono: ['Fira Code', 'monospace']
                     },
                     fontSize: {
-                        'xxs': '0.55rem',  /* Extrême densité */
-                        'xs': '0.65rem',   /* Standard data */
-                        'sm': '0.75rem',   /* Standard text */
-                        'base': '0.825rem',
-                        'lg': '0.9rem',
-                        'xl': '1.05rem',
-                        '2xl': '1.25rem',
-                        '3xl': '1.5rem',
+                        'xxs': '0.6rem',
+                        'xs': '0.7rem',
+                        '13px': '0.785rem',
+                        'sm': '0.85rem',
+                        'base': '0.95rem',
+                        'lg': '1.05rem',
+                        'xl': '1.15rem',
+                        '2xl': '1.35rem',
+                        '3xl': '1.6rem',
                     },
                     letterSpacing: {
-                        tighter: '-0.02em',
-                        tight: '-0.01em',
+                        tighter: '-0.03em',
+                        tight: '-0.015em',
                         normal: '0',
                         wide: '0.025em',
                         wider: '0.05em',
-                        widest: '0.1em',
+                        widest: '0.12em',
                     }
                 }
             }
         }
     </script>
     <style>
-        /* Animations & Transitions */
-        .fade-in { animation: fadeIn 0.3s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-        
+        /* Animations & Scrollbar Ultra-Fine */
         .live-pulse { animation: pulseGreen 2s infinite; }
-        @keyframes pulseGreen { 0% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.4); } 70% { box-shadow: 0 0 0 4px rgba(5, 150, 105, 0); } 100% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0); } }
+        @keyframes pulseGreen { 0% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.4); } 70% { box-shadow: 0 0 0 3px rgba(5, 150, 105, 0); } 100% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0); } }
         
-        /* Skeleton Loader Industriel */
-        .skeleton {
-            background: #e2e8f0;
-            background-image: linear-gradient(90deg, #e2e8f0 0px, #f1f5f9 40px, #e2e8f0 80px);
-            background-size: 200% 100%;
-            animation: shimmer 1.2s infinite linear;
-        }
-        .skeleton-dark {
-            background: #1e293b;
-            background-image: linear-gradient(90deg, #1e293b 0px, #334155 40px, #1e293b 80px);
-            background-size: 200% 100%;
-            animation: shimmer 1.2s infinite linear;
-        }
-        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
-
-        /* Scrollbar Premium Dense */
         ::-webkit-scrollbar { width: 4px; height: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #94A3B8; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #64748B; }
 
-        /* Modales Plein Écran Premium */
+        /* Typographie de Documentation (Encyclopédique & Dense) */
+        .doc-prose { color: #1E293B; font-size: 0.785rem; line-height: 1.6; }
+        .doc-prose h2 { font-size: 1.25rem; font-weight: 900; color: #030712; margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.25rem; border-bottom: 1px solid #E2E8F0; letter-spacing: -0.02em; }
+        .doc-prose h3 { font-size: 0.95rem; font-weight: 800; color: #0F172A; margin-top: 1.5rem; margin-bottom: 0.6rem; letter-spacing: -0.01em; }
+        .doc-prose h4 { font-size: 0.8rem; font-weight: 700; color: #334155; margin-top: 1rem; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .doc-prose p { margin-bottom: 1rem; text-align: justify; }
+        
+        .doc-prose ul { list-style-type: none; padding-left: 0; margin-bottom: 1rem; }
+        .doc-prose ul li { margin-bottom: 0.35rem; position: relative; padding-left: 1rem; }
+        .doc-prose ul li::before { content: '■'; position: absolute; left: 0; top: 0.15rem; color: #0284C7; font-size: 0.5rem; }
+        
+        .doc-prose table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; font-size: 0.7rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); border: 1px solid #CBD5E1; }
+        .doc-prose th { background-color: #F8FAFC; text-align: left; padding: 0.5rem 0.75rem; border: 1px solid #CBD5E1; color: #0F172A; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; }
+        .doc-prose td { padding: 0.5rem 0.75rem; border: 1px solid #E2E8F0; color: #334155; vertical-align: top; }
+        
+        .doc-prose .highlight { color: #0284C7; font-weight: 700; background: #F0F9FF; padding: 1px 4px; border-radius: 2px; border: 1px solid #BAE6FD; }
+        .doc-prose code:not(pre code) { background-color: #F1F5F9; padding: 0.1rem 0.3rem; border-radius: 0.2rem; font-family: 'Fira Code', monospace; font-size: 0.65rem; color: #0369A1; border: 1px solid #CBD5E1; font-weight: 600; }
+
+        /* Blocs de Code Ultra-Premium (IDE Style) */
+        .dev-code-block { background-color: #0d1117; border: 1px solid #30363d; border-radius: 4px; overflow: hidden; margin-bottom: 1.25rem; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .dev-code-header { background-color: #161b22; border-bottom: 1px solid #30363d; padding: 6px 12px; display: flex; justify-content: space-between; align-items: center; }
+        .dev-code-body { padding: 12px; overflow-x: auto; font-family: 'Fira Code', monospace; font-size: 0.65rem; line-height: 1.5; color: #c9d1d9; }
+        
+        /* Syntax Highlighting GitHub Dark Dimmed */
+        .syntax-key { color: #79c0ff; }
+        .syntax-string { color: #a5d6ff; }
+        .syntax-number { color: #79c0ff; }
+        .syntax-keyword { color: #ff7b72; font-weight: 600; }
+        .syntax-comment { color: #8b949e; font-style: italic; }
+        .syntax-type { color: #ffa657; }
+        .syntax-func { color: #d2a8ff; }
+        .syntax-op { color: #c9d1d9; }
+
+        /* Sidebar active link */
+        .nav-link.active { color: #0284C7; font-weight: 800; border-left-color: #0284C7; background-color: #F0F9FF; }
+        
+        /* Blur effect for sticky headers */
+        .glass-header { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(8px); }
+
+        /* Modales Plein Écran Premium - CORRIGÉ */
         .modal-overlay { 
-            opacity: 0; visibility: hidden; pointer-events: none; 
-            transition: opacity 0.2s ease, visibility 0.2s ease; 
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0; 
+            visibility: hidden; 
+            pointer-events: none; 
+            transition: opacity 0.3s ease, visibility 0.3s ease; 
             background-color: rgba(3, 7, 18, 0.85); 
             backdrop-filter: blur(4px); 
+            z-index: 100000; /* Z-index de base très élevé */
         }
-        .modal-overlay.active { opacity: 1; visibility: visible; pointer-events: auto; z-index: 100000; }
+        .modal-overlay.active { 
+            opacity: 1; 
+            visibility: visible; 
+            pointer-events: auto; 
+        }
         .modal-content { 
-            transform: scale(0.98) translateY(10px); opacity: 0; 
+            transform: scale(0.98) translateY(10px); 
+            opacity: 0; 
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease; 
             background: #F8FAFC; 
+            max-height: 90vh; /* Empêche la modale de dépasser de l'écran */
+            display: flex;
+            flex-direction: column;
         }
-        .modal-overlay.active .modal-content { transform: scale(1) translateY(0); opacity: 1; }
+        .modal-overlay.active .modal-content { 
+            transform: scale(1) translateY(0); 
+            opacity: 1; 
+        }
         .hash-break { word-break: break-all; overflow-wrap: anywhere; }
-
-        /* Toasts Premium */
-        #toast-container { position: fixed; bottom: 15px; right: 15px; z-index: 999999; display: flex; flex-direction: column; gap: 4px; }
-        .toast { background: #030712; color: white; padding: 8px 12px; border-radius: 4px; border: 1px solid #1e293b; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); font-size: 0.7rem; font-weight: 600; display: flex; align-items: center; gap: 8px; border-left: 2px solid #0284C7; animation: slideIn 0.2s forwards, fadeOut 0.2s ease-in 3.5s forwards; }
-        .toast.success { border-left-color: #059669; }
-        .toast.error { border-left-color: #DC2626; }
-        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        @keyframes fadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(10px); } }
-        
-        /* Application globale de la densité */
-        td, th { padding-top: 0.4rem; padding-bottom: 0.4rem; padding-left: 0.75rem; padding-right: 0.75rem; }
     </style>
 </head>
 <body class="bg-indBg text-premiumDark font-sans antialiased flex flex-col min-h-screen tracking-tight">
 
-    <!-- NAVIGATION PRINCIPALE ULTRA-COMPACTE -->
-    <header class="bg-white border-b border-indBorder sticky top-0 z-40 shadow-sm">
+    <!-- ========================================== -->
+    <!-- 1. NAVIGATION BAR                          -->
+    <!-- ========================================== -->
+    <header class="glass-header border-b border-indBorder sticky top-0 z-50 shadow-sm">
         <div class="max-w-[100rem] mx-auto px-2 sm:px-4 lg:px-6">
-            <div class="flex justify-between items-center h-10">
-                <div class="flex items-center gap-2 cursor-pointer select-none group" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
-                    <div class="h-6 w-6 rounded flex items-center justify-center bg-premiumDark border border-slate-700 overflow-hidden">
-                        <img src="https://i.imgur.com/9pIdsgM.jpeg" alt="Logo" class="w-full h-full object-cover">
-                    </div>
-                    <span class="font-extrabold text-sm tracking-tighter text-premiumDark">NEXUS<span class="text-indAccent">SCAN</span></span>
-                </div>
+            <div class="flex justify-between items-center h-12">
+                
+                <a href="NexusScan.html" class="flex items-center gap-2 cursor-pointer group">
+                    <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo" class="h-6 w-6 rounded border border-slate-300 object-cover shadow-sm group-hover:border-indAccent transition-colors">
+                    <span class="font-extrabold text-base tracking-tighter text-premiumDark">NEXUS<span class="text-indAccent">SCAN</span></span>
+                </a>
 
-                <nav class="hidden md:flex space-x-6 items-center h-full">
-                    <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="h-full flex items-center text-indAccent font-bold text-[0.7rem] border-b-2 border-indAccent transition-colors"><i class="fa-solid fa-house mr-1"></i> Accueil</button>
-                    <button onclick="openFullModal('allBlocksModal')" class="h-full flex items-center text-slate-500 hover:text-premiumDark font-semibold text-[0.7rem] border-b-2 border-transparent hover:border-slate-300 transition-colors"><i class="fa-solid fa-cubes mr-1"></i> Blocs L1</button>
-                    <button onclick="openFullModal('allTxsModal')" class="h-full flex items-center text-slate-500 hover:text-premiumDark font-semibold text-[0.7rem] border-b-2 border-transparent hover:border-slate-300 transition-colors"><i class="fa-solid fa-list-ul mr-1"></i> Transactions</button>
+                <nav class="hidden md:flex space-x-5 items-center h-full">
+                    <a href="NexusScan.html" class="h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-xs border-b-2 border-transparent hover:border-slate-300 transition-colors"><i class="fa-solid fa-house mr-1.5"></i> Explorateur</a>
+                    <a href="documentation.html" class="h-full flex items-center text-indAccent font-bold text-xs border-b-2 border-indAccent"><i class="fa-solid fa-book-journal-whills mr-1.5"></i> Encyclopédie L1</a>
+                    <a href="api.html" class="h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-xs border-b-2 border-transparent hover:border-slate-300 transition-colors"><i class="fa-solid fa-server mr-1.5"></i> API RPC</a>
+                    <a href="support.html" class="h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-xs border-b-2 border-transparent hover:border-slate-300 transition-colors"><i class="fa-solid fa-headset mr-1.5"></i> Opérations B2B</a>
                 </nav>
 
                 <div class="flex items-center gap-2">
-                    <div class="hidden sm:flex items-center gap-1.5 bg-slate-50 border border-slate-200 px-2 py-1 rounded shadow-sm" id="networkStatusIndicator">
-                        <div class="w-1.5 h-1.5 rounded-full bg-indSuccess live-pulse"></div>
-                        <span class="text-[0.6rem] font-bold text-indSuccess tracking-widest uppercase">L1 Live</span>
+                    <div class="hidden sm:flex items-center gap-1.5 bg-[#030712] border border-slate-700 px-2 py-1 rounded shadow-inner text-white">
+                        <div class="w-1 h-1 rounded-full bg-indSuccess live-pulse"></div>
+                        <span class="text-[0.55rem] font-bold tracking-widest uppercase">Nexus Mainnet</span>
                     </div>
-                    <button id="mobileMenuOpenBtn" class="md:hidden text-slate-600 hover:text-indAccent text-sm p-1 transition-colors"><i class="fa-solid fa-bars"></i></button>
+                    <button id="mobileMenuBtn" class="md:hidden text-slate-600 hover:text-indAccent focus:outline-none text-lg">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
                 </div>
             </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-b border-indBorder px-4 pt-1 pb-3 shadow-lg absolute w-full z-50">
+            <a href="NexusScan.html" class="block py-2 text-slate-600 font-semibold text-xs border-b border-slate-100"><i class="fa-solid fa-house w-5 text-center"></i> Explorateur</a>
+            <a href="documentation.html" class="block py-2 text-indAccent font-bold text-xs bg-sky-50 px-2 rounded mt-1 border-l-2 border-indAccent"><i class="fa-solid fa-book-journal-whills w-5 text-center"></i> Encyclopédie</a>
+            <a href="api.html" class="block py-2 text-slate-600 font-semibold text-xs border-b border-slate-100 mt-1"><i class="fa-solid fa-server w-5 text-center"></i> API RPC</a>
         </div>
     </header>
 
-    <!-- MENU MOBILE -->
-    <div id="mobileMenu" class="fixed inset-0 bg-white z-50 hidden flex-col">
-        <div class="flex justify-between items-center p-3 border-b border-indBorder shadow-sm bg-white">
-            <div class="flex items-center gap-2">
-                <img src="https://i.imgur.com/9pIdsgM.jpeg" alt="Logo" class="w-6 h-6 rounded border border-slate-200">
-                <span class="font-extrabold text-sm tracking-tighter text-premiumDark">NEXUS<span class="text-indAccent">SCAN</span></span>
+    <!-- ========================================== -->
+    <!-- 2. LAYOUT DOCUMENTATION ENCYCLOPÉDIQUE     -->
+    <!-- ========================================== -->
+    <div class="max-w-[100rem] mx-auto w-full flex-grow flex flex-col lg:flex-row bg-white">
+        
+        <!-- CONTENU PRINCIPAL (DENSE DATA) -->
+        <main class="flex-1 min-w-0 p-4 lg:p-10 doc-prose pb-24 border-r border-slate-200">
+            
+            <div class="mb-8 border-b border-slate-200 pb-6">
+                <div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-indAccent/10 border border-indAccent/20 text-indAccent text-[0.55rem] font-black mb-3 uppercase tracking-widest">
+                    <i class="fa-solid fa-microchip"></i> Encyclopédie Core L1 - Build 2.4.0 (Octobre 2026)
+                </div>
+                <h1 class="text-2xl lg:text-3xl font-black text-premiumDark tracking-tighter mb-2 leading-none">Livre Blanc Technique & Architecture Institutionnelle</h1>
+                <p class="text-slate-500 font-medium text-xs max-w-4xl leading-relaxed mt-3">
+                    Ce document constitue la référence exhaustive de l'infrastructure logicielle et matérielle du protocole Nexus Core L1. Il détaille la politique monétaire adossée, les mécanismes du consensus nBFT, la machine virtuelle (NVM), les normes cryptographiques (Argon2id/ECDSA) et la topologie du réseau P2P ingénierés par <strong>Atlas & Duc Corporation</strong> au Burkina Faso.
+                </p>
             </div>
-            <button onclick="closeMobileMenu()" class="text-slate-500 hover:text-red-500 text-lg p-2 transition-colors"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <div class="flex flex-col pt-2 flex-grow bg-slate-50">
-            <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); closeMobileMenu()" class="py-3 px-5 text-left font-bold text-xs border-b border-indBorder text-indAccent bg-white shadow-sm border-l-2 border-indAccent"><i class="fa-solid fa-house w-5 text-center"></i> Accueil</button>
-            <button onclick="openFullModal('allBlocksModal'); closeMobileMenu()" class="py-3 px-5 text-left font-semibold text-xs border-b border-indBorder text-slate-600 bg-white hover:bg-slate-50 border-l-2 border-transparent"><i class="fa-solid fa-cubes w-5 text-center"></i> Blocs L1</button>
-            <button onclick="openFullModal('allTxsModal'); closeMobileMenu()" class="py-3 px-5 text-left font-semibold text-xs border-b border-indBorder text-slate-600 bg-white hover:bg-slate-50 border-l-2 border-transparent"><i class="fa-solid fa-list-ul w-5 text-center"></i> Transactions</button>
-        </div>
+
+            <!-- ========================================== -->
+            <!-- SECTION 1: ECONOMIE & SOUVERAINETE         -->
+            <!-- ========================================== -->
+            <section id="vision" class="scroll-mt-16">
+                <h2>1. Tokénomique & Souveraineté Économique</h2>
+                <p>L'écosystème <span class="highlight">Nexus Core L1</span> opère en rupture totale avec les paradigmes spéculatifs des blockchains publiques (volatilité, congestion). Il s'agit d'une infrastructure <strong>souveraine, décentralisée par consortium, et à parité fiduciaire stricte</strong>, développée pour numériser l'économie réelle africaine (agriculture, logistique, santé).</p>
+                
+                <h3>1.1 Paramètres Fondamentaux du Réseau L1</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="w-1/4">Paramètre L1</th>
+                            <th class="w-1/3">Valeur Système</th>
+                            <th>Description Spécifique</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Coin Natif</strong></td>
+                            <td><code>AG-COIN (₳)</code></td>
+                            <td>Actif de base unique, utilisé pour le transfert de valeur et le paiement du gaz d'exécution.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total Supply</strong></td>
+                            <td><code>100,000,000,000 ₳</code></td>
+                            <td>Offre maximale cryptographiquement gravée dans le bloc 0 (Genesis). L'inflation réseau est strictement de 0%.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Parité Économique</strong></td>
+                            <td><code>1 ₳ = 1 XOF (FCFA)</code></td>
+                            <td>Ancrage absolu. Chaque AG-COIN émis (Mint) correspond à un dépôt fiduciaire équivalent dans la trésorerie.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Précision (Décimales)</strong></td>
+                            <td><code>6 (Micro-₳)</code></td>
+                            <td>Unité indivisible minimale de la blockchain. <code>1 microA = 0.000001 ₳</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Chain ID (Mainnet)</strong></td>
+                            <td><code>9012 (0x2334)</code></td>
+                            <td>Identifiant injecté dans l'équation ECDSA selon l'EIP-155 pour empêcher les Replay Attacks.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 id="closed-loop" class="scroll-mt-16">1.2 Économie en Boucle Fermée & Trésorerie On-Chain</h3>
+                <p>Pour immuniser l'infrastructure contre les attaques de marché, Nexus Core implémente un modèle "Closed-Loop" géré par le smart contract de trésorerie (<code>AGI9e3jK4Ly5xMv8PqRw2TbFnVdC1Xg6hYuZ7AsBmN1x</code>) :</p>
+                <ul>
+                    <li><strong>Isolation d'Exchange :</strong> Le token n'est audité et négocié que via les infrastructures DEX propriétaires et les agrégateurs B2B d'Atlas & Duc (ex: via l'API REST CoinMarketCap interne).</li>
+                    <li><strong>Mécanisme No-Burn :</strong> Lors de conversions fiat sortantes (Cash-out via Mobile Money), les jetons ne sont pas détruits ("Burned"). Ils sont restitués à la réserve du protocole (Vault) pour maintenir l'intégrité de la masse monétaire.</li>
+                    <li><strong>Auditabilité Temps Réel :</strong> Le RPC <code>nexus_getBalance</code> sur l'adresse de trésorerie permet à tout moment de vérifier la solvabilité du système.</li>
+                </ul>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- SECTION 2: CONSENSUS & RESEAU              -->
+            <!-- ========================================== -->
+            <section id="architecture" class="scroll-mt-16">
+                <h2>2. Architecture du Registre (Ledger) & Topologie P2P</h2>
+                <p>Le moteur d'état (State Machine) est programmé en Node.js industriel. Il est maintenu en RAM et persisté via un flux I/O asynchrone sécurisé (<code>ledger_mainnet.json</code> & fichier `.tmp` transactionnel) pour éviter toute corruption lors d'arrêts brutaux (SIGINT/SIGTERM).</p>
+
+                <h3>2.1 Structure du Bloc & Mempool (Block Time: 2000ms)</h3>
+                <p>Le validateur leader forge un bloc de manière déterministe toutes les <strong>2 secondes</strong>. La Mempool (file d'attente) limite dynamiquement sa taille à <code>MAX_MEMPOOL_SIZE = 5000</code> transactions pour prévenir les vecteurs d'attaque DDoS.</p>
+                
+                <div class="dev-code-block">
+                    <div class="dev-code-header">
+                        <span class="text-[0.6rem] font-bold text-slate-400 uppercase tracking-widest">Interface L1Block (TypeScript Spec)</span>
+                    </div>
+                    <div class="dev-code-body">
+<span class="syntax-keyword">interface</span> <span class="syntax-type">NexusBlock</span> {
+  <span class="syntax-keyword">index</span>: <span class="syntax-type">number</span>;          <span class="syntax-comment">// Hauteur de la chaîne</span>
+  <span class="syntax-keyword">hash</span>: <span class="syntax-type">string</span>;           <span class="syntax-comment">// SHA-256(index + prevHash + timestamp + merkleRoot + validator)</span>
+  <span class="syntax-keyword">previousHash</span>: <span class="syntax-type">string</span>;   <span class="syntax-comment">// Chaînage cryptographique</span>
+  <span class="syntax-keyword">timestamp</span>: <span class="syntax-type">number</span>;      <span class="syntax-comment">// Horodatage UNIX (Secondes)</span>
+  <span class="syntax-keyword">validator</span>: <span class="syntax-type">string</span>;      <span class="syntax-comment">// Adresse de l'Autorité ayant forgé le bloc</span>
+  <span class="syntax-keyword">merkleRoot</span>: <span class="syntax-type">string</span>;     <span class="syntax-comment">// Racine de l'arbre binaire des transactions</span>
+  <span class="syntax-keyword">stateRoot</span>: <span class="syntax-type">string</span>;      <span class="syntax-comment">// Hash de l'état global (Balances & NVM State)</span>
+  <span class="syntax-keyword">transactions</span>: <span class="syntax-type">Tx</span>[];     <span class="syntax-comment">// Tableau d'objets Transaction</span>
+}
+                    </div>
+                </div>
+
+                <h3 id="merkle" class="scroll-mt-16">2.2 Arbre de Merkle (Double SHA-256)</h3>
+                <p>La <code>merkleRoot</code> est calculée via une fonction récursive de hachage Double SHA-256. Si le nombre de feuilles (transactions) est impair, le dernier hash est dupliqué. Ce mécanisme permet les preuves SPV (Simplified Payment Verification) pour les clients légers (Mobile).</p>
+
+                <h3 id="nbft" class="scroll-mt-16">2.3 Consensus nBFT (Proof of Authority)</h3>
+                <p>Contrairement au Nakamoto Consensus (PoW), le <strong>Nexus Byzantine Fault Tolerance (nBFT)</strong> offre une finalité absolue et immédiate. Dès qu'un bloc est inséré dans l'array <code>this.blocks</code>, il est irréversible (0 Re-org). Les nœuds communiquent via le port P2P <code>6001</code> via WebSocket, gérant le routage via les messages <code>REQUEST_CHAIN</code>, <code>NEW_BLOCK</code>, et <code>NEW_TRANSACTION</code>.</p>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- SECTION 3: CRYPTOGRAPHIE                   -->
+            <!-- ========================================== -->
+            <section id="crypto" class="scroll-mt-16">
+                <h2>3. Standards Cryptographiques & Résilience ASIC</h2>
+                <p>L'infrastructure cryptographique du portefeuille Nexus Core a été spécifiquement conçue pour contrer l'évolution des calculateurs quantiques préliminaires et des fermes de minage ASIC dédiées au brute-force.</p>
+                
+                <h3 id="argon2id" class="scroll-mt-16">3.1 Key Derivation Function : Argon2id</h3>
+                <p>Les clés privées ne sont jamais stockées brutes. Elles sont dérivées via <strong>Argon2id</strong> (standard IETF RFC 9106), offrant une résistance hybride (GPU et attaques par canaux auxiliaires).</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Paramètre Argon2id</th>
+                            <th>Valeur Strict</th>
+                            <th>Justification Sécuritaire</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Memory Cost (m)</strong></td>
+                            <td><code>65536</code> (64 MiB)</td>
+                            <td>Sature la mémoire cache des ASIC, rendant le calcul matériel inopérant.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Iterations (t)</strong></td>
+                            <td><code>4</code> passes</td>
+                            <td>Augmente le coût CPU linéaire sans compromettre l'UX mobile.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Parallelism (p)</strong></td>
+                            <td><code>4</code> threads</td>
+                            <td>Force l'attaquant à allouer 4 cœurs physiques par tentative.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 id="ecdsa" class="scroll-mt-16">3.2 Courbe Elliptique secp256k1 & Adressage</h3>
+                <p>Les transactions sont signées via l'algorithme ECDSA sur la courbe <code>y² = x³ + 7</code>. L'adresse L1 publique est dérivée de la clé publique de la manière suivante :</p>
+                <div class="dev-code-block">
+                    <div class="dev-code-body">
+<span class="syntax-keyword">const</span> pubKeyHash = <span class="syntax-func">RIPEMD160</span>(<span class="syntax-func">SHA256</span>(publicKeyBytes));
+<span class="syntax-keyword">const</span> address = <span class="syntax-string">"0x"</span> + pubKeyHash.<span class="syntax-func">toString</span>(<span class="syntax-string">'hex'</span>);
+<span class="syntax-comment">// Les adresses de contrats générées par la NVM sont préfixées par "AGIC"</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- SECTION 4: NVM & SMART CONTRACTS           -->
+            <!-- ========================================== -->
+            <section id="nvm" class="scroll-mt-16">
+                <h2>4. Nexus Virtual Machine (NVM) & Tokénisation</h2>
+                <p>Le L1 intègre un moteur d'exécution de code Turing-complet, la <strong>NVM</strong>. Ce moteur est isolé de l'hôte matériel via le module natif <code>vm</code> de Node.js (V8 Sandboxing).</p>
+
+                <h3 id="gas-model" class="scroll-mt-16">4.1 Modèle de Gaz Zéro-Déviation (Zero-Deviation Gas)</h3>
+                <p>L'inflation des frais (Gas Spikes) rend l'usage commercial d'Ethereum ou Solana impossible pour l'industrie traditionnelle. Nexus Core résout ce problème avec une tarification rigide codée en dur (Hardcoded) :</p>
+                <ul>
+                    <li><strong>Exécution d'un transfert simple :</strong> Coûte exactement <code>1000 microA</code> (0.001 ₳ = 0.001 FCFA).</li>
+                    <li><strong>Exécution NVM (Contrat) :</strong> Facturé au gaz utilisé, mais avec un <code>gasPrice</code> fixe.</li>
+                    <li><strong>Prévention des Boucles Infinies :</strong> Le contexte V8 est créé avec un <code>timeout: 50</code> (50 millisecondes max). Tout contrat dépassant ce délai est interrompu (Halt), la transaction échoue, mais le gaz est consommé pour rémunérer le validateur.</li>
+                </ul>
+
+                <h3 id="smart-contracts" class="scroll-mt-16">4.2 Standard NCRC-20 & Stockage d'État</h3>
+                <p>Lors d'une transaction de type <code>deploy_contract</code>, le L1 stocke la logique (Code) dans <code>ledger.contractsCode</code> et instancie l'état (State) dans <code>ledger.contractsState</code>.</p>
+
+                <div class="dev-code-block">
+                    <div class="dev-code-header">
+                        <span class="text-[0.6rem] font-bold text-slate-400 uppercase tracking-widest">NVM Sandboxed Execution (Core Engine)</span>
+                    </div>
+                    <div class="dev-code-body">
+<span class="syntax-keyword">class</span> <span class="syntax-type">NexusLedgerState</span> {
+  <span class="syntax-func">executeContract</span>(code, currentState, action, caller) {
+    <span class="syntax-comment">// 1. Isoler l'état pour empêcher les mutations illégales (Deep Copy)</span>
+    <span class="syntax-keyword">const</span> sandbox = { 
+      state: currentState ? <span class="syntax-type">JSON</span>.<span class="syntax-func">parse</span>(<span class="syntax-type">JSON</span>.<span class="syntax-func">stringify</span>(currentState)) : {}, 
+      action, 
+      caller 
+    };
+    <span class="syntax-keyword">const</span> context = vm.<span class="syntax-func">createContext</span>(sandbox);
+    
+    <span class="syntax-keyword">try</span> {
+      <span class="syntax-comment">// 2. Compilation JIT et injection du point d'entrée "execute()"</span>
+      <span class="syntax-keyword">const</span> script = <span class="syntax-keyword">new</span> vm.<span class="syntax-func">Script</span>(<span class="syntax-string">`${code}\nexecute(state, action, caller);`</span>);
+      
+      <span class="syntax-comment">// 3. Exécution stricte: Max 50ms, RAM limitée au contexte V8</span>
+      <span class="syntax-keyword">return</span> script.<span class="syntax-func">runInContext</span>(context, { timeout: <span class="syntax-number">50</span> }); 
+    } <span class="syntax-keyword">catch</span> (e) {
+      <span class="syntax-type">console</span>.<span class="syntax-func">error</span>(<span class="syntax-string">`[NVM ERREUR] Échec d'exécution du contrat: ${e.message}`</span>);
+      <span class="syntax-keyword">return null</span>; <span class="syntax-comment">// Rollback de l'état</span>
+    }
+  }
+}
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- SECTION 5: OPÉRATIONS NŒUD & B2B           -->
+            <!-- ========================================== -->
+            <section id="integration" class="scroll-mt-16">
+                <h2>5. Opérations Validation & Intégration Client</h2>
+                
+                <h3 id="hardware" class="scroll-mt-16">5.1 Spécifications Matérielles des Nœuds Valideurs</h3>
+                <p>Pour assurer le traitement de la base de données en RAM (<code>this.balances</code>, <code>this.blocks</code>) sur un réseau principal, le consortium impose l'architecture matérielle suivante :</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Composant</th>
+                            <th>Configuration Minimale</th>
+                            <th>Raison Technique</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>CPU</strong></td>
+                            <td>32 Cores / 64 Threads (x86_64)</td>
+                            <td>Traitement parallèle des signatures ECDSA dans la Mempool et calcul Merkle.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mémoire (RAM)</strong></td>
+                            <td>128 GB DDR5 ECC</td>
+                            <td>Le <code>NexusLedgerState</code> conserve l'intégralité du state en mémoire vive pour des I/O sub-millisecondes.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Stockage</strong></td>
+                            <td>4 TB NVMe PCIe 4.0 (RAID 10)</td>
+                            <td>Persistance ultra-rapide de <code>ledger_mainnet.tmp.json</code> toutes les 2 secondes.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 id="sdk-web" class="scroll-mt-16">5.2 API JSON-RPC & Format de Transaction</h3>
+                <p>Le nœud expose le port HTTP <code>9545</code> pour le trafic RPC. L'endpoint <code>nexus_sendRawTransaction</code> accepte des payloads JSON stricts. Le <code>nonce</code> (nombre de transactions déjà envoyées par l'adresse) doit être parfaitement synchronisé pour éviter l'erreur <code>-32000 (Transaction désynchronisée)</code>.</p>
+                
+                <div class="dev-code-block">
+                    <div class="dev-code-header">
+                        <span class="text-[0.6rem] font-bold text-slate-400 uppercase tracking-widest">Calcul du Coût et Vérification L1 (Backend Node.js)</span>
+                    </div>
+                    <div class="dev-code-body">
+<span class="syntax-comment">// Extrait du moteur RPC L1 : Vérification de solvabilité</span>
+<span class="syntax-keyword">const</span> amount = <span class="syntax-type">BigInt</span>(tx.amountMicro || <span class="syntax-number">0</span>);
+<span class="syntax-keyword">const</span> fee = <span class="syntax-type">BigInt</span>(tx.feeMicro || <span class="syntax-number">0</span>);
+<span class="syntax-keyword">const</span> totalCost = amount + fee;
+
+<span class="syntax-keyword">const</span> currentBalance = ledger.<span class="syntax-func">getBalance</span>(tx.from);
+<span class="syntax-keyword">if</span> (currentBalance < totalCost) {
+  <span class="syntax-keyword">throw</span> { 
+    code: -<span class="syntax-number">32000</span>, 
+    message: <span class="syntax-string">`Fonds insuffisants. Solde: ${ledger.formatToNexus(currentBalance)}, Requis: ${ledger.formatToNexus(totalCost)}`</span> 
+  };
+}
+                    </div>
+                </div>
+
+                <h3 id="compliance" class="scroll-mt-16">5.3 Conformité UEMOA & Audit AML</h3>
+                <p>L'infrastructure est "Compliance-Ready". Les wallets B2B créés via les SDK Atlas & Duc intègrent une vérification KYC (Biométrie/CNI) dont l'empreinte de validation (Hash) peut être inscrite dans le champ data des transactions L1. Les smart contracts de micro-finance AGI intègrent nativement des algorithmes de plafonnement (Velocity Limits) pour lutter contre le blanchiment d'argent.</p>
+            </section>
+
+        </main>
+
+        <!-- ========================================== -->
+        <!-- SIDEBAR DE NAVIGATION (DENSE)              -->
+        <!-- ========================================== -->
+        <aside class="hidden lg:block w-64 shrink-0 bg-slate-50 border-l border-slate-200 h-[calc(100vh-3rem)] sticky top-12 overflow-y-auto custom-scrollbar">
+            <div class="p-4">
+                
+                <div class="mb-5">
+                    <div class="relative">
+                        <i class="fa-solid fa-search absolute left-2.5 top-1/2 transform -translate-y-1/2 text-slate-400 text-[0.6rem]"></i>
+                        <input type="text" placeholder="Recherche rapide..." class="w-full bg-white border border-slate-200 rounded pl-7 pr-2 py-1.5 text-[0.7rem] font-mono text-premiumDark focus:ring-1 focus:ring-indAccent outline-none shadow-sm placeholder:font-sans">
+                    </div>
+                </div>
+
+                <nav class="space-y-4 text-[0.7rem] font-medium">
+                    <!-- Section 1 -->
+                    <div>
+                        <h4 class="font-black text-slate-400 uppercase tracking-widest text-[0.55rem] mb-1.5 flex items-center gap-1.5"><i class="fa-solid fa-building-columns text-indAccent"></i> 1. Tokénomique</h4>
+                        <ul class="space-y-0.5 border-l-2 border-slate-200 ml-1.5 pl-2 text-slate-600">
+                            <li><a href="#vision" class="nav-link block py-0.5 hover:text-indAccent transition-colors">Paramètres du Mainnet</a></li>
+                            <li><a href="#closed-loop" class="nav-link block py-0.5 hover:text-indAccent transition-colors">Modèle Closed-Loop & Trésorerie</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Section 2 -->
+                    <div>
+                        <h4 class="font-black text-slate-400 uppercase tracking-widest text-[0.55rem] mb-1.5 mt-3 flex items-center gap-1.5"><i class="fa-solid fa-network-wired text-indSuccess"></i> 2. Ledger & P2P</h4>
+                        <ul class="space-y-0.5 border-l-2 border-slate-200 ml-1.5 pl-2 text-slate-600">
+                            <li><a href="#architecture" class="nav-link block py-0.5 hover:text-indAccent transition-colors">Structure de Bloc & Mempool</a></li>
+                            <li><a href="#merkle" class="nav-link block py-0.5 hover:text-indAccent transition-colors">Double SHA-256 Merkle Root</a></li>
+                            <li><a href="#nbft" class="nav-link block py-0.5 hover:text-indAccent transition-colors">Consensus nBFT (PoA)</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Section 3 -->
+                    <div>
+                        <h4 class="font-black text-slate-400 uppercase tracking-widest text-[0.55rem] mb-1.5 mt-3 flex items-center gap-1.5"><i class="fa-solid fa-shield-halved text-indWarning"></i> 3. Cryptographie</h4>
+                        <ul class="space-y-0.5 border-l-2 border-slate-200 ml-1.5 pl-2 text-slate-600">
+                            <li><a href="#argon2id" class="nav-link block py-0.5 hover:text-indAccent transition-colors">Protection Mémoire Argon2id</a></li>
+                            <li><a href="#ecdsa" class="nav-link block py-0.5 hover:text-indAccent transition-colors">Signatures secp256k1 (ECDSA)</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Section 4 -->
+                    <div>
+                        <h4 class="font-black text-slate-400 uppercase tracking-widest text-[0.55rem] mb-1.5 mt-3 flex items-center gap-1.5"><i class="fa-solid fa-microchip text-purple-500"></i> 4. Nexus VM</h4>
+                        <ul class="space-y-0.5 border-l-2 border-slate-200 ml-1.5 pl-2 text-slate-600">
+                            <li><a href="#nvm" class="nav-link block py-0.5 hover:text-indAccent transition-colors">Exécution Sandboxed (Node V8)</a></li>
+                            <li><a href="#gas-model" class="nav-link block py-0.5 hover:text-indAccent transition-colors">Modèle de Frais Fixes (Zero-Dev)</a></li>
+                            <li><a href="#smart-contracts" class="nav-link block py-0.5 hover:text-indAccent transition-colors">Gestion d'État NCRC-20</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Section 5 -->
+                    <div>
+                        <h4 class="font-black text-slate-400 uppercase tracking-widest text-[0.55rem] mb-1.5 mt-3 flex items-center gap-1.5"><i class="fa-solid fa-code text-rose-500"></i> 5. Opérations B2B</h4>
+                        <ul class="space-y-0.5 border-l-2 border-slate-200 ml-1.5 pl-2 text-slate-600">
+                            <li><a href="#hardware" class="nav-link block py-0.5 hover:text-indAccent transition-colors">Topologie Matérielle Valideur</a></li>
+                            <li><a href="#sdk-web" class="nav-link block py-0.5 hover:text-indAccent transition-colors">Payloads JSON-RPC</a></li>
+                            <li><a href="#compliance" class="nav-link block py-0.5 hover:text-indAccent transition-colors">Auditabilité AML & UEMOA</a></li>
+                        </ul>
+                    </div>
+                </nav>
+                
+                <div class="mt-6 pt-4 border-t border-slate-200">
+                    <a href="api.html" class="flex items-center justify-center gap-2 bg-premiumDark hover:bg-slate-800 text-white font-bold text-[0.6rem] uppercase tracking-widest transition-colors py-2 rounded shadow-sm">
+                        <i class="fa-solid fa-terminal"></i> Accéder au portail API
+                    </a>
+                </div>
+            </div>
+        </aside>
+
     </div>
 
-    <!-- CONTENEUR PRINCIPAL -->
-    <main class="flex-grow flex flex-col relative">
-        <!-- Ligne de synchronisation ultra-fine -->
-        <div id="syncProgressBar" class="absolute top-0 left-0 h-[1.5px] bg-indAccent transition-all duration-300 z-30 w-0 opacity-0 shadow-[0_0_8px_#0EA5E9]"></div>
-
-        <div class="flex-grow flex flex-col fade-in">
-            <!-- HEADER ACCUEIL DATA-DENSE -->
-            <section class="bg-[#020617] text-white pt-6 pb-8 px-4 relative overflow-hidden border-b border-slate-800">
-                <!-- Motif industriel de fond -->
-                <div class="absolute inset-0 opacity-10 z-0" style="background-image: linear-gradient(#1e293b 1px, transparent 1px), linear-gradient(90deg, #1e293b 1px, transparent 1px); background-size: 16px 16px;"></div>
-                
-                <div class="max-w-5xl mx-auto relative z-10 flex flex-col items-center">
-                    <h1 class="text-xl md:text-2xl font-black mb-1.5 text-center tracking-tighter text-white drop-shadow-sm">Registre L1 <span class="text-indAccent">NEXUS CORE</span></h1>
-                    <div class="text-center mb-5 flex flex-col items-center">
-                        <p class="text-slate-400 text-xxs font-bold uppercase tracking-widest mb-1">Architecture Souveraine | Atlas & Duc Corp.</p>
-                        <!-- Dynamic Price Tag Compact -->
-                        <span id="apiPriceTag" class="bg-slate-800/90 border border-slate-600 px-3 py-1 rounded text-indAccent font-black text-xxs tracking-wider inline-block shadow-sm">
-                            1 ₳ = <span class="text-white">1.00 XOF</span>
-                        </span>
-                    </div>
-                    
-                    <form onsubmit="handleSearch(event)" class="w-full max-w-2xl bg-[#0F172A] rounded-md p-1 flex items-center border border-slate-700 focus-within:border-indAccent focus-within:ring-1 focus-within:ring-indAccent transition-all">
-                        <div class="pl-3 pr-2 text-slate-400 text-xs"><i class="fa-solid fa-search"></i></div>
-                        <input type="text" id="searchInput" placeholder="Rechercher Hash / Bloc / Adresse..." class="w-full bg-transparent text-white px-1 py-1 outline-none font-mono placeholder:text-slate-500 text-xs">
-                        <button type="submit" id="searchBtn" class="bg-indAccent hover:bg-[#0369a1] text-white px-4 py-1.5 rounded-sm font-bold text-xs transition-colors shadow-sm">
-                            <span class="hidden sm:inline">Rechercher</span><i class="fa-solid fa-arrow-right sm:hidden"></i>
-                        </button>
-                    </form>
-
-                    <!-- METRIQUES DYNAMIQUES COMPACTES -->
-                    <div class="mt-5 grid grid-cols-2 md:grid-cols-4 gap-2 w-full max-w-5xl">
-                        <div class="bg-slate-900/60 border border-slate-800 px-3 py-2 rounded-md flex items-center gap-2">
-                            <i class="fa-solid fa-coins text-indAccent text-sm opacity-80"></i>
-                            <div>
-                                <p class="text-[0.55rem] text-slate-500 uppercase tracking-widest">Actif Natif</p>
-                                <p class="text-xs font-bold text-slate-200">AG-COIN (₳)</p>
-                            </div>
-                        </div>
-                        <div class="bg-slate-900/60 border border-slate-800 px-3 py-2 rounded-md flex items-center gap-2">
-                            <i class="fa-solid fa-chart-pie text-indAccent text-sm opacity-80"></i>
-                            <div>
-                                <p class="text-[0.55rem] text-slate-500 uppercase tracking-widest">Total Supply</p>
-                                <p id="apiTotalSupply" class="text-xs font-bold text-slate-200 font-mono">100,000,000,000 ₳</p>
-                            </div>
-                        </div>
-                        <div class="bg-slate-900/60 border border-slate-800 px-3 py-2 rounded-md flex items-center gap-2">
-                            <i class="fa-solid fa-hashtag text-indAccent text-sm opacity-80"></i>
-                            <div>
-                                <p class="text-[0.55rem] text-slate-500 uppercase tracking-widest">Décimales</p>
-                                <p class="text-xs font-bold text-slate-200">6 (Micro-₳)</p>
-                            </div>
-                        </div>
-                        <div class="bg-[#064E3B]/30 border border-[#059669]/40 px-3 py-2 rounded-md flex items-center gap-2">
-                            <i class="fa-solid fa-users text-indSuccess text-sm opacity-90"></i>
-                            <div>
-                                <p class="text-[0.55rem] text-[#34D399] uppercase tracking-widest">Holders</p>
-                                <p id="apiHoldersCount" class="text-xs font-black text-white font-mono">
-                                    <span class="skeleton-dark h-3 w-10 rounded block mt-0.5"></span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- STATISTIQUES L1 DENSES -->
-            <section class="max-w-[100rem] w-full mx-auto px-2 sm:px-4 lg:px-6 py-4 border-b border-indBorder bg-white z-20">
-                <div class="grid grid-cols-2 lg:grid-cols-4 gap-2">
-                    <div class="bg-slate-50 rounded border border-slate-200 p-2.5 flex items-center gap-2">
-                        <div class="w-7 h-7 rounded bg-white flex items-center justify-center text-slate-400 border border-slate-200 shadow-sm"><i class="fa-solid fa-scale-balanced text-[10px]"></i></div>
-                        <div>
-                            <p class="text-[0.55rem] font-bold text-slate-500 uppercase tracking-wider">Parité Éco</p>
-                            <h3 class="text-xs font-black text-premiumDark leading-none mt-0.5">Strict <span class="text-[0.65rem] text-indAccent border-b border-indAccent/30">1:1</span></h3>
-                        </div>
-                    </div>
-                    <div class="bg-slate-50 rounded border border-slate-200 p-2.5 flex items-center gap-2">
-                        <div class="w-7 h-7 rounded bg-white flex items-center justify-center text-indAccent border border-slate-200 shadow-sm"><i class="fa-solid fa-arrow-right-arrow-left text-[10px]"></i></div>
-                        <div>
-                            <p class="text-[0.55rem] font-bold text-slate-500 uppercase tracking-wider">Total Txns</p>
-                            <h3 id="statTotalTx" class="text-xs font-black font-mono text-premiumDark leading-none mt-0.5"><div class="skeleton h-3 w-16 rounded"></div></h3>
-                        </div>
-                    </div>
-                    <div class="bg-slate-50 rounded border border-slate-200 p-2.5 flex items-center gap-2">
-                        <div class="w-7 h-7 rounded bg-white flex items-center justify-center text-indSuccess border border-slate-200 shadow-sm"><i class="fa-solid fa-layer-group text-[10px]"></i></div>
-                        <div>
-                            <p class="text-[0.55rem] font-bold text-slate-500 uppercase tracking-wider">Hauteur L1</p>
-                            <h3 id="statLatestBlock" class="text-xs font-black font-mono text-premiumDark leading-none mt-0.5"><div class="skeleton h-3 w-12 rounded"></div></h3>
-                        </div>
-                    </div>
-                    <div class="bg-slate-50 rounded border border-slate-200 p-2.5 flex items-center gap-2">
-                        <div class="w-7 h-7 rounded bg-white flex items-center justify-center text-indigo-500 border border-slate-200 shadow-sm"><i class="fa-solid fa-chart-line text-[10px]"></i></div>
-                        <div>
-                            <p class="text-[0.55rem] font-bold text-slate-500 uppercase tracking-wider">Volume 24H</p>
-                            <h3 id="statVolume24h" class="text-xs font-black font-mono text-premiumDark leading-none mt-0.5"><div class="skeleton h-3 w-20 rounded"></div></h3>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- SECTIONS DES ÉLÉMENTS RÉCENTS (ACCUEIL) -->
-            <section class="max-w-[100rem] w-full mx-auto px-2 sm:px-4 lg:px-6 py-4 flex-grow grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <!-- Blocs Récents -->
-                <div class="bg-white rounded-md border border-slate-300 shadow-sm flex flex-col h-[320px] overflow-hidden">
-                    <div class="p-2.5 border-b border-slate-200 flex justify-between items-center bg-slate-50">
-                        <h2 class="font-extrabold text-premiumDark text-xs flex items-center gap-1.5"><i class="fa-solid fa-cube text-indAccent"></i> Blocs Récents</h2>
-                        <button onclick="openFullModal('allBlocksModal')" class="text-[0.65rem] font-bold text-slate-600 hover:text-indAccent bg-white px-2 py-1 rounded border border-slate-200 hover:border-indAccent transition-colors flex items-center shadow-sm">Tout voir <i class="fa-solid fa-chevron-right ml-1 text-[0.55rem]"></i></button>
-                    </div>
-                    <div class="overflow-y-auto flex-grow p-1.5" id="blocksContainerPreview"></div>
-                </div>
-
-                <!-- Transactions Récentes -->
-                <div class="bg-white rounded-md border border-slate-300 shadow-sm flex flex-col h-[320px] overflow-hidden">
-                    <div class="p-2.5 border-b border-slate-200 flex justify-between items-center bg-slate-50">
-                        <h2 class="font-extrabold text-premiumDark text-xs flex items-center gap-1.5"><i class="fa-solid fa-list-ul text-indAccent"></i> Txs Récentes</h2>
-                        <button onclick="openFullModal('allTxsModal')" class="text-[0.65rem] font-bold text-slate-600 hover:text-indAccent bg-white px-2 py-1 rounded border border-slate-200 hover:border-indAccent transition-colors flex items-center shadow-sm">Tout voir <i class="fa-solid fa-chevron-right ml-1 text-[0.55rem]"></i></button>
-                    </div>
-                    <div class="overflow-y-auto flex-grow p-1.5" id="txsContainerPreview"></div>
-                </div>
-            </section>
-        </div>
-    </main>
-
-    <!-- FOOTER OFFICIEL ATLAS & DUC -->
-    <footer class="bg-[#020617] border-t border-slate-800 py-6 mt-auto z-10 w-full flex flex-col items-center justify-center">
-        <div class="w-full max-w-5xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between text-center md:text-left">
-            <div class="flex items-center gap-3 mb-4 md:mb-0">
-                <img src="https://i.imgur.com/Tc7Jzx3.jpeg" alt="Logo Atlas & Duc" class="h-8 w-8 rounded border border-slate-600 object-cover">
+    <!-- ========================================== -->
+    <!-- 6. FOOTER INDUSTRIEL COMPACT               -->
+    <!-- ========================================== -->
+    <footer class="bg-premiumDark border-t border-slate-800 py-6 mt-auto z-10 w-full flex flex-col items-center justify-center">
+        <div class="w-full max-w-[100rem] mx-auto px-4 flex flex-col md:flex-row items-center justify-between text-center md:text-left gap-4">
+            
+            <div class="flex items-center gap-3">
+                <img src="https://i.imgur.com/Tc7Jzx3.jpeg" alt="Logo Atlas & Duc" class="h-8 w-8 rounded border border-slate-600 object-cover shadow-sm">
                 <div>
-                    <h4 class="text-slate-200 font-bold text-xs uppercase tracking-widest leading-none mb-1">Atlas & Duc Corporation</h4>
-                    <p class="text-indAccent text-[0.55rem] font-bold tracking-[0.2em] uppercase">Infrastructure WEB3 Industrielle</p>
+                    <h4 class="text-white font-bold text-xs tracking-widest uppercase leading-none mb-1">Atlas & Duc Corporation</h4>
+                    <span class="text-indAccent text-[0.55rem] font-bold tracking-widest uppercase">Infrastructure WEB3 Industrielle</span>
                 </div>
             </div>
             
-            <div class="flex items-center gap-4 text-xs font-semibold text-slate-500 mb-4 md:mb-0">
-                <a href="documentation.html" class="hover:text-indAccent transition-colors"><i class="fa-solid fa-book mr-1"></i> DOCS</a>
+            <div class="flex items-center gap-5 text-[0.65rem] font-bold text-slate-400">
+                <a href="NexusScan.html" class="hover:text-indAccent transition-colors"><i class="fa-solid fa-house mr-1"></i> Explorateur</a>
+                <a href="documentation.html" class="text-indAccent transition-colors"><i class="fa-solid fa-book-journal-whills mr-1"></i> Encyclopédie</a>
                 <a href="api.html" class="hover:text-indAccent transition-colors"><i class="fa-solid fa-server mr-1"></i> API RPC</a>
-                <a href="support.html" class="hover:text-indAccent transition-colors"><i class="fa-solid fa-headset mr-1"></i> SUPPORT</a>
+                <a href="support.html" class="hover:text-indAccent transition-colors"><i class="fa-solid fa-headset mr-1"></i> Support</a>
             </div>
             
-            <div class="text-[0.6rem] text-slate-600 font-medium text-right">
-                <p>&copy; 2026 Atlas & Duc Corp.</p>
-                <p>Opéré au Burkina Faso.</p>
+            <div class="text-right text-[0.6rem] text-slate-500 font-medium leading-relaxed">
+                <p class="text-slate-400 font-bold mb-0.5">&copy; 2026 Atlas & Duc Corp.</p>
+                <p>Opéré au Burkina Faso (UEMOA).</p>
             </div>
+            
         </div>
     </footer>
 
@@ -309,8 +557,8 @@
     <!-- ========================================================================= -->
 
     <!-- 1. EXPLORATEUR DE BLOCS (PAGINATION 25/PAGE) -->
-    <div id="allBlocksModal" class="modal-overlay fixed inset-0 flex items-center justify-center p-0 md:p-4">
-        <div class="modal-content w-full h-full max-w-[90rem] flex flex-col overflow-hidden rounded-none md:rounded-md shadow-2xl bg-white border-0 md:border border-slate-300">
+    <div id="allBlocksModal" class="modal-overlay">
+        <div class="modal-content w-full max-w-[90rem] md:rounded-md border border-slate-300 shadow-2xl">
             <!-- Header Dense -->
             <div class="bg-slate-50 border-b border-slate-200 px-4 py-2 flex justify-between items-center shrink-0">
                 <div class="flex items-center gap-2">
@@ -364,8 +612,8 @@
     </div>
 
     <!-- 2. EXPLORATEUR DE TRANSACTIONS (PAGINATION 25/PAGE) -->
-    <div id="allTxsModal" class="modal-overlay fixed inset-0 flex items-center justify-center p-0 md:p-4">
-        <div class="modal-content w-full h-full max-w-[90rem] flex flex-col overflow-hidden rounded-none md:rounded-md shadow-2xl bg-white border-0 md:border border-slate-300">
+    <div id="allTxsModal" class="modal-overlay">
+        <div class="modal-content w-full max-w-[90rem] md:rounded-md border border-slate-300 shadow-2xl">
             <!-- Header Dense -->
             <div class="bg-slate-50 border-b border-slate-200 px-4 py-2 flex justify-between items-center shrink-0">
                 <div class="flex items-center gap-2">
@@ -425,8 +673,8 @@
     <!-- ============================================== -->
 
     <!-- FENÊTRE DÉTAIL : TRANSACTION -->
-    <div id="txModal" class="modal-overlay fixed inset-0 flex items-center justify-center p-2 sm:p-4">
-        <div class="modal-content w-full max-w-3xl flex flex-col overflow-hidden rounded-md shadow-2xl bg-slate-50 border border-slate-300 max-h-[90vh]">
+    <div id="txModal" class="modal-overlay p-2 sm:p-4">
+        <div class="modal-content w-full max-w-3xl rounded-md border border-slate-300 shadow-2xl bg-slate-50">
             <div class="flex justify-between items-center px-4 py-2 border-b border-slate-200 bg-white shrink-0">
                 <h3 class="text-sm font-black text-premiumDark flex items-center gap-2"><i class="fa-solid fa-file-invoice text-indAccent"></i> Détail Transaction</h3>
                 <button onclick="closeModal('txModal')" class="text-slate-400 hover:text-slate-700 p-1"><i class="fa-solid fa-xmark text-lg"></i></button>
@@ -436,8 +684,8 @@
     </div>
 
     <!-- FENÊTRE DÉTAIL : BLOC -->
-    <div id="blockModal" class="modal-overlay fixed inset-0 flex items-center justify-center p-2 sm:p-4">
-        <div class="modal-content w-full max-w-3xl flex flex-col overflow-hidden rounded-md shadow-2xl bg-slate-50 border border-slate-300 max-h-[90vh]">
+    <div id="blockModal" class="modal-overlay p-2 sm:p-4">
+        <div class="modal-content w-full max-w-3xl rounded-md border border-slate-300 shadow-2xl bg-slate-50">
             <div class="flex justify-between items-center px-4 py-2 border-b border-slate-200 bg-white shrink-0">
                 <h3 class="text-sm font-black text-premiumDark flex items-center gap-2">
                     <i class="fa-solid fa-cube text-indAccent"></i> Détail Bloc 
@@ -452,7 +700,7 @@
     <div id="toast-container"></div>
 
     <!-- ========================================================================= -->
-    <!-- MOTEUR JAVASCRIPT COMPLET & INDEXEUR & API LISTING (INCHANGÉ)             -->
+    <!-- MOTEUR JAVASCRIPT COMPLET & INDEXEUR & API LISTING                        -->
     <!-- ========================================================================= -->
     <script>
         /* --- CONFIGURATION & ENDPOINTS --- */
@@ -882,7 +1130,6 @@
 
             const inputData = (tx.input && tx.input !== "0x") ? tx.input : "0x";
             const nonce = tx.nonce ? parseInt(tx.nonce, 16) : 0;
-            const blockHashData = tx.blockHash || "N/A";
             const confirmations = Math.max(0, latestBlockNum - tx.blockNumberDec + 1);
             
             document.getElementById('txModalBody').innerHTML = `
