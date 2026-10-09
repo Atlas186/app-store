@@ -2,7 +2,8 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Configuration Viewport stricte pour WebView/Mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Nexus Scan | Explorateur L1 Industriel | Atlas & Duc Corp.</title>
     
     <!-- Polices Industrielles -->
@@ -33,9 +34,9 @@
                         mono: ['Fira Code', 'monospace']
                     },
                     fontSize: {
-                        'xxs': '0.55rem',  /* Extrême densité */
-                        'xs': '0.65rem',   /* Standard data */
-                        'sm': '0.75rem',   /* Standard text */
+                        'xxs': '0.55rem',
+                        'xs': '0.65rem',
+                        'sm': '0.75rem',
                         'base': '0.825rem',
                         'lg': '0.9rem',
                         'xl': '1.05rem',
@@ -90,21 +91,19 @@
 
         /* 
          * ==============================================
-         * MODALES PLEIN ÉCRAN - ARCHITECTURE ROBUSTE
-         * Correction majeure : Utilisation stricte de display: none/flex
-         * pour éviter la division de l'écran sur mobile.
+         * MODALES PLEIN ÉCRAN - ARCHITECTURE ROBUSTE (CORRECTION WEBVIEW)
          * ==============================================
          */
         .modal-overlay { 
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(3, 7, 18, 0.75); 
-            backdrop-filter: blur(5px); 
-            -webkit-backdrop-filter: blur(5px);
+            position: fixed; inset: 0;
+            background-color: rgba(3, 7, 18, 0.85); 
+            backdrop-filter: blur(4px); 
+            -webkit-backdrop-filter: blur(4px);
             z-index: 100000;
-            /* Le display est géré par JS (none <-> flex) */
         }
+        /* Animation fluide de l'apparition */
         .modal-content { 
-            animation: modalScaleIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
+            animation: modalScaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
         }
         @keyframes modalScaleIn {
             0% { transform: scale(0.96) translateY(15px); opacity: 0; }
@@ -113,7 +112,7 @@
         
         /* Protection absolue contre le débordement des strings Hexadécimaux */
         .hash-break { 
-            word-break: break-all; overflow-wrap: anywhere; 
+            word-break: break-all; overflow-wrap: break-word; white-space: normal; 
         }
 
         /* Toasts Premium */
@@ -124,7 +123,7 @@
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         @keyframes fadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(10px); } }
         
-        /* Application globale de la densité */
+        /* Application globale de la densité pour les tableaux */
         td, th { padding-top: 0.5rem; padding-bottom: 0.5rem; padding-left: 0.75rem; padding-right: 0.75rem; }
     </style>
 </head>
@@ -320,16 +319,16 @@
 
 
     <!-- ========================================================================= -->
-    <!-- FENÊTRES PLEIN ÉCRAN (MODALES) - "TOUT VOIR"                              -->
-    <!-- Modification : Ajout de style="display: none;" direct et utilisation      -->
-    <!-- de la classe tailwind flex pour la robustesse d'affichage.                -->
+    <!-- FENÊTRES PLEIN ÉCRAN (MODALES) - LISTES COMPLÈTES                         -->
+    <!-- Architecture CSS GRID pour éviter les bugs flex-1 sur Mobile WebView      -->
     <!-- ========================================================================= -->
 
-    <!-- 1. EXPLORATEUR DE BLOCS -->
-    <div id="allBlocksModal" class="modal-overlay items-center justify-center p-0 md:p-5" style="display: none;">
-        <div class="modal-content w-full h-full md:h-auto md:max-h-[90vh] max-w-[90rem] flex flex-col overflow-hidden rounded-none md:rounded-xl shadow-2xl bg-white border-0 md:border border-slate-300">
+    <!-- 1. EXPLORATEUR DE BLOCS (LISTE) -->
+    <div id="allBlocksModal" class="modal-overlay p-0 md:p-5 items-center justify-center" style="display: none;">
+        <div class="modal-content w-full max-w-[90rem] bg-white md:rounded-xl shadow-2xl border-0 md:border border-slate-300 grid" style="grid-template-rows: auto auto 1fr; max-height: 90vh; height: 100%;">
+            
             <!-- Header Dense -->
-            <div class="bg-slate-50 border-b border-slate-200 px-5 py-3 flex justify-between items-center shrink-0">
+            <div class="bg-slate-50 border-b border-slate-200 px-5 py-3 flex justify-between items-center shadow-sm z-10">
                 <div class="flex items-center gap-3">
                     <i class="fa-solid fa-cubes text-indAccent text-xl"></i>
                     <div>
@@ -341,7 +340,7 @@
             </div>
 
             <!-- Toolbar -->
-            <div class="bg-white px-5 py-2.5 border-b border-slate-200 flex flex-wrap justify-between items-center gap-3 shrink-0">
+            <div class="bg-white px-5 py-2.5 border-b border-slate-200 flex flex-wrap justify-between items-center gap-3 z-10">
                 <div class="flex items-center gap-2 w-full md:w-auto">
                     <div class="relative w-full md:w-72">
                         <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
@@ -360,8 +359,8 @@
                 </div>
             </div>
 
-            <!-- Data Table: Flex-1 ensures it takes remaining space and scrolls -->
-            <div class="flex-1 overflow-y-auto bg-white custom-scrollbar">
+            <!-- Data Table (Scrollable Area via Grid 1fr) -->
+            <div class="overflow-y-auto bg-white custom-scrollbar">
                 <table class="w-full text-left border-collapse min-w-[700px]">
                     <thead class="bg-slate-100 border-b border-slate-200 sticky top-0 z-10 shadow-sm">
                         <tr class="text-[0.65rem] text-slate-500 uppercase tracking-wider whitespace-nowrap">
@@ -380,11 +379,12 @@
         </div>
     </div>
 
-    <!-- 2. EXPLORATEUR DE TRANSACTIONS -->
-    <div id="allTxsModal" class="modal-overlay items-center justify-center p-0 md:p-5" style="display: none;">
-        <div class="modal-content w-full h-full md:h-auto md:max-h-[90vh] max-w-[90rem] flex flex-col overflow-hidden rounded-none md:rounded-xl shadow-2xl bg-white border-0 md:border border-slate-300">
+    <!-- 2. EXPLORATEUR DE TRANSACTIONS (LISTE) -->
+    <div id="allTxsModal" class="modal-overlay p-0 md:p-5 items-center justify-center" style="display: none;">
+        <div class="modal-content w-full max-w-[90rem] bg-white md:rounded-xl shadow-2xl border-0 md:border border-slate-300 grid" style="grid-template-rows: auto auto 1fr; max-height: 90vh; height: 100%;">
+            
             <!-- Header Dense -->
-            <div class="bg-slate-50 border-b border-slate-200 px-5 py-3 flex justify-between items-center shrink-0">
+            <div class="bg-slate-50 border-b border-slate-200 px-5 py-3 flex justify-between items-center shadow-sm z-10">
                 <div class="flex items-center gap-3">
                     <i class="fa-solid fa-list-ul text-indSuccess text-xl"></i>
                     <div>
@@ -396,7 +396,7 @@
             </div>
 
             <!-- Toolbar -->
-            <div class="bg-white px-5 py-2.5 border-b border-slate-200 flex flex-wrap justify-between items-center gap-3 shrink-0">
+            <div class="bg-white px-5 py-2.5 border-b border-slate-200 flex flex-wrap justify-between items-center gap-3 z-10">
                 <div class="flex items-center gap-2 w-full md:w-auto">
                     <div class="relative w-full md:w-72">
                         <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
@@ -415,8 +415,8 @@
                 </div>
             </div>
 
-            <!-- Data Table -->
-            <div class="flex-1 overflow-y-auto bg-white custom-scrollbar">
+            <!-- Data Table (Scrollable Area via Grid 1fr) -->
+            <div class="overflow-y-auto bg-white custom-scrollbar">
                 <table class="w-full text-left border-collapse min-w-[900px]">
                     <thead class="bg-slate-100 border-b border-slate-200 sticky top-0 z-10 shadow-sm">
                         <tr class="text-[0.65rem] text-slate-500 uppercase tracking-wider whitespace-nowrap">
@@ -438,21 +438,22 @@
 
 
     <!-- ============================================== -->
-    <!-- MODALES DE DÉTAILS INDIVIDUELS (REFONTE PRO)   -->
-    <!-- Utilisation de display: none au lieu de hidden -->
-    <!-- pour une parfaite intégration Flexbox          -->
+    <!-- MODALES DE DÉTAILS INDIVIDUELS (CORRECTION MOBILE) -->
+    <!-- Structure CSS Grid: auto (Header) / 1fr (Body) -->
     <!-- ============================================== -->
 
     <!-- FENÊTRE DÉTAIL : TRANSACTION -->
     <div id="txModal" class="modal-overlay items-center justify-center p-3 md:p-5" style="display: none;">
-        <div class="modal-content w-full max-w-4xl flex flex-col rounded-xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] bg-[#F8FAFC] border border-slate-300 max-h-[90vh]">
-            <!-- Header Fixe (shrink-0) -->
-            <div class="flex justify-between items-center px-5 py-4 border-b border-slate-200 bg-white shrink-0 rounded-t-xl z-10 shadow-sm">
+        <div class="modal-content w-full max-w-4xl bg-[#F8FAFC] rounded-xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] border border-slate-300 grid" style="grid-template-rows: auto 1fr; max-height: 85vh;">
+            
+            <!-- Header Fixe -->
+            <div class="flex justify-between items-center px-4 md:px-5 py-3 md:py-4 border-b border-slate-200 bg-white shadow-sm z-10">
                 <h3 class="text-sm md:text-base font-black text-premiumDark flex items-center gap-2"><i class="fa-solid fa-file-invoice text-indAccent"></i> Informations de la Transaction</h3>
                 <button onclick="closeModal('txModal')" class="text-slate-500 hover:text-red-600 bg-slate-100 hover:bg-red-50 rounded-md p-2 transition-colors border border-slate-200 hover:border-red-200 shadow-sm"><i class="fa-solid fa-xmark text-lg leading-none"></i></button>
             </div>
-            <!-- Conteneur défilant (flex-1 overflow-y-auto) -->
-            <div class="flex-1 overflow-y-auto p-4 md:p-6 w-full text-xs custom-scrollbar bg-slate-50/50" id="txModalBody">
+            
+            <!-- Conteneur défilant -->
+            <div class="overflow-y-auto p-4 md:p-6 w-full text-xs custom-scrollbar bg-slate-50/50" id="txModalBody">
                 <!-- Injecté par JS -->
             </div>
         </div>
@@ -460,17 +461,19 @@
 
     <!-- FENÊTRE DÉTAIL : BLOC -->
     <div id="blockModal" class="modal-overlay items-center justify-center p-3 md:p-5" style="display: none;">
-        <div class="modal-content w-full max-w-4xl flex flex-col rounded-xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] bg-[#F8FAFC] border border-slate-300 max-h-[90vh]">
-            <!-- Header Fixe (shrink-0) -->
-            <div class="flex justify-between items-center px-5 py-4 border-b border-slate-200 bg-white shrink-0 rounded-t-xl z-10 shadow-sm">
+        <div class="modal-content w-full max-w-4xl bg-[#F8FAFC] rounded-xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] border border-slate-300 grid" style="grid-template-rows: auto 1fr; max-height: 85vh;">
+            
+            <!-- Header Fixe -->
+            <div class="flex justify-between items-center px-4 md:px-5 py-3 md:py-4 border-b border-slate-200 bg-white shadow-sm z-10">
                 <h3 class="text-sm md:text-base font-black text-premiumDark flex items-center gap-2">
                     <i class="fa-solid fa-cube text-indAccent"></i> Détail du Bloc 
                     <span id="blockModalTitleNum" class="text-slate-600 font-mono bg-slate-100 px-2 py-0.5 rounded border border-slate-200 text-xs shadow-sm ml-2"></span>
                 </h3>
                 <button onclick="closeModal('blockModal')" class="text-slate-500 hover:text-red-600 bg-slate-100 hover:bg-red-50 rounded-md p-2 transition-colors border border-slate-200 hover:border-red-200 shadow-sm"><i class="fa-solid fa-xmark text-lg leading-none"></i></button>
             </div>
-            <!-- Conteneur défilant (flex-1 overflow-y-auto) -->
-            <div class="flex-1 overflow-y-auto p-4 md:p-6 w-full text-xs custom-scrollbar bg-slate-50/50" id="blockModalBody">
+            
+            <!-- Conteneur défilant -->
+            <div class="overflow-y-auto p-4 md:p-6 w-full text-xs custom-scrollbar bg-slate-50/50" id="blockModalBody">
                 <!-- Injecté par JS -->
             </div>
         </div>
@@ -784,7 +787,7 @@
             const modal = document.getElementById(modalId);
             globalModalZ += 10;
             modal.style.zIndex = globalModalZ;
-            modal.style.display = 'flex';
+            modal.style.display = 'flex'; // Affiche la modale (flex pour centrer le grid interne)
             document.body.style.overflow = 'hidden';
             
             if (modalId === 'allBlocksModal') updateBlockModalView();
@@ -879,22 +882,21 @@
         // Fermeture robuste des modales
         function closeModal(id) {
             document.getElementById(id).style.display = 'none';
-            // Si aucune modale n'est ouverte, on restaure le scroll du body
+            // Si aucune modale n'est ouverte (display: flex), on restaure le scroll du body
             const openModals = document.querySelectorAll('.modal-overlay[style*="display: flex"]');
             if (openModals.length === 0) {
                 document.body.style.overflow = '';
             }
         }
 
-        // Nouvelle architecture de ligne : min-w-0 indispensable sur flex-row
+        // Nouvelle architecture de ligne CSS GRID pour éviter les bugs WebView et garantir le wrap
         function createGridRow(label, displayValue, rawValueToCopy = null, isStatus = false) {
             return `
-                <div class="flex flex-col sm:flex-row sm:items-center py-3 px-4 border-b border-slate-100 last:border-0 hover:bg-slate-50/80 transition-colors gap-2 sm:gap-4">
-                    <div class="sm:w-1/3 md:w-1/4 flex items-start sm:items-center text-[0.65rem] uppercase font-bold text-slate-500 shrink-0 mt-0.5 sm:mt-0">
-                        <i class="fa-solid fa-angle-right text-[0.55rem] mr-2 opacity-50 hidden sm:inline-block"></i> ${label}
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-1.5 md:gap-4 py-3.5 px-4 border-b border-slate-100 last:border-0 hover:bg-slate-50/80 transition-colors items-start md:items-center">
+                    <div class="md:col-span-3 flex items-center text-[0.65rem] uppercase font-bold text-slate-500 mt-1 md:mt-0">
+                        <i class="fa-solid fa-angle-right text-[0.55rem] mr-2 opacity-50 hidden md:inline-block"></i> ${label}
                     </div>
-                    <!-- min-w-0 est vital ici pour forcer le wrap des enfants flex -->
-                    <div class="sm:w-2/3 md:w-3/4 flex items-center justify-between gap-3 min-w-0">
+                    <div class="md:col-span-9 flex items-center justify-between gap-3 min-w-0">
                         <div class="text-xs font-mono text-premiumDark w-full min-w-0 hash-break ${isStatus ? 'flex items-center flex-wrap gap-2' : ''}">
                             ${displayValue}
                         </div>
@@ -922,9 +924,9 @@
                     <h4 class="text-[0.7rem] font-bold text-slate-800 uppercase tracking-widest mb-2.5 px-1 flex items-center gap-2"><i class="fa-solid fa-layer-group text-indAccent"></i> Vue d'ensemble</h4>
                     <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
                         ${createGridRow("Hash Transaction", `<span class="text-indAccent font-bold">${tx.hash}</span>`, tx.hash)}
-                        ${createGridRow("Statut", `<span class="bg-[#059669]/10 text-[#059669] border border-[#059669]/20 px-2.5 py-0.5 rounded-md text-[0.65rem] uppercase font-black tracking-wider flex items-center gap-1.5 w-fit"><i class="fa-solid fa-circle-check"></i> Succès</span> <span class="text-[0.65rem] text-slate-500 font-bold ml-1 sm:ml-2 bg-slate-50 px-2 py-0.5 rounded-md border border-slate-200 shadow-sm">${confirmations} Conf.</span>`, null, true)}
+                        ${createGridRow("Statut", `<span class="bg-[#059669]/10 text-[#059669] border border-[#059669]/20 px-2.5 py-0.5 rounded-md text-[0.65rem] uppercase font-black tracking-wider flex items-center gap-1.5 w-fit"><i class="fa-solid fa-circle-check"></i> Succès</span> <span class="text-[0.65rem] text-slate-500 font-bold bg-slate-50 px-2 py-0.5 rounded-md border border-slate-200 shadow-sm">${confirmations} Conf.</span>`, null, true)}
                         ${createGridRow("Bloc", `<button onclick="openBlockDetail(${tx.blockNumberDec})" class="text-indAccent hover:underline font-bold bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100 transition-colors hover:bg-indigo-50 flex items-center gap-1.5 w-fit"><i class="fa-solid fa-cube opacity-70"></i>${tx.blockNumberHex}</button>`)}
-                        ${createGridRow("Horodatage", `<div class="flex items-center gap-2"><i class="fa-regular fa-clock text-slate-400"></i> <span class="font-medium text-slate-700">${timeAgo(parseTimestamp(tx.timestamp))}</span> <span class="text-slate-400 ml-1 text-[0.65rem]">(${formatDateFull(parseTimestamp(tx.timestamp))})</span></div>`)}
+                        ${createGridRow("Horodatage", `<div class="flex items-center gap-2"><i class="fa-regular fa-clock text-slate-400"></i> <span class="font-medium text-slate-700">${timeAgo(parseTimestamp(tx.timestamp))}</span> <span class="text-slate-400 text-[0.65rem]">(${formatDateFull(parseTimestamp(tx.timestamp))})</span></div>`)}
                     </div>
                 </div>
                 
@@ -944,11 +946,11 @@
                     <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
                         ${createGridRow("Frais (Gas)", `<span class="font-medium text-slate-700">${feeMicro} ₳</span>`)}
                         ${createGridRow("Nonce", `<span class="font-medium text-slate-700">${nonce}</span>`)}
-                        <div class="flex flex-col sm:flex-row py-4 px-4 border-t border-slate-100 hover:bg-slate-50 transition-colors gap-2">
-                            <div class="sm:w-1/3 md:w-1/4 flex items-center text-[0.65rem] uppercase font-bold text-slate-500 shrink-0">
-                                <i class="fa-solid fa-angle-right text-[0.55rem] mr-2 opacity-50 hidden sm:inline-block"></i> Payload (Input)
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-1.5 md:gap-4 py-3.5 px-4 border-t border-slate-100 hover:bg-slate-50 transition-colors items-start">
+                            <div class="md:col-span-3 flex items-center text-[0.65rem] uppercase font-bold text-slate-500 mt-1">
+                                <i class="fa-solid fa-angle-right text-[0.55rem] mr-2 opacity-50 hidden md:inline-block"></i> Payload (Input)
                             </div>
-                            <div class="sm:w-2/3 md:w-3/4 min-w-0">
+                            <div class="md:col-span-9 min-w-0">
                                 <div class="text-[0.65rem] text-slate-600 bg-slate-100 p-3 rounded-md border border-slate-200 max-h-32 overflow-y-auto font-mono hash-break shadow-inner custom-scrollbar">${inputData}</div>
                             </div>
                         </div>
@@ -992,8 +994,8 @@
                 <div class="mb-6">
                     <h4 class="text-[0.7rem] font-bold text-slate-800 uppercase tracking-widest mb-2.5 px-1 flex items-center gap-2"><i class="fa-solid fa-cube text-indAccent"></i> Informations du Bloc</h4>
                     <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
-                        ${createGridRow("Hauteur", `<span class="text-indAccent font-black text-sm">${b.hexNumber}</span> <span class="ml-1 sm:ml-2 text-[0.65rem] text-slate-500 font-bold bg-slate-50 px-2 py-0.5 rounded-md border border-slate-200 shadow-sm">${confirmations} Confirmations</span>`, null, true)}
-                        ${createGridRow("Horodatage", `<div class="flex items-center gap-2"><i class="fa-regular fa-clock text-slate-400"></i> <span class="font-medium text-slate-700">${timeAgo(parseTimestamp(b.timestamp))}</span> <span class="text-slate-400 ml-1 text-[0.65rem]">(${formatDateFull(parseTimestamp(b.timestamp))})</span></div>`)}
+                        ${createGridRow("Hauteur", `<span class="text-indAccent font-black text-sm">${b.hexNumber}</span> <span class="text-[0.65rem] text-slate-500 font-bold bg-slate-50 px-2 py-0.5 rounded-md border border-slate-200 shadow-sm">${confirmations} Confirmations</span>`, null, true)}
+                        ${createGridRow("Horodatage", `<div class="flex items-center gap-2"><i class="fa-regular fa-clock text-slate-400"></i> <span class="font-medium text-slate-700">${timeAgo(parseTimestamp(b.timestamp))}</span> <span class="text-slate-400 text-[0.65rem]">(${formatDateFull(parseTimestamp(b.timestamp))})</span></div>`)}
                         ${createGridRow("Transactions", `<span class="bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-md text-[0.7rem] font-black border border-indigo-100 flex items-center gap-1.5 w-fit"><i class="fa-solid fa-list-ul"></i> ${b.transactions ? b.transactions.length : 0} Txns</span>`)}
                         ${createGridRow("Validateur", `<span class="text-slate-700 font-medium">${b.miner || b.validator || "0xNexusMaster"}</span>`, b.miner || b.validator)}
                     </div>
@@ -1010,14 +1012,14 @@
                 <div>
                     <h4 class="text-[0.7rem] font-bold text-slate-800 uppercase tracking-widest mb-2.5 px-1 flex items-center gap-2"><i class="fa-solid fa-server text-indAccent"></i> Ressources & Extra</h4>
                     <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
-                        ${createGridRow("Gaz Utilisé", `<span class="font-bold text-slate-700">${gasUsed}</span> <span class="text-slate-400 font-normal ml-1">unités</span>`)}
+                        ${createGridRow("Gaz Utilisé", `<span class="font-bold text-slate-700">${gasUsed}</span> <span class="text-slate-400 font-normal">unités</span>`)}
                         ${createGridRow("Limite Gaz", `<span class="text-slate-600 font-medium">${gasLimit}</span>`)}
                         ${createGridRow("Taille", `<span class="text-slate-600 font-medium">${b.size ? parseInt(b.size, 16).toLocaleString('fr-FR') + " octets" : "N/A"}</span>`)}
-                        <div class="flex flex-col sm:flex-row py-4 px-4 border-t border-slate-100 hover:bg-slate-50 transition-colors gap-2">
-                            <div class="sm:w-1/3 md:w-1/4 flex items-center text-[0.65rem] uppercase font-bold text-slate-500 shrink-0">
-                                <i class="fa-solid fa-angle-right text-[0.55rem] mr-2 opacity-50 hidden sm:inline-block"></i> Extra Data
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-1.5 md:gap-4 py-3.5 px-4 border-t border-slate-100 hover:bg-slate-50 transition-colors items-start">
+                            <div class="md:col-span-3 flex items-center text-[0.65rem] uppercase font-bold text-slate-500 mt-1">
+                                <i class="fa-solid fa-angle-right text-[0.55rem] mr-2 opacity-50 hidden md:inline-block"></i> Extra Data
                             </div>
-                            <div class="sm:w-2/3 md:w-3/4 min-w-0">
+                            <div class="md:col-span-9 min-w-0">
                                 <div class="text-[0.65rem] text-slate-600 bg-slate-100 p-3 rounded-md border border-slate-200 max-h-32 overflow-y-auto font-mono hash-break shadow-inner custom-scrollbar">${extraData}</div>
                             </div>
                         </div>
