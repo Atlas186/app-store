@@ -139,7 +139,7 @@
 
                 <nav class="hidden md:flex space-x-6 items-center h-full">
                     <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="h-full flex items-center text-indAccent font-bold text-[0.7rem] border-b-2 border-indAccent transition-colors"><i class="fa-solid fa-house mr-1"></i> Accueil</button>
-                    <button onclick="openFullModal('allBlocksModal')" class="h-full flex items-center text-slate-500 hover:text-premiumDark font-semibold text-[0.7rem] border-b-2 border-transparent hover:border-slate-300 transition-colors"><i class="fa-solid fa-cubes mr-1"></i> Blocs L1</button>
+                    <button onclick="openFullModal('allBlocksModal')" class="h-full flex items-center text-slate-50 hover:text-premiumDark font-semibold text-[0.7rem] border-b-2 border-transparent hover:border-slate-300 transition-colors"><i class="fa-solid fa-cubes mr-1"></i> Blocs L1</button>
                     <button onclick="openFullModal('allTxsModal')" class="h-full flex items-center text-slate-500 hover:text-premiumDark font-semibold text-[0.7rem] border-b-2 border-transparent hover:border-slate-300 transition-colors"><i class="fa-solid fa-list-ul mr-1"></i> Transactions</button>
                 </nav>
 
@@ -436,10 +436,10 @@
     <!-- ============================================== -->
 
     <!-- FENÊTRE DÉTAIL : TRANSACTION -->
-    <div id="txModal" class="modal-overlay fixed inset-0 flex items-center justify-center p-3 md:p-5">
-        <!-- min-h-0 et max-h-[90vh] sont cruciaux pour le scroll fluide interne -->
-        <div class="modal-content relative w-full max-w-4xl flex flex-col min-h-0 rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.4)] bg-[#F8FAFC] border border-slate-300 max-h-[90vh]">
-            <div class="flex justify-between items-center px-4 md:px-5 py-3 border-b border-slate-200 bg-white shrink-0 rounded-t-xl z-10 shadow-sm">
+    <div id="txModal" class="modal-overlay fixed inset-0 flex items-center justify-center p-0 md:p-4">
+        <!-- Remplacement des contraintes de hauteur (max-h) par un affichage plein écran h-full w-full -->
+        <div class="modal-content relative w-full h-full max-w-[90rem] flex flex-col overflow-hidden rounded-none md:rounded-xl shadow-2xl bg-[#F8FAFC] border-0 md:border border-slate-300">
+            <div class="flex justify-between items-center px-4 md:px-5 py-3 border-b border-slate-200 bg-white shrink-0 z-10 shadow-sm">
                 <h3 class="text-sm md:text-base font-black text-premiumDark flex items-center gap-2"><i class="fa-solid fa-file-invoice text-indAccent"></i> Informations de la Transaction</h3>
                 <button onclick="closeModal('txModal')" class="text-slate-500 hover:text-red-600 bg-slate-100 hover:bg-red-50 rounded-md p-1.5 transition-colors border border-slate-200 hover:border-red-200 shadow-sm"><i class="fa-solid fa-xmark text-lg leading-none"></i></button>
             </div>
@@ -451,9 +451,10 @@
     </div>
 
     <!-- FENÊTRE DÉTAIL : BLOC -->
-    <div id="blockModal" class="modal-overlay fixed inset-0 flex items-center justify-center p-3 md:p-5">
-        <div class="modal-content relative w-full max-w-4xl flex flex-col min-h-0 rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.4)] bg-[#F8FAFC] border border-slate-300 max-h-[90vh]">
-            <div class="flex justify-between items-center px-4 md:px-5 py-3 border-b border-slate-200 bg-white shrink-0 rounded-t-xl z-10 shadow-sm">
+    <div id="blockModal" class="modal-overlay fixed inset-0 flex items-center justify-center p-0 md:p-4">
+        <!-- Remplacement des contraintes de hauteur (max-h) par un affichage plein écran h-full w-full -->
+        <div class="modal-content relative w-full h-full max-w-[90rem] flex flex-col overflow-hidden rounded-none md:rounded-xl shadow-2xl bg-[#F8FAFC] border-0 md:border border-slate-300">
+            <div class="flex justify-between items-center px-4 md:px-5 py-3 border-b border-slate-200 bg-white shrink-0 z-10 shadow-sm">
                 <h3 class="text-sm md:text-base font-black text-premiumDark flex items-center gap-2">
                     <i class="fa-solid fa-cube text-indAccent"></i> Détail du Bloc 
                     <span id="blockModalTitleNum" class="text-slate-600 font-mono bg-slate-100 px-2 py-0.5 rounded border border-slate-200 text-xs shadow-sm ml-1"></span>
