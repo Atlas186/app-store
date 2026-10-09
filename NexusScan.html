@@ -567,7 +567,8 @@
                 try {
                     const data = JSON.parse(text);
                     if (typeof data === 'number') return data;
-                    if (data.holders !== undefined) return data.holders;
+                    if (data.totalHolders !== undefined) return data.totalHolders;
+                    if (data.holders !== undefined && !Array.isArray(data.holders)) return data.holders;
                     if (data.price !== undefined) return data.price;
                     if (data.totalSupply !== undefined) return data.totalSupply;
                     if (data.supply !== undefined) return data.supply;
