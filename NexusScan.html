@@ -2,8 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <!-- Configuration Viewport stricte pour WebView/Mobile -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Nexus Scan | Explorateur L1 Industriel | Atlas & Duc Corp.</title>
     
     <!-- Polices Industrielles -->
@@ -34,9 +33,9 @@
                         mono: ['Fira Code', 'monospace']
                     },
                     fontSize: {
-                        'xxs': '0.55rem',
-                        'xs': '0.65rem',
-                        'sm': '0.75rem',
+                        'xxs': '0.55rem',  /* Extrême densité */
+                        'xs': '0.65rem',   /* Standard data */
+                        'sm': '0.75rem',   /* Standard text */
                         'base': '0.825rem',
                         'lg': '0.9rem',
                         'xl': '1.05rem',
@@ -89,146 +88,144 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #94A3B8; border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #64748B; }
 
-        /* 
-         * ==============================================
-         * MODALES PLEIN ÉCRAN - ARCHITECTURE ROBUSTE (CORRECTION WEBVIEW)
-         * ==============================================
-         */
+        /* Modales Plein Écran Premium - Refonte Z-Index & Flexbox */
         .modal-overlay { 
-            position: fixed; inset: 0;
-            background-color: rgba(3, 7, 18, 0.85); 
-            backdrop-filter: blur(4px); 
-            -webkit-backdrop-filter: blur(4px);
-            z-index: 100000;
+            opacity: 0; visibility: hidden; pointer-events: none; 
+            transition: opacity 0.25s ease-out, visibility 0.25s ease-out; 
+            background-color: rgba(3, 7, 18, 0.75); 
+            backdrop-filter: blur(5px); 
+            -webkit-backdrop-filter: blur(5px);
         }
-        /* Animation fluide de l'apparition */
+        .modal-overlay.active { 
+            opacity: 1; visibility: visible; pointer-events: auto; z-index: 100000; 
+        }
         .modal-content { 
-            animation: modalScaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
+            transform: scale(0.96) translateY(15px); opacity: 0; 
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease-out; 
         }
-        @keyframes modalScaleIn {
-            0% { transform: scale(0.96) translateY(15px); opacity: 0; }
-            100% { transform: scale(1) translateY(0); opacity: 1; }
+        .modal-overlay.active .modal-content { 
+            transform: scale(1) translateY(0); opacity: 1; 
         }
         
-        /* Protection absolue contre le débordement des strings Hexadécimaux */
+        /* Correction compatibilité navigateur pour les longs hashes */
         .hash-break { 
-            word-break: break-all; overflow-wrap: break-word; white-space: normal; 
+            word-break: break-all; overflow-wrap: break-word; 
         }
 
         /* Toasts Premium */
-        #toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 999999; display: flex; flex-direction: column; gap: 8px; }
-        .toast { background: #030712; color: white; padding: 10px 16px; border-radius: 6px; border: 1px solid #1e293b; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); font-size: 0.75rem; font-weight: 600; display: flex; align-items: center; gap: 10px; border-left: 3px solid #0284C7; animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards, fadeOut 0.3s ease-in 3.5s forwards; }
+        #toast-container { position: fixed; bottom: 15px; right: 15px; z-index: 999999; display: flex; flex-direction: column; gap: 4px; }
+        .toast { background: #030712; color: white; padding: 8px 12px; border-radius: 4px; border: 1px solid #1e293b; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); font-size: 0.7rem; font-weight: 600; display: flex; align-items: center; gap: 8px; border-left: 2px solid #0284C7; animation: slideIn 0.2s forwards, fadeOut 0.2s ease-in 3.5s forwards; }
         .toast.success { border-left-color: #059669; }
         .toast.error { border-left-color: #DC2626; }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         @keyframes fadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(10px); } }
         
-        /* Application globale de la densité pour les tableaux */
-        td, th { padding-top: 0.5rem; padding-bottom: 0.5rem; padding-left: 0.75rem; padding-right: 0.75rem; }
+        /* Application globale de la densité */
+        td, th { padding-top: 0.4rem; padding-bottom: 0.4rem; padding-left: 0.75rem; padding-right: 0.75rem; }
     </style>
 </head>
 <body class="bg-indBg text-premiumDark font-sans antialiased flex flex-col min-h-screen tracking-tight">
 
-    <!-- NAVIGATION PRINCIPALE PREMIUM -->
+    <!-- NAVIGATION PRINCIPALE ULTRA-COMPACTE -->
     <header class="bg-white border-b border-indBorder sticky top-0 z-40 shadow-sm">
         <div class="max-w-[100rem] mx-auto px-2 sm:px-4 lg:px-6">
-            <div class="flex justify-between items-center h-12">
+            <div class="flex justify-between items-center h-10">
                 <div class="flex items-center gap-2 cursor-pointer select-none group" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
-                    <div class="h-7 w-7 rounded flex items-center justify-center bg-premiumDark border border-slate-700 overflow-hidden shadow-sm">
+                    <div class="h-6 w-6 rounded flex items-center justify-center bg-premiumDark border border-slate-700 overflow-hidden">
                         <img src="https://i.imgur.com/9pIdsgM.jpeg" alt="Logo" class="w-full h-full object-cover">
                     </div>
-                    <span class="font-extrabold text-sm tracking-tighter text-premiumDark group-hover:text-indAccent transition-colors">NEXUS<span class="text-indAccent group-hover:text-premiumDark transition-colors">SCAN</span></span>
+                    <span class="font-extrabold text-sm tracking-tighter text-premiumDark">NEXUS<span class="text-indAccent">SCAN</span></span>
                 </div>
 
-                <nav class="hidden md:flex space-x-8 items-center h-full">
-                    <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="h-full flex items-center text-indAccent font-bold text-xs border-b-2 border-indAccent transition-colors"><i class="fa-solid fa-house mr-1.5"></i> Accueil</button>
-                    <button onclick="openFullModal('allBlocksModal')" class="h-full flex items-center text-slate-500 hover:text-premiumDark font-semibold text-xs border-b-2 border-transparent hover:border-slate-300 transition-colors"><i class="fa-solid fa-cubes mr-1.5"></i> Blocs L1</button>
-                    <button onclick="openFullModal('allTxsModal')" class="h-full flex items-center text-slate-500 hover:text-premiumDark font-semibold text-xs border-b-2 border-transparent hover:border-slate-300 transition-colors"><i class="fa-solid fa-list-ul mr-1.5"></i> Transactions</button>
+                <nav class="hidden md:flex space-x-6 items-center h-full">
+                    <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="h-full flex items-center text-indAccent font-bold text-[0.7rem] border-b-2 border-indAccent transition-colors"><i class="fa-solid fa-house mr-1"></i> Accueil</button>
+                    <button onclick="openFullModal('allBlocksModal')" class="h-full flex items-center text-slate-500 hover:text-premiumDark font-semibold text-[0.7rem] border-b-2 border-transparent hover:border-slate-300 transition-colors"><i class="fa-solid fa-cubes mr-1"></i> Blocs L1</button>
+                    <button onclick="openFullModal('allTxsModal')" class="h-full flex items-center text-slate-500 hover:text-premiumDark font-semibold text-[0.7rem] border-b-2 border-transparent hover:border-slate-300 transition-colors"><i class="fa-solid fa-list-ul mr-1"></i> Transactions</button>
                 </nav>
 
-                <div class="flex items-center gap-3">
-                    <div class="hidden sm:flex items-center gap-1.5 bg-slate-50 border border-slate-200 px-2.5 py-1 rounded shadow-sm" id="networkStatusIndicator">
-                        <div class="w-2 h-2 rounded-full bg-indSuccess live-pulse"></div>
-                        <span class="text-[0.65rem] font-bold text-indSuccess tracking-widest uppercase">L1 Live</span>
+                <div class="flex items-center gap-2">
+                    <div class="hidden sm:flex items-center gap-1.5 bg-slate-50 border border-slate-200 px-2 py-1 rounded shadow-sm" id="networkStatusIndicator">
+                        <div class="w-1.5 h-1.5 rounded-full bg-indSuccess live-pulse"></div>
+                        <span class="text-[0.6rem] font-bold text-indSuccess tracking-widest uppercase">L1 Live</span>
                     </div>
-                    <button id="mobileMenuOpenBtn" class="md:hidden text-slate-600 hover:text-indAccent text-lg p-1.5 transition-colors"><i class="fa-solid fa-bars"></i></button>
+                    <button id="mobileMenuOpenBtn" class="md:hidden text-slate-600 hover:text-indAccent text-sm p-1 transition-colors"><i class="fa-solid fa-bars"></i></button>
                 </div>
             </div>
         </div>
     </header>
 
     <!-- MENU MOBILE -->
-    <div id="mobileMenu" class="fixed inset-0 bg-white z-[60] hidden flex-col">
+    <div id="mobileMenu" class="fixed inset-0 bg-white z-50 hidden flex-col">
         <div class="flex justify-between items-center p-3 border-b border-indBorder shadow-sm bg-white">
             <div class="flex items-center gap-2">
-                <img src="https://i.imgur.com/9pIdsgM.jpeg" alt="Logo" class="w-7 h-7 rounded border border-slate-200">
+                <img src="https://i.imgur.com/9pIdsgM.jpeg" alt="Logo" class="w-6 h-6 rounded border border-slate-200">
                 <span class="font-extrabold text-sm tracking-tighter text-premiumDark">NEXUS<span class="text-indAccent">SCAN</span></span>
             </div>
-            <button onclick="closeMobileMenu()" class="text-slate-500 hover:text-red-500 text-xl p-2 transition-colors"><i class="fa-solid fa-xmark"></i></button>
+            <button onclick="closeMobileMenu()" class="text-slate-500 hover:text-red-500 text-lg p-2 transition-colors"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="flex flex-col pt-2 flex-grow bg-slate-50">
-            <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); closeMobileMenu()" class="py-4 px-5 text-left font-bold text-sm border-b border-indBorder text-indAccent bg-white shadow-sm border-l-2 border-indAccent"><i class="fa-solid fa-house w-6 text-center"></i> Accueil</button>
-            <button onclick="openFullModal('allBlocksModal'); closeMobileMenu()" class="py-4 px-5 text-left font-semibold text-sm border-b border-indBorder text-slate-600 bg-white hover:bg-slate-50 border-l-2 border-transparent"><i class="fa-solid fa-cubes w-6 text-center"></i> Blocs L1</button>
-            <button onclick="openFullModal('allTxsModal'); closeMobileMenu()" class="py-4 px-5 text-left font-semibold text-sm border-b border-indBorder text-slate-600 bg-white hover:bg-slate-50 border-l-2 border-transparent"><i class="fa-solid fa-list-ul w-6 text-center"></i> Transactions</button>
+            <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); closeMobileMenu()" class="py-3 px-5 text-left font-bold text-xs border-b border-indBorder text-indAccent bg-white shadow-sm border-l-2 border-indAccent"><i class="fa-solid fa-house w-5 text-center"></i> Accueil</button>
+            <button onclick="openFullModal('allBlocksModal'); closeMobileMenu()" class="py-3 px-5 text-left font-semibold text-xs border-b border-indBorder text-slate-600 bg-white hover:bg-slate-50 border-l-2 border-transparent"><i class="fa-solid fa-cubes w-5 text-center"></i> Blocs L1</button>
+            <button onclick="openFullModal('allTxsModal'); closeMobileMenu()" class="py-3 px-5 text-left font-semibold text-xs border-b border-indBorder text-slate-600 bg-white hover:bg-slate-50 border-l-2 border-transparent"><i class="fa-solid fa-list-ul w-5 text-center"></i> Transactions</button>
         </div>
     </div>
 
     <!-- CONTENEUR PRINCIPAL -->
     <main class="flex-grow flex flex-col relative">
         <!-- Ligne de synchronisation ultra-fine -->
-        <div id="syncProgressBar" class="absolute top-0 left-0 h-[2px] bg-indAccent transition-all duration-300 z-30 w-0 opacity-0 shadow-[0_0_10px_#0EA5E9]"></div>
+        <div id="syncProgressBar" class="absolute top-0 left-0 h-[1.5px] bg-indAccent transition-all duration-300 z-30 w-0 opacity-0 shadow-[0_0_8px_#0EA5E9]"></div>
 
         <div class="flex-grow flex flex-col fade-in">
             <!-- HEADER ACCUEIL DATA-DENSE -->
-            <section class="bg-[#020617] text-white pt-8 pb-10 px-4 relative overflow-hidden border-b border-slate-800">
-                <div class="absolute inset-0 opacity-10 z-0" style="background-image: linear-gradient(#1e293b 1px, transparent 1px), linear-gradient(90deg, #1e293b 1px, transparent 1px); background-size: 20px 20px;"></div>
+            <section class="bg-[#020617] text-white pt-6 pb-8 px-4 relative overflow-hidden border-b border-slate-800">
+                <div class="absolute inset-0 opacity-10 z-0" style="background-image: linear-gradient(#1e293b 1px, transparent 1px), linear-gradient(90deg, #1e293b 1px, transparent 1px); background-size: 16px 16px;"></div>
                 
                 <div class="max-w-5xl mx-auto relative z-10 flex flex-col items-center">
-                    <h1 class="text-2xl md:text-3xl font-black mb-2 text-center tracking-tighter text-white drop-shadow-md">Registre L1 <span class="text-indAccent">NEXUS CORE</span></h1>
-                    <div class="text-center mb-6 flex flex-col items-center">
-                        <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1.5">Architecture Souveraine | Atlas & Duc Corp.</p>
-                        <span id="apiPriceTag" class="bg-slate-800/90 border border-slate-600 px-3 py-1 rounded-md text-indAccent font-black text-xs tracking-wider inline-block shadow-sm">
+                    <h1 class="text-xl md:text-2xl font-black mb-1.5 text-center tracking-tighter text-white drop-shadow-sm">Registre L1 <span class="text-indAccent">NEXUS CORE</span></h1>
+                    <div class="text-center mb-5 flex flex-col items-center">
+                        <p class="text-slate-400 text-xxs font-bold uppercase tracking-widest mb-1">Architecture Souveraine | Atlas & Duc Corp.</p>
+                        <span id="apiPriceTag" class="bg-slate-800/90 border border-slate-600 px-3 py-1 rounded text-indAccent font-black text-xxs tracking-wider inline-block shadow-sm">
                             1 ₳ = <span class="text-white">1.00 XOF</span>
                         </span>
                     </div>
                     
-                    <form onsubmit="handleSearch(event)" class="w-full max-w-2xl bg-[#0F172A] rounded-lg p-1.5 flex items-center border border-slate-700 focus-within:border-indAccent focus-within:ring-2 focus-within:ring-indAccent/50 transition-all shadow-lg">
-                        <div class="pl-4 pr-3 text-slate-400 text-sm"><i class="fa-solid fa-search"></i></div>
-                        <input type="text" id="searchInput" placeholder="Rechercher par Hash / N° Bloc / Adresse..." class="w-full bg-transparent text-white px-2 py-1.5 outline-none font-mono placeholder:text-slate-500 text-sm">
-                        <button type="submit" id="searchBtn" class="bg-indAccent hover:bg-[#026aa1] text-white px-5 py-2 rounded-md font-bold text-xs transition-all shadow-[0_0_10px_rgba(2,132,199,0.3)] hover:shadow-[0_0_15px_rgba(2,132,199,0.5)]">
+                    <form onsubmit="handleSearch(event)" class="w-full max-w-2xl bg-[#0F172A] rounded-md p-1 flex items-center border border-slate-700 focus-within:border-indAccent focus-within:ring-1 focus-within:ring-indAccent transition-all">
+                        <div class="pl-3 pr-2 text-slate-400 text-xs"><i class="fa-solid fa-search"></i></div>
+                        <input type="text" id="searchInput" placeholder="Rechercher Hash / Bloc / Adresse..." class="w-full bg-transparent text-white px-1 py-1 outline-none font-mono placeholder:text-slate-500 text-xs">
+                        <button type="submit" id="searchBtn" class="bg-indAccent hover:bg-[#0369a1] text-white px-4 py-1.5 rounded-sm font-bold text-xs transition-colors shadow-sm">
                             <span class="hidden sm:inline">Rechercher</span><i class="fa-solid fa-arrow-right sm:hidden"></i>
                         </button>
                     </form>
 
                     <!-- METRIQUES DYNAMIQUES COMPACTES -->
-                    <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3 w-full max-w-5xl">
-                        <div class="bg-slate-900/80 border border-slate-800 px-4 py-3 rounded-lg flex items-center gap-3 shadow-md">
-                            <i class="fa-solid fa-coins text-indAccent text-lg opacity-90"></i>
+                    <div class="mt-5 grid grid-cols-2 md:grid-cols-4 gap-2 w-full max-w-5xl">
+                        <div class="bg-slate-900/60 border border-slate-800 px-3 py-2 rounded-md flex items-center gap-2">
+                            <i class="fa-solid fa-coins text-indAccent text-sm opacity-80"></i>
                             <div>
-                                <p class="text-[0.6rem] text-slate-500 uppercase tracking-widest">Actif Natif</p>
-                                <p class="text-sm font-bold text-slate-200">AG-COIN (₳)</p>
+                                <p class="text-[0.55rem] text-slate-500 uppercase tracking-widest">Actif Natif</p>
+                                <p class="text-xs font-bold text-slate-200">AG-COIN (₳)</p>
                             </div>
                         </div>
-                        <div class="bg-slate-900/80 border border-slate-800 px-4 py-3 rounded-lg flex items-center gap-3 shadow-md">
-                            <i class="fa-solid fa-chart-pie text-indAccent text-lg opacity-90"></i>
+                        <div class="bg-slate-900/60 border border-slate-800 px-3 py-2 rounded-md flex items-center gap-2">
+                            <i class="fa-solid fa-chart-pie text-indAccent text-sm opacity-80"></i>
                             <div>
-                                <p class="text-[0.6rem] text-slate-500 uppercase tracking-widest">Total Supply</p>
-                                <p id="apiTotalSupply" class="text-sm font-bold text-slate-200 font-mono">100,000,000,000 ₳</p>
+                                <p class="text-[0.55rem] text-slate-500 uppercase tracking-widest">Total Supply</p>
+                                <p id="apiTotalSupply" class="text-xs font-bold text-slate-200 font-mono">100,000,000,000 ₳</p>
                             </div>
                         </div>
-                        <div class="bg-slate-900/80 border border-slate-800 px-4 py-3 rounded-lg flex items-center gap-3 shadow-md">
-                            <i class="fa-solid fa-hashtag text-indAccent text-lg opacity-90"></i>
+                        <div class="bg-slate-900/60 border border-slate-800 px-3 py-2 rounded-md flex items-center gap-2">
+                            <i class="fa-solid fa-hashtag text-indAccent text-sm opacity-80"></i>
                             <div>
-                                <p class="text-[0.6rem] text-slate-500 uppercase tracking-widest">Décimales</p>
-                                <p class="text-sm font-bold text-slate-200">6 (Micro-₳)</p>
+                                <p class="text-[0.55rem] text-slate-500 uppercase tracking-widest">Décimales</p>
+                                <p class="text-xs font-bold text-slate-200">6 (Micro-₳)</p>
                             </div>
                         </div>
-                        <div class="bg-[#064E3B]/40 border border-[#059669]/50 px-4 py-3 rounded-lg flex items-center gap-3 shadow-[0_0_15px_rgba(5,150,105,0.15)]">
-                            <i class="fa-solid fa-users text-indSuccess text-lg opacity-100"></i>
+                        <div class="bg-[#064E3B]/30 border border-[#059669]/40 px-3 py-2 rounded-md flex items-center gap-2">
+                            <i class="fa-solid fa-users text-indSuccess text-sm opacity-90"></i>
                             <div>
-                                <p class="text-[0.6rem] text-[#34D399] uppercase tracking-widest">Holders</p>
-                                <p id="apiHoldersCount" class="text-sm font-black text-white font-mono">
-                                    <span class="skeleton-dark h-4 w-12 rounded block mt-0.5"></span>
+                                <p class="text-[0.55rem] text-[#34D399] uppercase tracking-widest">Holders</p>
+                                <p id="apiHoldersCount" class="text-xs font-black text-white font-mono">
+                                    <span class="skeleton-dark h-3 w-10 rounded block mt-0.5"></span>
                                 </p>
                             </div>
                         </div>
@@ -237,80 +234,80 @@
             </section>
 
             <!-- STATISTIQUES L1 DENSES -->
-            <section class="max-w-[100rem] w-full mx-auto px-2 sm:px-4 lg:px-6 py-5 border-b border-indBorder bg-white z-20">
-                <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                    <div class="bg-slate-50 rounded-lg border border-slate-200 p-3 flex items-center gap-3 shadow-sm hover:shadow transition-shadow">
-                        <div class="w-9 h-9 rounded-md bg-white flex items-center justify-center text-slate-500 border border-slate-200 shadow-sm"><i class="fa-solid fa-scale-balanced text-sm"></i></div>
+            <section class="max-w-[100rem] w-full mx-auto px-2 sm:px-4 lg:px-6 py-4 border-b border-indBorder bg-white z-20">
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-2">
+                    <div class="bg-slate-50 rounded border border-slate-200 p-2.5 flex items-center gap-2">
+                        <div class="w-7 h-7 rounded bg-white flex items-center justify-center text-slate-400 border border-slate-200 shadow-sm"><i class="fa-solid fa-scale-balanced text-[10px]"></i></div>
                         <div>
-                            <p class="text-[0.6rem] font-bold text-slate-500 uppercase tracking-wider">Parité Éco</p>
-                            <h3 class="text-sm font-black text-premiumDark leading-none mt-1">Strict <span class="text-xs text-indAccent border-b border-indAccent/30 pb-0.5">1:1</span></h3>
+                            <p class="text-[0.55rem] font-bold text-slate-500 uppercase tracking-wider">Parité Éco</p>
+                            <h3 class="text-xs font-black text-premiumDark leading-none mt-0.5">Strict <span class="text-[0.65rem] text-indAccent border-b border-indAccent/30">1:1</span></h3>
                         </div>
                     </div>
-                    <div class="bg-slate-50 rounded-lg border border-slate-200 p-3 flex items-center gap-3 shadow-sm hover:shadow transition-shadow">
-                        <div class="w-9 h-9 rounded-md bg-white flex items-center justify-center text-indAccent border border-slate-200 shadow-sm"><i class="fa-solid fa-arrow-right-arrow-left text-sm"></i></div>
+                    <div class="bg-slate-50 rounded border border-slate-200 p-2.5 flex items-center gap-2">
+                        <div class="w-7 h-7 rounded bg-white flex items-center justify-center text-indAccent border border-slate-200 shadow-sm"><i class="fa-solid fa-arrow-right-arrow-left text-[10px]"></i></div>
                         <div>
-                            <p class="text-[0.6rem] font-bold text-slate-500 uppercase tracking-wider">Total Txns</p>
-                            <h3 id="statTotalTx" class="text-sm font-black font-mono text-premiumDark leading-none mt-1"><div class="skeleton h-4 w-20 rounded"></div></h3>
+                            <p class="text-[0.55rem] font-bold text-slate-500 uppercase tracking-wider">Total Txns</p>
+                            <h3 id="statTotalTx" class="text-xs font-black font-mono text-premiumDark leading-none mt-0.5"><div class="skeleton h-3 w-16 rounded"></div></h3>
                         </div>
                     </div>
-                    <div class="bg-slate-50 rounded-lg border border-slate-200 p-3 flex items-center gap-3 shadow-sm hover:shadow transition-shadow">
-                        <div class="w-9 h-9 rounded-md bg-white flex items-center justify-center text-indSuccess border border-slate-200 shadow-sm"><i class="fa-solid fa-layer-group text-sm"></i></div>
+                    <div class="bg-slate-50 rounded border border-slate-200 p-2.5 flex items-center gap-2">
+                        <div class="w-7 h-7 rounded bg-white flex items-center justify-center text-indSuccess border border-slate-200 shadow-sm"><i class="fa-solid fa-layer-group text-[10px]"></i></div>
                         <div>
-                            <p class="text-[0.6rem] font-bold text-slate-500 uppercase tracking-wider">Hauteur L1</p>
-                            <h3 id="statLatestBlock" class="text-sm font-black font-mono text-premiumDark leading-none mt-1"><div class="skeleton h-4 w-16 rounded"></div></h3>
+                            <p class="text-[0.55rem] font-bold text-slate-500 uppercase tracking-wider">Hauteur L1</p>
+                            <h3 id="statLatestBlock" class="text-xs font-black font-mono text-premiumDark leading-none mt-0.5"><div class="skeleton h-3 w-12 rounded"></div></h3>
                         </div>
                     </div>
-                    <div class="bg-slate-50 rounded-lg border border-slate-200 p-3 flex items-center gap-3 shadow-sm hover:shadow transition-shadow">
-                        <div class="w-9 h-9 rounded-md bg-white flex items-center justify-center text-indigo-500 border border-slate-200 shadow-sm"><i class="fa-solid fa-chart-line text-sm"></i></div>
+                    <div class="bg-slate-50 rounded border border-slate-200 p-2.5 flex items-center gap-2">
+                        <div class="w-7 h-7 rounded bg-white flex items-center justify-center text-indigo-500 border border-slate-200 shadow-sm"><i class="fa-solid fa-chart-line text-[10px]"></i></div>
                         <div>
-                            <p class="text-[0.6rem] font-bold text-slate-500 uppercase tracking-wider">Volume 24H</p>
-                            <h3 id="statVolume24h" class="text-sm font-black font-mono text-premiumDark leading-none mt-1"><div class="skeleton h-4 w-24 rounded"></div></h3>
+                            <p class="text-[0.55rem] font-bold text-slate-500 uppercase tracking-wider">Volume 24H</p>
+                            <h3 id="statVolume24h" class="text-xs font-black font-mono text-premiumDark leading-none mt-0.5"><div class="skeleton h-3 w-20 rounded"></div></h3>
                         </div>
                     </div>
                 </div>
             </section>
 
             <!-- SECTIONS DES ÉLÉMENTS RÉCENTS (ACCUEIL) -->
-            <section class="max-w-[100rem] w-full mx-auto px-2 sm:px-4 lg:px-6 py-6 flex-grow grid grid-cols-1 lg:grid-cols-2 gap-5">
+            <section class="max-w-[100rem] w-full mx-auto px-2 sm:px-4 lg:px-6 py-4 flex-grow grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <!-- Blocs Récents -->
-                <div class="bg-white rounded-xl border border-slate-200 shadow-md flex flex-col h-[400px] overflow-hidden">
-                    <div class="p-3.5 border-b border-slate-200 flex justify-between items-center bg-slate-50">
-                        <h2 class="font-black text-premiumDark text-sm flex items-center gap-2"><i class="fa-solid fa-cube text-indAccent"></i> Derniers Blocs</h2>
-                        <button onclick="openFullModal('allBlocksModal')" class="text-[0.7rem] font-bold text-slate-600 hover:text-indAccent bg-white px-2.5 py-1.5 rounded-md border border-slate-200 hover:border-indAccent transition-colors flex items-center shadow-sm">Tout voir <i class="fa-solid fa-chevron-right ml-1.5 text-[0.6rem]"></i></button>
+                <div class="bg-white rounded-md border border-slate-300 shadow-sm flex flex-col h-[320px] overflow-hidden">
+                    <div class="p-2.5 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+                        <h2 class="font-extrabold text-premiumDark text-xs flex items-center gap-1.5"><i class="fa-solid fa-cube text-indAccent"></i> Blocs Récents</h2>
+                        <button onclick="openFullModal('allBlocksModal')" class="text-[0.65rem] font-bold text-slate-600 hover:text-indAccent bg-white px-2 py-1 rounded border border-slate-200 hover:border-indAccent transition-colors flex items-center shadow-sm">Tout voir <i class="fa-solid fa-chevron-right ml-1 text-[0.55rem]"></i></button>
                     </div>
-                    <div class="overflow-y-auto flex-grow p-2 custom-scrollbar bg-slate-50/30" id="blocksContainerPreview"></div>
+                    <div class="overflow-y-auto flex-grow p-1.5 custom-scrollbar" id="blocksContainerPreview"></div>
                 </div>
 
                 <!-- Transactions Récentes -->
-                <div class="bg-white rounded-xl border border-slate-200 shadow-md flex flex-col h-[400px] overflow-hidden">
-                    <div class="p-3.5 border-b border-slate-200 flex justify-between items-center bg-slate-50">
-                        <h2 class="font-black text-premiumDark text-sm flex items-center gap-2"><i class="fa-solid fa-list-ul text-indAccent"></i> Dernières Transactions</h2>
-                        <button onclick="openFullModal('allTxsModal')" class="text-[0.7rem] font-bold text-slate-600 hover:text-indAccent bg-white px-2.5 py-1.5 rounded-md border border-slate-200 hover:border-indAccent transition-colors flex items-center shadow-sm">Tout voir <i class="fa-solid fa-chevron-right ml-1.5 text-[0.6rem]"></i></button>
+                <div class="bg-white rounded-md border border-slate-300 shadow-sm flex flex-col h-[320px] overflow-hidden">
+                    <div class="p-2.5 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+                        <h2 class="font-extrabold text-premiumDark text-xs flex items-center gap-1.5"><i class="fa-solid fa-list-ul text-indAccent"></i> Txs Récentes</h2>
+                        <button onclick="openFullModal('allTxsModal')" class="text-[0.65rem] font-bold text-slate-600 hover:text-indAccent bg-white px-2 py-1 rounded border border-slate-200 hover:border-indAccent transition-colors flex items-center shadow-sm">Tout voir <i class="fa-solid fa-chevron-right ml-1 text-[0.55rem]"></i></button>
                     </div>
-                    <div class="overflow-y-auto flex-grow p-2 custom-scrollbar bg-slate-50/30" id="txsContainerPreview"></div>
+                    <div class="overflow-y-auto flex-grow p-1.5 custom-scrollbar" id="txsContainerPreview"></div>
                 </div>
             </section>
         </div>
     </main>
 
     <!-- FOOTER OFFICIEL ATLAS & DUC -->
-    <footer class="bg-[#020617] border-t border-slate-800 py-8 mt-auto z-10 w-full flex flex-col items-center justify-center">
+    <footer class="bg-[#020617] border-t border-slate-800 py-6 mt-auto z-10 w-full flex flex-col items-center justify-center">
         <div class="w-full max-w-5xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between text-center md:text-left">
-            <div class="flex items-center gap-4 mb-5 md:mb-0">
-                <img src="https://i.imgur.com/Tc7Jzx3.jpeg" alt="Logo Atlas & Duc" class="h-10 w-10 rounded-md border border-slate-600 object-cover shadow-lg">
+            <div class="flex items-center gap-3 mb-4 md:mb-0">
+                <img src="https://i.imgur.com/Tc7Jzx3.jpeg" alt="Logo Atlas & Duc" class="h-8 w-8 rounded border border-slate-600 object-cover">
                 <div>
-                    <h4 class="text-slate-200 font-bold text-sm uppercase tracking-widest leading-none mb-1.5">Atlas & Duc Corporation</h4>
-                    <p class="text-indAccent text-[0.6rem] font-bold tracking-[0.2em] uppercase">Infrastructure WEB3 Industrielle</p>
+                    <h4 class="text-slate-200 font-bold text-xs uppercase tracking-widest leading-none mb-1">Atlas & Duc Corporation</h4>
+                    <p class="text-indAccent text-[0.55rem] font-bold tracking-[0.2em] uppercase">Infrastructure WEB3 Industrielle</p>
                 </div>
             </div>
             
-            <div class="flex items-center gap-5 text-xs font-semibold text-slate-400 mb-5 md:mb-0">
-                <a href="documentation.html" class="hover:text-indAccent transition-colors"><i class="fa-solid fa-book mr-1.5"></i> DOCS</a>
-                <a href="api.html" class="hover:text-indAccent transition-colors"><i class="fa-solid fa-server mr-1.5"></i> API RPC</a>
-                <a href="support.html" class="hover:text-indAccent transition-colors"><i class="fa-solid fa-headset mr-1.5"></i> SUPPORT</a>
+            <div class="flex items-center gap-4 text-xs font-semibold text-slate-500 mb-4 md:mb-0">
+                <a href="documentation.html" class="hover:text-indAccent transition-colors"><i class="fa-solid fa-book mr-1"></i> DOCS</a>
+                <a href="api.html" class="hover:text-indAccent transition-colors"><i class="fa-solid fa-server mr-1"></i> API RPC</a>
+                <a href="support.html" class="hover:text-indAccent transition-colors"><i class="fa-solid fa-headset mr-1"></i> SUPPORT</a>
             </div>
             
-            <div class="text-[0.65rem] text-slate-600 font-medium text-right">
+            <div class="text-[0.6rem] text-slate-600 font-medium text-right">
                 <p>&copy; 2026 Atlas & Duc Corp.</p>
                 <p>Opéré au Burkina Faso.</p>
             </div>
@@ -319,56 +316,54 @@
 
 
     <!-- ========================================================================= -->
-    <!-- FENÊTRES PLEIN ÉCRAN (MODALES) - LISTES COMPLÈTES                         -->
-    <!-- Architecture CSS GRID pour éviter les bugs flex-1 sur Mobile WebView      -->
+    <!-- FENÊTRES PLEIN ÉCRAN (MODALES) - "TOUT VOIR" DENSES                       -->
     <!-- ========================================================================= -->
 
-    <!-- 1. EXPLORATEUR DE BLOCS (LISTE) -->
-    <div id="allBlocksModal" class="modal-overlay p-0 md:p-5 items-center justify-center" style="display: none;">
-        <div class="modal-content w-full max-w-[90rem] bg-white md:rounded-xl shadow-2xl border-0 md:border border-slate-300 grid" style="grid-template-rows: auto auto 1fr; max-height: 90vh; height: 100%;">
-            
+    <!-- 1. EXPLORATEUR DE BLOCS (PAGINATION 25/PAGE) -->
+    <div id="allBlocksModal" class="modal-overlay fixed inset-0 flex items-center justify-center p-0 md:p-4">
+        <div class="modal-content w-full h-full max-w-[90rem] flex flex-col overflow-hidden rounded-none md:rounded-xl shadow-2xl bg-white border-0 md:border border-slate-300">
             <!-- Header Dense -->
-            <div class="bg-slate-50 border-b border-slate-200 px-5 py-3 flex justify-between items-center shadow-sm z-10">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-cubes text-indAccent text-xl"></i>
+            <div class="bg-slate-50 border-b border-slate-200 px-4 py-2 flex justify-between items-center shrink-0">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-cubes text-indAccent text-lg"></i>
                     <div>
-                        <h2 class="text-sm font-black text-premiumDark leading-none mb-1">Registre Complet des Blocs</h2>
-                        <span class="text-[0.6rem] font-bold text-slate-500 uppercase tracking-widest">Base de données L1</span>
+                        <h2 class="text-sm font-black text-premiumDark leading-none mb-0.5">Registre des Blocs L1</h2>
+                        <span class="text-[0.55rem] font-bold text-slate-500 uppercase tracking-widest">Base de données complète</span>
                     </div>
                 </div>
-                <button onclick="closeModal('allBlocksModal')" class="bg-white hover:bg-red-50 text-slate-500 hover:text-red-600 border border-slate-200 px-3 py-1.5 rounded-md font-bold text-xs transition-colors shadow-sm flex items-center"><i class="fa-solid fa-xmark mr-1.5"></i> Fermer</button>
+                <button onclick="closeModal('allBlocksModal')" class="bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 px-3 py-1 rounded font-bold text-xs transition-colors shadow-sm"><i class="fa-solid fa-xmark mr-1"></i> Fermer</button>
             </div>
 
             <!-- Toolbar -->
-            <div class="bg-white px-5 py-2.5 border-b border-slate-200 flex flex-wrap justify-between items-center gap-3 z-10">
+            <div class="bg-white px-4 py-2 border-b border-slate-200 flex flex-wrap justify-between items-center gap-2 shrink-0">
                 <div class="flex items-center gap-2 w-full md:w-auto">
-                    <div class="relative w-full md:w-72">
-                        <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-                        <input type="text" id="blockModalSearch" onkeyup="handleBlockModalSearch()" placeholder="Filtre (Hash, N°)..." class="w-full bg-slate-50 border border-slate-200 text-xs text-slate-700 rounded-md pl-8 pr-3 py-1.5 focus:outline-none focus:border-indAccent focus:ring-1 focus:ring-indAccent font-mono transition-all">
+                    <div class="relative w-full md:w-64">
+                        <i class="fa-solid fa-search absolute left-2 top-1/2 -translate-y-1/2 text-slate-400 text-[0.65rem]"></i>
+                        <input type="text" id="blockModalSearch" onkeyup="handleBlockModalSearch()" placeholder="Filtre (Hash, N°)..." class="w-full bg-slate-50 border border-slate-200 text-xs text-slate-700 rounded pl-7 pr-2 py-1 focus:outline-none focus:border-indAccent font-mono">
                     </div>
-                    <select id="blockModalFilter" onchange="handleBlockModalFilter()" class="bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-600 rounded-md px-2 py-1.5 outline-none cursor-pointer hover:border-slate-300 transition-colors">
+                    <select id="blockModalFilter" onchange="handleBlockModalFilter()" class="bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-600 rounded px-2 py-1 outline-none cursor-pointer">
                         <option value="all">Tous les blocs</option>
                         <option value="with_tx">Avec Txs</option>
                         <option value="empty">Vides</option>
                     </select>
                 </div>
-                <div class="flex items-center gap-1 text-xs font-bold text-slate-600 bg-slate-50 border border-slate-200 rounded-md p-0.5 shadow-sm">
-                    <button onclick="prevBlockPage()" class="px-3 py-1 hover:bg-white rounded hover:shadow-sm transition-all"><i class="fa-solid fa-chevron-left"></i></button>
-                    <span id="blockPageInfo" class="px-3 min-w-[70px] text-center border-x border-slate-200 text-[0.7rem]">1 / 1</span>
-                    <button onclick="nextBlockPage()" class="px-3 py-1 hover:bg-white rounded hover:shadow-sm transition-all"><i class="fa-solid fa-chevron-right"></i></button>
+                <div class="flex items-center gap-1 text-xs font-bold text-slate-600 bg-slate-50 border border-slate-200 rounded p-0.5">
+                    <button onclick="prevBlockPage()" class="px-2 py-0.5 hover:bg-white rounded"><i class="fa-solid fa-chevron-left"></i></button>
+                    <span id="blockPageInfo" class="px-2 min-w-[70px] text-center border-x border-slate-200 text-[0.65rem]">1 / 1</span>
+                    <button onclick="nextBlockPage()" class="px-2 py-0.5 hover:bg-white rounded"><i class="fa-solid fa-chevron-right"></i></button>
                 </div>
             </div>
 
-            <!-- Data Table (Scrollable Area via Grid 1fr) -->
-            <div class="overflow-y-auto bg-white custom-scrollbar">
+            <!-- Data Table -->
+            <div class="flex-grow overflow-y-auto bg-white custom-scrollbar">
                 <table class="w-full text-left border-collapse min-w-[700px]">
-                    <thead class="bg-slate-100 border-b border-slate-200 sticky top-0 z-10 shadow-sm">
-                        <tr class="text-[0.65rem] text-slate-500 uppercase tracking-wider whitespace-nowrap">
+                    <thead class="bg-slate-100 border-b border-slate-200 sticky top-0 z-10">
+                        <tr class="text-[0.6rem] text-slate-500 uppercase tracking-wider whitespace-nowrap">
                             <th class="font-bold border-r border-slate-200 w-24">Bloc</th>
                             <th class="font-bold border-r border-slate-200 w-32">Horodatage</th>
-                            <th class="font-bold border-r border-slate-200 w-20 text-center">Txns</th>
+                            <th class="font-bold border-r border-slate-200 w-16 text-center">Txns</th>
                             <th class="font-bold border-r border-slate-200">Validateur</th>
-                            <th class="font-bold text-right w-28">Gaz Utilisé</th>
+                            <th class="font-bold text-right w-24">Gaz</th>
                         </tr>
                     </thead>
                     <tbody id="allBlocksTable" class="text-xs divide-y divide-slate-100 font-mono">
@@ -379,53 +374,52 @@
         </div>
     </div>
 
-    <!-- 2. EXPLORATEUR DE TRANSACTIONS (LISTE) -->
-    <div id="allTxsModal" class="modal-overlay p-0 md:p-5 items-center justify-center" style="display: none;">
-        <div class="modal-content w-full max-w-[90rem] bg-white md:rounded-xl shadow-2xl border-0 md:border border-slate-300 grid" style="grid-template-rows: auto auto 1fr; max-height: 90vh; height: 100%;">
-            
+    <!-- 2. EXPLORATEUR DE TRANSACTIONS (PAGINATION 25/PAGE) -->
+    <div id="allTxsModal" class="modal-overlay fixed inset-0 flex items-center justify-center p-0 md:p-4">
+        <div class="modal-content w-full h-full max-w-[90rem] flex flex-col overflow-hidden rounded-none md:rounded-xl shadow-2xl bg-white border-0 md:border border-slate-300">
             <!-- Header Dense -->
-            <div class="bg-slate-50 border-b border-slate-200 px-5 py-3 flex justify-between items-center shadow-sm z-10">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-list-ul text-indSuccess text-xl"></i>
+            <div class="bg-slate-50 border-b border-slate-200 px-4 py-2 flex justify-between items-center shrink-0">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-list-ul text-indSuccess text-lg"></i>
                     <div>
-                        <h2 class="text-sm font-black text-premiumDark leading-none mb-1">Registre des Transactions</h2>
-                        <span class="text-[0.6rem] font-bold text-slate-500 uppercase tracking-widest">Historique global L1</span>
+                        <h2 class="text-sm font-black text-premiumDark leading-none mb-0.5">Registre des Transactions</h2>
+                        <span class="text-[0.55rem] font-bold text-slate-500 uppercase tracking-widest">Historique global L1</span>
                     </div>
                 </div>
-                <button onclick="closeModal('allTxsModal')" class="bg-white hover:bg-red-50 text-slate-500 hover:text-red-600 border border-slate-200 px-3 py-1.5 rounded-md font-bold text-xs transition-colors shadow-sm flex items-center"><i class="fa-solid fa-xmark mr-1.5"></i> Fermer</button>
+                <button onclick="closeModal('allTxsModal')" class="bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 px-3 py-1 rounded font-bold text-xs transition-colors shadow-sm"><i class="fa-solid fa-xmark mr-1"></i> Fermer</button>
             </div>
 
             <!-- Toolbar -->
-            <div class="bg-white px-5 py-2.5 border-b border-slate-200 flex flex-wrap justify-between items-center gap-3 z-10">
+            <div class="bg-white px-4 py-2 border-b border-slate-200 flex flex-wrap justify-between items-center gap-2 shrink-0">
                 <div class="flex items-center gap-2 w-full md:w-auto">
-                    <div class="relative w-full md:w-72">
-                        <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-                        <input type="text" id="txModalSearch" onkeyup="handleTxModalSearch()" placeholder="Filtre (Hash, Adresse)..." class="w-full bg-slate-50 border border-slate-200 text-xs text-slate-700 rounded-md pl-8 pr-3 py-1.5 focus:outline-none focus:border-indAccent focus:ring-1 focus:ring-indAccent font-mono transition-all">
+                    <div class="relative w-full md:w-64">
+                        <i class="fa-solid fa-search absolute left-2 top-1/2 -translate-y-1/2 text-slate-400 text-[0.65rem]"></i>
+                        <input type="text" id="txModalSearch" onkeyup="handleTxModalSearch()" placeholder="Filtre (Hash, Adresse)..." class="w-full bg-slate-50 border border-slate-200 text-xs text-slate-700 rounded pl-7 pr-2 py-1 focus:outline-none focus:border-indAccent font-mono">
                     </div>
-                    <select id="txModalFilter" onchange="handleTxModalFilter()" class="bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-600 rounded-md px-2 py-1.5 outline-none cursor-pointer hover:border-slate-300 transition-colors">
+                    <select id="txModalFilter" onchange="handleTxModalFilter()" class="bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-600 rounded px-2 py-1 outline-none cursor-pointer">
                         <option value="all">Toutes Txs</option>
                         <option value="value">Transferts (>0)</option>
                         <option value="contract">Contrats</option>
                     </select>
                 </div>
-                <div class="flex items-center gap-1 text-xs font-bold text-slate-600 bg-slate-50 border border-slate-200 rounded-md p-0.5 shadow-sm">
-                    <button onclick="prevTxPage()" class="px-3 py-1 hover:bg-white rounded hover:shadow-sm transition-all"><i class="fa-solid fa-chevron-left"></i></button>
-                    <span id="txPageInfo" class="px-3 min-w-[70px] text-center border-x border-slate-200 text-[0.7rem]">1 / 1</span>
-                    <button onclick="nextTxPage()" class="px-3 py-1 hover:bg-white rounded hover:shadow-sm transition-all"><i class="fa-solid fa-chevron-right"></i></button>
+                <div class="flex items-center gap-1 text-xs font-bold text-slate-600 bg-slate-50 border border-slate-200 rounded p-0.5">
+                    <button onclick="prevTxPage()" class="px-2 py-0.5 hover:bg-white rounded"><i class="fa-solid fa-chevron-left"></i></button>
+                    <span id="txPageInfo" class="px-2 min-w-[70px] text-center border-x border-slate-200 text-[0.65rem]">1 / 1</span>
+                    <button onclick="nextTxPage()" class="px-2 py-0.5 hover:bg-white rounded"><i class="fa-solid fa-chevron-right"></i></button>
                 </div>
             </div>
 
-            <!-- Data Table (Scrollable Area via Grid 1fr) -->
-            <div class="overflow-y-auto bg-white custom-scrollbar">
-                <table class="w-full text-left border-collapse min-w-[900px]">
-                    <thead class="bg-slate-100 border-b border-slate-200 sticky top-0 z-10 shadow-sm">
-                        <tr class="text-[0.65rem] text-slate-500 uppercase tracking-wider whitespace-nowrap">
-                            <th class="font-bold border-r border-slate-200 w-36">TxHash</th>
+            <!-- Data Table -->
+            <div class="flex-grow overflow-y-auto bg-white custom-scrollbar">
+                <table class="w-full text-left border-collapse min-w-[850px]">
+                    <thead class="bg-slate-100 border-b border-slate-200 sticky top-0 z-10">
+                        <tr class="text-[0.6rem] text-slate-500 uppercase tracking-wider whitespace-nowrap">
+                            <th class="font-bold border-r border-slate-200 w-32">TxHash</th>
                             <th class="font-bold border-r border-slate-200 w-24">Bloc</th>
-                            <th class="font-bold border-r border-slate-200 w-32">Horodatage</th>
-                            <th class="font-bold border-r border-slate-200">Expéditeur (From)</th>
-                            <th class="font-bold border-r border-slate-200">Destinataire (To)</th>
-                            <th class="font-bold text-right w-36">Montant (₳)</th>
+                            <th class="font-bold border-r border-slate-200 w-32">Age</th>
+                            <th class="font-bold border-r border-slate-200">Expéditeur</th>
+                            <th class="font-bold border-r border-slate-200">Destinataire</th>
+                            <th class="font-bold text-right w-32">Montant (₳)</th>
                         </tr>
                     </thead>
                     <tbody id="allTxsTable" class="text-xs divide-y divide-slate-100 font-mono">
@@ -438,42 +432,36 @@
 
 
     <!-- ============================================== -->
-    <!-- MODALES DE DÉTAILS INDIVIDUELS (CORRECTION MOBILE) -->
-    <!-- Structure CSS Grid: auto (Header) / 1fr (Body) -->
+    <!-- MODALES DE DÉTAILS INDIVIDUELS (REFONTE PRO)   -->
     <!-- ============================================== -->
 
     <!-- FENÊTRE DÉTAIL : TRANSACTION -->
-    <div id="txModal" class="modal-overlay items-center justify-center p-3 md:p-5" style="display: none;">
-        <div class="modal-content w-full max-w-4xl bg-[#F8FAFC] rounded-xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] border border-slate-300 grid" style="grid-template-rows: auto 1fr; max-height: 85vh;">
-            
-            <!-- Header Fixe -->
-            <div class="flex justify-between items-center px-4 md:px-5 py-3 md:py-4 border-b border-slate-200 bg-white shadow-sm z-10">
+    <div id="txModal" class="modal-overlay fixed inset-0 flex items-center justify-center p-3 md:p-5">
+        <!-- min-h-0 et max-h-[90vh] sont cruciaux pour le scroll fluide interne -->
+        <div class="modal-content relative w-full max-w-4xl flex flex-col min-h-0 rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.4)] bg-[#F8FAFC] border border-slate-300 max-h-[90vh]">
+            <div class="flex justify-between items-center px-4 md:px-5 py-3 border-b border-slate-200 bg-white shrink-0 rounded-t-xl z-10 shadow-sm">
                 <h3 class="text-sm md:text-base font-black text-premiumDark flex items-center gap-2"><i class="fa-solid fa-file-invoice text-indAccent"></i> Informations de la Transaction</h3>
-                <button onclick="closeModal('txModal')" class="text-slate-500 hover:text-red-600 bg-slate-100 hover:bg-red-50 rounded-md p-2 transition-colors border border-slate-200 hover:border-red-200 shadow-sm"><i class="fa-solid fa-xmark text-lg leading-none"></i></button>
+                <button onclick="closeModal('txModal')" class="text-slate-500 hover:text-red-600 bg-slate-100 hover:bg-red-50 rounded-md p-1.5 transition-colors border border-slate-200 hover:border-red-200 shadow-sm"><i class="fa-solid fa-xmark text-lg leading-none"></i></button>
             </div>
-            
             <!-- Conteneur défilant -->
-            <div class="overflow-y-auto p-4 md:p-6 w-full text-xs custom-scrollbar bg-slate-50/50" id="txModalBody">
+            <div class="p-3 md:p-5 overflow-y-auto flex-grow w-full text-xs custom-scrollbar bg-slate-50/50" id="txModalBody">
                 <!-- Injecté par JS -->
             </div>
         </div>
     </div>
 
     <!-- FENÊTRE DÉTAIL : BLOC -->
-    <div id="blockModal" class="modal-overlay items-center justify-center p-3 md:p-5" style="display: none;">
-        <div class="modal-content w-full max-w-4xl bg-[#F8FAFC] rounded-xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] border border-slate-300 grid" style="grid-template-rows: auto 1fr; max-height: 85vh;">
-            
-            <!-- Header Fixe -->
-            <div class="flex justify-between items-center px-4 md:px-5 py-3 md:py-4 border-b border-slate-200 bg-white shadow-sm z-10">
+    <div id="blockModal" class="modal-overlay fixed inset-0 flex items-center justify-center p-3 md:p-5">
+        <div class="modal-content relative w-full max-w-4xl flex flex-col min-h-0 rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.4)] bg-[#F8FAFC] border border-slate-300 max-h-[90vh]">
+            <div class="flex justify-between items-center px-4 md:px-5 py-3 border-b border-slate-200 bg-white shrink-0 rounded-t-xl z-10 shadow-sm">
                 <h3 class="text-sm md:text-base font-black text-premiumDark flex items-center gap-2">
                     <i class="fa-solid fa-cube text-indAccent"></i> Détail du Bloc 
-                    <span id="blockModalTitleNum" class="text-slate-600 font-mono bg-slate-100 px-2 py-0.5 rounded border border-slate-200 text-xs shadow-sm ml-2"></span>
+                    <span id="blockModalTitleNum" class="text-slate-600 font-mono bg-slate-100 px-2 py-0.5 rounded border border-slate-200 text-xs shadow-sm ml-1"></span>
                 </h3>
-                <button onclick="closeModal('blockModal')" class="text-slate-500 hover:text-red-600 bg-slate-100 hover:bg-red-50 rounded-md p-2 transition-colors border border-slate-200 hover:border-red-200 shadow-sm"><i class="fa-solid fa-xmark text-lg leading-none"></i></button>
+                <button onclick="closeModal('blockModal')" class="text-slate-500 hover:text-red-600 bg-slate-100 hover:bg-red-50 rounded-md p-1.5 transition-colors border border-slate-200 hover:border-red-200 shadow-sm"><i class="fa-solid fa-xmark text-lg leading-none"></i></button>
             </div>
-            
             <!-- Conteneur défilant -->
-            <div class="overflow-y-auto p-4 md:p-6 w-full text-xs custom-scrollbar bg-slate-50/50" id="blockModalBody">
+            <div class="p-3 md:p-5 overflow-y-auto flex-grow w-full text-xs custom-scrollbar bg-slate-50/50" id="blockModalBody">
                 <!-- Injecté par JS -->
             </div>
         </div>
@@ -499,7 +487,7 @@
         /* --- ÉTATS --- */
         let latestBlockNum = 0;          
         let totalTxGlobal = 0; 
-        let globalModalZ = 100050; // Gestion sécurisée de la profondeur
+        let globalModalZ = 100050;
 
         const blockCache = new Map();   
         const txCache = new Map();      
@@ -569,7 +557,7 @@
             menu.classList.add('hidden');
         }
 
-        /* --- GESTION DES APIS EXTERNES --- */
+        /* --- GESTION DES APIS EXTERNES (HOLDERS, SUPPLY, PRICE) --- */
         async function safeFetchNumber(url) {
             try {
                 const res = await fetch(url);
@@ -585,25 +573,37 @@
                     if (data.result !== undefined) return data.result;
                     if (data.data !== undefined) return data.data;
                     return Object.values(data)[0]; 
-                } catch(e) { return text; }
-            } catch(e) { return null; }
+                } catch(e) {
+                    return text; 
+                }
+            } catch(e) {
+                return null;
+            }
         }
 
         async function fetchEcosystemMetrics() {
+            // 1. Holders
             const holders = await safeFetchNumber(API_ENDPOINTS.holders);
             const holdersEl = document.getElementById('apiHoldersCount');
-            if(holdersEl && holders !== null) holdersEl.innerText = Number(holders).toLocaleString('fr-FR');
-            else if (holdersEl && holdersEl.innerHTML.includes('skeleton')) holdersEl.innerText = "N/A";
+            if(holdersEl && holders !== null) {
+                holdersEl.innerText = Number(holders).toLocaleString('fr-FR');
+            } else if (holdersEl && holdersEl.innerHTML.includes('skeleton')) {
+                holdersEl.innerText = "N/A";
+            }
 
+            // 2. Price
             const price = await safeFetchNumber(API_ENDPOINTS.price);
             const priceEl = document.getElementById('apiPriceTag');
             if(priceEl && price !== null && !isNaN(Number(price))) {
                 priceEl.innerHTML = `1 ₳ = <span class="text-white">${Number(price).toFixed(2)} XOF</span>`;
             }
 
+            // 3. Total Supply
             const supply = await safeFetchNumber(API_ENDPOINTS.totalSupply);
             const supplyEl = document.getElementById('apiTotalSupply');
-            if(supplyEl && supply !== null) supplyEl.innerText = Number(supply).toLocaleString('fr-FR') + " ₳";
+            if(supplyEl && supply !== null) {
+                supplyEl.innerText = Number(supply).toLocaleString('fr-FR') + " ₳";
+            }
         }
 
         /* --- SESSION CACHE --- */
@@ -654,11 +654,11 @@
 
             const blockHex = await rpcCall("nexus_blockNumber");
             if (!blockHex) {
-                document.getElementById('networkStatusIndicator').innerHTML = `<div class="w-2 h-2 rounded-full bg-red-500"></div><span class="text-[0.65rem] font-bold text-red-500 uppercase tracking-widest">Hors Ligne</span>`;
+                document.getElementById('networkStatusIndicator').innerHTML = `<div class="w-1.5 h-1.5 rounded-full bg-red-500"></div><span class="text-[0.6rem] font-bold text-red-500 uppercase tracking-widest">Hors Ligne</span>`;
                 pb.style.opacity = '0'; return;
             }
 
-            document.getElementById('networkStatusIndicator').innerHTML = `<div class="w-2 h-2 rounded-full bg-indSuccess live-pulse"></div><span class="text-[0.65rem] font-bold text-indSuccess uppercase tracking-widest">L1 Live</span>`;
+            document.getElementById('networkStatusIndicator').innerHTML = `<div class="w-1.5 h-1.5 rounded-full bg-indSuccess live-pulse"></div><span class="text-[0.6rem] font-bold text-indSuccess uppercase tracking-widest">L1 Live</span>`;
             
             const currentBlockNum = parseInt(blockHex, 16);
             if (currentBlockNum <= latestBlockNum && latestBlockNum !== 0) {
@@ -726,10 +726,10 @@
             } else document.getElementById('statTotalTx').innerText = globalTxHashes.size.toLocaleString('fr-FR');
         }
 
-        /* --- UI ACCUEIL (PREMIUM) --- */
+        /* --- UI ACCUEIL (DENSE) --- */
         function renderBlocksPreview(blocks) {
             const c = document.getElementById('blocksContainerPreview'); 
-            if(blocks.length === 0) { c.innerHTML = '<div class="text-center p-6 text-slate-400 font-medium text-xs"><i class="fa-solid fa-cubes text-2xl mb-2 block opacity-50"></i>En attente du réseau L1...</div>'; return; }
+            if(blocks.length === 0) { c.innerHTML = '<div class="text-center p-4 text-slate-400 font-medium text-xs"><i class="fa-solid fa-cubes text-lg mb-1 block"></i>Attente L1...</div>'; return; }
             
             c.innerHTML = '';
             blocks.slice(0, 10).forEach((b, i) => { 
@@ -737,17 +737,17 @@
                 const txCount = b.transactions ? b.transactions.length : 0;
                 
                 const html = `
-                    <div onclick="openBlockDetail(${decNum})" class="flex items-center justify-between p-2.5 mb-2 rounded-lg border bg-white hover:bg-slate-50 border-slate-200 hover:border-indAccent/50 cursor-pointer transition-all shadow-sm group">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-md bg-slate-100 group-hover:bg-indigo-50 flex items-center justify-center border border-slate-200 group-hover:border-indigo-200 text-slate-500 group-hover:text-indAccent shrink-0 transition-colors"><span class="font-mono text-[0.7rem] font-bold">B</span></div>
+                    <div onclick="openBlockDetail(${decNum})" class="flex items-center justify-between p-1.5 mb-1 rounded border bg-white hover:bg-slate-50 border-slate-100 hover:border-slate-300 cursor-pointer transition-colors">
+                        <div class="flex items-center gap-2">
+                            <div class="w-6 h-6 rounded bg-slate-100 flex items-center justify-center border border-slate-200 text-slate-400 shrink-0"><span class="font-mono text-[0.6rem]">B</span></div>
                             <div class="leading-none">
-                                <span class="font-black text-indAccent text-sm font-mono">${b.hexNumber}</span>
-                                <span class="block text-[0.65rem] text-slate-400 mt-1">${timeAgo(parseTimestamp(b.timestamp))}</span>
+                                <span class="font-black text-indAccent text-xs font-mono">${b.hexNumber}</span>
+                                <span class="block text-[0.6rem] text-slate-400 mt-0.5">${timeAgo(parseTimestamp(b.timestamp))}</span>
                             </div>
                         </div>
                         <div class="text-right shrink-0">
-                            <p class="text-[0.65rem] text-slate-500 font-mono mb-1 bg-slate-50 px-1.5 py-0.5 rounded border border-slate-100 inline-block">${formatHash(b.miner||b.validator||"0xNexus", 5)}</p>
-                            <span class="block text-[0.65rem] font-bold ${txCount > 0 ? 'text-indSuccess' : 'text-slate-400'}">${txCount} Txns</span>
+                            <p class="text-[0.6rem] text-slate-400 font-mono mb-0.5">${formatHash(b.miner||b.validator||"0xNexus", 4)}</p>
+                            <span class="text-[0.6rem] font-bold ${txCount > 0 ? 'text-indSuccess' : 'text-slate-400'}">${txCount} Tx</span>
                         </div>
                     </div>`;
                 c.insertAdjacentHTML('beforeend', html);
@@ -756,26 +756,24 @@
 
         function renderTxsPreview(txs) {
             const c = document.getElementById('txsContainerPreview'); 
-            if(txs.length===0){ c.innerHTML=`<div class="p-6 text-center text-slate-400 text-xs font-medium"><i class="fa-solid fa-wind text-2xl mb-2 block opacity-50"></i>Aucune transaction récente</div>`; return; }
+            if(txs.length===0){ c.innerHTML=`<div class="p-4 text-center text-slate-400 text-xs font-medium"><i class="fa-solid fa-wind text-lg mb-1 block"></i>Vide</div>`; return; }
             
             c.innerHTML = '';
             txs.slice(0, 10).forEach((tx, i) => { 
                 const amt = formatAmount(tx.amountMicro || tx.value);
                 const html = `
-                    <div onclick="openTxDetail('${tx.hash}')" class="flex items-center justify-between p-2.5 mb-2 rounded-lg border bg-white hover:bg-slate-50 border-slate-200 hover:border-indAccent/50 cursor-pointer transition-all shadow-sm group">
-                        <div class="flex items-center gap-3 min-w-0">
-                            <div class="w-8 h-8 rounded-md bg-slate-100 group-hover:bg-emerald-50 flex items-center justify-center border border-slate-200 group-hover:border-emerald-200 text-slate-500 group-hover:text-indSuccess shrink-0 transition-colors"><i class="fa-solid fa-arrow-right-arrow-left text-[0.6rem]"></i></div>
+                    <div onclick="openTxDetail('${tx.hash}')" class="flex items-center justify-between p-1.5 mb-1 rounded border bg-white hover:bg-slate-50 border-slate-100 hover:border-slate-300 cursor-pointer transition-colors">
+                        <div class="flex items-center gap-2 min-w-0">
+                            <div class="w-6 h-6 rounded bg-slate-100 flex items-center justify-center border border-slate-200 text-slate-400 shrink-0"><span class="font-mono text-[0.6rem]">T</span></div>
                             <div class="min-w-0 flex-grow leading-none">
-                                <span class="font-mono font-bold text-sm text-slate-700 block truncate group-hover:text-premiumDark transition-colors">${formatHash(tx.hash, 8)}</span>
-                                <div class="flex items-center gap-1.5 mt-1 text-[0.65rem] text-slate-400 font-mono">
-                                    <span class="bg-slate-50 px-1 py-0.5 rounded border border-slate-100">${formatHash(tx.from,4)}</span>
-                                    <i class="fa-solid fa-arrow-right text-[0.5rem] opacity-50"></i>
-                                    <span class="bg-slate-50 px-1 py-0.5 rounded border border-slate-100">${tx.to ? formatHash(tx.to,4) : 'Contrat'}</span>
+                                <span class="font-mono font-bold text-xs text-slate-700 block truncate">${formatHash(tx.hash, 6)}</span>
+                                <div class="flex items-center gap-1 mt-0.5 text-[0.6rem] text-slate-400 font-mono">
+                                    <span>${formatHash(tx.from,3)}</span><i class="fa-solid fa-arrow-right text-[0.5rem]"></i><span>${tx.to ? formatHash(tx.to,3) : 'Contrat'}</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="text-right shrink-0 ml-3">
-                            <span class="font-bold text-xs text-indSuccess font-mono bg-[#059669]/10 px-2.5 py-1 rounded border border-[#059669]/20">${amt} ₳</span>
+                        <div class="text-right shrink-0 ml-2">
+                            <span class="font-bold text-xs text-indSuccess font-mono">${amt} ₳</span>
                         </div>
                     </div>`;
                 c.insertAdjacentHTML('beforeend', html);
@@ -784,12 +782,8 @@
 
         /* --- LOGIQUE DES MODALES "TOUT VOIR" --- */
         function openFullModal(modalId) {
-            const modal = document.getElementById(modalId);
-            globalModalZ += 10;
-            modal.style.zIndex = globalModalZ;
-            modal.style.display = 'flex'; // Affiche la modale (flex pour centrer le grid interne)
+            document.getElementById(modalId).classList.add('active');
             document.body.style.overflow = 'hidden';
-            
             if (modalId === 'allBlocksModal') updateBlockModalView();
             if (modalId === 'allTxsModal') updateTxModalView();
         }
@@ -821,14 +815,14 @@
             const paginated = allBlocks.slice(start, start + ITEMS_PER_PAGE);
             const tb = document.getElementById('allBlocksTable'); if(!tb) return; tb.innerHTML = '';
             
-            if (paginated.length === 0) { tb.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-slate-400 font-medium">Aucun bloc trouvé</td></tr>`; return; }
+            if (paginated.length === 0) { tb.innerHTML = `<tr><td colspan="5" class="py-4 text-center text-slate-400 font-medium">Aucun bloc</td></tr>`; return; }
 
             paginated.forEach(b => {
                 tb.insertAdjacentHTML('beforeend', `
                     <tr class="hover:bg-slate-50 cursor-pointer transition-colors border-b border-slate-100 last:border-0" onclick="openBlockDetail(${b.decNumber})">
                         <td class="font-bold text-indAccent">${b.hexNumber}</td>
                         <td class="text-slate-500">${timeAgo(parseTimestamp(b.timestamp))}</td>
-                        <td class="text-center ${b.transactions && b.transactions.length > 0 ? 'text-indSuccess font-bold bg-[#059669]/10 rounded' : 'text-slate-400'}">${b.transactions?b.transactions.length:0}</td>
+                        <td class="text-center ${b.transactions && b.transactions.length > 0 ? 'text-indSuccess font-bold' : 'text-slate-400'}">${b.transactions?b.transactions.length:0}</td>
                         <td class="text-slate-600">${formatHash(b.miner||b.validator||"0xNexusMaster", 8)}</td>
                         <td class="text-right text-slate-500">${b.gasUsed ? parseInt(b.gasUsed, 16).toLocaleString('fr-FR') : "0"}</td>
                     </tr>`);
@@ -862,7 +856,7 @@
             const paginated = allTxs.slice(start, start + ITEMS_PER_PAGE);
             const tb = document.getElementById('allTxsTable'); if(!tb) return; tb.innerHTML = '';
             
-            if (paginated.length === 0) { tb.innerHTML = `<tr><td colspan="6" class="py-6 text-center text-slate-400 font-medium">Aucune transaction trouvée</td></tr>`; return; }
+            if (paginated.length === 0) { tb.innerHTML = `<tr><td colspan="6" class="py-4 text-center text-slate-400 font-medium">Aucune tx</td></tr>`; return; }
 
             paginated.forEach(tx => {
                 tb.insertAdjacentHTML('beforeend', `
@@ -870,8 +864,8 @@
                         <td class="font-bold text-slate-700">${formatHash(tx.hash, 8)}</td>
                         <td class="text-indAccent hover:underline" onclick="event.stopPropagation(); openBlockDetail(${tx.blockNumberDec})">${tx.blockNumberHex}</td>
                         <td class="text-slate-500">${timeAgo(parseTimestamp(tx.timestamp))}</td>
-                        <td class="text-slate-600">${formatHash(tx.from, 8)}</td>
-                        <td class="text-slate-600">${tx.to ? formatHash(tx.to, 8) : '<span class="text-indigo-500 font-semibold">Contrat</span>'}</td>
+                        <td class="text-slate-600">${formatHash(tx.from, 6)}</td>
+                        <td class="text-slate-600">${tx.to ? formatHash(tx.to, 6) : 'Contrat'}</td>
                         <td class="text-right font-bold text-indSuccess">${formatAmount(tx.amountMicro||tx.value)}</td>
                     </tr>`);
             });
@@ -879,24 +873,21 @@
 
 
         /* --- DÉTAILS INDIVIDUELS (DENSES & PRO) --- */
-        // Fermeture robuste des modales
         function closeModal(id) {
-            document.getElementById(id).style.display = 'none';
-            // Si aucune modale n'est ouverte (display: flex), on restaure le scroll du body
-            const openModals = document.querySelectorAll('.modal-overlay[style*="display: flex"]');
-            if (openModals.length === 0) {
-                document.body.style.overflow = '';
-            }
+            document.getElementById(id).classList.remove('active');
+            const activeModals = document.querySelectorAll('.modal-overlay.active');
+            // Libérer le scroll uniquement s'il n'y a plus aucune modale ouverte
+            if (activeModals.length === 0) document.body.style.overflow = '';
         }
 
-        // Nouvelle architecture de ligne CSS GRID pour éviter les bugs WebView et garantir le wrap
+        // Nouvelle architecture visuelle pour les lignes de détails
         function createGridRow(label, displayValue, rawValueToCopy = null, isStatus = false) {
             return `
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-1.5 md:gap-4 py-3.5 px-4 border-b border-slate-100 last:border-0 hover:bg-slate-50/80 transition-colors items-start md:items-center">
-                    <div class="md:col-span-3 flex items-center text-[0.65rem] uppercase font-bold text-slate-500 mt-1 md:mt-0">
-                        <i class="fa-solid fa-angle-right text-[0.55rem] mr-2 opacity-50 hidden md:inline-block"></i> ${label}
+                <div class="flex flex-col sm:flex-row sm:items-center py-2.5 px-3 border-b border-slate-100 last:border-0 hover:bg-slate-50/80 transition-colors gap-1 sm:gap-4">
+                    <div class="sm:w-1/3 md:w-1/4 flex items-start sm:items-center text-[0.65rem] uppercase font-bold text-slate-500 shrink-0 mt-0.5 sm:mt-0">
+                        <i class="fa-solid fa-angle-right text-[0.55rem] mr-2 opacity-50 hidden sm:inline-block"></i> ${label}
                     </div>
-                    <div class="md:col-span-9 flex items-center justify-between gap-3 min-w-0">
+                    <div class="sm:w-2/3 md:w-3/4 flex items-center justify-between gap-2 overflow-hidden">
                         <div class="text-xs font-mono text-premiumDark w-full min-w-0 hash-break ${isStatus ? 'flex items-center flex-wrap gap-2' : ''}">
                             ${displayValue}
                         </div>
@@ -920,48 +911,47 @@
             // Layout structuré professionnellement
             document.getElementById('txModalBody').innerHTML = `
                 <!-- Overview Section -->
-                <div class="mb-6">
-                    <h4 class="text-[0.7rem] font-bold text-slate-800 uppercase tracking-widest mb-2.5 px-1 flex items-center gap-2"><i class="fa-solid fa-layer-group text-indAccent"></i> Vue d'ensemble</h4>
+                <div class="mb-5">
+                    <h4 class="text-[0.7rem] font-bold text-slate-800 uppercase tracking-widest mb-2 px-1 flex items-center gap-2"><i class="fa-solid fa-layer-group text-indAccent"></i> Vue d'ensemble</h4>
                     <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
                         ${createGridRow("Hash Transaction", `<span class="text-indAccent font-bold">${tx.hash}</span>`, tx.hash)}
-                        ${createGridRow("Statut", `<span class="bg-[#059669]/10 text-[#059669] border border-[#059669]/20 px-2.5 py-0.5 rounded-md text-[0.65rem] uppercase font-black tracking-wider flex items-center gap-1.5 w-fit"><i class="fa-solid fa-circle-check"></i> Succès</span> <span class="text-[0.65rem] text-slate-500 font-bold bg-slate-50 px-2 py-0.5 rounded-md border border-slate-200 shadow-sm">${confirmations} Conf.</span>`, null, true)}
-                        ${createGridRow("Bloc", `<button onclick="openBlockDetail(${tx.blockNumberDec})" class="text-indAccent hover:underline font-bold bg-slate-50 px-2.5 py-1 rounded-md border border-slate-100 transition-colors hover:bg-indigo-50 flex items-center gap-1.5 w-fit"><i class="fa-solid fa-cube opacity-70"></i>${tx.blockNumberHex}</button>`)}
-                        ${createGridRow("Horodatage", `<div class="flex items-center gap-2"><i class="fa-regular fa-clock text-slate-400"></i> <span class="font-medium text-slate-700">${timeAgo(parseTimestamp(tx.timestamp))}</span> <span class="text-slate-400 text-[0.65rem]">(${formatDateFull(parseTimestamp(tx.timestamp))})</span></div>`)}
+                        ${createGridRow("Statut", `<span class="bg-[#059669]/10 text-[#059669] border border-[#059669]/20 px-2.5 py-0.5 rounded text-[0.65rem] uppercase font-black tracking-wider flex items-center gap-1.5 w-fit"><i class="fa-solid fa-circle-check"></i> Succès</span> <span class="text-[0.65rem] text-slate-500 font-bold ml-1 sm:ml-2 bg-slate-50 px-2 py-0.5 rounded border border-slate-200 shadow-sm">${confirmations} Conf.</span>`, null, true)}
+                        ${createGridRow("Bloc", `<button onclick="openBlockDetail(${tx.blockNumberDec})" class="text-indAccent hover:underline font-bold bg-slate-50 px-2 py-0.5 rounded border border-slate-100 transition-colors hover:bg-indigo-50 flex items-center gap-1.5 w-fit"><i class="fa-solid fa-cube opacity-70"></i>${tx.blockNumberHex}</button>`)}
+                        ${createGridRow("Horodatage", `<div class="flex items-center gap-1.5"><i class="fa-regular fa-clock text-slate-400"></i> <span class="font-medium text-slate-700">${timeAgo(parseTimestamp(tx.timestamp))}</span> <span class="text-slate-400 ml-1 text-[0.65rem]">(${formatDateFull(parseTimestamp(tx.timestamp))})</span></div>`)}
                     </div>
                 </div>
                 
                 <!-- Transfer Section -->
-                <div class="mb-6">
-                    <h4 class="text-[0.7rem] font-bold text-slate-800 uppercase tracking-widest mb-2.5 px-1 flex items-center gap-2"><i class="fa-solid fa-arrow-right-arrow-left text-indAccent"></i> Détails du Transfert</h4>
+                <div class="mb-5">
+                    <h4 class="text-[0.7rem] font-bold text-slate-800 uppercase tracking-widest mb-2 px-1 flex items-center gap-2"><i class="fa-solid fa-arrow-right-arrow-left text-indAccent"></i> Détails du Transfert</h4>
                     <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
                         ${createGridRow("De (Expéditeur)", `<span class="text-slate-700">${tx.from}</span>`, tx.from)}
-                        ${createGridRow("Vers (Destinataire)", tx.to ? `<span class="text-slate-700">${tx.to}</span>` : '<span class="bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-md text-[0.65rem] uppercase font-bold border border-indigo-100 flex items-center gap-1.5 w-fit"><i class="fa-solid fa-file-contract"></i> Création de Contrat</span>', tx.to)}
-                        ${createGridRow("Montant", `<span class="font-black text-[#059669] bg-[#059669]/10 px-3 py-1.5 rounded-md border border-[#059669]/20 text-xs">${amt} ₳</span>`)}
+                        ${createGridRow("Vers (Destinataire)", tx.to ? `<span class="text-slate-700">${tx.to}</span>` : '<span class="bg-indigo-50 text-indigo-700 px-2.5 py-0.5 rounded text-[0.65rem] uppercase font-bold border border-indigo-100 flex items-center gap-1.5 w-fit"><i class="fa-solid fa-file-contract"></i> Création de Contrat</span>', tx.to)}
+                        ${createGridRow("Montant", `<span class="font-black text-[#059669] bg-[#059669]/10 px-2.5 py-1 rounded border border-[#059669]/20 text-xs">${amt} ₳</span>`)}
                     </div>
                 </div>
                 
                 <!-- Technical Data -->
                 <div>
-                    <h4 class="text-[0.7rem] font-bold text-slate-800 uppercase tracking-widest mb-2.5 px-1 flex items-center gap-2"><i class="fa-solid fa-microchip text-indAccent"></i> Données Techniques</h4>
+                    <h4 class="text-[0.7rem] font-bold text-slate-800 uppercase tracking-widest mb-2 px-1 flex items-center gap-2"><i class="fa-solid fa-microchip text-indAccent"></i> Données Techniques</h4>
                     <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
                         ${createGridRow("Frais (Gas)", `<span class="font-medium text-slate-700">${feeMicro} ₳</span>`)}
                         ${createGridRow("Nonce", `<span class="font-medium text-slate-700">${nonce}</span>`)}
-                        <div class="grid grid-cols-1 md:grid-cols-12 gap-1.5 md:gap-4 py-3.5 px-4 border-t border-slate-100 hover:bg-slate-50 transition-colors items-start">
-                            <div class="md:col-span-3 flex items-center text-[0.65rem] uppercase font-bold text-slate-500 mt-1">
-                                <i class="fa-solid fa-angle-right text-[0.55rem] mr-2 opacity-50 hidden md:inline-block"></i> Payload (Input)
+                        <div class="flex flex-col sm:flex-row py-3 px-3 border-t border-slate-100 hover:bg-slate-50 transition-colors">
+                            <div class="sm:w-1/3 md:w-1/4 flex items-center text-[0.65rem] uppercase font-bold text-slate-500 mb-2 sm:mb-0 shrink-0">
+                                <i class="fa-solid fa-angle-right text-[0.55rem] mr-2 opacity-50 hidden sm:inline-block"></i> Payload (Input)
                             </div>
-                            <div class="md:col-span-9 min-w-0">
-                                <div class="text-[0.65rem] text-slate-600 bg-slate-100 p-3 rounded-md border border-slate-200 max-h-32 overflow-y-auto font-mono hash-break shadow-inner custom-scrollbar">${inputData}</div>
+                            <div class="sm:w-2/3 md:w-3/4">
+                                <div class="text-[0.65rem] text-slate-600 bg-slate-100 p-2.5 rounded border border-slate-200 max-h-32 overflow-y-auto font-mono hash-break shadow-inner custom-scrollbar">${inputData}</div>
                             </div>
                         </div>
                     </div>
                 </div>`;
             
-            // Affichage sécurisé de la modale via display
-            const modal = document.getElementById('txModal');
+            // Gestion explicite du z-index pour s'assurer que c'est toujours au-dessus
             globalModalZ += 10;
-            modal.style.zIndex = globalModalZ;
-            modal.style.display = 'flex';
+            document.getElementById('txModal').style.zIndex = globalModalZ;
+            document.getElementById('txModal').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
@@ -991,18 +981,18 @@
             const confirmations = Math.max(0, latestBlockNum - num + 1);
 
             document.getElementById('blockModalBody').innerHTML = `
-                <div class="mb-6">
-                    <h4 class="text-[0.7rem] font-bold text-slate-800 uppercase tracking-widest mb-2.5 px-1 flex items-center gap-2"><i class="fa-solid fa-cube text-indAccent"></i> Informations du Bloc</h4>
+                <div class="mb-5">
+                    <h4 class="text-[0.7rem] font-bold text-slate-800 uppercase tracking-widest mb-2 px-1 flex items-center gap-2"><i class="fa-solid fa-cube text-indAccent"></i> Informations du Bloc</h4>
                     <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
-                        ${createGridRow("Hauteur", `<span class="text-indAccent font-black text-sm">${b.hexNumber}</span> <span class="text-[0.65rem] text-slate-500 font-bold bg-slate-50 px-2 py-0.5 rounded-md border border-slate-200 shadow-sm">${confirmations} Confirmations</span>`, null, true)}
-                        ${createGridRow("Horodatage", `<div class="flex items-center gap-2"><i class="fa-regular fa-clock text-slate-400"></i> <span class="font-medium text-slate-700">${timeAgo(parseTimestamp(b.timestamp))}</span> <span class="text-slate-400 text-[0.65rem]">(${formatDateFull(parseTimestamp(b.timestamp))})</span></div>`)}
-                        ${createGridRow("Transactions", `<span class="bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-md text-[0.7rem] font-black border border-indigo-100 flex items-center gap-1.5 w-fit"><i class="fa-solid fa-list-ul"></i> ${b.transactions ? b.transactions.length : 0} Txns</span>`)}
+                        ${createGridRow("Hauteur", `<span class="text-indAccent font-black text-sm">${b.hexNumber}</span> <span class="ml-1 sm:ml-2 text-[0.65rem] text-slate-500 font-bold bg-slate-50 px-2 py-0.5 rounded border border-slate-200 shadow-sm">${confirmations} Confirmations</span>`, null, true)}
+                        ${createGridRow("Horodatage", `<div class="flex items-center gap-1.5"><i class="fa-regular fa-clock text-slate-400"></i> <span class="font-medium text-slate-700">${timeAgo(parseTimestamp(b.timestamp))}</span> <span class="text-slate-400 ml-1 text-[0.65rem]">(${formatDateFull(parseTimestamp(b.timestamp))})</span></div>`)}
+                        ${createGridRow("Transactions", `<span class="bg-indigo-50 text-indigo-700 px-2.5 py-0.5 rounded text-[0.7rem] font-black border border-indigo-100 flex items-center gap-1.5 w-fit"><i class="fa-solid fa-list-ul"></i> ${b.transactions ? b.transactions.length : 0} Txns</span>`)}
                         ${createGridRow("Validateur", `<span class="text-slate-700 font-medium">${b.miner || b.validator || "0xNexusMaster"}</span>`, b.miner || b.validator)}
                     </div>
                 </div>
                 
-                <div class="mb-6">
-                    <h4 class="text-[0.7rem] font-bold text-slate-800 uppercase tracking-widest mb-2.5 px-1 flex items-center gap-2"><i class="fa-solid fa-link text-indAccent"></i> Hachage</h4>
+                <div class="mb-5">
+                    <h4 class="text-[0.7rem] font-bold text-slate-800 uppercase tracking-widest mb-2 px-1 flex items-center gap-2"><i class="fa-solid fa-link text-indAccent"></i> Hachage</h4>
                     <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
                         ${createGridRow("Hash du Bloc", `<span class="text-slate-700">${b.hash}</span>`, b.hash)}
                         ${createGridRow("Parent Hash", `<span class="text-slate-500">${b.parentHash || "Genesis"}</span>`, b.parentHash)}
@@ -1010,27 +1000,25 @@
                 </div>
                 
                 <div>
-                    <h4 class="text-[0.7rem] font-bold text-slate-800 uppercase tracking-widest mb-2.5 px-1 flex items-center gap-2"><i class="fa-solid fa-server text-indAccent"></i> Ressources & Extra</h4>
+                    <h4 class="text-[0.7rem] font-bold text-slate-800 uppercase tracking-widest mb-2 px-1 flex items-center gap-2"><i class="fa-solid fa-server text-indAccent"></i> Ressources & Extra</h4>
                     <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
-                        ${createGridRow("Gaz Utilisé", `<span class="font-bold text-slate-700">${gasUsed}</span> <span class="text-slate-400 font-normal">unités</span>`)}
+                        ${createGridRow("Gaz Utilisé", `<span class="font-bold text-slate-700">${gasUsed}</span> <span class="text-slate-400 font-normal ml-1">unités</span>`)}
                         ${createGridRow("Limite Gaz", `<span class="text-slate-600 font-medium">${gasLimit}</span>`)}
                         ${createGridRow("Taille", `<span class="text-slate-600 font-medium">${b.size ? parseInt(b.size, 16).toLocaleString('fr-FR') + " octets" : "N/A"}</span>`)}
-                        <div class="grid grid-cols-1 md:grid-cols-12 gap-1.5 md:gap-4 py-3.5 px-4 border-t border-slate-100 hover:bg-slate-50 transition-colors items-start">
-                            <div class="md:col-span-3 flex items-center text-[0.65rem] uppercase font-bold text-slate-500 mt-1">
-                                <i class="fa-solid fa-angle-right text-[0.55rem] mr-2 opacity-50 hidden md:inline-block"></i> Extra Data
+                        <div class="flex flex-col sm:flex-row py-3 px-3 border-t border-slate-100 hover:bg-slate-50 transition-colors">
+                            <div class="sm:w-1/3 md:w-1/4 flex items-center text-[0.65rem] uppercase font-bold text-slate-500 mb-2 sm:mb-0 shrink-0">
+                                <i class="fa-solid fa-angle-right text-[0.55rem] mr-2 opacity-50 hidden sm:inline-block"></i> Extra Data
                             </div>
-                            <div class="md:col-span-9 min-w-0">
-                                <div class="text-[0.65rem] text-slate-600 bg-slate-100 p-3 rounded-md border border-slate-200 max-h-32 overflow-y-auto font-mono hash-break shadow-inner custom-scrollbar">${extraData}</div>
+                            <div class="sm:w-2/3 md:w-3/4">
+                                <div class="text-[0.65rem] text-slate-600 bg-slate-100 p-2.5 rounded border border-slate-200 max-h-32 overflow-y-auto font-mono hash-break shadow-inner custom-scrollbar">${extraData}</div>
                             </div>
                         </div>
                     </div>
                 </div>`;
             
-            // Affichage sécurisé
-            const modal = document.getElementById('blockModal');
             globalModalZ += 10;
-            modal.style.zIndex = globalModalZ;
-            modal.style.display = 'flex';
+            document.getElementById('blockModal').style.zIndex = globalModalZ;
+            document.getElementById('blockModal').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
@@ -1056,7 +1044,7 @@
                 else if ((val.startsWith('0x') && val.length === 42) || val.startsWith('AGI')) {
                     const userTxs = Array.from(txCache.values()).filter(tx => tx.from === val || tx.to === val);
                     if (userTxs.length > 0) {
-                        showToast(`${userTxs.length} Tx locale(s) trouvée(s)`, "success");
+                        showToast(`${userTxs.length} Tx locale(s)`, "success");
                         openTxDetail(userTxs[0].hash);
                     } else showToast("Aucune Tx indexée pour cette adresse.", "error");
                 } else showToast("Format invalide.", "error");
@@ -1066,10 +1054,11 @@
         }
 
         /* --- EVENT LISTENERS GLOBAUX --- */
-        // Support pour fermer via Escape
         document.addEventListener('keydown', e => { 
             if (e.key === "Escape") { 
-                document.querySelectorAll('.modal-overlay[style*="display: flex"]').forEach(m => closeModal(m.id));
+                if(document.getElementById('txModal').classList.contains('active')) closeModal('txModal');
+                else if(document.getElementById('blockModal').classList.contains('active')) closeModal('blockModal');
+                else document.querySelectorAll('.modal-overlay.active').forEach(m => closeModal(m.id));
             } 
         });
 
@@ -1106,8 +1095,8 @@
                 renderBlocksPreview(cachedBlocks);
                 renderTxsPreview(cachedTxs);
             } else {
-                document.getElementById('blocksContainerPreview').innerHTML = `<div class="p-4"><div class="skeleton h-12 w-full mb-3 rounded-lg"></div><div class="skeleton h-12 w-full rounded-lg"></div></div>`;
-                document.getElementById('txsContainerPreview').innerHTML = `<div class="p-4"><div class="skeleton h-12 w-full mb-3 rounded-lg"></div><div class="skeleton h-12 w-full rounded-lg"></div></div>`;
+                document.getElementById('blocksContainerPreview').innerHTML = `<div class="p-2"><div class="skeleton h-8 w-full mb-2 rounded"></div><div class="skeleton h-8 w-full rounded"></div></div>`;
+                document.getElementById('txsContainerPreview').innerHTML = `<div class="p-2"><div class="skeleton h-8 w-full mb-2 rounded"></div><div class="skeleton h-8 w-full rounded"></div></div>`;
             }
             
             syncNetworkData();
