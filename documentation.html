@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Documentation Technique | Nexus Core L1 Developer Portal</title>
+    <title>Encyclopédie L1 Core | Atlas & Duc Developer Portal</title>
     
-    <!-- Polices Industrielles -->
+    <!-- Polices Industrielles (Chasse fixe & Sans-serif) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -20,429 +20,466 @@
             theme: {
                 extend: {
                     colors: {
-                        premiumDark: '#0B1120',
-                        indAccent: '#0EA5E9',
-                        indSuccess: '#10B981',
+                        premiumDark: '#030712', /* Noir absolu industriel */
+                        indAccent: '#0284C7', /* Bleu technique profond */
+                        indSuccess: '#059669', /* Vert émeraude de validation */
+                        indWarning: '#D97706',
                         indBg: '#F8FAFC',
                         indCard: '#FFFFFF',
-                        indBorder: '#E2E8F0',
-                        indTextMuted: '#64748B'
+                        indBorder: '#CBD5E1', /* Bordure plus nette */
+                        indTextMuted: '#475569'
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                         mono: ['Fira Code', 'monospace']
                     },
                     fontSize: {
-                        'xxs': '0.65rem',
-                        'xs': '0.75rem',
-                        '13px': '0.8125rem',
-                        'sm': '0.875rem',
-                        'base': '1rem',
-                        'lg': '1.125rem',
-                        'xl': '1.25rem',
-                        '2xl': '1.5rem',
+                        'xxs': '0.6rem',
+                        'xs': '0.7rem',
+                        '13px': '0.785rem',
+                        'sm': '0.85rem',
+                        'base': '0.95rem',
+                        'lg': '1.05rem',
+                        'xl': '1.15rem',
+                        '2xl': '1.35rem',
+                        '3xl': '1.6rem',
+                    },
+                    letterSpacing: {
+                        tighter: '-0.03em',
+                        tight: '-0.015em',
+                        normal: '0',
+                        wide: '0.025em',
+                        wider: '0.05em',
+                        widest: '0.12em',
                     }
                 }
             }
         }
     </script>
     <style>
-        /* Animations & Scrollbar Industrielle Dense */
+        /* Animations & Scrollbar Ultra-Fine */
         .live-pulse { animation: pulseGreen 2s infinite; }
-        @keyframes pulseGreen { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); } 70% { box-shadow: 0 0 0 4px rgba(16, 185, 129, 0); } 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
+        @keyframes pulseGreen { 0% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.4); } 70% { box-shadow: 0 0 0 3px rgba(5, 150, 105, 0); } 100% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0); } }
         
         ::-webkit-scrollbar { width: 4px; height: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+        ::-webkit-scrollbar-thumb { background: #94A3B8; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748B; }
 
-        /* Typographie de Documentation (Dense & Premium) */
-        .doc-prose { color: #334155; font-size: 0.8125rem; line-height: 1.6; }
-        .doc-prose h2 { font-size: 1.25rem; font-weight: 800; color: #0B1120; margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid #E2E8F0; letter-spacing: -0.01em; }
-        .doc-prose h3 { font-size: 1rem; font-weight: 700; color: #1E293B; margin-top: 1.5rem; margin-bottom: 0.75rem; }
-        .doc-prose p { margin-bottom: 1rem; }
-        .doc-prose ul { list-style-type: disc; padding-left: 1.25rem; margin-bottom: 1rem; }
-        .doc-prose ul li { margin-bottom: 0.35rem; }
-        .doc-prose table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; font-size: 0.8125rem; }
-        .doc-prose th { background-color: #F8FAFC; text-align: left; padding: 0.6rem 0.8rem; border: 1px solid #E2E8F0; color: #0B1120; font-weight: 700; }
-        .doc-prose td { padding: 0.6rem 0.8rem; border: 1px solid #E2E8F0; color: #475569; }
-        .doc-prose .highlight { color: #0EA5E9; font-weight: 600; }
-        .doc-prose code:not(pre code) { background-color: #F1F5F9; padding: 0.15rem 0.35rem; border-radius: 0.25rem; font-family: 'Fira Code', monospace; font-size: 0.75rem; color: #0284C7; border: 1px solid #E2E8F0; }
-
-        /* Blocs de Code Premium (Thème VS Code Dark) */
-        .dev-code-block { background-color: #1e1e1e; border: 1px solid #2d2d2d; border-radius: 6px; overflow: hidden; margin-bottom: 1.25rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .dev-code-header { background-color: #252526; border-bottom: 1px solid #333333; padding: 6px 12px; display: flex; justify-content: space-between; align-items: center; }
-        .dev-code-body { padding: 12px; overflow-x: auto; font-family: 'Fira Code', monospace; font-size: 0.75rem; line-height: 1.5; color: #d4d4d4; }
+        /* Typographie de Documentation (Encyclopédique & Dense) */
+        .doc-prose { color: #1E293B; font-size: 0.785rem; line-height: 1.6; }
+        .doc-prose h2 { font-size: 1.25rem; font-weight: 900; color: #030712; margin-top: 2.5rem; margin-bottom: 1rem; padding-bottom: 0.25rem; border-bottom: 1px solid #E2E8F0; letter-spacing: -0.02em; }
+        .doc-prose h3 { font-size: 0.95rem; font-weight: 800; color: #0F172A; margin-top: 1.5rem; margin-bottom: 0.6rem; letter-spacing: -0.01em; }
+        .doc-prose h4 { font-size: 0.8rem; font-weight: 700; color: #334155; margin-top: 1rem; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .doc-prose p { margin-bottom: 1rem; text-align: justify; }
         
-        .syntax-key { color: #9cdcfe; }
-        .syntax-string { color: #ce9178; }
-        .syntax-number { color: #b5cea8; }
-        .syntax-keyword { color: #569cd6; }
-        .syntax-comment { color: #6a9955; }
-        .syntax-type { color: #4ec9b0; }
+        .doc-prose ul { list-style-type: none; padding-left: 0; margin-bottom: 1rem; }
+        .doc-prose ul li { margin-bottom: 0.35rem; position: relative; padding-left: 1rem; }
+        .doc-prose ul li::before { content: '■'; position: absolute; left: 0; top: 0.15rem; color: #0284C7; font-size: 0.5rem; }
+        
+        .doc-prose table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; font-size: 0.7rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); border: 1px solid #CBD5E1; }
+        .doc-prose th { background-color: #F8FAFC; text-align: left; padding: 0.5rem 0.75rem; border: 1px solid #CBD5E1; color: #0F172A; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; }
+        .doc-prose td { padding: 0.5rem 0.75rem; border: 1px solid #E2E8F0; color: #334155; vertical-align: top; }
+        
+        .doc-prose .highlight { color: #0284C7; font-weight: 700; background: #F0F9FF; padding: 1px 4px; border-radius: 2px; border: 1px solid #BAE6FD; }
+        .doc-prose code:not(pre code) { background-color: #F1F5F9; padding: 0.1rem 0.3rem; border-radius: 0.2rem; font-family: 'Fira Code', monospace; font-size: 0.65rem; color: #0369A1; border: 1px solid #CBD5E1; font-weight: 600; }
+
+        /* Blocs de Code Ultra-Premium (IDE Style) */
+        .dev-code-block { background-color: #0d1117; border: 1px solid #30363d; border-radius: 4px; overflow: hidden; margin-bottom: 1.25rem; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .dev-code-header { background-color: #161b22; border-bottom: 1px solid #30363d; padding: 6px 12px; display: flex; justify-content: space-between; align-items: center; }
+        .dev-code-body { padding: 12px; overflow-x: auto; font-family: 'Fira Code', monospace; font-size: 0.65rem; line-height: 1.5; color: #c9d1d9; }
+        
+        /* Syntax Highlighting GitHub Dark Dimmed */
+        .syntax-key { color: #79c0ff; }
+        .syntax-string { color: #a5d6ff; }
+        .syntax-number { color: #79c0ff; }
+        .syntax-keyword { color: #ff7b72; font-weight: 600; }
+        .syntax-comment { color: #8b949e; font-style: italic; }
+        .syntax-type { color: #ffa657; }
+        .syntax-func { color: #d2a8ff; }
+        .syntax-op { color: #c9d1d9; }
 
         /* Sidebar active link */
-        .nav-link.active { color: #0EA5E9; font-weight: 700; border-left-color: #0EA5E9; background-color: #F0F9FF; }
+        .nav-link.active { color: #0284C7; font-weight: 800; border-left-color: #0284C7; background-color: #F0F9FF; }
+        
+        /* Blur effect for sticky headers */
+        .glass-header { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(8px); }
     </style>
 </head>
-<body class="bg-indBg text-premiumDark font-sans antialiased flex flex-col min-h-screen">
+<body class="bg-indBg text-premiumDark font-sans antialiased flex flex-col min-h-screen tracking-tight">
 
     <!-- ========================================== -->
-    <!-- 1. NAVIGATION BAR (Compacte & Cohérente)   -->
+    <!-- 1. NAVIGATION BAR                          -->
     <!-- ========================================== -->
-    <header class="bg-indCard/95 backdrop-blur-md border-b border-indBorder sticky top-0 z-50 shadow-sm">
-        <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-14">
+    <header class="glass-header border-b border-indBorder sticky top-0 z-50 shadow-sm">
+        <div class="max-w-[100rem] mx-auto px-2 sm:px-4 lg:px-6">
+            <div class="flex justify-between items-center h-12">
                 
-                <!-- Logo & Brand -->
                 <a href="NexusScan.html" class="flex items-center gap-2 cursor-pointer group">
-                    <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo" class="h-7 w-7 rounded-full border border-indBorder object-cover shadow-sm group-hover:border-indAccent transition-colors">
-                    <span class="font-extrabold text-lg tracking-tight text-premiumDark">NEXUS<span class="text-indAccent">SCAN</span></span>
+                    <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo" class="h-6 w-6 rounded border border-slate-300 object-cover shadow-sm group-hover:border-indAccent transition-colors">
+                    <span class="font-extrabold text-base tracking-tighter text-premiumDark">NEXUS<span class="text-indAccent">SCAN</span></span>
                 </a>
 
-                <!-- Desktop Navigation -->
-                <nav class="hidden md:flex space-x-6 items-center">
-                    <a href="NexusScan.html" class="text-indTextMuted hover:text-premiumDark font-semibold text-13px transition-colors py-4"><i class="fa-solid fa-house mr-1"></i> Accueil</a>
-                    <a href="documentation.html" class="text-indAccent font-bold text-13px border-b-2 border-indAccent py-4"><i class="fa-solid fa-book mr-1"></i> Documentation</a>
-                    <a href="api.html" class="text-indTextMuted hover:text-premiumDark font-semibold text-13px transition-colors py-4"><i class="fa-solid fa-server mr-1"></i> API RPC</a>
-                    <a href="support.html" class="text-indTextMuted hover:text-premiumDark font-semibold text-13px transition-colors py-4"><i class="fa-solid fa-headset mr-1"></i> Support B2B</a>
+                <nav class="hidden md:flex space-x-5 items-center h-full">
+                    <a href="NexusScan.html" class="h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-xs border-b-2 border-transparent hover:border-slate-300 transition-colors"><i class="fa-solid fa-house mr-1.5"></i> Explorateur</a>
+                    <a href="documentation.html" class="h-full flex items-center text-indAccent font-bold text-xs border-b-2 border-indAccent"><i class="fa-solid fa-book-journal-whills mr-1.5"></i> DOCS L1</a>
+                    <a href="api.html" class="h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-xs border-b-2 border-transparent hover:border-slate-300 transition-colors"><i class="fa-solid fa-server mr-1.5"></i> API RPC</a>
+                    <a href="support.html" class="h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-xs border-b-2 border-transparent hover:border-slate-300 transition-colors"><i class="fa-solid fa-headset mr-1.5"></i> Opérations B2B</a>
                 </nav>
 
-                <!-- Status & Mobile Menu Button -->
-                <div class="flex items-center gap-3">
-                    <div class="hidden sm:flex items-center gap-1.5 bg-indSuccess/10 border border-indSuccess/20 px-2.5 py-1 rounded-full">
-                        <div class="w-1.5 h-1.5 rounded-full bg-indSuccess live-pulse"></div>
-                        <span class="text-[10px] font-bold text-indSuccess tracking-wide">v2.4.0 LIVE</span>
+                <div class="flex items-center gap-2">
+                    <div class="hidden sm:flex items-center gap-1.5 bg-[#030712] border border-slate-700 px-2 py-1 rounded shadow-inner text-white">
+                        <div class="w-1 h-1 rounded-full bg-indSuccess live-pulse"></div>
+                        <span class="text-[0.55rem] font-bold tracking-widest uppercase">Nexus Mainnet</span>
                     </div>
-                    <button id="mobileMenuBtn" class="md:hidden text-premiumDark hover:text-indAccent focus:outline-none text-xl">
+                    <button id="mobileMenuBtn" class="md:hidden text-slate-600 hover:text-indAccent focus:outline-none text-lg">
                         <i class="fa-solid fa-bars"></i>
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- Mobile Menu (Dropdown) -->
-        <div id="mobileMenu" class="hidden md:hidden bg-indCard border-b border-indBorder px-4 pt-2 pb-4 shadow-lg absolute w-full z-50">
-            <a href="NexusScan.html" class="block py-2.5 text-indTextMuted font-semibold text-13px border-b border-indBorder"><i class="fa-solid fa-house w-6 text-center"></i> Accueil</a>
-            <a href="documentation.html" class="block py-2.5 text-indAccent font-bold text-13px bg-sky-50 px-2 rounded mt-1"><i class="fa-solid fa-book w-6 text-center"></i> Documentation</a>
-            <a href="api.html" class="block py-2.5 text-indTextMuted font-semibold text-13px border-b border-indBorder"><i class="fa-solid fa-server w-6 text-center"></i> API RPC</a>
-            <a href="support.html" class="block py-2.5 text-indTextMuted font-semibold text-13px border-b border-indBorder"><i class="fa-solid fa-headset w-6 text-center"></i> Support B2B</a>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-b border-indBorder px-4 pt-1 pb-3 shadow-lg absolute w-full z-50">
+            <a href="NexusScan.html" class="block py-2 text-slate-600 font-semibold text-xs border-b border-slate-100"><i class="fa-solid fa-house w-5 text-center"></i> Explorateur</a>
+            <a href="documentation.html" class="block py-2 text-indAccent font-bold text-xs bg-sky-50 px-2 rounded mt-1 border-l-2 border-indAccent"><i class="fa-solid fa-book-journal-whills w-5 text-center"></i> DOCS L1</a>
+            <a href="api.html" class="block py-2 text-slate-600 font-semibold text-xs border-b border-slate-100 mt-1"><i class="fa-solid fa-server w-5 text-center"></i> API RPC</a>
         </div>
     </header>
 
     <!-- ========================================== -->
-    <!-- 2. LAYOUT DOCUMENTATION (Main + Sidebar à Droite) -->
+    <!-- 2. LAYOUT DOCUMENTATION ENCYCLOPÉDIQUE     -->
     <!-- ========================================== -->
-    <div class="max-w-[90rem] mx-auto w-full flex-grow flex flex-col lg:flex-row">
+    <div class="max-w-[100rem] mx-auto w-full flex-grow flex flex-col lg:flex-row bg-white">
         
-        <!-- CONTENU PRINCIPAL (DOC PROSE) - DÉPLACÉ À GAUCHE -->
-        <main class="flex-1 min-w-0 p-5 lg:p-10 doc-prose pb-20">
+        <!-- CONTENU PRINCIPAL (DENSE DATA) -->
+        <main class="flex-1 min-w-0 p-4 lg:p-10 doc-prose pb-24 border-r border-slate-200">
             
-            <div class="mb-8 border-b border-indBorder pb-6">
-                <div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-indAccent/10 border border-indAccent/20 text-indAccent text-[10px] font-bold mb-4 uppercase tracking-widest">
-                    <i class="fa-solid fa-file-contract"></i> Core Spécifications v2.4.0
+            <div class="mb-8 border-b border-slate-200 pb-6">
+                <div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-indAccent/10 border border-indAccent/20 text-indAccent text-[0.55rem] font-black mb-3 uppercase tracking-widest">
+                    <i class="fa-solid fa-microchip"></i> Documentation Core L1 - Build 2.4.0 (Octobre 2026)
                 </div>
-                <h1 class="text-2xl lg:text-3xl font-black text-premiumDark tracking-tight mb-3">Livre Blanc Technique & Architecture Industrielle</h1>
-                <p class="text-slate-500 font-medium max-w-3xl">Document technique officiel détaillant l'architecture L1, la politique monétaire stricte, les mécanismes de consensus propriétaires, et les SDK (Kotlin/Node.js) mis en œuvre par Atlas & Duc Corporation.</p>
+                <h1 class="text-2xl lg:text-3xl font-black text-premiumDark tracking-tighter mb-2 leading-none">Livre Blanc Technique & Architecture Institutionnelle</h1>
+                <p class="text-slate-500 font-medium text-xs max-w-4xl leading-relaxed mt-3">
+                    Ce document constitue la référence exhaustive de l'infrastructure logicielle et matérielle du protocole Nexus Core L1. Il détaille la politique monétaire adossée, les mécanismes du consensus nBFT, la machine virtuelle (NVM), les normes cryptographiques (Argon2id/ECDSA) et la topologie du réseau P2P ingénierés par <strong>Atlas & Duc Corporation</strong> au Burkina Faso.
+                </p>
             </div>
 
             <!-- ========================================== -->
-            <!-- 1. INTRODUCTION                            -->
+            <!-- SECTION 1: ECONOMIE & SOUVERAINETE         -->
             <!-- ========================================== -->
-            <section id="vision" class="scroll-mt-20">
-                <h2>1. Vision & Infrastructure Souveraine</h2>
-                <p>L'écosystème <span class="highlight">Nexus Core L1</span> a été pensé et ingénieré intégralement par <strong>Atlas & Duc Corporation</strong>. Sa conception répond à l'exigence d'une infrastructure transactionnelle africaine hautement performante, capable de s'affranchir des goulots d'étranglement des réseaux bancaires (SWIFT) sans hériter de la volatilité et des dérives spéculatives des blockchains publiques traditionnelles.</p>
-                <p>Conçu comme un réseau de confiance B2B/B2G, Nexus Core traite de manière native les contrats intelligents via la Nexus Virtual Machine (NVM), permettant la tokenisation de l'économie réelle (infrastructures agricoles, industrielles, dividendes).</p>
-            </section>
-
-            <section id="parity" class="scroll-mt-20">
-                <h3>1.1 L'Économie en Boucle Fermée & Le Coin Natif (1 ₳ = 1 XOF)</h3>
-                <p>L'<strong>AG-COIN (₳)</strong> est le <strong>coin natif</strong> du réseau Layer-1 (et non un simple token déployé sur un réseau tiers). Son modèle économique est l'un des plus stricts de l'industrie, garanti par un adossement fiduciaire absolu :</p>
-                <ul>
-                    <li><strong>Économie en Boucle Fermée (Closed-Loop) :</strong> L'AG-COIN opère dans un circuit économique hermétique et maîtrisé. Contrairement aux cryptomonnaies spéculatives, il n'y a <strong>aucun listing sur des exchanges externes</strong> (Binance, Coinbase) et <strong>aucun mécanisme de "Coin Burning" (destruction de pièces)</strong>.</li>
-                    <li><strong>Frappe (Minting) Régulée :</strong> La création de coins sur le Mainnet ne s'effectue qu'en corrélation stricte et auditable avec un dépôt bancaire fiduciaire exactisé, verrouillé dans les réserves d'Atlas & Duc Corporation.</li>
-                    <li><strong>Gestion des Retraits :</strong> Lors d'une demande de retrait (virement bancaire ou Mobile Money), les coins natifs retournent dans le coffre-fort (Vault) du protocole L1. Ils ne sont jamais détruits. Ce circuit fermé garantit une stabilité structurelle imperméable aux manipulations de marché.</li>
-                </ul>
-            </section>
-
-            <section id="architecture" class="scroll-mt-20">
-                <h3>1.2 Architecture Multi-Couches</h3>
-                <p>Pour assurer le traitement de dizaines de milliers de transactions par seconde, le réseau repose sur un déploiement serveur industriel (Node.js) orchestré par PM2 :</p>
+            <section id="vision" class="scroll-mt-16">
+                <h2>1. Tokénomique & Souveraineté Économique</h2>
+                <p>L'écosystème <span class="highlight">Nexus Core L1</span> opère en rupture totale avec les paradigmes spéculatifs des blockchains publiques (volatilité, congestion). Il s'agit d'une infrastructure <strong>souveraine, décentralisée par consortium, et à parité fiduciaire stricte</strong>, développée pour numériser l'économie réelle africaine (agriculture, logistique, santé).</p>
+                
+                <h3>1.1 Paramètres Fondamentaux du Réseau L1</h3>
                 <table>
                     <thead>
                         <tr>
-                            <th>Couche (Layer)</th>
-                            <th>Implémentation Technique</th>
-                            <th>Technologies Employées</th>
+                            <th class="w-1/4">Paramètre L1</th>
+                            <th class="w-1/3">Valeur Système</th>
+                            <th>Description Spécifique</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong>L0 - Routage & Infra</strong></td>
-                            <td>Gossip P2P (Port 6001), Processus PM2 en fork_mode, Tunnels IPv4 (127.0.0.1).</td>
-                            <td>Node.js, PM2 Daemon, Cloudflare Argo Tunnels.</td>
+                            <td><strong>Coin Natif</strong></td>
+                            <td><code>AG-COIN (₳)</code></td>
+                            <td>Actif de base unique, utilisé pour le transfert de valeur et le paiement du gaz d'exécution.</td>
                         </tr>
                         <tr>
-                            <td><strong>L1 - Consensus Core</strong></td>
-                            <td>Ordonnancement des transactions, production des blocs, gestion de l'état (State).</td>
-                            <td>Algorithme nBFT, ECDSA (secp256k1).</td>
+                            <td><strong>Total Supply</strong></td>
+                            <td><code>100,000,000,000 ₳</code></td>
+                            <td>Offre maximale cryptographiquement gravée dans le bloc 0 (Genesis). L'inflation réseau est strictement de 0%.</td>
                         </tr>
                         <tr>
-                            <td><strong>L2 - Application (RPC)</strong></td>
-                            <td>Endpoints d'accès (Port 9545), traitement des requêtes JSON-RPC.</td>
-                            <td>Express.js, NVM (Nexus Virtual Machine).</td>
+                            <td><strong>Parité Économique</strong></td>
+                            <td><code>1 ₳ = 1 XOF (FCFA)</code></td>
+                            <td>Ancrage absolu. Chaque AG-COIN émis (Mint) correspond à un dépôt fiduciaire équivalent dans la trésorerie.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Précision (Décimales)</strong></td>
+                            <td><code>6 (Micro-₳)</code></td>
+                            <td>Unité indivisible minimale de la blockchain. <code>1 microA = 0.000001 ₳</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Chain ID (Mainnet)</strong></td>
+                            <td><code>9012 (0x2334)</code></td>
+                            <td>Identifiant injecté dans l'équation ECDSA selon l'EIP-155 pour empêcher les Replay Attacks.</td>
                         </tr>
                     </tbody>
                 </table>
-            </section>
 
-            <!-- ========================================== -->
-            <!-- 2. CONSENSUS & RESEAU                      -->
-            <!-- ========================================== -->
-            <section id="nbft" class="scroll-mt-20">
-                <h2>2. Algorithme de Consensus : nBFT</h2>
-                <p>Nexus Core exploite le protocole propriétaire <strong>Nexus Byzantine Fault Tolerance (nBFT)</strong>, un modèle hybride de DPoA (Delegated Proof of Authority) garantissant une finalité absolue et immédiate des blocs. Dès l'insertion, aucune réorganisation de chaîne (re-org) n'est possible.</p>
-
-                <div class="dev-code-block">
-                    <div class="dev-code-header">
-                        <span class="text-[9px] font-bold text-slate-400 uppercase">nBFT Voting Flow (Golang/Pseudo-code)</span>
-                    </div>
-                    <div class="dev-code-body">
-<span class="syntax-comment">// Phase 1 : Proposition par le Leader</span>
-<span class="syntax-keyword">func</span> (n *Node) ProposeBlock(txs []<span class="syntax-type">Transaction</span>) {
-    <span class="syntax-keyword">if</span> !n.IsProposer(CurrentView) { <span class="syntax-keyword">return</span> }
-    block := BuildBlock(txs)
-    n.Broadcast(PrePrepareMsg{Block: block})
-}
-
-<span class="syntax-comment">// Phase 2 & 3 : Préparation et Validation Cryptographique (Majorité 2/3)</span>
-<span class="syntax-keyword">func</span> (n *Node) OnPrepare(msg <span class="syntax-type">PrepareMsg</span>) {
-    n.PrepareVotes[msg.BlockHash]++
-    <span class="syntax-keyword">if</span> n.PrepareVotes[msg.BlockHash] > (<span class="syntax-number">2</span> * TotalValidators / <span class="syntax-number">3</span>) {
-        n.Broadcast(CommitMsg{BlockHash: msg.Block.Hash})
-        n.CommitBlockToState(msg.Block) <span class="syntax-comment">// Finalité absolue immédiate</span>
-    }
-}
-                    </div>
-                </div>
-            </section>
-
-            <section id="validators" class="scroll-mt-20">
-                <h3>2.1 Nœuds Validateurs (Partenaires)</h3>
-                <p>Le réseau Mainnet est soutenu par un consortium d'entités vérifiées (Institutions, Banques, Filiales Atlas & Duc). La topologie matérielle minimale requise pour opérer un nœud de validation est stricte :</p>
+                <h3 id="closed-loop" class="scroll-mt-16">1.2 Économie en Boucle Fermée & Trésorerie On-Chain</h3>
+                <p>Pour immuniser l'infrastructure contre les attaques de marché, Nexus Core implémente un modèle "Closed-Loop" géré par le smart contract de trésorerie (<code>AGI9e3jK4Ly5xMv8PqRw2TbFnVdC1Xg6hYuZ7AsBmN1x</code>) :</p>
                 <ul>
-                    <li><strong>Compute :</strong> 32 Cores / 64 Threads (Architecture x86_64 EPYC ou ARM64).</li>
-                    <li><strong>Mémoire (RAM) :</strong> 128 GB ECC RAM, indispensable pour le balayage rapide de l'arbre d'état (State Trie).</li>
-                    <li><strong>Stockage :</strong> 4 TB NVMe SSD en configuration RAID 10.</li>
+                    <li><strong>Isolation d'Exchange :</strong> Le token n'est audité et négocié que via les infrastructures DEX propriétaires et les agrégateurs B2B d'Atlas & Duc (ex: via l'API REST CoinMarketCap interne).</li>
+                    <li><strong>Mécanisme No-Burn :</strong> Lors de conversions fiat sortantes (Cash-out via Mobile Money), les jetons ne sont pas détruits ("Burned"). Ils sont restitués à la réserve du protocole (Vault) pour maintenir l'intégrité de la masse monétaire.</li>
+                    <li><strong>Auditabilité Temps Réel :</strong> Le RPC <code>nexus_getBalance</code> sur l'adresse de trésorerie permet à tout moment de vérifier la solvabilité du système.</li>
                 </ul>
             </section>
 
-            <section id="slashing" class="scroll-mt-20">
-                <h3>2.2 Mécanisme de Sanction (Slashing)</h3>
-                <p>Pour assurer le SLA de 99.999%, le consensus intègre des pénalités asymétriques :</p>
-                <p>En cas de <strong>Double Signature</strong> (tentative de Fork volontaire par un validateur), la sanction est la confiscation immédiate de l'intégralité des fonds bloqués en garantie par le nœud et son éviction définitive du consortium (Tombstoning).</p>
-            </section>
+            <!-- ========================================== -->
+            <!-- SECTION 2: CONSENSUS & RESEAU              -->
+            <!-- ========================================== -->
+            <section id="architecture" class="scroll-mt-16">
+                <h2>2. Architecture du Registre (Ledger) & Topologie P2P</h2>
+                <p>Le moteur d'état (State Machine) est programmé en Node.js industriel. Il est maintenu en RAM et persisté via un flux I/O asynchrone sécurisé (<code>ledger_mainnet.json</code> & fichier `.tmp` transactionnel) pour éviter toute corruption lors d'arrêts brutaux (SIGINT/SIGTERM).</p>
 
-            <!-- ========================================== -->
-            <!-- 3. CRYPTOGRAPHIE & SECURITE                -->
-            <!-- ========================================== -->
-            <section id="argon2id" class="scroll-mt-20">
-                <h2>3. Cryptographie Militaire</h2>
-                <p>L'architecture de sécurité d'Atlas & Duc Corporation surpasse les standards Web3, protégeant nativement les clés des portefeuilles mobiles et serveurs contre les attaques par force brute matérielle.</p>
+                <h3>2.1 Structure du Bloc & Mempool (Block Time: 2000ms)</h3>
+                <p>Le validateur leader forge un bloc de manière déterministe toutes les <strong>2 secondes</strong>. La Mempool (file d'attente) limite dynamiquement sa taille à <code>MAX_MEMPOOL_SIZE = 5000</code> transactions pour prévenir les vecteurs d'attaque DDoS.</p>
                 
-                <h3>3.1 Dérivation de clé via Argon2id</h3>
-                <p>À l'inverse des portefeuilles classiques utilisant PBKDF2 (facilement parallélisable sur ASIC), la dérivation des seeds (phrases mnémoniques) Nexus utilise <strong>Argon2id</strong>. Le coût en mémoire est défini à <code class="bg-slate-100 text-indAccent">m=65536</code> (64 Mo de RAM allouée par tentative) et 4 threads, bloquant mathématiquement toute tentative de brute-force matérielle.</p>
-            </section>
-
-            <section id="ecdsa" class="scroll-mt-20">
-                <h3>3.2 Signatures ECDSA (secp256k1)</h3>
-                <p>Chaque transaction est chiffrée de bout en bout via la courbe elliptique <code>secp256k1</code>. La signature <code>(r, s, v)</code> intègre le <strong>Chain ID L1 (226)</strong> au sein du paramètre de récupération <code>v</code>, empêchant nativement le piratage par rejeu (Replay Attacks).</p>
-            </section>
-
-            <!-- ========================================== -->
-            <!-- 4. NEXUS VIRTUAL MACHINE (NVM)             -->
-            <!-- ========================================== -->
-            <section id="smart-contracts" class="scroll-mt-20">
-                <h2>4. Nexus Virtual Machine (NVM)</h2>
-                <p>La NVM est un environnement Turing-complet 100% compatible avec l'EVM d'Ethereum. Les partenaires peuvent déployer des contrats intelligents écrits en Solidity traitant de la logistique, des tontines, ou de l'actionnariat.</p>
-
                 <div class="dev-code-block">
                     <div class="dev-code-header">
-                        <span class="text-[9px] font-bold text-slate-400 uppercase">AgiDividendVault.sol</span>
+                        <span class="text-[0.6rem] font-bold text-slate-400 uppercase tracking-widest">Interface L1Block (TypeScript Spec)</span>
                     </div>
                     <div class="dev-code-body">
-<span class="syntax-comment">// SPDX-License-Identifier: MIT</span>
-<span class="syntax-keyword">pragma</span> <span class="syntax-type">solidity</span> ^0.8.19;
-
-<span class="syntax-keyword">contract</span> <span class="syntax-type">AgiDividendVault</span> {
-    <span class="syntax-type">uint256</span> <span class="syntax-keyword">public constant</span> ROI_PERCENT = <span class="syntax-number">10</span>;
-    <span class="syntax-type">mapping</span>(<span class="syntax-type">address</span> => <span class="syntax-type">uint256</span>) <span class="syntax-keyword">public</span> investments;
-
-    <span class="syntax-keyword">function</span> <span class="syntax-type">invest</span>() <span class="syntax-keyword">external payable</span> {
-        <span class="syntax-keyword">require</span>(msg.value >= <span class="syntax-number">1000000</span>, <span class="syntax-string">"Minimum 1 AGI (1 XOF)"</span>);
-        investments[msg.sender] += msg.value;
-    }
-
-    <span class="syntax-keyword">function</span> <span class="syntax-type">claimDividends</span>() <span class="syntax-keyword">external</span> {
-        <span class="syntax-type">uint256</span> amount = investments[msg.sender];
-        <span class="syntax-keyword">require</span>(amount > <span class="syntax-number">0</span>, <span class="syntax-string">"Aucun investissement"</span>);
-        
-        investments[msg.sender] = <span class="syntax-number">0</span>; <span class="syntax-comment">// Prevent re-entrancy</span>
-        <span class="syntax-type">uint256</span> payout = amount + ((amount * ROI_PERCENT) / <span class="syntax-number">100</span>);
-        
-        (<span class="syntax-type">bool</span> success, ) = msg.sender.call{value: payout}(<span class="syntax-string">""</span>);
-        <span class="syntax-keyword">require</span>(success, <span class="syntax-string">"Transfert echoue"</span>);
-    }
+<span class="syntax-keyword">interface</span> <span class="syntax-type">NexusBlock</span> {
+  <span class="syntax-keyword">index</span>: <span class="syntax-type">number</span>;          <span class="syntax-comment">// Hauteur de la chaîne</span>
+  <span class="syntax-keyword">hash</span>: <span class="syntax-type">string</span>;           <span class="syntax-comment">// SHA-256(index + prevHash + timestamp + merkleRoot + validator)</span>
+  <span class="syntax-keyword">previousHash</span>: <span class="syntax-type">string</span>;   <span class="syntax-comment">// Chaînage cryptographique</span>
+  <span class="syntax-keyword">timestamp</span>: <span class="syntax-type">number</span>;      <span class="syntax-comment">// Horodatage UNIX (Secondes)</span>
+  <span class="syntax-keyword">validator</span>: <span class="syntax-type">string</span>;      <span class="syntax-comment">// Adresse de l'Autorité ayant forgé le bloc</span>
+  <span class="syntax-keyword">merkleRoot</span>: <span class="syntax-type">string</span>;     <span class="syntax-comment">// Racine de l'arbre binaire des transactions</span>
+  <span class="syntax-keyword">stateRoot</span>: <span class="syntax-type">string</span>;      <span class="syntax-comment">// Hash de l'état global (Balances & NVM State)</span>
+  <span class="syntax-keyword">transactions</span>: <span class="syntax-type">Tx</span>[];     <span class="syntax-comment">// Tableau d'objets Transaction</span>
 }
+                    </div>
+                </div>
+
+                <h3 id="merkle" class="scroll-mt-16">2.2 Arbre de Merkle (Double SHA-256)</h3>
+                <p>La <code>merkleRoot</code> est calculée via une fonction récursive de hachage Double SHA-256. Si le nombre de feuilles (transactions) est impair, le dernier hash est dupliqué. Ce mécanisme permet les preuves SPV (Simplified Payment Verification) pour les clients légers (Mobile).</p>
+
+                <h3 id="nbft" class="scroll-mt-16">2.3 Consensus nBFT (Proof of Authority)</h3>
+                <p>Contrairement au Nakamoto Consensus (PoW), le <strong>Nexus Byzantine Fault Tolerance (nBFT)</strong> offre une finalité absolue et immédiate. Dès qu'un bloc est inséré dans l'array <code>this.blocks</code>, il est irréversible (0 Re-org). Les nœuds communiquent via le port P2P <code>6001</code> via WebSocket, gérant le routage via les messages <code>REQUEST_CHAIN</code>, <code>NEW_BLOCK</code>, et <code>NEW_TRANSACTION</code>.</p>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- SECTION 3: CRYPTOGRAPHIE                   -->
+            <!-- ========================================== -->
+            <section id="crypto" class="scroll-mt-16">
+                <h2>3. Standards Cryptographiques & Résilience ASIC</h2>
+                <p>L'infrastructure cryptographique du portefeuille Nexus Core a été spécifiquement conçue pour contrer l'évolution des calculateurs quantiques préliminaires et des fermes de minage ASIC dédiées au brute-force.</p>
+                
+                <h3 id="argon2id" class="scroll-mt-16">3.1 Key Derivation Function : Argon2id</h3>
+                <p>Les clés privées ne sont jamais stockées brutes. Elles sont dérivées via <strong>Argon2id</strong> (standard IETF RFC 9106), offrant une résistance hybride (GPU et attaques par canaux auxiliaires).</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Paramètre Argon2id</th>
+                            <th>Valeur Strict</th>
+                            <th>Justification Sécuritaire</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Memory Cost (m)</strong></td>
+                            <td><code>65536</code> (64 MiB)</td>
+                            <td>Sature la mémoire cache des ASIC, rendant le calcul matériel inopérant.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Iterations (t)</strong></td>
+                            <td><code>4</code> passes</td>
+                            <td>Augmente le coût CPU linéaire sans compromettre l'UX mobile.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Parallelism (p)</strong></td>
+                            <td><code>4</code> threads</td>
+                            <td>Force l'attaquant à allouer 4 cœurs physiques par tentative.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 id="ecdsa" class="scroll-mt-16">3.2 Courbe Elliptique secp256k1 & Adressage</h3>
+                <p>Les transactions sont signées via l'algorithme ECDSA sur la courbe <code>y² = x³ + 7</code>. L'adresse L1 publique est dérivée de la clé publique de la manière suivante :</p>
+                <div class="dev-code-block">
+                    <div class="dev-code-body">
+<span class="syntax-keyword">const</span> pubKeyHash = <span class="syntax-func">RIPEMD160</span>(<span class="syntax-func">SHA256</span>(publicKeyBytes));
+<span class="syntax-keyword">const</span> address = <span class="syntax-string">"0x"</span> + pubKeyHash.<span class="syntax-func">toString</span>(<span class="syntax-string">'hex'</span>);
+<span class="syntax-comment">// Les adresses de contrats générées par la NVM sont préfixées par "AGIC"</span>
                     </div>
                 </div>
             </section>
 
-            <section id="gas-model" class="scroll-mt-20">
-                <h3>4.1 Modèle de Frais Fixes (Zero-Deviation Gas)</h3>
-                <p>L'inconvénient majeur des réseaux publics est la variation imprévisible des frais. Nexus Core implémente un modèle mathématique bloqué au cœur du nœud : le coût d'une transaction standard (21,000 gas) est <strong>strictement verrouillé à 0.001 ₳ (soit 0.001 XOF)</strong>, quelle que soit la charge du réseau. Ce modèle prédictif est essentiel pour la budgétisation des entreprises partenaires.</p>
-            </section>
+            <!-- ========================================== -->
+            <!-- SECTION 4: NVM & SMART CONTRACTS           -->
+            <!-- ========================================== -->
+            <section id="nvm" class="scroll-mt-16">
+                <h2>4. Nexus Virtual Machine (NVM) & Tokénisation</h2>
+                <p>Le L1 intègre un moteur d'exécution de code Turing-complet, la <strong>NVM</strong>. Ce moteur est isolé de l'hôte matériel via le module natif <code>vm</code> de Node.js (V8 Sandboxing).</p>
 
-            <!-- ========================================== -->
-            <!-- 5. INTEGRATION B2B & API                   -->
-            <!-- ========================================== -->
-            <section id="sdk-web" class="scroll-mt-20">
-                <h2>5. Intégration Logicielle B2B</h2>
-                <p>Atlas & Duc Corporation propose des SDK complets pour interagir avec le Mainnet sans exposer vos clés privées aux requêtes HTTP brutes.</p>
-                
-                <h3>5.1 SDK Web (Node.js / Express)</h3>
+                <h3 id="gas-model" class="scroll-mt-16">4.1 Modèle de Gaz Zéro-Déviation (Zero-Deviation Gas)</h3>
+                <p>L'inflation des frais (Gas Spikes) rend l'usage commercial d'Ethereum ou Solana impossible pour l'industrie traditionnelle. Nexus Core résout ce problème avec une tarification rigide codée en dur (Hardcoded) :</p>
+                <ul>
+                    <li><strong>Exécution d'un transfert simple :</strong> Coûte exactement <code>1000 microA</code> (0.001 ₳ = 0.001 FCFA).</li>
+                    <li><strong>Exécution NVM (Contrat) :</strong> Facturé au gaz utilisé, mais avec un <code>gasPrice</code> fixe.</li>
+                    <li><strong>Prévention des Boucles Infinies :</strong> Le contexte V8 est créé avec un <code>timeout: 50</code> (50 millisecondes max). Tout contrat dépassant ce délai est interrompu (Halt), la transaction échoue, mais le gaz est consommé pour rémunérer le validateur.</li>
+                </ul>
+
+                <h3 id="smart-contracts" class="scroll-mt-16">4.2 Standard NCRC-20 & Stockage d'État</h3>
+                <p>Lors d'une transaction de type <code>deploy_contract</code>, le L1 stocke la logique (Code) dans <code>ledger.contractsCode</code> et instancie l'état (State) dans <code>ledger.contractsState</code>.</p>
+
                 <div class="dev-code-block">
                     <div class="dev-code-header">
-                        <span class="text-[9px] font-bold text-slate-400 uppercase">backend.js</span>
+                        <span class="text-[0.6rem] font-bold text-slate-400 uppercase tracking-widest">NVM Sandboxed Execution (Core Engine)</span>
                     </div>
                     <div class="dev-code-body">
-<span class="syntax-keyword">import</span> { NexusClient, Wallet } <span class="syntax-keyword">from</span> <span class="syntax-string">'@nexus-core/sdk'</span>;
-
-<span class="syntax-keyword">const</span> client = <span class="syntax-keyword">new</span> NexusClient(<span class="syntax-string">"https://rpc.agi-nexus-core.click"</span>);
-<span class="syntax-keyword">const</span> merchantWallet = <span class="syntax-keyword">new</span> Wallet(process.env.MERCHANT_KEY, client);
-
-<span class="syntax-keyword">async function</span> processPayment(customerAddress, amountXof) {
-    <span class="syntax-keyword">const</span> tx = {
-        to: customerAddress,
-        value: amountXof * <span class="syntax-number">1000000</span>, <span class="syntax-comment">// Conversion en microA</span>
-        gasLimit: <span class="syntax-number">21000</span>
+<span class="syntax-keyword">class</span> <span class="syntax-type">NexusLedgerState</span> {
+  <span class="syntax-func">executeContract</span>(code, currentState, action, caller) {
+    <span class="syntax-comment">// 1. Isoler l'état pour empêcher les mutations illégales (Deep Copy)</span>
+    <span class="syntax-keyword">const</span> sandbox = { 
+      state: currentState ? <span class="syntax-type">JSON</span>.<span class="syntax-func">parse</span>(<span class="syntax-type">JSON</span>.<span class="syntax-func">stringify</span>(currentState)) : {}, 
+      action, 
+      caller 
     };
-    <span class="syntax-keyword">const</span> receipt = <span class="syntax-keyword">await</span> merchantWallet.sendTransaction(tx);
-    <span class="syntax-keyword">return</span> receipt.transactionHash;
+    <span class="syntax-keyword">const</span> context = vm.<span class="syntax-func">createContext</span>(sandbox);
+    
+    <span class="syntax-keyword">try</span> {
+      <span class="syntax-comment">// 2. Compilation JIT et injection du point d'entrée "execute()"</span>
+      <span class="syntax-keyword">const</span> script = <span class="syntax-keyword">new</span> vm.<span class="syntax-func">Script</span>(<span class="syntax-string">`${code}\nexecute(state, action, caller);`</span>);
+      
+      <span class="syntax-comment">// 3. Exécution stricte: Max 50ms, RAM limitée au contexte V8</span>
+      <span class="syntax-keyword">return</span> script.<span class="syntax-func">runInContext</span>(context, { timeout: <span class="syntax-number">50</span> }); 
+    } <span class="syntax-keyword">catch</span> (e) {
+      <span class="syntax-type">console</span>.<span class="syntax-func">error</span>(<span class="syntax-string">`[NVM ERREUR] Échec d'exécution du contrat: ${e.message}`</span>);
+      <span class="syntax-keyword">return null</span>; <span class="syntax-comment">// Rollback de l'état</span>
+    }
+  }
 }
                     </div>
                 </div>
             </section>
 
-            <section id="sdk-mobile" class="scroll-mt-20">
-                <h3>5.2 SDK Mobile Android (Kotlin)</h3>
-                <p>Pour le développement mobile natif, le package Kotlin gère la cryptographie Argon2id locale et la signature des paquets P2P.</p>
+            <!-- ========================================== -->
+            <!-- SECTION 5: OPÉRATIONS NŒUD & B2B           -->
+            <!-- ========================================== -->
+            <section id="integration" class="scroll-mt-16">
+                <h2>5. Opérations Validation & Intégration Client</h2>
+                
+                <h3 id="hardware" class="scroll-mt-16">5.1 Spécifications Matérielles des Nœuds Valideurs</h3>
+                <p>Pour assurer le traitement de la base de données en RAM (<code>this.balances</code>, <code>this.blocks</code>) sur un réseau principal, le consortium impose l'architecture matérielle suivante :</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Composant</th>
+                            <th>Configuration Minimale</th>
+                            <th>Raison Technique</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>CPU</strong></td>
+                            <td>32 Cores / 64 Threads (x86_64)</td>
+                            <td>Traitement parallèle des signatures ECDSA dans la Mempool et calcul Merkle.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mémoire (RAM)</strong></td>
+                            <td>128 GB DDR5 ECC</td>
+                            <td>Le <code>NexusLedgerState</code> conserve l'intégralité du state en mémoire vive pour des I/O sub-millisecondes.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Stockage</strong></td>
+                            <td>4 TB NVMe PCIe 4.0 (RAID 10)</td>
+                            <td>Persistance ultra-rapide de <code>ledger_mainnet.tmp.json</code> toutes les 2 secondes.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 id="sdk-web" class="scroll-mt-16">5.2 API JSON-RPC & Format de Transaction</h3>
+                <p>Le nœud expose le port HTTP <code>9545</code> pour le trafic RPC. L'endpoint <code>nexus_sendRawTransaction</code> accepte des payloads JSON stricts. Le <code>nonce</code> (nombre de transactions déjà envoyées par l'adresse) doit être parfaitement synchronisé pour éviter l'erreur <code>-32000 (Transaction désynchronisée)</code>.</p>
+                
                 <div class="dev-code-block">
                     <div class="dev-code-header">
-                        <span class="text-[9px] font-bold text-slate-400 uppercase">NexusPaymentManager.kt</span>
+                        <span class="text-[0.6rem] font-bold text-slate-400 uppercase tracking-widest">Calcul du Coût et Vérification L1 (Backend Node.js)</span>
                     </div>
                     <div class="dev-code-body">
-<span class="syntax-keyword">import</span> com.atlasduc.nexus.NexusClient
-<span class="syntax-keyword">import</span> com.atlasduc.nexus.TransactionBuilder
+<span class="syntax-comment">// Extrait du moteur RPC L1 : Vérification de solvabilité</span>
+<span class="syntax-keyword">const</span> amount = <span class="syntax-type">BigInt</span>(tx.amountMicro || <span class="syntax-number">0</span>);
+<span class="syntax-keyword">const</span> fee = <span class="syntax-type">BigInt</span>(tx.feeMicro || <span class="syntax-number">0</span>);
+<span class="syntax-keyword">const</span> totalCost = amount + fee;
 
-<span class="syntax-keyword">val</span> client = NexusClient(<span class="syntax-string">"https://rpc.agi-nexus-core.click"</span>)
-
-<span class="syntax-keyword">fun</span> <span class="syntax-type">sendMobilePayment</span>(destAddress: String, amountMicro: Long) {
-    <span class="syntax-keyword">val</span> tx = TransactionBuilder()
-        .to(destAddress)
-        .value(amountMicro)
-        .gasLimit(<span class="syntax-number">21000</span>)
-        .build()
-        
-    <span class="syntax-comment">// Signature matérielle asynchrone (TEE)</span>
-    <span class="syntax-keyword">val</span> signedTx = tx.signWithKey(privateKeyBytes)
-    client.sendRawTransaction(signedTx)
+<span class="syntax-keyword">const</span> currentBalance = ledger.<span class="syntax-func">getBalance</span>(tx.from);
+<span class="syntax-keyword">if</span> (currentBalance < totalCost) {
+  <span class="syntax-keyword">throw</span> { 
+    code: -<span class="syntax-number">32000</span>, 
+    message: <span class="syntax-string">`Fonds insuffisants. Solde: ${ledger.formatToNexus(currentBalance)}, Requis: ${ledger.formatToNexus(totalCost)}`</span> 
+  };
 }
                     </div>
                 </div>
-            </section>
 
-            <section id="compliance" class="scroll-mt-20">
-                <h3>5.3 Conformité KYC/AML & Auditabilité</h3>
-                <p>L'infrastructure respecte les directives institutionnelles de l'UEMOA. Toutes les transactions excédant les plafonds réglementaires déclenchent des audits Anti-Money Laundering (AML) via des algorithmes de filtrage comportementaux. Les identités des utilisateurs sont liées via hachages biométriques (KYC), préservant la vie privée tout en permettant une auditabilité légale.</p>
+                <h3 id="compliance" class="scroll-mt-16">5.3 Conformité UEMOA & Audit AML</h3>
+                <p>L'infrastructure est "Compliance-Ready". Les wallets B2B créés via les SDK Atlas & Duc intègrent une vérification KYC (Biométrie/CNI) dont l'empreinte de validation (Hash) peut être inscrite dans le champ data des transactions L1. Les smart contracts de micro-finance AGI intègrent nativement des algorithmes de plafonnement (Velocity Limits) pour lutter contre le blanchiment d'argent.</p>
             </section>
 
         </main>
 
-        <!-- SIDEBAR DE NAVIGATION (DÉPLACÉE À DROITE) -->
-        <aside class="hidden lg:block w-64 shrink-0 border-l border-indBorder bg-indCard h-[calc(100vh-56px)] sticky top-14 overflow-y-auto custom-scrollbar">
-            <div class="p-5">
+        <!-- ========================================== -->
+        <!-- SIDEBAR DE NAVIGATION (DENSE)              -->
+        <!-- ========================================== -->
+        <aside class="hidden lg:block w-64 shrink-0 bg-slate-50 border-l border-slate-200 h-[calc(100vh-3rem)] sticky top-12 overflow-y-auto custom-scrollbar">
+            <div class="p-4">
                 
                 <div class="mb-5">
                     <div class="relative">
-                        <i class="fa-solid fa-search absolute left-2.5 top-1/2 transform -translate-y-1/2 text-slate-400 text-xs"></i>
-                        <input type="text" placeholder="Rechercher (Ctrl+K)" class="w-full bg-slate-50 border border-indBorder rounded pl-7 pr-2 py-1.5 text-[11px] font-medium text-premiumDark focus:ring-1 focus:ring-indAccent focus:border-indAccent outline-none transition-all placeholder:text-slate-400">
+                        <i class="fa-solid fa-search absolute left-2.5 top-1/2 transform -translate-y-1/2 text-slate-400 text-[0.6rem]"></i>
+                        <input type="text" placeholder="Recherche rapide..." class="w-full bg-white border border-slate-200 rounded pl-7 pr-2 py-1.5 text-[0.7rem] font-mono text-premiumDark focus:ring-1 focus:ring-indAccent outline-none shadow-sm placeholder:font-sans">
                     </div>
                 </div>
 
-                <nav class="space-y-5 text-[11px]">
-                    <!-- Navigation Générale (Ajoutée) -->
-                    <div>
-                        <h4 class="font-bold text-slate-400 uppercase tracking-widest text-[9px] mb-1.5">Navigation Générale</h4>
-                        <ul class="space-y-1.5 text-xs font-medium text-slate-600 border-b border-slate-100 pb-4">
-                            <li><a href="NexusScan.html" class="hover:text-indAccent transition-colors flex items-center gap-2"><i class="fa-solid fa-house w-3 text-center"></i> Accueil (Scan)</a></li>
-                            <li><a href="api.html" class="hover:text-indAccent transition-colors flex items-center gap-2"><i class="fa-solid fa-server w-3 text-center"></i> API RPC</a></li>
-                            <li><a href="support.html" class="hover:text-indAccent transition-colors flex items-center gap-2"><i class="fa-solid fa-headset w-3 text-center"></i> Support B2B</a></li>
-                        </ul>
-                    </div>
-
+                <nav class="space-y-4 text-[0.7rem] font-medium">
                     <!-- Section 1 -->
                     <div>
-                        <h4 class="font-bold text-slate-400 uppercase tracking-widest text-[9px] mb-1.5 mt-2">Introduction</h4>
-                        <ul class="space-y-0.5 border-l border-indBorder ml-1">
-                            <li><a href="#vision" class="nav-link block pl-3 py-1 text-slate-600 hover:text-indAccent border-l-2 border-transparent">Vision & Philosophie</a></li>
-                            <li><a href="#parity" class="nav-link block pl-3 py-1 text-slate-600 hover:text-indAccent border-l-2 border-transparent">L'Économie en Boucle Fermée</a></li>
-                            <li><a href="#architecture" class="nav-link block pl-3 py-1 text-slate-600 hover:text-indAccent border-l-2 border-transparent">Architecture Multi-Couches</a></li>
+                        <h4 class="font-black text-slate-400 uppercase tracking-widest text-[0.55rem] mb-1.5 flex items-center gap-1.5"><i class="fa-solid fa-building-columns text-indAccent"></i> 1. Tokénomique</h4>
+                        <ul class="space-y-0.5 border-l-2 border-slate-200 ml-1.5 pl-2 text-slate-600">
+                            <li><a href="#vision" class="nav-link block py-0.5 hover:text-indAccent transition-colors">Paramètres du Mainnet</a></li>
+                            <li><a href="#closed-loop" class="nav-link block py-0.5 hover:text-indAccent transition-colors">Modèle Closed-Loop & Trésorerie</a></li>
                         </ul>
                     </div>
 
                     <!-- Section 2 -->
                     <div>
-                        <h4 class="font-bold text-slate-400 uppercase tracking-widest text-[9px] mb-1.5">Consensus & Réseau</h4>
-                        <ul class="space-y-0.5 border-l border-indBorder ml-1">
-                            <li><a href="#nbft" class="nav-link block pl-3 py-1 text-slate-600 hover:text-indAccent border-l-2 border-transparent">Algorithme nBFT</a></li>
-                            <li><a href="#validators" class="nav-link block pl-3 py-1 text-slate-600 hover:text-indAccent border-l-2 border-transparent">Nœuds Validateurs</a></li>
-                            <li><a href="#slashing" class="nav-link block pl-3 py-1 text-slate-600 hover:text-indAccent border-l-2 border-transparent">Mécanisme de Slashing</a></li>
+                        <h4 class="font-black text-slate-400 uppercase tracking-widest text-[0.55rem] mb-1.5 mt-3 flex items-center gap-1.5"><i class="fa-solid fa-network-wired text-indSuccess"></i> 2. Ledger & P2P</h4>
+                        <ul class="space-y-0.5 border-l-2 border-slate-200 ml-1.5 pl-2 text-slate-600">
+                            <li><a href="#architecture" class="nav-link block py-0.5 hover:text-indAccent transition-colors">Structure de Bloc & Mempool</a></li>
+                            <li><a href="#merkle" class="nav-link block py-0.5 hover:text-indAccent transition-colors">Double SHA-256 Merkle Root</a></li>
+                            <li><a href="#nbft" class="nav-link block py-0.5 hover:text-indAccent transition-colors">Consensus nBFT (PoA)</a></li>
                         </ul>
                     </div>
 
                     <!-- Section 3 -->
                     <div>
-                        <h4 class="font-bold text-slate-400 uppercase tracking-widest text-[9px] mb-1.5">Sécurité & Cryptographie</h4>
-                        <ul class="space-y-0.5 border-l border-indBorder ml-1">
-                            <li><a href="#argon2id" class="nav-link block pl-3 py-1 text-slate-600 hover:text-indAccent border-l-2 border-transparent">Dérivation Argon2id</a></li>
-                            <li><a href="#ecdsa" class="nav-link block pl-3 py-1 text-slate-600 hover:text-indAccent border-l-2 border-transparent">Signatures ECDSA</a></li>
+                        <h4 class="font-black text-slate-400 uppercase tracking-widest text-[0.55rem] mb-1.5 mt-3 flex items-center gap-1.5"><i class="fa-solid fa-shield-halved text-indWarning"></i> 3. Cryptographie</h4>
+                        <ul class="space-y-0.5 border-l-2 border-slate-200 ml-1.5 pl-2 text-slate-600">
+                            <li><a href="#argon2id" class="nav-link block py-0.5 hover:text-indAccent transition-colors">Protection Mémoire Argon2id</a></li>
+                            <li><a href="#ecdsa" class="nav-link block py-0.5 hover:text-indAccent transition-colors">Signatures secp256k1 (ECDSA)</a></li>
                         </ul>
                     </div>
 
                     <!-- Section 4 -->
                     <div>
-                        <h4 class="font-bold text-slate-400 uppercase tracking-widest text-[9px] mb-1.5">Nexus Virtual Machine</h4>
-                        <ul class="space-y-0.5 border-l border-indBorder ml-1">
-                            <li><a href="#smart-contracts" class="nav-link block pl-3 py-1 text-slate-600 hover:text-indAccent border-l-2 border-transparent">Contrats Intelligents</a></li>
-                            <li><a href="#gas-model" class="nav-link block pl-3 py-1 text-slate-600 hover:text-indAccent border-l-2 border-transparent">Modèle de Gas Fixe</a></li>
+                        <h4 class="font-black text-slate-400 uppercase tracking-widest text-[0.55rem] mb-1.5 mt-3 flex items-center gap-1.5"><i class="fa-solid fa-microchip text-purple-500"></i> 4. Nexus VM</h4>
+                        <ul class="space-y-0.5 border-l-2 border-slate-200 ml-1.5 pl-2 text-slate-600">
+                            <li><a href="#nvm" class="nav-link block py-0.5 hover:text-indAccent transition-colors">Exécution Sandboxed (Node V8)</a></li>
+                            <li><a href="#gas-model" class="nav-link block py-0.5 hover:text-indAccent transition-colors">Modèle de Frais Fixes (Zero-Dev)</a></li>
+                            <li><a href="#smart-contracts" class="nav-link block py-0.5 hover:text-indAccent transition-colors">Gestion d'État NCRC-20</a></li>
                         </ul>
                     </div>
 
                     <!-- Section 5 -->
                     <div>
-                        <h4 class="font-bold text-slate-400 uppercase tracking-widest text-[9px] mb-1.5">Intégration B2B</h4>
-                        <ul class="space-y-0.5 border-l border-indBorder ml-1">
-                            <li><a href="#sdk-web" class="nav-link block pl-3 py-1 text-slate-600 hover:text-indAccent border-l-2 border-transparent">SDK Web (JavaScript)</a></li>
-                            <li><a href="#sdk-mobile" class="nav-link block pl-3 py-1 text-slate-600 hover:text-indAccent border-l-2 border-transparent">SDK Mobile (Kotlin)</a></li>
-                            <li><a href="#compliance" class="nav-link block pl-3 py-1 text-slate-600 hover:text-indAccent border-l-2 border-transparent">Conformité KYC/AML</a></li>
+                        <h4 class="font-black text-slate-400 uppercase tracking-widest text-[0.55rem] mb-1.5 mt-3 flex items-center gap-1.5"><i class="fa-solid fa-code text-rose-500"></i> 5. Opérations B2B</h4>
+                        <ul class="space-y-0.5 border-l-2 border-slate-200 ml-1.5 pl-2 text-slate-600">
+                            <li><a href="#hardware" class="nav-link block py-0.5 hover:text-indAccent transition-colors">Topologie Matérielle Valideur</a></li>
+                            <li><a href="#sdk-web" class="nav-link block py-0.5 hover:text-indAccent transition-colors">Payloads JSON-RPC</a></li>
+                            <li><a href="#compliance" class="nav-link block py-0.5 hover:text-indAccent transition-colors">Auditabilité AML & UEMOA</a></li>
                         </ul>
                     </div>
                 </nav>
                 
-                <div class="mt-8 pt-5 border-t border-indBorder">
-                    <a href="https://github.com/atlas-duc" target="_blank" class="flex items-center gap-2 text-slate-500 hover:text-premiumDark font-bold text-[11px] transition-colors">
-                        <i class="fa-brands fa-github text-sm"></i> Dépôts Open Source
+                <div class="mt-6 pt-4 border-t border-slate-200">
+                    <a href="api.html" class="flex items-center justify-center gap-2 bg-premiumDark hover:bg-slate-800 text-white font-bold text-[0.6rem] uppercase tracking-widest transition-colors py-2 rounded shadow-sm">
+                        <i class="fa-solid fa-terminal"></i> Accéder au portail API
                     </a>
                 </div>
             </div>
@@ -451,39 +488,29 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- 6. FOOTER INDUSTRIEL COMPACT (NOUVEAU)     -->
+    <!-- 6. FOOTER INDUSTRIEL COMPACT               -->
     <!-- ========================================== -->
-    <footer class="bg-premiumDark border-t border-slate-800 pt-10 pb-8 mt-auto z-10 w-full flex flex-col items-center justify-center relative overflow-hidden">
-        <!-- Effet de fond subtil -->
-        <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 20px 20px;"></div>
-        
-        <div class="w-full max-w-3xl mx-auto px-4 flex flex-col items-center justify-center text-center relative z-10">
+    <footer class="bg-premiumDark border-t border-slate-800 py-6 mt-auto z-10 w-full flex flex-col items-center justify-center">
+        <div class="w-full max-w-[100rem] mx-auto px-4 flex flex-col md:flex-row items-center justify-between text-center md:text-left gap-4">
             
-            <!-- Logo & Brand (Centré) -->
-            <div class="flex flex-col items-center justify-center gap-3 mb-6">
-                <!-- J'ai conservé l'image pour cohérence avec le header, mais appliqué le style du footer Nexus Scan -->
-                <img src="https://i.imgur.com/Tc7Jzx3.jpeg" alt="Logo Atlas & Duc" class="h-16 w-16 rounded-full border-2 border-slate-700 shadow-lg object-cover">
-                <div class="flex flex-col items-center justify-center">
-                    <h4 class="text-white font-black text-sm md:text-base tracking-widest uppercase leading-none mb-1.5">Atlas & Duc Corporation</h4>
-                    <span class="text-indAccent text-[9px] font-bold tracking-[0.2em] uppercase">Infrastructure WEB3 Industrielle</span>
+            <div class="flex items-center gap-3">
+                <img src="https://i.imgur.com/Tc7Jzx3.jpeg" alt="Logo Atlas & Duc" class="h-8 w-8 rounded border border-slate-600 object-cover shadow-sm">
+                <div>
+                    <h4 class="text-white font-bold text-xs tracking-widest uppercase leading-none mb-1">Atlas & Duc Corporation</h4>
+                    <span class="text-indAccent text-[0.55rem] font-bold tracking-widest uppercase">Infrastructure WEB3 Industrielle</span>
                 </div>
             </div>
             
-            <!-- Liens de Navigation (Centrés) -->
-            <div class="flex flex-wrap items-center justify-center gap-5 md:gap-8 text-[11px] font-bold text-slate-400 w-full mb-6">
-                <a href="NexusScan.html" class="hover:text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-house"></i> Accueil</a>
-                <a href="documentation.html" class="hover:text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-book"></i> DOCS</a>
-                <a href="api.html" class="hover:text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-server"></i> API RPC</a>
-                <a href="support.html" class="hover:text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-headset"></i> Support</a>
+            <div class="flex items-center gap-5 text-[0.65rem] font-bold text-slate-400">
+                <a href="NexusScan.html" class="hover:text-indAccent transition-colors"><i class="fa-solid fa-house mr-1"></i> Explorateur</a>
+                <a href="documentation.html" class="text-indAccent transition-colors"><i class="fa-solid fa-book-journal-whills mr-1"></i> DOCS L1</a>
+                <a href="api.html" class="hover:text-indAccent transition-colors"><i class="fa-solid fa-server mr-1"></i> API RPC</a>
+                <a href="support.html" class="hover:text-indAccent transition-colors"><i class="fa-solid fa-headset mr-1"></i> Support</a>
             </div>
             
-            <!-- Mentions Légales et Statut (Centrées) -->
-            <div class="flex flex-col items-center justify-center border-t border-slate-800/80 w-full pt-5 max-w-sm">
-                <div class="flex items-center justify-center gap-2 mb-2 bg-slate-900/50 px-3 py-1 rounded-full border border-slate-800">
-                    <div class="w-1.5 h-1.5 rounded-full bg-indSuccess live-pulse"></div>
-                    <p class="text-[9px] text-slate-400 font-bold uppercase tracking-widest">Connecté via Nœud Local</p>
-                </div>
-                <p class="text-[9px] text-slate-600 font-bold tracking-wider">&copy; 2026 Atlas & Duc Corporation. Tous droits réservés.</p>
+            <div class="text-right text-[0.6rem] text-slate-500 font-medium leading-relaxed">
+                <p class="text-slate-400 font-bold mb-0.5">&copy; 2026 Atlas & Duc Corp.</p>
+                <p>Opéré au Burkina Faso (UEMOA).</p>
             </div>
             
         </div>
@@ -517,7 +544,7 @@
                 let current = "";
                 sections.forEach(section => {
                     const sectionTop = section.offsetTop;
-                    // Décalage pour activer le menu légèrement avant d'atteindre le titre
+                    // Décalage pour activer le menu avant d'atteindre exactement le titre
                     if (pageYOffset >= (sectionTop - 100)) {
                         current = section.getAttribute("id");
                     }
