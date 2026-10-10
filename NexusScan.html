@@ -191,7 +191,7 @@
                     
                     <form onsubmit="handleSearch(event)" class="w-full max-w-2xl bg-[#0F172A] rounded-md p-1 flex items-center border border-slate-700 focus-within:border-indAccent focus-within:ring-1 focus-within:ring-indAccent transition-all">
                         <div class="pl-3 pr-2 text-slate-400 text-xs"><i class="fa-solid fa-search"></i></div>
-                        <input type="text" id="searchInput" placeholder="Rechercher Hash / Bloc / Adresse..." class="w-full bg-transparent text-white px-1 py-1 outline-none font-mono placeholder:text-slate-500 text-xs">
+                        <input type="text" id="searchInput" placeholder="Rechercher Hash / Bloc / Adresse (ADC...)" class="w-full bg-transparent text-white px-1 py-1 outline-none font-mono placeholder:text-slate-500 text-xs">
                         <button type="submit" id="searchBtn" class="bg-indAccent hover:bg-[#0369a1] text-white px-4 py-1.5 rounded-sm font-bold text-xs transition-colors shadow-sm">
                             <span class="hidden sm:inline">Rechercher</span><i class="fa-solid fa-arrow-right sm:hidden"></i>
                         </button>
@@ -1035,7 +1035,7 @@
             btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i>`;
             
             try {
-                if (val.length === 66 && val.startsWith('0x')) {
+                if ((val.length === 66 || val.length >= 43) && !val.startsWith('AGI') && !val.startsWith('ADC')) {
                     if(txCache.has(val)) openTxDetail(val);
                     else showToast("Transaction non indexée localement.", "error");
                 } 
@@ -1043,7 +1043,8 @@
                     const num = typeof val === 'string' && val.startsWith('0x') ? parseInt(val, 16) : parseInt(val, 10);
                     openBlockDetail(num);
                 } 
-                else if ((val.startsWith('0x') && val.length === 42) || val.startsWith('AGI')) {
+                // MISE À JOUR : Ajout du préfixe ADC pour les adresses Atlas & Duc
+                else if ((val.startsWith('0x') && val.length === 42) || val.startsWith('AGI') || val.startsWith('ADC')) {
                     const userTxs = Array.from(txCache.values()).filter(tx => tx.from === val || tx.to === val);
                     if (userTxs.length > 0) {
                         showToast(`${userTxs.length} Tx locale(s)`, "success");
