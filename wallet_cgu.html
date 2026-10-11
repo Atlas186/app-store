@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conditions Générales d'Utilisation | Nexus Wallet Pro</title>
+    
+    <!-- Polices Industrielles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Moteur Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        premiumDark: '#0B1120',
+                        indAccent: '#0EA5E9',
+                        indSuccess: '#10B981',
+                        indWarning: '#F59E0B',
+                        indDanger: '#EF4444',
+                        indBg: '#F8FAFC',
+                        indCard: '#FFFFFF',
+                        indBorder: '#E2E8F0',
+                        indTextMuted: '#64748B'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .fade-in { animation: fadeIn 0.5s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .live-pulse { animation: pulseGreen 2s infinite; }
+        @keyframes pulseGreen { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); } 70% { box-shadow: 0 0 0 4px rgba(16, 185, 129, 0); } 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+        .text-justify-custom { text-align: justify; text-justify: inter-word; }
+    </style>
+</head>
+<body class="bg-indBg text-premiumDark font-sans antialiased flex flex-col min-h-screen text-[13px]">
+
+    <!-- BOUTON LANGUE FLOTTANT -->
+    <button onclick="toggleLang()" class="fixed bottom-6 right-6 z-50 bg-premiumDark text-white w-10 h-10 rounded shadow-xl border border-slate-700 flex items-center justify-center hover:bg-indAccent transition-colors group focus:outline-none">
+        <i class="fa-solid fa-globe text-sm group-hover:rotate-45 transition-transform"></i>
+    </button>
+
+    <!-- HEADER (Navigation Complète) -->
+    <header class="bg-indCard/95 backdrop-blur-md border-b border-indBorder sticky top-0 z-40 shadow-sm">
+        <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-14">
+                
+                <a href="NexusScan.html" class="flex items-center gap-2 cursor-pointer group">
+                    <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo" class="h-7 w-7 rounded-full border border-indBorder object-cover shadow-sm group-hover:border-indAccent transition-colors">
+                    <span class="font-extrabold text-lg tracking-tight text-premiumDark">NEXUS<span class="text-indAccent">SCAN</span></span>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-5 items-center">
+                    <a href="NexusScan.html" data-key="nav_home" class="text-indTextMuted hover:text-premiumDark font-semibold text-[12px] transition-colors py-4"><i class="fa-solid fa-house mr-1"></i> Accueil</a>
+                    <a href="documentation.html" data-key="nav_doc" class="text-indTextMuted hover:text-premiumDark font-semibold text-[12px] transition-colors py-4"><i class="fa-solid fa-book mr-1"></i> Documentation</a>
+                    <a href="api.html" data-key="nav_api" class="text-indTextMuted hover:text-premiumDark font-semibold text-[12px] transition-colors py-4"><i class="fa-solid fa-server mr-1"></i> API RPC</a>
+                    <a href="support.html" data-key="nav_support" class="text-indTextMuted hover:text-premiumDark font-semibold text-[12px] transition-colors py-4"><i class="fa-solid fa-headset mr-1"></i> Support B2B</a>
+                    <a href="privacy.html" data-key="nav_privacy" class="text-indTextMuted hover:text-premiumDark font-semibold text-[12px] transition-colors py-4"><i class="fa-solid fa-shield-halved mr-1"></i> Confidentialité</a>
+                    <a href="wallet_cgu.html" data-key="nav_cgu" class="text-indAccent font-bold text-[12px] border-b-2 border-indAccent py-4"><i class="fa-solid fa-gavel mr-1"></i> Wallet CGU</a>
+                </nav>
+
+                <div class="flex items-center gap-3">
+                    <div class="hidden sm:flex items-center gap-1.5 bg-indSuccess/10 border border-indSuccess/20 px-2.5 py-1 rounded-full">
+                        <div class="w-1.5 h-1.5 rounded-full bg-indSuccess live-pulse"></div>
+                        <span class="text-[10px] font-bold text-indSuccess tracking-wide">MAINNET L1</span>
+                    </div>
+                    <button id="mobileMenuBtn" class="md:hidden text-premiumDark hover:text-indAccent focus:outline-none text-xl">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation -->
+        <div id="mobileMenu" class="hidden md:hidden bg-indCard border-b border-indBorder px-4 pt-2 pb-4 shadow-lg absolute w-full z-50">
+            <a href="NexusScan.html" data-key="nav_home" class="block py-2.5 text-indTextMuted font-semibold text-[13px] border-b border-indBorder"><i class="fa-solid fa-house w-6 text-center"></i> Accueil</a>
+            <a href="documentation.html" data-key="nav_doc" class="block py-2.5 text-indTextMuted font-semibold text-[13px] border-b border-indBorder"><i class="fa-solid fa-book w-6 text-center"></i> Documentation</a>
+            <a href="api.html" data-key="nav_api" class="block py-2.5 text-indTextMuted font-semibold text-[13px] border-b border-indBorder"><i class="fa-solid fa-server w-6 text-center"></i> API RPC</a>
+            <a href="support.html" data-key="nav_support" class="block py-2.5 text-indTextMuted font-semibold text-[13px] border-b border-indBorder"><i class="fa-solid fa-headset w-6 text-center"></i> Support B2B</a>
+            <a href="privacy.html" data-key="nav_privacy" class="block py-2.5 text-indTextMuted font-semibold text-[13px] border-b border-indBorder"><i class="fa-solid fa-shield-halved w-6 text-center"></i> Confidentialité</a>
+            <a href="wallet_cgu.html" data-key="nav_cgu" class="block py-2.5 text-indAccent font-bold text-[13px] bg-sky-50 px-2 rounded mt-1"><i class="fa-solid fa-gavel w-6 text-center"></i> Wallet CGU</a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="bg-premiumDark text-white pt-10 pb-12 px-4 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-[#0f172a] via-slate-800 to-[#020617] z-0"></div>
+        <div class="absolute inset-0 opacity-[0.04]" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 16px 16px;"></div>
+        <div class="max-w-4xl mx-auto relative z-10 text-center fade-in">
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-indWarning/20 border border-indWarning/30 text-indWarning text-[10px] font-bold mb-3 uppercase tracking-widest">
+                <i class="fa-solid fa-gavel"></i>
+                <span data-key="hero_tag">Cadre Légal & Contrat Utilisateur</span>
+            </div>
+            <h1 data-key="hero_title" class="text-2xl md:text-3xl lg:text-4xl font-black mb-3 tracking-tight">CONDITIONS GÉNÉRALES <span class="text-indAccent">D'UTILISATION</span></h1>
+            <p data-key="hero_subtitle" class="text-slate-400 text-[11px] md:text-[13px] max-w-2xl mx-auto font-medium leading-relaxed">
+                Le présent document définit les termes et conditions légaux encadrant l'accès, le téléchargement et l'utilisation de l'interface Nexus Wallet Pro, éditée par Atlas & Duc Corporation.
+            </p>
+        </div>
+    </section>
+
+    <!-- MAIN LAYOUT -->
+    <div class="max-w-[90rem] mx-auto w-full flex-grow flex flex-col lg:flex-row">
+        
+        <!-- CONTENT -->
+        <main class="flex-1 min-w-0 p-4 sm:p-6 lg:p-8 space-y-10 fade-in pb-20">
+            
+            <!-- SECTION 1 -->
+            <section id="section-acceptation" class="scroll-mt-20">
+                <div class="flex items-center gap-3 mb-4 border-b border-indBorder pb-2">
+                    <div class="w-8 h-8 rounded bg-indAccent/10 flex items-center justify-center text-indAccent"><i class="fa-solid fa-handshake"></i></div>
+                    <h2 data-key="sec1_title" class="text-lg font-black text-premiumDark tracking-tight uppercase">1. Acceptation des Conditions et Description du Service</h2>
+                </div>
+                <div class="bg-white border border-indBorder rounded p-5 shadow-sm text-slate-600 text-[12px] leading-relaxed text-justify-custom font-medium">
+                    <p data-key="sec1_content" class="mb-4">
+                        Les présentes Conditions Générales d'Utilisation (ci-après dénommées les "CGU") constituent un contrat juridiquement contraignant entre vous (ci-après l'"Utilisateur") et Atlas & Duc Corporation, une entreprise de droit burkinabè (ci-après "nous", "notre", ou la "Société"). En téléchargeant, en installant, en accédant ou en utilisant l'application logicielle Nexus Wallet Pro, que ce soit via une plateforme de distribution mobile (telle que le Google Play Store) ou via un exécutable direct fourni par nos soins, vous reconnaissez expressément avoir lu, compris et accepté sans aucune réserve l'intégralité des clauses détaillées dans le présent document, ainsi que notre Politique de Confidentialité. Si vous n'êtes pas en accord avec une ou plusieurs de ces clauses, vous devez immédiatement cesser toute utilisation de l'application et la désinstaller de votre appareil matériel. Nexus Wallet Pro est exclusivement conçu, structuré et distribué comme une interface logicielle dite "client léger" et "Non-Custodial". Sa seule et unique fonction opérationnelle est de fournir un environnement cryptographique local sécurisé vous permettant de générer des clés, de signer des transactions hors-ligne et d'interagir directement avec le réseau principal (Mainnet) de la blockchain Nexus Core Layer-1, opéré par Atlas & Duc Corporation. Il est formellement établi que Nexus Wallet Pro n'est pas une banque, une institution financière de crédit, une plateforme d'échange de devises (exchange) ni un service de garde d'actifs fiduciaires. Nous ne fournissons aucun service d'investissement, de courtage, ni de conseil financier. La valeur de la monnaie numérique native AG-COIN (₳), bien qu'adossée au XOF sur notre infrastructure de réseau, repose sur les mécanismes de la blockchain sous-jacente. L'Utilisateur comprend que l'interaction avec des actifs cryptographiques, des contrats intelligents (Smart Contracts) et des systèmes décentralisés comporte des risques inhérents d'ordre technologique et financier, dont il assume l'entière et exclusive responsabilité. Atlas & Duc Corporation se réserve le droit souverain et unilatéral de modifier, de mettre à jour ou de réviser les présentes CGU à tout moment, notamment pour se conformer à de nouvelles exigences réglementaires nationales ou internationales, ou pour refléter des évolutions majeures de l'architecture logicielle de Nexus Wallet Pro. Toute modification substantielle fera l'objet d'une notification technique intégrée à l'application. La poursuite de l'utilisation du logiciel après la publication des CGU modifiées vaut acceptation irrévocable de ces dernières.
+                    </p>
+                </div>
+            </section>
+
+            <!-- SECTION 2 -->
+            <section id="section-responsabilite" class="scroll-mt-20">
+                <div class="flex items-center gap-3 mb-4 border-b border-indBorder pb-2">
+                    <div class="w-8 h-8 rounded bg-red-500/10 flex items-center justify-center text-red-600"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                    <h2 data-key="sec2_title" class="text-lg font-black text-premiumDark tracking-tight uppercase">2. Exclusion Totale de Responsabilité et Gestion des Clés</h2>
+                </div>
+                <div class="bg-white border border-indBorder rounded p-5 shadow-sm text-slate-600 text-[12px] leading-relaxed text-justify-custom font-medium">
+                    <p data-key="sec2_content" class="mb-4">
+                        L'acceptation du paradigme décentralisé ("Non-Custodial") induit un transfert absolu de responsabilité de la Société vers l'Utilisateur. En créant un portefeuille via Nexus Wallet Pro, l'application génère localement, sur le processeur de votre propre appareil, une phrase mnémonique de récupération (Seed Phrase) généralement composée de 12 à 24 mots, ainsi que les clés cryptographiques privées et publiques qui en découlent. L'Utilisateur reconnaît et accepte formellement qu'Atlas & Duc Corporation, ses dirigeants, employés ou entités affiliées n'ont, à aucun moment, accès à ces informations de sécurité. Nous ne stockons, ne transmettons, ni ne conservons aucune copie de votre phrase de récupération sur nos serveurs de bases de données, nos infrastructures cloud, ou par quelque autre moyen technique que ce soit. En conséquence directe, l'Utilisateur assume l'unique et entière responsabilité de la sauvegarde matérielle, de la conservation sécurisée et de la confidentialité de sa phrase mnémonique, de ses mots de passe et de tout mécanisme d'authentification biométrique associé à l'application. Si vous perdez l'accès à votre appareil matériel ET que vous perdez simultanément ou oubliez votre phrase de récupération, vos actifs numériques (AG-COIN ₳ et autres jetons) associés à cette adresse cryptographique deviendront irrémédiablement inaccessibles, perdus à tout jamais sur le registre blockchain. Vous déchargez expressément et juridiquement Atlas & Duc Corporation de toute responsabilité quant à l'impossibilité technique de restaurer vos fonds ou de récupérer vos clés perdues, volées ou détruites. De plus, Atlas & Duc Corporation ne pourra être tenue responsable des dommages directs, indirects, consécutifs, incidents ou punitifs résultant d'erreurs de la part de l'Utilisateur, telles que, mais sans s'y limiter : (I) la transmission de fonds vers une adresse Base58 erronée ou incompatible ; (II) l'exposition de la phrase mnémonique à des tiers ou à des logiciels malveillants (malwares, keyloggers) installés sur l'appareil de l'Utilisateur ; (III) l'oubli du mot de passe maître de l'appareil empêchant le déchiffrement local du conteneur sécurisé (Keystore/Secure Enclave) ; ou (IV) l'interaction volontaire avec des contrats intelligents (Smart Contracts) tiers défectueux, malveillants ou frauduleux déployés sur la blockchain Nexus Core. Le logiciel Nexus Wallet Pro est fourni « EN L'ÉTAT » (As Is) et « SELON SA DISPONIBILITÉ » (As Available). Dans les limites maximales autorisées par le droit applicable, Atlas & Duc Corporation décline expressément toute garantie, explicite ou implicite, y compris, mais sans s'y limiter, les garanties implicites de qualité marchande, d'adéquation à un usage particulier et de non-violation. Nous ne garantissons pas que l'application fonctionnera de manière ininterrompue, qu'elle sera exempte de bugs logiciels (bugs), de défauts techniques, ou qu'elle sera totalement imperméable aux attaques informatiques de type "Zero-Day".
+                    </p>
+                </div>
+            </section>
+
+            <!-- SECTION 3 -->
+            <section id="section-licence" class="scroll-mt-20">
+                <div class="flex items-center gap-3 mb-4 border-b border-indBorder pb-2">
+                    <div class="w-8 h-8 rounded bg-indSuccess/10 flex items-center justify-center text-indSuccess"><i class="fa-solid fa-code"></i></div>
+                    <h2 data-key="sec3_title" class="text-lg font-black text-premiumDark tracking-tight uppercase">3. Licence d'Utilisation, Propriété Intellectuelle et Restrictions</h2>
+                </div>
+                <div class="bg-white border border-indBorder rounded p-5 shadow-sm text-slate-600 text-[12px] leading-relaxed text-justify-custom font-medium">
+                    <p data-key="sec3_content" class="mb-4">
+                        Sous réserve de votre respect continu et inconditionnel des présentes CGU, Atlas & Duc Corporation vous accorde une licence limitée, personnelle, révocable, non exclusive, non transférable et non sous-licenciable pour télécharger, installer et exécuter une copie du logiciel Nexus Wallet Pro sur un appareil matériel mobile que vous possédez ou contrôlez légitimement, uniquement pour votre usage personnel, non commercial (sauf dans le cadre autorisé des transactions B2B prévues par le réseau), et en stricte conformité avec la documentation technique fournie. Cette licence ne constitue en aucun cas une vente ou un transfert des droits de propriété intellectuelle afférents à l'application. Tous les droits, titres et intérêts concernant Nexus Wallet Pro, y compris, mais sans s'y limiter, le code source, le code objet, les algorithmes sous-jacents, l'interface utilisateur graphique (UI), l'expérience utilisateur (UX), les marques déposées (incluant "Nexus Core", "AG-COIN", et le symbole "₳"), les logos, le design industriel et toute la documentation associée, demeurent la propriété exclusive, inaliénable et intellectuelle d'Atlas & Duc Corporation, protégée par les lois sur le droit d'auteur du Burkina Faso, de l'OAPI (Organisation Africaine de la Propriété Intellectuelle), ainsi que par les traités internationaux pertinents. Dans le cadre de l'utilisation de Nexus Wallet Pro, vous vous engagez formellement à ne pas (et à ne pas permettre, faciliter ou encourager des tiers à) : (I) modifier, traduire, adapter, altérer, réaliser des travaux dérivés ou créer des versions modifiées du logiciel ; (II) désassembler, décompiler, faire de l'ingénierie inverse (Reverse Engineering) ou tenter par tout autre moyen technique de découvrir, d'extraire ou de copier le code source de l'application, en tout ou en partie, sauf dans la mesure où une telle interdiction est expressément exclue par la législation applicable ; (III) louer, prêter, vendre, distribuer ou sous-licencier l'application ; (IV) utiliser Nexus Wallet Pro pour faciliter, engager ou promouvoir des activités illégales, incluant le blanchiment d'argent (AML), le financement du terrorisme (CFT), la fraude, l'évasion fiscale, l'achat de biens illicites ou toute violation des lois applicables dans votre juridiction ; (V) interférer, perturber ou tenter d'endommager les nœuds d'infrastructure RPC publics de la blockchain Nexus Core Layer-1 connectés à l'application, notamment par le biais d'attaques par déni de service (DDoS) ou l'injection de code malveillant ; (VI) tenter de contourner les mécanismes de sécurité, y compris l'obligation d'installer les mises à jour critiques déployées via l'API "In-App Updates" de Google Play. Atlas & Duc Corporation se réserve le droit exclusif de révoquer immédiatement cette licence et de suspendre, techniquement si possible, l'accès à l'interface en cas de violation avérée de l'une de ces restrictions.
+                    </p>
+                </div>
+            </section>
+
+            <!-- SECTION 4 -->
+            <section id="section-juridiction" class="scroll-mt-20">
+                <div class="flex items-center gap-3 mb-4 border-b border-indBorder pb-2">
+                    <div class="w-8 h-8 rounded bg-amber-500/10 flex items-center justify-center text-amber-600"><i class="fa-solid fa-scale-balanced"></i></div>
+                    <h2 data-key="sec4_title" class="text-lg font-black text-premiumDark tracking-tight uppercase">4. Mises à Jour Obligatoires, Conformité et Juridiction Applicable</h2>
+                </div>
+                <div class="bg-white border border-indBorder rounded p-5 shadow-sm text-slate-600 text-[12px] leading-relaxed text-justify-custom font-medium">
+                    <p data-key="sec4_content" class="mb-4">
+                        Afin de garantir l'intégrité de l'écosystème, la compatibilité continue avec les spécifications cryptographiques du protocole de la blockchain Nexus Core Layer-1 et la protection des fonds des utilisateurs face aux menaces émergentes en cybersécurité, Nexus Wallet Pro est techniquement conçu pour communiquer périodiquement avec les serveurs de distribution d'applications (tels que les services Google Play) afin de vérifier la disponibilité de correctifs logiciels. Atlas & Duc Corporation peut, à sa seule discrétion, déployer des mises à jour, des correctifs (patchs) de sécurité critiques, ou des modifications d'architecture majeures (Hard Forks). L'Utilisateur consent explicitement, via l'utilisation des mécanismes natifs (notamment l'API In-App Updates 'Immediate Mode'), à ce que l'application requière obligatoirement l'installation immédiate de la dernière version sécurisée pour continuer à fonctionner. Le refus d'appliquer une mise à jour critique entraînera le blocage technique temporaire ou définitif de l'interface utilisateur, afin de prévenir mathématiquement la diffusion de transactions obsolètes, vulnérables ou corrompues sur le réseau principal. Atlas & Duc Corporation s'efforcera, dans la mesure du possible et via ses canaux d'information officiels, de prévenir la communauté en amont de ces déploiements majeurs, mais n'encourt aucune responsabilité légale pour les interruptions de service temporaires découlant de ces nécessités d'ingénierie. Par ailleurs, vous déclarez et garantissez solennellement que votre utilisation de Nexus Wallet Pro respecte toutes les lois et réglementations applicables dans le pays, l'État ou la région où vous résidez ou depuis lequel vous accédez au logiciel. Vous assumez l'entière responsabilité de la déclaration et du paiement de tous les impôts, taxes, droits ou prélèvements fiscaux qui pourraient s'appliquer aux transactions cryptographiques ou aux plus-values réalisées via l'utilisation de nos logiciels, conformément aux lois de votre juridiction fiscale. Les présentes Conditions Générales d'Utilisation, ainsi que tout litige, réclamation ou controverse découlant directement ou indirectement de l'exécution, de l'interprétation, de la validité ou de la résiliation de ce contrat ou de l'utilisation de Nexus Wallet Pro, seront exclusivement régis, interprétés et exécutés conformément aux lois matérielles en vigueur au Burkina Faso, sans donner effet aux principes de conflits de lois. Pour toute question de conformité, réclamation légale formelle ou injonction judiciaire, l'Utilisateur ou les autorités compétentes doivent impérativement adresser leurs requêtes par voie électronique certifiée au département juridique d'Atlas & Duc Corporation à l'adresse suivante : administration@agi-nexus-core.click. Tout litige persistant et non résolu à l'amiable sera soumis à la compétence juridictionnelle exclusive des tribunaux siégeant dans la ville de Ouagadougou, au Burkina Faso, compétence à laquelle l'Utilisateur se soumet irrévocablement par les présentes.
+                    </p>
+                </div>
+            </section>
+        </main>
+
+        <!-- SIDEBAR DROITE (Navigation Rapide Sticky) -->
+        <aside class="hidden lg:block w-72 shrink-0 border-l border-indBorder bg-indCard h-[calc(100vh-56px)] sticky top-14 overflow-y-auto custom-scrollbar">
+            <div class="p-6">
+                
+                <div class="mb-6 pb-4 border-b border-slate-100 text-center">
+                    <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo" class="h-12 w-12 rounded-full border border-slate-200 mx-auto mb-2 shadow-sm">
+                    <h3 class="font-black text-premiumDark text-[13px] tracking-widest uppercase">Atlas & Duc Corp.</h3>
+                    <p data-key="sidebar_version" class="text-indWarning font-bold text-[10px] mt-1">Version Légale CGU 1.4</p>
+                </div>
+
+                <nav class="space-y-6 text-[11px]">
+                    <div>
+                        <h4 data-key="sidebar_title_sections" class="font-bold text-slate-400 uppercase tracking-widest text-[9px] mb-2.5">Sommaire des CGU</h4>
+                        <ul class="space-y-3 text-xs font-medium text-slate-600">
+                            <li><a href="#section-acceptation" class="hover:text-indAccent transition-colors flex items-start gap-2.5"><i class="fa-solid fa-handshake text-indAccent mt-0.5"></i> <span data-key="side_sec1">1. Acceptation & Service</span></a></li>
+                            <li><a href="#section-responsabilite" class="hover:text-indAccent transition-colors flex items-start gap-2.5"><i class="fa-solid fa-triangle-exclamation text-red-500 mt-0.5"></i> <span data-key="side_sec2">2. Limites de Responsabilité</span></a></li>
+                            <li><a href="#section-licence" class="hover:text-indAccent transition-colors flex items-start gap-2.5"><i class="fa-solid fa-code text-indSuccess mt-0.5"></i> <span data-key="side_sec3">3. Licence & Restrictions</span></a></li>
+                            <li><a href="#section-juridiction" class="hover:text-indAccent transition-colors flex items-start gap-2.5"><i class="fa-solid fa-scale-balanced text-amber-500 mt-0.5"></i> <span data-key="side_sec4">4. Mises à Jour & Juridiction</span></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-100">
+                        <h4 data-key="sidebar_contact_title" class="font-bold text-slate-400 uppercase tracking-widest text-[9px] mb-2">Département Juridique</h4>
+                        <a href="mailto:administration@agi-nexus-core.click" class="flex items-center gap-2 text-[10px] text-slate-600 hover:text-indAccent font-mono break-all font-bold">
+                            <i class="fa-solid fa-envelope"></i> administration@agi-nexus-core.click
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- FOOTER COMPLET -->
+    <footer class="bg-premiumDark border-t border-slate-800 mt-auto pt-10 pb-8">
+        <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center relative z-10">
+            
+            <div class="flex flex-col items-center justify-center gap-3 mb-6">
+                <img src="https://i.imgur.com/Tc7Jzx3.jpeg" alt="Logo Atlas & Duc" class="h-16 w-16 rounded-full border-2 border-slate-700 shadow-lg object-cover">
+                <div class="flex flex-col items-center justify-center">
+                    <h4 class="text-white font-black text-sm md:text-base tracking-widest uppercase leading-none mb-1.5">Atlas & Duc Corporation</h4>
+                    <span data-key="footer_infra" class="text-indAccent text-[9px] font-bold tracking-[0.2em] uppercase">Infrastructure WEB3 Industrielle</span>
+                </div>
+            </div>
+
+            <!-- Tous les liens intégrés dans le footer -->
+            <div class="flex flex-wrap items-center justify-center gap-5 md:gap-8 text-[11px] font-bold text-slate-400 w-full mb-6">
+                <a href="NexusScan.html" data-key="nav_home" class="hover:text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-house"></i> Accueil</a>
+                <a href="documentation.html" data-key="nav_doc" class="hover:text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-book"></i> Documentation</a>
+                <a href="api.html" data-key="nav_api" class="hover:text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-server"></i> API RPC</a>
+                <a href="support.html" data-key="nav_support" class="hover:text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-headset"></i> Support B2B</a>
+                <a href="privacy.html" data-key="nav_privacy" class="hover:text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-shield-halved"></i> Confidentialité</a>
+                <a href="wallet_cgu.html" data-key="nav_cgu" class="text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-gavel"></i> Wallet CGU</a>
+            </div>
+
+            <div class="flex flex-col items-center justify-center border-t border-slate-800/80 w-full pt-5 max-w-sm">
+                <div class="flex items-center justify-center gap-2 mb-2 bg-slate-900/50 px-3 py-1 rounded-full border border-slate-800">
+                    <div class="w-1.5 h-1.5 rounded-full bg-indSuccess live-pulse"></div>
+                    <p data-key="footer_status" class="text-[9px] text-slate-400 font-bold uppercase tracking-widest">Connecté via Nœud Local</p>
+                </div>
+                <p data-key="footer_copy" class="text-[9px] text-slate-600 font-bold tracking-wider">&copy; 2026 Atlas & Duc Corporation. Burkina Faso. Tous droits réservés.</p>
+            </div>
+            
+        </div>
+    </footer>
+
+    <script>
+        const btn = document.getElementById('mobileMenuBtn');
+        const menu = document.getElementById('mobileMenu');
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+            const icon = btn.querySelector('i');
+            if(menu.classList.contains('hidden')) { icon.classList.remove('fa-xmark'); icon.classList.add('fa-bars'); } 
+            else { icon.classList.remove('fa-bars'); icon.classList.add('fa-xmark'); }
+        });
+
+        // Dictionnaire Multilingue pour les CGU
+        const dict = {
+            fr: {
+                nav_home: "Accueil",
+                nav_doc: "Documentation",
+                nav_api: "API RPC",
+                nav_support: "Support B2B",
+                nav_privacy: "Confidentialité",
+                nav_cgu: "Wallet CGU",
+                hero_tag: "Cadre Légal & Contrat Utilisateur",
+                hero_title: "CONDITIONS GÉNÉRALES <span class='text-indAccent'>D'UTILISATION</span>",
+                hero_subtitle: "Le présent document définit les termes et conditions légaux encadrant l'accès, le téléchargement et l'utilisation de l'interface Nexus Wallet Pro, éditée par Atlas & Duc Corporation.",
+                
+                sec1_title: "1. Acceptation des Conditions et Description du Service",
+                sec1_content: "Les présentes Conditions Générales d'Utilisation (ci-après dénommées les 'CGU') constituent un contrat juridiquement contraignant entre vous (ci-après l''Utilisateur') et Atlas & Duc Corporation, une entreprise de droit burkinabè (ci-après 'nous', 'notre', ou la 'Société'). En téléchargeant, en installant, en accédant ou en utilisant l'application logicielle Nexus Wallet Pro, que ce soit via une plateforme de distribution mobile (telle que le Google Play Store) ou via un exécutable direct fourni par nos soins, vous reconnaissez expressément avoir lu, compris et accepté sans aucune réserve l'intégralité des clauses détaillées dans le présent document, ainsi que notre Politique de Confidentialité. Si vous n'êtes pas en accord avec une ou plusieurs de ces clauses, vous devez immédiatement cesser toute utilisation de l'application et la désinstaller de votre appareil matériel. Nexus Wallet Pro est exclusivement conçu, structuré et distribué comme une interface logicielle dite 'client léger' et 'Non-Custodial'. Sa seule et unique fonction opérationnelle est de fournir un environnement cryptographique local sécurisé vous permettant de générer des clés, de signer des transactions hors-ligne et d'interagir directement avec le réseau principal (Mainnet) de la blockchain Nexus Core Layer-1, opéré par Atlas & Duc Corporation. Il est formellement établi que Nexus Wallet Pro n'est pas une banque, une institution financière de crédit, une plateforme d'échange de devises (exchange) ni un service de garde d'actifs fiduciaires. Nous ne fournissons aucun service d'investissement, de courtage, ni de conseil financier. La valeur de la monnaie numérique native AG-COIN (₳), bien qu'adossée au XOF sur notre infrastructure de réseau, repose sur les mécanismes de la blockchain sous-jacente. L'Utilisateur comprend que l'interaction avec des actifs cryptographiques, des contrats intelligents (Smart Contracts) et des systèmes décentralisés comporte des risques inhérents d'ordre technologique et financier, dont il assume l'entière et exclusive responsabilité. Atlas & Duc Corporation se réserve le droit souverain et unilatéral de modifier, de mettre à jour ou de réviser les présentes CGU à tout moment, notamment pour se conformer à de nouvelles exigences réglementaires nationales ou internationales, ou pour refléter des évolutions majeures de l'architecture logicielle de Nexus Wallet Pro. Toute modification substantielle fera l'objet d'une notification technique intégrée à l'application. La poursuite de l'utilisation du logiciel après la publication des CGU modifiées vaut acceptation irrévocable de ces dernières.",
+                
+                sec2_title: "2. Exclusion Totale de Responsabilité et Gestion des Clés",
+                sec2_content: "L'acceptation du paradigme décentralisé ('Non-Custodial') induit un transfert absolu de responsabilité de la Société vers l'Utilisateur. En créant un portefeuille via Nexus Wallet Pro, l'application génère localement, sur le processeur de votre propre appareil, une phrase mnémonique de récupération (Seed Phrase) généralement composée de 12 à 24 mots, ainsi que les clés cryptographiques privées et publiques qui en découlent. L'Utilisateur reconnaît et accepte formellement qu'Atlas & Duc Corporation, ses dirigeants, employés ou entités affiliées n'ont, à aucun moment, accès à ces informations de sécurité. Nous ne stockons, ne transmettons, ni ne conservons aucune copie de votre phrase de récupération sur nos serveurs de bases de données, nos infrastructures cloud, ou par quelque autre moyen technique que ce soit. En conséquence directe, l'Utilisateur assume l'unique et entière responsabilité de la sauvegarde matérielle, de la conservation sécurisée et de la confidentialité de sa phrase mnémonique, de ses mots de passe et de tout mécanisme d'authentification biométrique associé à l'application. Si vous perdez l'accès à votre appareil matériel ET que vous perdez simultanément ou oubliez votre phrase de récupération, vos actifs numériques (AG-COIN ₳ et autres jetons) associés à cette adresse cryptographique deviendront irrémédiablement inaccessibles, perdus à tout jamais sur le registre blockchain. Vous déchargez expressément et juridiquement Atlas & Duc Corporation de toute responsabilité quant à l'impossibilité technique de restaurer vos fonds ou de récupérer vos clés perdues, volées ou détruites. De plus, Atlas & Duc Corporation ne pourra être tenue responsable des dommages directs, indirects, consécutifs, incidents ou punitifs résultant d'erreurs de la part de l'Utilisateur, telles que, mais sans s'y limiter : (I) la transmission de fonds vers une adresse Base58 erronée ou incompatible ; (II) l'exposition de la phrase mnémonique à des tiers ou à des logiciels malveillants (malwares, keyloggers) installés sur l'appareil de l'Utilisateur ; (III) l'oubli du mot de passe maître de l'appareil empêchant le déchiffrement local du conteneur sécurisé (Keystore/Secure Enclave) ; ou (IV) l'interaction volontaire avec des contrats intelligents (Smart Contracts) tiers défectueux, malveillants ou frauduleux déployés sur la blockchain Nexus Core. Le logiciel Nexus Wallet Pro est fourni « EN L'ÉTAT » (As Is) et « SELON SA DISPONIBILITÉ » (As Available). Dans les limites maximales autorisées par le droit applicable, Atlas & Duc Corporation décline expressément toute garantie, explicite ou implicite, y compris, mais sans s'y limiter, les garanties implicites de qualité marchande, d'adéquation à un usage particulier et de non-violation. Nous ne garantissons pas que l'application fonctionnera de manière ininterrompue, qu'elle sera exempte de bugs logiciels (bugs), de défauts techniques, ou qu'elle sera totalement imperméable aux attaques informatiques de type 'Zero-Day'.",
+                
+                sec3_title: "3. Licence d'Utilisation, Propriété Intellectuelle et Restrictions",
+                sec3_content: "Sous réserve de votre respect continu et inconditionnel des présentes CGU, Atlas & Duc Corporation vous accorde une licence limitée, personnelle, révocable, non exclusive, non transférable et non sous-licenciable pour télécharger, installer et exécuter une copie du logiciel Nexus Wallet Pro sur un appareil matériel mobile que vous possédez ou contrôlez légitimement, uniquement pour votre usage personnel, non commercial (sauf dans le cadre autorisé des transactions B2B prévues par le réseau), et en stricte conformité avec la documentation technique fournie. Cette licence ne constitue en aucun cas une vente ou un transfert des droits de propriété intellectuelle afférents à l'application. Tous les droits, titres et intérêts concernant Nexus Wallet Pro, y compris, mais sans s'y limiter, le code source, le code objet, les algorithmes sous-jacents, l'interface utilisateur graphique (UI), l'expérience utilisateur (UX), les marques déposées (incluant 'Nexus Core', 'AG-COIN', et le symbole '₳'), les logos, le design industriel et toute la documentation associée, demeurent la propriété exclusive, inaliénable et intellectuelle d'Atlas & Duc Corporation, protégée par les lois sur le droit d'auteur du Burkina Faso, de l'OAPI (Organisation Africaine de la Propriété Intellectuelle), ainsi que par les traités internationaux pertinents. Dans le cadre de l'utilisation de Nexus Wallet Pro, vous vous engagez formellement à ne pas (et à ne pas permettre, faciliter ou encourager des tiers à) : (I) modifier, traduire, adapter, altérer, réaliser des travaux dérivés ou créer des versions modifiées du logiciel ; (II) désassembler, décompiler, faire de l'ingénierie inverse (Reverse Engineering) ou tenter par tout autre moyen technique de découvrir, d'extraire ou de copier le code source de l'application, en tout ou en partie, sauf dans la mesure où une telle interdiction est expressément exclue par la législation applicable ; (III) louer, prêter, vendre, distribuer ou sous-licencier l'application ; (IV) utiliser Nexus Wallet Pro pour faciliter, engager ou promouvoir des activités illégales, incluant le blanchiment d'argent (AML), le financement du terrorisme (CFT), la fraude, l'évasion fiscale, l'achat de biens illicites ou toute violation des lois applicables dans votre juridiction ; (V) interférer, perturber ou tenter d'endommager les nœuds d'infrastructure RPC publics de la blockchain Nexus Core Layer-1 connectés à l'application, notamment par le biais d'attaques par déni de service (DDoS) ou l'injection de code malveillant ; (VI) tenter de contourner les mécanismes de sécurité, y compris l'obligation d'installer les mises à jour critiques déployées via l'API 'In-App Updates' de Google Play. Atlas & Duc Corporation se réserve le droit exclusif de révoquer immédiatement cette licence et de suspendre, techniquement si possible, l'accès à l'interface en cas de violation avérée de l'une de ces restrictions.",
+                
+                sec4_title: "4. Mises à Jour Obligatoires, Conformité et Juridiction Applicable",
+                sec4_content: "Afin de garantir l'intégrité de l'écosystème, la compatibilité continue avec les spécifications cryptographiques du protocole de la blockchain Nexus Core Layer-1 et la protection des fonds des utilisateurs face aux menaces émergentes en cybersécurité, Nexus Wallet Pro est techniquement conçu pour communiquer périodiquement avec les serveurs de distribution d'applications (tels que les services Google Play) afin de vérifier la disponibilité de correctifs logiciels. Atlas & Duc Corporation peut, à sa seule discrétion, déployer des mises à jour, des correctifs (patchs) de sécurité critiques, ou des modifications d'architecture majeures (Hard Forks). L'Utilisateur consent explicitement, via l'utilisation des mécanismes natifs (notamment l'API In-App Updates 'Immediate Mode'), à ce que l'application requière obligatoirement l'installation immédiate de la dernière version sécurisée pour continuer à fonctionner. Le refus d'appliquer une mise à jour critique entraînera le blocage technique temporaire ou définitif de l'interface utilisateur, afin de prévenir mathématiquement la diffusion de transactions obsolètes, vulnérables ou corrompues sur le réseau principal. Atlas & Duc Corporation s'efforcera, dans la mesure du possible et via ses canaux d'information officiels, de prévenir la communauté en amont de ces déploiements majeurs, mais n'encourt aucune responsabilité légale pour les interruptions de service temporaires découlant de ces nécessités d'ingénierie. Par ailleurs, vous déclarez et garantissez solennellement que votre utilisation de Nexus Wallet Pro respecte toutes les lois et réglementations applicables dans le pays, l'État ou la région où vous résidez ou depuis lequel vous accédez au logiciel. Vous assumez l'entière responsabilité de la déclaration et du paiement de tous les impôts, taxes, droits ou prélèvements fiscaux qui pourraient s'appliquer aux transactions cryptographiques ou aux plus-values réalisées via l'utilisation de nos logiciels, conformément aux lois de votre juridiction fiscale. Les présentes Conditions Générales d'Utilisation, ainsi que tout litige, réclamation ou controverse découlant directement ou indirectement de l'exécution, de l'interprétation, de la validité ou de la résiliation de ce contrat ou de l'utilisation de Nexus Wallet Pro, seront exclusivement régis, interprétés et exécutés conformément aux lois matérielles en vigueur au Burkina Faso, sans donner effet aux principes de conflits de lois. Pour toute question de conformité, réclamation légale formelle ou injonction judiciaire, l'Utilisateur ou les autorités compétentes doivent impérativement adresser leurs requêtes par voie électronique certifiée au département juridique d'Atlas & Duc Corporation à l'adresse suivante : administration@agi-nexus-core.click. Tout litige persistant et non résolu à l'amiable sera soumis à la compétence juridictionnelle exclusive des tribunaux siégeant dans la ville de Ouagadougou, au Burkina Faso, compétence à laquelle l'Utilisateur se soumet irrévocablement par les présentes.",
+                
+                sidebar_version: "Version Légale CGU 1.4",
+                sidebar_title_sections: "Sommaire des CGU",
+                side_sec1: "1. Acceptation & Service",
+                side_sec2: "2. Limites de Responsabilité",
+                side_sec3: "3. Licence & Restrictions",
+                side_sec4: "4. Mises à Jour & Juridiction",
+                sidebar_contact_title: "Département Juridique",
+                
+                footer_infra: "Infrastructure WEB3 Industrielle",
+                footer_status: "Connecté via Nœud Local",
+                footer_copy: "&copy; 2026 Atlas & Duc Corporation. Burkina Faso. Tous droits réservés."
+            },
+            en: {
+                nav_home: "Home",
+                nav_doc: "Documentation",
+                nav_api: "RPC API",
+                nav_support: "B2B Support",
+                nav_privacy: "Privacy Policy",
+                nav_cgu: "Wallet T&C",
+                hero_tag: "Legal Framework & User Agreement",
+                hero_title: "TERMS AND <span class='text-indAccent'>CONDITIONS</span>",
+                hero_subtitle: "This document defines the legal terms and conditions governing access, download, and use of the Nexus Wallet Pro interface, published by Atlas & Duc Corporation.",
+                
+                sec1_title: "1. Acceptance of Terms and Service Description",
+                sec1_content: "These Terms and Conditions (hereinafter referred to as the 'Terms') constitute a legally binding contract between you (hereinafter the 'User') and Atlas & Duc Corporation, a company incorporated under the laws of Burkina Faso (hereinafter 'we', 'our', or the 'Company'). By downloading, installing, accessing, or using the Nexus Wallet Pro software application, whether via a mobile distribution platform (such as the Google Play Store) or via a direct executable provided by us, you expressly acknowledge having read, understood, and unreservedly accepted all the clauses detailed in this document, as well as our Privacy Policy. If you do not agree with one or more of these clauses, you must immediately cease all use of the application and uninstall it from your hardware device. Nexus Wallet Pro is exclusively designed, structured, and distributed as a 'light client' and 'Non-Custodial' software interface. Its sole and only operational function is to provide a secure local cryptographic environment allowing you to generate keys, sign offline transactions, and interact directly with the main network (Mainnet) of the Nexus Core Layer-1 blockchain, operated by Atlas & Duc Corporation. It is formally established that Nexus Wallet Pro is not a bank, a credit financial institution, a currency exchange platform (exchange), or a fiat asset custody service. We do not provide any investment, brokerage, or financial advisory services. The value of the native digital currency AG-COIN (₳), although pegged to the XOF on our network infrastructure, relies on the mechanisms of the underlying blockchain. The User understands that interacting with cryptographic assets, smart contracts, and decentralized systems involves inherent technological and financial risks, for which they assume full and exclusive responsibility. Atlas & Duc Corporation reserves the sovereign and unilateral right to modify, update, or revise these Terms at any time, notably to comply with new national or international regulatory requirements, or to reflect major developments in the software architecture of Nexus Wallet Pro. Any substantial modification will be the subject of a technical notification integrated into the application. Continued use of the software after the publication of modified Terms constitutes irrevocable acceptance of them.",
+                
+                sec2_title: "2. Total Disclaimer of Liability and Key Management",
+                sec2_content: "Acceptance of the decentralized ('Non-Custodial') paradigm induces an absolute transfer of responsibility from the Company to the User. When creating a wallet via Nexus Wallet Pro, the application locally generates, on your own device's processor, a mnemonic recovery phrase (Seed Phrase) generally composed of 12 to 24 words, as well as the resulting private and public cryptographic keys. The User formally acknowledges and accepts that Atlas & Duc Corporation, its officers, employees, or affiliated entities have, at no time, access to this security information. We do not store, transmit, or retain any copy of your recovery phrase on our database servers, our cloud infrastructures, or by any other technical means whatsoever. As a direct consequence, the User assumes sole and entire responsibility for the hardware backup, secure safekeeping, and confidentiality of their mnemonic phrase, passwords, and any biometric authentication mechanism associated with the application. If you lose access to your hardware device AND you simultaneously lose or forget your recovery phrase, your digital assets (AG-COIN ₳ and other tokens) associated with this cryptographic address will become irretrievably inaccessible, lost forever on the blockchain ledger. You expressly and legally discharge Atlas & Duc Corporation from any liability regarding the technical impossibility of restoring your funds or recovering your lost, stolen, or destroyed keys. Furthermore, Atlas & Duc Corporation cannot be held liable for direct, indirect, consequential, incidental, or punitive damages resulting from errors on the part of the User, such as, but not limited to: (I) transmission of funds to an incorrect or incompatible Base58 address; (II) exposure of the mnemonic phrase to third parties or malicious software (malwares, keyloggers) installed on the User's device; (III) forgetting the device's master password preventing local decryption of the secure container (Keystore/Secure Enclave); or (IV) voluntary interaction with defective, malicious, or fraudulent third-party Smart Contracts deployed on the Nexus Core blockchain. The Nexus Wallet Pro software is provided 'AS IS' and 'AS AVAILABLE'. To the maximum extent permitted by applicable law, Atlas & Duc Corporation expressly disclaims all warranties, express or implied, including, but not limited to, implied warranties of merchantability, fitness for a particular purpose, and non-infringement. We do not warrant that the application will operate uninterrupted, that it will be free from software bugs, technical defects, or that it will be totally immune to 'Zero-Day' cyberattacks.",
+                
+                sec3_title: "3. License to Use, Intellectual Property, and Restrictions",
+                sec3_content: "Subject to your continuous and unconditional compliance with these Terms, Atlas & Duc Corporation grants you a limited, personal, revocable, non-exclusive, non-transferable, and non-sublicensable license to download, install, and execute a copy of the Nexus Wallet Pro software on a mobile hardware device that you legally own or control, solely for your personal, non-commercial use (except within the authorized scope of B2B transactions provided by the network), and in strict compliance with the provided technical documentation. This license in no way constitutes a sale or transfer of intellectual property rights relating to the application. All rights, title, and interests regarding Nexus Wallet Pro, including, but not limited to, source code, object code, underlying algorithms, graphical user interface (UI), user experience (UX), trademarks (including 'Nexus Core', 'AG-COIN', and the '₳' symbol), logos, industrial design, and all associated documentation, remain the exclusive, inalienable, and intellectual property of Atlas & Duc Corporation, protected by the copyright laws of Burkina Faso, the OAPI (African Intellectual Property Organization), as well as relevant international treaties. In connection with the use of Nexus Wallet Pro, you formally agree not to (and not to permit, facilitate, or encourage third parties to): (I) modify, translate, adapt, alter, make derivative works, or create modified versions of the software; (II) disassemble, decompile, reverse engineer, or attempt by any other technical means to discover, extract, or copy the source code of the application, in whole or in part, except to the extent such prohibition is expressly excluded by applicable law; (III) rent, lease, sell, distribute, or sublicense the application; (IV) use Nexus Wallet Pro to facilitate, engage in, or promote illegal activities, including money laundering (AML), terrorist financing (CFT), fraud, tax evasion, purchasing illicit goods, or any violation of applicable laws in your jurisdiction; (V) interfere with, disrupt, or attempt to damage the public RPC infrastructure nodes of the Nexus Core Layer-1 blockchain connected to the application, notably through Distributed Denial of Service (DDoS) attacks or malicious code injection; (VI) attempt to bypass security mechanisms, including the obligation to install critical updates deployed via the Google Play 'In-App Updates' API. Atlas & Duc Corporation reserves the exclusive right to immediately revoke this license and suspend, technically if possible, access to the interface in the event of a proven violation of any of these restrictions.",
+                
+                sec4_title: "4. Mandatory Updates, Compliance, and Applicable Jurisdiction",
+                sec4_content: "To guarantee the integrity of the ecosystem, continuous compatibility with the cryptographic specifications of the Nexus Core Layer-1 blockchain protocol, and the protection of user funds against emerging cybersecurity threats, Nexus Wallet Pro is technically designed to communicate periodically with application distribution servers (such as Google Play services) to check for the availability of software patches. Atlas & Duc Corporation may, at its sole discretion, deploy updates, critical security patches, or major architectural modifications (Hard Forks). The User explicitly consents, via the use of native mechanisms (notably the In-App Updates 'Immediate Mode' API), that the application will mandatorily require the immediate installation of the latest secure version to continue operating. Refusal to apply a critical update will result in the temporary or permanent technical blocking of the user interface, to mathematically prevent the broadcasting of obsolete, vulnerable, or corrupted transactions on the main network. Atlas & Duc Corporation will strive, as far as possible and via its official information channels, to warn the community in advance of these major deployments, but incurs no legal liability for temporary service interruptions arising from these engineering necessities. Furthermore, you solemnly represent and warrant that your use of Nexus Wallet Pro complies with all laws and regulations applicable in the country, state, or region where you reside or from which you access the software. You assume full responsibility for declaring and paying all taxes, duties, or levies that may apply to cryptographic transactions or capital gains realized through the use of our software, in accordance with the laws of your tax jurisdiction. These Terms and Conditions, as well as any dispute, claim, or controversy arising directly or indirectly from the execution, interpretation, validity, or termination of this agreement or the use of Nexus Wallet Pro, shall be exclusively governed by, construed, and enforced in accordance with the substantive laws in force in Burkina Faso, without giving effect to conflict of laws principles. For any compliance questions, formal legal claims, or judicial injunctions, the User or competent authorities must imperatively address their requests via certified electronic means to the legal department of Atlas & Duc Corporation at the following address: administration@agi-nexus-core.click. Any persistent dispute not resolved amicably shall be submitted to the exclusive jurisdiction of the courts sitting in the city of Ouagadougou, Burkina Faso, to which jurisdiction the User irrevocably submits by these presents.",
+                
+                sidebar_version: "Legal Version CGU 1.4",
+                sidebar_title_sections: "Terms Summary",
+                side_sec1: "1. Acceptance & Service",
+                side_sec2: "2. Liability Limits",
+                side_sec3: "3. License & Restrictions",
+                side_sec4: "4. Updates & Jurisdiction",
+                sidebar_contact_title: "Legal Department",
+                
+                footer_infra: "Industrial WEB3 Infrastructure",
+                footer_status: "Connected via Local Node",
+                footer_copy: "&copy; 2026 Atlas & Duc Corporation. Burkina Faso. All rights reserved."
+            }
+        };
+
+        let currentLang = 'fr';
+        function toggleLang() {
+            currentLang = currentLang === 'fr' ? 'en' : 'fr';
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (dict[currentLang][key]) { el.innerHTML = dict[currentLang][key]; }
+            });
+        }
+    </script>
+</body>
+</html>

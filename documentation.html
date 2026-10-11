@@ -20,15 +20,16 @@
             theme: {
                 extend: {
                     colors: {
-                        premiumDark: '#030712', /* Noir absolu industriel */
-                        indAccent: '#0284C7', /* Bleu technique profond */
-                        indSuccess: '#059669', /* Vert émeraude de validation */
+                        premiumDark: '#030712',
+                        indAccent: '#0284C7',
+                        indSuccess: '#059669',
                         indWarning: '#D97706',
                         indDanger: '#DC2626',
                         indBg: '#F8FAFC',
                         indCard: '#FFFFFF',
                         indBorder: '#CBD5E1',
-                        indTextMuted: '#475569'
+                        indTextMuted: '#475569',
+                        indPurple: '#7C3AED'
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -50,7 +51,6 @@
         }
     </script>
     <style>
-        /* Animations & Scrollbar Ultra-Fine */
         .live-pulse { animation: pulseGreen 2s infinite; }
         @keyframes pulseGreen { 0% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.4); } 70% { box-shadow: 0 0 0 3px rgba(5, 150, 105, 0); } 100% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0); } }
         
@@ -59,13 +59,11 @@
         ::-webkit-scrollbar-thumb { background: #94A3B8; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #64748B; }
 
-        /* Typographie de Documentation Encyclopédique */
         .doc-prose { color: #1E293B; font-size: 0.8rem; line-height: 1.7; }
         .doc-prose h2 { font-size: 1.4rem; font-weight: 900; color: #030712; margin-top: 3.5rem; margin-bottom: 1.2rem; padding-bottom: 0.5rem; border-bottom: 2px solid #E2E8F0; letter-spacing: -0.02em; display: flex; align-items: center; gap: 0.5rem; }
         .doc-prose h3 { font-size: 1.05rem; font-weight: 800; color: #0F172A; margin-top: 2rem; margin-bottom: 0.8rem; letter-spacing: -0.01em; border-left: 3px solid #0284C7; padding-left: 0.5rem; }
         .doc-prose h4 { font-size: 0.85rem; font-weight: 700; color: #334155; margin-top: 1.2rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; }
         .doc-prose p { margin-bottom: 1.2rem; text-align: justify; }
-        
         .doc-prose ul { list-style-type: none; padding-left: 0; margin-bottom: 1.2rem; }
         .doc-prose ul li { margin-bottom: 0.4rem; position: relative; padding-left: 1.2rem; }
         .doc-prose ul li::before { content: '■'; position: absolute; left: 0; top: 0.2rem; color: #0284C7; font-size: 0.5rem; }
@@ -74,21 +72,17 @@
         .doc-prose th { background-color: #F8FAFC; text-align: left; padding: 0.6rem 0.8rem; border: 1px solid #CBD5E1; color: #0F172A; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; }
         .doc-prose td { padding: 0.6rem 0.8rem; border: 1px solid #E2E8F0; color: #334155; vertical-align: top; }
         
-        .doc-prose .highlight { color: #0284C7; font-weight: 700; background: #F0F9FF; padding: 1px 4px; border-radius: 2px; border: 1px solid #BAE6FD; }
         .doc-prose code:not(pre code) { background-color: #F1F5F9; padding: 0.15rem 0.4rem; border-radius: 0.2rem; font-family: 'Fira Code', monospace; font-size: 0.7rem; color: #0369A1; border: 1px solid #CBD5E1; font-weight: 600; }
 
-        /* Callouts / Info Boxes */
         .callout { padding: 1rem; border-radius: 0.25rem; margin-bottom: 1.5rem; border-left: 4px solid; display: flex; gap: 0.75rem; align-items: flex-start; }
         .callout-info { background-color: #F0F9FF; border-color: #0284C7; color: #0369A1; }
         .callout-warning { background-color: #FFFBEB; border-color: #D97706; color: #92400E; }
         .callout-danger { background-color: #FEF2F2; border-color: #DC2626; color: #991B1B; }
 
-        /* Blocs de Code Ultra-Premium (IDE Style) */
         .dev-code-block { background-color: #0d1117; border: 1px solid #30363d; border-radius: 4px; overflow: hidden; margin-bottom: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
         .dev-code-header { background-color: #161b22; border-bottom: 1px solid #30363d; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; }
         .dev-code-body { padding: 16px; overflow-x: auto; font-family: 'Fira Code', monospace; font-size: 0.7rem; line-height: 1.6; color: #c9d1d9; }
         
-        /* Syntax Highlighting */
         .syntax-key { color: #79c0ff; }
         .syntax-string { color: #a5d6ff; }
         .syntax-number { color: #79c0ff; }
@@ -96,19 +90,15 @@
         .syntax-comment { color: #8b949e; font-style: italic; }
         .syntax-type { color: #ffa657; }
         .syntax-func { color: #d2a8ff; }
-        .syntax-op { color: #c9d1d9; }
 
-        /* Sidebar active link */
         .nav-link.active { color: #0284C7; font-weight: 800; border-left-color: #0284C7; background-color: #F0F9FF; }
-        
-        /* Blur effect for sticky headers */
         .glass-header { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(8px); }
     </style>
 </head>
 <body class="bg-indBg text-premiumDark font-sans antialiased flex flex-col min-h-screen tracking-tight">
 
     <!-- ========================================== -->
-    <!-- 1. NAVIGATION BAR                          -->
+    <!-- 1. NAVIGATION BAR COMPLÈTE                 -->
     <!-- ========================================== -->
     <header class="glass-header border-b border-indBorder sticky top-0 z-50 shadow-sm">
         <div class="max-w-[100rem] mx-auto px-4 sm:px-6 lg:px-8">
@@ -122,11 +112,14 @@
                     </div>
                 </a>
 
-                <nav class="hidden md:flex space-x-6 items-center h-full">
+                <!-- Desktop Menu -->
+                <nav class="hidden md:flex space-x-5 items-center h-full">
                     <a href="NexusScan.html" class="h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-xs border-b-2 border-transparent hover:border-slate-300 transition-colors"><i class="fa-solid fa-house mr-1.5"></i> Explorateur</a>
                     <a href="documentation.html" class="h-full flex items-center text-indAccent font-bold text-xs border-b-2 border-indAccent"><i class="fa-solid fa-book-journal-whills mr-1.5"></i> YELLOW PAPER</a>
                     <a href="api.html" class="h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-xs border-b-2 border-transparent hover:border-slate-300 transition-colors"><i class="fa-solid fa-server mr-1.5"></i> API RPC</a>
-                    <a href="support.html" class="h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-xs border-b-2 border-transparent hover:border-slate-300 transition-colors"><i class="fa-solid fa-headset mr-1.5"></i> Opérations B2B</a>
+                    <a href="support.html" class="h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-xs border-b-2 border-transparent hover:border-slate-300 transition-colors"><i class="fa-solid fa-headset mr-1.5"></i> Support B2B</a>
+                    <a href="privacy.html" class="h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-xs border-b-2 border-transparent hover:border-slate-300 transition-colors"><i class="fa-solid fa-shield-halved mr-1.5"></i> Confidentialité</a>
+                    <a href="wallet_cgu.html" class="h-full flex items-center text-indTextMuted hover:text-premiumDark font-semibold text-xs border-b-2 border-transparent hover:border-slate-300 transition-colors"><i class="fa-solid fa-gavel mr-1.5"></i> Wallet CGU</a>
                 </nav>
 
                 <div class="flex items-center gap-3">
@@ -139,6 +132,16 @@
                     </button>
                 </div>
             </div>
+        </div>
+
+        <!-- Mobile Navigation -->
+        <div id="mobileMenu" class="hidden md:hidden bg-indCard border-b border-indBorder px-4 pt-2 pb-4 shadow-lg absolute w-full z-50">
+            <a href="NexusScan.html" class="block py-2.5 text-indTextMuted font-semibold text-[13px] border-b border-indBorder"><i class="fa-solid fa-house w-6 text-center"></i> Explorateur</a>
+            <a href="documentation.html" class="block py-2.5 text-indAccent font-bold text-[13px] border-b border-indBorder bg-sky-50 px-2 rounded"><i class="fa-solid fa-book-journal-whills w-6 text-center"></i> Yellow Paper</a>
+            <a href="api.html" class="block py-2.5 text-indTextMuted font-semibold text-[13px] border-b border-indBorder"><i class="fa-solid fa-server w-6 text-center"></i> API RPC</a>
+            <a href="support.html" class="block py-2.5 text-indTextMuted font-semibold text-[13px] border-b border-indBorder"><i class="fa-solid fa-headset w-6 text-center"></i> Support B2B</a>
+            <a href="privacy.html" class="block py-2.5 text-indTextMuted font-semibold text-[13px] border-b border-indBorder"><i class="fa-solid fa-shield-halved w-6 text-center"></i> Confidentialité</a>
+            <a href="wallet_cgu.html" class="block py-2.5 text-indTextMuted font-semibold text-[13px]"><i class="fa-solid fa-gavel w-6 text-center"></i> Wallet CGU</a>
         </div>
     </header>
 
@@ -156,7 +159,7 @@
                 </div>
                 <h1 class="text-3xl lg:text-4xl font-black text-premiumDark tracking-tighter mb-4 leading-tight">Architecture Institutionnelle & Livre Blanc Technique</h1>
                 <p class="text-slate-500 font-medium text-sm max-w-4xl leading-relaxed">
-                    Ce document constitue la référence exhaustive absolue de l'infrastructure logicielle, cryptographique et matérielle du protocole <strong>Nexus Core Layer-1</strong>. Développé en ingénierie souveraine au Burkina Faso par <span class="text-premiumDark font-bold">Atlas & Duc Corporation</span>, ce réseau résout le trilemme de la blockchain (Sécurité, Scalabilité, Décentralisation) par une approche de consortium autorité (nBFT), un ancrage monétaire strict et une machine virtuelle sand-boxée à frais constants.
+                    Ce document constitue la référence exhaustive absolue de l'infrastructure logicielle, cryptographique et matérielle du protocole <strong>Nexus Core Layer-1</strong>. Développé en ingénierie souveraine au Burkina Faso par <span class="text-premiumDark font-bold">Atlas & Duc Corporation</span>, ce réseau résout le trilemme de la blockchain (Sécurité, Scalabilité, Décentralisation) par une approche de consortium d'autorité (nBFT), un ancrage monétaire strict de la pièce native ₳, et une machine virtuelle sand-boxée garantissant des frais transactionnels constants.
                 </p>
             </div>
 
@@ -165,10 +168,10 @@
             <!-- ========================================== -->
             <section id="vision" class="scroll-mt-20">
                 <h2><i class="fa-solid fa-building-columns text-indAccent"></i> 1. Tokénomique & Ingénierie Monétaire</h2>
-                <p>Le réseau L1 Nexus rejette catégoriquement le paradigme spéculatif des blockchains publiques (type ERC-20 flottants). L'infrastructure est conçue comme un outil de souveraineté économique, agissant comme un grand livre de compte immuable (Ledger) pour l'économie réelle de la zone UEMOA et au-delà.</p>
+                <p>Le réseau L1 Nexus rejette catégoriquement le paradigme hautement spéculatif et volatil des blockchains publiques non adossées. Conçue avant tout comme un outil de souveraineté économique et un grand livre de compte immuable (Ledger) pour les opérations interentreprises (B2B) et l'inclusion financière, l'infrastructure s'appuie sur des fondamentaux macroéconomiques stricts.</p>
                 
                 <h3 id="params" class="scroll-mt-20">1.1 Paramètres Invariants du Réseau</h3>
-                <p>Les métriques fondamentales suivantes sont encodées en dur dans le binaire du nœud et validées dans le bloc 0 (Genesis). Aucune modification de ces paramètres n'est possible sans un hard-fork approuvé par 100% du consortium.</p>
+                <p>Les métriques fondamentales suivantes sont encodées en dur dans le binaire du nœud validateur et sanctuarisées dans le bloc 0 (Genesis Block). Aucune modification algorithmique de ces paramètres n'est possible sans un hard-fork approuvé par 100% du consortium de gouvernance.</p>
                 <table>
                     <thead>
                         <tr>
@@ -179,49 +182,41 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong>Coin Natif & Symbole</strong></td>
-                            <td><code>AG-COIN (₳)</code></td>
-                            <td>Unité de compte universelle du réseau. Utilisée pour le transfert inter-wallet et la tarification du gaz (frais d'exécution).</td>
+                            <td><strong>Pièce Native (Coin)</strong></td>
+                            <td><code>₳</code></td>
+                            <td>Unité de compte universelle du réseau. Utilisée pour les transferts inter-wallets, le règlement interbancaire et la tarification du gaz (frais d'exécution NVM).</td>
                         </tr>
                         <tr>
                             <td><strong>Total Supply Cap</strong></td>
                             <td><code>100,000,000,000 ₳</code></td>
-                            <td>Offre maximale pré-minée dans la trésorerie au bloc 0. L'inflation algorithmique est mathématiquement fixée à 0.00%.</td>
+                            <td>Offre maximale pré-minée et séquestrée dans les contrats de trésorerie au bloc 0. L'inflation algorithmique (minting) est mathématiquement fixée à 0.00%.</td>
                         </tr>
                         <tr>
-                            <td><strong>Parité Économique</strong></td>
+                            <td><strong>Parité Économique (Peg)</strong></td>
                             <td><code>1 ₳ = 1 XOF (FCFA)</code></td>
-                            <td>Peg bilatéral absolu. L'écosystème est une représentation numérique 1:1 de la valeur fiduciaire déposée en réserve (Proof of Reserve).</td>
+                            <td>Peg bilatéral absolu. L'écosystème entier agit comme une représentation numérique 1:1 de la valeur fiduciaire déposée en réserve (Proof of Reserve).</td>
                         </tr>
                         <tr>
                             <td><strong>Indivisibilité (Decimals)</strong></td>
                             <td><code>6 (Micro-₳)</code></td>
-                            <td>Toutes les opérations internes de la RAM et de la NVM s'effectuent en entier (BigInt). <code>1 ₳ = 1,000,000 microA</code> pour éviter les erreurs de virgule flottante (IEEE 754).</td>
+                            <td>Toutes les opérations internes de la RAM et de la NVM s'effectuent en entiers naturels (BigInt). Ex: <code>1 ₳ = 1,000,000 microA</code> pour éradiquer les erreurs d'arrondi à virgule flottante (Standard IEEE 754).</td>
                         </tr>
                         <tr>
                             <td><strong>Chain ID (Mainnet)</strong></td>
                             <td><code>9012 (0x2334)</code></td>
-                            <td>Protection contre les Replay Attacks (EIP-155). Une transaction signée pour le L1 Testnet (9013) sera rejetée par le Mainnet.</td>
+                            <td>Protection contre les Replay Attacks (selon EIP-155). Une transaction signée cryptographiquement pour le L1 Testnet (Chain ID 9013) sera automatiquement rejetée par le Mainnet.</td>
                         </tr>
                     </tbody>
                 </table>
 
                 <h3 id="closed-loop" class="scroll-mt-20">1.2 Trésorerie On-Chain & Preuve de Réserve (PoR)</h3>
-                <p>Le contrat de trésorerie primaire (Genesis Address: <code>ADC6MH4qsxED6cLtH3NLng5QL6Kvb9HRa8ui</code>) concentre l'intégralité du non-circulant. Le mécanisme de distribution obéit au modèle <em>Mint-and-Burn conditionnel</em>, redéfini ici comme un modèle <strong>Release-and-Lock</strong> :</p>
+                <p>Le contrat de trésorerie primaire (Genesis Address: <code>ADC6MH4qsxED6cLtH3NLng5QL6Kvb9HRa8ui</code>) concentre l'intégralité du volume non-circulant de ₳. Le mécanisme de distribution et de régulation de la masse monétaire obéit au modèle <em>Release-and-Lock</em> :</p>
                 
                 <ul>
-                    <li><strong>Cash-in (Dépôt) :</strong> Lorsqu'un utilisateur dépose des fonds fiduciaires via Mobile Money ou virement bancaire sur les agrégateurs partenaires, le système API propriétaire déclenche une transaction L1 déplaçant les ₳ correspondants du Vault vers l'adresse Base58 de l'utilisateur.</li>
-                    <li><strong>Cash-out (Retrait) :</strong> Lors d'une conversion fiat sortante, les AG-COIN ne sont pas détruits ("Burn"). Ils sont transférés en retour vers l'adresse du Vault, garantissant que <code>TotalSupply = CirculatingSupply + VaultBalance</code> soit toujours une constante absolue.</li>
-                    <li><strong>Velocity Limits :</strong> Pour des raisons de conformité AML/CFT, le backend RPC limite les transferts L1 non-institutionnels à un quantum maximum par bloc, évitant les drainages soudains de liquidité.</li>
+                    <li><strong>Cash-in (Dépôt) :</strong> Lorsqu'un utilisateur dépose des fonds fiduciaires via les agrégateurs de paiement partenaires (Mobile Money ou virement bancaire), notre système API propriétaire interagit avec l'oracle central. Il déclenche une transaction L1 déplaçant les ₳ correspondants du Vault vers l'adresse Base58 de l'utilisateur final.</li>
+                    <li><strong>Cash-out (Retrait) :</strong> Lors d'une conversion fiat sortante (ramping down), les ₳ ne sont pas détruits ("Burn") de l'historique du grand livre. Ils sont transférés en retour vers l'adresse du Vault central, garantissant que l'équation <code>TotalSupply = CirculatingSupply + VaultBalance</code> demeure une constante absolue à chaque nanoseconde.</li>
+                    <li><strong>Velocity Limits & AML :</strong> Afin de prévenir le blanchiment de capitaux, le backend RPC limite les transferts L1 non-institutionnels à un quantum maximum par bloc (velocity constraints). Tout mouvement dépassant ce seuil déclenche un gel temporaire pour audit de conformité manuel.</li>
                 </ul>
-
-                <div class="callout callout-info">
-                    <i class="fa-solid fa-circle-info mt-1"></i>
-                    <div>
-                        <strong>Surveillance en Temps Réel</strong><br>
-                        La solvabilité du système peut être auditée à la milliseconde près en exécutant la méthode JSON-RPC <code>nexus_getBalance</code> sur l'adresse publique du Vault, et en la comparant aux réserves fiduciaires certifiées publiées trimestriellement par Atlas & Duc Corp.
-                    </div>
-                </div>
             </section>
 
             <!-- ========================================== -->
@@ -229,43 +224,42 @@
             <!-- ========================================== -->
             <section id="architecture" class="scroll-mt-20">
                 <h2><i class="fa-solid fa-network-wired text-indSuccess"></i> 2. Architecture du Registre & Topologie nBFT</h2>
-                <p>Contrairement aux blockchains classiques stockant les données sur disque lent (LevelDB), Nexus Core maintient l'intégralité du <em>State Machine</em> (Moteur d'État) en <strong>RAM vive</strong> pour des temps de réponse sub-millisecondes, combiné à un système de persistance asynchrone (WAL - Write-Ahead Logging) via <code>ledger_mainnet.json</code>.</p>
+                <p>Contrairement aux blockchains de première génération (type Bitcoin) qui stockent itérativement les données sur des disques durs lents (via des moteurs comme LevelDB), Nexus Core maintient l'intégralité de son <em>State Machine</em> (Moteur d'État) en <strong>RAM vive (In-Memory)</strong>. Cela permet d'atteindre des temps de réponse sub-millisecondes, sécurisés par un système de persistance asynchrone ultra-rapide (WAL - Write-Ahead Logging) via des clichés sérialisés dans <code>ledger_mainnet.json</code>.</p>
 
                 <h3 id="block-structure" class="scroll-mt-20">2.1 Anatomie Stricte d'un Bloc (Block Time: 2000ms)</h3>
-                <p>La cadence est fixée à <strong>2000 millisecondes (2 secondes)</strong>. Si la Mempool (limitée par sécurité à <code>50,000</code> transactions) est vide, le validateur génère un bloc vide de battement de cœur (Heartbeat) pour prouver sa vivacité.</p>
+                <p>La cadence de production de la chaîne est fixée mathématiquement à <strong>2000 millisecondes (2 secondes)</strong> par itération (Epoch). Si la Mempool (limitée par mesure anti-DDoS à <code>50,000</code> transactions en attente) est vide, le validateur génère obligatoirement un bloc vide dit de "battement de cœur" (Heartbeat Block) pour prouver au reste du réseau sa vivacité et maintenir l'horloge cryptographique.</p>
                 
                 <div class="dev-code-block">
                     <div class="dev-code-header">
-                        <span class="text-[0.65rem] font-bold text-slate-400 uppercase tracking-widest">Interface Sérialisée (Format JSON Stocké)</span>
+                        <span class="text-[0.65rem] font-bold text-slate-400 uppercase tracking-widest">Interface Sérialisée (Format JSON du Bloc)</span>
                         <span class="text-[0.6rem] text-slate-500">TypeScript / JSON</span>
                     </div>
                     <div class="dev-code-body">
 <span class="syntax-keyword">interface</span> <span class="syntax-type">NexusBlock</span> {
-  <span class="syntax-keyword">index</span>: <span class="syntax-type">number</span>;          <span class="syntax-comment">// Hauteur exacte de la chaîne (ex: 15420)</span>
+  <span class="syntax-keyword">index</span>: <span class="syntax-type">number</span>;          <span class="syntax-comment">// Hauteur exacte de la chaîne (ex: 1250420)</span>
   <span class="syntax-keyword">hash</span>: <span class="syntax-type">string</span>;           <span class="syntax-comment">// Base58(SHA-256(index + prevHash + timestamp + merkleRoot + validator))</span>
-  <span class="syntax-keyword">previousHash</span>: <span class="syntax-type">string</span>;   <span class="syntax-comment">// Lien indéfectible au bloc n-1 (Base58)</span>
-  <span class="syntax-keyword">timestamp</span>: <span class="syntax-type">number</span>;      <span class="syntax-comment">// Horodatage UNIX epoch en secondes</span>
-  <span class="syntax-keyword">validator</span>: <span class="syntax-type">string</span>;      <span class="syntax-comment">// Adresse de l'Autorité (Atlas & Duc) ayant forgé</span>
-  <span class="syntax-keyword">merkleRoot</span>: <span class="syntax-type">string</span>;     <span class="syntax-comment">// Racine de l'arbre binaire des transactions</span>
-  <span class="syntax-keyword">transactions</span>: <span class="syntax-type">Tx</span>[];     <span class="syntax-comment">// Array d'objets Transaction formatés</span>
+  <span class="syntax-keyword">previousHash</span>: <span class="syntax-type">string</span>;   <span class="syntax-comment">// Lien cryptographique indéfectible au bloc n-1 (Format Base58)</span>
+  <span class="syntax-keyword">timestamp</span>: <span class="syntax-type">number</span>;      <span class="syntax-comment">// Horodatage UNIX epoch exprimé en millisecondes exactes</span>
+  <span class="syntax-keyword">validator</span>: <span class="syntax-type">string</span>;      <span class="syntax-comment">// Adresse Base58 de l'Autorité (Atlas & Duc) ayant forgé le bloc</span>
+  <span class="syntax-keyword">merkleRoot</span>: <span class="syntax-type">string</span>;     <span class="syntax-comment">// Racine de l'arbre binaire des transactions incluses</span>
+  <span class="syntax-keyword">transactions</span>: <span class="syntax-type">Tx</span>[];     <span class="syntax-comment">// Array d'objets Transaction validés (0 si Heartbeat)</span>
 }
                     </div>
                 </div>
 
-                <h3 id="merkle" class="scroll-mt-20">2.2 Arbre de Merkle & Hachage Cryptographique</h3>
-                <p>La propriété <code>merkleRoot</code> est vitale pour les clients légers (Portefeuilles Mobiles) afin de vérifier si une transaction est incluse dans un bloc sans télécharger les centaines de Gigaoctets de la blockchain. Le réseau Nexus utilise un <strong>Double SHA-256 récursif</strong> encodé en Base58 :</p>
+                <h3 id="merkle" class="scroll-mt-20">2.2 Arbre de Merkle & Validation des Clients Légers</h3>
+                <p>La propriété <code>merkleRoot</code> est d'une importance vitale pour l'écosystème. Elle permet aux clients légers (tels que l'application mobile Nexus Wallet Pro) de vérifier via une preuve d'inclusion (Merkle Proof) si une transaction spécifique est bien intégrée dans un bloc, et ce, sans avoir à télécharger les téraoctets de données du grand livre complet. Nexus Core utilise un hachage <strong>Double SHA-256 récursif</strong> encodé en Base58 :</p>
                 <ol class="list-decimal pl-5 mb-4 text-sm space-y-2">
-                    <li>Chaque objet de transaction est stringifié (<code>JSON.stringify</code>) puis haché une première fois.</li>
-                    <li>Les hashs sont appariés deux par deux. Si le nombre de feuilles est impair, le dernier hash est dupliqué contre lui-même (Ex: <code>Hash(C + C)</code>).</li>
-                    <li>Le processus est répété (hachage des concaténations) jusqu'à l'obtention d'un hash racine unique.</li>
+                    <li>Chaque objet de transaction de la pile est canoniquement stringifié (ordonnancement strict des clés JSON) puis haché une première fois.</li>
+                    <li>Les hashs générés sont appariés deux par deux. Si le nombre de feuilles (transactions) est impair, le dernier hash est dupliqué et haché avec lui-même pour fermer l'arbre (Ex: <code>Hash(Tx_n + Tx_n)</code>).</li>
+                    <li>Ce processus de hachage des concaténations est répété itérativement niveau par niveau, jusqu'à l'obtention d'un hash racine unique de 32 octets représentant l'état total des transactions du bloc.</li>
                 </ol>
 
-                <h3 id="nbft" class="scroll-mt-20">2.3 Algorithme de Consensus nBFT (Nexus Byzantine Fault Tolerance)</h3>
-                <p>Le réseau écarte le Proof-of-Work (lent et énergivore) et le Proof-of-Stake (oligarchique). Il utilise le <strong>Proof-of-Authority (PoA)</strong> avec l'algorithme interne <em>nBFT</em> :</p>
+                <h3 id="nbft" class="scroll-mt-20">2.3 Algorithme nBFT (Nexus Byzantine Fault Tolerance)</h3>
+                <p>Le réseau écarte délibérément le Proof-of-Work (jugé trop lent, probabiliste et écologiquement destructeur) et le Proof-of-Stake (tendant vers l'oligarchie ploutocratique). L'architecture repose sur le <strong>Proof-of-Authority (PoA)</strong> adossé à notre algorithme interne <em>nBFT</em> :</p>
                 <ul>
-                    <li><strong>Liste Blanche (Allowlist) :</strong> Seuls les nœuds dont les adresses figurent dans l'array <code>genesisConfig.validators</code> sont autorisés à signer des blocs.</li>
-                    <li><strong>Finalité Absolue :</strong> Dès qu'un bloc passe la fonction <code>isValidNewBlock()</code> et est inséré en mémoire locale, il est <strong>final</strong>. Il n'y a pas de réorganisation de chaîne (Re-orgs), garantissant aux exchanges une certitude instantanée des dépôts.</li>
-                    <li><strong>P2P Broadcasting :</strong> Les validateurs communiquent via un bus WebSocket dédié (Port TCP/6001). Les messages émis sont strictement typés : <code>NEW_BLOCK</code> et <code>NEW_TRANSACTION</code>.</li>
+                    <li><strong>Gouvernance par Liste Blanche (Allowlist) :</strong> Seuls les nœuds d'infrastructure dont les clés publiques figurent statiquement dans l'array <code>genesisConfig.validators</code> sont techniquement habilités à signer et proposer des blocs au réseau.</li>
+                    <li><strong>Finalité Déterministe Absolue :</strong> Dans le protocole nBFT, dès qu'un bloc proposé est approuvé par la majorité requise (généralement 2/3 des validateurs actifs + 1), il passe la fonction d'état <code>isValidNewBlock()</code> et est commité en mémoire. Il devient <strong>instantanément et irréversiblement final</strong>. Le concept de réorganisation de chaîne (Chain Re-orgs) n'existe pas sur Nexus Core, offrant aux B2B une certitude mathématique instantanée des paiements.</li>
                 </ul>
             </section>
 
@@ -274,19 +268,19 @@
             <!-- ========================================== -->
             <section id="crypto" class="scroll-mt-20">
                 <h2><i class="fa-solid fa-shield-halved text-indWarning"></i> 3. Standard Cryptographique & Résilience Vectorielle</h2>
-                <p>L'infrastructure cryptographique du portefeuille Nexus Core a été conçue en anticipant les évolutions du brute-forcing par ASIC et l'ingénierie sociale. L'encodage hexadécimal complexe est remplacé par une représentation <em>humainement lisible</em>.</p>
+                <p>La surface d'attaque des portefeuilles et de l'infrastructure RPC a été blindée en anticipant l'évolution de la puissance de calcul (fermes d'ASICs) et les failles de l'ingénierie sociale humaine. Les choix cryptographiques de Nexus diffèrent fondamentalement de l'écosystème EVM classique.</p>
 
-                <h3 id="base58" class="scroll-mt-20">3.1 Nomenclature Base58 (Sans Ambiguïté)</h3>
-                <p>Contrairement aux adresses Ethereum (<code>0x...</code>) qui utilisent de l'hexadécimal (incluant O/0 et I/l, sources majeures d'erreurs d'envoi), Nexus Core utilise l'alphabet Base58 exclusif, dépourvu des caractères prêtant à confusion.</p>
+                <h3 id="base58" class="scroll-mt-20">3.1 Nomenclature Base58 Structurée (Sans Ambiguïté)</h3>
+                <p>Contrairement aux adresses standards Ethereum (format <code>0x...</code>) qui exploitent un système hexadécimal incluant des caractères visuellement similaires (O majuscule et zéro 0, l minuscule et I majuscule), le réseau Nexus impose l'alphabet <strong>Base58</strong> exclusif.</p>
                 <div class="dev-code-block mb-3">
                     <div class="dev-code-body text-center text-indAccent font-black text-xs tracking-[0.2em] break-all">
                         123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz
                     </div>
                 </div>
-                <p>Chaque identifiant (Adresse de Wallet, Hash de Transaction, Contrat NCRC-20) passe par cet encodage. Les adresses de trésorerie commencent par un préfixe spécifique (ex: <code>ADC...</code> pour Atlas Duc Corporation), et les contrats sont préfixés par <code>ADCC...</code> lors de leur instanciation par la VM.</p>
+                <p>Chaque identifiant d'entité sur le réseau (Adresse de Wallet, Hash de Transaction, Contrat NCRC-20, ou Clé Publique) passe obligatoirement par ce codec. L'ingénierie va plus loin via un système de <strong>préfixes contextuels</strong> : les adresses de trésorerie institutionnelle débutent par <code>ADC...</code>, tandis que les instances de contrats intelligents générées par la NVM sont irrémédiablement préfixées par <code>ADCC...</code>, permettant une distinction visuelle et logicielle immédiate pour les wallets.</p>
                 
-                <h3 id="argon2id" class="scroll-mt-20">3.2 KDF (Key Derivation) : La forteresse Argon2id</h3>
-                <p>Pour la sécurisation des mots de passe clients (génération de la Master Key côté front-end ou wallet décentralisé), le protocole impose <strong>Argon2id</strong> (standard IETF RFC 9106), offrant une résistance hybride infranchissable contre les fermes GPU et les attaques par canaux auxiliaires (Side-channel attacks).</p>
+                <h3 id="argon2id" class="scroll-mt-20">3.2 KDF (Key Derivation Function) : La forteresse Argon2id</h3>
+                <p>Pour la sécurisation des coffres-forts locaux (génération de la Master Key à partir de mots de passe sur les interfaces front-end ou au sein de Nexus Wallet Pro), le protocole abandonne les anciens standards comme PBKDF2 au profit strict de <strong>Argon2id</strong> (standard recommandé IETF RFC 9106). Il offre une résistance hybride infranchissable contre le cassage par processeurs graphiques (GPU) et les attaques par canaux auxiliaires.</p>
                 <table>
                     <thead>
                         <tr>
@@ -299,23 +293,23 @@
                         <tr>
                             <td><strong>Memory Cost (m)</strong></td>
                             <td><code>65536</code> (64 MiB)</td>
-                            <td>Sature volontairement la mémoire cache L1/L2 des ASICs, rendant la parallélisation matérielle impossible ou hors de prix.</td>
+                            <td>Sature volontairement la mémoire cache ultra-rapide (L1/L2) des ASICs spécialisés, rendant la parallélisation matérielle du minage de mot de passe techniquement impossible ou financièrement dissuasive.</td>
                         </tr>
                         <tr>
                             <td><strong>Iterations (t)</strong></td>
                             <td><code>4</code> passes</td>
-                            <td>Multiplie le coût CPU de manière linéaire, configuré pour nécessiter ~500ms sur un smartphone moderne.</td>
+                            <td>Multiplie le coût de traitement CPU de manière linéaire. Paramétré pour nécessiter environ 500 à 800ms de calcul sur un smartphone ARM moderne, bloquant les attaques par dictionnaire.</td>
                         </tr>
                         <tr>
                             <td><strong>Parallelism (p)</strong></td>
                             <td><code>4</code> threads</td>
-                            <td>Force l'attaquant à bloquer 4 cœurs physiques/logiques par tentative de mot de passe.</td>
+                            <td>Force mathématiquement l'attaquant à immobiliser 4 cœurs physiques ou logiques complets pour chaque tentative unique de hachage.</td>
                         </tr>
                     </tbody>
                 </table>
 
-                <h3 id="ecdsa" class="scroll-mt-20">3.3 Signature secp256k1 & Vérification L1</h3>
-                <p>Avant d'intégrer la Mempool, le nœud RPC extrait la signature cryptographique du JSON soumis via <code>nexus_sendRawTransaction</code>. L'adresse publique (<code>tx.from</code>) est dérivée de la clé publique contenue dans la signature ECDSA (courbe <code>y² = x³ + 7</code>) et croisée avec le paramètre <code>tx.from</code> pour prévenir le spoofing.</p>
+                <h3 id="ecdsa" class="scroll-mt-20">3.3 Signature secp256k1 & Validation d'Intégrité</h3>
+                <p>Avant d'autoriser une transaction à pénétrer la Mempool, le pare-feu du nœud RPC intercepte le payload JSON. Il extrait la signature cryptographique soumise (générée hors-ligne par le client) et opère une vérification mathématique via la courbe elliptique <strong>secp256k1</strong> (courbe <code>y² = x³ + 7</code>). L'adresse publique de l'émetteur est dérivée cryptographiquement de la signature récupérée, puis comparée au champ <code>tx.from</code> déclaré. Toute divergence entraîne un rejet immédiat (Code d'erreur : <code>ERR_SPOOFED_TX</code>), bloquant toute tentative d'usurpation d'identité on-chain.</p>
             </section>
 
             <!-- ========================================== -->
@@ -323,58 +317,60 @@
             <!-- ========================================== -->
             <section id="nvm" class="scroll-mt-20">
                 <h2><i class="fa-solid fa-microchip text-purple-600"></i> 4. Nexus Virtual Machine (NVM) & NCRC-20</h2>
-                <p>Le Layer-1 n'est pas qu'un registre de paiement. Il intègre un moteur d'exécution de code Turing-complet, la <strong>NVM (Nexus Virtual Machine)</strong>. Basée sur l'engine V8 de Node.js via le module natif <code>vm</code>, la NVM permet d'exécuter des Smart Contracts écrits en JavaScript natif, réduisant radicalement la barrière à l'entrée par rapport à Solidity ou Rust.</p>
+                <p>Le Layer-1 Nexus transcende la notion de simple registre de paiement (comme l'est le réseau Bitcoin). Il intègre de manière native un moteur d'exécution de code Turing-complet, la <strong>NVM (Nexus Virtual Machine)</strong>. Fondée sur la robustesse industrielle du moteur V8 de Google (embarqué via l'API <code>vm</code> de Node.js), la NVM permet aux développeurs d'Atlas & Duc de déployer des Smart Contracts rédigés en <strong>JavaScript pur (ES6)</strong>. Ce choix architectural audacieux anéantit la barrière à l'entrée par rapport aux langages ésotériques tels que Solidity ou Rust.</p>
 
-                <h3 id="gas-model" class="scroll-mt-20">4.1 Le Modèle "Zero-Deviation Gas"</h3>
-                <p>L'imprévisibilité des frais (Gas Spikes) détruit l'utilisabilité B2B. Nexus Core introduit le <em>Zero-Deviation Gas</em> :</p>
+                <h3 id="gas-model" class="scroll-mt-20">4.1 Le Modèle "Zero-Deviation Gas" (Frais Constants)</h3>
+                <p>L'imprévisibilité et la volatilité des frais (Gas Spikes), inhérentes aux réseaux EVM, détruisent toute viabilité pour la comptabilité d'entreprise (B2B). Pour résoudre cela, Nexus Core a inventé le paradigme du <em>Zero-Deviation Gas</em> :</p>
                 <ul>
-                    <li><strong>Transfert Simple P2P :</strong> Coûte un forfait immuable défini par <code>tx.feeMicro</code> (généralement 1000 microA, soit 0.001 ₳).</li>
-                    <li><strong>Halt by Timeout :</strong> Au lieu d'un système complexe de compteurs de gas par OpCode, la NVM sandboxe le contrat avec un <code>timeout: 50</code> (50 millisecondes CPU max). Tout contrat impliquant une boucle infinie ou un calcul trop lourd est tué par le Thread V8. La transaction est marquée <code>failed</code>, mais les frais sont conservés par le réseau.</li>
-                    <li><strong>Isolation d'État (Deep Copy) :</strong> Le contrat ne peut pas modifier l'état global directement. L'objet <code>state</code> lui est passé en copie isolée. Si l'exécution réussit sans crasher, le moteur <code>NexusLedgerState</code> valide le nouvel état et écrase l'ancien dans la Map <code>ledger.contractsState</code>.</li>
+                    <li><strong>Transfert Simple de ₳ :</strong> Coûte un forfait immuable, gravé dans le marbre algorithmique, défini par la variable <code>tx.feeMicro</code> (actuellement fixé à 1000 microA, soit précisément 0.001 ₳ par mouvement, indépendamment de la charge réseau).</li>
+                    <li><strong>Halt by Timeout (Execution Sandboxing) :</strong> Au lieu d'implémenter un système complexe de compteurs de gaz opération par opération (OpCode metering), la NVM encapsule l'exécution de tout contrat dans une sandbox stricte avec un coupe-circuit temporel : <code>timeout: 50</code> (50 millisecondes CPU maximum). Tout contrat s'engageant dans une boucle infinie ou exigeant une puissance de calcul déraisonnable est impitoyablement tué par le Thread V8. La transaction est marquée on-chain comme <code>failed</code>, mais les frais de base sont conservés par le réseau pour prévenir le spam.</li>
+                    <li><strong>Isolation d'État Mutagène (Deep Copy) :</strong> Par mesure de sécurité critique, un contrat en cours d'exécution ne peut <em>jamais</em> muter l'état global du Ledger en direct. L'objet <code>state</code> global lui est injecté sous forme de copie de travail isolée (Deep Clone). Seulement si l'exécution se termine avec succès, le moteur de consensus <code>NexusLedgerState</code> valide les deltas et les fusionne (merge) dans la mémoire RAM principale (la Map <code>ledger.contractsState</code>).</li>
                 </ul>
 
-                <h3 id="smart-contracts" class="scroll-mt-20">4.2 Déploiement & Syntaxe d'un Contrat L1</h3>
-                <p>Un contrat est déployé en soumettant une transaction de type <code>deploy_contract</code> contenant le code source sous forme de chaîne de caractères dans le paramètre <code>code</code>. Voici la structure d'un contrat de base de données d'identité (KYC-Registry) :</p>
+                <h3 id="smart-contracts" class="scroll-mt-20">4.2 Architecture NCRC-20 & Contrat d'Identité L1</h3>
+                <p>Les actifs tokenisés ou les registres complexes (comme la gestion KYC) sont instanciés sur le réseau via le standard NCRC-20. Le déploiement s'effectue en broadcastant une transaction de type <code>deploy_contract</code> où le code source JS est sérialisé en string. Voici l'anatomie d'un registre de conformité KYC on-chain :</p>
 
                 <div class="dev-code-block">
                     <div class="dev-code-header">
-                        <span class="text-[0.65rem] font-bold text-slate-400 uppercase tracking-widest">Contrat L1 (JS NVM-Compatible)</span>
+                        <span class="text-[0.65rem] font-bold text-slate-400 uppercase tracking-widest">Interface Contrat L1 NVM (JavaScript Sandboxed)</span>
                     </div>
                     <div class="dev-code-body">
-<span class="syntax-comment">// Ce code est converti en String et envoyé dans tx.code</span>
+<span class="syntax-comment">// Logique métier encapsulée et transmise via tx.code</span>
 <span class="syntax-keyword">function</span> <span class="syntax-func">execute</span>(state, action, caller) {
-  <span class="syntax-comment">// 1. Initialisation de l'état si vide</span>
+  <span class="syntax-comment">// 1. Initialisation de l'état persistant si vierge (Bloc de Genèse du contrat)</span>
   <span class="syntax-keyword">if</span> (!state.registry) state.registry = {};
   <span class="syntax-keyword">if</span> (!state.owner) state.owner = caller;
 
-  <span class="syntax-comment">// 2. Routage de l'action</span>
+  <span class="syntax-comment">// 2. Routage d'action (Similaire au concept Redux)</span>
   <span class="syntax-keyword">if</span> (action.type === <span class="syntax-string">'init'</span>) {
     <span class="syntax-keyword">return</span> state;
   }
 
   <span class="syntax-keyword">if</span> (action.type === <span class="syntax-string">'register_identity'</span>) {
-    <span class="syntax-keyword">if</span> (caller !== state.owner) <span class="syntax-keyword">throw new</span> <span class="syntax-type">Error</span>(<span class="syntax-string">"Non autorisé (Admin only)"</span>);
+    <span class="syntax-comment">// Couche de sécurité : Seul l'entité déployante (ex: Admin Atlas & Duc) peut écrire</span>
+    <span class="syntax-keyword">if</span> (caller !== state.owner) <span class="syntax-keyword">throw new</span> <span class="syntax-type">Error</span>(<span class="syntax-string">"SECURITY_FAULT: Unauthorized Access"</span>);
+    
     <span class="syntax-keyword">const</span> userAddress = action.params.user;
     <span class="syntax-keyword">const</span> kycdHash = action.params.hash;
     
     state.registry[userAddress] = {
-      kycStatus: <span class="syntax-string">'verified'</span>,
-      documentHash: kycdHash,
-      timestamp: <span class="syntax-type">Date</span>.<span class="syntax-func">now</span>()
+      kycStatus: <span class="syntax-string">'VERIFIED_L1'</span>,
+      documentHash: kycdHash, <span class="syntax-comment">// Hachage du dossier d'identité (IPFS/Stockage froid)</span>
+      approvalTimestamp: <span class="syntax-type">Date</span>.<span class="syntax-func">now</span>()
     };
-    <span class="syntax-keyword">return</span> state;
+    <span class="syntax-keyword">return</span> state; <span class="syntax-comment">// Retourne le nouvel état muté à la NVM pour commit</span>
   }
 
-  <span class="syntax-keyword">throw new</span> <span class="syntax-type">Error</span>(<span class="syntax-string">"Action Inconnue"</span>);
+  <span class="syntax-keyword">throw new</span> <span class="syntax-type">Error</span>(<span class="syntax-string">"ACTION_NOT_FOUND: Unknown call type"</span>);
 }
                     </div>
                 </div>
 
-                <div class="callout callout-warning">
+                <div class="callout callout-danger mt-4">
                     <i class="fa-solid fa-triangle-exclamation mt-1"></i>
                     <div>
-                        <strong>Sécurité NVM</strong><br>
-                        Le contexte `vm.createContext()` de Node.js est purgé des modules systèmes (pas de `fs`, `http`, ou `require()`). Le code n'a accès qu'à l'objet `state`, `action`, `caller`, et aux fonctions mathématiques natives basiques.
+                        <strong>Restriction d'Environnement (V8 Sandboxing)</strong><br>
+                        Le contexte `vm.createContext()` fourni par le nœud est impitoyablement purgé de tous les modules systèmes et I/O natifs. Les commandes telles que `require()`, `fs.readFile`, `http.get`, ou l'accès à `process.env` sont détruites. Le contrat fonctionne dans le vide absolu, n'ayant pour seul pont avec le monde que les objets injectés `state`, `action`, et `caller`.
                     </div>
                 </div>
             </section>
@@ -383,52 +379,66 @@
             <!-- SECTION 5: OPÉRATIONS NŒUD & B2B           -->
             <!-- ========================================== -->
             <section id="integration" class="scroll-mt-20">
-                <h2><i class="fa-solid fa-server text-rose-600"></i> 5. Opérations B2B & Spécifications Matérielles</h2>
+                <h2><i class="fa-solid fa-server text-rose-600"></i> 5. Opérations B2B & Ingénierie Matérielle</h2>
+                <p>Le Layer-1 Nexus est un moteur logiciel hautement spécialisé. Pour maintenir la promesse d'un réseau In-Memory traitant des milliers de TPS sans latence (Zero-Lag), Atlas & Duc Corporation déploie une infrastructure bare-metal (serveurs physiques dédiés) obéissant à des critères de sélection militarisés.</p>
                 
                 <h3 id="hardware" class="scroll-mt-20">5.1 Cluster de Validation Atlas & Duc (Hardware Tier 1)</h3>
-                <p>Le réseau principal étant un Ledger "In-Memory" pur avec persistance synchrone haute fréquence, les spécifications des serveurs bare-metal hébergés par le consortium répondent à des normes industrielles draconiennes :</p>
+                <p>La topologie matérielle des nœuds validateurs maîtres (Master Nodes) sur lesquels repose le réseau principal est spécifiée comme suit :</p>
                 <table>
                     <thead>
                         <tr>
                             <th>Couche d'Ingénierie</th>
-                            <th>Configuration Strict Requise</th>
-                            <th>Raison Opérationnelle</th>
+                            <th>Spécification Technique Exigée</th>
+                            <th>Raison Opérationnelle Stratégique</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td><strong>Compute (CPU)</strong></td>
-                            <td>Dual AMD EPYC (64 Cores / 128 Threads)</td>
-                            <td>Validation multi-threadée de l'intégrité de la Mempool (ECDSA + Double Merkle) à grande échelle.</td>
+                            <td>Dual AMD EPYC (Architecture Zen 4) - 64 Cœurs / 128 Threads</td>
+                            <td>La validation des signatures cryptographiques (ECDSA) de la Mempool et le calcul récursif de l'arbre de Merkle exigent un multithreading massif pour éviter la congestion.</td>
                         </tr>
                         <tr>
-                            <td><strong>State RAM</strong></td>
-                            <td>256 GB RAM DDR5 ECC</td>
-                            <td>L'objet `this.balances` (des dizaines de millions de comptes projetés) est maintenu en permanence dans la V8 Heap Memory.</td>
+                            <td><strong>State RAM (Mémoire)</strong></td>
+                            <td>256 GB RAM DDR5 ECC (Error-Correcting Code)</td>
+                            <td>Le registre entier, incluant l'objet critique `this.balances` (projeté pour soutenir des dizaines de millions de portefeuilles ₳) et le `contractsState`, est hébergé en permanence dans la V8 Heap Memory. La mémoire ECC prévient la corruption d'état due aux rayonnements cosmiques (Bit flips).</td>
                         </tr>
                         <tr>
-                            <td><strong>I/O (Stockage)</strong></td>
-                            <td>Grappe NVMe PCIe 5.0 (RAID 10)</td>
-                            <td>Le dump de l'état via `fs.writeFileSync(TEMP_DB_FILE)` toutes les 2 secondes nécessite des débits I/O de classe datacenter (> 10 GB/s).</td>
+                            <td><strong>I/O (Stockage WAL)</strong></td>
+                            <td>Grappe NVMe PCIe 5.0 (Configuration RAID 10)</td>
+                            <td>La fonction de persistance (`fs.writeFileSync`) dumpe la RAM sur le disque toutes les 2 secondes. Cela génère une usure extrême (TBW) et nécessite des débits d'écriture séquentielle > 12 Go/s.</td>
                         </tr>
                         <tr>
-                            <td><strong>Réseau (Bande Passante)</strong></td>
-                            <td>Lien dédié 10 Gbps symétrique</td>
-                            <td>Diffusion instantanée du P2P WebSocket (`port: 6001`) pour garantir le consensus en &lt; 50ms sur le territoire.</td>
+                            <td><strong>Networking</strong></td>
+                            <td>Liaison Fibre Dédiée 10 Gbps (Symétrique) via Tunnels Cloudflare Argo</td>
+                            <td>La diffusion instantanée des paquets P2P WebSocket (`port: 6001`) entre les nœuds doit garantir un accord de consensus (Reachability) en moins de 50 millisecondes à travers la sous-région ouest-africaine.</td>
                         </tr>
                     </tbody>
                 </table>
 
-                <h3 id="compliance" class="scroll-mt-20">5.2 Continuité d'Activité & Plan de Reprise (PRA/PCA)</h3>
-                <p>Le moteur logiciel L1 est conçu pour résister aux pannes électriques abruptes (courantes dans certains datacenters). La fonction <code>saveState()</code> utilise un patron d'écriture atomique : l'état est d'abord sérialisé dans un fichier temporaire <code>ledger_mainnet.tmp.json</code>. Uniquement si l'écriture est terminée sans erreur, une instruction système <code>fs.renameSync()</code> (qui est atomique au niveau de l'OS) remplace le fichier de base de données principal. En cas de coupure (SIGINT/SIGTERM/Crash), la corruption de données est mathématiquement impossible.</p>
+                <h3 id="compliance" class="scroll-mt-20">5.2 Reprise d'Activité & Sécurité d'Écriture Atomique</h3>
+                <p>Dans l'écosystème technologique sous-régional, l'infrastructure logicielle doit être blindée contre les pannes d'alimentation abruptes (Blackouts). Le moteur Nexus Core implémente un patron d'écriture rigoureusement <strong>Atomique</strong>. Lors du commit de l'état en mémoire vers le disque persistant, la méthode de sauvegarde sérialise d'abord les données dans un fichier temporaire isolé (<code>ledger_mainnet.tmp.json</code>). Ce n'est qu'après l'achèvement complet et sans erreur de cette écriture que le système d'exploitation est instruit d'exécuter un <code>fs.renameSync()</code>. Cette instruction OS étant fondamentalement atomique, elle écrase instantanément l'ancienne base de données. Ainsi, même en cas de coupure de courant (SIGKILL, Kernel Panic) survenant au milieu du processus d'écriture, la corruption partielle du fichier de base de données est rendue mathématiquement et physiquement impossible.</p>
 
-                <h3 id="aml" class="scroll-mt-20">5.3 Intégration Institutionnelle & Cadre Légal UEMOA</h3>
-                <p>En tant qu'infrastructure "Compliance-by-Design", Nexus Core fournit aux institutions (Banques, SFD, Opérateurs Telco) une suite d'APIs permettant :</p>
+                <h3 id="aml" class="scroll-mt-20">5.3 Conformité UEMOA (AML/CFT) & Services Institutionnels</h3>
+                <p>Conçu sous le paradigme du "Compliance-by-Design", Nexus Core n'est pas une zone de non-droit cryptographique. L'architecture fournit un cadre d'intégration direct (via API RPC) pour les banques, les Systèmes Financiers Décentralisés (SFD) et les opérateurs Telco de l'espace UEMOA :</p>
                 <ul class="mb-0">
-                    <li>La <strong>génération de portefeuilles sous séquestre</strong> (Multisig ou contrôlés par Smart Contract).</li>
-                    <li>L'inscription irréfutable des empreintes d'audit (Audit Trails) de conformité AML/CFT directement dans la blockchain.</li>
-                    <li>La supervision en temps réel des flux de trésorerie via les endpoints d'exploration on-chain.</li>
+                    <li><strong>Portefeuilles Institutionnels Sous Séquestre :</strong> Déploiement de wallets Multisig (N-of-M) exigeant la validation croisée des directeurs financiers avant le déblocage de fonds L1 importants.</li>
+                    <li><strong>Audit Trails Immuables :</strong> L'inscription cryptographique des empreintes d'audit de conformité (hash des vérifications d'identité ou rapports de transactions suspectes) directement dans la racine de la blockchain, offrant une preuve irréfutable aux régulateurs bancaires.</li>
                 </ul>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- SECTION 6: INTEROPÉRABILITÉ                -->
+            <!-- ========================================== -->
+            <section id="interop" class="scroll-mt-20">
+                <h2><i class="fa-solid fa-satellite-dish text-sky-500"></i> 6. Protocoles d'Interopérabilité (Oracles & Bridges)</h2>
+                <p>Bien que le réseau Nexus Core L1 agisse comme un registre fermé et ultra-sécurisé garantissant l'intégrité de la monnaie ₳, il est conçu pour dialoguer avec des systèmes externes par l'entremise de composants architecturaux hautement contrôlés : les Oracles et les ponts de liquidité (Bridges).</p>
+
+                <h3 id="oracles" class="scroll-mt-20">6.1 Flux de Données Oracles (Inbound)</h3>
+                <p>La Nexus Virtual Machine (NVM), en raison de son isolement déterministe radical, est par définition "aveugle" au monde extérieur. Elle ne peut pas exécuter une requête HTTP pour connaître le cours du XOF ou de l'or. L'injection de données externes s'effectue via des <strong>Oracles de Confiance</strong> opérés par Atlas & Duc Corporation. Ces oracles sont des serveurs Node.js externes surveillant des API mondiales. À intervalles réguliers, ils formulent une transaction spéciale L1 signée avec leur clé privée d'autorité, qui invoque une fonction <code>update_price_feed</code> sur un contrat intelligent dédié. Le contrat, vérifiant que l'émetteur de la transaction est bien l'Oracle officiel, inscrit la nouvelle donnée dans son état. Dès le bloc suivant, tous les autres contrats (systèmes de crédit, assurances) peuvent consommer cette donnée fiable pour leurs calculs internes.</p>
+
+                <h3 id="bridges" class="scroll-mt-20">6.2 Mécanique de Bridge Cross-Chain (Burn/Lock & Mint)</h3>
+                <p>Pour préparer l'intégration future du ₳ avec d'autres blockchains publiques (ex: Binance Smart Chain pour l'export de liquidité synthétique), Nexus Core implémente un protocole de pontage asymétrique. Les actifs sortants sont verrouillés (Locked) dans un contrat <code>Nexus_Bridge_Treasury</code> sur le L1. Une fois la finalité du bloc de verrouillage atteinte, le relais du pont (Relayer) écoute l'événement via WebSocket RPC et autorise l'émission (Minting) d'un jeton enveloppé équivalent (Wrapped ₳) sur le réseau de destination. Ce mécanisme garantit, de la même manière que le dépôt fiduciaire initial, que l'offre en circulation globale n'est jamais gonflée artificiellement.</p>
             </section>
 
         </main>
@@ -464,7 +474,7 @@
                         <ul class="space-y-1 border-l-2 border-slate-200 ml-2 pl-3 text-slate-600">
                             <li><a href="#architecture" class="nav-link block py-1 hover:text-indAccent transition-colors">Architecture In-Memory</a></li>
                             <li><a href="#block-structure" class="nav-link block py-1 hover:text-indAccent transition-colors">Anatomie d'un Bloc (JSON)</a></li>
-                            <li><a href="#merkle" class="nav-link block py-1 hover:text-indAccent transition-colors">Double SHA-256 Merkle Root</a></li>
+                            <li><a href="#merkle" class="nav-link block py-1 hover:text-indAccent transition-colors">Arbre de Merkle & Validation</a></li>
                             <li><a href="#nbft" class="nav-link block py-1 hover:text-indAccent transition-colors">Consensus nBFT (PoA)</a></li>
                         </ul>
                     </div>
@@ -482,21 +492,30 @@
 
                     <!-- Section 4 -->
                     <div>
-                        <h4 class="font-black text-slate-500 uppercase tracking-widest text-[0.65rem] mb-2 mt-4 flex items-center gap-2"><i class="fa-solid fa-microchip text-purple-600"></i> 4. Nexus VM</h4>
+                        <h4 class="font-black text-slate-500 uppercase tracking-widest text-[0.65rem] mb-2 mt-4 flex items-center gap-2"><i class="fa-solid fa-microchip text-indPurple"></i> 4. Nexus VM</h4>
                         <ul class="space-y-1 border-l-2 border-slate-200 ml-2 pl-3 text-slate-600">
                             <li><a href="#nvm" class="nav-link block py-1 hover:text-indAccent transition-colors">Le Moteur V8 Sandboxed</a></li>
                             <li><a href="#gas-model" class="nav-link block py-1 hover:text-indAccent transition-colors">Modèle Zero-Deviation Gas</a></li>
-                            <li><a href="#smart-contracts" class="nav-link block py-1 hover:text-indAccent transition-colors">Standard NCRC-20 (Code Ex.)</a></li>
+                            <li><a href="#smart-contracts" class="nav-link block py-1 hover:text-indAccent transition-colors">Standard NCRC-20 (Contrats)</a></li>
                         </ul>
                     </div>
 
                     <!-- Section 5 -->
                     <div>
-                        <h4 class="font-black text-slate-500 uppercase tracking-widest text-[0.65rem] mb-2 mt-4 flex items-center gap-2"><i class="fa-solid fa-server text-rose-600"></i> 5. Opérations & B2B</h4>
+                        <h4 class="font-black text-slate-500 uppercase tracking-widest text-[0.65rem] mb-2 mt-4 flex items-center gap-2"><i class="fa-solid fa-server text-rose-600"></i> 5. Opérations B2B</h4>
                         <ul class="space-y-1 border-l-2 border-slate-200 ml-2 pl-3 text-slate-600">
                             <li><a href="#hardware" class="nav-link block py-1 hover:text-indAccent transition-colors">Spécifications Matérielles Tier 1</a></li>
-                            <li><a href="#compliance" class="nav-link block py-1 hover:text-indAccent transition-colors">Continuité d'Activité (Atomic Writes)</a></li>
+                            <li><a href="#compliance" class="nav-link block py-1 hover:text-indAccent transition-colors">Sécurité d'Écriture Atomique</a></li>
                             <li><a href="#aml" class="nav-link block py-1 hover:text-indAccent transition-colors">Conformité UEMOA (AML/CFT)</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Section 6 -->
+                    <div>
+                        <h4 class="font-black text-slate-500 uppercase tracking-widest text-[0.65rem] mb-2 mt-4 flex items-center gap-2"><i class="fa-solid fa-satellite-dish text-sky-500"></i> 6. Interopérabilité</h4>
+                        <ul class="space-y-1 border-l-2 border-slate-200 ml-2 pl-3 text-slate-600">
+                            <li><a href="#oracles" class="nav-link block py-1 hover:text-indAccent transition-colors">Oracles & Données Externes</a></li>
+                            <li><a href="#bridges" class="nav-link block py-1 hover:text-indAccent transition-colors">Bridges Cross-Chain</a></li>
                         </ul>
                     </div>
                 </nav>
@@ -515,7 +534,6 @@
     <!-- 6. FOOTER INDUSTRIEL COMPACT               -->
     <!-- ========================================== -->
     <footer class="bg-premiumDark border-t border-slate-800 py-8 mt-auto z-10 w-full flex flex-col items-center justify-center relative overflow-hidden">
-        <!-- Subtile texture de fond -->
         <div class="absolute inset-0 opacity-[0.02]" style="background-image: linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg, #ffffff 1px, transparent 1px); background-size: 20px 20px;"></div>
         
         <div class="w-full max-w-[100rem] mx-auto px-4 flex flex-col md:flex-row items-center justify-between text-center md:text-left gap-6 relative z-10">
@@ -528,11 +546,13 @@
                 </div>
             </div>
             
-            <div class="flex flex-wrap items-center justify-center gap-6 text-[0.75rem] font-bold text-slate-400">
+            <div class="flex flex-wrap items-center justify-center gap-5 md:gap-6 text-[0.75rem] font-bold text-slate-400">
                 <a href="NexusScan.html" class="hover:text-indAccent transition-colors flex items-center gap-1.5"><i class="fa-solid fa-house"></i> Explorateur</a>
                 <a href="documentation.html" class="text-indAccent transition-colors flex items-center gap-1.5"><i class="fa-solid fa-book-journal-whills"></i> Yellow Paper</a>
                 <a href="api.html" class="hover:text-indAccent transition-colors flex items-center gap-1.5"><i class="fa-solid fa-server"></i> API RPC</a>
-                <a href="support.html" class="hover:text-indAccent transition-colors flex items-center gap-1.5"><i class="fa-solid fa-headset"></i> Support Institutionnel</a>
+                <a href="support.html" class="hover:text-indAccent transition-colors flex items-center gap-1.5"><i class="fa-solid fa-headset"></i> Support B2B</a>
+                <a href="privacy.html" class="hover:text-indAccent transition-colors flex items-center gap-1.5"><i class="fa-solid fa-shield-halved"></i> Confidentialité</a>
+                <a href="wallet_cgu.html" class="hover:text-indAccent transition-colors flex items-center gap-1.5"><i class="fa-solid fa-gavel"></i> Wallet CGU</a>
             </div>
             
             <div class="text-right text-[0.65rem] text-slate-500 font-medium leading-relaxed">
@@ -564,7 +584,6 @@
 
         // --- GESTION DU SCROLL ACTIF (SCROLLSPY SIDEBAR) ---
         document.addEventListener("DOMContentLoaded", function() {
-            // Sélectionne tous les ancrages (h3 et section avec un id)
             const headings = document.querySelectorAll("h3[id], section[id]");
             const navLinks = document.querySelectorAll(".nav-link");
 
@@ -573,7 +592,6 @@
                 
                 headings.forEach(heading => {
                     const headingTop = heading.offsetTop;
-                    // Décalage pour activer le menu avant d'atteindre exactement le titre
                     if (pageYOffset >= (headingTop - 150)) {
                         current = heading.getAttribute("id");
                     }
@@ -581,20 +599,17 @@
 
                 navLinks.forEach(link => {
                     link.classList.remove("active");
-                    const href = link.getAttribute("href").substring(1); // Enlever le '#'
+                    const href = link.getAttribute("href").substring(1); 
                     
-                    // On check si le lien correspond à la cible actuelle
                     if (href === current && current !== "") {
                         link.classList.add("active");
                         
-                        // Défilement automatique de la sidebar pour garder l'élément visible
                         const sidebar = document.querySelector('aside');
                         const activeItem = document.querySelector('.nav-link.active');
                         if(sidebar && activeItem) {
                             const sidebarRect = sidebar.getBoundingClientRect();
                             const activeRect = activeItem.getBoundingClientRect();
                             
-                            // Si l'élément actif sort de la zone visible en bas ou en haut
                             if(activeRect.bottom > sidebarRect.bottom || activeRect.top < sidebarRect.top) {
                                 activeItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
                             }

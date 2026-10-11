@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +8,7 @@
     <!-- Polices Industrielles -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -24,6 +24,7 @@
                         indAccent: '#0EA5E9',
                         indSuccess: '#10B981',
                         indWarning: '#F59E0B',
+                        indDanger: '#EF4444',
                         indBg: '#F8FAFC',
                         indCard: '#FFFFFF',
                         indBorder: '#E2E8F0',
@@ -45,9 +46,14 @@
         @keyframes pulseGreen { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); } 70% { box-shadow: 0 0 0 4px rgba(16, 185, 129, 0); } 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+        ::-webkit-scrollbar-thumb { background: #94A3B8; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748B; }
         html { scroll-behavior: smooth; }
+
+        /* Typographie dense pour la documentation */
+        .doc-text { font-size: 0.85rem; line-height: 1.8; color: #334155; text-align: justify; margin-bottom: 1.5rem; font-weight: 500; }
+        .doc-title { font-size: 1.75rem; font-weight: 900; color: #0B1120; margin-bottom: 1rem; border-bottom: 2px solid #E2E8F0; padding-bottom: 0.5rem; letter-spacing: -0.02em; }
+        .doc-subtitle { font-size: 1.1rem; font-weight: 800; color: #0EA5E9; margin-top: 2rem; margin-bottom: 1rem; }
 
         /* Syntax Highlighting Base (Thème VS Code Dark) */
         .dev-code-block { background-color: #1e1e1e; border: 1px solid #2d2d2d; border-radius: 8px; overflow: hidden; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); margin-bottom: 2rem; }
@@ -67,27 +73,28 @@
         .syntax-var { color: #4fc1ff; }
 
         /* Badges Méthodes */
-        .badge-post { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
-        .badge-get { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
-        .badge-ws { background: #f3e8ff; color: #7e22ce; border: 1px solid #e9d5ff; }
+        .badge-post { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; font-weight: 900; }
+        .badge-get { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; font-weight: 900; }
+        .badge-ws { background: #f3e8ff; color: #7e22ce; border: 1px solid #e9d5ff; font-weight: 900; }
 
         /* Glossary Tooltips */
-        .glossary-term { border-bottom: 1px dashed #0EA5E9; cursor: help; color: #0EA5E9; font-weight: 500; position: relative; }
+        .glossary-term { border-bottom: 1px dashed #0EA5E9; cursor: help; color: #0EA5E9; font-weight: 700; position: relative; }
         .glossary-term:hover::after {
             content: attr(data-tooltip); position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
-            background: #0B1120; color: #fff; padding: 6px 10px; border-radius: 4px; font-size: 11px;
-            white-space: normal; width: 200px; z-index: 50; text-align: center; margin-bottom: 5px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            background: #0B1120; color: #fff; padding: 8px 12px; border-radius: 6px; font-size: 11px; font-weight: 500;
+            white-space: normal; width: 220px; z-index: 50; text-align: center; margin-bottom: 5px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
     </style>
 </head>
 <body class="bg-indBg text-premiumDark font-sans antialiased flex flex-col min-h-screen">
 
     <!-- ========================================== -->
-    <!-- 1. NAVIGATION BAR                          -->
+    <!-- 1. NAVIGATION BAR COMPLÈTE                 -->
     <!-- ========================================== -->
     <header class="bg-indCard/95 backdrop-blur-md border-b border-indBorder sticky top-0 z-50 shadow-sm">
         <div class="max-w-[95rem] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
+                
                 <!-- Logo & Brand -->
                 <a href="NexusScan.html" class="flex items-center gap-3 cursor-pointer group">
                     <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo" class="h-9 w-9 rounded border border-indBorder object-cover shadow-sm group-hover:border-indAccent transition-colors">
@@ -98,9 +105,13 @@
                 </a>
 
                 <!-- Desktop Navigation -->
-                <nav class="hidden md:flex space-x-8 items-center h-full">
-                    <a href="NexusScan.html" class="text-indTextMuted hover:text-premiumDark font-semibold text-sm transition-colors flex items-center h-full"><i class="fa-solid fa-house mr-2"></i> Explorateur</a>
-                    <a href="api.html" class="text-indAccent font-bold text-sm border-b-2 border-indAccent flex items-center h-full"><i class="fa-solid fa-server mr-2"></i> API RPC & Docs</a>
+                <nav class="hidden md:flex space-x-6 items-center h-full">
+                    <a href="NexusScan.html" class="text-indTextMuted hover:text-premiumDark font-semibold text-[13px] transition-colors flex items-center h-full"><i class="fa-solid fa-house mr-1.5"></i> Explorateur</a>
+                    <a href="documentation.html" class="text-indTextMuted hover:text-premiumDark font-semibold text-[13px] transition-colors flex items-center h-full"><i class="fa-solid fa-book-journal-whills mr-1.5"></i> Yellow Paper</a>
+                    <a href="api.html" class="text-indAccent font-bold text-[13px] border-b-2 border-indAccent flex items-center h-full"><i class="fa-solid fa-server mr-1.5"></i> API RPC</a>
+                    <a href="support.html" class="text-indTextMuted hover:text-premiumDark font-semibold text-[13px] transition-colors flex items-center h-full"><i class="fa-solid fa-headset mr-1.5"></i> Support B2B</a>
+                    <a href="privacy.html" class="text-indTextMuted hover:text-premiumDark font-semibold text-[13px] transition-colors flex items-center h-full"><i class="fa-solid fa-shield-halved mr-1.5"></i> Confidentialité</a>
+                    <a href="wallet_cgu.html" class="text-indTextMuted hover:text-premiumDark font-semibold text-[13px] transition-colors flex items-center h-full"><i class="fa-solid fa-gavel mr-1.5"></i> Wallet CGU</a>
                 </nav>
 
                 <!-- Network Status -->
@@ -109,7 +120,6 @@
                         <div class="w-2 h-2 rounded-full bg-indSuccess live-pulse"></div>
                         <span class="text-[10px] font-bold tracking-widest uppercase">Nexus Mainnet</span>
                     </div>
-                    <!-- Mobile Menu Button -->
                     <button id="mobileMenuBtn" class="md:hidden text-premiumDark hover:text-indAccent focus:outline-none text-2xl">
                         <i class="fa-solid fa-bars"></i>
                     </button>
@@ -119,13 +129,17 @@
 
         <!-- Mobile Menu -->
         <div id="mobileMenu" class="hidden md:hidden bg-indCard border-b border-indBorder shadow-lg absolute w-full z-50">
-            <a href="NexusScan.html" class="block py-4 px-6 text-indTextMuted font-semibold border-b border-indBorder"><i class="fa-solid fa-house w-6"></i> Explorateur</a>
-            <a href="api.html" class="block py-4 px-6 text-indAccent font-bold bg-sky-50 border-l-4 border-indAccent"><i class="fa-solid fa-server w-6"></i> API RPC & Docs</a>
+            <a href="NexusScan.html" class="block py-3 px-6 text-[13px] text-indTextMuted font-semibold border-b border-indBorder"><i class="fa-solid fa-house w-6 text-center"></i> Explorateur</a>
+            <a href="documentation.html" class="block py-3 px-6 text-[13px] text-indTextMuted font-semibold border-b border-indBorder"><i class="fa-solid fa-book-journal-whills w-6 text-center"></i> Yellow Paper</a>
+            <a href="api.html" class="block py-3 px-6 text-[13px] text-indAccent font-bold bg-sky-50 border-l-4 border-indAccent border-b border-indBorder"><i class="fa-solid fa-server w-6 text-center"></i> API RPC</a>
+            <a href="support.html" class="block py-3 px-6 text-[13px] text-indTextMuted font-semibold border-b border-indBorder"><i class="fa-solid fa-headset w-6 text-center"></i> Support B2B</a>
+            <a href="privacy.html" class="block py-3 px-6 text-[13px] text-indTextMuted font-semibold border-b border-indBorder"><i class="fa-solid fa-shield-halved w-6 text-center"></i> Confidentialité</a>
+            <a href="wallet_cgu.html" class="block py-3 px-6 text-[13px] text-indTextMuted font-semibold"><i class="fa-solid fa-gavel w-6 text-center"></i> Wallet CGU</a>
         </div>
     </header>
 
     <!-- ========================================== -->
-    <!-- 2. HERO SECTION API (B2B & Pédagogie)      -->
+    <!-- 2. HERO SECTION API                        -->
     <!-- ========================================== -->
     <section class="bg-premiumDark text-white pt-16 pb-20 px-4 relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#020617] z-0"></div>
@@ -138,8 +152,8 @@
             <h1 class="text-4xl md:text-5xl lg:text-6xl font-black mb-6 tracking-tight leading-tight">
                 Connectivité <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-indAccent">Nexus Core</span> L1
             </h1>
-            <p class="text-slate-300 text-base md:text-lg max-w-3xl mx-auto font-medium leading-relaxed mb-8">
-                Que vous soyez un développeur curieux créant sa première dApp, ou une institution financière connectant un DEX, cette encyclopédie interactive vous guide pas à pas dans l'intégration du réseau souverain opéré par Atlas & Duc Corporation.
+            <p class="text-slate-300 text-sm md:text-base max-w-3xl mx-auto font-medium leading-relaxed mb-8">
+                L'infrastructure JSON-RPC et REST de Nexus Core offre une latence sub-milliseconde pour l'interrogation du grand livre In-Memory. Conçue pour les institutions financières, les agrégateurs Web3 et les dApps, cette encyclopédie détaille les protocoles d'accès au réseau souverain d'Atlas & Duc Corporation.
             </p>
             
             <div class="flex flex-wrap justify-center gap-4">
@@ -150,58 +164,55 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- 3. MAIN LAYOUT (Documentation)             -->
+    <!-- 3. MAIN LAYOUT (Documentation Dense)       -->
     <!-- ========================================== -->
     <main class="max-w-[95rem] mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow w-full flex flex-col lg:flex-row gap-10 relative">
         
         <!-- SIDEBAR (Navigation Latérale - Sticky) -->
         <aside class="w-full lg:w-72 shrink-0 hidden md:block">
-            <div class="sticky top-24 bg-white rounded-xl border border-slate-200 p-6 shadow-sm max-h-[85vh] overflow-y-auto">
+            <div class="sticky top-24 bg-white rounded-xl border border-slate-200 p-6 shadow-sm max-h-[85vh] overflow-y-auto custom-scrollbar">
                 <h3 class="font-black text-premiumDark uppercase tracking-widest text-xs mb-6 border-b border-slate-100 pb-3 flex items-center gap-2"><i class="fa-solid fa-book-open text-indAccent"></i> Sommaire Encyclopédique</h3>
                 
                 <div class="space-y-6">
                     <div>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Pour les Débutants</p>
-                        <ul class="space-y-2 text-sm font-medium text-slate-600">
-                            <li><a href="#quickstart" class="hover:text-indAccent transition-colors block">Qu'est-ce qu'une API RPC ?</a></li>
-                            <li><a href="#architecture" class="hover:text-indAccent transition-colors block">Architecture & AG-COIN (₳)</a></li>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Fondamentaux</p>
+                        <ul class="space-y-2 text-[13px] font-bold text-slate-600 border-l-2 border-slate-100 ml-1 pl-3">
+                            <li><a href="#quickstart" class="hover:text-indAccent transition-colors block py-1">Architecture & RPC</a></li>
+                            <li><a href="#endpoints" class="hover:text-indAccent transition-colors block py-1">Endpoints Mainnet/Testnet</a></li>
+                            <li><a href="#websockets" class="hover:text-indAccent transition-colors block py-1">WebSockets & Événements P2P</a></li>
                         </ul>
                     </div>
 
                     <div>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Réseau & Endpoints</p>
-                        <ul class="space-y-2 text-sm font-medium text-slate-600 border-l-2 border-slate-100 ml-1 pl-3">
-                            <li><a href="#endpoints" class="hover:text-indAccent transition-colors block">Mainnet & Testnet</a></li>
-                            <li><a href="#websockets" class="hover:text-indAccent transition-colors block">WebSockets P2P</a></li>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">API REST (Publique)</p>
+                        <ul class="space-y-2 text-[12px] font-bold font-mono text-slate-600 border-l-2 border-slate-100 ml-1 pl-3">
+                            <li><a href="#rest-ticker" class="hover:text-indAccent transition-colors block py-1 truncate">/api/exchange/ticker</a></li>
+                            <li><a href="#rest-price" class="hover:text-indAccent transition-colors block py-1 truncate">/api/price</a></li>
+                            <li><a href="#rest-holders" class="hover:text-indAccent transition-colors block py-1 truncate">/api/holders</a></li>
                         </ul>
                     </div>
 
                     <div>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">API REST (Exchanges)</p>
-                        <ul class="space-y-2 text-sm font-medium text-slate-600 border-l-2 border-slate-100 ml-1 pl-3">
-                            <li><a href="#rest-ticker" class="hover:text-indAccent transition-colors block truncate">/api/exchange/ticker</a></li>
-                            <li><a href="#rest-supply" class="hover:text-indAccent transition-colors block truncate">/api/total-supply</a></li>
-                            <li><a href="#rest-price" class="hover:text-indAccent transition-colors block truncate">/api/price</a></li>
-                            <li><a href="#rest-holders" class="hover:text-indAccent transition-colors block truncate">/api/holders</a></li>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Méthodes JSON-RPC (Lecture)</p>
+                        <ul class="space-y-2 text-[12px] font-bold font-mono text-slate-600 border-l-2 border-slate-100 ml-1 pl-3">
+                            <li><a href="#nexus-blocknumber" class="hover:text-indAccent transition-colors block py-1 truncate">nexus_blockNumber</a></li>
+                            <li><a href="#nexus-getbalance" class="hover:text-indAccent transition-colors block py-1 truncate">nexus_getBalance</a></li>
+                            <li><a href="#nexus-gettxcount" class="hover:text-indAccent transition-colors block py-1 truncate">nexus_getTransactionCount</a></li>
+                            <li><a href="#nexus-getblock" class="hover:text-indAccent transition-colors block py-1 truncate">nexus_getBlockByNumber</a></li>
                         </ul>
                     </div>
 
                     <div>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Méthodes JSON-RPC Core</p>
-                        <ul class="space-y-2 text-sm font-medium text-slate-600 border-l-2 border-slate-100 ml-1 pl-3">
-                            <li><a href="#nexus-chainid" class="hover:text-indAccent transition-colors block truncate">nexus_chainId</a></li>
-                            <li><a href="#nexus-blocknumber" class="hover:text-indAccent transition-colors block truncate">nexus_blockNumber</a></li>
-                            <li><a href="#nexus-getbalance" class="hover:text-indAccent transition-colors block truncate">nexus_getBalance</a></li>
-                            <li><a href="#nexus-gettxcount" class="hover:text-indAccent transition-colors block truncate">nexus_getTransactionCount</a></li>
-                            <li><a href="#nexus-getblock" class="hover:text-indAccent transition-colors block truncate">nexus_getBlockByNumber</a></li>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Mutations (Écriture)</p>
+                        <ul class="space-y-2 text-[12px] font-bold font-mono text-slate-600 border-l-2 border-slate-100 ml-1 pl-3">
+                            <li><a href="#nexus-sendrawtx" class="hover:text-indAccent transition-colors block py-1 truncate text-indAccent">nexus_sendRawTransaction</a></li>
                         </ul>
                     </div>
 
                     <div>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Smart Contracts & Txs</p>
-                        <ul class="space-y-2 text-sm font-medium text-slate-600 border-l-2 border-slate-100 ml-1 pl-3">
-                            <li><a href="#nexus-getcontractstate" class="hover:text-indAccent transition-colors block truncate">nexus_getContractState</a></li>
-                            <li><a href="#nexus-sendrawtx" class="hover:text-indAccent transition-colors block truncate font-bold text-indAccent">nexus_sendRawTransaction</a></li>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Dépannage</p>
+                        <ul class="space-y-2 text-[13px] font-bold text-slate-600 border-l-2 border-slate-100 ml-1 pl-3">
+                            <li><a href="#errors" class="hover:text-indAccent transition-colors block py-1">Codes d'Erreur & Exceptions</a></li>
                         </ul>
                     </div>
                 </div>
@@ -211,47 +222,60 @@
         <!-- CONTENU PRINCIPAL -->
         <div class="flex-1 min-w-0 pb-20">
             
-            <!-- SECTION : GUIDE DU DÉBUTANT -->
+            <!-- ========================================== -->
+            <!-- SECTION 1: QUICKSTART                      -->
+            <!-- ========================================== -->
             <section id="quickstart" class="scroll-mt-28 mb-16">
-                <div class="border-l-4 border-indAccent pl-5 mb-8">
-                    <h2 class="text-3xl font-black text-premiumDark mb-2">Guide du Débutant : Comprendre le RPC</h2>
-                    <p class="text-slate-500 text-lg">Parfait pour les novices de la blockchain.</p>
-                </div>
+                <h2 class="doc-title">Guide du Débutant : Comprendre le RPC Nexus</h2>
                 
-                <div class="prose prose-slate max-w-none text-slate-700 space-y-6">
-                    <p>
-                        Une <strong>API RPC (Remote Procedure Call)</strong> est un pont de communication. Imaginez la blockchain Nexus Core comme une immense base de données ultra-sécurisée et décentralisée. Votre application (un portefeuille mobile, un jeu Web3, ou un site e-commerce) ne peut pas lire cette base de données directement. Elle utilise donc l'API RPC pour "poser des questions" au réseau (Ex: <em>"Quel est le solde de cette adresse ?"</em>) ou lui donner des ordres (Ex: <em>"Envoie 100 AG-COIN à Bob"</em>).
-                    </p>
-                    
-                    <div class="bg-blue-50 border border-blue-100 rounded-xl p-6 flex gap-4 items-start">
-                        <i class="fa-solid fa-lightbulb text-3xl text-blue-500 mt-1"></i>
-                        <div>
-                            <h4 class="font-bold text-premiumDark text-lg mb-2">L'architecture Atlas & Duc Corporation</h4>
-                            <p class="text-sm leading-relaxed mb-3">La blockchain Nexus Core a été conçue de zéro (Layer-1) avec des spécificités uniques pour garantir la sécurité et la vitesse :</p>
-                            <ul class="list-disc list-inside text-sm space-y-2 ml-2">
-                                <li><strong>Consensus PoA (Proof of Authority) :</strong> Les blocs sont validés toutes les 2 secondes par des nœuds certifiés par l'entreprise, garantissant des frais minimes et une empreinte écologique nulle.</li>
-                                <li><strong>Monnaie Native :</strong> L'actif numérique natif est le <span class="font-bold text-premiumDark">AG-COIN</span>, obligatoirement représenté par le symbole <span class="font-black text-xl text-indAccent">₳</span>.</li>
-                                <li><strong>Micro-divisions :</strong> 1 ₳ se divise en 1 000 000 de <span class="glossary-term" data-tooltip="La plus petite unité de l'AG-COIN. Les calculs machines se font toujours en microA pour éviter les erreurs de virgule.">microA</span> (6 décimales).</li>
-                                <li><strong>Cryptographie Base58 :</strong> Les adresses et les hash (identifiants de transaction) ne sont pas en hexadécimal complexe (0x...), mais encodés en Base58, plus lisibles pour l'humain.</li>
-                            </ul>
-                        </div>
+                <p class="doc-text">
+                    L'interface <strong>RPC (Remote Procedure Call)</strong> est la colonne vertébrale technique qui relie le monde extérieur à l'environnement isolé de la blockchain Nexus Core Layer-1. Par définition, un nœud blockchain est une entité logicielle hermétique, conçue pour valider des états cryptographiques de manière autonome. Votre application logicielle (qu'il s'agisse d'un portefeuille mobile grand public comme Nexus Wallet Pro, d'un tableau de bord de gestion d'entreprise B2B comme AGI Business Pro, ou d'un Exchange centralisé) ne possède pas la capacité d'interagir directement avec le disque dur ou la mémoire RAM des serveurs de validation d'Atlas & Duc Corporation. L'API RPC est donc le pont standardisé indispensable. Elle permet à votre code de soumettre des requêtes formatées en JSON (JavaScript Object Notation) au réseau, via le protocole de transport HTTP/HTTPS sécurisé.
+                </p>
+                <p class="doc-text">
+                    Le paradigme technologique de Nexus Core se distingue radicalement des architectures traditionnelles telles que l'EVM (Ethereum Virtual Machine). Là où la plupart des réseaux stockent leur état (les soldes des utilisateurs et les données des smart contracts) sur des bases de données sur disque (LevelDB ou RocksDB) générant inévitablement des goulots d'étranglement de latence I/O, le moteur Nexus Core charge l'intégralité du <span class="glossary-term" data-tooltip="Le registre complet contenant les soldes de toutes les adresses, maintenu en mémoire vive pour un accès quasi-instantané.">State Ledger</span> directement dans la mémoire vive (RAM) du processus V8 Node.js. En conséquence, les requêtes de lecture (comme <code>nexus_getBalance</code>) ne requièrent aucune recherche sur disque dur. Elles interrogent directement les structures de données en mémoire (Maps et Dictionnaires), offrant des temps de réponse moyens inférieurs à 5 millisecondes. C'est cette ingénierie de pointe qui rend la blockchain Nexus parfaitement adaptée aux paiements interbancaires en temps réel.
+                </p>
+                
+                <div class="bg-blue-50 border border-blue-200 rounded-xl p-6 flex gap-5 items-start my-6 shadow-sm">
+                    <div class="bg-blue-500 text-white w-10 h-10 rounded-full flex items-center justify-center shrink-0 shadow-md">
+                        <i class="fa-solid fa-lightbulb text-xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-black text-premiumDark text-lg mb-2">Particularités Cryptographiques du Réseau</h4>
+                        <p class="text-[13px] text-slate-700 leading-relaxed mb-4 text-justify">
+                            Avant d'intégrer l'API, les développeurs doivent impérativement maîtriser les trois piliers fondateurs de l'architecture d'Atlas & Duc :
+                        </p>
+                        <ul class="space-y-3 text-[13px] text-slate-700 font-medium">
+                            <li class="flex items-start gap-2"><i class="fa-solid fa-check text-blue-500 mt-1"></i> <strong>L'Unité de Compte Absolue (MicroA) :</strong> La pièce native du réseau est l'AG-COIN (symbole : ₳). Cependant, pour des raisons de précision mathématique stricte et pour éviter les défaillances liées à l'arrondi des nombres à virgule flottante (Standard IEEE 754), l'API RPC n'accepte et ne renvoie <em>jamais</em> de décimales. Toutes les valeurs sont exprimées en <strong>microA</strong> (la plus petite fraction indivisible). Sachant que l'AG-COIN possède 6 décimales, l'équation est : <code>1 ₳ = 1,000,000 microA</code>. Ainsi, un solde de 50.5 ₳ sera représenté par l'entier <code>50500000</code> dans le JSON.</li>
+                            <li class="flex items-start gap-2"><i class="fa-solid fa-check text-blue-500 mt-1"></i> <strong>L'Encodage Base58 :</strong> Les identifiants sur Nexus Core n'utilisent pas le format hexadécimal classique (commençant par 0x) très répandu dans le Web3. L'intégralité des clés publiques, des adresses de portefeuilles, des identifiants de contrats intelligents (NCRC-20) et des Hash de transactions sont rigoureusement encodés en <strong>Base58</strong>. Cet alphabet spécifique supprime volontairement les caractères ambigus (comme le 0 chiffre, le O majuscule, le I majuscule et le l minuscule) pour réduire drastiquement les erreurs de saisie humaine lors des transferts B2B.</li>
+                            <li class="flex items-start gap-2"><i class="fa-solid fa-check text-blue-500 mt-1"></i> <strong>Le Consensus nBFT (Proof of Authority) :</strong> L'approbation des transactions ne dépend pas d'un minage énergétique destructeur. Seuls les nœuds d'infrastructure certifiés et maintenus par Atlas & Duc Corporation ont le droit de signer cryptographiquement les blocs toutes les 2 secondes exactes. Cela garantit une résistance absolue aux attaques des 51% et maintient des frais de réseau bas et prévisibles.</li>
+                        </ul>
                     </div>
                 </div>
             </section>
 
-            <!-- SECTION : ENDPOINTS -->
+            <!-- ========================================== -->
+            <!-- SECTION 2: ENDPOINTS                       -->
+            <!-- ========================================== -->
             <section id="endpoints" class="scroll-mt-28 mb-16">
-                <h2 class="text-2xl font-black text-premiumDark border-b border-slate-200 pb-4 mb-6">Environnements de Connexion</h2>
+                <h2 class="doc-title">Environnements de Connexion (Endpoints)</h2>
                 
-                <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
-                    <!-- Mainnet -->
-                    <div class="bg-white border-2 border-indSuccess/40 rounded-xl p-6 shadow-md relative overflow-hidden transition-transform hover:-translate-y-1">
+                <p class="doc-text">
+                    La topologie réseau de Nexus Core est physiquement séparée en deux environnements distincts, opérant sur des registres d'état totalement indépendants. L'isolation stricte de ces réseaux empêche toute contamination de données. Les développeurs doivent intégrer des mécanismes de contrôle dans leur code source pour s'assurer que les transactions signées pour l'environnement de développement ne soient jamais transmises par erreur au réseau principal (grâce au système de protection anti-rejeu EIP-155 qui requiert le Chain ID lors de la signature cryptographique).
+                </p>
+
+                <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-6">
+                    <!-- MAINNET CARD -->
+                    <div class="bg-white border-2 border-indSuccess/40 rounded-xl p-6 shadow-md relative overflow-hidden transition-all hover:shadow-lg">
                         <div class="absolute top-0 right-0 bg-indSuccess text-white text-[10px] font-black px-4 py-1.5 rounded-bl-lg uppercase tracking-widest shadow-sm">Production</div>
-                        <h3 class="font-black text-premiumDark text-lg mb-5 flex items-center gap-2"><i class="fa-solid fa-globe text-indSuccess"></i> Nexus Mainnet</h3>
+                        <h3 class="font-black text-premiumDark text-xl mb-4 flex items-center gap-2"><i class="fa-solid fa-globe text-indSuccess"></i> Nexus Mainnet</h3>
                         
+                        <p class="text-[13px] text-slate-600 mb-5 text-justify leading-relaxed">
+                            Le réseau L1 de production. C'est ici que les AG-COIN (₳) détiennent une valeur financière réelle, strictement arrimée au Franc CFA (XOF) via le mécanisme de trésorerie Proof of Reserve (PoR) d'Atlas & Duc Corp. Toute opération sur ce réseau consomme des frais de réseau réels déduits du solde de l'expéditeur.
+                        </p>
+
                         <div class="space-y-4">
                             <div>
-                                <p class="text-slate-400 text-xs font-bold uppercase mb-1.5 tracking-wider">URL du Nœud RPC (POST)</p>
+                                <p class="text-slate-400 text-[10px] font-black uppercase mb-1.5 tracking-wider">URL du Nœud d'Entrée (POST JSON-RPC)</p>
                                 <div class="flex justify-between items-center bg-slate-50 border border-slate-200 rounded-lg px-4 py-3">
                                     <code class="font-mono text-premiumDark font-bold text-sm">https://rpc.agi-nexus-core.click</code>
                                     <button onclick="copyText('https://rpc.agi-nexus-core.click', this)" class="text-slate-400 hover:text-indAccent transition-colors"><i class="fa-regular fa-copy text-lg"></i></button>
@@ -259,25 +283,32 @@
                             </div>
                             <div class="grid grid-cols-2 gap-4">
                                 <div class="bg-slate-50 border border-slate-100 p-3 rounded-lg">
-                                    <p class="text-slate-400 text-[10px] font-bold uppercase mb-1 tracking-wider">Chain ID</p>
-                                    <p class="font-mono font-black text-lg text-premiumDark">9012 <span class="text-xs text-slate-500 font-medium">(0x2334)</span></p>
+                                    <p class="text-slate-400 text-[10px] font-black uppercase mb-1 tracking-wider">Chain ID</p>
+                                    <p class="font-mono font-black text-xl text-premiumDark">9012 <span class="text-xs text-slate-500 font-medium">(0x2334)</span></p>
                                 </div>
                                 <div class="bg-slate-50 border border-slate-100 p-3 rounded-lg">
-                                    <p class="text-slate-400 text-[10px] font-bold uppercase mb-1 tracking-wider">Symbole Natif</p>
-                                    <p class="font-black text-lg text-premiumDark">AG-COIN (₳)</p>
+                                    <p class="text-slate-400 text-[10px] font-black uppercase mb-1 tracking-wider">Actif Natif</p>
+                                    <p class="font-black text-xl text-premiumDark">₳ (AG-COIN)</p>
                                 </div>
+                            </div>
+                            <div class="bg-blue-50 border border-blue-100 p-3 rounded-lg mt-2">
+                                <p class="text-blue-800 text-[11px] font-bold flex items-center gap-2"><i class="fa-solid fa-shield-halved"></i> Rate Limit (Anti-DDoS) : 200 req/sec par IP.</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Testnet -->
-                    <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm relative overflow-hidden transition-transform hover:-translate-y-1">
+                    <!-- TESTNET CARD -->
+                    <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm relative overflow-hidden transition-all hover:shadow-lg">
                         <div class="absolute top-0 right-0 bg-amber-500 text-white text-[10px] font-black px-4 py-1.5 rounded-bl-lg uppercase tracking-widest shadow-sm">Développement</div>
-                        <h3 class="font-black text-premiumDark text-lg mb-5 flex items-center gap-2"><i class="fa-solid fa-flask text-amber-500"></i> Nexus Testnet</h3>
+                        <h3 class="font-black text-premiumDark text-xl mb-4 flex items-center gap-2"><i class="fa-solid fa-flask text-amber-500"></i> Nexus Testnet</h3>
                         
+                        <p class="text-[13px] text-slate-600 mb-5 text-justify leading-relaxed">
+                            Le réseau bac à sable (Sandbox) dédié exclusivement à l'ingénierie et aux tests d'intégration. Les AG-COIN qui circulent sur ce réseau n'ont aucune valeur financière. Le Testnet permet aux développeurs de déployer et de simuler l'exécution de contrats intelligents (NVM) sans risquer des fonds corporatifs.
+                        </p>
+
                         <div class="space-y-4">
                             <div>
-                                <p class="text-slate-400 text-xs font-bold uppercase mb-1.5 tracking-wider">URL du Nœud RPC (POST)</p>
+                                <p class="text-slate-400 text-[10px] font-black uppercase mb-1.5 tracking-wider">URL du Nœud d'Entrée (POST JSON-RPC)</p>
                                 <div class="flex justify-between items-center bg-slate-50 border border-slate-200 rounded-lg px-4 py-3">
                                     <code class="font-mono text-premiumDark font-bold text-sm">https://testnet-rpc.agi-nexus-core.click</code>
                                     <button onclick="copyText('https://testnet-rpc.agi-nexus-core.click', this)" class="text-slate-400 hover:text-indAccent transition-colors"><i class="fa-regular fa-copy text-lg"></i></button>
@@ -285,370 +316,371 @@
                             </div>
                             <div class="grid grid-cols-2 gap-4">
                                 <div class="bg-slate-50 border border-slate-100 p-3 rounded-lg">
-                                    <p class="text-slate-400 text-[10px] font-bold uppercase mb-1 tracking-wider">Chain ID</p>
-                                    <p class="font-mono font-black text-lg text-slate-700">9013</p>
+                                    <p class="text-slate-400 text-[10px] font-black uppercase mb-1 tracking-wider">Chain ID</p>
+                                    <p class="font-mono font-black text-xl text-slate-700">9013 <span class="text-xs text-slate-500 font-medium">(0x2335)</span></p>
                                 </div>
-                                <div class="bg-amber-50 border border-amber-100 p-3 rounded-lg flex flex-col justify-center">
-                                    <p class="text-amber-800 text-[10px] font-bold uppercase mb-1 tracking-wider">Outil Dev</p>
-                                    <a href="#" class="text-amber-600 font-bold text-sm hover:underline flex items-center gap-1"><i class="fa-solid fa-droplet"></i> Faucet Testnet</a>
+                                <div class="bg-amber-50 border border-amber-200 p-3 rounded-lg flex flex-col justify-center items-center">
+                                    <p class="text-amber-800 text-[10px] font-black uppercase mb-1 tracking-wider text-center w-full">Outil D'Ingénierie</p>
+                                    <a href="#" class="text-amber-600 font-black text-[13px] hover:text-amber-700 hover:underline flex items-center gap-1"><i class="fa-solid fa-droplet"></i> Accéder au Faucet L1</a>
                                 </div>
+                            </div>
+                             <div class="bg-slate-50 border border-slate-200 p-3 rounded-lg mt-2">
+                                <p class="text-slate-500 text-[11px] font-bold flex items-center gap-2"><i class="fa-solid fa-rotate"></i> État du registre réinitialisé chaque 90 jours.</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- SECTION : REST API -->
-            <section id="rest-api" class="scroll-mt-28 mb-16">
-                <div class="mb-8">
-                    <h2 class="text-2xl font-black text-premiumDark">API REST (Données & Marchés)</h2>
-                    <p class="text-slate-500 font-medium mt-2">Points d'accès simples en GET (sans JSON-RPC) requis par CoinMarketCap, CoinGecko et les plateformes d'échanges.</p>
+            <!-- ========================================== -->
+            <!-- SECTION 3: WEBSOCKETS                      -->
+            <!-- ========================================== -->
+            <section id="websockets" class="scroll-mt-28 mb-16 bg-gradient-to-br from-slate-50 to-white border border-slate-200 rounded-2xl p-8 shadow-sm">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-14 h-14 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center text-3xl shadow-inner"><i class="fa-solid fa-satellite-dish"></i></div>
+                    <div>
+                        <h2 class="text-2xl font-black text-premiumDark leading-tight mb-1">WebSockets & Flux P2P Temps Réel</h2>
+                        <p class="text-slate-500 font-bold text-sm tracking-wide">Communication asynchrone pour les plateformes d'échanges.</p>
+                    </div>
                 </div>
-
-                <div class="space-y-8">
-                    <!-- Ticker & Price -->
-                    <div id="rest-ticker" class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
-                        <div class="flex items-center gap-3 mb-4">
-                            <span class="badge-get text-[11px] font-black px-2 py-1 rounded tracking-widest">GET</span>
-                            <h3 class="text-lg font-bold font-mono text-premiumDark">/api/exchange/ticker</h3>
-                            <span class="text-slate-400 text-sm ml-auto hidden sm:block">Volumes 24h</span>
+                
+                <p class="doc-text">
+                    Le protocole HTTP REST est fondamentalement inadéquat pour la construction d'interfaces réactives dans le Web3. Obliger un client à interroger le serveur en boucle (Long Polling) pour vérifier si une transaction a été validée sature inutilement la bande passante et induit une latence inacceptable. Pour résoudre ce problème critique, l'infrastructure de validation Nexus Core intègre nativement un bus de communication P2P via le protocole WebSocket (WSS). En établissant une connexion TCP persistante avec notre port <strong>6001</strong>, votre serveur backend ou votre application frontend peut "s'abonner" (subscribe) au flux d'événements vitaux du moteur de consensus. Dès que l'état en mémoire du Ledger est muté, une notification push est instantanément propulsée à tous les clients connectés, garantissant une latence d'affichage inférieure à 100 millisecondes.
+                </p>
+                
+                <div class="bg-premiumDark border border-slate-800 rounded-xl px-6 py-5 mb-8 flex flex-col md:flex-row md:items-center justify-between shadow-lg">
+                    <div class="mb-3 md:mb-0">
+                        <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-1">URL de connexion WSS (Mainnet)</p>
+                        <code class="font-mono text-indAccent font-bold text-base">ws://p2p.agi-nexus-core.click:6001</code>
+                    </div>
+                    <span class="badge-ws text-[11px] font-black px-4 py-1.5 rounded uppercase tracking-widest shadow-sm self-start md:self-auto">Socket.io V4 Compatible</span>
+                </div>
+                
+                <h4 class="font-black text-sm text-premiumDark uppercase tracking-widest mb-4 border-b border-slate-200 pb-2">Spécification des payloads d'événements :</h4>
+                <ul class="space-y-4">
+                    <li class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm transition-all hover:border-purple-300">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="bg-purple-100 text-purple-700 font-mono font-black text-xs px-2 py-1 rounded">NEW_BLOCK</span>
+                            <span class="text-xs font-bold text-slate-400 uppercase">Fréquence : 2000 ms</span>
                         </div>
-                        <p class="text-sm text-slate-600 mb-4">Renvoie les volumes d'échanges réels traités sur la blockchain (entre les portefeuilles et l'adresse de réserve du DEX Atlas & Duc).</p>
+                        <p class="text-[13px] text-slate-600 text-justify leading-relaxed">
+                            Cet événement est diffusé à l'échelle mondiale toutes les 2 secondes précises, dès qu'un Nœud Maître (Autorité Atlas & Duc) résout le hachage cryptographique et scelle définitivement un nouveau bloc. Le payload JSON transmis contient l'objet complet du bloc (Index, Hash Base58, Timestamp, Racine de Merkle, et l'array des transactions incluses). C'est le signal absolu de finalité : toute transaction contenue dans cet événement peut être considérée comme irrémédiablement traitée, sans risque de Rollback ou de chaîne orpheline.
+                        </p>
+                    </li>
+                    <li class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm transition-all hover:border-blue-300">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="bg-blue-100 text-blue-700 font-mono font-black text-xs px-2 py-1 rounded">NEW_TRANSACTION</span>
+                            <span class="text-xs font-bold text-slate-400 uppercase">Fréquence : Instantanée</span>
+                        </div>
+                        <p class="text-[13px] text-slate-600 text-justify leading-relaxed">
+                            Diffusé immédiatement par le pare-feu du nœud RPC dès qu'une transaction entrante passe avec succès la vérification de signature ECDSA (secp256k1) et de solde, entrant ainsi dans la Mempool (statut <em>Pending</em>). Ce flux asynchrone est crucial pour les portefeuilles mobiles souhaitant afficher une notification UI "Envoi en cours..." à l'utilisateur avant même la génération du bloc suivant. Le payload inclut l'objet de transaction brut soumis par l'expéditeur.
+                        </p>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- SECTION 4: API REST                        -->
+            <!-- ========================================== -->
+            <section id="rest-api" class="scroll-mt-28 mb-16">
+                <h2 class="doc-title">API REST (Données de Marché & Analytiques)</h2>
+                <p class="doc-text">
+                    En dehors des interactions transactionnelles strictes couvertes par le JSON-RPC, l'écosystème Nexus Core expose une série de points de terminaison RESTful publics. Ces API en méthode GET sont spécifiquement formatées pour satisfaire les exigences techniques stricts des agrégateurs de données internationaux (tels que CoinMarketCap, CoinGecko) et des algorithmes de trading automatisé. Elles ne nécessitent aucune clé d'authentification (API Key), mais sont soumises à une politique de cache Edge via le CDN (Content Delivery Network) avec un Time-To-Live (TTL) de 60 secondes pour absorber les pics de charge massifs.
+                </p>
+
+                <div class="space-y-8 mt-6">
+                    <!-- Ticker Endpoint -->
+                    <div id="rest-ticker" class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm scroll-mt-28">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="badge-get text-[11px] px-3 py-1.5 rounded tracking-widest">GET</span>
+                            <h3 class="text-xl font-bold font-mono text-premiumDark">/api/exchange/ticker</h3>
+                        </div>
+                        <p class="text-[13px] text-slate-600 text-justify leading-relaxed mb-6">
+                            Renvoie la photographie temporelle des volumes d'échanges réels consolidés sur la blockchain au cours des dernières 24 heures glissantes (Rolling 24h Window). L'algorithme d'agrégation d'Atlas & Duc filtre exclusivement les transactions qui interagissent avec les contrats intelligents du DEX L1 (Decentralized Exchange) pour isoler le véritable volume de trading, excluant ainsi les simples transferts P2P entre portefeuilles de gré à gré afin d'empêcher la manipulation de volume (Wash Trading). Le payload fournit les paires principales, incluant le volume de base, la devise de cotation, le dernier prix exécuté et le pourcentage de variation (Spread).
+                        </p>
                         
-                        <!-- Snippet Component -->
-                        <div class="snippet-container" data-id="snippet-1">
+                        <div class="snippet-container" data-id="snippet-ticker">
                             <div class="dev-code-header flex gap-1 px-2 pt-2">
-                                <button class="code-tab active" data-target="curl">cURL</button>
-                                <button class="code-tab" data-target="js">JavaScript</button>
+                                <button class="code-tab active" data-target="curl">cURL Shell</button>
+                                <button class="code-tab" data-target="js">Node.js / Axios</button>
                             </div>
                             <div class="dev-code-block rounded-t-none mb-0 border-t-0">
-                                <pre class="code-content active" data-lang="curl"><code class="text-slate-300">curl -X GET https://rpc.agi-nexus-core.click/api/exchange/ticker</code></pre>
-                                <pre class="code-content" data-lang="js"><code class="text-slate-300"><span class="syntax-keyword">const</span> response = <span class="syntax-keyword">await</span> <span class="syntax-method">fetch</span>(<span class="syntax-string">'https://rpc.agi-nexus-core.click/api/exchange/ticker'</span>);
-<span class="syntax-keyword">const</span> data = <span class="syntax-keyword">await</span> response.<span class="syntax-method">json</span>();
-console.<span class="syntax-method">log</span>(data.AGCOIN_XOF.base_volume);</code></pre>
+                                <pre class="code-content active" data-lang="curl"><code class="text-slate-300">curl -X GET https://rpc.agi-nexus-core.click/api/exchange/ticker \
+  -H <span class="syntax-string">"Accept: application/json"</span></code></pre>
+                                <pre class="code-content" data-lang="js"><code class="text-slate-300"><span class="syntax-keyword">const</span> axios = <span class="syntax-keyword">require</span>(<span class="syntax-string">'axios'</span>);
+
+<span class="syntax-keyword">async function</span> <span class="syntax-method">getTickerVolume</span>() {
+  <span class="syntax-keyword">const</span> response = <span class="syntax-keyword">await</span> axios.<span class="syntax-method">get</span>(<span class="syntax-string">'https://rpc.agi-nexus-core.click/api/exchange/ticker'</span>);
+  <span class="syntax-keyword">const</span> volumeXof = response.data.AGCOIN_XOF.base_volume;
+  console.<span class="syntax-method">log</span>(<span class="syntax-string">`Volume 24h L1: ${volumeXof} ₳`</span>);
+}</code></pre>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Price Endpoint -->
-                    <div id="rest-price" class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
-                        <div class="flex items-center gap-3 mb-4">
-                            <span class="badge-get text-[11px] font-black px-2 py-1 rounded tracking-widest">GET</span>
-                            <h3 class="text-lg font-bold font-mono text-premiumDark">/api/price</h3>
-                        </div>
-                        <p class="text-sm text-slate-600 mb-4">Obtenir le prix officiel de l'AG-COIN (₳) fixé par l'écosystème en FCFA (XOF) et sa parité dynamique en USD.</p>
-                        <div class="dev-code-block mb-0">
-                            <pre class="p-4 text-sm font-mono"><code class="text-slate-300">{
+                    <!-- Price & Supply Endpoint -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div id="rest-price" class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm scroll-mt-28">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="badge-get text-[11px] px-3 py-1.5 rounded tracking-widest">GET</span>
+                                <h3 class="text-lg font-bold font-mono text-premiumDark">/api/price</h3>
+                            </div>
+                            <p class="text-[12px] text-slate-600 text-justify leading-relaxed mb-4">
+                                Point d'accès fondamental extrayant le taux de parité de l'écosystème. Bien que la variable <code>price_xof</code> soit algorithmiquement fixée à l'entier <code>1.00</code> en raison de l'ancrage institutionnel au Franc CFA, l'API interroge simultanément des Oracles externes de la BCEAO pour calculer et restituer la parité dynamique <code>price_usd</code> (Dollar américain) en temps réel, essentielle pour le référencement international du Coin.
+                            </p>
+                            <div class="dev-code-block mb-0">
+                                <pre class="p-4 text-xs font-mono"><code class="text-slate-300">{
   <span class="syntax-key">"symbol"</span>: <span class="syntax-string">"₳"</span>,
   <span class="syntax-key">"name"</span>: <span class="syntax-string">"AG-COIN"</span>,
   <span class="syntax-key">"price_xof"</span>: <span class="syntax-number">1.00</span>,
-  <span class="syntax-key">"price_usd"</span>: <span class="syntax-number">0.0016</span>,
-  <span class="syntax-key">"last_updated"</span>: <span class="syntax-number">1728616800</span>
+  <span class="syntax-key">"price_usd"</span>: <span class="syntax-number">0.001642</span>,
+  <span class="syntax-key">"last_updated_epoch"</span>: <span class="syntax-number">1728616800</span>
 }</code></pre>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Holders -->
-                    <div id="rest-holders" class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
-                        <div class="flex items-center gap-3 mb-4">
-                            <span class="badge-get text-[11px] font-black px-2 py-1 rounded tracking-widest">GET</span>
-                            <h3 class="text-lg font-bold font-mono text-premiumDark">/api/holders</h3>
+                        <div id="rest-holders" class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm scroll-mt-28">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="badge-get text-[11px] px-3 py-1.5 rounded tracking-widest">GET</span>
+                                <h3 class="text-lg font-bold font-mono text-premiumDark">/api/holders</h3>
+                            </div>
+                            <p class="text-[12px] text-slate-600 text-justify leading-relaxed mb-4">
+                                Fournit la nomenclature (Rich List) des entités participant au réseau. Cette méthode itère sur l'objet de mémoire `this.balances` de la V8 Engine pour retourner un Array des adresses dont le solde est supérieur à zéro, rigoureusement trié par ordre décroissant de capital. Pour des raisons d'optimisation de la mémoire, l'output est paginé par défaut (100 résultats par appel) et omet les adresses des contrats NVM pour ne lister que les entités clés (Wallets EOA).
+                            </p>
                         </div>
-                        <p class="text-sm text-slate-600 mb-4">Liste complète (Rich List) des adresses détenant un solde supérieur à 0 sur la Layer-1, triée par balance décroissante.</p>
                     </div>
                 </div>
             </section>
 
-            <!-- SECTION : JSON-RPC -->
+            <!-- ========================================== -->
+            <!-- SECTION 5: JSON-RPC CORE (LECTURE)         -->
+            <!-- ========================================== -->
             <section id="rpc-methods" class="scroll-mt-28 mb-16">
-                <div class="mb-10 border-b border-slate-200 pb-4">
-                    <h2 class="text-3xl font-black text-premiumDark">Méthodes JSON-RPC Core</h2>
-                    <p class="text-slate-500 font-medium mt-2">Le standard de communication avec les nœuds de la blockchain. Les requêtes s'envoient en POST avec un Content-Type <code>application/json</code>.</p>
-                </div>
-
-                <!-- BlockNumber -->
-                <div id="nexus-blocknumber" class="mb-12">
-                    <h3 class="text-xl font-bold font-mono text-premiumDark flex items-center gap-3 mb-3">
-                        <span class="badge-post text-[11px] font-black px-2 py-1 rounded tracking-widest">POST</span> nexus_blockNumber
-                    </h3>
-                    <p class="text-slate-600 mb-4">Retourne le numéro du bloc le plus récent forgé par le réseau.</p>
-                    
-                    <div class="snippet-container" data-id="snippet-blocknumber">
-                        <div class="dev-code-header flex gap-1 px-2 pt-2">
-                            <button class="code-tab active" data-target="js">JavaScript (Node/Browser)</button>
-                            <button class="code-tab" data-target="python">Python</button>
-                        </div>
-                        <div class="dev-code-block rounded-t-none border-t-0 flex flex-col md:flex-row">
-                            <!-- Code block -->
-                            <div class="w-full md:w-1/2 border-b md:border-b-0 md:border-r border-slate-700">
-                                <pre class="code-content active" data-lang="js"><code class="text-slate-300"><span class="syntax-keyword">const</span> payload = {
-  jsonrpc: <span class="syntax-string">"2.0"</span>,
-  method: <span class="syntax-string">"nexus_blockNumber"</span>,
-  params: [],
-  id: <span class="syntax-number">1</span>
-};
-
-<span class="syntax-keyword">const</span> res = <span class="syntax-keyword">await</span> <span class="syntax-method">fetch</span>(<span class="syntax-string">'https://rpc.agi-nexus-core.click'</span>, {
-  method: <span class="syntax-string">'POST'</span>,
-  body: JSON.<span class="syntax-method">stringify</span>(payload)
-});
-<span class="syntax-keyword">const</span> data = <span class="syntax-keyword">await</span> res.<span class="syntax-method">json</span>();
-console.<span class="syntax-method">log</span>(<span class="syntax-string">"Dernier bloc:"</span>, parseInt(data.result, <span class="syntax-number">16</span>));</code></pre>
-                                <pre class="code-content" data-lang="python"><code class="text-slate-300"><span class="syntax-keyword">import</span> requests
-
-payload = {
-    <span class="syntax-string">"jsonrpc"</span>: <span class="syntax-string">"2.0"</span>,
-    <span class="syntax-string">"method"</span>: <span class="syntax-string">"nexus_blockNumber"</span>,
-    <span class="syntax-string">"params"</span>: [],
-    <span class="syntax-string">"id"</span>: <span class="syntax-number">1</span>
-}
-res = requests.<span class="syntax-method">post</span>(<span class="syntax-string">'https://rpc.agi-nexus-core.click'</span>, json=payload)
-<span class="syntax-method">print</span>(<span class="syntax-string">"Dernier bloc:"</span>, <span class="syntax-method">int</span>(res.json()[<span class="syntax-string">'result'</span>], <span class="syntax-number">16</span>))</code></pre>
-                            </div>
-                            <!-- Response -->
-                            <div class="w-full md:w-1/2 bg-[#1a1a1a]">
-                                <div class="px-4 py-2 text-[10px] uppercase font-bold text-slate-500 border-b border-slate-800">Réponse attendue</div>
-                                <pre class="p-4 text-xs font-mono"><code class="text-slate-300">{
-  <span class="syntax-key">"jsonrpc"</span>: <span class="syntax-string">"2.0"</span>,
-  <span class="syntax-key">"result"</span>: <span class="syntax-string">"0x1f4"</span>, <span class="syntax-comment">// 500 en décimal</span>
-  <span class="syntax-key">"id"</span>: <span class="syntax-number">1</span>
-}</code></pre>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <h2 class="doc-title">Méthodes JSON-RPC Core (Lecture de l'État)</h2>
+                <p class="doc-text">
+                    La spécification technique de communication avec le cœur du réseau (Ledger) obéit scrupuleusement au standard industriel <strong>JSON-RPC 2.0</strong>. Toutes les requêtes sans exception doivent être forgées via la méthode HTTP <code>POST</code>. Le corps (body) de la requête doit impérativement comporter l'en-tête (Header) <code>Content-Type: application/json</code>. L'objet JSON root doit inclure l'identifiant de version <code>"jsonrpc": "2.0"</code>, le nom exact de la procédure dans la clé <code>method</code>, un array de paramètres <code>params</code> (même s'il est vide), et un <code>id</code> entier de votre choix (par exemple un timestamp) qui vous sera retourné dans la réponse pour corréler asynchroniquement les appels dans votre base de code.
+                </p>
 
                 <!-- GetBalance -->
-                <div id="nexus-getbalance" class="mb-12">
-                    <h3 class="text-xl font-bold font-mono text-premiumDark flex items-center gap-3 mb-3">
-                        <span class="badge-post text-[11px] font-black px-2 py-1 rounded tracking-widest">POST</span> nexus_getBalance
+                <div id="nexus-getbalance" class="mb-12 scroll-mt-28">
+                    <h3 class="text-xl font-bold font-mono text-premiumDark flex items-center gap-3 mb-4">
+                        <span class="badge-post text-[11px] px-3 py-1.5 rounded tracking-widest">POST</span> nexus_getBalance
                     </h3>
-                    <p class="text-slate-600 mb-4">Consulte le solde d'un portefeuille. Spécificité Nexus : le nœud vous renvoie non seulement la valeur brute en `microA`, mais aussi le format texte avec le symbole `₳` et sa contrevaleur légale en `FCFA`.</p>
+                    <p class="text-[13px] text-slate-600 text-justify leading-relaxed mb-5">
+                        Interrogation directe de la carte des soldes maintenue en mémoire RAM (Heap) par le processus validateur de Node.js. Contrairement aux implémentations EVM qui renvoient exclusivement une valeur hexadécimale barbare nécessitant des bibliothèques de formatage front-end (comme ethers.js ou web3.js), le nœud Nexus a été optimisé pour soulager la charge de calcul côté client. Le parseur natif L1 effectue lui-même la conversion mathématique et renvoie un objet multidimensionnel comprenant non seulement l'entier brut (BigInt) en `microA` pour l'exécution des contrats, mais également le format texte pré-formaté pour l'interface utilisateur, incluant le symbole `₳` et l'équivalence fiduciaire calculée en temps réel.
+                    </p>
                     
-                    <div class="bg-[#1e1e1e] border border-[#2d2d2d] rounded-xl overflow-hidden shadow-lg flex flex-col md:flex-row mb-4">
-                        <div class="w-full md:w-1/2 border-b md:border-b-0 md:border-r border-slate-700">
-                            <div class="px-4 py-2 text-[10px] uppercase font-bold text-slate-500 bg-[#252526] border-b border-[#333]">Payload de requête</div>
-                            <pre class="p-4 text-xs font-mono"><code class="text-slate-300">{
+                    <div class="bg-[#1e1e1e] border border-[#2d2d2d] rounded-xl overflow-hidden shadow-lg flex flex-col xl:flex-row mb-4">
+                        <div class="w-full xl:w-1/2 border-b xl:border-b-0 xl:border-r border-[#333]">
+                            <div class="px-4 py-3 text-[10px] uppercase font-bold text-slate-400 bg-[#252526] border-b border-[#333] tracking-widest">Payload d'Entrée (Requête Frontend)</div>
+                            <pre class="p-5 text-[13px] font-mono"><code class="text-slate-300">{
   <span class="syntax-key">"jsonrpc"</span>: <span class="syntax-string">"2.0"</span>,
   <span class="syntax-key">"method"</span>: <span class="syntax-string">"nexus_getBalance"</span>,
-  <span class="syntax-key">"params"</span>: [<span class="syntax-string">"ADC6MH4qsxED6cLt..."</span>],
-  <span class="syntax-key">"id"</span>: <span class="syntax-number">2</span>
+  <span class="syntax-key">"params"</span>: [
+    <span class="syntax-string">"ADC6MH4qsxED6cLtH3NLng5QL6Kvb9HRa8"</span>
+  ],
+  <span class="syntax-key">"id"</span>: <span class="syntax-number">101</span>
 }</code></pre>
                         </div>
-                        <div class="w-full md:w-1/2">
-                            <div class="px-4 py-2 text-[10px] uppercase font-bold text-slate-500 bg-[#252526] border-b border-[#333]">Réponse du Nœud</div>
-                            <pre class="p-4 text-xs font-mono"><code class="text-slate-300">{
+                        <div class="w-full xl:w-1/2">
+                            <div class="px-4 py-3 text-[10px] uppercase font-bold text-slate-400 bg-[#252526] border-b border-[#333] tracking-widest">Sortie du Nœud Validateur</div>
+                            <pre class="p-5 text-[13px] font-mono"><code class="text-slate-300">{
   <span class="syntax-key">"jsonrpc"</span>: <span class="syntax-string">"2.0"</span>,
-  <span class="syntax-key">"id"</span>: <span class="syntax-number">2</span>,
+  <span class="syntax-key">"id"</span>: <span class="syntax-number">101</span>,
   <span class="syntax-key">"result"</span>: {
     <span class="syntax-key">"address"</span>: <span class="syntax-string">"ADC6MH4qsxED6cLt..."</span>,
-    <span class="syntax-key">"microA"</span>: <span class="syntax-string">"5000000000"</span>, <span class="syntax-comment">// Valeur pour les calculs (BigInt)</span>
-    <span class="syntax-key">"formatted"</span>: <span class="syntax-string">"5000.000000 ₳"</span>, <span class="syntax-comment">// Affichage UI</span>
-    <span class="syntax-key">"parityXOF"</span>: <span class="syntax-string">"5000.000000 FCFA"</span> <span class="syntax-comment">// Équivalent fiat</span>
+    <span class="syntax-key">"microA"</span>: <span class="syntax-string">"250000000000"</span>, <span class="syntax-comment">// Valeur brute absolue</span>
+    <span class="syntax-key">"formatted"</span>: <span class="syntax-string">"250000.000000 ₳"</span>, <span class="syntax-comment">// String prêt pour l'UI</span>
+    <span class="syntax-key">"parityXOF"</span>: <span class="syntax-string">"250000.000000 FCFA"</span> <span class="syntax-comment">// Arrimage strict</span>
   }
 }</code></pre>
                         </div>
                     </div>
                 </div>
 
-                <!-- GetBlockByNumber -->
-                <div id="nexus-getblock" class="mb-12">
-                    <h3 class="text-xl font-bold font-mono text-premiumDark flex items-center gap-3 mb-3">
-                        <span class="badge-post text-[11px] font-black px-2 py-1 rounded tracking-widest">POST</span> nexus_getBlockByNumber
-                    </h3>
-                    <p class="text-slate-600 mb-4">Récupère toutes les informations d'un bloc validé sur la chaîne (Transactions, Hash Base58, Timestamp, Validateur).</p>
-                    <ul class="list-disc list-inside text-sm text-slate-600 space-y-1 mb-4 bg-slate-50 p-4 rounded-lg border border-slate-200">
-                        <li><strong>Paramètre 1</strong> (String/Hex) : Numéro du bloc (ex: <code>"0x1f4"</code>, <code>"500"</code>, ou <code>"latest"</code>).</li>
-                        <li><strong>Paramètre 2</strong> (Booléen) : <code>true</code> pour retourner les objets transactionnels complets, <code>false</code> pour n'avoir que leurs hashs.</li>
-                    </ul>
-                </div>
+                <!-- BlockNumber & GetTxCount -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                    <div id="nexus-blocknumber" class="scroll-mt-28">
+                        <h3 class="text-lg font-bold font-mono text-premiumDark flex items-center gap-2 mb-3">
+                            <span class="badge-post text-[10px] px-2 py-1 rounded tracking-widest">POST</span> nexus_blockNumber
+                        </h3>
+                        <p class="text-[12px] text-slate-600 text-justify leading-relaxed">
+                            Interrogation du State Ledger pour récupérer la hauteur de la chaîne (Block Height). Cette méthode lit la propriété `index` du dernier objet `Block` inséré dans la blockchain locale du nœud. Le résultat est retourné sous forme de chaîne de caractères hexadécimale (standard imposé pour la compatibilité avec les outils d'ingénierie Web3 génériques). Il est crucial pour les développeurs de convertir ce résultat avec <code>parseInt(result, 16)</code> pour obtenir la valeur décimale exploitable dans leurs calculs d'interface ou de synchronisation.
+                        </p>
+                    </div>
 
-                <!-- GetTransactionCount (Nonce) -->
-                <div id="nexus-gettxcount" class="mb-12">
-                    <h3 class="text-xl font-bold font-mono text-premiumDark flex items-center gap-3 mb-3">
-                        <span class="badge-post text-[11px] font-black px-2 py-1 rounded tracking-widest">POST</span> nexus_getTransactionCount
-                    </h3>
-                    <p class="text-slate-600 mb-4">Dans Nexus Core, chaque compte possède un compteur appelé <span class="glossary-term" data-tooltip="Numéro unique et séquentiel de transaction pour une adresse. Empêche qu'une transaction soit rejouée (double-spending).">Nonce</span>. Avant d'envoyer une transaction, vous devez appeler cette méthode pour connaître le prochain Nonce valide à inclure dans votre payload de transaction.</p>
+                    <div id="nexus-gettxcount" class="scroll-mt-28">
+                        <h3 class="text-lg font-bold font-mono text-premiumDark flex items-center gap-2 mb-3">
+                            <span class="badge-post text-[10px] px-2 py-1 rounded tracking-widest">POST</span> nexus_getTransactionCount
+                        </h3>
+                        <p class="text-[12px] text-slate-600 text-justify leading-relaxed">
+                            Architecture primordiale de sécurité : la prévention des doubles dépenses (Double-Spending) et de la rejouabilité des transactions (Replay Attacks). Dans la base de données Nexus, chaque portefeuille se voit assigner un compteur cryptographique immuable, le <strong>Nonce</strong>. Ce compteur représente le nombre exact de transactions validées depuis la création de l'adresse. Avant de forger une nouvelle transaction, le client (SDK) doit appeler cette méthode pour connaître le prochain entier incrémental autorisé. Si le Nonce soumis dans la transaction est inférieur ou égal à l'état du registre, le nœud rejette immédiatement l'opération (Code d'erreur : Désynchronisation d'état).
+                        </p>
+                    </div>
                 </div>
             </section>
 
-            <!-- SECTION : SMART CONTRACTS & TRANSACTIONS (L'ENCYCLOPÉDIE) -->
+            <!-- ========================================== -->
+            <!-- SECTION 6: SMART CONTRACTS & TXS (ÉCRITURE)-->
+            <!-- ========================================== -->
             <section id="nexus-sendrawtx" class="scroll-mt-28 mb-16">
-                <div class="border-t-4 border-indAccent pt-10 mb-8">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-red-100 text-red-700 text-[10px] font-black tracking-widest uppercase mb-4">
-                        Opération Critique (Écriture)
+                <div class="border-t-4 border-indAccent pt-12 mb-8">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-red-100/80 border border-red-200 text-red-700 text-[10px] font-black tracking-widest uppercase mb-4 shadow-sm">
+                        <i class="fa-solid fa-triangle-exclamation"></i> Mutation d'État Blockchain (Opération d'Écriture)
                     </div>
-                    <h2 class="text-3xl font-black text-premiumDark mb-2">nexus_sendRawTransaction</h2>
-                    <p class="text-slate-500 text-lg">Le cœur du réseau : envoyer des fonds, déployer des smart contracts ou les exécuter.</p>
+                    <h2 class="doc-title border-none mb-1">nexus_sendRawTransaction</h2>
+                    <p class="text-slate-500 font-bold text-lg">L'unique vecteur d'interaction cryptographique modifiant le registre public.</p>
                 </div>
 
-                <div class="prose prose-slate max-w-none text-slate-700 space-y-6 mb-8">
-                    <p>
-                        Contrairement aux requêtes de lecture, <code>nexus_sendRawTransaction</code> modifie l'état de la blockchain. Que vous vouliez envoyer des ₳ à un ami, déployer un contrat NCRC-20, ou interagir avec un DEX L1, tout passe par cette méthode unique qui injecte votre ordre dans la <strong>Mempool</strong> (salle d'attente des transactions) d'Atlas & Duc.
-                    </p>
-                </div>
+                <p class="doc-text">
+                    La méthode <code>nexus_sendRawTransaction</code> représente le noyau dur fonctionnel du réseau L1. Contrairement aux appels en lecture qui sont purement analytiques, cette procédure lance le moteur de mutation de l'état global. Que l'intention soit le transfert monétaire direct (P2P) d'un AG-COIN à une entité partenaire, l'instanciation irréversible d'un contrat intelligent (NVM) pour numériser un actif, ou l'appel conditionnel (Execution Call) à un contrat préexistant sur le réseau (comme un DEX automatisé ou un registre d'identité KYC), l'intégralité des flux doit converger vers cette porte d'entrée unique. C'est lors du passage par ce goulot d'étranglement que le pare-feu du nœud RPC opère les vérifications ECDSA (Elliptic Curve Digital Signature Algorithm), déduisant la clé publique de l'expéditeur de la signature mathématique asymétrique apposée sur l'objet JSON. Si la vérification échoue, ou si le hachage cryptographique de la transaction a été altéré par un intermédiaire de type Man-in-the-Middle (MitM), l'insertion dans la <strong>Mempool</strong> (la salle d'attente des transactions) est impitoyablement refusée.
+                </p>
 
                 <!-- Structure de Transaction -->
-                <h4 class="font-bold text-lg text-premiumDark mb-4">Architecture d'une Transaction Valide</h4>
-                <div class="overflow-x-auto bg-white rounded-xl border border-slate-200 shadow-sm mb-8">
-                    <table class="w-full text-left border-collapse text-sm">
+                <h4 class="font-black text-lg text-premiumDark mb-5 border-b border-slate-200 pb-2">Spécification Technique du Payload (Objet Transactionnel)</h4>
+                <div class="overflow-x-auto bg-white rounded-xl border border-slate-200 shadow-sm mb-10">
+                    <table class="w-full text-left border-collapse text-[13px]">
                         <thead>
-                            <tr class="bg-slate-50 border-b border-slate-200 text-xs text-slate-500 uppercase tracking-widest">
-                                <th class="py-3 px-4 font-bold w-1/4">Propriété</th>
-                                <th class="py-3 px-4 font-bold w-1/4">Type</th>
-                                <th class="py-3 px-4 font-bold">Description technique</th>
+                            <tr class="bg-slate-50 border-b border-slate-200 text-[11px] text-slate-500 uppercase tracking-widest">
+                                <th class="py-4 px-5 font-black w-1/5">Clé JSON</th>
+                                <th class="py-4 px-5 font-black w-1/5">Typage JS Strict</th>
+                                <th class="py-4 px-5 font-black">Spécification Conceptuelle & Validation RPC</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100">
-                            <tr>
-                                <td class="py-3 px-4 font-mono font-bold text-sky-600">type</td>
-                                <td class="py-3 px-4 font-mono text-xs">String</td>
-                                <td class="py-3 px-4 text-slate-600"><code>'transfer'</code> (défaut), <code>'deploy_contract'</code>, ou <code>'call_contract'</code>.</td>
+                            <tr class="hover:bg-slate-50/50 transition-colors">
+                                <td class="py-4 px-5 font-mono font-black text-indAccent">type</td>
+                                <td class="py-4 px-5 font-mono text-xs text-slate-500">String (Enum)</td>
+                                <td class="py-4 px-5 text-slate-600 text-justify leading-relaxed">Définit le moteur de routage interne du nœud. Valeurs autorisées exclusives : <code>'transfer'</code> (pour un simple mouvement de fonds), <code>'deploy_contract'</code> (pour instancier la V8 Engine), ou <code>'call_contract'</code> (pour muter l'état interne d'un contrat cible).</td>
                             </tr>
-                            <tr>
-                                <td class="py-3 px-4 font-mono font-bold text-sky-600">from</td>
-                                <td class="py-3 px-4 font-mono text-xs">String (Base58)</td>
-                                <td class="py-3 px-4 text-slate-600">Votre adresse (Expéditeur).</td>
+                            <tr class="hover:bg-slate-50/50 transition-colors">
+                                <td class="py-4 px-5 font-mono font-black text-indAccent">from</td>
+                                <td class="py-4 px-5 font-mono text-xs text-slate-500">String (Base58)</td>
+                                <td class="py-4 px-5 text-slate-600 text-justify leading-relaxed">Adresse cryptographique de l'entité initiatrice. Le moteur compare cette valeur avec la clé publique extraite de la signature ECDSA (Propriété `signature`). L'usurpation d'identité est mathématiquement bloquée ici.</td>
                             </tr>
-                            <tr>
-                                <td class="py-3 px-4 font-mono font-bold text-sky-600">to</td>
-                                <td class="py-3 px-4 font-mono text-xs">String (Base58)</td>
-                                <td class="py-3 px-4 text-slate-600">Adresse du destinataire (ou du contrat). Obligatoire sauf pour <code>deploy_contract</code>.</td>
+                            <tr class="hover:bg-slate-50/50 transition-colors">
+                                <td class="py-4 px-5 font-mono font-black text-indAccent">to</td>
+                                <td class="py-4 px-5 font-mono text-xs text-slate-500">String (Base58)</td>
+                                <td class="py-4 px-5 text-slate-600 text-justify leading-relaxed">Entité de destination ou contrat cible. Propriété rigoureusement <strong>obligatoire</strong> pour les types <code>'transfer'</code> et <code>'call_contract'</code>. Elle est laissée vide (ou non définie) lors d'un <code>'deploy_contract'</code> (le réseau générera l'adresse préfixée <code>ADCC_</code>).</td>
                             </tr>
-                            <tr>
-                                <td class="py-3 px-4 font-mono font-bold text-sky-600">amountMicro</td>
-                                <td class="py-3 px-4 font-mono text-xs">Number/String</td>
-                                <td class="py-3 px-4 text-slate-600">Montant à envoyer, obligatoirement en <strong>microA</strong>. (Ex: 1 ₳ = 1000000).</td>
+                            <tr class="hover:bg-slate-50/50 transition-colors">
+                                <td class="py-4 px-5 font-mono font-black text-indAccent">amountMicro</td>
+                                <td class="py-4 px-5 font-mono text-xs text-slate-500">Integer (Number)</td>
+                                <td class="py-4 px-5 text-slate-600 text-justify leading-relaxed">Le transfert de valeur absolue, exprimé impérativement en <strong>microA</strong> pour pallier les erreurs de mantisse des flottants. Le nœud convertit cette valeur en BigInt durant le calcul des matrices de soldes.</td>
                             </tr>
-                            <tr>
-                                <td class="py-3 px-4 font-mono font-bold text-sky-600">feeMicro</td>
-                                <td class="py-3 px-4 font-mono text-xs">Number/String</td>
-                                <td class="py-3 px-4 text-slate-600">Frais de réseau offerts au validateur PoA. (0 en environnement Dev).</td>
+                            <tr class="hover:bg-slate-50/50 transition-colors">
+                                <td class="py-4 px-5 font-mono font-black text-indAccent">feeMicro</td>
+                                <td class="py-4 px-5 font-mono text-xs text-slate-500">Integer (Number)</td>
+                                <td class="py-4 px-5 text-slate-600 text-justify leading-relaxed">La rémunération d'infrastructure (Gaz) déduite de <code>tx.from</code> et créditée au Nœud Validateur d'Atlas & Duc pour l'effort computationnel fourni. Rejeté si inférieur au plancher (Base Fee) imposé par le réseau.</td>
                             </tr>
-                            <tr>
-                                <td class="py-3 px-4 font-mono font-bold text-sky-600">nonce</td>
-                                <td class="py-3 px-4 font-mono text-xs">Number</td>
-                                <td class="py-3 px-4 text-slate-600">Valeur exacte récupérée via <code>nexus_getTransactionCount</code>.</td>
+                            <tr class="hover:bg-slate-50/50 transition-colors">
+                                <td class="py-4 px-5 font-mono font-black text-indAccent">nonce</td>
+                                <td class="py-4 px-5 font-mono text-xs text-slate-500">Integer (Number)</td>
+                                <td class="py-4 px-5 text-slate-600 text-justify leading-relaxed">Le verrou chronologique. Il doit être strictement égal au résultat de la requête <code>nexus_getTransactionCount</code>. Protège contre la duplication d'ordre (Double-Spending).</td>
                             </tr>
-                            <tr class="bg-indigo-50/30">
-                                <td class="py-3 px-4 font-mono font-bold text-indigo-600">code</td>
-                                <td class="py-3 px-4 font-mono text-xs">String (JS)</td>
-                                <td class="py-3 px-4 text-slate-600"><em>(Uniquement pour deploy_contract)</em> Le code source du Smart Contract exécutable par la VM Nexus.</td>
+                            <tr class="bg-indigo-50/40 border-l-4 border-l-indigo-400">
+                                <td class="py-4 px-5 font-mono font-black text-indigo-700">code</td>
+                                <td class="py-4 px-5 font-mono text-xs text-slate-500">String (JS source)</td>
+                                <td class="py-4 px-5 text-slate-600 text-justify leading-relaxed"><em>(Propriété optionnelle contextuelle - Type deploy_contract)</em> Contient le code source intégral et non-minifié en langage ECMAScript (JavaScript). Il sera compilé à la volée par la sandbox V8 du réseau Nexus.</td>
                             </tr>
-                            <tr class="bg-indigo-50/30">
-                                <td class="py-3 px-4 font-mono font-bold text-indigo-600">action</td>
-                                <td class="py-3 px-4 font-mono text-xs">Object</td>
-                                <td class="py-3 px-4 text-slate-600"><em>(Uniquement pour call_contract)</em> Les paramètres passés à la fonction du contrat. Ex: <code>{ method: "mint", params: [10] }</code>.</td>
+                            <tr class="bg-indigo-50/40 border-l-4 border-l-indigo-400">
+                                <td class="py-4 px-5 font-mono font-black text-indigo-700">action</td>
+                                <td class="py-4 px-5 font-mono text-xs text-slate-500">Object (JSON)</td>
+                                <td class="py-4 px-5 text-slate-600 text-justify leading-relaxed"><em>(Propriété optionnelle contextuelle - Type call_contract)</em> L'instruction routée vers la fonction interne du contrat (Architecture pseudo-Redux). Ex: <code>{ method: "approve_transfer", params: { amount: 500 } }</code>.</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <!-- Exemple Pratique: Envoi de fonds -->
-                <div class="mb-6">
-                    <h4 class="font-bold text-lg text-premiumDark mb-3 flex items-center gap-2"><i class="fa-solid fa-money-bill-transfer text-indSuccess"></i> Exemple 1 : Envoyer 5 AG-COIN</h4>
-                    <div class="dev-code-block mb-0">
-                        <pre class="p-4 text-[13px] font-mono"><code class="text-slate-300"><span class="syntax-keyword">const</span> transaction = {
-  type: <span class="syntax-string">'transfer'</span>,
-  from: <span class="syntax-string">'ADC6MH4qsxED6cLt...'</span>,
-  to: <span class="syntax-string">'ClientWallet9HHR...'</span>,
-  amountMicro: <span class="syntax-number">5000000</span>, <span class="syntax-comment">// 5 ₳ * 1,000,000</span>
-  feeMicro: <span class="syntax-number">1000</span>,       <span class="syntax-comment">// Frais de minage</span>
-  nonce: <span class="syntax-number">12</span>           <span class="syntax-comment">// Obtenu juste avant</span>
-};
-
-<span class="syntax-comment">// Dans un système réel, cet objet JSON doit être signé cryptographiquement</span>
-<span class="syntax-comment">// avant d'être envoyé via :</span>
-<span class="syntax-comment">// { "method": "nexus_sendRawTransaction", "params": [transaction] }</span></code></pre>
-                    </div>
-                </div>
-
-                <!-- Exemple Pratique: Smart Contract -->
-                <div class="mb-6">
-                    <h4 class="font-bold text-lg text-premiumDark mb-3 flex items-center gap-2"><i class="fa-solid fa-microchip text-indigo-500"></i> Exemple 2 : Exécuter un Smart Contract</h4>
-                    <p class="text-sm text-slate-600 mb-3">La machine virtuelle de Nexus exécute du JavaScript sandboxé. Voici comment interagir avec un contrat L1.</p>
-                    <div class="dev-code-block mb-0 border-indigo-900/50">
-                        <pre class="p-4 text-[13px] font-mono"><code class="text-slate-300"><span class="syntax-keyword">const</span> contractCallTx = {
-  type: <span class="syntax-string">'call_contract'</span>,
-  from: <span class="syntax-string">'ADC6MH4qsxED6cLt...'</span>,
-  to: <span class="syntax-string">'ADCC_TokenContratId99...'</span>, <span class="syntax-comment">// ADCC = Atlas Duc Contract</span>
-  amountMicro: <span class="syntax-number">0</span>,
-  feeMicro: <span class="syntax-number">5000</span>,
-  nonce: <span class="syntax-number">13</span>,
-  action: {
-    method: <span class="syntax-string">'mint'</span>,
-    params: { receiver: <span class="syntax-string">'UserWallet...'</span>, amount: <span class="syntax-number">100</span> }
-  }
-};</code></pre>
-                    </div>
-                </div>
-
-            </section>
-
-            <!-- SECTION : WEBSOCKETS P2P -->
-            <section id="websockets" class="scroll-mt-28 mb-16 bg-slate-50 border border-slate-200 rounded-2xl p-8">
-                <div class="flex items-center gap-4 mb-6">
-                    <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-600 flex items-center justify-center text-2xl shadow-inner"><i class="fa-solid fa-plug"></i></div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Exemple Pratique: Envoi de fonds -->
                     <div>
-                        <h2 class="text-2xl font-black text-premiumDark leading-tight">WebSockets & Flux P2P Temps Réel</h2>
-                        <p class="text-slate-500 font-medium text-sm mt-1">Écoutez la blockchain sans rafraîchir.</p>
+                        <h4 class="font-black text-[15px] text-premiumDark mb-4 flex items-center gap-2"><i class="fa-solid fa-money-bill-transfer text-indSuccess text-lg"></i> Cas d'usage : Paiement B2B simple</h4>
+                        <p class="text-[13px] text-slate-600 mb-4 leading-relaxed text-justify">
+                            La création d'un transfert monétaire est l'opération fondamentale du Ledger. L'objet ci-dessous (qui constitue le champ <code>transaction</code> du payload RPC) démontre un envoi de 5 AG-COIN (convertis mathématiquement en 5,000,000 microA). Le développeur doit s'assurer que le compte initiateur (<code>from</code>) possède un solde total couvrant l'équation stricte : <code>(amountMicro + feeMicro) <= totalBalance</code>, sous peine d'un rejet instantané par le nœud avec un code d'erreur de provision insuffisante.
+                        </p>
+                        <div class="dev-code-block mb-0">
+                            <pre class="p-5 text-[13px] font-mono"><code class="text-slate-300"><span class="syntax-keyword">const</span> coreTransaction = {
+  type: <span class="syntax-string">'transfer'</span>,
+  from: <span class="syntax-string">'ADC6MH4qsxED6cLtH3NLng5QL6Kvb9HRa8'</span>,
+  to: <span class="syntax-string">'B2BWallet9HHR82kxED6cLtg5QL6Kvb9a1'</span>,
+  amountMicro: <span class="syntax-number">5000000</span>, <span class="syntax-comment">// Représente 5 ₳</span>
+  feeMicro: <span class="syntax-number">1000</span>,       <span class="syntax-comment">// Frais standards incompressibles</span>
+  nonce: <span class="syntax-number">42</span>,          <span class="syntax-comment">// Anti-rejeu séquentiel</span>
+  signature: <span class="syntax-string">'30440220261...'</span> <span class="syntax-comment">// Hachage privé ECDSA</span>
+};</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- Exemple Pratique: Smart Contract -->
+                    <div>
+                        <h4 class="font-black text-[15px] text-premiumDark mb-4 flex items-center gap-2"><i class="fa-solid fa-microchip text-indigo-500 text-lg"></i> Cas d'usage : Appel de Smart Contract (NVM)</h4>
+                        <p class="text-[13px] text-slate-600 mb-4 leading-relaxed text-justify">
+                            L'interaction avec les entités algorithmiques (Smart Contracts NCRC-20) s'effectue en mutant le <code>type</code> de la transaction. Ce vecteur délaisse l'échange monétaire standard (qui peut être mis à 0) pour injecter l'objet <code>action</code> dans le contexte d'exécution de la V8 Engine. La NVM de Nexus exécute ce code dans un environnement de "Sandboxing profond", privant le script de tout accès réseau externe (HTTP) ou d'écriture disque, garantissant une intégrité déterministe absolue à travers l'ensemble des nœuds composant le réseau.
+                        </p>
+                        <div class="dev-code-block mb-0 border-indigo-900/50">
+                            <pre class="p-5 text-[13px] font-mono"><code class="text-slate-300"><span class="syntax-keyword">const</span> contractCallTx = {
+  type: <span class="syntax-string">'call_contract'</span>,
+  from: <span class="syntax-string">'ADC6MH4qsxED6cLtH3NLng5QL6Kvb9HRa8'</span>,
+  to: <span class="syntax-string">'ADCC_TokenRegistryContract99XyZ12'</span>, 
+  amountMicro: <span class="syntax-number">0</span>, <span class="syntax-comment">// Pas d'envoi monétaire attaché</span>
+  feeMicro: <span class="syntax-number">5000</span>, <span class="syntax-comment">// Taxe de calcul (Gaz Machine)</span>
+  nonce: <span class="syntax-number">43</span>,
+  action: {
+    method: <span class="syntax-string">'issue_invoice'</span>,
+    params: { clientId: <span class="syntax-number">8910</span>, invoiceAmount: <span class="syntax-number">15000</span> }
+  },
+  signature: <span class="syntax-string">'3044022067a...'</span>
+};</code></pre>
+                        </div>
                     </div>
                 </div>
-                
-                <p class="text-slate-700 mb-4">Pour les exchanges et dApps qui nécessitent une interface ultra-réactive, connectez-vous au serveur P2P d'Atlas & Duc sur le port <strong>6001</strong>.</p>
-                
-                <div class="bg-white border border-slate-300 rounded-lg px-5 py-4 mb-6 font-mono text-sm font-bold text-premiumDark flex items-center justify-between shadow-sm">
-                    ws://p2p.agi-nexus-core.click:6001
-                    <span class="badge-ws text-[10px] font-black px-3 py-1 rounded tracking-widest shadow-sm">CONNEXION WSS</span>
-                </div>
-                
-                <h4 class="font-bold text-sm text-premiumDark uppercase tracking-widest mb-3">Événements diffusés :</h4>
-                <ul class="space-y-3">
-                    <li class="flex items-start gap-3 bg-white p-3 rounded border border-slate-100 shadow-sm">
-                        <span class="font-mono text-purple-600 font-bold mt-0.5">NEW_BLOCK</span>
-                        <span class="text-sm text-slate-600">Diffusé toutes les 2 secondes lorsqu'un Validateur Officiel (PoA) forge un nouveau bloc. Idéal pour confirmer le statut "Success" d'une transaction.</span>
-                    </li>
-                    <li class="flex items-start gap-3 bg-white p-3 rounded border border-slate-100 shadow-sm">
-                        <span class="font-mono text-purple-600 font-bold mt-0.5">NEW_TRANSACTION</span>
-                        <span class="text-sm text-slate-600">Diffusé instantanément lorsqu'une transaction valide entre dans la Mempool, avant même d'être minée (statut "pending").</span>
-                    </li>
-                </ul>
             </section>
 
-            <!-- SECTION : ERREURS & DÉBOGAGE -->
+            <!-- ========================================== -->
+            <!-- SECTION 7: ERREURS & DÉBOGAGE              -->
+            <!-- ========================================== -->
             <section id="errors" class="scroll-mt-28">
-                <h2 class="text-2xl font-black text-premiumDark border-b border-slate-200 pb-4 mb-6 flex items-center gap-2"><i class="fa-solid fa-bug text-red-500"></i> Codes d'Erreur & Résolution</h2>
-                <p class="text-slate-600 mb-6">Si votre requête échoue, l'API renvoie un objet JSON contenant la clé <code>error</code> selon le standard JSON-RPC 2.0.</p>
+                <h2 class="doc-title border-red-200 text-red-600 flex items-center gap-3"><i class="fa-solid fa-bug"></i> Codes d'Erreur & Résolution Analytique</h2>
                 
-                <div class="overflow-x-auto bg-white rounded-xl border border-slate-200 shadow-sm">
-                    <table class="w-full text-left border-collapse text-sm">
+                <p class="doc-text">
+                    L'architecture résiliente de Nexus Core implique un rejet formel, impitoyable et immédiat de toute requête ou transaction ne respectant pas les règles du consensus (Consensus Rules). Lorsqu'une exécution se solde par un échec au niveau de l'API, le nœud ne crashe pas de manière inattendue. Il encapsule l'anomalie et retourne au client un objet JSON respectant la structure normative d'erreur définie par le standard JSON-RPC 2.0. Cet objet inclut la clé <code>error</code>, elle-même décomposée en un <code>code</code> entier formel, et un <code>message</code> sémantique détaillant le motif exact du rejet (fail-fast validation). Les intégrateurs système (Ingénieurs B2B) doivent impérativement construire une logique de capture (try/catch bloc) et de traitement conditionnel de ces exceptions dans leurs applications, particulièrement pour implémenter des mécanismes de relance (Retry avec Exponential Backoff) lors des congestions réseau ou des désynchronisations de compteurs temporels (Nonce).
+                </p>
+                
+                <div class="overflow-x-auto bg-white rounded-xl border border-slate-200 shadow-sm mt-8">
+                    <table class="w-full text-left border-collapse text-[13px]">
                         <thead>
-                            <tr class="bg-slate-50 border-b border-slate-200 text-xs text-slate-500 uppercase tracking-widest">
-                                <th class="py-3 px-4 font-bold">Code</th>
-                                <th class="py-3 px-4 font-bold">Message type</th>
-                                <th class="py-3 px-4 font-bold">Explication de l'échec</th>
+                            <tr class="bg-red-50/50 border-b border-red-100 text-[11px] text-red-700 uppercase tracking-widest font-black">
+                                <th class="py-4 px-5">Code Natif</th>
+                                <th class="py-4 px-5">Exception Vectorielle</th>
+                                <th class="py-4 px-5">Mécanique du Rejet & Processus de Résolution (Hotfix)</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100">
-                            <tr class="hover:bg-slate-50 transition-colors">
-                                <td class="py-3 px-4 font-mono font-bold text-red-600">-32602</td>
-                                <td class="py-3 px-4 font-semibold text-slate-700">Paramètre 'address' manquant</td>
-                                <td class="py-3 px-4 text-slate-600">Vous avez oublié de fournir les paramètres dans le tableau <code>params: []</code>.</td>
+                            <tr class="hover:bg-slate-50/80 transition-colors">
+                                <td class="py-5 px-5 font-mono font-black text-red-600">-32602</td>
+                                <td class="py-5 px-5 font-bold text-premiumDark">Invalid params array</td>
+                                <td class="py-5 px-5 text-slate-600 text-justify leading-relaxed">Défaillance structurelle de la requête JSON-RPC. Le nœud attendait des arguments obligatoires (par exemple, l'adresse de portefeuille pour un <code>nexus_getBalance</code>), mais le tableau <code>params: []</code> a été fourni vide ou contenant un type de donnée invalide (par exemple un Integer au lieu d'une String Base58).</td>
                             </tr>
-                            <tr class="hover:bg-slate-50 transition-colors">
-                                <td class="py-3 px-4 font-mono font-bold text-red-600">-32000</td>
-                                <td class="py-3 px-4 font-semibold text-slate-700">Fonds insuffisants. Solde: X, Requis: Y</td>
-                                <td class="py-3 px-4 text-slate-600">Votre balance L1 ne couvre pas le montant envoyé + les frais (feeMicro).</td>
+                            <tr class="hover:bg-slate-50/80 transition-colors">
+                                <td class="py-5 px-5 font-mono font-black text-red-600">-32000</td>
+                                <td class="py-5 px-5 font-bold text-premiumDark">Insufficient funds logic</td>
+                                <td class="py-5 px-5 text-slate-600 text-justify leading-relaxed">Blocage monétaire strict. Lors de l'analyse du payload <code>nexus_sendRawTransaction</code>, le moteur d'état a déduit que la somme mathématique <code>(amountMicro + feeMicro)</code> excédait le montant d'AG-COIN physiquement présent et non-verrouillé sur l'adresse émettrice. Solution : Interrogez le solde ou ajustez la valeur <code>amountMicro</code>.</td>
                             </tr>
-                            <tr class="hover:bg-slate-50 transition-colors">
-                                <td class="py-3 px-4 font-mono font-bold text-red-600">-32000</td>
-                                <td class="py-3 px-4 font-semibold text-slate-700">Transaction désynchronisée (Nonce)</td>
-                                <td class="py-3 px-4 text-slate-600">Le <code>nonce</code> fourni dans votre transaction ne correspond pas à la valeur attendue par le Ledger.</td>
+                            <tr class="hover:bg-slate-50/80 transition-colors">
+                                <td class="py-5 px-5 font-mono font-black text-red-600">-32001</td>
+                                <td class="py-5 px-5 font-bold text-premiumDark">Nonce Out-Of-Sync</td>
+                                <td class="py-5 px-5 text-slate-600 text-justify leading-relaxed">Violation de séquence chronologique. Le compteur d'opérations (Nonce) envoyé dans la transaction est inférieur ou égal à l'historique déjà enregistré sur la blockchain. C'est le système de défense critique contre les attaques par double-dépense (Replay Attack). Vous devez resynchroniser votre application en appelant <code>nexus_getTransactionCount</code> avant tout nouvel envoi de fonds.</td>
                             </tr>
-                            <tr class="hover:bg-slate-50 transition-colors">
-                                <td class="py-3 px-4 font-mono font-bold text-red-600">-32005</td>
-                                <td class="py-3 px-4 font-semibold text-slate-700">Mempool saturée</td>
-                                <td class="py-3 px-4 text-slate-600">La file d'attente (max 50000 txs) est pleine. Implémentez un système de <em>retry</em> avec délai.</td>
+                            <tr class="hover:bg-slate-50/80 transition-colors border-l-4 border-l-red-500 bg-red-50/30">
+                                <td class="py-5 px-5 font-mono font-black text-red-600">-32005</td>
+                                <td class="py-5 px-5 font-bold text-premiumDark">Mempool Capacity Overflow</td>
+                                <td class="py-5 px-5 text-slate-600 text-justify leading-relaxed">Saturation d'infrastructure (Anti-DDoS actif). La file d'attente locale du nœud (Mempool), paramétrée pour contenir un maximum de 50,000 transactions en attente de forgeage par les autorités nBFT, est actuellement pleine. La requête est droppée. Le développeur doit impérativement configurer un algorithme d'attente (sleep) de quelques secondes avant de soumettre la transaction à nouveau.</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition-colors border-l-4 border-l-red-500 bg-red-50/30">
+                                <td class="py-5 px-5 font-mono font-black text-red-600">-32010</td>
+                                <td class="py-5 px-5 font-bold text-premiumDark">ERR_SPOOFED_TX_SIGNATURE</td>
+                                <td class="py-5 px-5 text-slate-600 text-justify leading-relaxed">Alerte de Sécurité Majeure. Le moteur cryptographique a tenté de dériver l'adresse publique (Base58) à partir de la signature secp256k1 fournie. Or, l'adresse mathématiquement déduite ne correspond absolument pas à la propriété <code>from</code> déclarée dans le JSON. La transaction est considérée comme une tentative malveillante d'usurpation (Spoofing) ou corrompue et est instantanément détruite de la mémoire.</td>
                             </tr>
                         </tbody>
                     </table>
@@ -659,7 +691,7 @@ res = requests.<span class="syntax-method">post</span>(<span class="syntax-strin
     </main>
 
     <!-- ========================================== -->
-    <!-- 4. FOOTER INDUSTRIEL                       -->
+    <!-- 4. FOOTER INDUSTRIEL COMPLET               -->
     <!-- ========================================== -->
     <footer class="bg-premiumDark border-t border-slate-800 pt-16 pb-8 mt-auto w-full relative overflow-hidden">
         <!-- Grid Pattern Background -->
@@ -671,35 +703,39 @@ res = requests.<span class="syntax-method">post</span>(<span class="syntax-strin
             <div class="flex items-center gap-4">
                 <img src="https://i.imgur.com/Tc7Jzx3.jpeg" alt="Atlas & Duc Corp" class="h-16 w-16 rounded-full border-2 border-slate-700 shadow-[0_0_20px_rgba(255,255,255,0.05)] object-cover">
                 <div>
-                    <h4 class="text-white font-black text-xl tracking-wide uppercase leading-tight">Atlas & Duc Corporation</h4>
-                    <p class="text-indAccent text-xs font-bold tracking-[0.1em] uppercase mt-1">Infrastructure L1 Blockchain • Burkina Faso</p>
+                    <h4 class="text-white font-black text-xl tracking-wide uppercase leading-tight mb-1">Atlas & Duc Corporation</h4>
+                    <span class="text-indAccent text-[10px] font-bold tracking-[0.2em] uppercase">Infrastructure L1 UEMOA</span>
                 </div>
             </div>
             
-            <!-- Nav & Legal -->
-            <div class="flex flex-col items-end gap-4">
-                <div class="flex gap-6 text-sm font-bold text-slate-400">
-                    <a href="NexusScan.html" class="hover:text-indAccent transition-colors">Explorer</a>
-                    <a href="api.html" class="text-indAccent">Docs API</a>
-                    <a href="support.html" class="hover:text-indAccent transition-colors">Support Institutionnel B2B</a>
+            <!-- Navigation Footer -->
+            <div class="flex flex-col items-center md:items-end gap-6">
+                <div class="flex flex-wrap justify-center gap-5 md:gap-6 text-[12px] font-bold text-slate-400">
+                    <a href="NexusScan.html" class="hover:text-indAccent transition-colors flex items-center gap-1.5"><i class="fa-solid fa-house"></i> Explorateur</a>
+                    <a href="documentation.html" class="hover:text-indAccent transition-colors flex items-center gap-1.5"><i class="fa-solid fa-book-journal-whills"></i> Yellow Paper</a>
+                    <a href="api.html" class="text-indAccent transition-colors flex items-center gap-1.5"><i class="fa-solid fa-server"></i> API RPC</a>
+                    <a href="support.html" class="hover:text-indAccent transition-colors flex items-center gap-1.5"><i class="fa-solid fa-headset"></i> Support B2B</a>
+                    <a href="privacy.html" class="hover:text-indAccent transition-colors flex items-center gap-1.5"><i class="fa-solid fa-shield-halved"></i> Confidentialité</a>
+                    <a href="wallet_cgu.html" class="hover:text-indAccent transition-colors flex items-center gap-1.5"><i class="fa-solid fa-gavel"></i> Wallet CGU</a>
                 </div>
+                
                 <div class="flex items-center gap-3 bg-slate-900 px-4 py-2 rounded-lg border border-slate-700 shadow-inner">
                     <div class="w-2 h-2 rounded-full bg-indSuccess live-pulse"></div>
-                    <span class="text-[10px] text-slate-300 font-bold uppercase tracking-widest">SLA 99.99% | PoA Active</span>
+                    <span class="text-[10px] text-slate-300 font-bold uppercase tracking-widest">SLA 99.99% | PoA Mainnet Actif</span>
                 </div>
             </div>
         </div>
         
-        <div class="mt-12 pt-6 border-t border-slate-800 text-center relative z-10">
-            <p class="text-[11px] text-slate-500 font-medium tracking-wider uppercase">&copy; 2026 Atlas & Duc Corporation. Conçu et opéré au Burkina Faso. Tous droits réservés.</p>
+        <div class="mt-12 pt-6 border-t border-slate-800 text-center relative z-10 max-w-sm mx-auto">
+            <p class="text-[10px] text-slate-500 font-bold tracking-widest uppercase leading-relaxed">&copy; 2026 Atlas & Duc Corporation.<br>Développement Souverain - Burkina Faso.</p>
         </div>
     </footer>
 
     <!-- ========================================== -->
-    <!-- 5. JAVASCRIPT: INTERACTIVITÉ               -->
+    <!-- 5. JAVASCRIPT: LOGIQUE INTERACTIVE         -->
     <!-- ========================================== -->
     <script>
-        // Gestion du Menu Mobile
+        // Gestion Menu Mobile
         const btn = document.getElementById('mobileMenuBtn');
         const menu = document.getElementById('mobileMenu');
         btn.addEventListener('click', () => {
@@ -712,7 +748,7 @@ res = requests.<span class="syntax-method">post</span>(<span class="syntax-strin
             }
         });
 
-        // Fonction de Copie dans le presse-papier
+        // Fonction copie API
         function copyText(text, btnElement) {
             navigator.clipboard.writeText(text).then(() => {
                 const originalHtml = btnElement.innerHTML;
@@ -721,24 +757,53 @@ res = requests.<span class="syntax-method">post</span>(<span class="syntax-strin
             });
         }
 
-        // Système d'onglets pour les snippets de code
+        // Système d'onglets pour snippets de code
         document.querySelectorAll('.snippet-container').forEach(container => {
             const tabs = container.querySelectorAll('.code-tab');
             const contents = container.querySelectorAll('.code-content');
 
             tabs.forEach(tab => {
                 tab.addEventListener('click', () => {
-                    // Retirer 'active' partout
                     tabs.forEach(t => t.classList.remove('active'));
                     contents.forEach(c => c.classList.remove('active'));
 
-                    // Ajouter 'active' au tab cliqué
                     tab.classList.add('active');
-                    
-                    // Afficher le contenu correspondant
                     const targetLang = tab.getAttribute('data-target');
                     const targetContent = container.querySelector(`.code-content[data-lang="${targetLang}"]`);
                     if (targetContent) targetContent.classList.add('active');
+                });
+            });
+        });
+
+        // ScrollSpy Sidebar
+        document.addEventListener("DOMContentLoaded", function() {
+            const sections = document.querySelectorAll("section[id], div[id^='rest-'], div[id^='nexus-']");
+            const navLinks = document.querySelectorAll("aside a");
+
+            window.addEventListener("scroll", () => {
+                let current = "";
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= (sectionTop - 150)) {
+                        current = section.getAttribute("id");
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove("text-indAccent", "font-black");
+                    const href = link.getAttribute("href").substring(1); 
+                    
+                    if (href === current && current !== "") {
+                        link.classList.add("text-indAccent");
+                        const sidebar = document.querySelector('aside .overflow-y-auto');
+                        if(sidebar) {
+                            const linkRect = link.getBoundingClientRect();
+                            const sidebarRect = sidebar.getBoundingClientRect();
+                            if(linkRect.bottom > sidebarRect.bottom || linkRect.top < sidebarRect.top) {
+                                link.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }
+                        }
+                    }
                 });
             });
         });

@@ -81,11 +81,13 @@
                 </a>
 
                 <!-- Desktop Navigation -->
-                <nav class="hidden md:flex space-x-6 items-center">
-                    <a href="NexusScan.html" class="text-indTextMuted hover:text-premiumDark font-semibold text-[13px] transition-colors py-4"><i class="fa-solid fa-house mr-1"></i> Accueil</a>
-                    <a href="documentation.html" class="text-indTextMuted hover:text-premiumDark font-semibold text-[13px] transition-colors py-4"><i class="fa-solid fa-book mr-1"></i> Documentation</a>
-                    <a href="api.html" class="text-indTextMuted hover:text-premiumDark font-semibold text-[13px] transition-colors py-4"><i class="fa-solid fa-server mr-1"></i> API RPC</a>
-                    <a href="support.html" class="text-indAccent font-bold text-[13px] border-b-2 border-indAccent py-4"><i class="fa-solid fa-headset mr-1"></i> Support B2B</a>
+                <nav class="hidden md:flex space-x-5 items-center">
+                    <a href="NexusScan.html" data-key="nav_home" class="text-indTextMuted hover:text-premiumDark font-semibold text-[12px] transition-colors py-4"><i class="fa-solid fa-house mr-1"></i> Accueil</a>
+                    <a href="documentation.html" data-key="nav_doc" class="text-indTextMuted hover:text-premiumDark font-semibold text-[12px] transition-colors py-4"><i class="fa-solid fa-book mr-1"></i> Documentation</a>
+                    <a href="api.html" data-key="nav_api" class="text-indTextMuted hover:text-premiumDark font-semibold text-[12px] transition-colors py-4"><i class="fa-solid fa-server mr-1"></i> API RPC</a>
+                    <a href="support.html" data-key="nav_support" class="text-indAccent font-bold text-[12px] border-b-2 border-indAccent py-4"><i class="fa-solid fa-headset mr-1"></i> Support B2B</a>
+                    <a href="privacy.html" data-key="nav_privacy" class="text-indTextMuted hover:text-premiumDark font-semibold text-[12px] transition-colors py-4"><i class="fa-solid fa-shield-halved mr-1"></i> Confidentialité</a>
+                    <a href="wallet_cgu.html" data-key="nav_cgu" class="text-indTextMuted hover:text-premiumDark font-semibold text-[12px] transition-colors py-4"><i class="fa-solid fa-gavel mr-1"></i> Wallet CGU</a>
                 </nav>
 
                 <!-- Status & Mobile Menu -->
@@ -103,10 +105,12 @@
 
         <!-- Mobile Navigation Menu -->
         <div id="mobileMenu" class="hidden md:hidden bg-indCard border-b border-indBorder px-4 pt-2 pb-4 shadow-lg absolute w-full z-50">
-            <a href="NexusScan.html" class="block py-2.5 text-indTextMuted font-semibold text-[13px] border-b border-indBorder"><i class="fa-solid fa-house w-6 text-center"></i> Accueil</a>
-            <a href="documentation.html" class="block py-2.5 text-indTextMuted font-semibold text-[13px] border-b border-indBorder"><i class="fa-solid fa-book w-6 text-center"></i> Documentation</a>
-            <a href="api.html" class="block py-2.5 text-indTextMuted font-semibold text-[13px] border-b border-indBorder"><i class="fa-solid fa-server w-6 text-center"></i> API RPC</a>
-            <a href="support.html" class="block py-2.5 text-indAccent font-bold text-[13px] bg-sky-50 px-2 rounded mt-1"><i class="fa-solid fa-headset w-6 text-center"></i> Support B2B</a>
+            <a href="NexusScan.html" data-key="nav_home" class="block py-2.5 text-indTextMuted font-semibold text-[13px] border-b border-indBorder"><i class="fa-solid fa-house w-6 text-center"></i> Accueil</a>
+            <a href="documentation.html" data-key="nav_doc" class="block py-2.5 text-indTextMuted font-semibold text-[13px] border-b border-indBorder"><i class="fa-solid fa-book w-6 text-center"></i> Documentation</a>
+            <a href="api.html" data-key="nav_api" class="block py-2.5 text-indTextMuted font-semibold text-[13px] border-b border-indBorder"><i class="fa-solid fa-server w-6 text-center"></i> API RPC</a>
+            <a href="support.html" data-key="nav_support" class="block py-2.5 text-indAccent font-bold text-[13px] bg-sky-50 px-2 rounded border-l-2 border-indAccent mt-1 mb-1"><i class="fa-solid fa-headset w-6 text-center"></i> Support B2B</a>
+            <a href="privacy.html" data-key="nav_privacy" class="block py-2.5 text-indTextMuted font-semibold text-[13px] border-b border-indBorder"><i class="fa-solid fa-shield-halved w-6 text-center"></i> Confidentialité</a>
+            <a href="wallet_cgu.html" data-key="nav_cgu" class="block py-2.5 text-indTextMuted font-semibold text-[13px]"><i class="fa-solid fa-gavel w-6 text-center"></i> Wallet CGU</a>
         </div>
     </header>
 
@@ -343,6 +347,8 @@
                             <li><a href="documentation.html" class="hover:text-indAccent transition-colors flex items-center gap-2"><i class="fa-solid fa-book w-3 text-center"></i> <span data-key="nav_doc">Documentation</span></a></li>
                             <li><a href="api.html" class="hover:text-indAccent transition-colors flex items-center gap-2"><i class="fa-solid fa-server w-3 text-center"></i> <span data-key="nav_api">API RPC</span></a></li>
                             <li><a href="support.html" class="text-indAccent transition-colors flex items-center gap-2"><i class="fa-solid fa-headset w-3 text-center"></i> <span data-key="nav_support">Support B2B</span></a></li>
+                            <li><a href="privacy.html" class="hover:text-indAccent transition-colors flex items-center gap-2"><i class="fa-solid fa-shield-halved w-3 text-center"></i> <span data-key="nav_privacy">Confidentialité</span></a></li>
+                            <li><a href="wallet_cgu.html" class="hover:text-indAccent transition-colors flex items-center gap-2"><i class="fa-solid fa-gavel w-3 text-center"></i> <span data-key="nav_cgu">Wallet CGU</span></a></li>
                         </ul>
                     </div>
 
@@ -377,7 +383,7 @@
             
             <!-- Logo & Brand (Centré) -->
             <div class="flex flex-col items-center justify-center gap-3 mb-6">
-                <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo Atlas & Duc" class="h-16 w-16 rounded-full border-2 border-slate-700 shadow-lg object-cover">
+                <img src="https://i.imgur.com/Tc7Jzx3.jpeg" alt="Logo Atlas & Duc" class="h-16 w-16 rounded-full border-2 border-slate-700 shadow-lg object-cover">
                 <div class="flex flex-col items-center justify-center">
                     <h4 class="text-white font-black text-sm md:text-base tracking-widest uppercase leading-none mb-1.5">Atlas & Duc Corporation</h4>
                     <span data-key="footer_infra" class="text-indAccent text-[9px] font-bold tracking-[0.2em] uppercase">Infrastructure WEB3 Industrielle</span>
@@ -386,10 +392,12 @@
 
             <!-- Liens de Navigation (Centrés) -->
             <div class="flex flex-wrap items-center justify-center gap-5 md:gap-8 text-[11px] font-bold text-slate-400 w-full mb-6">
-                <a href="NexusScan.html" class="hover:text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-house"></i> <span data-key="footer_nav_home">Accueil</span></a>
-                <a href="documentation.html" class="hover:text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-book"></i> <span data-key="footer_nav_doc">DOCS</span></a>
-                <a href="api.html" class="hover:text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-server"></i> <span data-key="footer_nav_api">API RPC</span></a>
-                <a href="support.html" class="text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-headset"></i> <span data-key="footer_nav_support">Support B2B</span></a>
+                <a href="NexusScan.html" data-key="nav_home" class="hover:text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-house"></i> Accueil</a>
+                <a href="documentation.html" data-key="nav_doc" class="hover:text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-book"></i> Documentation</a>
+                <a href="api.html" data-key="nav_api" class="hover:text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-server"></i> API RPC</a>
+                <a href="support.html" data-key="nav_support" class="text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-headset"></i> Support B2B</a>
+                <a href="privacy.html" data-key="nav_privacy" class="hover:text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-shield-halved"></i> Confidentialité</a>
+                <a href="wallet_cgu.html" data-key="nav_cgu" class="hover:text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-gavel"></i> Wallet CGU</a>
             </div>
 
             <!-- Mentions Légales et Statut (Centrées) -->
@@ -481,12 +489,14 @@
                 a4: "Atlas & Duc Corporation est officiellement enregistrée et régulée au Burkina Faso sous le numéro de récépissé PHUE-3539/2025 du 11/07/2025. Les documents légaux peuvent être requis via l'adresse de l'Administration.",
                 footer_text: "Notre engagement est de fournir une infrastructure L1 résiliente et une assistance technique de premier ordre. Que ce soit pour des questions d'intégration JSON-RPC, des requêtes de nœuds validateurs ou de l'ingénierie de smart contracts, le pôle technique d'Atlas & Duc est à votre disposition 24/7.",
                 
-                // Nouveau - Sidebar & Bottom Footer
+                // Sidebar & Bottom Footer
                 nav_gen_title: "Navigation Générale",
-                nav_home: "Accueil (Scan)",
+                nav_home: "Accueil",
                 nav_doc: "Documentation",
                 nav_api: "API RPC",
                 nav_support: "Support B2B",
+                nav_privacy: "Confidentialité",
+                nav_cgu: "Wallet CGU",
                 nav_shortcut_title: "Raccourcis Support",
                 nav_dir: "Annuaire Corporatif",
                 nav_msg: "Messagerie Rapide",
@@ -494,10 +504,6 @@
                 nav_faq: "Base de Connaissances",
                 nav_secure: "Connexion Sécurisée",
                 footer_infra: "Infrastructure WEB3 Industrielle",
-                footer_nav_home: "Accueil",
-                footer_nav_doc: "Documentation",
-                footer_nav_api: "API RPC",
-                footer_nav_support: "Support B2B",
                 footer_status: "Connecté via Nœud Local",
                 footer_copy: "&copy; 2026 Atlas & Duc Corporation. Burkina Faso. Tous droits réservés."
             },
@@ -521,7 +527,7 @@
                 label_whatsapp: "Emergency Line",
                 val_whatsapp: "WhatsApp Message",
                 
-                // New - Fake Requests
+                // Fake Requests
                 tickets_title: "Recent Requests (B2B Tickets)",
                 th_id: "Ticket ID",
                 th_sujet: "Subject",
@@ -548,12 +554,14 @@
                 a4: "Atlas & Duc Corporation is officially registered and regulated in Burkina Faso under receipt number PHUE-3539/2025 dated 07/11/2025. Legal documents can be requested via the Administration address.",
                 footer_text: "Our commitment is to provide a resilient L1 infrastructure and first-class technical assistance. Whether it's for JSON-RPC integration questions, validator node requests, or smart contract engineering, the Atlas & Duc technical hub is at your disposal 24/7.",
                 
-                // New - Sidebar & Bottom Footer
+                // Sidebar & Bottom Footer
                 nav_gen_title: "General Navigation",
-                nav_home: "Home (Scan)",
+                nav_home: "Home",
                 nav_doc: "Documentation",
                 nav_api: "RPC API",
                 nav_support: "B2B Support",
+                nav_privacy: "Privacy Policy",
+                nav_cgu: "Wallet T&C",
                 nav_shortcut_title: "Support Shortcuts",
                 nav_dir: "Corporate Directory",
                 nav_msg: "Quick Messaging",
@@ -561,10 +569,6 @@
                 nav_faq: "Knowledge Base",
                 nav_secure: "Secure Connection",
                 footer_infra: "Industrial WEB3 Infrastructure",
-                footer_nav_home: "Home",
-                footer_nav_doc: "Documentation",
-                footer_nav_api: "RPC API",
-                footer_nav_support: "B2B Support",
                 footer_status: "Connected via Local Node",
                 footer_copy: "&copy; 2026 Atlas & Duc Corporation. Burkina Faso. All rights reserved."
             }
