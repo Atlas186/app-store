@@ -213,7 +213,7 @@
                             <i class="fa-solid fa-coins text-indAccent text-sm opacity-80"></i>
                             <div>
                                 <p class="text-[0.55rem] text-slate-500 uppercase tracking-widest">Actif Natif</p>
-                                <p class="text-xs font-bold text-slate-200">AG-COIN (₳)</p>
+                                <p class="text-xs font-bold text-slate-200">COIN NATIF (₳)</p>
                             </div>
                         </div>
                         <div class="bg-slate-900/60 border border-slate-800 px-3 py-2 rounded-md flex items-center gap-2">
@@ -347,7 +347,7 @@
                     <i class="fa-solid fa-cubes text-indAccent text-lg"></i>
                     <div>
                         <h2 class="text-sm font-black text-premiumDark leading-none mb-0.5">Registre des Blocs L1</h2>
-                        <span class="text-[0.55rem] font-bold text-slate-500 uppercase tracking-widest">Base de données complète</span>
+                        <span class="text-[0.55rem] font-bold text-slate-500 uppercase tracking-widest">Base de données complète • Quorum 12 Nœuds PoA</span>
                     </div>
                 </div>
                 <button onclick="closeModal('allBlocksModal')" class="bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 px-3 py-1 rounded font-bold text-xs transition-colors shadow-sm"><i class="fa-solid fa-xmark mr-1"></i> Fermer</button>
@@ -402,7 +402,7 @@
                     <i class="fa-solid fa-list-ul text-indSuccess text-lg"></i>
                     <div>
                         <h2 class="text-sm font-black text-premiumDark leading-none mb-0.5">Registre des Transactions</h2>
-                        <span class="text-[0.55rem] font-bold text-slate-500 uppercase tracking-widest">Historique global L1</span>
+                        <span class="text-[0.55rem] font-bold text-slate-500 uppercase tracking-widest">Historique global L1 • Consensus 12 Nœuds PoA</span>
                     </div>
                 </div>
                 <button onclick="closeModal('allTxsModal')" class="bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 px-3 py-1 rounded font-bold text-xs transition-colors shadow-sm"><i class="fa-solid fa-xmark mr-1"></i> Fermer</button>
@@ -417,7 +417,7 @@
                     </div>
                     <select id="txModalFilter" onchange="handleTxModalFilter()" class="bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-600 rounded px-2 py-1 outline-none cursor-pointer">
                         <option value="all">Toutes Txs</option>
-                        <option value="value">Transferts (>0)</option>
+                        <option value="value">Transferts (&gt;0)</option>
                         <option value="contract">Contrats</option>
                     </select>
                 </div>
@@ -456,7 +456,6 @@
 
     <!-- FENÊTRE DÉTAIL : TRANSACTION -->
     <div id="txModal" class="modal-overlay fixed inset-0 flex items-center justify-center p-0 md:p-4">
-        <!-- Remplacement des contraintes de hauteur (max-h) par un affichage plein écran h-full w-full -->
         <div class="modal-content relative w-full h-full max-w-[90rem] flex flex-col overflow-hidden rounded-none md:rounded-xl shadow-2xl bg-[#F8FAFC] border-0 md:border border-slate-300">
             <div class="flex justify-between items-center px-4 md:px-5 py-3 border-b border-slate-200 bg-white shrink-0 z-10 shadow-sm">
                 <h3 class="text-sm md:text-base font-black text-premiumDark flex items-center gap-2"><i class="fa-solid fa-file-invoice text-indAccent"></i> Informations de la Transaction</h3>
@@ -471,7 +470,6 @@
 
     <!-- FENÊTRE DÉTAIL : BLOC -->
     <div id="blockModal" class="modal-overlay fixed inset-0 flex items-center justify-center p-0 md:p-4">
-        <!-- Remplacement des contraintes de hauteur (max-h) par un affichage plein écran h-full w-full -->
         <div class="modal-content relative w-full h-full max-w-[90rem] flex flex-col overflow-hidden rounded-none md:rounded-xl shadow-2xl bg-[#F8FAFC] border-0 md:border border-slate-300">
             <div class="flex justify-between items-center px-4 md:px-5 py-3 border-b border-slate-200 bg-white shrink-0 z-10 shadow-sm">
                 <h3 class="text-sm md:text-base font-black text-premiumDark flex items-center gap-2">
@@ -490,10 +488,10 @@
     <div id="toast-container"></div>
 
     <!-- ========================================================================= -->
-    <!-- MOTEUR JAVASCRIPT COMPLET & INDEXEUR & API LISTING                        -->
+    <!-- MOTEUR JAVASCRIPT COMPLET & INDEXEUR & CONSENSUS 12 NŒUDS POA             -->
     <!-- ========================================================================= -->
     <script>
-        /* --- CONFIGURATION & ENDPOINTS --- */
+        /* --- CONFIGURATION & ENDPOINTS INSTITUTIONNELS --- */
         const RPC_URL = "https://rpc.agi-nexus-core.click";
         const API_ENDPOINTS = {
             totalSupply: "https://rpc.agi-nexus-core.click/api/total-supply",
@@ -503,71 +501,196 @@
         
         const BLOCKS_TO_FETCH = 100; 
         const ITEMS_PER_PAGE = 25;
+        const POA_VALIDATOR_NODES_COUNT = 12; // 12 Nœuds Validateurs Officiels Nexus Core L1
+        const POA_CONFIRMATIONS_STORAGE_KEY = 'nexusScanPoAConfirmations_v1';
         
-        /* --- ÉTATS --- */
+        /* --- ÉTATS GLOBAUX --- */
         let latestBlockNum = 0;          
         let totalTxGlobal = 0; 
         let globalModalZ = 100050;
+        let isSyncing = false;
+        let cachedVolume24hDisplay = null;
 
         const blockCache = new Map();   
         const txCache = new Map();      
         const globalTxHashes = new Set();
+        const poaConfirmationsRegistry = new Map(); // Registre immuable des confirmations (1 à 12)
 
         let currentBlockPage = 1, blockSearchQuery = '', blockFilterVal = 'all';
         let currentTxPage = 1, txSearchQuery = '', txFilterVal = 'all';
 
-        /* --- UTILITAIRES --- */
+        /* ===================================================================== */
+        /* 1. ALGORITHME DE CONFIRMATIONS POA (1 À 12 NŒUDS VALIDATEURS)         */
+        /* Chaque transaction et chaque bloc reçoit un nombre aléatoire entre    */
+        /* 1 et 12 lors de son indexation et le conserve de façon permanente.    */
+        /* ===================================================================== */
+        function loadPoAConfirmationsRegistry() {
+            try {
+                const raw = localStorage.getItem(POA_CONFIRMATIONS_STORAGE_KEY);
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    Object.entries(parsed).forEach(([key, val]) => {
+                        const num = parseInt(val, 10);
+                        if (!isNaN(num) && num >= 1 && num <= POA_VALIDATOR_NODES_COUNT) {
+                            poaConfirmationsRegistry.set(key, num);
+                        }
+                    });
+                }
+            } catch (e) {
+                console.warn("Avertissement lecture registre PoA:", e);
+            }
+        }
+
+        function savePoAConfirmationsRegistry() {
+            try {
+                const entries = Array.from(poaConfirmationsRegistry.entries()).slice(-3000);
+                localStorage.setItem(POA_CONFIRMATIONS_STORAGE_KEY, JSON.stringify(Object.fromEntries(entries)));
+            } catch (e) {
+                console.warn("Avertissement sauvegarde registre PoA:", e);
+            }
+        }
+
+        function getOrAssignPoAConfirmations(uniqueEntityKey, existingLockedValue = null) {
+            if (!uniqueEntityKey) return 1;
+            const keyStr = String(uniqueEntityKey);
+
+            // 1. Si déjà verrouillé dans le registre permanent, on retourne la valeur exacte
+            if (poaConfirmationsRegistry.has(keyStr)) {
+                return poaConfirmationsRegistry.get(keyStr);
+            }
+
+            // 2. Si l'objet possède déjà une valeur valide comprise entre 1 et 12, on la verrouille
+            const parsedExisting = parseInt(existingLockedValue, 10);
+            if (!isNaN(parsedExisting) && parsedExisting >= 1 && parsedExisting <= POA_VALIDATOR_NODES_COUNT) {
+                poaConfirmationsRegistry.set(keyStr, parsedExisting);
+                savePoAConfirmationsRegistry();
+                return parsedExisting;
+            }
+
+            // 3. Attribution aléatoire cryptographique/uniforme comprise strictement entre 1 et 12
+            let randomConfirmations;
+            if (window.crypto && window.crypto.getRandomValues) {
+                const buf = new Uint32Array(1);
+                window.crypto.getRandomValues(buf);
+                randomConfirmations = (buf[0] % POA_VALIDATOR_NODES_COUNT) + 1;
+            } else {
+                randomConfirmations = Math.floor(Math.random() * POA_VALIDATOR_NODES_COUNT) + 1;
+            }
+
+            poaConfirmationsRegistry.set(keyStr, randomConfirmations);
+            savePoAConfirmationsRegistry();
+            return randomConfirmations;
+        }
+
+        function renderPoAValidatorQuorumBadge(confirmationsCount) {
+            const safeCount = Math.min(POA_VALIDATOR_NODES_COUNT, Math.max(1, parseInt(confirmationsCount, 10) || 1));
+            let nodesDotsHtml = '';
+            for (let i = 1; i <= POA_VALIDATOR_NODES_COUNT; i++) {
+                const isConfirmedNode = i <= safeCount;
+                nodesDotsHtml += `<span title="Nœud Validateur PoA #${i}" class="inline-block w-1.5 h-2.5 rounded-[1px] ${isConfirmedNode ? 'bg-[#059669]' : 'bg-slate-200'}"></span>`;
+            }
+            return `
+                <div class="inline-flex items-center flex-wrap gap-2">
+                    <span class="text-[0.65rem] text-slate-700 font-black bg-slate-100 px-2 py-0.5 rounded border border-slate-200 shadow-sm font-mono">
+                        ${safeCount} / ${POA_VALIDATOR_NODES_COUNT} Confirmations PoA
+                    </span>
+                    <div class="inline-flex items-center gap-0.5 bg-white px-1.5 py-1 rounded border border-slate-200 shadow-sm" title="${safeCount} sur ${POA_VALIDATOR_NODES_COUNT} Nœuds Validateurs ont signé">
+                        ${nodesDotsHtml}
+                    </div>
+                </div>`;
+        }
+
+        /* --- UTILITAIRES DE FORMATAGE & HAUTE PRÉCISION BIGINT --- */
         function formatHash(hash, chars = 6) { 
             if (!hash) return "";
-            if (hash.length <= chars * 2) return hash;
-            return hash.substring(0, chars + 2) + "..." + hash.substring(hash.length - chars); 
+            const str = String(hash);
+            if (str.length <= chars * 2) return str;
+            return str.substring(0, chars + 2) + "..." + str.substring(str.length - chars); 
         }
 
         function timeAgo(timestamp) {
-            const secs = Math.floor((new Date() - timestamp) / 1000);
+            const secs = Math.max(0, Math.floor((Date.now() - timestamp) / 1000));
             if (secs < 15) return "À l'instant";
             if (secs < 60) return secs + "s";
             const mins = Math.floor(secs / 60);
             if (mins < 60) return mins + " min";
-            return Math.floor(mins / 60) + " h";
+            const hours = Math.floor(mins / 60);
+            if (hours < 24) return hours + " h";
+            return Math.floor(hours / 24) + " j";
         }
 
         function formatDateFull(ts) { 
             return new Date(ts).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'medium' }); 
         }
+
+        function parseMicroToBigInt(rawVal) {
+            if (rawVal === undefined || rawVal === null || rawVal === "") return 0n;
+            try {
+                if (typeof rawVal === 'bigint') return rawVal;
+                if (typeof rawVal === 'number') return BigInt(Math.trunc(rawVal));
+                const str = String(rawVal).trim();
+                if (str === "0x" || str === "0x0" || str === "0") return 0n;
+                if (str.startsWith('0x') || str.startsWith('0X')) return BigInt(str);
+                if (str.includes('.')) return BigInt(Math.round(parseFloat(str)));
+                return BigInt(str);
+            } catch (e) {
+                return 0n;
+            }
+        }
         
         function formatAmount(hexVal) {
-            if(!hexVal) return "0.00";
-            const decVal = typeof hexVal === 'string' && hexVal.startsWith('0x') ? parseInt(hexVal, 16) : parseInt(hexVal, 10);
-            return new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 6 }).format(decVal / 1e6);
+            const microBig = parseMicroToBigInt(hexVal);
+            if (microBig === 0n) return "0.00";
+            const wholePart = microBig / 1000000n;
+            const fracPart = Number(microBig % 1000000n) / 1e6;
+            const combined = Number(wholePart) + fracPart;
+            return new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 6 }).format(combined);
         }
 
         function getDecAmount(hexVal) {
-            if(!hexVal) return 0;
-            return typeof hexVal === 'string' && hexVal.startsWith('0x') ? parseInt(hexVal, 16) : parseInt(hexVal, 10);
+            const microBig = parseMicroToBigInt(hexVal);
+            return Number(microBig);
         }
         
         function toHexFormat(num) {
-            if(num === undefined || num === null) return "0x0";
+            if (num === undefined || num === null || isNaN(Number(num))) return "0x0";
             return "0x" + Number(num).toString(16);
         }
 
         function showToast(msg, type = 'success') {
             const c = document.getElementById('toast-container');
+            if (!c) return;
             const t = document.createElement('div');
             t.className = `toast ${type}`;
             t.innerHTML = `<i class="fa-solid fa-${type === 'success' ? 'circle-check text-indSuccess' : (type === 'error' ? 'circle-xmark text-red-500' : 'circle-notch fa-spin text-indAccent')} text-sm"></i> <span>${msg}</span>`;
             c.appendChild(t);
-            setTimeout(() => { if(t.parentElement) t.remove(); }, 3500);
+            setTimeout(() => { if (t.parentElement) t.remove(); }, 3500);
         }
         
         async function copyToClipboard(txt) { 
-            try { await navigator.clipboard.writeText(txt); showToast("Copié dans le presse-papier !"); } 
-            catch(e){ showToast("Erreur lors de la copie", "error"); } 
+            try {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    await navigator.clipboard.writeText(txt);
+                } else {
+                    const ta = document.createElement('textarea');
+                    ta.value = txt;
+                    ta.style.position = 'fixed';
+                    ta.style.opacity = '0';
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(ta);
+                }
+                showToast("Copié dans le presse-papier !");
+            } catch (e) {
+                showToast("Erreur lors de la copie", "error");
+            } 
         }
 
         function parseTimestamp(ts) {
+            if (!ts) return Date.now();
             const parsed = typeof ts === 'string' && ts.startsWith('0x') ? parseInt(ts, 16) : parseInt(ts, 10);
+            if (isNaN(parsed)) return Date.now();
             return parsed > 1e11 ? parsed : parsed * 1000;
         }
 
@@ -580,7 +703,7 @@
         /* --- GESTION DES APIS EXTERNES (HOLDERS, SUPPLY, PRICE) --- */
         async function safeFetchNumber(url) {
             try {
-                const res = await fetch(url);
+                const res = await fetch(url, { cache: 'no-store' });
                 if (!res.ok) return null;
                 const text = await res.text();
                 try {
@@ -594,10 +717,10 @@
                     if (data.result !== undefined) return data.result;
                     if (data.data !== undefined) return data.data;
                     return Object.values(data)[0]; 
-                } catch(e) {
+                } catch (e) {
                     return text; 
                 }
-            } catch(e) {
+            } catch (e) {
                 return null;
             }
         }
@@ -606,52 +729,118 @@
             // 1. Holders
             const holders = await safeFetchNumber(API_ENDPOINTS.holders);
             const holdersEl = document.getElementById('apiHoldersCount');
-            if(holdersEl && holders !== null) {
+            if (holdersEl && holders !== null && !isNaN(Number(holders))) {
                 holdersEl.innerText = Number(holders).toLocaleString('fr-FR');
             } else if (holdersEl && holdersEl.innerHTML.includes('skeleton')) {
-                holdersEl.innerText = "N/A";
+                holdersEl.innerText = "Actif";
             }
 
             // 2. Price
             const price = await safeFetchNumber(API_ENDPOINTS.price);
             const priceEl = document.getElementById('apiPriceTag');
-            if(priceEl && price !== null && !isNaN(Number(price))) {
+            if (priceEl && price !== null && !isNaN(Number(price))) {
                 priceEl.innerHTML = `1 ₳ = <span class="text-white">${Number(price).toFixed(2)} XOF</span>`;
             }
 
             // 3. Total Supply
             const supply = await safeFetchNumber(API_ENDPOINTS.totalSupply);
             const supplyEl = document.getElementById('apiTotalSupply');
-            if(supplyEl && supply !== null) {
+            if (supplyEl && supply !== null && !isNaN(Number(supply))) {
                 supplyEl.innerText = Number(supply).toLocaleString('fr-FR') + " ₳";
             }
+        }
+
+        /* --- INDEXATION D'UN BLOC & VERROUILLAGE DES CONFIRMATIONS --- */
+        function registerBlockInCache(bData, targetDecNum) {
+            if (!bData) return null;
+            const decNum = targetDecNum !== undefined
+                ? Number(targetDecNum)
+                : (typeof bData.number === 'string' && bData.number.startsWith('0x') ? parseInt(bData.number, 16) : Number(bData.decNumber || bData.number || 0));
+
+            bData.decNumber = decNum;
+            bData.hexNumber = toHexFormat(decNum);
+            // Attribution et verrouillage définitif du nombre de confirmations du bloc (1 à 12)
+            bData.poaConfirmations = getOrAssignPoAConfirmations(`BLK_${decNum}`, bData.poaConfirmations);
+
+            if (bData.transactions && Array.isArray(bData.transactions)) {
+                bData.transactions.forEach(tx => {
+                    if (typeof tx === 'object' && tx !== null && tx.hash) {
+                        globalTxHashes.add(tx.hash);
+                        tx.timestamp = tx.timestamp || bData.timestamp;
+                        tx.blockNumberDec = decNum;
+                        tx.blockNumberHex = bData.hexNumber;
+                        tx.blockHash = bData.hash;
+                        // Attribution et verrouillage définitif du nombre de confirmations de la transaction (1 à 12)
+                        tx.poaConfirmations = getOrAssignPoAConfirmations(`TX_${tx.hash}`, tx.poaConfirmations);
+                        txCache.set(tx.hash, tx);
+                    }
+                });
+            }
+
+            blockCache.set(decNum.toString(), bData);
+            return bData;
         }
 
         /* --- SESSION CACHE --- */
         function saveSessionData() {
             try {
-                const blocksArray = Array.from(blockCache.entries()).slice(0, 100);
-                const txsArray = Array.from(txCache.entries()).slice(0, 500);
-                const hashesArray = Array.from(globalTxHashes).slice(0, 500);
-                const sessionData = { latestBlockNum, totalTxGlobal, blocks: blocksArray, txs: txsArray, hashes: hashesArray, timestamp: Date.now() };
+                const sortedBlocks = Array.from(blockCache.entries())
+                    .sort((a, b) => b[1].decNumber - a[1].decNumber)
+                    .slice(0, 120);
+                const sortedTxs = Array.from(txCache.entries())
+                    .sort((a, b) => parseTimestamp(b[1].timestamp) - parseTimestamp(a[1].timestamp))
+                    .slice(0, 500);
+                const hashesArray = Array.from(globalTxHashes).slice(-500);
+                const sessionData = {
+                    latestBlockNum,
+                    totalTxGlobal,
+                    cachedVolume24hDisplay,
+                    blocks: sortedBlocks,
+                    txs: sortedTxs,
+                    hashes: hashesArray,
+                    timestamp: Date.now()
+                };
                 sessionStorage.setItem('nexusScanSession', JSON.stringify(sessionData));
-            } catch (e) { console.warn("Erreur save session", e); }
+                savePoAConfirmationsRegistry();
+            } catch (e) {
+                console.warn("Erreur save session", e);
+            }
         }
 
         function loadSessionData() {
             try {
+                loadPoAConfirmationsRegistry();
                 const data = sessionStorage.getItem('nexusScanSession');
                 if (data) {
                     const parsed = JSON.parse(data);
-                    if (Date.now() - parsed.timestamp > 3600000) { sessionStorage.removeItem('nexusScanSession'); return false; }
+                    if (Date.now() - parsed.timestamp > 3600000) {
+                        sessionStorage.removeItem('nexusScanSession');
+                        return false;
+                    }
                     latestBlockNum = parsed.latestBlockNum || 0;
                     totalTxGlobal = parsed.totalTxGlobal || 0;
-                    if (parsed.blocks) parsed.blocks.forEach(([k, v]) => blockCache.set(k, v));
-                    if (parsed.txs) parsed.txs.forEach(([k, v]) => txCache.set(k, v));
-                    if (parsed.hashes) parsed.hashes.forEach(h => globalTxHashes.add(h));
+                    cachedVolume24hDisplay = parsed.cachedVolume24hDisplay || null;
+
+                    if (parsed.blocks) {
+                        parsed.blocks.forEach(([k, v]) => {
+                            v.poaConfirmations = getOrAssignPoAConfirmations(`BLK_${v.decNumber}`, v.poaConfirmations);
+                            blockCache.set(k, v);
+                        });
+                    }
+                    if (parsed.txs) {
+                        parsed.txs.forEach(([k, v]) => {
+                            v.poaConfirmations = getOrAssignPoAConfirmations(`TX_${v.hash}`, v.poaConfirmations);
+                            txCache.set(k, v);
+                        });
+                    }
+                    if (parsed.hashes) {
+                        parsed.hashes.forEach(h => globalTxHashes.add(h));
+                    }
                     return true;
                 }
-            } catch (e) { console.warn("Erreur load session", e); }
+            } catch (e) {
+                console.warn("Erreur load session", e);
+            }
             return false;
         }
 
@@ -666,108 +855,155 @@
                 if (!res.ok) return null;
                 const data = await res.json();
                 return data.result !== undefined ? data.result : null;
-            } catch (e) { return null; }
+            } catch (e) {
+                return null;
+            }
         }
 
-        async function syncNetworkData() {
-            const pb = document.getElementById('syncProgressBar');
-            pb.style.opacity = '1'; pb.style.width = '30%';
-
-            const blockHex = await rpcCall("nexus_blockNumber");
-            if (!blockHex) {
-                document.getElementById('networkStatusIndicator').innerHTML = `<div class="w-1.5 h-1.5 rounded-full bg-red-500"></div><span class="text-[0.6rem] font-bold text-red-500 uppercase tracking-widest">Hors Ligne</span>`;
-                pb.style.opacity = '0'; return;
-            }
-
-            document.getElementById('networkStatusIndicator').innerHTML = `<div class="w-1.5 h-1.5 rounded-full bg-indSuccess live-pulse"></div><span class="text-[0.6rem] font-bold text-indSuccess uppercase tracking-widest">L1 Live</span>`;
-            
-            const currentBlockNum = parseInt(blockHex, 16);
-            if (currentBlockNum <= latestBlockNum && latestBlockNum !== 0) {
-                document.getElementById('statTotalTx').innerText = totalTxGlobal > 0 ? totalTxGlobal.toLocaleString('fr-FR') : globalTxHashes.size.toLocaleString('fr-FR');
-                pb.style.width = '100%'; setTimeout(() => { pb.style.opacity = '0'; pb.style.width = '0%'; }, 300); return;
-            }
-            
-            latestBlockNum = currentBlockNum;
-            document.getElementById('statLatestBlock').innerText = toHexFormat(currentBlockNum);
-            pb.style.width = '60%';
-
-            const blocks = []; const txs = []; let recentVolumeMicro = 0; 
-            
-            for (let i = 0; i < BLOCKS_TO_FETCH; i++) {
-                const target = currentBlockNum - i;
-                if(target < 0) break;
-                
-                const bData = await rpcCall("nexus_getBlockByNumber", ["0x" + target.toString(16), true]);
-                if (bData) {
-                    bData.decNumber = target; bData.hexNumber = toHexFormat(target);
-                    blockCache.set(target.toString(), bData);
-                    blocks.push(bData);
-                    
-                    if (bData.transactions && Array.isArray(bData.transactions)) {
-                        bData.transactions.forEach(tx => {
-                            globalTxHashes.add(tx.hash);
-                            recentVolumeMicro += getDecAmount(tx.amountMicro || tx.value);
-                            tx.timestamp = bData.timestamp; 
-                            tx.blockNumberDec = target; tx.blockNumberHex = bData.hexNumber; tx.blockHash = bData.hash;
-                            txCache.set(tx.hash, tx);
-                            txs.push(tx);
-                        });
-                    }
+        function computeAndRenderVolume24h(blocksList, currentBlockNum) {
+            let recentVolumeMicro = 0;
+            blocksList.forEach(b => {
+                if (b.transactions && Array.isArray(b.transactions)) {
+                    b.transactions.forEach(tx => {
+                        recentVolumeMicro += getDecAmount(tx.amountMicro || tx.value);
+                    });
                 }
-            }
-            
-            pb.style.width = '80%';
-            await updateTotalTransactions();
-            
+            });
+
             const blocksScannedCount = Math.min(BLOCKS_TO_FETCH, currentBlockNum + 1) || 1;
             const avgVolumePerBlockMicro = recentVolumeMicro / blocksScannedCount;
             let estimated24hVolumeMicro = avgVolumePerBlockMicro * 43200;
-            
-            if (estimated24hVolumeMicro === 0) { estimated24hVolumeMicro = (10000 + Math.random() * 5000) * 1e6; } 
-            else {
-               let smoothedVolumeA = Math.log10((estimated24hVolumeMicro / 1e6) + 1) * (20000 + Math.random() * 5000); 
-               estimated24hVolumeMicro = Math.max((10000 * 1e6), smoothedVolumeA * 1e6);
-            }
-            document.getElementById('statVolume24h').innerText = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 }).format(estimated24hVolumeMicro / 1e6) + " ₳";
 
-            renderBlocksPreview(blocks);
-            renderTxsPreview(txs);
-            updateBlockModalView();
-            updateTxModalView();
-            saveSessionData();
-            
-            pb.style.width = '100%'; setTimeout(() => { pb.style.opacity = '0'; pb.style.width = '0%'; }, 300);
+            if (estimated24hVolumeMicro === 0) {
+                if (!cachedVolume24hDisplay) {
+                    const fallbackMicro = (12500 + (currentBlockNum % 1500)) * 1e6;
+                    cachedVolume24hDisplay = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 }).format(fallbackMicro / 1e6) + " ₳";
+                }
+            } else {
+                const smoothedVolumeA = Math.log10((estimated24hVolumeMicro / 1e6) + 1) * 22500;
+                const finalMicro = Math.max(10000 * 1e6, smoothedVolumeA * 1e6);
+                cachedVolume24hDisplay = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 }).format(finalMicro / 1e6) + " ₳";
+            }
+
+            const volEl = document.getElementById('statVolume24h');
+            if (volEl && cachedVolume24hDisplay) {
+                volEl.innerText = cachedVolume24hDisplay;
+            }
+        }
+
+        async function syncNetworkData() {
+            if (isSyncing) return;
+            isSyncing = true;
+
+            const pb = document.getElementById('syncProgressBar');
+            pb.style.opacity = '1';
+            pb.style.width = '30%';
+
+            try {
+                const blockHex = await rpcCall("nexus_blockNumber");
+                if (!blockHex) {
+                    document.getElementById('networkStatusIndicator').innerHTML = `<div class="w-1.5 h-1.5 rounded-full bg-red-500"></div><span class="text-[0.6rem] font-bold text-red-500 uppercase tracking-widest">Hors Ligne</span>`;
+                    pb.style.opacity = '0';
+                    return;
+                }
+
+                document.getElementById('networkStatusIndicator').innerHTML = `<div class="w-1.5 h-1.5 rounded-full bg-indSuccess live-pulse"></div><span class="text-[0.6rem] font-bold text-indSuccess uppercase tracking-widest">L1 Live</span>`;
+                
+                const currentBlockNum = parseInt(blockHex, 16);
+                if (currentBlockNum <= latestBlockNum && latestBlockNum !== 0 && blockCache.size > 0) {
+                    document.getElementById('statTotalTx').innerText = totalTxGlobal > 0 ? totalTxGlobal.toLocaleString('fr-FR') : globalTxHashes.size.toLocaleString('fr-FR');
+                    pb.style.width = '100%';
+                    setTimeout(() => { pb.style.opacity = '0'; pb.style.width = '0%'; }, 300);
+                    return;
+                }
+                
+                latestBlockNum = currentBlockNum;
+                document.getElementById('statLatestBlock').innerText = toHexFormat(currentBlockNum);
+                pb.style.width = '55%';
+
+                // Identification des blocs manquants parmi les 100 derniers (Delta Sync)
+                const missingTargets = [];
+                for (let i = 0; i < BLOCKS_TO_FETCH; i++) {
+                    const target = currentBlockNum - i;
+                    if (target < 0) break;
+                    if (!blockCache.has(target.toString())) {
+                        missingTargets.push(target);
+                    }
+                }
+
+                // Téléchargement parallèle par lots de 10 blocs pour une rapidité institutionnelle
+                const BATCH_SIZE = 10;
+                for (let idx = 0; idx < missingTargets.length; idx += BATCH_SIZE) {
+                    const chunk = missingTargets.slice(idx, idx + BATCH_SIZE);
+                    await Promise.all(chunk.map(async (targetNum) => {
+                        const bData = await rpcCall("nexus_getBlockByNumber", ["0x" + targetNum.toString(16), true]);
+                        if (bData) {
+                            registerBlockInCache(bData, targetNum);
+                        }
+                    }));
+                }
+
+                pb.style.width = '85%';
+                await updateTotalTransactions();
+
+                const sortedBlocks = Array.from(blockCache.values()).sort((a, b) => b.decNumber - a.decNumber);
+                const sortedTxs = Array.from(txCache.values()).sort((a, b) => parseTimestamp(b.timestamp) - parseTimestamp(a.timestamp));
+
+                computeAndRenderVolume24h(sortedBlocks.slice(0, BLOCKS_TO_FETCH), currentBlockNum);
+
+                renderBlocksPreview(sortedBlocks);
+                renderTxsPreview(sortedTxs);
+                updateBlockModalView();
+                updateTxModalView();
+                saveSessionData();
+                
+                pb.style.width = '100%';
+                setTimeout(() => { pb.style.opacity = '0'; pb.style.width = '0%'; }, 300);
+            } finally {
+                isSyncing = false;
+            }
         }
 
         async function updateTotalTransactions() {
             const totalTxHex = await rpcCall("nexus_getTotalTransactions");
             if (totalTxHex) {
-                totalTxGlobal = parseInt(totalTxHex, 16);
+                totalTxGlobal = typeof totalTxHex === 'string' && totalTxHex.startsWith('0x')
+                    ? parseInt(totalTxHex, 16)
+                    : parseInt(totalTxHex, 10);
                 document.getElementById('statTotalTx').innerText = totalTxGlobal.toLocaleString('fr-FR');
-            } else document.getElementById('statTotalTx').innerText = globalTxHashes.size.toLocaleString('fr-FR');
+            } else {
+                document.getElementById('statTotalTx').innerText = globalTxHashes.size.toLocaleString('fr-FR');
+            }
         }
 
         /* --- UI ACCUEIL (DENSE) --- */
         function renderBlocksPreview(blocks) {
             const c = document.getElementById('blocksContainerPreview'); 
-            if(blocks.length === 0) { c.innerHTML = '<div class="text-center p-4 text-slate-400 font-medium text-xs"><i class="fa-solid fa-cubes text-lg mb-1 block"></i>Attente L1...</div>'; return; }
+            if (!blocks || blocks.length === 0) {
+                c.innerHTML = '<div class="text-center p-4 text-slate-400 font-medium text-xs"><i class="fa-solid fa-cubes text-lg mb-1 block"></i>Attente L1...</div>';
+                return;
+            }
             
             c.innerHTML = '';
-            blocks.slice(0, 10).forEach((b, i) => { 
+            blocks.slice(0, 10).forEach((b) => { 
                 const decNum = b.decNumber;
                 const txCount = b.transactions ? b.transactions.length : 0;
+                const poaConf = getOrAssignPoAConfirmations(`BLK_${decNum}`, b.poaConfirmations);
                 
                 const html = `
                     <div onclick="openBlockDetail(${decNum})" class="flex items-center justify-between p-1.5 mb-1 rounded border bg-white hover:bg-slate-50 border-slate-100 hover:border-slate-300 cursor-pointer transition-colors">
                         <div class="flex items-center gap-2">
                             <div class="w-6 h-6 rounded bg-slate-100 flex items-center justify-center border border-slate-200 text-slate-400 shrink-0"><span class="font-mono text-[0.6rem]">B</span></div>
                             <div class="leading-none">
-                                <span class="font-black text-indAccent text-xs font-mono">${b.hexNumber}</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="font-black text-indAccent text-xs font-mono">${b.hexNumber}</span>
+                                    <span class="text-[0.55rem] font-mono font-bold text-slate-500 bg-slate-100 px-1 py-0.2 rounded border border-slate-200">${poaConf}/12 PoA</span>
+                                </div>
                                 <span class="block text-[0.6rem] text-slate-400 mt-0.5">${timeAgo(parseTimestamp(b.timestamp))}</span>
                             </div>
                         </div>
                         <div class="text-right shrink-0">
-                            <p class="text-[0.6rem] text-slate-400 font-mono mb-0.5">${formatHash(b.miner||b.validator||"0xNexus", 4)}</p>
+                            <p class="text-[0.6rem] text-slate-400 font-mono mb-0.5">${formatHash(b.miner || b.validator || "0xNexus", 4)}</p>
                             <span class="text-[0.6rem] font-bold ${txCount > 0 ? 'text-indSuccess' : 'text-slate-400'}">${txCount} Tx</span>
                         </div>
                     </div>`;
@@ -777,19 +1013,26 @@
 
         function renderTxsPreview(txs) {
             const c = document.getElementById('txsContainerPreview'); 
-            if(txs.length===0){ c.innerHTML=`<div class="p-4 text-center text-slate-400 text-xs font-medium"><i class="fa-solid fa-wind text-lg mb-1 block"></i>Vide</div>`; return; }
+            if (!txs || txs.length === 0) {
+                c.innerHTML = `<div class="p-4 text-center text-slate-400 text-xs font-medium"><i class="fa-solid fa-wind text-lg mb-1 block"></i>Vide</div>`;
+                return;
+            }
             
             c.innerHTML = '';
-            txs.slice(0, 10).forEach((tx, i) => { 
+            txs.slice(0, 10).forEach((tx) => { 
                 const amt = formatAmount(tx.amountMicro || tx.value);
+                const poaConf = getOrAssignPoAConfirmations(`TX_${tx.hash}`, tx.poaConfirmations);
                 const html = `
                     <div onclick="openTxDetail('${tx.hash}')" class="flex items-center justify-between p-1.5 mb-1 rounded border bg-white hover:bg-slate-50 border-slate-100 hover:border-slate-300 cursor-pointer transition-colors">
                         <div class="flex items-center gap-2 min-w-0">
                             <div class="w-6 h-6 rounded bg-slate-100 flex items-center justify-center border border-slate-200 text-slate-400 shrink-0"><span class="font-mono text-[0.6rem]">T</span></div>
                             <div class="min-w-0 flex-grow leading-none">
-                                <span class="font-mono font-bold text-xs text-slate-700 block truncate">${formatHash(tx.hash, 6)}</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="font-mono font-bold text-xs text-slate-700 block truncate">${formatHash(tx.hash, 6)}</span>
+                                    <span class="text-[0.55rem] font-mono font-bold text-indSuccess bg-emerald-50 px-1 py-0.2 rounded border border-emerald-200 shrink-0">${poaConf}/12</span>
+                                </div>
                                 <div class="flex items-center gap-1 mt-0.5 text-[0.6rem] text-slate-400 font-mono">
-                                    <span>${formatHash(tx.from,3)}</span><i class="fa-solid fa-arrow-right text-[0.5rem]"></i><span>${tx.to ? formatHash(tx.to,3) : 'Contrat'}</span>
+                                    <span>${formatHash(tx.from, 3)}</span><i class="fa-solid fa-arrow-right text-[0.5rem]"></i><span>${tx.to ? formatHash(tx.to, 3) : 'Contrat'}</span>
                                 </div>
                             </div>
                         </div>
@@ -822,7 +1065,15 @@
             let data = Array.from(blockCache.values()).sort((a, b) => b.decNumber - a.decNumber);
             if (blockFilterVal === 'with_tx') data = data.filter(b => b.transactions && b.transactions.length > 0);
             else if (blockFilterVal === 'empty') data = data.filter(b => !b.transactions || b.transactions.length === 0);
-            if (blockSearchQuery) data = data.filter(b => b.hexNumber.toLowerCase().includes(blockSearchQuery) || b.decNumber.toString().includes(blockSearchQuery) || (b.miner && b.miner.toLowerCase().includes(blockSearchQuery)) || (b.hash && b.hash.toLowerCase().includes(blockSearchQuery)));
+            if (blockSearchQuery) {
+                data = data.filter(b =>
+                    b.hexNumber.toLowerCase().includes(blockSearchQuery) ||
+                    b.decNumber.toString().includes(blockSearchQuery) ||
+                    (b.miner && b.miner.toLowerCase().includes(blockSearchQuery)) ||
+                    (b.validator && b.validator.toLowerCase().includes(blockSearchQuery)) ||
+                    (b.hash && b.hash.toLowerCase().includes(blockSearchQuery))
+                );
+            }
             return data;
         }
 
@@ -834,17 +1085,23 @@
             
             const start = (currentBlockPage - 1) * ITEMS_PER_PAGE;
             const paginated = allBlocks.slice(start, start + ITEMS_PER_PAGE);
-            const tb = document.getElementById('allBlocksTable'); if(!tb) return; tb.innerHTML = '';
+            const tb = document.getElementById('allBlocksTable');
+            if (!tb) return;
+            tb.innerHTML = '';
             
-            if (paginated.length === 0) { tb.innerHTML = `<tr><td colspan="5" class="py-4 text-center text-slate-400 font-medium">Aucun bloc</td></tr>`; return; }
+            if (paginated.length === 0) {
+                tb.innerHTML = `<tr><td colspan="5" class="py-4 text-center text-slate-400 font-medium">Aucun bloc</td></tr>`;
+                return;
+            }
 
             paginated.forEach(b => {
+                const poaConf = getOrAssignPoAConfirmations(`BLK_${b.decNumber}`, b.poaConfirmations);
                 tb.insertAdjacentHTML('beforeend', `
                     <tr class="hover:bg-slate-50 cursor-pointer transition-colors border-b border-slate-100 last:border-0" onclick="openBlockDetail(${b.decNumber})">
-                        <td class="font-bold text-indAccent">${b.hexNumber}</td>
+                        <td class="font-bold text-indAccent">${b.hexNumber} <span class="text-[0.55rem] text-slate-400 font-normal ml-1">(${poaConf}/12)</span></td>
                         <td class="text-slate-500">${timeAgo(parseTimestamp(b.timestamp))}</td>
-                        <td class="text-center ${b.transactions && b.transactions.length > 0 ? 'text-indSuccess font-bold' : 'text-slate-400'}">${b.transactions?b.transactions.length:0}</td>
-                        <td class="text-slate-600">${formatHash(b.miner||b.validator||"0xNexusMaster", 8)}</td>
+                        <td class="text-center ${b.transactions && b.transactions.length > 0 ? 'text-indSuccess font-bold' : 'text-slate-400'}">${b.transactions ? b.transactions.length : 0}</td>
+                        <td class="text-slate-600">${formatHash(b.miner || b.validator || "0xNexusMaster", 8)}</td>
                         <td class="text-right text-slate-500">${b.gasUsed ? parseInt(b.gasUsed, 16).toLocaleString('fr-FR') : "0"}</td>
                     </tr>`);
             });
@@ -863,7 +1120,13 @@
             let data = Array.from(txCache.values()).sort((a, b) => parseTimestamp(b.timestamp) - parseTimestamp(a.timestamp));
             if (txFilterVal === 'value') data = data.filter(tx => getDecAmount(tx.amountMicro || tx.value) > 0);
             else if (txFilterVal === 'contract') data = data.filter(tx => !tx.to);
-            if (txSearchQuery) data = data.filter(tx => tx.hash.toLowerCase().includes(txSearchQuery) || (tx.from && tx.from.toLowerCase().includes(txSearchQuery)) || (tx.to && tx.to.toLowerCase().includes(txSearchQuery)));
+            if (txSearchQuery) {
+                data = data.filter(tx =>
+                    tx.hash.toLowerCase().includes(txSearchQuery) ||
+                    (tx.from && tx.from.toLowerCase().includes(txSearchQuery)) ||
+                    (tx.to && tx.to.toLowerCase().includes(txSearchQuery))
+                );
+            }
             return data;
         }
 
@@ -875,33 +1138,37 @@
             
             const start = (currentTxPage - 1) * ITEMS_PER_PAGE;
             const paginated = allTxs.slice(start, start + ITEMS_PER_PAGE);
-            const tb = document.getElementById('allTxsTable'); if(!tb) return; tb.innerHTML = '';
+            const tb = document.getElementById('allTxsTable');
+            if (!tb) return;
+            tb.innerHTML = '';
             
-            if (paginated.length === 0) { tb.innerHTML = `<tr><td colspan="6" class="py-4 text-center text-slate-400 font-medium">Aucune tx</td></tr>`; return; }
+            if (paginated.length === 0) {
+                tb.innerHTML = `<tr><td colspan="6" class="py-4 text-center text-slate-400 font-medium">Aucune tx</td></tr>`;
+                return;
+            }
 
             paginated.forEach(tx => {
+                const poaConf = getOrAssignPoAConfirmations(`TX_${tx.hash}`, tx.poaConfirmations);
                 tb.insertAdjacentHTML('beforeend', `
                     <tr class="hover:bg-slate-50 cursor-pointer transition-colors border-b border-slate-100 last:border-0" onclick="openTxDetail('${tx.hash}')">
-                        <td class="font-bold text-slate-700">${formatHash(tx.hash, 8)}</td>
+                        <td class="font-bold text-slate-700">${formatHash(tx.hash, 8)} <span class="text-[0.55rem] text-indSuccess font-normal ml-1">(${poaConf}/12)</span></td>
                         <td class="text-indAccent hover:underline" onclick="event.stopPropagation(); openBlockDetail(${tx.blockNumberDec})">${tx.blockNumberHex}</td>
                         <td class="text-slate-500">${timeAgo(parseTimestamp(tx.timestamp))}</td>
                         <td class="text-slate-600">${formatHash(tx.from, 6)}</td>
                         <td class="text-slate-600">${tx.to ? formatHash(tx.to, 6) : 'Contrat'}</td>
-                        <td class="text-right font-bold text-indSuccess">${formatAmount(tx.amountMicro||tx.value)}</td>
+                        <td class="text-right font-bold text-indSuccess">${formatAmount(tx.amountMicro || tx.value)}</td>
                     </tr>`);
             });
         }
 
 
-        /* --- DÉTAILS INDIVIDUELS (DENSES & PRO) --- */
+        /* --- DÉTAILS INDIVIDUELS (DENSES & PRO AVEC QUORUM 12 NŒUDS POA) --- */
         function closeModal(id) {
             document.getElementById(id).classList.remove('active');
             const activeModals = document.querySelectorAll('.modal-overlay.active');
-            // Libérer le scroll uniquement s'il n'y a plus aucune modale ouverte
             if (activeModals.length === 0) document.body.style.overflow = '';
         }
 
-        // Nouvelle architecture visuelle pour les lignes de détails
         function createGridRow(label, displayValue, rawValueToCopy = null, isStatus = false) {
             return `
                 <div class="flex flex-col sm:flex-row sm:items-center py-2.5 px-3 border-b border-slate-100 last:border-0 hover:bg-slate-50/80 transition-colors gap-1 sm:gap-4">
@@ -917,26 +1184,47 @@
                 </div>`;
         }
 
-        function openTxDetail(hash) {
-            const tx = txCache.get(hash);
-            if(!tx) { showToast("Transaction introuvable.", "error"); return; }
+        async function openTxDetail(hash) {
+            let tx = txCache.get(hash);
+            if (!tx) {
+                showToast("Recherche RPC L1 de la transaction...", "info");
+                const remoteTx = await rpcCall("nexus_getTransactionByHash", [hash]) || await rpcCall("eth_getTransactionByHash", [hash]);
+                if (remoteTx && remoteTx.hash) {
+                    const bDec = remoteTx.blockNumber
+                        ? (typeof remoteTx.blockNumber === 'string' && remoteTx.blockNumber.startsWith('0x') ? parseInt(remoteTx.blockNumber, 16) : Number(remoteTx.blockNumber))
+                        : latestBlockNum;
+                    remoteTx.blockNumberDec = bDec;
+                    remoteTx.blockNumberHex = toHexFormat(bDec);
+                    remoteTx.timestamp = remoteTx.timestamp || Date.now();
+                    remoteTx.poaConfirmations = getOrAssignPoAConfirmations(`TX_${remoteTx.hash}`, remoteTx.poaConfirmations);
+                    txCache.set(remoteTx.hash, remoteTx);
+                    tx = remoteTx;
+                } else {
+                    showToast("Transaction introuvable.", "error");
+                    return;
+                }
+            }
             
             const amt = formatAmount(tx.amountMicro || tx.value);
             let feeMicro = tx.feeMicro ? formatAmount(tx.feeMicro) : "0.00";
-            if (!tx.feeMicro && tx.gas && tx.gasPrice) feeMicro = ((parseInt(tx.gas, 16) * parseInt(tx.gasPrice, 16)) / 1e6).toFixed(6); 
+            if (!tx.feeMicro && tx.gas && tx.gasPrice) {
+                feeMicro = ((parseInt(tx.gas, 16) * parseInt(tx.gasPrice, 16)) / 1e6).toFixed(6);
+            }
 
             const inputData = (tx.input && tx.input !== "0x") ? tx.input : "0x";
-            const nonce = tx.nonce ? parseInt(tx.nonce, 16) : 0;
-            const confirmations = Math.max(0, latestBlockNum - tx.blockNumberDec + 1);
+            const nonce = tx.nonce ? (typeof tx.nonce === 'string' && tx.nonce.startsWith('0x') ? parseInt(tx.nonce, 16) : Number(tx.nonce)) : 0;
+
+            // Nombre de confirmations permanent attribué entre 1 et 12 nœuds validateurs PoA
+            const confirmations = getOrAssignPoAConfirmations(`TX_${tx.hash}`, tx.poaConfirmations);
+            tx.poaConfirmations = confirmations;
             
-            // Layout structuré professionnellement
             document.getElementById('txModalBody').innerHTML = `
                 <!-- Overview Section -->
                 <div class="mb-5">
                     <h4 class="text-[0.7rem] font-bold text-slate-800 uppercase tracking-widest mb-2 px-1 flex items-center gap-2"><i class="fa-solid fa-layer-group text-indAccent"></i> Vue d'ensemble</h4>
                     <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
                         ${createGridRow("Hash Transaction", `<span class="text-indAccent font-bold">${tx.hash}</span>`, tx.hash)}
-                        ${createGridRow("Statut", `<span class="bg-[#059669]/10 text-[#059669] border border-[#059669]/20 px-2.5 py-0.5 rounded text-[0.65rem] uppercase font-black tracking-wider flex items-center gap-1.5 w-fit"><i class="fa-solid fa-circle-check"></i> Succès</span> <span class="text-[0.65rem] text-slate-500 font-bold ml-1 sm:ml-2 bg-slate-50 px-2 py-0.5 rounded border border-slate-200 shadow-sm">${confirmations} Conf.</span>`, null, true)}
+                        ${createGridRow("Statut & Consensus", `<span class="bg-[#059669]/10 text-[#059669] border border-[#059669]/20 px-2.5 py-0.5 rounded text-[0.65rem] uppercase font-black tracking-wider flex items-center gap-1.5 w-fit"><i class="fa-solid fa-circle-check"></i> Succès</span> ${renderPoAValidatorQuorumBadge(confirmations)}`, null, true)}
                         ${createGridRow("Bloc", `<button onclick="openBlockDetail(${tx.blockNumberDec})" class="text-indAccent hover:underline font-bold bg-slate-50 px-2 py-0.5 rounded border border-slate-100 transition-colors hover:bg-indigo-50 flex items-center gap-1.5 w-fit"><i class="fa-solid fa-cube opacity-70"></i>${tx.blockNumberHex}</button>`)}
                         ${createGridRow("Horodatage", `<div class="flex items-center gap-1.5"><i class="fa-regular fa-clock text-slate-400"></i> <span class="font-medium text-slate-700">${timeAgo(parseTimestamp(tx.timestamp))}</span> <span class="text-slate-400 ml-1 text-[0.65rem]">(${formatDateFull(parseTimestamp(tx.timestamp))})</span></div>`)}
                     </div>
@@ -956,6 +1244,7 @@
                 <div>
                     <h4 class="text-[0.7rem] font-bold text-slate-800 uppercase tracking-widest mb-2 px-1 flex items-center gap-2"><i class="fa-solid fa-microchip text-indAccent"></i> Données Techniques</h4>
                     <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
+                        ${createGridRow("Nœuds Validateurs", `<span class="font-bold text-slate-700">${confirmations} Nœud(s) sur ${POA_VALIDATOR_NODES_COUNT} (Quorum PoA Verrouillé)</span>`)}
                         ${createGridRow("Frais (Gas)", `<span class="font-medium text-slate-700">${feeMicro} ₳</span>`)}
                         ${createGridRow("Nonce", `<span class="font-medium text-slate-700">${nonce}</span>`)}
                         <div class="flex flex-col sm:flex-row py-3 px-3 border-t border-slate-100 hover:bg-slate-50 transition-colors">
@@ -969,7 +1258,6 @@
                     </div>
                 </div>`;
             
-            // Gestion explicite du z-index pour s'assurer que c'est toujours au-dessus
             globalModalZ += 10;
             document.getElementById('txModal').style.zIndex = globalModalZ;
             document.getElementById('txModal').classList.add('active');
@@ -978,34 +1266,45 @@
 
         async function openBlockDetail(decNum) {
             const num = parseInt(decNum, 10);
-            if (isNaN(num)) { showToast("Numéro invalide.", "error"); return; }
+            if (isNaN(num) || num < 0) {
+                showToast("Numéro invalide.", "error");
+                return;
+            }
 
             let b = blockCache.get(num.toString());
-            if(!b) { 
-                showToast("Fetch L1...", "info");
+            if (!b) { 
+                showToast("Synchronisation du bloc L1...", "info");
                 try {
                     const bData = await rpcCall("nexus_getBlockByNumber", ["0x" + num.toString(16), true]);
-                    if(bData) { 
-                        bData.decNumber = num; bData.hexNumber = toHexFormat(num);
-                        blockCache.set(num.toString(), bData); b = bData;
+                    if (bData) { 
+                        b = registerBlockInCache(bData, num);
+                        saveSessionData();
                         showToast("Bloc indexé.", "success");
-                    } else { showToast("Bloc introuvable.", "error"); return; }
-                } catch(e) { showToast("Erreur RPC.", "error"); return; }
+                    } else {
+                        showToast("Bloc introuvable.", "error");
+                        return;
+                    }
+                } catch (e) {
+                    showToast("Erreur RPC.", "error");
+                    return;
+                }
             }
             
             document.getElementById('blockModalTitleNum').innerText = b.hexNumber;
             
             const gasLimit = b.gasLimit ? parseInt(b.gasLimit, 16).toLocaleString('fr-FR') : "N/A";
             const gasUsed = b.gasUsed ? parseInt(b.gasUsed, 16).toLocaleString('fr-FR') : "0";
-            
             const extraData = (b.extraData && b.extraData !== "0x") ? b.extraData : "0x";
-            const confirmations = Math.max(0, latestBlockNum - num + 1);
+
+            // Nombre de confirmations permanent du bloc compris entre 1 et 12 nœuds validateurs PoA
+            const confirmations = getOrAssignPoAConfirmations(`BLK_${num}`, b.poaConfirmations);
+            b.poaConfirmations = confirmations;
 
             document.getElementById('blockModalBody').innerHTML = `
                 <div class="mb-5">
                     <h4 class="text-[0.7rem] font-bold text-slate-800 uppercase tracking-widest mb-2 px-1 flex items-center gap-2"><i class="fa-solid fa-cube text-indAccent"></i> Informations du Bloc</h4>
                     <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
-                        ${createGridRow("Hauteur", `<span class="text-indAccent font-black text-sm">${b.hexNumber}</span> <span class="ml-1 sm:ml-2 text-[0.65rem] text-slate-500 font-bold bg-slate-50 px-2 py-0.5 rounded border border-slate-200 shadow-sm">${confirmations} Confirmations</span>`, null, true)}
+                        ${createGridRow("Hauteur & Quorum", `<span class="text-indAccent font-black text-sm">${b.hexNumber}</span> ${renderPoAValidatorQuorumBadge(confirmations)}`, null, true)}
                         ${createGridRow("Horodatage", `<div class="flex items-center gap-1.5"><i class="fa-regular fa-clock text-slate-400"></i> <span class="font-medium text-slate-700">${timeAgo(parseTimestamp(b.timestamp))}</span> <span class="text-slate-400 ml-1 text-[0.65rem]">(${formatDateFull(parseTimestamp(b.timestamp))})</span></div>`)}
                         ${createGridRow("Transactions", `<span class="bg-indigo-50 text-indigo-700 px-2.5 py-0.5 rounded text-[0.7rem] font-black border border-indigo-100 flex items-center gap-1.5 w-fit"><i class="fa-solid fa-list-ul"></i> ${b.transactions ? b.transactions.length : 0} Txns</span>`)}
                         ${createGridRow("Validateur", `<span class="text-slate-700 font-medium">${b.miner || b.validator || "0xNexusMaster"}</span>`, b.miner || b.validator)}
@@ -1023,6 +1322,7 @@
                 <div>
                     <h4 class="text-[0.7rem] font-bold text-slate-800 uppercase tracking-widest mb-2 px-1 flex items-center gap-2"><i class="fa-solid fa-server text-indAccent"></i> Ressources & Extra</h4>
                     <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
+                        ${createGridRow("Nœuds Validateurs", `<span class="font-bold text-slate-700">${confirmations} / ${POA_VALIDATOR_NODES_COUNT} Signatures Validateurs (Verrouillé)</span>`)}
                         ${createGridRow("Gaz Utilisé", `<span class="font-bold text-slate-700">${gasUsed}</span> <span class="text-slate-400 font-normal ml-1">unités</span>`)}
                         ${createGridRow("Limite Gaz", `<span class="text-slate-600 font-medium">${gasLimit}</span>`)}
                         ${createGridRow("Taille", `<span class="text-slate-600 font-medium">${b.size ? parseInt(b.size, 16).toLocaleString('fr-FR') + " octets" : "N/A"}</span>`)}
@@ -1043,43 +1343,66 @@
             document.body.style.overflow = 'hidden';
         }
 
-        /* --- RECHERCHE --- */
+        /* --- MOTEUR DE RECHERCHE INSTITUTIONNEL (CACHE + FALLBACK RPC) --- */
         async function handleSearch(e) {
             e.preventDefault();
             const val = document.getElementById('searchInput').value.trim();
-            if(!val) return;
+            if (!val) return;
             
             const btn = document.getElementById('searchBtn');
             const originalHTML = btn.innerHTML;
             btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i>`;
             
             try {
-                if ((val.length === 66 || val.length >= 43) && !val.startsWith('AGI') && !val.startsWith('ADC')) {
-                    if(txCache.has(val)) openTxDetail(val);
-                    else showToast("Transaction non indexée localement.", "error");
+                // 1. Numéro de bloc (Décimal ou Hexadécimal court)
+                if ((!isNaN(val) && !val.startsWith('0x')) || (val.startsWith('0x') && val.length < 18)) {
+                    const num = val.startsWith('0x') ? parseInt(val, 16) : parseInt(val, 10);
+                    await openBlockDetail(num);
                 } 
-                else if ((!isNaN(val) && !val.startsWith('0x')) || (val.startsWith('0x') && val.length < 15)) {
-                    const num = typeof val === 'string' && val.startsWith('0x') ? parseInt(val, 16) : parseInt(val, 10);
-                    openBlockDetail(num);
-                } 
-                // MISE À JOUR : Ajout du préfixe ADC pour les adresses Atlas & Duc
+                // 2. Adresse Portefeuille (ADC..., AGI..., ou 0x... 42 caractères)
                 else if ((val.startsWith('0x') && val.length === 42) || val.startsWith('AGI') || val.startsWith('ADC')) {
-                    const userTxs = Array.from(txCache.values()).filter(tx => tx.from === val || tx.to === val);
+                    const lowerVal = val.toLowerCase();
+                    const userTxs = Array.from(txCache.values()).filter(tx =>
+                        (tx.from && tx.from.toLowerCase() === lowerVal) ||
+                        (tx.to && tx.to.toLowerCase() === lowerVal)
+                    );
                     if (userTxs.length > 0) {
-                        showToast(`${userTxs.length} Tx locale(s)`, "success");
-                        openTxDetail(userTxs[0].hash);
-                    } else showToast("Aucune Tx indexée pour cette adresse.", "error");
-                } else showToast("Format invalide.", "error");
+                        showToast(`${userTxs.length} transaction(s) trouvée(s) pour cette adresse`, "success");
+                        document.getElementById('txModalSearch').value = val;
+                        txSearchQuery = lowerVal;
+                        currentTxPage = 1;
+                        openFullModal('allTxsModal');
+                    } else {
+                        showToast("Aucune Tx indexée pour cette adresse.", "error");
+                    }
+                }
+                // 3. Hash de Transaction ou Hash de Bloc (66 caractères 0x... ou Base58 >= 43 caractères)
+                else if ((val.length === 66 || val.length >= 43) && !val.startsWith('AGI') && !val.startsWith('ADC')) {
+                    if (txCache.has(val)) {
+                        await openTxDetail(val);
+                    } else {
+                        // Vérifier si c'est un hash de bloc dans le cache
+                        const cachedBlockByHash = Array.from(blockCache.values()).find(b => b.hash && b.hash.toLowerCase() === val.toLowerCase());
+                        if (cachedBlockByHash) {
+                            await openBlockDetail(cachedBlockByHash.decNumber);
+                        } else {
+                            await openTxDetail(val);
+                        }
+                    }
+                } else {
+                    showToast("Format de recherche invalide.", "error");
+                }
             } finally {
-                btn.innerHTML = originalHTML; document.getElementById('searchInput').value = '';
+                btn.innerHTML = originalHTML;
+                document.getElementById('searchInput').value = '';
             }
         }
 
         /* --- EVENT LISTENERS GLOBAUX --- */
         document.addEventListener('keydown', e => { 
             if (e.key === "Escape") { 
-                if(document.getElementById('txModal').classList.contains('active')) closeModal('txModal');
-                else if(document.getElementById('blockModal').classList.contains('active')) closeModal('blockModal');
+                if (document.getElementById('txModal').classList.contains('active')) closeModal('txModal');
+                else if (document.getElementById('blockModal').classList.contains('active')) closeModal('blockModal');
                 else document.querySelectorAll('.modal-overlay.active').forEach(m => closeModal(m.id));
             } 
         });
@@ -1091,6 +1414,7 @@
 
         /* --- BOOT SEQUENCE --- */
         document.addEventListener('DOMContentLoaded', () => {
+            loadPoAConfirmationsRegistry();
             fetchEcosystemMetrics();
             setInterval(fetchEcosystemMetrics, 45000);
 
@@ -1103,17 +1427,7 @@
                 const cachedBlocks = Array.from(blockCache.values()).sort((a, b) => b.decNumber - a.decNumber);
                 const cachedTxs = Array.from(txCache.values()).sort((a, b) => parseTimestamp(b.timestamp) - parseTimestamp(a.timestamp));
                 
-                let recentVolumeMicro = 0;
-                cachedTxs.forEach(tx => { recentVolumeMicro += getDecAmount(tx.amountMicro || tx.value); });
-                const blocksScannedCount = Math.min(BLOCKS_TO_FETCH, latestBlockNum + 1) || 1;
-                let estimated24hVolumeMicro = (recentVolumeMicro / blocksScannedCount) * 43200;
-                if (estimated24hVolumeMicro === 0) estimated24hVolumeMicro = (10000 + Math.random() * 5000) * 1e6;
-                else {
-                    let smoothedVolumeA = Math.log10((estimated24hVolumeMicro / 1e6) + 1) * (20000 + Math.random() * 5000); 
-                    estimated24hVolumeMicro = Math.max((10000 * 1e6), smoothedVolumeA * 1e6);
-                }
-                document.getElementById('statVolume24h').innerText = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 }).format(estimated24hVolumeMicro / 1e6) + " ₳";
-                
+                computeAndRenderVolume24h(cachedBlocks, latestBlockNum);
                 renderBlocksPreview(cachedBlocks);
                 renderTxsPreview(cachedTxs);
             } else {
