@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Politique de Confidentialité Institutionnelle | Nexus Wallet Pro & NexusScan - Atlas & Duc Corporation</title>
+    <title>Politique Institutionnelle de Confidentialité | Nexus Wallet Pro & NexusScan - Atlas & Duc Corporation</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -43,33 +43,36 @@
             70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); } 
             100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } 
         }
-        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: #F1F5F9; }
         ::-webkit-scrollbar-thumb { background: #94A3B8; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #0EA5E9; }
-        .text-justify-custom { text-align: justify; text-justify: inter-word; }
+        .text-justify-custom { text-align: justify; text-justify: inter-word; hyphens: auto; }
+        .clause-box { border-left: 3px solid #0EA5E9; background: linear-gradient(to right, #F8FAFC, #FFFFFF); }
+        .gold-box { border-left: 3px solid #D4AF37; background: linear-gradient(to right, #FFFBEB, #FFFFFF); }
         @media print {
             header, aside, footer, .no-print { display: none !important; }
             body { background: #FFFFFF !important; color: #000000 !important; }
+            section { break-inside: avoid; page-break-inside: avoid; border: 1px solid #CBD5E1 !important; margin-bottom: 24px !important; }
         }
     </style>
 </head>
 <body class="bg-indBg text-premiumDark font-sans antialiased flex flex-col min-h-screen text-[13px] selection:bg-indAccent selection:text-white">
 
-    <button onclick="toggleLang()" class="no-print fixed bottom-6 right-6 z-50 bg-premiumDark text-white px-4 h-11 rounded-full shadow-2xl border border-indGold/50 flex items-center gap-2.5 hover:bg-indAccent hover:border-indAccent transition-all group focus:outline-none">
-        <i class="fa-solid fa-globe text-indGold group-hover:text-white group-hover:rotate-45 transition-transform"></i>
+    <button onclick="toggleLang()" class="no-print fixed bottom-6 right-6 z-50 bg-premiumDark text-white px-5 h-12 rounded-full shadow-2xl border-2 border-indGold/60 flex items-center gap-2.5 hover:bg-indAccent hover:border-white transition-all group focus:outline-none">
+        <i class="fa-solid fa-globe text-indGold group-hover:text-white group-hover:rotate-45 transition-transform text-base"></i>
         <span id="floatingLangLabel" class="font-mono font-black text-xs tracking-widest">FR / EN</span>
     </button>
 
     <header class="bg-indCard/95 backdrop-blur-md border-b border-indBorder sticky top-0 z-40 shadow-sm">
-        <div class="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-[98rem] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <a href="NexusScan.html" class="flex items-center gap-3 cursor-pointer group">
                     <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo Nexus Core" class="h-10 w-10 rounded-lg border border-indBorder object-cover shadow-sm group-hover:border-indAccent transition-colors">
                     <div class="flex flex-col">
                         <div class="flex items-center gap-1.5">
                             <span class="font-black text-lg tracking-tight text-premiumDark leading-none">NEXUS<span class="text-indAccent">SCAN</span></span>
-                            <span class="bg-premiumDark text-indGold border border-indGold/40 text-[9px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider">PRIVACY L1</span>
+                            <span class="bg-premiumDark text-indGold border border-indGold/40 text-[9px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider">CORPUS L1</span>
                         </div>
                         <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mt-1">Atlas & Duc Corporation</span>
                     </div>
@@ -87,7 +90,7 @@
                 <div class="flex items-center gap-2.5">
                     <button onclick="toggleLang()" class="hidden sm:flex items-center gap-2 bg-slate-100 hover:bg-slate-200 border border-slate-200 text-premiumDark px-3 py-1.5 rounded-lg text-xs font-bold transition-colors">
                         <i class="fa-solid fa-language text-indAccent"></i>
-                        <span id="headerLangBadge">FRANÇAIS</span>
+                        <span id="headerLangBadge">FRANÇAIS (ACTIF)</span>
                     </button>
                     <button onclick="window.print()" class="hidden md:flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold transition-colors">
                         <i class="fa-solid fa-print text-slate-500"></i>
@@ -117,69 +120,74 @@
     <section class="bg-premiumDark text-white pt-14 pb-16 px-4 relative overflow-hidden border-b border-slate-800">
         <div class="absolute inset-0 bg-gradient-to-br from-[#0B1120] via-[#0F172A] to-[#020617] z-0"></div>
         <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#38bdf8 1px, transparent 1px); background-size: 26px 26px;"></div>
-        <div class="max-w-5xl mx-auto relative z-10 text-center fade-in">
+        <div class="max-w-6xl mx-auto relative z-10 text-center fade-in">
             <div class="inline-flex flex-wrap items-center justify-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/90 border border-indGold/40 text-indGold text-[10px] font-black mb-5 uppercase tracking-widest shadow-lg">
                 <i class="fa-solid fa-scale-balanced"></i>
-                <span data-key="hero_tag">Corpus Réglementaire Souverain • 20 Articles Officiels • Récépissé N° PHUE-3539/2025</span>
+                <span data-key="hero_tag">Codification Institutionnelle Intégrale • 20 Articles Souverains • Récépissé N° PHUE-3539/2025</span>
             </div>
-            <h1 data-key="hero_title" class="text-3xl sm:text-4xl lg:text-5xl font-black mb-4 tracking-tight leading-tight">
-                POLITIQUE INSTITUTIONNELLE DE <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-indAccent to-indGold">CONFIDENTIALITÉ</span>
+            <h1 data-key="hero_title" class="text-3xl sm:text-5xl lg:text-6xl font-black mb-5 tracking-tight leading-tight">
+                TRAITÉ INSTITUTIONNEL DE <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-indAccent to-indGold">CONFIDENTIALITÉ L1</span>
             </h1>
-            <p data-key="hero_subtitle" class="text-slate-300 text-xs sm:text-sm md:text-base max-w-3xl mx-auto font-medium leading-relaxed mb-8">
-                Charte juridique et cryptographique régissant l'application mobile non-custodial Nexus Wallet Pro, l'explorateur de blocs NexusScan et l'infrastructure souveraine Nexus Core Layer-1 (monnaie native ₳), opérés par Atlas & Duc Corporation.
+            <p data-key="hero_subtitle" class="text-slate-300 text-xs sm:text-sm md:text-base max-w-4xl mx-auto font-medium leading-relaxed mb-8">
+                Corpus juridique, cryptographique et réglementaire de haute densité régissant l'application mobile non-custodial Nexus Wallet Pro, l'explorateur de blocs NexusScan, les passerelles B2B et l'infrastructure souveraine Nexus Core Layer-1 (monnaie native ₳), opérés par Atlas & Duc Corporation.
             </p>
 
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-4xl mx-auto text-left">
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 max-w-5xl mx-auto text-left">
                 <div class="bg-slate-900/80 border border-slate-800 p-3.5 rounded-xl">
-                    <div data-key="stat1_label" class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Collecte de Données PII</div>
-                    <div data-key="stat1_val" class="text-base font-black text-indSuccess font-mono mt-0.5">0% (Zero-Data)</div>
+                    <div data-key="stat1_label" class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Collecte PII</div>
+                    <div data-key="stat1_val" class="text-sm sm:text-base font-black text-indSuccess font-mono mt-0.5">0% (Zero-Data)</div>
                 </div>
                 <div class="bg-slate-900/80 border border-slate-800 p-3.5 rounded-xl">
                     <div data-key="stat2_label" class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Chiffrement Local</div>
-                    <div class="text-base font-black text-white font-mono mt-0.5">AES-256-GCM / Argon2id</div>
+                    <div class="text-sm sm:text-base font-black text-white font-mono mt-0.5">AES-256-GCM / Argon2id</div>
                 </div>
                 <div class="bg-slate-900/80 border border-slate-800 p-3.5 rounded-xl">
-                    <div data-key="stat3_label" class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Standard Clés & Adresses</div>
-                    <div class="text-base font-black text-indAccent font-mono mt-0.5">BIP39 / ECDSA / Base58</div>
+                    <div data-key="stat3_label" class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Standard L1</div>
+                    <div class="text-sm sm:text-base font-black text-indAccent font-mono mt-0.5">BIP39 / ECDSA / Base58</div>
                 </div>
                 <div class="bg-slate-900/80 border border-slate-800 p-3.5 rounded-xl">
-                    <div data-key="stat4_label" class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Conformité & Juridiction</div>
-                    <div class="text-base font-black text-indGold font-mono mt-0.5">CIL-BF • UEMOA • RGPD</div>
+                    <div data-key="stat4_label" class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Juridiction & Normes</div>
+                    <div class="text-sm sm:text-base font-black text-indGold font-mono mt-0.5">CIL-BF • UEMOA • RGPD</div>
+                </div>
+                <div class="col-span-2 sm:col-span-1 bg-slate-900/80 border border-indGold/40 p-3.5 rounded-xl">
+                    <div data-key="stat5_label" class="text-[10px] font-bold text-indGold uppercase tracking-wider">Volume Documentaire</div>
+                    <div id="totalCorpusCounter" class="text-sm sm:text-base font-black text-white font-mono mt-0.5">> 280 000 chars</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <div class="max-w-[96rem] mx-auto w-full flex-grow flex flex-col lg:flex-row gap-8 px-4 sm:px-6 lg:px-8 py-10">
+    <div class="max-w-[98rem] mx-auto w-full flex-grow flex flex-col lg:flex-row gap-8 px-4 sm:px-6 lg:px-8 py-10">
         
         <aside class="w-full lg:w-80 shrink-0 hidden lg:block">
-            <div class="sticky top-20 bg-indCard rounded-2xl border border-indBorder p-5 shadow-sm max-h-[85vh] flex flex-col">
+            <div class="sticky top-20 bg-indCard rounded-2xl border border-indBorder p-5 shadow-sm max-h-[86vh] flex flex-col">
                 <div class="pb-4 mb-3 border-b border-slate-100">
                     <div class="flex items-center justify-between mb-3">
                         <div class="flex items-center gap-2">
-                            <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo" class="h-7 w-7 rounded-full border border-slate-200">
+                            <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo" class="h-8 w-8 rounded-lg border border-slate-200">
                             <div>
                                 <h3 class="font-black text-premiumDark text-xs tracking-wider uppercase leading-none">Atlas & Duc Corp.</h3>
-                                <p data-key="sidebar_version" class="text-indAccent font-bold text-[10px] mt-0.5">Référentiel V.4.0 • 20 Articles</p>
+                                <p data-key="sidebar_version" class="text-indAccent font-bold text-[10px] mt-0.5">Codification V.5.0 • 20 Articles</p>
                             </div>
                         </div>
-                        <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[9px] font-black px-2 py-0.5 rounded uppercase">Certifié</span>
+                        <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[9px] font-black px-2 py-0.5 rounded uppercase">Intégral</span>
                     </div>
                     <div class="relative">
                         <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
-                        <input type="text" id="articleSearchInput" placeholder="Rechercher un article (ex: AES, RGPD)..." class="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium text-premiumDark focus:outline-none focus:border-indAccent transition-colors">
+                        <input type="text" id="articleSearchInput" placeholder="Filtrer le corpus (ex: Argon2id, Base58, CIL)..." class="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium text-premiumDark focus:outline-none focus:border-indAccent transition-colors">
                     </div>
                 </div>
 
-                <div class="mb-2">
-                    <h4 data-key="sidebar_title_sections" class="font-black text-slate-400 uppercase tracking-widest text-[9px] mb-2">Sommaire des 20 Articles</h4>
+                <div class="mb-2 flex items-center justify-between">
+                    <h4 data-key="sidebar_title_sections" class="font-black text-slate-400 uppercase tracking-widest text-[9px]">Index des 20 Articles</h4>
+                    <span class="text-[9px] font-mono font-bold text-slate-400">10 Alinéas / Art.</span>
                 </div>
 
                 <ul id="sidebarArticlesList" class="space-y-1.5 text-[11.5px] font-bold text-slate-600 overflow-y-auto pr-1 flex-1">
                 </ul>
 
-                <div class="pt-4 mt-3 border-t border-slate-100">
-                    <h4 data-key="sidebar_contact_title" class="font-black text-slate-400 uppercase tracking-widest text-[9px] mb-1.5">Direction Juridique & Conformité</h4>
+                <div class="pt-4 mt-3 border-t border-slate-100 space-y-2">
+                    <h4 data-key="sidebar_contact_title" class="font-black text-slate-400 uppercase tracking-widest text-[9px]">Direction Juridique & DPO</h4>
                     <a href="mailto:administration@agi-nexus-core.click" class="flex items-center gap-2 text-[11px] text-premiumDark hover:text-indAccent font-mono break-all font-bold">
                         <i class="fa-solid fa-envelope text-indAccent"></i> administration@agi-nexus-core.click
                     </a>
@@ -188,29 +196,30 @@
         </aside>
 
         <main class="flex-1 min-w-0 space-y-8 fade-in pb-16">
-            <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div class="flex items-start sm:items-center gap-3.5">
-                    <div class="w-11 h-11 rounded-xl bg-premiumDark text-indGold flex items-center justify-center shrink-0 text-lg shadow-sm">
+            <div class="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 shadow-sm flex flex-col xl:flex-row xl:items-center justify-between gap-4">
+                <div class="flex items-start sm:items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-premiumDark text-indGold flex items-center justify-center shrink-0 text-xl shadow-md border border-indGold/30">
                         <i class="fa-solid fa-stamp"></i>
                     </div>
                     <div>
-                        <h2 data-key="meta_banner_title" class="font-black text-premiumDark text-sm uppercase tracking-tight">Acte Réglementaire Officiel — Atlas & Duc Corporation</h2>
-                        <p data-key="meta_banner_desc" class="text-xs text-slate-500 font-medium mt-0.5">Approuvé par la Présidence et l'Architecture Logicielle Principale (Yougma Thierry Joël) • Siège social : Koupéla, Kouritenga, Burkina Faso.</p>
+                        <h2 data-key="meta_banner_title" class="font-black text-premiumDark text-sm sm:text-base uppercase tracking-tight">Traité Normatif Officiel de Protection Cryptographique et de Non-Collecte — Atlas & Duc Corporation</h2>
+                        <p data-key="meta_banner_desc" class="text-xs text-slate-500 font-medium mt-1">Promulgué par la Présidence et la Direction de l'Architecture Logicielle Principale (Yougma Thierry Joël) • Siège social : Koupéla, Province du Kouritenga, Burkina Faso • Récépissé N° PHUE-3539/2025.</p>
                     </div>
                 </div>
-                <div class="flex items-center gap-2 self-start md:self-auto shrink-0">
-                    <span class="bg-slate-100 text-slate-700 font-mono text-[11px] font-bold px-3 py-1.5 rounded-lg border border-slate-200">Chain ID: 9012</span>
-                    <span class="bg-amber-50 text-amber-800 font-mono text-[11px] font-bold px-3 py-1.5 rounded-lg border border-amber-200">1 ₳ = 1 XOF</span>
+                <div class="flex flex-wrap items-center gap-2 self-start xl:self-auto shrink-0">
+                    <span class="bg-slate-900 text-white font-mono text-[11px] font-bold px-3 py-1.5 rounded-lg">Mainnet #9012</span>
+                    <span class="bg-amber-50 text-amber-900 font-mono text-[11px] font-black px-3 py-1.5 rounded-lg border border-amber-300">Offre Fixe : 100 000 000 000 ₳</span>
+                    <span class="bg-emerald-50 text-emerald-800 font-mono text-[11px] font-black px-3 py-1.5 rounded-lg border border-emerald-200">Parité : 1 ₳ = 1 XOF</span>
                 </div>
             </div>
 
-            <div id="articlesContainer" class="space-y-8">
+            <div id="articlesContainer" class="space-y-10">
             </div>
         </main>
     </div>
 
     <footer class="bg-premiumDark border-t border-slate-800 mt-auto pt-12 pb-8">
-        <div class="max-w-[96rem] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center relative z-10">
+        <div class="max-w-[98rem] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center relative z-10">
             <div class="flex flex-col items-center justify-center gap-3 mb-6">
                 <img src="https://i.imgur.com/Tc7Jzx3.jpeg" alt="Logo Atlas & Duc" class="h-16 w-16 rounded-full border-2 border-indGold/60 shadow-lg object-cover">
                 <div class="flex flex-col items-center justify-center">
@@ -228,10 +237,10 @@
                 <a href="wallet_cgu.html" data-key="nav_cgu" class="hover:text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-gavel"></i> Wallet CGU</a>
             </div>
 
-            <div class="flex flex-col items-center justify-center border-t border-slate-800/80 w-full pt-5 max-w-md">
+            <div class="flex flex-col items-center justify-center border-t border-slate-800/80 w-full pt-5 max-w-lg">
                 <div class="flex items-center justify-center gap-2 mb-2 bg-slate-900/80 px-3.5 py-1 rounded-full border border-slate-800">
                     <div class="w-2 h-2 rounded-full bg-indSuccess live-pulse"></div>
-                    <p data-key="footer_status" class="text-[10px] text-slate-300 font-bold uppercase tracking-widest">Protection Non-Custodial AES-256-GCM Active</p>
+                    <p data-key="footer_status" class="text-[10px] text-slate-300 font-bold uppercase tracking-widest">Protection Non-Custodial AES-256-GCM & Argon2id Active</p>
                 </div>
                 <p data-key="footer_copy" class="text-[10px] text-slate-500 font-bold tracking-wider">&copy; 2026 Atlas & Duc Corporation (Récépissé N° PHUE-3539/2025). Koupéla, Burkina Faso. Tous droits réservés.</p>
             </div>
@@ -264,24 +273,40 @@
                 nav_privacy: "Confidentialité",
                 nav_cgu: "Wallet CGU",
                 btn_print: "Imprimer / PDF",
-                hero_tag: "Corpus Réglementaire Souverain • 20 Articles Officiels • Récépissé N° PHUE-3539/2025",
-                hero_title: "POLITIQUE INSTITUTIONNELLE DE <span class='text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-indAccent to-indGold'>CONFIDENTIALITÉ</span>",
-                hero_subtitle: "Charte juridique et cryptographique régissant l'application mobile non-custodial Nexus Wallet Pro, l'explorateur de blocs NexusScan et l'infrastructure souveraine Nexus Core Layer-1 (monnaie native ₳), opérés par Atlas & Duc Corporation.",
-                stat1_label: "Collecte de Données PII",
+                hero_tag: "Codification Institutionnelle Intégrale • 20 Articles Souverains • Récépissé N° PHUE-3539/2025",
+                hero_title: "TRAITÉ INSTITUTIONNEL DE <span class='text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-indAccent to-indGold'>CONFIDENTIALITÉ L1</span>",
+                hero_subtitle: "Corpus juridique, cryptographique et réglementaire de haute densité régissant l'application mobile non-custodial Nexus Wallet Pro, l'explorateur de blocs NexusScan, les passerelles B2B et l'infrastructure souveraine Nexus Core Layer-1 (monnaie native ₳), opérés par Atlas & Duc Corporation.",
+                stat1_label: "Collecte PII",
                 stat1_val: "0% (Zero-Data)",
                 stat2_label: "Chiffrement Local",
-                stat3_label: "Standard Clés & Adresses",
-                stat4_label: "Conformité & Juridiction",
-                sidebar_version: "Référentiel V.4.0 • 20 Articles",
-                sidebar_title_sections: "Sommaire des 20 Articles",
-                sidebar_contact_title: "Direction Juridique & Conformité",
-                meta_banner_title: "Acte Réglementaire Officiel — Atlas & Duc Corporation",
-                meta_banner_desc: "Approuvé par la Présidence et l'Architecture Logicielle Principale (Yougma Thierry Joël) • Siège social : Koupéla, Kouritenga, Burkina Faso.",
+                stat3_label: "Standard L1",
+                stat4_label: "Juridiction & Normes",
+                stat5_label: "Volume Documentaire",
+                sidebar_version: "Codification V.5.0 • 20 Articles",
+                sidebar_title_sections: "Index des 20 Articles",
+                sidebar_contact_title: "Direction Juridique & DPO",
+                meta_banner_title: "Traité Normatif Officiel de Protection Cryptographique et de Non-Collecte — Atlas & Duc Corporation",
+                meta_banner_desc: "Promulgué par la Présidence et la Direction de l'Architecture Logicielle Principale (Yougma Thierry Joël) • Siège social : Koupéla, Province du Kouritenga, Burkina Faso • Récépissé N° PHUE-3539/2025.",
                 footer_infra: "Infrastructure Blockchain Souveraine Layer-1 • Monnaie Native ₳",
-                footer_status: "Protection Non-Custodial AES-256-GCM Active",
+                footer_status: "Protection Non-Custodial AES-256-GCM & Argon2id Active",
                 footer_copy: "© 2026 Atlas & Duc Corporation (Récépissé N° PHUE-3539/2025). Koupéla, Burkina Faso. Tous droits réservés.",
-                search_placeholder: "Rechercher un article (ex: AES, Base58, RGPD)...",
-                tech_clause_label: "Garantie Technique & Cryptographique :"
+                search_placeholder: "Filtrer le corpus (ex: Argon2id, Base58, CIL, ₳)...",
+                tech_clause_label: "Garantie Cryptographique & Invariant Protocolaire :",
+                chars_unit: "caractères",
+                words_unit: "mots",
+                section_headers: [
+                    "Section I — Exposé Doctrinal, Fondements Architecturaux et Portée Souveraine",
+                    "Section II — Spécifications Mathématiques, Cryptographiques et Mécanismes d'Isolation",
+                    "Section III — Régime d'Exécution sur le Registre In-Memory V8 et Consensus PoA (nBFT)",
+                    "Section IV — Statut Monétaire de la Pièce Native ₳, Unité Atomique microA et Parité XOF",
+                    "Section V — Protocole d'Interfaçage Client-Serveur, Transport TLS 1.3 et Flux P2P",
+                    "Section VI — Obligations Opérationnelles de l'Utilisateur et Hygiène Cryptographique (OPSEC)",
+                    "Section VII — Articulation avec l'Écosystème Applicatif (A&D Business Pro, POS, Adama Digital)",
+                    "Section VIII — Conformité Législative Nationale (Loi N° 001-2021/AN, CIL) et Communautaire (UEMOA)",
+                    "Section IX — Alignement International (RGPD UE 2016/679, Normes ISO/IEC 27001 & NIST)",
+                    "Section X — Force Exécutoire, Inopposabilité des Tiers et Garanties d'Auditabilité"
+                ],
+                matrix_headers: ["Paramètre Normatif", "Spécification Nexus Core L1", "Niveau d'Application & Sûreté", "Référence Standard / Loi"]
             },
             en: {
                 nav_home: "Home",
@@ -291,24 +316,40 @@
                 nav_privacy: "Privacy Policy",
                 nav_cgu: "Wallet T&C",
                 btn_print: "Print / PDF",
-                hero_tag: "Sovereign Regulatory Corpus • 20 Official Articles • Receipt N° PHUE-3539/2025",
-                hero_title: "INSTITUTIONAL <span class='text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-indAccent to-indGold'>PRIVACY POLICY</span>",
-                hero_subtitle: "Legal and cryptographic charter governing the non-custodial Nexus Wallet Pro mobile application, the NexusScan block explorer, and the sovereign Nexus Core Layer-1 infrastructure (native currency ₳), operated by Atlas & Duc Corporation.",
-                stat1_label: "PII Data Collection",
+                hero_tag: "Full Institutional Codification • 20 Sovereign Articles • Receipt N° PHUE-3539/2025",
+                hero_title: "INSTITUTIONAL <span class='text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-indAccent to-indGold'>L1 PRIVACY TREATY</span>",
+                hero_subtitle: "High-density legal, cryptographic, and regulatory corpus governing the non-custodial Nexus Wallet Pro mobile application, the NexusScan block explorer, B2B gateways, and the sovereign Nexus Core Layer-1 infrastructure (native currency ₳), operated by Atlas & Duc Corporation.",
+                stat1_label: "PII Collection",
                 stat1_val: "0% (Zero-Data)",
                 stat2_label: "Local Encryption",
-                stat3_label: "Key & Address Standard",
-                stat4_label: "Compliance & Jurisdiction",
-                sidebar_version: "Framework V.4.0 • 20 Articles",
-                sidebar_title_sections: "Summary of the 20 Articles",
-                sidebar_contact_title: "Legal & Compliance Department",
-                meta_banner_title: "Official Regulatory Act — Atlas & Duc Corporation",
-                meta_banner_desc: "Approved by the Presidency and Lead Software Architecture (Yougma Thierry Joël) • Headquarters: Koupéla, Kouritenga, Burkina Faso.",
+                stat3_label: "L1 Standard",
+                stat4_label: "Jurisdiction & Norms",
+                stat5_label: "Corpus Volume",
+                sidebar_version: "Codification V.5.0 • 20 Articles",
+                sidebar_title_sections: "Index of the 20 Articles",
+                sidebar_contact_title: "Legal Dept. & DPO",
+                meta_banner_title: "Official Normative Treaty on Cryptographic Protection and Zero-Data Collection — Atlas & Duc Corporation",
+                meta_banner_desc: "Promulgated by the Presidency and Lead Software Architecture Division (Yougma Thierry Joël) • Headquarters: Koupéla, Kouritenga Province, Burkina Faso • Receipt N° PHUE-3539/2025.",
                 footer_infra: "Sovereign Layer-1 Blockchain Infrastructure • Native Currency ₳",
-                footer_status: "Non-Custodial AES-256-GCM Protection Active",
+                footer_status: "Non-Custodial AES-256-GCM & Argon2id Protection Active",
                 footer_copy: "© 2026 Atlas & Duc Corporation (Receipt N° PHUE-3539/2025). Koupéla, Burkina Faso. All rights reserved.",
-                search_placeholder: "Search an article (e.g., AES, Base58, GDPR)...",
-                tech_clause_label: "Technical & Cryptographic Guarantee:"
+                search_placeholder: "Filter corpus (e.g., Argon2id, Base58, CIL, ₳)...",
+                tech_clause_label: "Cryptographic Guarantee & Protocol Invariant:",
+                chars_unit: "characters",
+                words_unit: "words",
+                section_headers: [
+                    "Section I — Doctrinal Statement, Architectural Foundations, and Sovereign Scope",
+                    "Section II — Mathematical, Cryptographic Specifications and Isolation Mechanisms",
+                    "Section III — Execution Regime on the In-Memory V8 Ledger and PoA (nBFT) Consensus",
+                    "Section IV — Monetary Status of the Native Coin ₳, Atomic Unit microA, and XOF Parity",
+                    "Section V — Client-Server Interfacing Protocol, TLS 1.3 Transport, and P2P Streams",
+                    "Section VI — User Operational Obligations and Cryptographic Hygiene (OPSEC)",
+                    "Section VII — Ecosystem Integration (A&D Business Pro, Roger Service Pro POS, Adama Digital)",
+                    "Section VIII — National Legislative Compliance (Law N° 001-2021/AN, CIL) and WAEMU Directives",
+                    "Section IX — International Alignment (EU GDPR 2016/679, ISO/IEC 27001 & NIST Standards)",
+                    "Section X — Enforceability, Third-Party Non-Invocability, and Auditability Guarantees"
+                ],
+                matrix_headers: ["Normative Parameter", "Nexus Core L1 Specification", "Enforcement & Security Level", "Standard / Statutory Ref."]
             }
         };
 
@@ -318,19 +359,26 @@
                 num: "01",
                 icon: "fa-building-shield",
                 color: "text-indAccent bg-indAccent/10",
+                domainCode: "CORP-SOV-01",
                 fr: {
                     short: "1. Préambule & Identité Corporative",
-                    title: "Article 1 — Préambule, Identité Corporative et Philosophie de Souveraineté Web3",
+                    title: "Article 1 — Préambule, Identité Corporative d'Atlas & Duc Corporation et Doctrine de Souveraineté Web3",
                     badge: "Fondation Souveraine",
-                    content: "La présente Politique Institutionnelle de Confidentialité (ci-après dénommée la « Politique ») constitue le référentiel juridique, technique et doctrinal régissant l'utilisation de l'application mobile Nexus Wallet Pro, du portail d'exploration de blocs NexusScan, ainsi que de l'ensemble des interfaces logicielles connectées au réseau blockchain souverain Nexus Core Layer-1. Ces infrastructures sont intégralement conçues, développées et maintenues par Atlas & Duc Corporation (anciennement Atlas Groupe International, enregistrée sous le récépissé officiel N° PHUE-3539/2025 en date du 11 juillet 2025), société de droit burkinabè dont le siège social est établi à Koupéla, province du Kouritenga, Burkina Faso, sous la présidence et la direction d'architecture logicielle de son fondateur, Yougma Thierry Joël. Chez Atlas & Duc Corporation, la confidentialité numérique est érigée au rang de droit fondamental inaliénable : face à la centralisation abusive et à la surveillance algorithmique de l'économie numérique traditionnelle, l'écosystème Nexus Core garantit à chaque citoyen, entrepreneur et institution une souveraineté mathématique et cryptographique totale sur ses actifs libellés dans la monnaie native ₳.",
-                    tech: "Opérateur : Atlas & Duc Corporation (Koupéla, Burkina Faso) | Mainnet Nexus Core L1 déployé le 15 août 2026 (Chain ID 9012)."
+                    core: "La présente Politique Institutionnelle de Confidentialité (ci-après désignée le « Traité » ou la « Politique ») établit l'architecture juridique, cryptographique, doctrinale et réglementaire régissant de manière impérative l'utilisation de l'application mobile décentralisée Nexus Wallet Pro, du portail analytique d'exploration de blocs NexusScan, ainsi que de l'ensemble des bibliothèques logicielles, interfaces de programmation (JSON-RPC 2.0, RESTful et WebSockets P2P) et passerelles B2B connectées au réseau blockchain souverain Nexus Core Layer-1. Ces infrastructures technologiques de premier plan sont intégralement conçues, développées, auditées et maintenues par Atlas & Duc Corporation (anciennement constituée sous la dénomination Atlas Groupe International suivant récépissé officiel N° PHUE-3539/2025 délivré le 11 juillet 2025), entité corporative de droit burkinabè dont le siège social et le centre névralgique d'ingénierie sont établis à Koupéla, province du Kouritenga, région du Centre-Est, Burkina Faso, avec des déploiements opérationnels étendus à Houndé, Kari, Pâ et Bobo-Dioulasso. Sous l'impulsion directe de son Fondateur, Président et Architecte Logiciel Principal, Yougma Thierry Joël, Atlas & Duc Corporation érige la protection de la vie privée numérique au rang d'invariant constitutionnel de son ingénierie.",
+                    cryptoFocus: "Isolation structurelle entre l'identité civile de la personne physique et l'identité mathématique sur la couche 1 (Layer-1), garantie par l'absence totale de serveur central d'enregistrement nominatif au sein d'Atlas & Duc Corporation.",
+                    operationalFocus: "Déploiement du Mainnet Nexus Core Layer-1 le 15 août 2026 sous l'identifiant de chaîne immuable Chain ID 9012 (0x2334), opérant comme socle d'infrastructure financière et technologique souveraine pour l'espace UEMOA et l'international.",
+                    legalFocus: "Conformité organique aux actes uniformes de l'OHADA, aux textes réglementaires du Burkina Faso (Récépissé N° PHUE-3539/2025, Loi N° 001-2021/AN) et aux traités internationaux protégeant le secret des correspondances et l'intégrité des systèmes automatisés de données.",
+                    tech: "Opérateur Souverain : Atlas & Duc Corporation (Siège : Koupéla, Burkina Faso) | Mainnet L1 : 15 Août 2026 | Chain ID : 9012 (0x2334)."
                 },
                 en: {
                     short: "1. Preamble & Corporate Identity",
-                    title: "Article 1 — Preamble, Corporate Identity, and Web3 Sovereignty Philosophy",
+                    title: "Article 1 — Preamble, Corporate Identity of Atlas & Duc Corporation, and Web3 Sovereignty Doctrine",
                     badge: "Sovereign Foundation",
-                    content: "This Institutional Privacy Policy (hereinafter referred to as the 'Policy') constitutes the legal, technical, and doctrinal framework governing the use of the Nexus Wallet Pro mobile application, the NexusScan block explorer portal, and all software interfaces connected to the sovereign Nexus Core Layer-1 blockchain network. These infrastructures are wholly designed, engineered, and maintained by Atlas & Duc Corporation (formerly Atlas Groupe International, officially registered under receipt N° PHUE-3539/2025 dated July 11, 2025), a corporation organized under the laws of Burkina Faso with headquarters in Koupéla, Kouritenga Province, Burkina Faso, under the presidency and lead software architecture of its founder, Yougma Thierry Joël. At Atlas & Duc Corporation, digital privacy is upheld as an inalienable fundamental right: against the abusive centralization and algorithmic surveillance of the traditional digital economy, the Nexus Core ecosystem guarantees every citizen, entrepreneur, and institution complete mathematical and cryptographic sovereignty over their assets denominated in the native currency ₳.",
-                    tech: "Operator: Atlas & Duc Corporation (Koupéla, Burkina Faso) | Nexus Core L1 Mainnet deployed August 15, 2026 (Chain ID 9012)."
+                    core: "This Institutional Privacy Policy (hereinafter referred to as the 'Treaty' or the 'Policy') establishes the binding legal, cryptographic, doctrinal, and regulatory architecture governing the use of the decentralized mobile application Nexus Wallet Pro, the analytical block explorer portal NexusScan, as well as all software libraries, application programming interfaces (JSON-RPC 2.0, RESTful, and P2P WebSockets), and B2B gateways connected to the sovereign Nexus Core Layer-1 blockchain network. These Tier-1 technological infrastructures are wholly designed, engineered, audited, and maintained by Atlas & Duc Corporation (formerly established under the corporate name Atlas Groupe International pursuant to official receipt N° PHUE-3539/2025 issued on July 11, 2025), a corporate entity organized under the laws of Burkina Faso with its headquarters and primary engineering center located in Koupéla, Kouritenga Province, Centre-Est Region, Burkina Faso, and operational deployments extending across Houndé, Kari, Pâ, and Bobo-Dioulasso. Under the direct leadership of its Founder, President, and Lead Software Architect, Yougma Thierry Joël, Atlas & Duc Corporation elevates digital privacy protection to the rank of a constitutional engineering invariant.",
+                    cryptoFocus: "Structural isolation between the civil identity of the natural person and the mathematical identity on Layer-1, guaranteed by the total absence of any centralized nominative registration server within Atlas & Duc Corporation.",
+                    operationalFocus: "Deployment of the Nexus Core Layer-1 Mainnet on August 15, 2026 under the immutable network identifier Chain ID 9012 (0x2334), operating as a sovereign financial and technological infrastructure backbone for the WAEMU region and international markets.",
+                    legalFocus: "Organic compliance with OHADA Uniform Acts, statutory frameworks of Burkina Faso (Receipt N° PHUE-3539/2025, Law N° 001-2021/AN), and international treaties safeguarding correspondence secrecy and automated data system integrity.",
+                    tech: "Sovereign Operator: Atlas & Duc Corporation (HQ: Koupéla, Burkina Faso) | L1 Mainnet: August 15, 2026 | Chain ID: 9012 (0x2334)."
                 }
             },
             {
@@ -338,19 +386,26 @@
                 num: "02",
                 icon: "fa-book-atlas",
                 color: "text-indigo-600 bg-indigo-500/10",
+                domainCode: "NOM-LEX-02",
                 fr: {
                     short: "2. Définitions & Terminologie L1",
-                    title: "Article 2 — Définitions Techniques et Terminologie Cryptographique Layer-1",
+                    title: "Article 2 — Définitions Normatives, Nomenclature Monétaire ₳ et Glossaire Cryptographique Layer-1",
                     badge: "Nomenclature Officielle",
-                    content: "Aux fins d'interprétation stricte de la présente Politique, les termes suivants revêtent une signification juridique et informatique précise : (a) « Monnaie Native ₳ » désigne l'actif numérique souverain de couche 1 du réseau Nexus Core, doté d'une offre maximale fixe de 100 000 000 000 ₳, arrimé à parité fixe de 1 ₳ pour 1 Franc CFA (XOF), et subdivisé en un million d'unités atomiques indivisibles appelées « microA » (1 ₳ = 1 000 000 microA) ; (b) « Portefeuille Non-Custodial » désigne l'architecture logicielle de Nexus Wallet Pro dans laquelle l'utilisateur détient seul et exclusivement ses clés privées sans aucune garde ni copie sur les serveurs d'Atlas & Duc Corporation ; (c) « Encodage Base58 » désigne la représentation alphanumérique dépourvue de caractères ambigus utilisée pour l'ensemble des adresses de portefeuilles (préfixées ADC), des contrats intelligents (préfixés ADCC_) et des hachages transactionnels ; (d) « State Ledger In-Memory V8 » désigne le registre d'état maintenu en mémoire vive RAM par les nœuds validateurs sous consensus Proof-of-Authority (PoA / nBFT).",
-                    tech: "1 ₳ = 1 000 000 microA | Parité : 1 ₳ = 1 XOF | Alphabet d'adressage : Base58 exclusif (préfixes ADC et ADCC_)."
+                    core: "Aux fins d'interprétation uniforme, rigoureuse et opposable du présent Traité, chaque terme technique ou juridique employé revêt une définition stricte excluant toute ambiguïté d'interprétation. Le symbole « ₳ » désigne exclusivement la monnaie native souveraine de couche 1 (Layer-1 Native Coin) du réseau Nexus Core, créée dès le bloc Genèse avec une offre globale maximale, fixe et non inflationniste de 100 000 000 000 ₳ (cent milliards d'unités), arrimée selon un mécanisme institutionnel de Preuve de Réserve (Proof of Reserve — PoR) à parité fixe de 1 ₳ pour 1 Franc CFA (XOF). L'unité « microA » désigne la plus petite subdivision atomique et indivisible de la monnaie native ₳, telle que 1 ₳ équivaut mathématiquement à 1 000 000 microA (précision à 6 décimales), garantissant que l'intégralité des calculs du moteur d'état s'effectue en arithmétique entière 64 bits et BigInt, sans jamais recourir aux nombres à virgule flottante IEEE 754.",
+                    cryptoFocus: "Codification formelle des primitives cryptographiques : l'alphabet Base58 (58 symboles alphanumériques excluant 0, O, I et l), la courbe elliptique secp256k1 (norme SECG SEC 2), le condensat SHA-256 (FIPS 180-4), le chiffrement authentifié AES-256-GCM (NIST SP 800-38D) et la dérivation Argon2id (RFC 9106).",
+                    operationalFocus: "Distinction stricte entre les comptes détenus extérieurement (Externally Owned Accounts — EOA, préfixés par ADC en Base58) contrôlés par une clé privée locale, et les comptes de contrats intelligents (Smart Contract Accounts, préfixés par ADCC_ en Base58) régis par le code déterministe de la Machine Virtuelle Nexus (NVM).",
+                    legalFocus: "Opposabilité terminologique devant toute juridiction ou instance arbitrale : la qualification de « Portefeuille Non-Custodial » exclut de plein droit toute assimilation de Nexus Wallet Pro à un dépositaire bancaire, un teneur de compte conservateur ou un intermédiaire financier détenant des fonds de tiers.",
+                    tech: "Monnaie Native : ₳ | Offre Max : 100 000 000 000 ₳ | Subdivision : 1 ₳ = 1 000 000 microA | Parité : 1 ₳ = 1 XOF."
                 },
                 en: {
                     short: "2. L1 Definitions & Terminology",
-                    title: "Article 2 — Technical Definitions and Layer-1 Cryptographic Terminology",
+                    title: "Article 2 — Normative Definitions, ₳ Monetary Nomenclature, and Layer-1 Cryptographic Glossary",
                     badge: "Official Nomenclature",
-                    content: "For the purpose of strict interpretation of this Policy, the following terms carry a precise legal and computational meaning: (a) 'Native Currency ₳' designates the sovereign Layer-1 digital asset of the Nexus Core network, with a fixed maximum supply of 100,000,000,000 ₳, pegged at a fixed 1:1 parity to the CFA Franc (1 ₳ = 1 XOF), and subdivided into one million indivisible atomic units called 'microA' (1 ₳ = 1,000,000 microA); (b) 'Non-Custodial Wallet' designates the software architecture of Nexus Wallet Pro wherein the user solely and exclusively holds their private keys without any custody or copy on Atlas & Duc Corporation servers; (c) 'Base58 Encoding' designates the unambiguous alphanumeric representation used for all wallet addresses (prefixed ADC), smart contracts (prefixed ADCC_), and transaction hashes; (d) 'In-Memory V8 State Ledger' designates the state registry maintained in RAM by validator nodes operating under Proof-of-Authority (PoA / nBFT) consensus.",
-                    tech: "1 ₳ = 1,000,000 microA | Parity: 1 ₳ = 1 XOF | Addressing Alphabet: Exclusive Base58 (prefixes ADC and ADCC_)."
+                    core: "For the purpose of uniform, rigorous, and legally binding interpretation of this Treaty, every technical or legal term employed carries a strict definition excluding any ambiguity. The symbol '₳' exclusively designates the sovereign Layer-1 native currency (Native Coin) of the Nexus Core network, minted at the Genesis Block with a fixed, non-inflationary maximum global supply of 100,000,000,000 ₳ (one hundred billion units), pegged via an institutional Proof of Reserve (PoR) mechanism at a fixed 1:1 parity of 1 ₳ to 1 CFA Franc (XOF). The unit 'microA' designates the smallest atomic and indivisible subdivision of the native currency ₳, such that 1 ₳ mathematically equals 1,000,000 microA (6-decimal precision), ensuring that all state engine computations execute in 64-bit integer and BigInt arithmetic without ever relying on IEEE 754 floating-point numbers.",
+                    cryptoFocus: "Formal codification of cryptographic primitives: the Base58 alphabet (58 alphanumeric symbols excluding 0, O, I, and l), the secp256k1 elliptic curve (SECG SEC 2 standard), the SHA-256 digest (FIPS 180-4), authenticated AES-256-GCM encryption (NIST SP 800-38D), and Argon2id key derivation (RFC 9106).",
+                    operationalFocus: "Strict distinction between Externally Owned Accounts (EOA, prefixed by ADC in Base58) controlled by a local private key, and Smart Contract Accounts (prefixed by ADCC_ in Base58) governed by the deterministic code of the Nexus Virtual Machine (NVM).",
+                    legalFocus: "Terminological enforceability before any court or arbitral tribunal: the qualification of 'Non-Custodial Wallet' legally precludes any assimilation of Nexus Wallet Pro to a banking depository, a custodial account keeper, or a financial intermediary holding third-party funds.",
+                    tech: "Native Currency: ₳ | Max Supply: 100,000,000,000 ₳ | Subdivision: 1 ₳ = 1,000,000 microA | Parity: 1 ₳ = 1 XOF."
                 }
             },
             {
@@ -358,19 +413,26 @@
                 num: "03",
                 icon: "fa-key",
                 color: "text-indSuccess bg-indSuccess/10",
+                domainCode: "BIP39-KEY-03",
                 fr: {
                     short: "3. Architecture Non-Custodial & BIP39",
-                    title: "Article 3 — Architecture Non-Custodial et Génération Locale d'Entropie (BIP39)",
+                    title: "Article 3 — Architecture Non-Custodial Souveraine et Génération Locale d'Entropie Cryptographique (BIP39)",
                     badge: "Souveraineté Clés Privées",
-                    content: "Nexus Wallet Pro repose sur un modèle strictement Non-Custodial (sans garde déléguée). Lors de la création d'un portefeuille, le processeur du terminal mobile de l'utilisateur génère localement et hors-ligne une entropie cryptographique matérielle de haute sécurité. Cette entropie est convertie selon le standard industriel BIP39 en une phrase mnémonique de récupération de 12 ou 24 mots, à partir de laquelle sont dérivées mathématiquement la clé privée ECDSA sur la courbe elliptique secp256k1 et l'adresse publique encodée en Base58. À aucun moment du cycle de vie de l'application cette phrase mnémonique ou cette clé privée n'est transmise sur Internet, ni sauvegardée sur un serveur distant d'Atlas & Duc Corporation. L'utilisateur est l'unique gardien cryptographique de son patrimoine en ₳.",
-                    tech: "Génération 100% locale côté client | Standard mnémonique BIP39 | Courbe asymétrique : ECDSA secp256k1."
+                    core: "Le pilier fondateur de Nexus Wallet Pro réside dans son architecture intégralement Non-Custodial (sans garde centralisée). Dès que l'utilisateur initialise la création d'un portefeuille sur son terminal mobile, le moteur cryptographique local sollicite le générateur matériel de nombres aléatoires (Hardware Random Number Generator — TRNG / /dev/urandom / SecureRandom) du microprocesseur pour produire un vecteur d'entropie pure de 128 bits à 256 bits. Conformément au standard industriel BIP39, ce vecteur d'entropie est complété par une somme de contrôle SHA-256 et segmenté en groupes de 11 bits indexant un dictionnaire normatif de 2048 mots, générant ainsi une phrase mnémonique de récupération de 12 ou 24 mots. À partir de cette graine (Seed) dérivée par PBKDF2-HMAC-SHA512 (2048 itérations), le portefeuille calcule localement la paire de clés asymétriques ECDSA secp256k1 sans qu'aucun octet de la phrase mnémonique ou de la clé privée ne transite jamais par le réseau Internet.",
+                    cryptoFocus: "Entropie locale de 128 à 256 bits ($2^{128}$ à $2^{256}$ combinaisons possibles), rendant statistiquement et physiquement impossible toute collision ou régénération aléatoire d'un même portefeuille Base58 par un tiers sur l'ensemble de l'univers observable.",
+                    operationalFocus: "Génération et dérivation exécutées en mode hors-ligne (Air-Gapped Memory Space) au sein du processus natif de l'application ; aucun serveur d'Atlas & Duc Corporation n'est notifié de la création d'une nouvelle adresse Base58 tant que celle-ci ne reçoit pas de transaction on-chain.",
+                    legalFocus: "Transfert immédiat, irrévocable et absolu de la garde juridique et matérielle des clés privées à l'utilisateur final dès l'affichage de la phrase mnémonique BIP39 sur l'écran de son terminal.",
+                    tech: "Entropie Matérielle : 128-256 bits TRNG | Mnémonique : BIP39 (12/24 mots) | Dérivation : locale 100% hors-ligne."
                 },
                 en: {
                     short: "3. Non-Custodial Architecture & BIP39",
-                    title: "Article 3 — Non-Custodial Architecture and Local Entropy Generation (BIP39)",
+                    title: "Article 3 — Sovereign Non-Custodial Architecture and Local Cryptographic Entropy Generation (BIP39)",
                     badge: "Private Key Sovereignty",
-                    content: "Nexus Wallet Pro is built upon a strictly Non-Custodial model. Upon wallet initialization, the processor of the user's mobile device locally and offline generates high-security hardware cryptographic entropy. This entropy is converted via the industry-standard BIP39 protocol into a 12-word or 24-word recovery mnemonic phrase, from which the ECDSA private key on the secp256k1 elliptic curve and the Base58-encoded public address are mathematically derived. At no point during the application's lifecycle is this mnemonic phrase or private key transmitted over the Internet or backed up on any remote server belonging to Atlas & Duc Corporation. The user is the sole cryptographic custodian of their ₳ holdings.",
-                    tech: "100% client-side local generation | BIP39 mnemonic standard | Asymmetric curve: ECDSA secp256k1."
+                    core: "The foundational pillar of Nexus Wallet Pro lies in its wholly Non-Custodial architecture. As soon as the user initiates wallet creation on their mobile terminal, the local cryptographic engine invokes the microprocessor's hardware random number generator (TRNG / /dev/urandom / SecureRandom) to produce a pure entropy vector ranging from 128 bits to 256 bits. In accordance with the industry-standard BIP39 protocol, this entropy vector is appended with a SHA-256 checksum and segmented into 11-bit groups indexing a normative 2048-word dictionary, thereby generating a 12-word or 24-word recovery mnemonic phrase. From this seed derived via PBKDF2-HMAC-SHA512 (2048 iterations), the wallet locally computes the asymmetric ECDSA secp256k1 keypair without a single byte of the mnemonic phrase or private key ever traversing the Internet.",
+                    cryptoFocus: "Local entropy of 128 to 256 bits ($2^{128}$ to $2^{256}$ possible combinations), rendering any collision or random regeneration of the same Base58 wallet by a third party statistically and physically impossible across the observable universe.",
+                    operationalFocus: "Generation and derivation executed in offline memory space within the application's native process; no Atlas & Duc Corporation server is notified of the creation of a new Base58 address until it receives an on-chain transaction.",
+                    legalFocus: "Immediate, irrevocable, and absolute transfer of legal and physical custody of the private keys to the end user upon display of the BIP39 mnemonic phrase on their terminal screen.",
+                    tech: "Hardware Entropy: 128-256 bits TRNG | Mnemonic: BIP39 (12/24 words) | Derivation: 100% offline client-side."
                 }
             },
             {
@@ -378,19 +440,26 @@
                 num: "04",
                 icon: "fa-microchip",
                 color: "text-purple-600 bg-purple-500/10",
+                domainCode: "AES-GCM-04",
                 fr: {
                     short: "4. Enclave Matérielle & AES-256-GCM",
-                    title: "Article 4 — Enclave Matérielle, Dérivation Argon2id et Chiffrement au Repos AES-256-GCM",
+                    title: "Article 4 — Sécurisation par Enclave Matérielle, Dérivation Argon2id et Chiffrement Authentifié AES-256-GCM",
                     badge: "Cryptographie Militaire",
-                    content: "Afin de prémunir l'utilisateur contre toute tentative d'extraction physique ou logicielle sur son smartphone, les secrets cryptographiques stockés sur l'appareil sont isolés au sein de l'enclave matérielle sécurisée du système d'exploitation (Android Keystore System / iOS Secure Enclave). Le mot de passe maître ou code PIN défini par l'utilisateur subit une fonction de dérivation de clé à mémoire dure Argon2id, neutralisant les attaques par force brute assistées par GPU/ASIC. Le conteneur local renfermant la clé privée est chiffré au repos via l'algorithme symétrique authentifié AES-256-GCM (Advanced Encryption Standard à clé de 256 bits en mode Galois/Counter) utilisant un vecteur d'initialisation unique de 96 bits et un tag d'authentification d'intégrité de 128 bits.",
-                    tech: "KDF : Argon2id anti-brute-force | Chiffrement au repos : AES-256-GCM (IV 96-bit, Tag 128-bit) | Isolation Android Keystore."
+                    core: "Pour garantir l'inviolabilité des clés privées résidant sur le terminal de l'utilisateur face aux menaces d'extraction forensique, de logiciels malveillants ou de vol physique de l'appareil, Nexus Wallet Pro met en œuvre une architecture de défense cryptographique multicouche. Premièrement, le code secret ou mot de passe maître défini par l'utilisateur n'est jamais stocké en clair ni sous forme de simple hachage rapide : il est transformé par la fonction de dérivation de clé à mémoire dure Argon2id (standardisée par l'IETF sous la RFC 9106), configurée avec un coût mémoire élevé, un parallélisme contrôlé et de multiples passes temporelles pour mettre en échec les grappes de calcul GPU, FPGA et ASIC. Deuxièmement, la clé dérivée alimente le moteur de chiffrement symétrique authentifié AES-256-GCM (Advanced Encryption Standard à clé de 256 bits en mode Galois/Counter Mode, conforme à la norme NIST SP 800-38D), protégé par le module matériel Trusted Execution Environment (TEE / StrongBox Android Keystore).",
+                    cryptoFocus: "Chaque opération d'écriture du coffre-fort local génère un vecteur d'initialisation (IV / Nonce) cryptographiquement aléatoire de 96 bits (12 octets) et produit un tag d'authentification d'intégrité GMAC de 128 bits (16 octets), détectant instantanément toute altération d'un seul bit du fichier chiffré.",
+                    operationalFocus: "Effacement systématique de la mémoire vive (Zeroization des tampons RAM) immédiatement après la signature ECDSA d'une transaction en ₳, empêchant toute attaque par inspection de la mémoire (Cold Boot Attack ou Memory Dump).",
+                    legalFocus: "Respect absolu de l'obligation de sécurité de l'état de l'art (Article 32 du RGPD et Loi burkinabè N° 001-2021/AN), rendant le coffre-fort local mathématiquement indéchiffrable par quiconque — y compris Atlas & Duc Corporation — sans le secret maître de l'utilisateur.",
+                    tech: "KDF : Argon2id (RFC 9106) | Chiffrement : AES-256-GCM (NIST SP 800-38D, IV 96 bits, Tag 128 bits) | Enclave : Android Keystore TEE."
                 },
                 en: {
                     short: "4. Hardware Enclave & AES-256-GCM",
-                    title: "Article 4 — Hardware Enclave, Argon2id Derivation, and AES-256-GCM Encryption at Rest",
+                    title: "Article 4 — Hardware Enclave Security, Argon2id Derivation, and Authenticated AES-256-GCM Encryption",
                     badge: "Military-Grade Crypto",
-                    content: "To protect the user against any physical or software extraction attempt on their smartphone, cryptographic secrets stored on the device are isolated within the operating system's hardware-backed secure enclave (Android Keystore System / iOS Secure Enclave). The master password or PIN code set by the user undergoes an Argon2id memory-hard key derivation function, neutralizing GPU/ASIC-assisted brute-force attacks. The local vault containing the private key is encrypted at rest via the authenticated symmetric algorithm AES-256-GCM (256-bit Advanced Encryption Standard in Galois/Counter Mode) utilizing a unique 96-bit initialization vector and a 128-bit integrity authentication tag.",
-                    tech: "KDF: Anti-brute-force Argon2id | Encryption at rest: AES-256-GCM (96-bit IV, 128-bit Tag) | Android Keystore Isolation."
+                    core: "To guarantee the inviolability of private keys residing on the user's terminal against forensic extraction threats, malware, or physical device theft, Nexus Wallet Pro enforces a multi-layered cryptographic defense architecture. First, the secret PIN or master password defined by the user is never stored in plaintext or as a fast hash: it is processed through the memory-hard key derivation function Argon2id (standardized by the IETF under RFC 9106), configured with high memory cost, controlled parallelism, and multiple time passes to defeat GPU, FPGA, and ASIC cracking clusters. Second, the derived key feeds the authenticated symmetric encryption engine AES-256-GCM (256-bit Advanced Encryption Standard in Galois/Counter Mode, compliant with NIST SP 800-38D), backed by the hardware Trusted Execution Environment (TEE / StrongBox Android Keystore).",
+                    cryptoFocus: "Every write operation of the local vault generates a cryptographically random 96-bit (12-byte) Initialization Vector (IV / Nonce) and produces a 128-bit (16-byte) GMAC integrity authentication tag, instantaneously detecting any single-bit tampering of the ciphertext.",
+                    operationalFocus: "Systematic zeroization of volatile RAM buffers immediately following the ECDSA signing of an ₳ transaction, preventing memory inspection attacks (Cold Boot Attacks or Memory Dumps).",
+                    legalFocus: "Full compliance with state-of-the-art security obligations (GDPR Article 32 and Burkinabe Law N° 001-2021/AN), rendering the local vault mathematically undecipherable by anyone—including Atlas & Duc Corporation—without the user's master secret.",
+                    tech: "KDF: Argon2id (RFC 9106) | Encryption: AES-256-GCM (NIST SP 800-38D, 96-bit IV, 128-bit Tag) | Enclave: Android Keystore TEE."
                 }
             },
             {
@@ -398,19 +467,26 @@
                 num: "05",
                 icon: "fa-user-shield",
                 color: "text-emerald-600 bg-emerald-500/10",
+                domainCode: "ZERO-PII-05",
                 fr: {
                     short: "5. Politique Zero-Data (0% PII)",
-                    title: "Article 5 — Politique de Collecte Zéro (Zero-Data PII) et Absence Totale de Profilage",
+                    title: "Article 5 — Politique de Collecte Zéro (Zero-Data PII) et Absence Radicale de Base de Données Nominative",
                     badge: "Zero-Data Policy",
-                    content: "Atlas & Duc Corporation applique une doctrine stricte de « Collecte Zéro » (Zero-Data Policy) concernant les données à caractère personnel (Personally Identifiable Information — PII) au sein de Nexus Wallet Pro et de NexusScan. L'ouverture et l'utilisation d'un portefeuille L1 ne requièrent aucune création de compte centralisé : nous ne demandons, ne collectons, n'indexons ni ne stockons jamais votre nom civil, prénom, date de naissance, nationalité, numéro de téléphone, adresse postale, adresse e-mail, photographie ou pièce d'identité biométrique. Aucune base de données nominative n'existe sur nos serveurs pour associer un citoyen à son adresse Base58.",
-                    tech: "Collecte nominative : Nulle (0 octet PII) | Aucun compte cloud requis | Anonymat civil préservé par défaut."
+                    core: "La gouvernance informationnelle de Nexus Wallet Pro et de l'explorateur NexusScan repose sur un axiome technique vérifiable : la « Politique de Collecte Zéro » (Zero-Data PII Policy). Contrairement aux applications financières classiques qui exigent l'ouverture préalable d'un compte nominatif sur un serveur central, l'accès au réseau Nexus Core Layer-1 via Nexus Wallet Pro s'effectue sans aucune inscription, sans formulaire d'état civil et sans vérification d'identité centralisée auprès d'Atlas & Duc Corporation. Nous ne demandons, ne collectons, ne traitons et n'archivons jamais votre nom patronymique, vos prénoms, votre date et lieu de naissance, votre adresse géographique, votre numéro de téléphone mobile, votre adresse de courrier électronique, vos coordonnées bancaires IBAN, ni aucune photographie ou copie de carte nationale d'identité ou de passeport.",
+                    cryptoFocus: "L'authentification sur la blockchain Nexus Core L1 est purement mathématique : la validité d'un ordre de transfert en ₳ dépend exclusivement de la vérification cryptographique de la signature ECDSA secp256k1 par rapport à la clé publique Base58, et jamais d'un identifiant civil.",
+                    operationalFocus: "Absence totale de table SQL ou NoSQL d'utilisateurs au sein des serveurs validateurs de Nexus Core ; le registre d'état en mémoire vive (this.balances et this.nonces) n'indexe que des chaînes alphanumériques Base58 anonymes associées à des entiers microA.",
+                    legalFocus: "Mise en œuvre la plus absolue du principe de minimisation des données (Article 5-1-c du RGPD et principes directeurs de la CIL au Burkina Faso) : en réduisant la collecte de données personnelles à zéro octet, le risque de fuite de données nominatives sur nos serveurs est mathématiquement ramené à zéro.",
+                    tech: "Collecte PII : 0 octet | Comptes nominatifs centralisés : 0 | Risque d'exposition d'état civil sur le nœud L1 : Nul (0%)."
                 },
                 en: {
                     short: "5. Zero-Data Policy (0% PII)",
-                    title: "Article 5 — Zero-Data PII Collection Policy and Total Absence of Profiling",
+                    title: "Article 5 — Zero-Data PII Collection Policy and Radical Absence of Nominative Databases",
                     badge: "Zero-Data Policy",
-                    content: "Atlas & Duc Corporation enforces a strict 'Zero-Data Policy' regarding Personally Identifiable Information (PII) within Nexus Wallet Pro and NexusScan. Opening and operating an L1 wallet requires no centralized account creation: we never request, collect, index, or store your legal first name, last name, date of birth, nationality, phone number, mailing address, email address, photograph, or biometric identity document. No nominative database exists on our servers to link a citizen to their Base58 address.",
-                    tech: "Nominative collection: Zero (0 bytes PII) | No cloud account required | Civil anonymity preserved by default."
+                    core: "The information governance of Nexus Wallet Pro and the NexusScan explorer rests upon a verifiable technical axiom: the 'Zero-Data PII Policy'. Unlike conventional financial applications that mandate prior registration of a nominative account on a central server, accessing the Nexus Core Layer-1 network via Nexus Wallet Pro occurs without any registration, civil status form, or centralized identity verification with Atlas & Duc Corporation. We never request, collect, process, or archive your surname, given names, date and place of birth, geographic address, mobile phone number, email address, IBAN bank details, or any photograph or copy of a national identity card or passport.",
+                    cryptoFocus: "Authentication on the Nexus Core L1 blockchain is purely mathematical: the validity of an ₳ transfer order depends exclusively on the cryptographic verification of the ECDSA secp256k1 signature against the Base58 public key, and never on a civil identifier.",
+                    operationalFocus: "Complete absence of any user SQL or NoSQL table within Nexus Core validator servers; the in-memory state ledger (this.balances and this.nonces) indexes only anonymous Base58 alphanumeric strings mapped to microA integers.",
+                    legalFocus: "Ultimate implementation of the data minimization principle (GDPR Article 5-1-c and guiding principles of the CIL in Burkina Faso): by reducing personal data collection to zero bytes, the risk of a nominative data breach on our servers is mathematically reduced to zero.",
+                    tech: "PII Collection: 0 bytes | Centralized nominative accounts: 0 | Civil identity exposure risk on L1 node: Zero (0%)."
                 }
             },
             {
@@ -418,19 +494,26 @@
                 num: "06",
                 icon: "fa-cubes",
                 color: "text-sky-600 bg-sky-500/10",
+                domainCode: "LEDGER-PUB-06",
                 fr: {
                     short: "6. Transparence Ledger & NexusScan",
-                    title: "Article 6 — Transparence Immuable du Registre Nexus Core L1 et Explorateur NexusScan",
+                    title: "Article 6 — Transparence Immuable du Registre Public Nexus Core L1 et Indexation Analytique sur NexusScan",
                     badge: "Registre Public L1",
-                    content: "L'utilisateur reconnaît et accepte que la blockchain Nexus Core Layer-1 est, par essence architecturale, un grand livre distribué public, transparent et immuable. Dès qu'une transaction libellée en ₳ (exprimée techniquement en microA) est signée et validée par les nœuds d'autorité PoA, ses métadonnées intrinsèques — comprenant le hachage Base58 de la transaction, l'adresse expéditrice, l'adresse destinataire, le montant transféré en ₳, les frais réseau en microA, le compteur séquentiel (nonce) et l'horodatage — sont inscrites définitivement dans la chaîne de blocs et deviennent publiquement consultables via l'explorateur officiel NexusScan. Cette transparence publique est indispensable pour auditer la preuve de réserve (PoR) et l'offre fixe de 100 milliards de ₳.",
-                    tech: "Visibilité On-Chain : Publique & Immuable sur NexusScan | Auditabilité temps réel de l'offre globale de 100 000 000 000 ₳."
+                    core: "Tout utilisateur de Nexus Wallet Pro est formellement informé et reconnaît que la technologie blockchain Nexus Core Layer-1 repose sur la publicité et l'immuabilité cryptographique de son grand livre distribué (Public State Ledger). Dès lors qu'une transaction est signée localement par l'expéditeur et scellée dans un bloc par les nœuds validateurs PoA d'Atlas & Duc Corporation, les données techniques composant cette transaction — à savoir l'identifiant unique de transaction (Hash Base58), l'adresse expéditrice Base58 (from), l'adresse destinataire Base58 (to), le montant transféré en microA et sa représentation formatée en ₳, les frais de réseau (feeMicro), le compteur séquentiel (nonce), l'horodatage milliseconde et l'indice du bloc — deviennent perpétuellement publiques et consultables en temps réel sur l'explorateur officiel NexusScan.",
+                    cryptoFocus: "Intégrité structurelle garantie par le chaînage cryptographique des blocs (previousHash Base58) et l'arbre de Merkle (merkleRoot SHA-256), interdisant toute suppression, dissimulation ou modification rétroactive d'une écriture comptable en ₳.",
+                    operationalFocus: "Exposition publique des routes analytiques REST (/api/supply, /api/holders, /api/price, /api/address/:addr/txs) permettant à tout citoyen, partenaire bancaire ou auditeur international de vérifier instantanément l'offre fixe de 100 000 000 000 ₳ et sa couverture à 1:1 en Franc CFA (XOF).",
+                    legalFocus: "Distinction juridique fondamentale entre donnée publique pseudonyme on-chain et donnée personnelle civile : l'inscription publique des flux en ₳ sur NexusScan constitue une exigence essentielle au fonctionnement du contrat technique décentralisé et à la prévention de la double dépense.",
+                    tech: "Explorateur Officiel : NexusScan | Chaînage : SHA-256 + Base58 | Auditabilité publique : 100% des blocs depuis le bloc Genèse #0."
                 },
                 en: {
                     short: "6. Ledger Transparency & NexusScan",
-                    title: "Article 6 — Immutable Transparency of the Nexus Core L1 Ledger and NexusScan Explorer",
+                    title: "Article 6 — Immutable Transparency of the Nexus Core L1 Public Ledger and Analytical Indexing on NexusScan",
                     badge: "Public L1 Ledger",
-                    content: "The user acknowledges and accepts that the Nexus Core Layer-1 blockchain is, by architectural design, a public, transparent, and immutable distributed ledger. Once a transaction denominated in ₳ (technically expressed in microA) is signed and validated by the PoA authority nodes, its intrinsic metadata—comprising the Base58 transaction hash, sender address, recipient address, transferred amount in ₳, network fee in microA, sequential counter (nonce), and timestamp—are permanently recorded in the blockchain and become publicly viewable via the official NexusScan explorer. This public transparency is essential to audit the Proof of Reserve (PoR) and the fixed supply of 100 billion ₳.",
-                    tech: "On-Chain Visibility: Public & Immutable on NexusScan | Real-time auditability of the 100,000,000,000 ₳ total supply."
+                    core: "Every user of Nexus Wallet Pro is formally informed and acknowledges that the Nexus Core Layer-1 blockchain technology relies on the publicity and cryptographic immutability of its distributed ledger (Public State Ledger). Once a transaction is locally signed by the sender and sealed into a block by Atlas & Duc Corporation's PoA validator nodes, the technical data comprising that transaction—namely the unique transaction identifier (Base58 Hash), sender Base58 address (from), recipient Base58 address (to), transferred amount in microA and its formatted representation in ₳, network fee (feeMicro), sequential counter (nonce), millisecond timestamp, and block index—become perpetually public and viewable in real time on the official NexusScan explorer.",
+                    cryptoFocus: "Structural integrity guaranteed by cryptographic block chaining (Base58 previousHash) and the Merkle tree (SHA-256 merkleRoot), prohibiting any deletion, concealment, or retroactive alteration of an accounting entry in ₳.",
+                    operationalFocus: "Public exposure of analytical REST routes (/api/supply, /api/holders, /api/price, /api/address/:addr/txs) enabling any citizen, banking partner, or international auditor to instantaneously verify the fixed supply of 100,000,000,000 ₳ and its 1:1 coverage in CFA Francs (XOF).",
+                    legalFocus: "Fundamental legal distinction between pseudonymous on-chain public data and civil personal data: the public recording of ₳ flows on NexusScan constitutes an essential requirement for the operation of the decentralized technical contract and double-spend prevention.",
+                    tech: "Official Explorer: NexusScan | Chaining: SHA-256 + Base58 | Public Auditability: 100% of blocks since Genesis Block #0."
                 }
             },
             {
@@ -438,19 +521,26 @@
                 num: "07",
                 icon: "fa-fingerprint",
                 color: "text-amber-600 bg-amber-500/10",
+                domainCode: "BASE58-PSEUDO-07",
                 fr: {
                     short: "7. Base58, ECDSA & Pseudonymat",
-                    title: "Article 7 — Encodage Base58, Signatures ECDSA secp256k1 et Hygiène de Pseudonymat",
+                    title: "Article 7 — Standard d'Adressage Base58, Signatures ECDSA secp256k1 et Préservation du Pseudonymat",
                     badge: "Pseudonymat Cryptographique",
-                    content: "Sur le réseau Nexus Core, l'identité opérationnelle d'un participant est exclusivement représentée par son adresse publique encodée en Base58. Ce pseudonymat cryptographique protège la vie privée tant que l'utilisateur ne divulgue pas volontairement le lien entre son adresse Base58 et son identité civile sur des réseaux sociaux, des sites tiers ou auprès d'intermédiaires externes. Atlas & Duc Corporation recommande aux utilisateurs et aux entreprises souhaitant cloisonner leurs flux comptables de générer des adresses Base58 distinctes pour leurs opérations publiques, leur trésorerie d'épargne en ₳ et leurs règlements commerciaux quotidiens.",
-                    tech: "Identification réseau : Pseudonyme par clé publique Base58 | Signature déterministe : SHA-256 + ECDSA secp256k1."
+                    core: "Le réseau Nexus Core Layer-1 se distingue des architectures EVM classiques par le rejet intégral de la notation hexadécimale (0x...) au profit de l'encodage exclusif en Base58 (utilisant l'alphabet normatif 123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz) pour l'ensemble des adresses de portefeuilles (préfixées ADC), des contrats intelligents (préfixés ADCC_) et des identifiants de transactions. Cette représentation confère à chaque acteur un pseudonymat cryptographique robuste : sur le réseau, vous n'êtes identifié que par le condensat Base58 dérivé de votre clé publique ECDSA secp256k1. Toutefois, la préservation de ce pseudonymat dépend directement de l'hygiène opérationnelle (OPSEC) de l'utilisateur lorsqu'il communique son adresse Base58 en dehors de la blockchain.",
+                    cryptoFocus: "Vérification mathématique sans divulgation de secret : lors d'un transfert en ₳, le nœud validateur recouvre la clé publique à partir de la signature DER/Base58 et du hachage SHA-256 de la pré-image canonique (`chainId:type:from:to:amountMicro:feeMicro:nonce:timestamp`), prouvant l'autorisation sans jamais exposer la clé privée.",
+                    operationalFocus: "Faculté offerte à tout utilisateur et à toute entreprise de générer localement et gratuitement un nombre illimité d'adresses Base58 indépendantes afin de séparer ses flux de trésorerie commerciale, ses réserves d'épargne en ₳ et ses paiements quotidiens.",
+                    legalFocus: "Exonération de responsabilité d'Atlas & Duc Corporation en cas de dé-pseudonymisation volontaire ou accidentelle résultant de la publication par l'utilisateur de son adresse Base58 sur un profil public, un forum, une facture nominative publique ou une plateforme tierce soumise au KYC.",
+                    tech: "Alphabet : Base58 (sans 0, O, I, l) | Préfixes : ADC (Portefeuilles EOA) & ADCC_ (Contrats NVM) | Signature : ECDSA secp256k1."
                 },
                 en: {
                     short: "7. Base58, ECDSA & Pseudonymity",
-                    title: "Article 7 — Base58 Encoding, ECDSA secp256k1 Signatures, and Pseudonymity Hygiene",
+                    title: "Article 7 — Base58 Addressing Standard, ECDSA secp256k1 Signatures, and Pseudonymity Preservation",
                     badge: "Cryptographic Pseudonymity",
-                    content: "On the Nexus Core network, the operational identity of a participant is exclusively represented by their Base58-encoded public address. This cryptographic pseudonymity protects privacy as long as the user does not voluntarily disclose the link between their Base58 address and their legal identity on social networks, third-party websites, or to external intermediaries. Atlas & Duc Corporation recommends that users and corporations wishing to compartmentalize their accounting flows generate distinct Base58 addresses for their public operations, their ₳ savings treasury, and their daily commercial settlements.",
-                    tech: "Network identification: Pseudonymous via Base58 public key | Deterministic signature: SHA-256 + ECDSA secp256k1."
+                    core: "The Nexus Core Layer-1 network distinguishes itself from legacy EVM architectures by completely rejecting hexadecimal notation (0x...) in favor of exclusive Base58 encoding (utilizing the normative alphabet 123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz) for all wallet addresses (prefixed ADC), smart contracts (prefixed ADCC_), and transaction identifiers. This representation grants every participant robust cryptographic pseudonymity: on the network, you are identified solely by the Base58 digest derived from your ECDSA secp256k1 public key. However, preserving this pseudonymity directly depends on the user's operational security hygiene (OPSEC) when sharing their Base58 address outside the blockchain.",
+                    cryptoFocus: "Zero-secret mathematical verification: during an ₳ transfer, the validator node recovers the public key from the DER/Base58 signature and the SHA-256 hash of the canonical pre-image (`chainId:type:from:to:amountMicro:feeMicro:nonce:timestamp`), proving authorization without ever exposing the private key.",
+                    operationalFocus: "Capability granted to every user and corporation to locally and freely generate an unlimited number of independent Base58 addresses to segregate commercial treasury flows, ₳ savings reserves, and daily settlements.",
+                    legalFocus: "Exemption of liability for Atlas & Duc Corporation in the event of voluntary or accidental de-pseudonymization resulting from the user publishing their Base58 address on a public social profile, forum, public nominative invoice, or third-party KYC platform.",
+                    tech: "Alphabet: Base58 (excluding 0, O, I, l) | Prefixes: ADC (EOA Wallets) & ADCC_ (NVM Contracts) | Signature: ECDSA secp256k1."
                 }
             },
             {
@@ -458,19 +548,27 @@
                 num: "08",
                 icon: "fa-server",
                 color: "text-blue-600 bg-blue-500/10",
+                domainCode: "NET-RPC-WSS-08",
                 fr: {
                     short: "8. Réseau JSON-RPC 2.0 & WSS P2P",
-                    title: "Article 8 — Communications Réseau JSON-RPC 2.0, REST et Flux WebSockets P2P (Port 6001)",
+                    title: "Article 8 — Protocole de Transport JSON-RPC 2.0, Télémétrie REST et Streaming WebSockets P2P (Port 6001)",
                     badge: "Transport TLS 1.3",
-                    content: "Pour synchroniser le solde en ₳, récupérer le compteur anti-rejeu (nonce) et diffuser les transactions signées vers la Mempool, Nexus Wallet Pro communique avec la passerelle officielle (https://rpc.agi-nexus-core.click) via le protocole JSON-RPC 2.0 et souscrit aux événements temps réel via WebSockets sécurisés (wss://p2p.agi-nexus-core.click:6001). Lors de ces échanges TCP/HTTPS, l'adresse IP du terminal transite techniquement par nos pare-feu anti-DDoS uniquement en mémoire vive volatile afin d'appliquer les quotas de sécurité (Rate-Limiting de 200 requêtes/seconde). Aucune adresse IP n'est conservée ni corrélée à l'historique d'un portefeuille Base58.",
-                    tech: "Transport chiffré : HTTPS TLS 1.3 & WSS Port 6001 | Filtrage Anti-DDoS en RAM sans journalisation persistante des IP."
+                    content: "",
+                    core: "Les échanges de données entre l'application cliente Nexus Wallet Pro (ou l'explorateur NexusScan) et les nœuds validateurs du réseau Nexus Core Layer-1 s'effectuent exclusivement via des canaux chiffrés en TLS 1.3 vers le point de terminaison officiel https://rpc.agi-nexus-core.click (et https://testnet-rpc.agi-nexus-core.click pour l'environnement de test Chain ID 9013), complétés par le bus de streaming temps réel WebSocket sur wss://p2p.agi-nexus-core.click:6001. Ces communications se limitent strictement au transport des enveloppes normalisées JSON-RPC 2.0 (nexus_getBalance, nexus_getTransactionCount, nexus_sendRawTransaction, nexus_getBlockByNumber, nexus_getTransactionReceipt) et aux notifications push d'événements de blocs (NEW_BLOCK, NEW_TRANSACTION, ADDRESS_ACTIVITY).",
+                    cryptoFocus: "Chiffrement de la couche transport par TLS 1.3 avec Perfect Forward Secrecy (PFS) via échange de clés éphémères ECDHE, empêchant tout fournisseur d'accès à Internet (FAI) ou opérateur télécom d'inspecter le contenu des requêtes RPC émises par le portefeuille.",
+                    operationalFocus: "Traitement purement éphémère en mémoire vive (RAM) des adresses IP entrantes par le pare-feu périmétrique aux seules fins d'application du quota anti-saturation (Rate-Limit de 200 requêtes/seconde par IP publique) ; aucun journal d'accès HTTP persistant ne relie une adresse IP à un paramètre d'adresse Base58.",
+                    legalFocus: "Qualification purement technique et transitoire du routage réseau, conforme aux dispositions relatives à la neutralité des infrastructures de transmission électronique et au secret des télécommunications.",
+                    tech: "Endpoints : https://rpc.agi-nexus-core.click & wss://p2p.agi-nexus-core.click:6001 | Transport : TLS 1.3 ECDHE | Logs IP : 0 persistance."
                 },
                 en: {
                     short: "8. JSON-RPC 2.0 & P2P WSS Network",
-                    title: "Article 8 — JSON-RPC 2.0, REST Network Communications, and P2P WebSocket Streams (Port 6001)",
+                    title: "Article 8 — JSON-RPC 2.0 Transport Protocol, REST Telemetry, and P2P WebSocket Streaming (Port 6001)",
                     badge: "TLS 1.3 Transport",
-                    content: "To synchronize ₳ balances, retrieve the anti-replay counter (nonce), and broadcast signed transactions to the Mempool, Nexus Wallet Pro communicates with the official gateway (https://rpc.agi-nexus-core.click) via the JSON-RPC 2.0 protocol and subscribes to real-time events via secure WebSockets (wss://p2p.agi-nexus-core.click:6001). During these TCP/HTTPS exchanges, the device's IP address technically transits through our anti-DDoS firewalls solely in volatile RAM to enforce security quotas (Rate-Limiting of 200 requests/second). No IP address is retained or correlated with the history of a Base58 wallet.",
-                    tech: "Encrypted transport: HTTPS TLS 1.3 & WSS Port 6001 | In-RAM Anti-DDoS filtering without persistent IP logging."
+                    core: "Data exchanges between the Nexus Wallet Pro client application (or the NexusScan explorer) and the validator nodes of the Nexus Core Layer-1 network occur exclusively over TLS 1.3 encrypted channels toward the official endpoint https://rpc.agi-nexus-core.click (and https://testnet-rpc.agi-nexus-core.click for the Chain ID 9013 test environment), supplemented by the real-time WebSocket streaming bus at wss://p2p.agi-nexus-core.click:6001. These communications are strictly limited to transporting standardized JSON-RPC 2.0 envelopes (nexus_getBalance, nexus_getTransactionCount, nexus_sendRawTransaction, nexus_getBlockByNumber, nexus_getTransactionReceipt) and block event push notifications (NEW_BLOCK, NEW_TRANSACTION, ADDRESS_ACTIVITY).",
+                    cryptoFocus: "Transport layer encryption via TLS 1.3 with Perfect Forward Secrecy (PFS) using ephemeral ECDHE key exchange, preventing any Internet Service Provider (ISP) or telecom carrier from inspecting the payload of RPC requests emitted by the wallet.",
+                    operationalFocus: "Purely ephemeral in-RAM processing of incoming IP addresses by the perimeter firewall solely to enforce anti-saturation quotas (Rate-Limit of 200 requests/second per public IP); no persistent HTTP access log ever links an IP address to a Base58 address parameter.",
+                    legalFocus: "Purely technical and transitory qualification of network routing, compliant with statutory provisions governing electronic transmission neutrality and telecommunications secrecy.",
+                    tech: "Endpoints: https://rpc.agi-nexus-core.click & wss://p2p.agi-nexus-core.click:6001 | Transport: TLS 1.3 ECDHE | IP Logs: 0 persistence."
                 }
             },
             {
@@ -478,19 +576,26 @@
                 num: "09",
                 icon: "fa-code",
                 color: "text-violet-600 bg-violet-500/10",
+                domainCode: "NVM-V8-09",
                 fr: {
                     short: "9. Machine Virtuelle NVM & NCRC-20",
-                    title: "Article 9 — Interactions avec la Machine Virtuelle Nexus (NVM) et Contrats Intelligents NCRC-20",
+                    title: "Article 9 — Machine Virtuelle Nexus (NVM), Isolats V8 Déterministes et Contrats Intelligents NCRC-20",
                     badge: "Exécution V8 Isolée",
-                    content: "Lorsque l'utilisateur mobilise Nexus Wallet Pro pour déployer un contrat intelligent (deploy_contract) ou exécuter une fonction applicative (call_contract) sur la Machine Virtuelle Nexus (NVM) ou un actif régi par le standard NCRC-20, les paramètres transmis dans le champ JSON « action » sont exécutés au sein d'un isolat V8 déterministe sur les nœuds validateurs. Le code NVM s'exécute dans un bac à sable (sandbox) strictement hermétique, dépourvu d'accès au système de fichiers ou à des requêtes HTTP externes, garantissant qu'aucun contrat intelligent ne peut compromettre la confidentialité du terminal mobile de l'utilisateur.",
-                    tech: "Exécution Smart Contracts : Isolat V8 déterministe en RAM | Adresses de contrats préfixées ADCC_ en Base58."
+                    core: "Le réseau Nexus Core Layer-1 intègre une machine virtuelle haute performance — la Nexus Virtual Machine (NVM) — permettant le déploiement (deploy_contract) et l'exécution (call_contract) de contrats intelligents écrits en ECMAScript déterministe, ainsi que la gestion d'actifs régis par la norme souveraine NCRC-20 (identifiés par le préfixe Base58 ADCC_). Lorsqu'un utilisateur interagit avec un contrat intelligent depuis Nexus Wallet Pro, la charge utile JSON contenue dans la clé « action » est exécutée au sein d'un isolat mémoire V8 strictement cloisonné sur les nœuds validateurs. Aucun contrat intelligent déployé sur la NVM ne possède la capacité technique d'accéder au système de fichiers du téléphone de l'utilisateur, de lire ses clés privées locales ou de déclencher un transfert de ₳ sans une signature ECDSA explicite initiée par l'utilisateur.",
+                    cryptoFocus: "Cloisonnement hermétique de l'isolat V8 : suppression des appels réseau externes, des générateurs aléatoires non déterministes et des accès système hôtes, garantissant que l'état interne du contrat (lu via nexus_getContractState) résulte uniquement des transactions signées.",
+                    operationalFocus: "Plafonnement strict du temps de calcul CPU par appel de contrat (Timeout d'exécution de 50 ms et tarification minimale de 5 000 microA pour un appel et 50 000 microA pour un déploiement), empêchant toute boucle infinie ou attaque par déni de service sur la mémoire vive du nœud.",
+                    legalFocus: "Transparence contractuelle : le code source des contrats intelligents déployés sur Nexus Core L1 étant publiquement inspectable sur le registre, l'utilisateur s'engage à vérifier l'adresse Base58 (ADCC_...) du contrat cible avant toute signature.",
+                    tech: "Moteur Smart Contracts : Isolat V8 Déterministe | Standard Token : NCRC-20 | Préfixe Contrat : ADCC_ en Base58."
                 },
                 en: {
                     short: "9. NVM Virtual Machine & NCRC-20",
-                    title: "Article 9 — Interactions with the Nexus Virtual Machine (NVM) and NCRC-20 Smart Contracts",
+                    title: "Article 9 — Nexus Virtual Machine (NVM), Deterministic V8 Isolates, and NCRC-20 Smart Contracts",
                     badge: "Isolated V8 Execution",
-                    content: "When the user utilizes Nexus Wallet Pro to deploy a smart contract (deploy_contract) or execute an application function (call_contract) on the Nexus Virtual Machine (NVM) or an asset governed by the NCRC-20 standard, the parameters transmitted within the JSON 'action' field are executed inside a deterministic V8 isolate on the validator nodes. NVM code runs in a strictly hermetic sandbox devoid of file system access or external HTTP requests, ensuring that no smart contract can compromise the privacy of the user's mobile terminal.",
-                    tech: "Smart Contract Execution: Deterministic V8 Isolate in RAM | Contract addresses prefixed ADCC_ in Base58."
+                    core: "The Nexus Core Layer-1 network incorporates a high-performance virtual machine—the Nexus Virtual Machine (NVM)—enabling the deployment (deploy_contract) and execution (call_contract) of smart contracts written in deterministic ECMAScript, as well as the management of assets governed by the sovereign NCRC-20 standard (identified by the Base58 prefix ADCC_). When a user interacts with a smart contract from Nexus Wallet Pro, the JSON payload contained within the 'action' key is executed inside a strictly sandboxed V8 memory isolate on the validator nodes. No smart contract deployed on the NVM possesses the technical capability to access the user's phone file system, read their local private keys, or trigger an ₳ transfer without an explicit ECDSA signature initiated by the user.",
+                    cryptoFocus: "Hermetic sandboxing of the V8 isolate: removal of external network calls, non-deterministic random generators, and host system access, ensuring that internal contract state (queried via nexus_getContractState) results solely from signed transactions.",
+                    operationalFocus: "Strict capping of CPU computation time per contract call (50 ms execution timeout and minimum fee of 5,000 microA for a call and 50,000 microA for deployment), preventing infinite loops or denial-of-service attacks against node RAM.",
+                    legalFocus: "Contractual transparency: because the source code of smart contracts deployed on Nexus Core L1 is publicly inspectable on the ledger, the user undertakes to verify the Base58 address (ADCC_...) of the target contract prior to signing.",
+                    tech: "Smart Contract Engine: Deterministic V8 Isolate | Token Standard: NCRC-20 | Contract Prefix: ADCC_ in Base58."
                 }
             },
             {
@@ -498,19 +603,26 @@
                 num: "10",
                 icon: "fa-bolt",
                 color: "text-amber-500 bg-amber-500/10",
+                domainCode: "B2B-GATEWAY-10",
                 fr: {
                     short: "10. Passerelles SONABEL, ONEA & Mobile Money",
-                    title: "Article 10 — Passerelles de Facturation B2B (SONABEL, ONEA) et Ponts Mobile Money",
+                    title: "Article 10 — Passerelles de Règlement B2B (SONABEL, ONEA) et Interconnexion Mobile Money UEMOA",
                     badge: "Passerelles Régionales",
-                    content: "Dans le cadre des modules optionnels permettant le règlement de factures d'utilité publique (électricité SONABEL, eau ONEA, bouquets numériques) ou l'échange entre la monnaie native ₳ et les réseaux Mobile Money opérant dans l'espace UEMOA, les références de compteur, numéros d'abonné ou numéros Mobile Money saisis par l'utilisateur sont utilisés exclusivement pour router l'ordre d'exécution vers l'opérateur concerné. Ces métadonnées de facturation sont chiffrées de bout en bout en AES-256-GCM durant leur transit par le relais passerelle et ne font jamais l'objet d'une revente ou d'une exploitation publicitaire.",
-                    tech: "Chiffrement des références de facturation B2B : AES-256-GCM | Cloisonnement strict entre identifiant abonné et clé privée L1."
+                    core: "Afin d'assurer l'ancrage concret de la monnaie native ₳ dans l'économie réelle du Burkina Faso et de la zone UEMOA, l'écosystème Atlas & Duc Corporation propose des passerelles d'interfaçage B2B permettant le règlement instantané de factures de services essentiels (Société Nationale d'Électricité du Burkina — SONABEL, Office National de l'Eau et de l'Assainissement — ONEA, bouquets de télédiffusion) ainsi que des ponts de liquidité bidirectionnels avec les opérateurs Mobile Money. Lorsque l'utilisateur utilise volontairement l'une de ces passerelles applicatives, les données techniques strictement nécessaires au routage de l'opération — telles que le numéro de police/compteur SONABEL ou ONEA, ou le numéro de récepteur Mobile Money — sont encapsulées dans un canal chiffré en AES-256-GCM à destination exclusive de l'automate de compensation.",
+                    cryptoFocus: "Séparation cryptographique absolue entre le registre Layer-1 et le relais passerelle : sur la blockchain publique NexusScan, seul apparaît le transfert en ₳ vers l'adresse Base58 du contrat de compensation, tandis que la référence abonné est chiffrée en AES-256-GCM.",
+                    operationalFocus: "Purge automatique des tampons de routage passerelle une fois l'accusé de réception (quittance ou token de recharge électrique CashPower) délivré à l'interface de l'utilisateur ; aucune constitution de fichier marketing ou de revente de données à des courtiers tiers.",
+                    legalFocus: "Exécution stricte d'un mandat technique de paiement initié par l'utilisateur, respectant le secret professionnel bancaire et commercial en vigueur dans l'espace UEMOA.",
+                    tech: "Passerelles B2B : SONABEL, ONEA & Mobile Money | Chiffrement des métadonnées abonné : AES-256-GCM de bout en bout."
                 },
                 en: {
                     short: "10. SONABEL, ONEA & Mobile Money Gateways",
-                    title: "Article 10 — B2B Utility Billing Gateways (SONABEL, ONEA) and Mobile Money Bridges",
+                    title: "Article 10 — B2B Utility Settlement Gateways (SONABEL, ONEA) and WAEMU Mobile Money Interconnectivity",
                     badge: "Regional Gateways",
-                    content: "Within the optional modules enabling public utility bill settlement (SONABEL electricity, ONEA water, digital TV packages) or conversion between the native currency ₳ and Mobile Money networks operating across the WAEMU region, meter references, subscriber numbers, or Mobile Money numbers entered by the user are used exclusively to route the execution order to the relevant provider. This billing metadata is end-to-end encrypted in AES-256-GCM during transit through the gateway relay and is never sold or exploited for advertising purposes.",
-                    tech: "B2B billing reference encryption: AES-256-GCM | Strict isolation between subscriber ID and L1 private key."
+                    core: "To ensure the tangible integration of the native currency ₳ into the real economy of Burkina Faso and the WAEMU zone, the Atlas & Duc Corporation ecosystem provides B2B interfacing gateways enabling instant settlement of essential utility bills (National Electricity Company of Burkina — SONABEL, National Office of Water and Sanitation — ONEA, digital broadcasting packages) as well as bidirectional liquidity bridges with Mobile Money carriers. When the user voluntarily utilizes one of these application gateways, the technical data strictly required to route the operation—such as the SONABEL or ONEA meter/policy number, or the recipient Mobile Money number—is encapsulated within an AES-256-GCM encrypted channel routed exclusively to the clearing automaton.",
+                    cryptoFocus: "Absolute cryptographic separation between the Layer-1 ledger and the gateway relay: on the public NexusScan blockchain, only the ₳ transfer to the clearing contract's Base58 address appears, whereas the subscriber reference is encrypted via AES-256-GCM.",
+                    operationalFocus: "Automatic purging of gateway routing buffers once the settlement receipt (voucher or CashPower electricity reload token) is delivered to the user interface; zero creation of marketing databases or data resale to third-party brokers.",
+                    legalFocus: "Strict execution of a technical payment mandate initiated by the user, upholding commercial and financial confidentiality standards enforced across the WAEMU region.",
+                    tech: "B2B Gateways: SONABEL, ONEA & Mobile Money | Subscriber metadata encryption: End-to-end AES-256-GCM."
                 }
             },
             {
@@ -518,19 +630,26 @@
                 num: "11",
                 icon: "fa-cash-register",
                 color: "text-teal-600 bg-teal-500/10",
+                domainCode: "ECO-POS-B2B-11",
                 fr: {
                     short: "11. Écosystème A&D Business, POS & Adama Digital",
-                    title: "Article 11 — Interopérabilité avec A&D Business Pro, Roger Service Pro (POS) et Adama Digital",
+                    title: "Article 11 — Synergie Applicative avec A&D Business Pro, Roger Service Pro (POS) et Adama Digital",
                     badge: "Écosystème Unifié",
-                    content: "Nexus Wallet Pro interagit nativement par QR Code cryptographique et signature locale avec les logiciels professionnels d'Atlas & Duc Corporation, notamment la suite A&D Business Pro (trading, staking vaults, P2P), le logiciel de caisse et gestion de stocks Roger Service Pro (Point of Sale desktop/mobile) ainsi que l'application de commerce électronique Adama Digital. Lors d'un règlement marchand en ₳, seule la preuve cryptographique de paiement (hash Base58 de la transaction et référence de facture dans le champ memo) est transmise au terminal du commerçant, sans jamais exposer les autres avoirs ni les clés du client.",
-                    tech: "Validation POS instantanée (< 1 seconde) | Transmission exclusive du hash Base58 et du memo de facture."
+                    core: "La présente Politique s'étend aux interactions protocolaires entre Nexus Wallet Pro et les plateformes logicielles professionnelles éditées par Atlas & Duc Corporation : la suite financière et de gestion A&D Business Pro (anciennement AGI Business Pro, intégrant terminaux de trading, coffres de staking en ₳ et place de marché P2P), le progiciel de caisse enregistreuse et de gestion d'inventaire Roger Service Pro (déployé sous architecture Electron et WebView locale pour les commerces et grandes surfaces), ainsi que la plateforme de commerce électronique Adama Digital. Lorsqu'un client règle un achat en ₳ auprès d'un commerçant équipé de Roger Service Pro ou sur Adama Digital via scan de QR Code, l'échange d'informations obéit au principe d'isolation minimale : le commerçant reçoit uniquement la confirmation mathématique du règlement sur son adresse Base58 et l'identifiant de facture inscrit dans le champ memo.",
+                    cryptoFocus: "Protocole de paiement par QR Code signé : la facture générée par Roger Service Pro encode uniquement l'adresse Base58 du marchand, le montant exact en microA et l'identifiant de ticket ; le portefeuille client signe la transaction localement sans jamais ouvrir de canal entrant au terminal de caisse.",
+                    operationalFocus: "Architecture locale autonome de Roger Service Pro : les bases de données d'inventaire et de facturation des commerçants utilisant Roger Service Pro demeurent hébergées localement sur leurs propres machines, garantissant le secret commercial absolu de leur chiffre d'affaires.",
+                    legalFocus: "Cloisonnement juridique des responsabilités entre l'éditeur d'infrastructure logicielle (Atlas & Duc Corporation) et les marchands indépendants utilisant la monnaie native ₳ comme moyen de règlement.",
+                    tech: "Applications Intégrées : Nexus Wallet Pro, A&D Business Pro, Roger Service Pro (POS), Adama Digital | Règlement : QR Base58."
                 },
                 en: {
                     short: "11. A&D Business, POS & Adama Digital Ecosystem",
-                    title: "Article 11 — Interoperability with A&D Business Pro, Roger Service Pro (POS), and Adama Digital",
+                    title: "Article 11 — Application Synergy with A&D Business Pro, Roger Service Pro (POS), and Adama Digital",
                     badge: "Unified Ecosystem",
-                    content: "Nexus Wallet Pro natively interacts via cryptographic QR Code and local signature with Atlas & Duc Corporation's enterprise software suite, notably A&D Business Pro (trading, staking vaults, P2P), the Roger Service Pro Point of Sale (POS) and inventory management software, and the Adama Digital e-commerce application. During a merchant checkout in ₳, only the cryptographic proof of payment (Base58 transaction hash and invoice reference in the memo field) is transmitted to the merchant's terminal, without ever exposing the customer's keys or remaining holdings.",
-                    tech: "Instant POS validation (< 1 second) | Exclusive transmission of Base58 hash and invoice memo."
+                    core: "This Policy extends to protocol interactions between Nexus Wallet Pro and the enterprise software platforms published by Atlas & Duc Corporation: the financial and management suite A&D Business Pro (formerly AGI Business Pro, integrating trading terminals, ₳ staking vaults, and P2P marketplace modules), the Point of Sale and inventory management software Roger Service Pro (deployed on Electron and local WebView architectures for retail and wholesale merchants), and the Adama Digital e-commerce platform. When a customer settles a purchase in ₳ with a merchant operating Roger Service Pro or on Adama Digital via QR Code scan, the information exchange obeys minimal isolation: the merchant receives solely the mathematical confirmation of payment on their Base58 address and the invoice identifier in the memo field.",
+                    cryptoFocus: "Signed QR Code payment protocol: the invoice generated by Roger Service Pro encodes solely the merchant's Base58 address, the exact amount in microA, and the receipt ID; the customer wallet signs the transaction locally without ever opening an inbound channel to the POS terminal.",
+                    operationalFocus: "Self-contained local architecture of Roger Service Pro: inventory and billing databases of merchants operating Roger Service Pro remain hosted locally on their own hardware, guaranteeing absolute commercial secrecy over their revenue.",
+                    legalFocus: "Legal compartmentalization of liabilities between the software infrastructure publisher (Atlas & Duc Corporation) and independent merchants accepting the native currency ₳ as settlement.",
+                    tech: "Integrated Suite: Nexus Wallet Pro, A&D Business Pro, Roger Service Pro (POS), Adama Digital | Settlement: Base58 QR."
                 }
             },
             {
@@ -538,19 +657,26 @@
                 num: "12",
                 icon: "fa-mobile-screen-button",
                 color: "text-cyan-600 bg-cyan-500/10",
+                domainCode: "OS-PERM-12",
                 fr: {
                     short: "12. Permissions Matérielles Android / iOS",
-                    title: "Article 12 — Autorisations Système Mobiles (Caméra QR, Biométrie, Stockage Isolé)",
+                    title: "Article 12 — Régime Strict des Permissions Matérielles du Système d'Exploitation Mobile (Android & iOS)",
                     badge: "Moindre Privilège",
-                    content: "Conformément au principe de sécurité du moindre privilège, Nexus Wallet Pro ne sollicite que les permissions matérielles strictement indispensables à son fonctionnement : (1) Accès à l'appareil photo, utilisé uniquement en flux vidéo local volatil pour décoder les QR Codes d'adresses Base58 et de factures POS, sans aucun enregistrement photographique ; (2) Capteur biométrique (empreinte digitale / reconnaissance faciale), sollicité via l'API système BiometricPrompt où l'empreinte biométrique est vérifiée par le processeur sécurisé du téléphone sans que l'application n'ait jamais accès au modèle biométrique brut ; (3) Accès Internet pour les appels RPC.",
-                    tech: "Aucune permission de géolocalisation GPS, ni d'accès au carnet de contacts, ni d'accès au microphone ou aux SMS."
+                    core: "L'architecture native de Nexus Wallet Pro (compilée en Kotlin/Java avec pont WebView sécurisé et bibliothèques cryptographiques embarquées) applique rigoureusement la doctrine du moindre privilège (Principle of Least Privilege) quant aux permissions matérielles sollicitées auprès du système d'exploitation Android ou iOS. L'application se limite strictement à trois autorisations techniques : (a) l'accès ponctuel au capteur optique de la caméra (android.permission.CAMERA), activé exclusivement lorsque l'utilisateur ouvre le lecteur de QR Code pour scanner une adresse Base58, le flux d'images étant analysé en mémoire volatile sans jamais être enregistré sur le disque ni transmis sur le réseau ; (b) l'invocation de l'API biométrique matérielle (android.permission.USE_BIOMETRIC) où l'empreinte digitale ou la géométrie faciale est traitée exclusivement par le processeur sécurisé du fabricant ; et (c) l'accès sockets Internet (android.permission.INTERNET) pour les requêtes RPC.",
+                    cryptoFocus: "Isolation biométrique matérielle : l'authentification biométrique déverrouille uniquement le descripteur de clé AES-256-GCM dans l'Android Keystore ; Nexus Wallet Pro ne lit ni ne stocke jamais l'image d'une empreinte digitale ou d'un visage.",
+                    operationalFocus: "Interdiction formelle dans le fichier AndroidManifest.xml de toute permission intrusive : zéro accès au GPS (ACCESS_FINE_LOCATION), zéro lecture du carnet d'adresses (READ_CONTACTS), zéro écoute du microphone (RECORD_AUDIO) et zéro lecture des SMS (READ_SMS).",
+                    legalFocus: "Respect vérifiable par audit binaire de l'intégrité matérielle du terminal de l'utilisateur, excluant toute surveillance clandestine en arrière-plan.",
+                    tech: "Permissions autorisées : Caméra (QR volatil), Biométrie (Keystore local), Internet (RPC) | GPS / Contacts / Micro / SMS : 0 (Interdits)."
                 },
                 en: {
                     short: "12. Android / iOS Hardware Permissions",
-                    title: "Article 12 — Mobile System Permissions (QR Camera, Biometrics, Isolated Storage)",
+                    title: "Article 12 — Strict Regime of Mobile Operating System Hardware Permissions (Android & iOS)",
                     badge: "Least Privilege",
-                    content: "In accordance with the security principle of least privilege, Nexus Wallet Pro requests only the hardware permissions strictly necessary for its operation: (1) Camera access, used solely as a volatile local video stream to decode Base58 address and POS invoice QR Codes, with zero photo recording; (2) Biometric sensor (fingerprint / facial recognition), invoked via the system BiometricPrompt API where biometric verification is handled by the phone's secure processor without the app ever accessing raw biometric templates; (3) Internet access for RPC calls.",
-                    tech: "Zero GPS geolocation permissions, zero contact book access, zero microphone or SMS reading permissions."
+                    core: "The native architecture of Nexus Wallet Pro (compiled in Kotlin/Java with a secure WebView bridge and embedded cryptographic libraries) rigorously enforces the Principle of Least Privilege regarding hardware permissions requested from the Android or iOS operating system. The application strictly limits itself to three technical permissions: (a) on-demand access to the optical camera sensor (android.permission.CAMERA), activated exclusively when the user opens the QR Code scanner to read a Base58 address, with the video frame buffer analyzed in volatile memory without ever being saved to disk or transmitted over the network; (b) invocation of the hardware biometric API (android.permission.USE_BIOMETRIC) where fingerprint or facial geometry is processed solely by the manufacturer's secure processor; and (c) Internet socket access (android.permission.INTERNET) for RPC requests.",
+                    cryptoFocus: "Hardware biometric isolation: biometric authentication solely unlocks the AES-256-GCM key handle inside the Android Keystore; Nexus Wallet Pro never reads or stores any fingerprint image or facial template.",
+                    operationalFocus: "Formal prohibition in the AndroidManifest.xml file of any intrusive permission: zero GPS access (ACCESS_FINE_LOCATION), zero contact book reading (READ_CONTACTS), zero microphone recording (RECORD_AUDIO), and zero SMS reading (READ_SMS).",
+                    legalFocus: "Binary-auditable respect for the hardware integrity of the user's terminal, precluding any clandestine background surveillance.",
+                    tech: "Permitted: Camera (volatile QR), Biometrics (local Keystore), Internet (RPC) | GPS / Contacts / Mic / SMS: 0 (Prohibited)."
                 }
             },
             {
@@ -558,19 +684,26 @@
                 num: "13",
                 icon: "fa-ban",
                 color: "text-rose-600 bg-rose-500/10",
+                domainCode: "NO-TRACK-13",
                 fr: {
                     short: "13. Absence de Traceurs & Cookies Tiers",
-                    title: "Article 13 — Absence Absolue de Traceurs Publicitaires, SDK Tiers et Cookies de Profilage",
+                    title: "Article 13 — Proscription Absolue des Traceurs Publicitaires, SDK d'Analyse Comportementale et Cookies Tiers",
                     badge: "Anti-Surveillance",
-                    content: "Le code binaire compilé de Nexus Wallet Pro et le code source web de NexusScan sont intégralement exempts de tout kit de développement publicitaire (Ad-SDK), de pixels de reciblage, d'outils d'enregistrement d'écran ou de traceurs comportementaux tiers. Sur l'explorateur NexusScan, aucun cookie publicitaire ou de pistage inter-sites n'est déposé sur votre navigateur ; seul l'espace localStorage du navigateur est utilisé localement pour mémoriser votre préférence linguistique (Français/Anglais) et vos paramètres d'affichage technique.",
-                    tech: "0 Cookie publicitaire | 0 SDK de profilage commercial | Monétisation des données utilisateurs strictement interdite."
+                    core: "Atlas & Duc Corporation interdit formellement l'intégration de tout kit de développement logiciel (SDK) de pistage publicitaire, de profilage marketing, de télémétrie comportementale ou d'empreinte matérielle (Device Fingerprinting) au sein de Nexus Wallet Pro et du portail NexusScan. Alors que la majorité des applications mobiles contemporaines incorporent des dizaines de traceurs invisibles revendant les métadonnées d'utilisation à des régies publicitaires internationales, le code compilé de nos applications est maintenu intégralement propre et souverain. Sur l'interface web de NexusScan, aucun cookie tiers ou traceur inter-sites (Cross-Site Tracking Cookie) n'est injecté dans le navigateur de l'utilisateur ; seul le stockage local standard (window.localStorage) est employé sur votre poste pour retenir votre choix de langue (Français ou Anglais) et vos préférences d'affichage.",
+                    cryptoFocus: "Absence de tout identifiant publicitaire mobile (Google Advertising ID — AAID ou Apple IDFA) dans les en-têtes HTTP ou les charges utiles JSON-RPC 2.0 émises par le portefeuille.",
+                    operationalFocus: "Indépendance du modèle économique d'Atlas & Duc Corporation : la viabilité de l'infrastructure Nexus Core Layer-1 repose sur les frais de réseau transparents en microA et les services d'ingénierie B2B, et jamais sur le commerce clandestin des données personnelles des citoyens.",
+                    legalFocus: "Exemption native des bandeaux de consentement publicitaire intrusifs (conformément aux lignes directrices ePrivacy et CIL relatives aux stockages purement techniques strictement nécessaires à la fourniture du service demandé par l'utilisateur).",
+                    tech: "SDK Publicitaires Tiers : 0 | Cookies de Pistage : 0 | Collecte AAID / IDFA : 0 | Stockage UI : localStorage local uniquement."
                 },
                 en: {
                     short: "13. Absence of Trackers & Third-Party Cookies",
-                    title: "Article 13 — Absolute Absence of Advertising Trackers, Third-Party SDKs, and Profiling Cookies",
+                    title: "Article 13 — Absolute Prohibition of Advertising Trackers, Behavioral Analytics SDKs, and Third-Party Cookies",
                     badge: "Anti-Surveillance",
-                    content: "The compiled binary code of Nexus Wallet Pro and the web source code of NexusScan are completely free of any advertising development kits (Ad-SDKs), retargeting pixels, screen-recording tools, or third-party behavioral trackers. On the NexusScan explorer, no advertising or cross-site tracking cookies are placed on your browser; only the browser's localStorage is used locally to remember your language preference (French/English) and your technical display settings.",
-                    tech: "0 Advertising cookies | 0 Commercial profiling SDKs | User data monetization strictly prohibited."
+                    core: "Atlas & Duc Corporation formally prohibits the integration of any advertising tracking Software Development Kit (SDK), marketing profiler, behavioral telemetry module, or Device Fingerprinting script within Nexus Wallet Pro and the NexusScan portal. Whereas the majority of contemporary mobile applications embed dozens of invisible trackers reselling usage metadata to international ad networks, the compiled code of our applications is kept wholly clean and sovereign. On the NexusScan web interface, no third-party cookie or Cross-Site Tracking Cookie is injected into the user's browser; only standard local storage (window.localStorage) is utilized on your machine to retain your language selection (French or English) and display preferences.",
+                    cryptoFocus: "Total absence of any mobile advertising identifier (Google Advertising ID — AAID or Apple IDFA) within HTTP headers or JSON-RPC 2.0 payloads emitted by the wallet.",
+                    operationalFocus: "Economic model independence of Atlas & Duc Corporation: the sustainability of the Nexus Core Layer-1 infrastructure rests on transparent network fees in microA and B2B engineering services, never on the clandestine monetization of citizens' personal data.",
+                    legalFocus: "Native exemption from intrusive advertising consent banners (in accordance with ePrivacy and CIL guidelines governing purely technical local storage strictly necessary to deliver the service requested by the user).",
+                    tech: "Third-Party Ad SDKs: 0 | Tracking Cookies: 0 | AAID / IDFA Collection: 0 | UI Storage: Local localStorage only."
                 }
             },
             {
@@ -578,19 +711,26 @@
                 num: "14",
                 icon: "fa-shield-virus",
                 color: "text-red-600 bg-red-500/10",
+                domainCode: "SEC-AUDIT-14",
                 fr: {
                     short: "14. Audits de Sécurité & Mises à Jour In-App",
-                    title: "Article 14 — Sécurité Applicative, Audits Cryptographiques et Mises à Jour In-App Obligatoires",
+                    title: "Article 14 — Intégrité Logicielle, Audits Cryptographiques Continus et Protocole de Mise à Jour In-App",
                     badge: "Intégrité Logicielle",
-                    content: "La direction de l'ingénierie logicielle d'Atlas & Duc Corporation procède à des revues de sécurité continues des bibliothèques cryptographiques (BitcoinJ, secp256k1, WebView Bridge sécurisé et moteurs Node.js V8). Lorsqu'une mise à niveau critique du protocole de consensus PoA ou un correctif de sécurité majeur est publié, l'application déploie le mécanisme officiel « Immediate In-App Update ». Ce verrou de sécurité bloque temporairement la signature de nouvelles transactions jusqu'à l'installation de la version certifiée, protégeant mathématiquement l'utilisateur contre toute attaque de type Man-in-the-Middle (MitM) ou désynchronisation de chaîne.",
-                    tech: "Vérification de signature APK/Bundle | Protection anti-altération du pont natif Android @JavascriptInterface."
+                    core: "La protection effective des avoirs en ₳ exige que l'environnement d'exécution client demeure invulnérable face à l'évolution des menaces cybernétiques mondiales. Sous la supervision directe de la Direction de l'Architecture Logicielle d'Atlas & Duc Corporation, l'ensemble des composants critiques — incluant le moteur de signature ECDSA secp256k1 (BitcoinJ / secp256k1 natif), l'encodeur Base58, le pont sécurisé Android @JavascriptInterface et les nœuds validateurs Node.js V8 — fait l'objet d'audits de code et de tests d'intrusion rigoureux. Lorsqu'une mise à niveau de sécurité critique ou une évolution du consensus PoA (Hard Fork protocolaire) est déployée, l'application active le mécanisme de mise à jour prioritaire « Immediate In-App Update », suspendant temporairement la signature de nouvelles transactions tant que le binaire certifié n'est pas installé.",
+                    cryptoFocus: "Vérification systématique du certificat de signature cryptographique du paquet applicatif (APK Signing Scheme v2/v3) par le système d'exploitation, empêchant l'installation de toute version altérée ou contrefaite de Nexus Wallet Pro.",
+                    operationalFocus: "Protection active contre les attaques par recouvrement d'écran (Tapjacking / Overlay Attacks), l'injection de scripts inter-contextes (XSS dans la WebView) et l'interception de certificats SSL (Certificate Pinning sur le domaine agi-nexus-core.click).",
+                    legalFocus: "Obligation de diligence technique partagée : l'utilisateur s'engage à maintenir son système d'exploitation à jour et à n'installer Nexus Wallet Pro que depuis les canaux de distribution officiels certifiés par Atlas & Duc Corporation.",
+                    tech: "Signature Binaire : APK Signature Scheme v2/v3 | Sécurité Réseau : TLS 1.3 + Certificate Pinning | Mise à jour : Immediate In-App."
                 },
                 en: {
                     short: "14. Security Audits & In-App Updates",
-                    title: "Article 14 — Application Security, Cryptographic Audits, and Mandatory In-App Updates",
+                    title: "Article 14 — Software Integrity, Continuous Cryptographic Audits, and In-App Update Protocol",
                     badge: "Software Integrity",
-                    content: "Atlas & Duc Corporation's software engineering division conducts continuous security reviews of its cryptographic libraries (BitcoinJ, secp256k1, secure WebView Bridge, and Node.js V8 engines). Whenever a critical upgrade to the PoA consensus protocol or a major security patch is released, the application deploys the official 'Immediate In-App Update' mechanism. This security lock temporarily halts the signing of new transactions until the certified version is installed, mathematically protecting the user against Man-in-the-Middle (MitM) attacks or chain desynchronization.",
-                    tech: "APK/Bundle signature verification | Anti-tampering protection on the native Android @JavascriptInterface bridge."
+                    core: "Effective protection of ₳ holdings requires that the client execution environment remain invulnerable against evolving global cyber threats. Under the direct supervision of Atlas & Duc Corporation's Lead Software Architecture Division, all critical components—including the ECDSA secp256k1 signing engine (native BitcoinJ / secp256k1), the Base58 encoder, the secure Android @JavascriptInterface bridge, and the Node.js V8 validator nodes—undergo rigorous code audits and penetration testing. Whenever a critical security patch or PoA consensus upgrade (protocol Hard Fork) is released, the application triggers the priority 'Immediate In-App Update' mechanism, temporarily suspending the signing of new transactions until the certified binary is installed.",
+                    cryptoFocus: "Systematic verification of the application package's cryptographic signing certificate (APK Signing Scheme v2/v3) by the operating system, preventing the installation of any tampered or counterfeit build of Nexus Wallet Pro.",
+                    operationalFocus: "Active defense against screen overlay attacks (Tapjacking), cross-context script injection (WebView XSS), and SSL certificate interception (Certificate Pinning on the agi-nexus-core.click domain).",
+                    legalFocus: "Shared technical diligence obligation: the user undertakes to keep their operating system updated and to install Nexus Wallet Pro exclusively from official distribution channels certified by Atlas & Duc Corporation.",
+                    tech: "Binary Signature: APK Signature Scheme v2/v3 | Network Security: TLS 1.3 + Certificate Pinning | Update: Immediate In-App."
                 }
             },
             {
@@ -598,19 +738,26 @@
                 num: "15",
                 icon: "fa-triangle-exclamation",
                 color: "text-orange-600 bg-orange-500/10",
+                domainCode: "LIAB-IRREV-15",
                 fr: {
                     short: "15. Responsabilité & Irréversibilité en ₳",
-                    title: "Article 15 — Responsabilité Exclusive de l'Utilisateur et Irréversibilité des Transactions en ₳",
+                    title: "Article 15 — Responsabilité Exclusive de Garde des Clés Privées et Irréversibilité Mathématique des Transactions en ₳",
                     badge: "Responsabilité Souveraine",
-                    content: "Le corollaire juridique indissociable de l'architecture Non-Custodial est la responsabilité intégrale et exclusive de l'utilisateur quant à la conservation physique et confidentielle de sa phrase mnémonique BIP39 et de ses clés privées. Atlas & Duc Corporation ne disposant d'aucun accès aux clés privées, nous sommes dans l'impossibilité absolue de réinitialiser un mot de passe, de restaurer un portefeuille perdu ou d'annuler une transaction en ₳ déjà scellée dans un bloc PoA. Toute perte de la phrase de récupération combinée à la perte de l'appareil entraîne la perte définitive et irrémédiable des fonds en ₳ qui y sont logés.",
-                    tech: "Finalité déterministe PoA : 100% irréversible dès le scellement du bloc | Aucune porte dérobée (Backdoor) de récupération."
+                    core: "L'utilisateur reconnaît expressément et sans réserve que la souveraineté financière absolue conférée par l'architecture Non-Custodial de Nexus Wallet Pro implique une responsabilité personnelle tout aussi absolue. Atlas & Duc Corporation ne détenant aucune copie de votre phrase mnémonique BIP39, de votre clé privée ECDSA secp256k1 ou de votre mot de passe maître Argon2id, notre société se trouve dans l'impossibilité physique, mathématique et juridique absolue de restaurer l'accès à un portefeuille dont l'utilisateur aurait égaré la phrase de récupération tout en perdant son appareil mobile. De même, dès qu'une transaction libellée en ₳ (ou un appel de contrat NVM) est signée localement et scellée dans un bloc par le consensus PoA (nBFT), celle-ci acquiert une finalité immédiate et irrévocable : aucune annulation (Rollback), rétrofacturation (Chargeback) ou modification n'est techniquement possible.",
+                    cryptoFocus: "Impossibilité mathématique d'inverser la fonction à sens unique SHA-256 ou le logarithme discret sur la courbe elliptique secp256k1 ($Q = d \\times G$) pour retrouver une clé privée $d$ à partir d'une adresse publique Base58.",
+                    operationalFocus: "Obligation impérative pour l'utilisateur de conserver sa phrase mnémonique de 12 ou 24 mots sur un support physique hors-ligne sécurisé (papier ignifugé ou gravure métallique), à l'abri des regards et de toute numérisation cloud non chiffrée.",
+                    legalFocus: "Clause limitative et exonératoire de responsabilité de plein droit : Atlas & Duc Corporation ne saurait en aucun cas être tenue responsable des pertes de fonds en ₳ résultant d'une perte de phrase mnémonique, d'une erreur d'adresse Base58 commise par l'expéditeur ou d'une divulgation volontaire de ses secrets à un tiers.",
+                    tech: "Récupération par l'éditeur : Impossible (0 Backdoor) | Finalité Transactionnelle PoA : 100% Irréversible dès scellement."
                 },
                 en: {
                     short: "15. User Liability & ₳ Irreversibility",
-                    title: "Article 15 — Exclusive User Liability and Irreversibility of ₳ Transactions",
+                    title: "Article 15 — Exclusive Private Key Custody Liability and Mathematical Irreversibility of ₳ Transactions",
                     badge: "Sovereign Liability",
-                    content: "The inseparable legal corollary of Non-Custodial architecture is the user's full and exclusive responsibility for the physical and confidential safekeeping of their BIP39 mnemonic phrase and private keys. Because Atlas & Duc Corporation has zero access to private keys, we are in the absolute impossibility of resetting a password, restoring a lost wallet, or reversing an ₳ transaction already sealed within a PoA block. Any loss of the recovery phrase combined with the loss of the device results in the permanent and irretrievable loss of the ₳ funds held therein.",
-                    tech: "PoA deterministic finality: 100% irreversible upon block sealing | Zero recovery backdoors."
+                    core: "The user expressly and unconditionally acknowledges that the absolute financial sovereignty conferred by the Non-Custodial architecture of Nexus Wallet Pro entails an equally absolute personal responsibility. Because Atlas & Duc Corporation holds zero copies of your BIP39 mnemonic phrase, your ECDSA secp256k1 private key, or your Argon2id master password, our corporation is in the absolute physical, mathematical, and legal impossibility of restoring access to a wallet whose recovery phrase has been misplaced by the user alongside the loss of their mobile device. Similarly, once a transaction denominated in ₳ (or an NVM contract call) is locally signed and sealed into a block by the PoA (nBFT) consensus, it achieves immediate and irrevocable finality: no cancellation (Rollback), chargeback, or alteration is technically possible.",
+                    cryptoFocus: "Mathematical impossibility of inverting the SHA-256 one-way function or solving the elliptic curve discrete logarithm problem on secp256k1 ($Q = d \\times G$) to recover a private key $d$ from a Base58 public address.",
+                    operationalFocus: "Imperative obligation for the user to store their 12-word or 24-word mnemonic phrase on a secure offline physical medium (fireproof paper or metal backup plate), shielded from view and never uploaded to unencrypted cloud storage.",
+                    legalFocus: "Binding limitation and exemption of liability clause: Atlas & Duc Corporation shall under no circumstances be held liable for losses of ₳ funds resulting from a lost mnemonic phrase, a Base58 recipient address error made by the sender, or voluntary disclosure of secrets to a third party.",
+                    tech: "Publisher Recovery: Impossible (0 Backdoor) | PoA Transaction Finality: 100% Irreversible upon block sealing."
                 }
             },
             {
@@ -618,19 +765,26 @@
                 num: "16",
                 icon: "fa-user-check",
                 color: "text-slate-700 bg-slate-500/10",
+                domainCode: "CAP-MINORS-16",
                 fr: {
                     short: "16. Protection des Mineurs & Capacité",
-                    title: "Article 16 — Protection des Mineurs et Capacité Juridique d'Utilisation Financière",
+                    title: "Article 16 — Capacité Juridique Civile et Commerciale et Protection Absolue des Mineurs",
                     badge: "Capacité Civile",
-                    content: "L'utilisation de Nexus Wallet Pro pour la détention souveraine d'actifs en ₳, l'exécution de contrats intelligents NVM et la réalisation d'opérations commerciales B2B ou P2P s'adresse aux personnes physiques majeures jouissant de leur pleine capacité juridique (18 ans révolus selon la législation du Burkina Faso et de l'espace UEMOA) ou aux mineurs émancipés agissant sous l'autorisation et la supervision directe de leur représentant légal. Du fait de notre politique Zero-Data, nous ne collectons jamais de données personnelles relatives aux mineurs.",
-                    tech: "Âge légal requis : 18 ans révolus ou représentation légale certifiée pour la gestion d'actifs numériques."
+                    core: "L'utilisation de l'application Nexus Wallet Pro pour la détention souveraine de trésorerie en ₳, la signature d'engagements contractuels sur la Machine Virtuelle Nexus (NVM) et l'exécution de règlements commerciaux B2B ou P2P requiert la pleine capacité juridique civile et commerciale conformément à la législation nationale applicable (fixée à 18 ans révolus pour les actes de disposition financière dans l'espace juridique du Burkina Faso et de l'UEMOA, sauf émancipation légale ou représentation expresse par les titulaires de l'autorité parentale). En vertu de notre Politique de Collecte Zéro (Article 5), Atlas & Duc Corporation ne sollicite, ne collecte et ne traite jamais de données personnelles relatives à des mineurs.",
+                    cryptoFocus: "Aucune collecte de données biométriques, scolaires, familiales ou d'état civil d'enfants sur les serveurs du réseau Nexus Core Layer-1.",
+                    operationalFocus: "Recommandation aux parents et tuteurs légaux d'utiliser les mécanismes de verrouillage biométrique et de contrôle parental natifs du système d'exploitation mobile s'ils confient temporairement leur appareil téléphonique à un mineur.",
+                    legalFocus: "Conformité intégrale aux dispositions protectrices des mineurs édictées par la Loi burkinabè N° 001-2021/AN et l'Article 8 du RGPD européen.",
+                    tech: "Majorité légale requise : 18 ans révolus | Fichiers de données sur mineurs détenus par Atlas & Duc Corp. : 0."
                 },
                 en: {
                     short: "16. Protection of Minors & Legal Capacity",
-                    title: "Article 16 — Protection of Minors and Legal Capacity for Financial Use",
+                    title: "Article 16 — Civil and Commercial Legal Capacity and Absolute Protection of Minors",
                     badge: "Legal Capacity",
-                    content: "The use of Nexus Wallet Pro for the sovereign holding of ₳ assets, execution of NVM smart contracts, and performance of B2B or P2P commercial operations is intended for adults of legal age possessing full legal capacity (18 years of age under the laws of Burkina Faso and the WAEMU region) or emancipated minors acting under the direct authorization and supervision of their legal guardian. Due to our Zero-Data policy, we never collect personal data relating to minors.",
-                    tech: "Required legal age: 18 years or certified legal guardianship for digital asset management."
+                    core: "Utilizing the Nexus Wallet Pro application for sovereign ₳ treasury holding, signing contractual commitments on the Nexus Virtual Machine (NVM), and executing B2B or P2P commercial settlements requires full civil and commercial legal capacity in accordance with applicable national law (established at 18 years of age for financial disposition acts within the legal jurisdiction of Burkina Faso and the WAEMU region, absent legal emancipation or express representation by holders of parental authority). Pursuant to our Zero-Data Policy (Article 5), Atlas & Duc Corporation never solicits, collects, or processes personal data relating to minors.",
+                    cryptoFocus: "Zero collection of biometric, educational, familial, or civil status data of children on Nexus Core Layer-1 network servers.",
+                    operationalFocus: "Recommendation to parents and legal guardians to utilize native operating system biometric locks and parental controls if they temporarily entrust their mobile device to a minor.",
+                    legalFocus: "Full compliance with child data protection provisions enacted under Burkinabe Law N° 001-2021/AN and Article 8 of the European GDPR.",
+                    tech: "Required legal age: 18 years | Minor data records held by Atlas & Duc Corp.: 0."
                 }
             },
             {
@@ -638,19 +792,26 @@
                 num: "17",
                 icon: "fa-earth-africa",
                 color: "text-indGold bg-amber-500/10",
+                domainCode: "LAW-CIL-GDPR-17",
                 fr: {
                     short: "17. Conformité CIL-BF, UEMOA, OAPI & RGPD",
-                    title: "Article 17 — Conformité Réglementaire Multi-Juridictionnelle (CIL Burkina Faso, UEMOA, OAPI, RGPD)",
+                    title: "Article 17 — Conformité Réglementaire Multi-Juridictionnelle (CIL Burkina Faso, UEMOA, OHADA, OAPI & RGPD)",
                     badge: "Cadre Légal International",
-                    content: "La conception Privacy-by-Design (confidentialité dès la conception) et Privacy-by-Default de Nexus Wallet Pro et de NexusScan est alignée sur les législations les plus strictes en matière de protection des données : (1) Au Burkina Faso, la Loi N° 001-2021/AN du 30 mars 2021 portant protection des personnes à l'égard du traitement des données à caractère personnel, sous l'égide de la Commission de l'Informatique et des Libertés (CIL) ; (2) Les directives communautaires de l'UEMOA et de la CEDEAO relatives à la cybersécurité et aux transactions électroniques ; (3) La protection de la propriété intellectuelle auprès de l'OAPI ; et (4) Le Règlement Général sur la Protection des Données (RGPD — UE 2016/679) pour les utilisateurs internationaux.",
-                    tech: "Conformité native Privacy-by-Design : Loi N° 001-2021/AN (CIL Burkina Faso), Directives UEMOA & RGPD Art. 25."
+                    core: "L'ingénierie de Nexus Wallet Pro, de NexusScan et du réseau Nexus Core Layer-1 a été bâtie dès l'origine selon les paradigmes normatifs de « Privacy-by-Design » (protection de la vie privée dès la conception) et de « Privacy-by-Default » (protection par défaut). Cette architecture assure une conformité organique et simultanée avec : (1) la législation souveraine du Burkina Faso, notamment la Loi N° 001-2021/AN du 30 mars 2021 portant protection des personnes à l'égard du traitement des données à caractère personnel, placée sous l'autorité de régulation de la Commission de l'Informatique et des Libertés (CIL) ; (2) les règlements et instructions communautaires de l'UEMOA et de la CEDEAO régissant la sécurité des systèmes d'information et les transactions électroniques ; (3) l'Accord de Bangui révisé de l'Organisation Africaine de la Propriété Intellectuelle (OAPI) protégeant les œuvres logicielles et marques d'Atlas & Duc Corporation ; et (4) le Règlement Général sur la Protection des Données (RGPD — Règlement UE 2016/679, notamment son Article 25).",
+                    cryptoFocus: "Substitution de la confiance réglementaire déclarative par la preuve mathématique (Zero-Knowledge of PII) : l'architecture logicielle rend techniquement impossible toute violation de données nominatives sur le nœud L1.",
+                    operationalFocus: "Ancrage territorial souverain des infrastructures maîtresses d'Atlas & Duc Corporation au Burkina Faso (Koupéla, Houndé, Bobo-Dioulasso), garantissant l'indépendance technologique vis-à-vis des juridictions extraterritoriales intrusives.",
+                    legalFocus: "Reconnaissance de la valeur probante des écrits et signatures électroniques générés par cryptographie asymétrique secp256k1 conformément au droit positif burkinabè et communautaire.",
+                    tech: "Cadres Légaux : Loi N° 001-2021/AN (CIL-BF) | Directives UEMOA / CEDEAO | Actes OHADA | OAPI | RGPD UE 2016/679."
                 },
                 en: {
                     short: "17. CIL-BF, WAEMU, OAPI & GDPR Compliance",
-                    title: "Article 17 — Multi-Jurisdictional Regulatory Compliance (CIL Burkina Faso, WAEMU, OAPI, GDPR)",
+                    title: "Article 17 — Multi-Jurisdictional Regulatory Compliance (CIL Burkina Faso, WAEMU, OHADA, OAPI & GDPR)",
                     badge: "International Legal Framework",
-                    content: "The Privacy-by-Design and Privacy-by-Default architecture of Nexus Wallet Pro and NexusScan aligns with the strictest data protection legislations: (1) In Burkina Faso, Law N° 001-2021/AN of March 30, 2021 on the protection of individuals with regard to the processing of personal data, overseen by the Commission de l'Informatique et des Libertés (CIL); (2) WAEMU and ECOWAS community directives governing cybersecurity and electronic transactions; (3) Intellectual property protections under OAPI; and (4) The General Data Protection Regulation (GDPR — EU 2016/679) for international users.",
-                    tech: "Native Privacy-by-Design Compliance: Law N° 001-2021/AN (CIL Burkina Faso), WAEMU Directives & GDPR Art. 25."
+                    core: "The engineering of Nexus Wallet Pro, NexusScan, and the Nexus Core Layer-1 network was architected from inception according to the normative paradigms of 'Privacy-by-Design' and 'Privacy-by-Default'. This architecture ensures organic and simultaneous compliance with: (1) the sovereign legislation of Burkina Faso, notably Law N° 001-2021/AN of March 30, 2021 on the protection of individuals with regard to the processing of personal data, under the regulatory authority of the Commission de l'Informatique et des Libertés (CIL); (2) WAEMU and ECOWAS community regulations and directives governing information system security and electronic transactions; (3) the revised Bangui Agreement of the African Intellectual Property Organization (OAPI) protecting the software works and trademarks of Atlas & Duc Corporation; and (4) the European Union General Data Protection Regulation (GDPR — Regulation EU 2016/679, notably Article 25).",
+                    cryptoFocus: "Replacement of declarative regulatory trust with mathematical proof (Zero-Knowledge of PII): the software architecture renders any nominative data breach on the L1 node technically impossible.",
+                    operationalFocus: "Sovereign territorial anchoring of Atlas & Duc Corporation's master infrastructures in Burkina Faso (Koupéla, Houndé, Bobo-Dioulasso), guaranteeing technological independence from intrusive extraterritorial jurisdictions.",
+                    legalFocus: "Recognition of the probative value of electronic records and signatures generated via asymmetric secp256k1 cryptography in accordance with Burkinabe and community statutory law.",
+                    tech: "Legal Frameworks: Law N° 001-2021/AN (CIL-BF) | WAEMU / ECOWAS Directives | OHADA Acts | OAPI | EU GDPR 2016/679."
                 }
             },
             {
@@ -658,19 +819,26 @@
                 num: "18",
                 icon: "fa-trash-can",
                 color: "text-emerald-700 bg-emerald-500/10",
+                domainCode: "RIGHTS-ERASURE-18",
                 fr: {
                     short: "18. Droits des Utilisateurs & Effacement Local",
-                    title: "Article 18 — Exercice des Droits Informatiques et Libertés et Effacement par Désinstallation Locale",
+                    title: "Article 18 — Modalités d'Exercice des Droits Informatiques et Libertés, Portabilité BIP39 et Droit à l'Effacement Local",
                     badge: "Autonomie d'Effacement",
-                    content: "Les réglementations nationales et internationales confèrent aux utilisateurs un droit d'accès, de rectification, de portabilité et d'effacement (« droit à l'oubli »). Compte tenu du fait qu'Atlas & Duc Corporation ne détient aucun fichier client nominatif sur ses serveurs pour Nexus Wallet Pro, l'utilisateur exerce directement et souverainement son droit à la portabilité en exportant sa phrase mnémonique BIP39, et son droit à l'effacement en désinstallant l'application ou en purgeant le stockage sécurisé de son téléphone. En revanche, conformément aux standards juridiques mondiaux applicables aux blockchains publiques, le droit à l'effacement ne peut matériellement pas s'appliquer aux hachages et soldes pseudonomysés inscrits de façon immuable dans les blocs historiques du registre Nexus Core L1.",
-                    tech: "Purge locale : Immédiate par désinstallation de l'application | Portabilité : Standard universel BIP39 / Base58."
+                    core: "Conformément aux dispositions de la Loi N° 001-2021/AN au Burkina Faso et des Articles 15 à 20 du RGPD, toute personne dispose de droits d'accès, de rectification, de limitation, de portabilité et d'effacement sur ses données personnelles. Dans l'architecture décentralisée et Non-Custodial de Nexus Wallet Pro, l'utilisateur détient le pouvoir technique d'exercer ces droits instantanément et sans intermédiaire : (1) le droit d'accès s'exerce en consultant librement l'état de son adresse Base58 sur NexusScan ; (2) le droit à la portabilité s'exerce de manière absolue via l'exportation de la phrase mnémonique standardisée BIP39 ou de la clé privée Base58 ; (3) le droit à l'effacement local s'exécute immédiatement en désinstallant l'application Nexus Wallet Pro ou en effaçant son stockage sécurisé, détruisant définitivement le conteneur AES-256-GCM sur le téléphone.",
+                    cryptoFocus: "Distinction technique et légale impérative entre le stockage local (intégralement effaçable par l'utilisateur) et le registre distribué L1 (dont les écritures comptables pseudonymes en ₳ sont mathématiquement immuables pour garantir l'intégrité monétaire globale).",
+                    operationalFocus: "Aucune démarche administrative ou demande d'autorisation auprès d'Atlas & Duc Corporation n'est requise pour fermer ou supprimer son portefeuille local sur son terminal mobile.",
+                    legalFocus: "Application de l'exception légale relative à l'immuabilité des registres distribués cryptographiques : l'absence de données civiles nominatives (0% PII) dans les blocs du Mainnet #9012 garantit que la conservation perpétuelle des hachages Base58 ne porte aucune atteinte à la vie privée civile.",
+                    tech: "Portabilité : 100% Standard BIP39 / Base58 | Effacement Local : Immédiat par désinstallation | Registre L1 : Immuable & Pseudonyme."
                 },
                 en: {
                     short: "18. User Rights & Local Erasure",
-                    title: "Article 18 — Exercise of Data Protection Rights and Erasure via Local Uninstallation",
+                    title: "Article 18 — Exercise of Data Protection Rights, BIP39 Portability, and Local Right to Erasure",
                     badge: "Erasure Autonomy",
-                    content: "National and international regulations grant users the right of access, rectification, portability, and erasure ('right to be forgotten'). Given that Atlas & Duc Corporation holds no nominative customer files on its servers for Nexus Wallet Pro, the user directly and sovereignly exercises their right to portability by exporting their BIP39 mnemonic phrase, and their right to erasure by uninstalling the application or wiping their phone's secure storage. Conversely, in accordance with global legal standards applicable to public blockchains, the right to erasure cannot materially apply to pseudonymized hashes and balances immutably recorded in historical blocks of the Nexus Core L1 ledger.",
-                    tech: "Local wipe: Immediate upon app uninstallation | Portability: Universal BIP39 / Base58 standard."
+                    core: "In accordance with the provisions of Law N° 001-2021/AN in Burkina Faso and Articles 15 through 20 of the GDPR, every individual holds rights of access, rectification, restriction, portability, and erasure over their personal data. Within the decentralized and Non-Custodial architecture of Nexus Wallet Pro, the user holds the technical power to exercise these rights instantaneously and without an intermediary: (1) the right of access is exercised by freely querying the state of one's Base58 address on NexusScan; (2) the right to portability is exercised in full via export of the standardized BIP39 mnemonic phrase or Base58 private key; (3) the local right to erasure is executed immediately by uninstalling the Nexus Wallet Pro application or wiping its secure storage, permanently destroying the AES-256-GCM vault on the phone.",
+                    cryptoFocus: "Imperative technical and legal distinction between local device storage (wholly erasable by the user) and the distributed L1 ledger (whose pseudonymous accounting entries in ₳ are mathematically immutable to safeguard global monetary integrity).",
+                    operationalFocus: "Zero administrative procedures or authorization requests to Atlas & Duc Corporation are required to close or wipe a local wallet on one's mobile terminal.",
+                    legalFocus: "Application of the statutory doctrine governing immutable cryptographic distributed ledgers: the absence of nominative civil data (0% PII) within Mainnet #9012 blocks ensures that perpetual retention of Base58 hashes infringes no civil privacy right.",
+                    tech: "Portability: 100% BIP39 / Base58 Standard | Local Erasure: Immediate upon uninstallation | L1 Ledger: Immutable & Pseudonymous."
                 }
             },
             {
@@ -678,19 +846,26 @@
                 num: "19",
                 icon: "fa-gavel",
                 color: "text-amber-700 bg-amber-500/10",
+                domainCode: "JUD-REQ-AML-19",
                 fr: {
                     short: "19. Réquisitions Judiciaires & Limites Techniques",
-                    title: "Article 19 — Réquisitions Judiciaires, Coopération Légale (LAB/FT) et Limites Mathématiques",
+                    title: "Article 19 — Protocole de Traitement des Réquisitions Judiciaires, Lutte Contre la Cybercriminalité et Limites Mathématiques",
                     badge: "Transparence Légale",
-                    content: "Atlas & Duc Corporation condamne fermement toute utilisation illicite de ses technologies et coopère de bonne foi avec les autorités judiciaires et financières compétentes dans le respect strict des procédures légales en vigueur au Burkina Faso et dans la zone UEMOA. Toutefois, en vertu du principe juridique « à l'impossible nul n'est tenu », lors d'une réquisition judiciaire portant sur Nexus Wallet Pro, Atlas & Duc Corporation ne peut techniquement communiquer aucune clé privée, aucune phrase mnémonique ni aucun fichier d'identité civile qu'elle ne possède pas. Seules les données publiques déjà visibles sur l'explorateur NexusScan peuvent être confirmées.",
-                    tech: "Impossibilité mathématique de saisie des clés privées locales | Aucune détention de fonds tiers par l'éditeur logiciel."
+                    core: "Atlas & Duc Corporation attache une importance primordiale à l'éthique des affaires, à la lutte contre la fraude informatique et au respect de l'ordre public économique au Burkina Faso et à l'international. Lorsqu'une autorité judiciaire, un magistrat instructeur ou une autorité administrative compétente nous notifie une réquisition légale formelle et régulière, notre Direction Juridique traite la demande avec diligence. Toutefois, en vertu de l'adage juridique universel « À l'impossible nul n'est tenu » (Impossibilium nulla obligatio est), Atlas & Duc Corporation certifie par le présent Traité qu'elle est techniquement et mathématiquement incapable de fournir les clés privées d'un utilisateur de Nexus Wallet Pro, de révéler l'identité civile d'une adresse Base58 non déclarée, ou de saisir à distance les fonds en ₳ d'un portefeuille EOA.",
+                    cryptoFocus: "Impossibilité mathématique prouvable par audit du code source : les nœuds validateurs PoA vérifient les signatures ECDSA secp256k1 entrantes sans jamais posséder la clé privée correspondante, interdisant toute génération de transaction forcée au nom d'un tiers.",
+                    operationalFocus: "Coopération analytique sur registre ouvert : en réponse à une commission rogatoire valide, Atlas & Duc Corporation peut assister les autorités dans la lecture analytique des flux publics inscrits sur l'explorateur NexusScan (traçabilité des hachages Base58 de bloc en bloc).",
+                    legalFocus: "Protection juridique des utilisateurs légitimes contre l'arbitraire et sécurité juridique de l'éditeur logiciel dont le rôle se borne à la fourniture d'une infrastructure protocolaire neutre.",
+                    tech: "Gel ou saisie à distance d'un portefeuille EOA : Mathématiquement Impossible | Accès aux clés privées par Atlas & Duc : 0%."
                 },
                 en: {
                     short: "19. Judicial Requisitions & Technical Limits",
-                    title: "Article 19 — Judicial Requisitions, Legal Cooperation (AML/CFT), and Mathematical Limits",
+                    title: "Article 19 — Judicial Requisition Handling Protocol, Cybercrime Prevention, and Mathematical Limits",
                     badge: "Legal Transparency",
-                    content: "Atlas & Duc Corporation firmly condemns any illicit use of its technologies and cooperates in good faith with competent judicial and financial authorities in strict compliance with legal procedures in force in Burkina Faso and the WAEMU zone. However, under the legal maxim 'no one is bound to perform the impossible', in the event of a judicial requisition concerning Nexus Wallet Pro, Atlas & Duc Corporation cannot technically provide any private key, mnemonic phrase, or civil identity record that it does not possess. Only public data already visible on the NexusScan explorer can be confirmed.",
-                    tech: "Mathematical impossibility of seizing local private keys | Zero custody of third-party funds by the software publisher."
+                    core: "Atlas & Duc Corporation attaches paramount importance to business ethics, computer fraud prevention, and respect for economic public order in Burkina Faso and internationally. When a competent judicial authority, investigating magistrate, or regulatory body serves us with a formal and procedurally valid legal requisition, our Legal Department processes the inquiry with due diligence. However, pursuant to the universal legal maxim 'No one is bound to perform the impossible' (Impossibilium nulla obligatio est), Atlas & Duc Corporation certifies through this Treaty that it is technically and mathematically incapable of providing the private keys of a Nexus Wallet Pro user, revealing the civil identity behind an undeclared Base58 address, or remotely seizing ₳ funds from an EOA wallet.",
+                    cryptoFocus: "Source-code auditable mathematical impossibility: PoA validator nodes verify incoming ECDSA secp256k1 signatures without ever possessing the corresponding private key, precluding any forced transaction generation on behalf of a third party.",
+                    operationalFocus: "Open-ledger analytical cooperation: in response to a valid letters rogatory, Atlas & Duc Corporation may assist authorities in the analytical reading of public flows recorded on the NexusScan explorer (block-by-block traceability of Base58 hashes).",
+                    legalFocus: "Legal protection of legitimate users against arbitrary seizure and legal certainty for the software publisher whose role is strictly confined to providing neutral protocol infrastructure.",
+                    tech: "Remote freezing or seizure of an EOA wallet: Mathematically Impossible | Private key access by Atlas & Duc: 0%."
                 }
             },
             {
@@ -698,22 +873,81 @@
                 num: "20",
                 icon: "fa-scale-balanced",
                 color: "text-indAccent bg-indAccent/10",
+                domainCode: "GOV-JURIS-20",
                 fr: {
                     short: "20. Gouvernance, Juridiction & Contact Officiel",
-                    title: "Article 20 — Gouvernance Documentaire, Révisions Protocolaires, Juridiction et Contact Officiel",
+                    title: "Article 20 — Gouvernance Documentaire, Clause d'Intégralité, Droit Applicable, Juridiction Souveraine et Contact Officiel",
                     badge: "Dispositions Finales",
-                    content: "La présente Politique Institutionnelle de Confidentialité entre en vigueur dès sa publication et demeure opposable pour toute utilisation de Nexus Wallet Pro et de NexusScan. Atlas & Duc Corporation se réserve le droit d'actualiser ce corpus afin de refléter les évolutions cryptographiques du réseau Nexus Core Layer-1 ou les nouvelles dispositions législatives. Tout litige relatif à l'interprétation ou à l'exécution de la présente Politique est soumis au droit burkinabè et relève de la compétence exclusive des juridictions du ressort du siège social d'Atlas & Duc Corporation. Pour toute notification officielle ou question relative à la conformité : administration@agi-nexus-core.click.",
-                    tech: "Juridiction compétente : Droit Burkinabè (Siège : Koupéla) | Contact certifié : administration@agi-nexus-core.click."
+                    core: "Le présent Traité Institutionnel de Confidentialité, structuré en vingt (20) articles indivisibles et dix (10) sections normatives par article, exprime l'intégralité des engagements et garanties d'Atlas & Duc Corporation en matière de confidentialité et de sécurité cryptographique pour Nexus Wallet Pro, NexusScan et la blockchain Nexus Core Layer-1. Il annule et remplace toute version antérieure. Toute évolution future résultant d'une mise à niveau cryptographique du Mainnet #9012 ou d'une évolution législative sera publiée avec un numéro de révision horodaté. En cas de divergence d'interprétation entre la version française et la version anglaise du présent document bilingue, la version française — langue officielle du siège social d'Atlas & Duc Corporation au Burkina Faso — fera foi de plein droit devant toute juridiction.",
+                    cryptoFocus: "Empreinte d'intégrité documentaire : la version officielle en vigueur du présent Traité est servie directement par l'infrastructure sécurisée agi-nexus-core.click sous certificat TLS 1.3 authentifié.",
+                    operationalFocus: "Canal unique de communication juridique, réglementaire et institutionnelle : toute demande d'audit, notification officielle ou question relative à la présente Politique doit être adressée par courrier électronique certifié à administration@agi-nexus-core.click.",
+                    legalFocus: "Droit applicable et attribution exclusive de compétence : le présent Traité est régi exclusivement par le droit positif en vigueur au Burkina Faso et les Actes Uniformes de l'OHADA. Tout différend non résolu à l'amiable dans un délai de soixante (60) jours relèvera de la compétence exclusive des juridictions compétentes du ressort du siège social d'Atlas & Duc Corporation (Koupéla / Ouagadougou, Burkina Faso).",
+                    tech: "Siège Social : Koupéla, Kouritenga, Burkina Faso | Récépissé : N° PHUE-3539/2025 | Contact : administration@agi-nexus-core.click."
                 },
                 en: {
                     short: "20. Governance, Jurisdiction & Official Contact",
-                    title: "Article 20 — Document Governance, Protocol Revisions, Jurisdiction, and Official Contact",
+                    title: "Article 20 — Document Governance, Entire Agreement Clause, Governing Law, Sovereign Jurisdiction, and Official Contact",
                     badge: "Final Provisions",
-                    content: "This Institutional Privacy Policy enters into force upon publication and remains binding for any use of Nexus Wallet Pro and NexusScan. Atlas & Duc Corporation reserves the right to update this corpus to reflect cryptographic evolutions of the Nexus Core Layer-1 network or new legislative provisions. Any dispute relating to the interpretation or execution of this Policy is governed by the laws of Burkina Faso and falls under the exclusive jurisdiction of the courts having authority over Atlas & Duc Corporation's headquarters. For any official notice or compliance inquiry: administration@agi-nexus-core.click.",
-                    tech: "Competent Jurisdiction: Laws of Burkina Faso (HQ: Koupéla) | Certified Contact: administration@agi-nexus-core.click."
+                    core: "This Institutional Privacy Treaty, structured into twenty (20) indivisible articles and ten (10) normative sections per article, expresses the entirety of Atlas & Duc Corporation's commitments and guarantees regarding privacy and cryptographic security for Nexus Wallet Pro, NexusScan, and the Nexus Core Layer-1 blockchain. It supersedes all prior versions. Any future amendment resulting from a cryptographic upgrade of Mainnet #9012 or legislative evolution shall be published with a timestamped revision number. In the event of any discrepancy in interpretation between the French version and the English version of this bilingual instrument, the French version—the official language of Atlas & Duc Corporation's headquarters in Burkina Faso—shall legally prevail before any court.",
+                    cryptoFocus: "Documentary integrity fingerprint: the official authoritative version of this Treaty is served directly from the secure agi-nexus-core.click infrastructure under an authenticated TLS 1.3 certificate.",
+                    operationalFocus: "Single channel for legal, regulatory, and institutional correspondence: any audit inquiry, official notice, or question regarding this Policy must be addressed via certified electronic mail to administration@agi-nexus-core.click.",
+                    legalFocus: "Governing law and exclusive forum selection: this Treaty is governed exclusively by the laws in force in Burkina Faso and OHADA Uniform Acts. Any dispute not amicably resolved within sixty (60) days shall fall under the exclusive jurisdiction of the competent courts having authority over Atlas & Duc Corporation's headquarters (Koupéla / Ouagadougou, Burkina Faso).",
+                    tech: "Headquarters: Koupéla, Kouritenga, Burkina Faso | Receipt: N° PHUE-3539/2025 | Contact: administration@agi-nexus-core.click."
                 }
             }
         ];
+
+        function buildExpandedSections(art, lang) {
+            const d = art[lang];
+            const num = art.num;
+            const code = art.domainCode;
+
+            if (lang === 'fr') {
+                return [
+                    `${d.core} Dans le cadre de la gouvernance souveraine instaurée par Atlas & Duc Corporation (Récépissé officiel N° PHUE-3539/2025 du 11 juillet 2025, siège social établi à Koupéla, province du Kouritenga, Burkina Faso), les dispositions du présent Article #${num} (Référence de codification interne : ${code}) s'appliquent de plein droit et sans restriction à toute interaction initiée depuis l'application mobile Nexus Wallet Pro, l'interface web d'exploration analytique NexusScan, les bibliothèques clientes d'intégration B2B ainsi que les nœuds validateurs du réseau Nexus Core Layer-1. L'architecture globale a été pensée, modélisée et codée sous la direction de Yougma Thierry Joël afin de substituer aux promesses contractuelles fragiles du Web2 une garantie mathématique, vérifiable et inviolable : l'absence structurelle de tout point de défaillance centralisé susceptible d'exposer la vie privée ou le patrimoine financier des utilisateurs. Chaque composant logiciel respecte scrupuleusement la séparation entre l'interface de présentation client (exécutée localement sur le terminal de l'opérateur) et le protocole de validation décentralisé, garantissant qu'aucune donnée sensible ne quitte l'environnement de contrôle exclusif du détenteur légitime du portefeuille.`,
+                    `Sur le plan de l'ingénierie cryptographique formelle, le présent Article #${num} impose l'application stricte des invariants suivants : ${d.cryptoFocus} L'ensemble des opérations de génération de clés, de dérivation de secrets et de signature transactionnelle repose sur l'enchaînement déterministe de primitives éprouvées à l'échelle industrielle et académique mondiale. Plus précisément, l'entropie initiale issue du générateur matériel du terminal est traitée selon la norme BIP39, tandis que la protection locale du coffre-fort numérique mobilise la fonction de dérivation à mémoire dure Argon2id (conforme à la spécification RFC 9106 de l'IETF) couplée au chiffrement symétrique authentifié AES-256-GCM (conforme au standard NIST SP 800-38D avec clé de 256 bits, vecteur d'initialisation de 96 bits et tag d'authentification GMAC de 128 bits). Pour les opérations sur le réseau Nexus Core Layer-1, l'intégralité des identifiants publics — qu'il s'agisse des adresses de portefeuilles EOA préfixées par « ADC », des contrats intelligents NVM préfixés par « ADCC_ » ou des condensats de transactions — est rigoureusement encodée en Base58 (alphabet de 58 caractères excluant 0, O, I et l), éliminant à la fois le format hexadécimal 0x et tout risque d'erreur de transcription visuelle lors des règlements financiers de haute valeur.`,
+                    `En ce qui concerne l'exécution protocolaire au sein du moteur d'état de la blockchain Nexus Core Layer-1 (Mainnet déployé le 15 août 2026 sous le Chain ID 9012 / 0x2334, et Testnet sous le Chain ID 9013 / 0x2335), les règles du présent Article #${num} s'articulent directement avec l'architecture « In-Memory State Ledger » propulsée par le moteur V8 Node.js et le consensus Proof-of-Authority (PoA / nBFT). ${d.operationalFocus} Contrairement aux réseaux historiques souffrant de latences d'accès disque et de réorganisations de chaînes imprévisibles, les nœuds validateurs certifiés par Atlas & Duc Corporation maintiennent les tables de soldes et de compteurs anti-rejeu (nonces) directement en mémoire vive RAM avec persistance chiffrée AES-256-GCM. Lorsqu'une requête conforme au standard JSON-RPC 2.0 est soumise au nœud, le pare-feu cryptographique vérifie en moins de cinq (5) millisecondes la validité de la signature ECDSA sur la courbe secp256k1, la concordance exacte du nonce séquentiel et la suffisance de la provision en unités atomiques microA, sans jamais requérir ni stocker la moindre information nominative ou d'état civil concernant l'initiateur de l'ordre.`,
+                    `L'application rigoureuse du présent Article #${num} est indissociable de la souveraineté monétaire de la pièce native ₳ (Layer-1 Native Coin). Sur l'ensemble de l'infrastructure Nexus Core, de Nexus Wallet Pro et de NexusScan, le symbole « ₳ » désigne l'unique monnaie native du protocole, dotée d'une masse monétaire maximale, fixe et immuable de 100 000 000 000 ₳ (cent milliards d'unités) scellée dès le bloc Genèse. Chaque unité ₳ est arrimée à parité fixe et constante de un pour un au Franc CFA (1 ₳ = 1 XOF) grâce au mécanisme institutionnel de Preuve de Réserve (Proof of Reserve) d'Atlas & Duc Corporation. Afin de garantir une exactitude comptable absolue et d'éradiquer toute vulnérabilité d'arrondi inhérente aux nombres flottants (norme IEEE 754), toutes les structures de données internes, toutes les méthodes JSON-RPC (telles que nexus_getBalance, nexus_estimateFee et nexus_sendRawTransaction) ainsi que tous les états de contrats intelligents NVM manipulent exclusivement des nombres entiers exprimés en « microA », où 1 ₳ = 1 000 000 microA (précision mathématique à six décimales). Cette rigueur arithmétique protège intégralement l'intégrité patrimoniale des citoyens, des commerçants et des institutions partenaires.`,
+                    `Au niveau des télécommunications et du transport réseau, le présent Article #${num} régit de manière exhaustive les flux bidirectionnels établis entre le terminal de l'utilisateur et les passerelles d'entrée du réseau (notamment https://rpc.agi-nexus-core.click pour les appels POST JSON-RPC 2.0 et GET RESTful, ainsi que wss://p2p.agi-nexus-core.click:6001 pour la souscription temps réel aux événements P2P NEW_BLOCK, NEW_TRANSACTION, CONTRACT_EVENT et ADDRESS_ACTIVITY). Toutes les trames réseau sont obligatoirement encapsulées dans des tunnels chiffrés TLS 1.3 mettant en œuvre la confidentialité persistante parfaite (Perfect Forward Secrecy — ECDHE). Les équipements de routage et de protection anti-DDoS d'Atlas & Duc Corporation n'examinent les en-têtes réseau qu'en mémoire volatile instantanée afin de garantir une disponibilité de service (SLA) de 99,99 % et d'appliquer les seuils de régulation de trafic (200 requêtes par seconde pour les accès publics standards, 1 500 requêtes par seconde pour les partenaires marchands B2B). Aucun fichier journal (log) persistant n'est constitué pour associer l'adresse IP publique ou l'identifiant réseau d'un opérateur mobile à une clé publique Base58 ou à un historique de consultation sur NexusScan.`,
+                    `Au titre des obligations opérationnelles et de la sécurité comportementale (OPSEC), l'utilisateur reconnaît par le présent Article #${num} que la nature Non-Custodial de Nexus Wallet Pro lui confère le statut d'unique maître cryptographique de ses actifs en ₳. Il incombe exclusivement à l'utilisateur : (i) de conserver sa phrase mnémonique BIP39 de 12 ou 24 mots sur un support matériel hors-ligne sécurisé, à l'abri de toute prise de vue photographique ou synchronisation sur des services cloud tiers non chiffrés ; (ii) de ne jamais saisir sa phrase mnémonique ou sa clé privée Base58 sur un site web tiers, un formulaire de messagerie ou une application non certifiée ; (iii) de vérifier visuellement l'exactitude des premiers et derniers caractères Base58 de toute adresse destinataire (préfixée ADC ou ADCC_) avant d'apposer sa signature ECDSA secp256k1 ; et (iv) d'activer le verrouillage biométrique et par code PIN Argon2id sur son terminal mobile. Atlas & Duc Corporation rappelle solennellement qu'aucun membre de sa direction, aucun ingénieur support B2B et aucun nœud validateur ne demandera jamais à un utilisateur de lui communiquer sa phrase de récupération ou sa clé privée.`,
+                    `Dans le cadre de l'interopérabilité native au sein de l'écosystème industriel d'Atlas & Duc Corporation, les garanties édictées par l'Article #${num} s'appliquent pleinement lors des interactions entre Nexus Wallet Pro et nos solutions logicielles connexes : la suite financière et de gestion d'entreprise A&D Business Pro (intégrant portefeuilles multi-comptes, terminaux de trading, coffres de staking et modules P2P), le progiciel de point de vente et de gestion des stocks Roger Service Pro (déployé dans les commerces et unités de distribution à Koupéla, Houndé, Bobo-Dioulasso et à travers le Burkina Faso), la plateforme de commerce électronique Adama Digital, ainsi que les passerelles de règlement de factures B2B (SONABEL, ONEA) et les ponts Mobile Money. Lors de chacune de ces opérations, le principe de cloisonnement strict des contextes est appliqué : l'application marchande ou la passerelle ne reçoit que le condensat Base58 prouvant le règlement en ₳ et la référence de pièce comptable chiffrée, sans jamais pouvoir interroger ni déduire l'identité civile ou la structure patrimoniale globale du portefeuille émetteur.`,
+                    `Sur le plan du droit positif national et communautaire ouest-africain, le présent Article #${num} traduit l'engagement indéfectible d'Atlas & Duc Corporation envers la souveraineté juridique et numérique du Burkina Faso et de l'espace UEMOA / CEDEAO. ${d.legalFocus} Notre architecture respecte scrupuleusement les dispositions de la Loi N° 001-2021/AN du 30 mars 2021 portant protection des personnes à l'égard du traitement des données à caractère personnel au Burkina Faso, sous le contrôle de la Commission de l'Informatique et des Libertés (CIL), ainsi que les Actes Uniformes de l'OHADA relatifs au droit commercial général et à la valeur probante des documents et signatures électroniques. En éliminant à la source toute collecte de données à caractère personnel (0% PII) au sein de Nexus Wallet Pro et de NexusScan, Atlas & Duc Corporation garantit aux citoyens burkinabè et aux opérateurs économiques de la sous-région un outil de paiement, d'épargne et de gestion en ₳ parfaitement conforme aux exigences légales de sécurité, d'intégrité et de confidentialité.`,
+                    `En matière de conformité internationale et de standardisation cybernétique, les stipulations de l'Article #${num} sont intégralement alignées sur le Règlement Général sur la Protection des Données de l'Union Européenne (RGPD — Règlement UE 2016/679, et tout particulièrement son Article 5 relatif à la minimisation des données, son Article 25 imposant la protection des données dès la conception et par défaut, et son Article 32 régissant la sécurité du traitement par chiffrement de l'état de l'art), ainsi que sur les référentiels normatifs internationaux ISO/IEC 27001 (gestion de la sécurité de l'information), ISO/IEC 27701 (gestion de la vie privée), NIST FIPS 180-4, NIST SP 800-38D et SECG SEC 2. Cet alignement multi-juridictionnel permet aux institutions financières internationales, aux ONG, aux diasporas et aux agrégateurs mondiaux d'interagir avec le réseau Nexus Core Layer-1 et l'explorateur NexusScan avec l'assurance d'un niveau de conformité institutionnel de premier rang (Tier-1 Institutional Grade).`,
+                    `Enfin, au titre de la force exécutoire et de l'auditabilité permanente du présent Article #${num} (${code}), Atlas & Duc Corporation garantit que l'ensemble des règles techniques et juridiques énoncées ci-dessus ne constitue pas une simple déclaration d'intention, mais découle directement du code source compilé et des règles mathématiques du consensus PoA du Mainnet #9012. Toute personne physique ou morale utilisant Nexus Wallet Pro ou consultant NexusScan bénéficie immédiatement et automatiquement de ces garanties protectrices. Si une disposition mineure du présent article venait à être réputée restreinte par une évolution législative impérative, les autres alinéas conserveraient leur plein effet juridique et technique, étant interprétés systématiquement dans le sens le plus favorable à la préservation de la souveraineté cryptographique de l'utilisateur et de la sécurité de ses avoirs en monnaie native ₳.`
+                ];
+            } else {
+                return [
+                    `${d.core} Within the sovereign governance framework established by Atlas & Duc Corporation (Official Receipt N° PHUE-3539/2025 dated July 11, 2025, corporate headquarters located in Koupéla, Kouritenga Province, Burkina Faso), the provisions of this Article #${num} (Internal Codification Reference: ${code}) apply automatically and without restriction to every interaction initiated from the Nexus Wallet Pro mobile application, the NexusScan analytical block explorer web interface, B2B client integration libraries, and the validator nodes of the Nexus Core Layer-1 network. The overarching architecture was conceived, modeled, and engineered under the leadership of Yougma Thierry Joël to replace fragile Web2 contractual promises with a verifiable, inviolable mathematical guarantee: the structural absence of any centralized single point of failure capable of exposing user privacy or financial holdings. Every software component strictly enforces the separation between the client presentation layer (executed locally on the operator's terminal) and the decentralized validation protocol, ensuring that no sensitive data ever leaves the exclusive control environment of the legitimate wallet holder.`,
+                    `From the standpoint of formal cryptographic engineering, this Article #${num} mandates strict enforcement of the following invariants: ${d.cryptoFocus} All key generation, secret derivation, and transaction signing operations rely on the deterministic chaining of globally battle-tested industrial and academic primitives. Specifically, initial entropy sourced from the terminal's hardware generator is processed according to the BIP39 standard, while local digital vault protection mobilizes the Argon2id memory-hard key derivation function (compliant with IETF RFC 9106) paired with authenticated symmetric encryption AES-256-GCM (compliant with NIST SP 800-38D utilizing a 256-bit key, a 96-bit initialization vector, and a 128-bit GMAC integrity authentication tag). For all operations on the Nexus Core Layer-1 network, every public identifier—whether EOA wallet addresses prefixed by 'ADC', NVM smart contracts prefixed by 'ADCC_', or transaction digests—is rigorously encoded in Base58 (a 58-character alphabet excluding 0, O, I, and l), eliminating both hexadecimal 0x notation and any risk of visual transcription error during high-value financial settlements.`,
+                    `Regarding protocol execution within the state engine of the Nexus Core Layer-1 blockchain (Mainnet deployed on August 15, 2026 under Chain ID 9012 / 0x2334, and Testnet under Chain ID 9013 / 0x2335), the rules of this Article #${num} interface directly with the 'In-Memory State Ledger' architecture powered by the Node.js V8 engine and Proof-of-Authority (PoA / nBFT) consensus. ${d.operationalFocus} Unlike legacy networks plagued by disk I/O bottlenecks and unpredictable chain reorganizations, validator nodes certified by Atlas & Duc Corporation maintain balance maps and anti-replay counters (nonces) directly in volatile RAM backed by AES-256-GCM encrypted persistence. When a request compliant with the JSON-RPC 2.0 standard is submitted to the node, the cryptographic firewall verifies in under five (5) milliseconds the validity of the ECDSA signature on the secp256k1 curve, the exact sequential match of the nonce, and the sufficiency of funds in atomic microA units, without ever requiring or storing the slightest nominative or civil status information regarding the order initiator.`,
+                    `Strict enforcement of this Article #${num} is inseparable from the monetary sovereignty of the native coin ₳ (Layer-1 Native Coin). Across the entire Nexus Core infrastructure, Nexus Wallet Pro, and NexusScan, the symbol '₳' designates the sole native currency of the protocol, endowed with a fixed, immutable maximum supply of 100,000,000,000 ₳ (one hundred billion units) sealed at the Genesis Block. Each ₳ unit is pegged at a fixed, constant one-to-one parity with the CFA Franc (1 ₳ = 1 XOF) through Atlas & Duc Corporation's institutional Proof of Reserve (PoR) mechanism. To guarantee absolute accounting precision and eradicate any rounding vulnerability inherent to floating-point numbers (IEEE 754 standard), all internal data structures, all JSON-RPC methods (such as nexus_getBalance, nexus_estimateFee, and nexus_sendRawTransaction), and all NVM smart contract states exclusively manipulate integer values expressed in 'microA', where 1 ₳ = 1,000,000 microA (six-decimal mathematical precision). This arithmetic rigor fully safeguards the patrimonial integrity of citizens, merchants, and institutional partners.`,
+                    `At the telecommunications and network transport layer, this Article #${num} comprehensively governs the bidirectional streams established between the user's terminal and the network entry gateways (notably https://rpc.agi-nexus-core.click for POST JSON-RPC 2.0 and GET RESTful calls, as well as wss://p2p.agi-nexus-core.click:6001 for real-time subscription to P2P events NEW_BLOCK, NEW_TRANSACTION, CONTRACT_EVENT, and ADDRESS_ACTIVITY). All network frames are mandatorily encapsulated within TLS 1.3 encrypted tunnels enforcing Perfect Forward Secrecy (ECDHE). Atlas & Duc Corporation's routing and anti-DDoS protection appliances inspect network headers solely in instantaneous volatile memory to guarantee a 99.99% Service Level Agreement (SLA) and enforce traffic regulation thresholds (200 requests per second for standard public access, 1,500 requests per second for B2B merchant partners). No persistent log file is ever created to correlate a mobile carrier's public IP address or network identifier with a Base58 public key or a browsing history on NexusScan.`,
+                    `Under operational obligations and behavioral security hygiene (OPSEC), the user acknowledges through this Article #${num} that the Non-Custodial nature of Nexus Wallet Pro grants them the status of sole cryptographic master over their ₳ assets. It is the exclusive responsibility of the user: (i) to safeguard their 12-word or 24-word BIP39 mnemonic phrase on a secure offline physical medium, shielded from photographic capture or synchronization to unencrypted third-party cloud services; (ii) never to enter their mnemonic phrase or Base58 private key on any third-party website, messaging form, or uncertified application; (iii) visually to verify the accuracy of the leading and trailing Base58 characters of any recipient address (prefixed ADC or ADCC_) prior to affixing their ECDSA secp256k1 signature; and (iv) to enable biometric locking and Argon2id PIN protection on their mobile terminal. Atlas & Duc Corporation solemnly reminds all users that no member of its executive board, no B2B support engineer, and no validator node will ever ask a user to disclose their recovery phrase or private key.`,
+                    `Within the framework of native interoperability across Atlas & Duc Corporation's industrial ecosystem, the safeguards enacted by Article #${num} apply in full during interactions between Nexus Wallet Pro and our connected enterprise software solutions: the financial and corporate management suite A&D Business Pro (integrating multi-account wallets, trading terminals, staking vaults, and P2P modules), the Point of Sale and inventory management software Roger Service Pro (deployed across retail and wholesale businesses in Koupéla, Houndé, Bobo-Dioulasso, and throughout Burkina Faso), the Adama Digital e-commerce platform, as well as B2B utility billing gateways (SONABEL, ONEA) and Mobile Money bridges. During each of these operations, strict context compartmentalization is enforced: the merchant application or gateway receives solely the Base58 digest proving settlement in ₳ and the encrypted accounting voucher reference, without ever being able to query or deduce the civil identity or overall patrimonial structure of the sending wallet.`,
+                    `Under national and West African community statutory law, this Article #${num} embodies Atlas & Duc Corporation's unwavering commitment to the legal and digital sovereignty of Burkina Faso and the WAEMU / ECOWAS region. ${d.legalFocus} Our architecture scrupulously complies with the provisions of Law N° 001-2021/AN of March 30, 2021 on the protection of individuals with regard to the processing of personal data in Burkina Faso, under the regulatory oversight of the Commission de l'Informatique et des Libertés (CIL), as well as OHADA Uniform Acts governing general commercial law and the probative value of electronic documents and signatures. By eliminating at the source any collection of personally identifiable information (0% PII) within Nexus Wallet Pro and NexusScan, Atlas & Duc Corporation provides Burkinabe citizens and regional economic operators with an ₳ payment, savings, and management instrument fully compliant with statutory security, integrity, and confidentiality mandates.`,
+                    `With respect to international compliance and cybernetic standardization, the stipulations of Article #${num} are fully aligned with the European Union General Data Protection Regulation (GDPR — Regulation EU 2016/679, specifically Article 5 on data minimization, Article 25 mandating data protection by design and by default, and Article 32 governing security of processing via state-of-the-art encryption), as well as international normative standards ISO/IEC 27001 (information security management), ISO/IEC 27701 (privacy information management), NIST FIPS 180-4, NIST SP 800-38D, and SECG SEC 2. This multi-jurisdictional alignment enables international financial institutions, NGOs, diaspora members, and global aggregators to interact with the Nexus Core Layer-1 network and the NexusScan explorer with the assurance of Tier-1 Institutional Grade compliance.`,
+                    `Finally, regarding the enforceability and permanent auditability of this Article #${num} (${code}), Atlas & Duc Corporation guarantees that the entirety of the technical and legal rules set forth above does not merely constitute a statement of intent, but flows directly from the compiled source code and mathematical rules of the Mainnet #9012 PoA consensus. Every natural or legal person utilizing Nexus Wallet Pro or consulting NexusScan immediately and automatically benefits from these protective guarantees. Should any minor provision of this article be deemed restricted by a mandatory legislative evolution, all remaining paragraphs shall retain their full legal and technical force, being systematically construed in the manner most favorable to preserving the user's cryptographic sovereignty and the security of their holdings in the native currency ₳.`
+                ];
+            }
+        }
+
+        function buildMatrixRows(art, lang) {
+            if (lang === 'fr') {
+                return [
+                    ["Référence Codifiée", `${art.domainCode} (Article Officiel #${art.num})`, "Obligatoire & Immuable sur Mainnet #9012", "Charte Souveraine Atlas & Duc Corp."],
+                    ["Unité Monétaire & Parité", "Monnaie Native ₳ (1 ₳ = 1 000 000 microA = 1 XOF)", "Arithmétique Entière 64-bit / BigInt Strict", "Bloc Genèse Nexus Core L1 (100 Milliards ₳)"],
+                    ["Primitives Cryptographiques", "BIP39 + Argon2id + AES-256-GCM + ECDSA secp256k1", "Exécution Locale & Enclave Matérielle TEE", "RFC 9106 / NIST SP 800-38D / FIPS 180-4"],
+                    ["Politique Données Civiles", "0% Collecte PII (Zero-Data Policy) & Adressage Base58", "Vérification Mathématique Sans Identité Civile", "Loi N° 001-2021/AN (CIL-BF) & RGPD Art. 25"]
+                ];
+            } else {
+                return [
+                    ["Codified Reference", `${art.domainCode} (Official Article #${art.num})`, "Mandatory & Immutable on Mainnet #9012", "Atlas & Duc Corp. Sovereign Charter"],
+                    ["Monetary Unit & Parity", "Native Coin ₳ (1 ₳ = 1,000,000 microA = 1 XOF)", "Strict 64-bit / BigInt Integer Arithmetic", "Nexus Core L1 Genesis Block (100 Billion ₳)"],
+                    ["Cryptographic Primitives", "BIP39 + Argon2id + AES-256-GCM + ECDSA secp256k1", "Local Execution & Hardware TEE Enclave", "RFC 9106 / NIST SP 800-38D / FIPS 180-4"],
+                    ["Civil Data Policy", "0% PII Collection (Zero-Data Policy) & Base58 Addressing", "Mathematical Verification Without Civil ID", "Law N° 001-2021/AN (CIL-BF) & GDPR Art. 25"]
+                ];
+            }
+        }
 
         let currentLang = 'fr';
 
@@ -726,52 +960,119 @@
             container.innerHTML = '';
             sidebarList.innerHTML = '';
 
+            let totalCorpusChars = 0;
+
             articlesData.forEach(art => {
                 const langObj = art[currentLang];
-                const matchesSearch = !query ||
-                    langObj.title.toLowerCase().includes(query) ||
-                    langObj.content.toLowerCase().includes(query) ||
-                    langObj.tech.toLowerCase().includes(query) ||
-                    langObj.badge.toLowerCase().includes(query);
+                const sections = buildExpandedSections(art, currentLang);
+                const matrixRows = buildMatrixRows(art, currentLang);
+                const headers = uiStrings[currentLang].section_headers;
+                const mHeaders = uiStrings[currentLang].matrix_headers;
+
+                const fullTextForMeasure = langObj.title + " " + sections.join(" ") + " " + langObj.tech + " " + matrixRows.flat().join(" ");
+                const charCount = fullTextForMeasure.length;
+                const wordCount = fullTextForMeasure.split(/\s+/).length;
+                totalCorpusChars += charCount;
+
+                const matchesSearch = !query || fullTextForMeasure.toLowerCase().includes(query) || langObj.badge.toLowerCase().includes(query);
 
                 const li = document.createElement('li');
                 li.style.display = matchesSearch ? 'block' : 'none';
                 li.innerHTML = `
-                    <a href="#${art.id}" class="hover:text-indAccent hover:bg-slate-50 px-2.5 py-1.5 rounded-lg transition-colors flex items-center gap-2.5 truncate">
-                        <span class="font-mono text-[10px] font-black text-indAccent bg-sky-50 border border-sky-200 px-1.5 py-0.5 rounded">${art.num}</span>
-                        <span class="truncate">${langObj.short.replace(/^\d+\.\s*/, '')}</span>
+                    <a href="#${art.id}" class="hover:text-indAccent hover:bg-slate-50 px-2.5 py-1.5 rounded-lg transition-colors flex items-center justify-between gap-2 group">
+                        <div class="flex items-center gap-2 truncate">
+                            <span class="font-mono text-[10px] font-black text-indAccent bg-sky-50 border border-sky-200 px-1.5 py-0.5 rounded">${art.num}</span>
+                            <span class="truncate">${langObj.short.replace(/^\d+\.\s*/, '')}</span>
+                        </div>
+                        <span class="text-[9px] font-mono text-slate-400 group-hover:text-indAccent shrink-0">${(charCount / 1000).toFixed(1)}k</span>
                     </a>
                 `;
                 sidebarList.appendChild(li);
 
                 if (matchesSearch) {
-                    const section = document.createElement('section');
-                    section.id = art.id;
-                    section.className = 'scroll-mt-24 bg-white border border-indBorder rounded-2xl p-5 sm:p-7 shadow-sm hover:border-slate-300 transition-all';
-                    section.innerHTML = `
-                        <div class="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3.5 border-b border-slate-100">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-xl ${art.color} flex items-center justify-center shrink-0 text-base shadow-sm">
+                    const sectionEl = document.createElement('section');
+                    sectionEl.id = art.id;
+                    sectionEl.className = 'scroll-mt-24 bg-white border border-indBorder rounded-2xl p-6 sm:p-8 shadow-sm hover:border-slate-300 transition-all';
+
+                    let clausesHtml = '';
+                    sections.forEach((secText, idx) => {
+                        const boxStyle = idx % 2 === 0 ? 'clause-box' : 'gold-box';
+                        clausesHtml += `
+                            <div class="${boxStyle} p-4 sm:p-5 rounded-r-xl border border-slate-100 mb-4">
+                                <div class="flex items-center justify-between gap-2 mb-2">
+                                    <h3 class="font-black text-premiumDark text-xs sm:text-[13px] uppercase tracking-wide">${headers[idx]}</h3>
+                                    <span class="font-mono text-[10px] font-bold text-slate-400 shrink-0">${art.domainCode} • §${idx + 1}</span>
+                                </div>
+                                <p class="text-slate-600 text-[12.5px] sm:text-[13px] leading-relaxed text-justify-custom font-medium">
+                                    ${secText}
+                                </p>
+                            </div>
+                        `;
+                    });
+
+                    let tableRowsHtml = '';
+                    matrixRows.forEach(r => {
+                        tableRowsHtml += `
+                            <tr class="hover:bg-slate-50/80">
+                                <td class="py-2.5 px-3.5 font-bold text-premiumDark border-b border-slate-100">${r[0]}</td>
+                                <td class="py-2.5 px-3.5 font-mono text-indAccent font-semibold border-b border-slate-100">${r[1]}</td>
+                                <td class="py-2.5 px-3.5 text-slate-600 border-b border-slate-100">${r[2]}</td>
+                                <td class="py-2.5 px-3.5 font-mono text-slate-500 border-b border-slate-100">${r[3]}</td>
+                            </tr>
+                        `;
+                    });
+
+                    sectionEl.innerHTML = `
+                        <div class="flex flex-wrap items-center justify-between gap-3 mb-6 pb-4 border-b-2 border-slate-100">
+                            <div class="flex items-center gap-3.5">
+                                <div class="w-12 h-12 rounded-xl ${art.color} flex items-center justify-center shrink-0 text-lg shadow-sm">
                                     <i class="fa-solid ${art.icon}"></i>
                                 </div>
                                 <div>
-                                    <span class="font-mono text-[10px] font-black uppercase tracking-widest text-slate-400 block">ARTICLE OFFICIEL #${art.num}</span>
-                                    <h2 class="text-base sm:text-lg font-black text-premiumDark tracking-tight leading-snug">${langObj.title}</h2>
+                                    <div class="flex flex-wrap items-center gap-2 mb-1">
+                                        <span class="font-mono text-[10px] font-black uppercase tracking-widest text-indAccent bg-sky-50 px-2 py-0.5 rounded border border-sky-200">ARTICLE OFFICIEL #${art.num}</span>
+                                        <span class="font-mono text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">${art.domainCode}</span>
+                                        <span class="font-mono text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">${charCount.toLocaleString()} ${uiStrings[currentLang].chars_unit} • ${wordCount.toLocaleString()} ${uiStrings[currentLang].words_unit}</span>
+                                    </div>
+                                    <h2 class="text-lg sm:text-xl font-black text-premiumDark tracking-tight leading-snug">${langObj.title}</h2>
                                 </div>
                             </div>
-                            <span class="bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider shrink-0">${langObj.badge}</span>
+                            <span class="bg-premiumDark text-indGold border border-indGold/40 text-[10px] font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider shrink-0">${langObj.badge}</span>
                         </div>
-                        <p class="text-slate-600 text-[13px] leading-relaxed text-justify-custom font-medium mb-4">
-                            ${langObj.content}
-                        </p>
-                        <div class="bg-slate-900 text-slate-200 rounded-xl px-4 py-3 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-mono">
-                            <span class="text-indGold font-bold shrink-0"><i class="fa-solid fa-shield-check mr-1.5"></i>${uiStrings[currentLang].tech_clause_label}</span>
+
+                        <div class="space-y-4 mb-6">
+                            ${clausesHtml}
+                        </div>
+
+                        <div class="overflow-x-auto rounded-xl border border-slate-200 mb-5">
+                            <table class="w-full text-left border-collapse text-xs">
+                                <thead>
+                                    <tr class="bg-slate-900 text-white text-[10px] uppercase tracking-wider font-black">
+                                        <th class="py-3 px-3.5">${mHeaders[0]}</th>
+                                        <th class="py-3 px-3.5">${mHeaders[1]}</th>
+                                        <th class="py-3 px-3.5">${mHeaders[2]}</th>
+                                        <th class="py-3 px-3.5">${mHeaders[3]}</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white">
+                                    ${tableRowsHtml}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="bg-premiumDark text-slate-200 rounded-xl px-4 py-3.5 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-mono">
+                            <span class="text-indGold font-bold shrink-0"><i class="fa-solid fa-shield-halved mr-1.5"></i>${uiStrings[currentLang].tech_clause_label}</span>
                             <span class="text-sky-300">${langObj.tech}</span>
                         </div>
                     `;
-                    container.appendChild(section);
+                    container.appendChild(sectionEl);
                 }
             });
+
+            const totalCounterEl = document.getElementById('totalCorpusCounter');
+            if (totalCounterEl) {
+                totalCounterEl.textContent = `${totalCorpusChars.toLocaleString()} ${uiStrings[currentLang].chars_unit}`;
+            }
 
             document.querySelectorAll('[data-key]').forEach(el => {
                 const key = el.getAttribute('data-key');
