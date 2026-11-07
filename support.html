@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portail Institutionnel de Support B2B & SLA | Nexus Core L1 - Atlas & Duc Corporation</title>
+    <title>Portail Institutionnel de Support B2B, NOC L1 & SLA | Nexus Core L1 - Atlas & Duc Corporation</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -52,6 +52,9 @@
         .text-justify-custom { text-align: justify; text-justify: inter-word; hyphens: auto; }
         .clause-box { border-left: 3px solid #0EA5E9; background: linear-gradient(to right, #F8FAFC, #FFFFFF); }
         .gold-box { border-left: 3px solid #D4AF37; background: linear-gradient(to right, #FFFBEB, #FFFFFF); }
+        .dev-code-block { background-color: #0D1117; border: 1px solid #21262D; border-radius: 10px; overflow: hidden; box-shadow: 0 10px 20px -5px rgba(0,0,0,0.25); }
+        .dev-code-header { background-color: #161B22; border-bottom: 1px solid #21262D; padding: 8px 14px; display: flex; justify-content: space-between; align-items: center; }
+        .dev-code-body { padding: 14px; overflow-x: auto; font-family: 'Fira Code', monospace; font-size: 11.5px; line-height: 1.6; color: #E2E8F0; }
         .faq-content { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.25s ease-out; }
         .faq-content > div { overflow: hidden; }
         .faq-item.active .faq-content { grid-template-rows: 1fr; }
@@ -158,13 +161,14 @@
                 </div>
                 <div class="col-span-2 sm:col-span-1 bg-slate-900/80 border border-indGold/40 p-3.5 rounded-xl">
                     <div data-key="stat5_label" class="text-[10px] font-bold text-indGold uppercase tracking-wider">Volume Référentiel</div>
-                    <div id="totalCorpusCounter" class="text-xs sm:text-sm font-black text-white font-mono mt-0.5">&gt; 300 000 chars</div>
+                    <div id="totalCorpusCounter" class="text-xs sm:text-sm font-black text-white font-mono mt-0.5">&gt; 315 000 chars</div>
                 </div>
             </div>
 
             <div class="flex flex-wrap justify-center gap-3">
                 <a href="#corp_dir" class="bg-indAccent hover:bg-sky-500 text-white px-6 py-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all shadow-lg shadow-indAccent/25"><i class="fa-solid fa-address-book mr-1.5"></i> Annuaire Corporatif Officiel</a>
                 <a href="#ticket_console" class="bg-indGold/20 hover:bg-indGold/30 border border-indGold text-indGold px-6 py-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all"><i class="fa-solid fa-ticket mr-1.5"></i> Générer un Ticket B2B Base58</a>
+                <a href="#diag_lab" class="bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-400 text-emerald-300 px-6 py-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all"><i class="fa-solid fa-microchip mr-1.5"></i> Vérificateur Base58 & ₳</a>
                 <a href="#b2b-mod-1" class="bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white px-6 py-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all"><i class="fa-solid fa-book-journal-whills mr-1.5"></i> 20 Protocoles SLA & B2B</a>
             </div>
         </div>
@@ -191,9 +195,10 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 gap-1.5 mb-3">
-                    <a href="#corp_dir" class="bg-slate-100 hover:bg-sky-50 hover:text-indAccent text-slate-700 font-bold text-[10px] py-1.5 px-2 rounded-lg text-center border border-slate-200 transition-colors"><i class="fa-solid fa-phone mr-1"></i>Contacts Directs</a>
-                    <a href="#faq_section" class="bg-slate-900 hover:bg-indAccent text-indGold hover:text-white font-bold text-[10px] py-1.5 px-2 rounded-lg text-center transition-colors"><i class="fa-solid fa-circle-question mr-1"></i>FAQ & Tickets</a>
+                <div class="grid grid-cols-3 gap-1.5 mb-3">
+                    <a href="#corp_dir" class="bg-slate-100 hover:bg-sky-50 hover:text-indAccent text-slate-700 font-bold text-[10px] py-1.5 px-1.5 rounded-lg text-center border border-slate-200 transition-colors"><i class="fa-solid fa-phone mr-1"></i>Contacts</a>
+                    <a href="#diag_lab" class="bg-slate-100 hover:bg-sky-50 hover:text-indAccent text-slate-700 font-bold text-[10px] py-1.5 px-1.5 rounded-lg text-center border border-slate-200 transition-colors"><i class="fa-solid fa-vial mr-1"></i>Outil B2B</a>
+                    <a href="#faq_section" class="bg-slate-900 hover:bg-indAccent text-indGold hover:text-white font-bold text-[10px] py-1.5 px-1.5 rounded-lg text-center transition-colors"><i class="fa-solid fa-circle-question mr-1"></i>12 FAQ</a>
                 </div>
 
                 <div class="mb-2 flex items-center justify-between">
@@ -324,7 +329,7 @@
                             </div>
                             <div>
                                 <p data-key="label_whatsapp" class="text-[10px] font-black text-indTextMuted uppercase tracking-widest mb-0.5">Ligne d'Urgence Opérationnelle (+226 76 16 73 64)</p>
-                                <h3 data-key="val_whatsapp" class="font-black text-base text-premiumDark"> Liaison Directe WhatsApp B2B</h3>
+                                <h3 data-key="val_whatsapp" class="font-black text-base text-premiumDark">Liaison Directe WhatsApp B2B</h3>
                             </div>
                         </div>
                         <i class="fa-solid fa-arrow-up-right-from-square text-slate-300 group-hover:text-indSuccess transition-all"></i>
@@ -339,31 +344,41 @@
                             <i class="fa-solid fa-fingerprint"></i> Enregistrement Cryptographique Base58
                         </div>
                         <h2 data-key="console_ticket_title" class="text-xl sm:text-2xl font-black text-white">Générateur de Ticket d'Incident & Homologation B2B</h2>
-                        <p data-key="console_ticket_sub" class="text-xs text-slate-400 mt-1">Créez un ticket d'ingénierie indexé en Base58 (`ADCT_...`) pour vos demandes de quota RPC, d'intégration POS ou d'audit de contrat NVM.</p>
+                        <p data-key="console_ticket_sub" class="text-xs text-slate-400 mt-1">Créez un ticket d'ingénierie indexé en Base58 (ADCT_...) pour vos demandes de quota RPC, d'intégration POS ou d'audit de contrat NVM.</p>
                     </div>
                     <span class="bg-slate-900 border border-slate-700 text-indAccent font-mono text-xs font-bold px-3.5 py-2 rounded-xl self-start md:self-auto">
                         SLA Priorité P1 : &lt; 15 min
                     </span>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-6">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-6">
                     <div class="lg:col-span-4">
                         <label data-key="lbl_ticket_cat" class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">1. Département & Catégorie B2B</label>
                         <select id="b2bTicketCategory" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs font-bold text-white focus:outline-none focus:border-indAccent">
-                            <option value="Quota API RPC (1500 req/s & mTLS)">Quota API RPC (1 500 req/s & mTLS)</option>
+                            <option value="Quota API RPC (1 500 req/s & mTLS)">Quota API RPC (1 500 req/s & mTLS)</option>
                             <option value="Déploiement Caisse Roger Service Pro (POS)">Déploiement Caisse Roger Service Pro (POS)</option>
                             <option value="Intégration Passerelle SONABEL / ONEA / MoMo">Intégration Passerelle SONABEL / ONEA / MoMo</option>
                             <option value="Audit Smart Contract NVM / NCRC-20 (ADCC_)">Audit Smart Contract NVM / NCRC-20 (ADCC_)</option>
                             <option value="Homologation Marchand Adama Digital / A&D Business">Homologation Marchand Adama Digital / A&D Business</option>
+                            <option value="Guichet Trésorerie Institutionnelle (1 ₳ = 1 XOF)">Guichet Trésorerie Institutionnelle (1 ₳ = 1 XOF)</option>
                         </select>
                     </div>
-                    <div class="lg:col-span-4">
-                        <label data-key="lbl_ticket_wallet" class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">2. Adresse Base58 Marchand / Entreprise</label>
-                        <input type="text" id="b2bTicketWallet" value="ADC6MH4qsxED6cLtH3NLng5QL6Kvb9HRa8" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs font-mono text-sky-300 focus:outline-none focus:border-indAccent">
+                    <div class="lg:col-span-2">
+                        <label data-key="lbl_ticket_prio" class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">2. Niveau SLA</label>
+                        <select id="b2bTicketPriority" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2.5 text-xs font-mono font-bold text-indGold focus:outline-none focus:border-indAccent">
+                            <option value="P1">P1 (&lt; 15 min)</option>
+                            <option value="P2">P2 (&lt; 30 min)</option>
+                            <option value="P3">P3 (&lt; 2h)</option>
+                            <option value="P4">P4 (&lt; 12h)</option>
+                        </select>
                     </div>
-                    <div class="lg:col-span-4 flex items-end">
-                        <button id="createB2bTicketBtn" class="w-full bg-indAccent hover:bg-sky-500 text-white font-black text-xs uppercase tracking-widest py-3 px-5 rounded-xl shadow-lg shadow-indAccent/25 transition-all flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-plus-circle"></i> <span data-key="btn_gen_ticket">Générer le Ticket Base58</span>
+                    <div class="lg:col-span-3">
+                        <label data-key="lbl_ticket_wallet" class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">3. Adresse Base58 Cible</label>
+                        <input type="text" id="b2bTicketWallet" value="ADC6MH4qsxED6cLtH3NLng5QL6Kvb9HRa8ui" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs font-mono text-sky-300 focus:outline-none focus:border-indAccent">
+                    </div>
+                    <div class="lg:col-span-3 flex items-end">
+                        <button id="createB2bTicketBtn" class="w-full bg-indAccent hover:bg-sky-500 text-white font-black text-xs uppercase tracking-widest py-3 px-4 rounded-xl shadow-lg shadow-indAccent/25 transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-plus-circle"></i> <span data-key="btn_gen_ticket">Générer Ticket Base58</span>
                         </button>
                     </div>
                 </div>
@@ -377,7 +392,7 @@
                         <span class="text-[10px] font-mono text-slate-400">Encodage Identifiant : Base58 Strict</span>
                     </div>
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse text-xs min-w-[600px]">
+                        <table class="w-full text-left border-collapse text-xs min-w-[650px]">
                             <thead>
                                 <tr class="border-b border-slate-800 text-[10px] text-slate-400 uppercase tracking-widest">
                                     <th data-key="th_id" class="py-3 px-4 font-bold">ID Ticket Base58</th>
@@ -415,61 +430,63 @@
                 </div>
             </section>
 
+            <section id="diag_lab" class="scroll-mt-24 bg-white border-2 border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 mb-6 border-b border-slate-100">
+                    <div>
+                        <span class="text-[10px] font-mono font-black uppercase tracking-widest text-indAccent bg-sky-50 border border-sky-200 px-2.5 py-1 rounded">Outil d'Auto-Diagnostic Marchand & B2B</span>
+                        <h2 data-key="diag_title" class="text-xl font-black text-premiumDark mt-2">Vérificateur d'Intégrité Base58 & Calculateur Comptable (₳ / microA / XOF)</h2>
+                        <p data-key="diag_sub" class="text-xs text-slate-500 mt-0.5">Vérifiez la conformité d'une adresse Base58 et calculez les montants exacts en microA ainsi que les frais Zero-Deviation Gas avant l'envoi RPC.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-4">
+                        <h3 data-key="diag_box1_title" class="font-black text-sm text-premiumDark flex items-center gap-2"><i class="fa-solid fa-check-double text-indAccent"></i> 1. Audit Syntaxique d'Identifiant Base58 (ADC / ADCC_ / ADCT_)</h3>
+                        <div>
+                            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-wider mb-1">Entrer une Adresse ou un Hash Base58 à vérifier</label>
+                            <div class="flex gap-2">
+                                <input type="text" id="base58CheckInput" value="ADC6MH4qsxED6cLtH3NLng5QL6Kvb9HRa8ui" class="flex-1 bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-mono text-premiumDark focus:outline-none focus:border-indAccent">
+                                <button id="runBase58CheckBtn" class="bg-premiumDark hover:bg-indAccent text-white font-bold text-xs px-4 py-2 rounded-lg transition-colors shrink-0">Vérifier</button>
+                            </div>
+                        </div>
+                        <div id="base58CheckResult" class="bg-white border border-emerald-200 rounded-lg p-3.5 text-xs font-mono text-emerald-800">
+                            [VALIDE] Alphabet Base58 conforme (0 caractère ambigu) | Type détecté : Portefeuille EOA / Trésorerie (Préfixe ADC) | Prêt pour Mainnet #9012.
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-4">
+                        <h3 data-key="diag_box2_title" class="font-black text-sm text-premiumDark flex items-center gap-2"><i class="fa-solid fa-calculator text-indGold"></i> 2. Convertisseur Exact ₳ &lt;-&gt; microA &amp; Zero-Deviation Gas</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-wider mb-1">Montant en Monnaie Native (₳)</label>
+                                <input type="number" id="calcAmountA" value="25000" min="0" step="0.000001" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-mono font-bold text-premiumDark focus:outline-none focus:border-indAccent">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-wider mb-1">Type d'Opération RPC L1</label>
+                                <select id="calcOpType" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-mono font-bold text-premiumDark focus:outline-none focus:border-indAccent">
+                                    <option value="1000">transfer (1 000 microA)</option>
+                                    <option value="5000">call_contract (5 000 microA)</option>
+                                    <option value="50000">deploy_contract (50 000 microA)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="calcOutputBox" class="bg-premiumDark text-slate-200 rounded-lg p-3.5 text-xs font-mono space-y-1">
+                            <div class="flex justify-between"><span>amountMicro (BigInt) :</span><span id="outMicroVal" class="text-sky-300 font-bold">25000000000</span></div>
+                            <div class="flex justify-between"><span>feeMicro (Zero-Deviation) :</span><span id="outFeeVal" class="text-indGold font-bold">1000 (0.001000 ₳)</span></div>
+                            <div class="flex justify-between border-t border-slate-800 pt-1 mt-1"><span>Provision Totale Requise :</span><span id="outTotalVal" class="text-indSuccess font-bold">25000001000 microA (25000.001000 FCFA)</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <section id="faq_section" class="scroll-mt-24">
                 <div class="flex items-center justify-between mb-4 border-b border-indBorder pb-2">
                     <h2 data-key="faq_title" class="text-sm font-black text-premiumDark uppercase tracking-wider flex items-center gap-2">
-                        <i class="fa-solid fa-circle-question text-indAccent"></i> Base de Connaissances Rapide (FAQ Exécutive & Technique)
+                        <i class="fa-solid fa-circle-question text-indAccent"></i> Base de Connaissances Exécutive & Technique (12 Réponses Certifiées)
                     </h2>
-                    <span class="text-[10px] font-mono font-bold text-slate-500">Réponses Officielles Certifiées</span>
+                    <span class="text-[10px] font-mono font-bold text-slate-500">FAQ B2B & Institutionnelle</span>
                 </div>
-                <div class="space-y-3">
-                    <div class="faq-item active bg-white border border-indBorder rounded-xl transition-colors">
-                        <button class="w-full text-left p-4 flex justify-between items-center outline-none rounded-xl" onclick="toggleFaq(this)">
-                            <span data-key="q1" class="font-black text-sm text-premiumDark">1. Comment fonctionne la parité stricte 1 ₳ = 1 XOF sur le réseau Nexus Core L1 ?</span>
-                            <i class="fa-solid fa-chevron-down text-indAccent faq-icon transition-transform duration-200 text-xs"></i>
-                        </button>
-                        <div class="faq-content">
-                            <div class="px-4 pb-4 pt-0 text-xs text-slate-600 leading-relaxed text-justify-custom font-medium" data-key="a1">
-                                Sur l'infrastructure souveraine Nexus Core Layer-1, chaque unité de la monnaie native ₳ (plafonnée à 100 000 000 000 ₳ dès le bloc Genèse) est strictement arrimée à parité fixe de 1 ₳ = 1 Franc CFA (XOF) via le mécanisme de Preuve de Réserve (Proof of Reserve — Release-and-Lock) d'Atlas & Duc Corporation. Toutes les opérations techniques sont traitées en entiers atomiques microA (1 ₳ = 1 000 000 microA), garantissant une stabilité comptable totale et zéro volatilité spéculative pour les règlements B2B.
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="faq-item bg-white border border-indBorder rounded-xl transition-colors">
-                        <button class="w-full text-left p-4 flex justify-between items-center outline-none rounded-xl" onclick="toggleFaq(this)">
-                            <span data-key="q2" class="font-black text-sm text-premiumDark">2. Quel est l'engagement de disponibilité (SLA) garanti aux partenaires B2B ?</span>
-                            <i class="fa-solid fa-chevron-down text-indAccent faq-icon transition-transform duration-200 text-xs"></i>
-                        </button>
-                        <div class="faq-content">
-                            <div class="px-4 pb-4 pt-0 text-xs text-slate-600 leading-relaxed text-justify-custom font-medium" data-key="a2">
-                                Atlas & Duc Corporation garantit contractuellement un taux de disponibilité réseau (Uptime SLA) de 99,999 % sur le Mainnet #9012 grâce au consensus Proof-of-Authority (nBFT), au moteur d'état In-Memory V8 en RAM DDR5 ECC, à la persistance atomique anti-blackout (WAL) et aux grappes de serveurs redondants orchestrés par PM2 et tunnels Cloudflare Argo.
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="faq-item bg-white border border-indBorder rounded-xl transition-colors">
-                        <button class="w-full text-left p-4 flex justify-between items-center outline-none rounded-xl" onclick="toggleFaq(this)">
-                            <span data-key="q3" class="font-black text-sm text-premiumDark">3. Le Support B2B peut-il restaurer une phrase mnémonique BIP39 ou annuler une transaction en ₳ ?</span>
-                            <i class="fa-solid fa-chevron-down text-indAccent faq-icon transition-transform duration-200 text-xs"></i>
-                        </button>
-                        <div class="faq-content">
-                            <div class="px-4 pb-4 pt-0 text-xs text-slate-600 leading-relaxed text-justify-custom font-medium" data-key="a3">
-                                Non, jamais. En vertu de notre architecture 100 % Non-Custodial et du chiffrement local AES-256-GCM / Argon2id, Atlas & Duc Corporation ne détient aucune copie des clés privées ni des phrases mnémoniques BIP39 des utilisateurs. De même, toute transaction signée en ECDSA secp256k1 et scellée dans un bloc PoA acquiert une finalité irréversible en 2 secondes. Aucun agent du support ne vous demandera jamais votre phrase secrète.
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="faq-item bg-white border border-indBorder rounded-xl transition-colors">
-                        <button class="w-full text-left p-4 flex justify-between items-center outline-none rounded-xl" onclick="toggleFaq(this)">
-                            <span data-key="q4" class="font-black text-sm text-premiumDark">4. Où consulter les références légales d'Atlas & Duc Corporation et demander une clé API B2B ?</span>
-                            <i class="fa-solid fa-chevron-down text-indAccent faq-icon transition-transform duration-200 text-xs"></i>
-                        </button>
-                        <div class="faq-content">
-                            <div class="px-4 pb-4 pt-0 text-xs text-slate-600 leading-relaxed text-justify-custom font-medium" data-key="a4">
-                                Atlas & Duc Corporation (anciennement Atlas Groupe International) est officiellement constituée au Burkina Faso sous le récépissé N° PHUE-3539/2025 du 11 juillet 2025, avec sièges à Koupéla et Bobo-Dioulasso. Pour obtenir une clé API B2B (`X-Nexus-API-Key` à 1 500 req/s) ou déployer Roger Service Pro POS, contactez directement `administration@agi-nexus-core.click` ou `support@agi-nexus-core.click`.
-                            </div>
-                        </div>
-                    </div>
+                <div id="faqListContainer" class="space-y-3">
                 </div>
             </section>
 
@@ -527,6 +544,9 @@
                     carry = (carry / 58) | 0;
                 }
             }
+            for (let k = 0; k < uint8Arr.length && uint8Arr[k] === 0; k++) {
+                digits.push(0);
+            }
             return digits.reverse().map(d => BASE58_ALPHABET[d]).join('');
         }
 
@@ -564,6 +584,7 @@
 
         const createTicketBtn = document.getElementById('createB2bTicketBtn');
         const ticketCatEl = document.getElementById('b2bTicketCategory');
+        const ticketPrioEl = document.getElementById('b2bTicketPriority');
         const ticketWalletEl = document.getElementById('b2bTicketWallet');
         const ticketsTbody = document.getElementById('ticketsTableBody');
         const ticketBanner = document.getElementById('ticketConfirmBanner');
@@ -571,7 +592,8 @@
         if (createTicketBtn && ticketCatEl && ticketWalletEl && ticketsTbody) {
             createTicketBtn.addEventListener('click', () => {
                 const subj = ticketCatEl.value;
-                const wallet = ticketWalletEl.value.trim() || 'ADC6MH4qsxED6cLtH3NLng5QL6Kvb9HRa8';
+                const prio = ticketPrioEl ? ticketPrioEl.value : 'P1';
+                const wallet = ticketWalletEl.value.trim() || 'ADC6MH4qsxED6cLtH3NLng5QL6Kvb9HRa8ui';
                 const ticketId = generateNexusBase58Id(subj + ':' + wallet + ':' + Date.now(), 'ADCT_');
                 const shortWallet = wallet.length > 16 ? (wallet.slice(0, 14) + '...') : wallet;
 
@@ -581,186 +603,200 @@
                     <td class="py-3 px-4 font-bold text-indGold">${ticketId}</td>
                     <td class="py-3 px-4 font-sans text-white font-bold">${subj}</td>
                     <td class="py-3 px-4 text-sky-400">${shortWallet}</td>
-                    <td class="py-3 px-4"><span class="bg-indAccent/20 text-sky-300 border border-indAccent/40 px-2.5 py-0.5 rounded text-[10px] font-bold uppercase">Assigné NOC L1</span></td>
+                    <td class="py-3 px-4"><span class="bg-indAccent/20 text-sky-300 border border-indAccent/40 px-2.5 py-0.5 rounded text-[10px] font-bold uppercase">Assigné NOC (${prio})</span></td>
                     <td class="py-3 px-4 text-emerald-400 font-sans font-bold">À l'instant</td>
                 `;
                 ticketsTbody.insertBefore(tr, ticketsTbody.firstChild);
 
                 if (ticketBanner) {
                     ticketBanner.classList.remove('hidden');
-                    ticketBanner.textContent = `[NOC L1 CONFIRMATION] Ticket B2B généré avec succès sous l'identifiant Base58 : ${ticketId} | Portefeuille associé : ${wallet} | Prise en charge SLA P1 (< 15 min) activée.`;
+                    ticketBanner.textContent = `[NOC L1 CONFIRMATION] Ticket B2B généré sous l'identifiant Base58 : ${ticketId} | Niveau : ${prio} | Portefeuille : ${wallet} | Canal chiffré AES-256-GCM initialisé.`;
                 }
             });
         }
 
-        const uiStrings = {
-            fr: {
-                nav_home: "<i class='fa-solid fa-house mr-1.5'></i> Accueil",
-                nav_doc: "<i class='fa-solid fa-book-open mr-1.5'></i> Livre Blanc",
-                nav_api: "<i class='fa-solid fa-server mr-1.5'></i> API RPC",
-                nav_support: "<i class='fa-solid fa-headset mr-1.5'></i> Support B2B",
-                nav_privacy: "<i class='fa-solid fa-shield-halved mr-1.5'></i> Confidentialité",
-                nav_cgu: "<i class='fa-solid fa-gavel mr-1.5'></i> Wallet CGU",
-                btn_print: "Imprimer / PDF",
-                status: "Centre d'Opérations Réseau (NOC L1) : Ingénieurs & Direction Disponibles 24/7",
-                title: "PORTAIL INSTITUTIONNEL DE <span class='text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-indAccent to-indGold'>SUPPORT B2B & SLA</span>",
-                subtitle: "Assistance d'ingénierie critique, gouvernance exécutive, homologation marchande et continuité d'exploitation dédiées à la blockchain souveraine Nexus Core Layer-1 (monnaie native ₳, 1 ₳ = 1 XOF), opérée par Atlas & Duc Corporation.",
-                stat1_label: "Disponibilité SLA L1",
-                stat2_label: "Temps de Réponse P1",
-                stat3_label: "Étalon & Unité L1",
-                stat4_label: "Traçabilité Tickets",
-                stat5_label: "Volume Référentiel",
-                sidebar_version: "Support B2B V.5.0 • 20 Modules",
-                sidebar_title_sections: "20 Protocoles Support & SLA",
-                nav_secure: "Canal Chiffré TLS 1.3 & AES-256-GCM",
-                meta_banner_title: "Direction des Opérations Réseau (NOC L1) & Assistance Institutionnelle B2B — Atlas & Duc Corporation",
-                meta_banner_desc: "Supervisé par Yougma Thierry Joël (Fondateur, Président & Architecte Logiciel Principal) • Récépissé Officiel N° PHUE-3539/2025 • Sièges : Koupéla & Bobo-Dioulasso, Burkina Faso.",
-                corp_dir: "<i class='fa-solid fa-building-shield text-indAccent'></i> Départements Exécutifs & Annuaire Corporatif Officiel L1",
-                dir_title: "Présidence & Direction",
-                dir_pres: "Présidence (Ligne Téléphonique Directe)",
-                dir_email: "Direction Générale (Courriel Officiel)",
-                admin_title: "CTO & Administration",
-                admin_cto: "Direction Technique (CTO / Nœuds PoA)",
-                admin_email: "Administration & Juridique (Courriel)",
-                tech_title: "Support & Assistance B2B",
-                tech_phone: "Assistance Technique (Ligne Directe)",
-                tech_email: "Support Technique (Courriel 24/7)",
-                label_chat: "Portail de Messagerie Interne Chiffré",
-                val_chat: "Ouvrir une Session Ticket Interne (discussion.html)",
-                label_whatsapp: "Ligne d'Urgence Opérationnelle (+226 76 16 73 64)",
-                val_whatsapp: "Liaison Directe WhatsApp B2B",
-                console_ticket_title: "Générateur de Ticket d'Incident & Homologation B2B",
-                console_ticket_sub: "Créez un ticket d'ingénierie indexé en Base58 (ADCT_...) pour vos demandes de quota RPC, d'intégration POS ou d'audit de contrat NVM.",
-                lbl_ticket_cat: "1. Département & Catégorie B2B",
-                lbl_ticket_wallet: "2. Adresse Base58 Marchand / Entreprise",
-                btn_gen_ticket: "Générer le Ticket Base58",
-                tickets_title: "<i class='fa-solid fa-list-check text-indGold mr-1.5'></i> Registre Temps Réel des Requêtes & Tickets B2B",
-                th_id: "ID Ticket Base58",
-                th_sujet: "Objet de l'Intervention B2B",
-                th_statut: "Statut SLA",
-                th_date: "Horodatage",
-                tk1_subj: "Augmentation Rate-Limit API RPC (1 500 req/s)",
-                tk1_time: "Il y a 18 min",
-                tk2_subj: "Homologation Nœud Marchand & Terminal POS Houndé",
-                tk2_time: "Hier",
-                tk3_subj: "Intégration SDK Android Kotlin & Pont WebView Base58",
-                tk3_time: "Octobre 2026",
-                status_progress: "En cours (P1)",
-                status_resolved: "Résolu & Actif",
-                faq_title: "<i class='fa-solid fa-circle-question text-indAccent'></i> Base de Connaissances Rapide (FAQ Exécutive & Technique)",
-                q1: "1. Comment fonctionne la parité stricte 1 ₳ = 1 XOF sur le réseau Nexus Core L1 ?",
-                a1: "Sur l'infrastructure souveraine Nexus Core Layer-1, chaque unité de la monnaie native ₳ (plafonnée à 100 000 000 000 ₳ dès le bloc Genèse) est strictement arrimée à parité fixe de 1 ₳ = 1 Franc CFA (XOF) via le mécanisme de Preuve de Réserve (Proof of Reserve — Release-and-Lock) d'Atlas & Duc Corporation. Toutes les opérations techniques sont traitées en entiers atomiques microA (1 ₳ = 1 000 000 microA), garantissant une stabilité comptable totale et zéro volatilité spéculative pour les règlements B2B.",
-                q2: "2. Quel est l'engagement de disponibilité (SLA) garanti aux partenaires B2B ?",
-                a2: "Atlas & Duc Corporation garantit contractuellement un taux de disponibilité réseau (Uptime SLA) de 99,999 % sur le Mainnet #9012 grâce au consensus Proof-of-Authority (nBFT), au moteur d'état In-Memory V8 en RAM DDR5 ECC, à la persistance atomique anti-blackout (WAL) et aux grappes de serveurs redondants orchestrés par PM2 et tunnels Cloudflare Argo.",
-                q3: "3. Le Support B2B peut-il restaurer une phrase mnémonique BIP39 ou annuler une transaction en ₳ ?",
-                a3: "Non, jamais. En vertu de notre architecture 100 % Non-Custodial et du chiffrement local AES-256-GCM / Argon2id, Atlas & Duc Corporation ne détient aucune copie des clés privées ni des phrases mnémoniques BIP39 des utilisateurs. De même, toute transaction signée en ECDSA secp256k1 et scellée dans un bloc PoA acquiert une finalité irréversible en 2 secondes. Aucun agent du support ne vous demandera jamais votre phrase secrète.",
-                q4: "4. Où consulter les références légales d'Atlas & Duc Corporation et demander une clé API B2B ?",
-                a4: "Atlas & Duc Corporation (anciennement Atlas Groupe International) est officiellement constituée au Burkina Faso sous le récépissé N° PHUE-3539/2025 du 11 juillet 2025, avec sièges à Koupéla et Bobo-Dioulasso. Pour obtenir une clé API B2B (X-Nexus-API-Key à 1 500 req/s) ou déployer Roger Service Pro POS, contactez directement administration@agi-nexus-core.click ou support@agi-nexus-core.click.",
-                footer_infra: "Infrastructure Blockchain Souveraine Layer-1 • Monnaie Native ₳",
-                footer_status: "NOC L1 Actif 24/7 • SLA 99.999% • Parité 1 ₳ = 1 XOF",
-                footer_copy: "© 2026 Atlas & Duc Corporation (Récépissé N° PHUE-3539/2025). Koupéla & Bobo-Dioulasso, Burkina Faso.",
-                search_placeholder: "Filtrer le support (ex: SLA, POS, SONABEL, ₳)...",
-                tech_clause_label: "Protocole Opérationnel B2B & Garantie SLA :",
-                chars_unit: "caractères",
-                words_unit: "mots",
-                section_headers: [
-                    "Section I — Cadre Institutionnel du Protocole d'Assistance et Gouvernance NOC L1",
-                    "Section II — Engagements de Niveau de Service (SLA 99,999 %) et Temps de Réponse (MTTA / MTTR)",
-                    "Section III — Procédure Technique de Diagnostic sur le Moteur In-Memory V8",
-                    "Section IV — Sécurité Cryptographique des Interventions (Non-Custodial, Base58 & AES-256-GCM)",
-                    "Section V — Continuité Monétaire en Pièce Native ₳ (microA) et Réconciliation XOF",
-                    "Section VI — Supervision des Passerelles JSON-RPC 2.0 et du Bus WebSocket P2P (Port 6001)",
-                    "Section VII — Support Dédié aux Contrats Intelligents NVM (ADCC_) et Norme NCRC-20",
-                    "Section VIII — Maintenance des Applications Mobiles (Nexus Wallet Pro & A&D Business Pro)",
-                    "Section IX — Assistance Terrain POS (Roger Service Pro), Adama Digital & Passerelles SONABEL/ONEA",
-                    "Section X — Escalade Exécutive, Auditabilité NexusScan et Conformité UEMOA"
-                ],
-                matrix_headers: ["Paramètre SLA / Support", "Spécification Opérationnelle Atlas & Duc", "Délai & Garantie d'Exécution", "Canal & Référence Normative"]
+        const base58CheckInput = document.getElementById('base58CheckInput');
+        const runBase58CheckBtn = document.getElementById('runBase58CheckBtn');
+        const base58CheckResult = document.getElementById('base58CheckResult');
+
+        if (runBase58CheckBtn && base58CheckInput && base58CheckResult) {
+            runBase58CheckBtn.addEventListener('click', () => {
+                const val = base58CheckInput.value.trim();
+                if (!val || val.length < 8) {
+                    base58CheckResult.className = 'bg-red-50 border border-red-200 rounded-lg p-3.5 text-xs font-mono text-red-700';
+                    base58CheckResult.textContent = '[ERREUR -32003] Identifiant trop court ou vide. Longueur minimale requise : 8 caractères Base58.';
+                    return;
+                }
+                const cleanPart = val.replace(/^ADCC_|^ADCT_/, '');
+                let invalidChar = null;
+                for (let i = 0; i < cleanPart.length; i++) {
+                    if (!BASE58_ALPHABET.includes(cleanPart[i])) {
+                        invalidChar = cleanPart[i];
+                        break;
+                    }
+                }
+                if (invalidChar) {
+                    base58CheckResult.className = 'bg-red-50 border border-red-200 rounded-lg p-3.5 text-xs font-mono text-red-700';
+                    base58CheckResult.textContent = `[ERREUR -32003 ERR_INVALID_BASE58_ADDRESS] Caractère interdit détecté : "${invalidChar}". Rappel : 0, O, I, l et 0x sont proscrits sur Nexus Core L1.`;
+                    return;
+                }
+                let entityType = 'Hash de Transaction / Bloc Base58';
+                if (val.startsWith('ADCC_')) entityType = 'Contrat Intelligent NVM V8 (Préfixe ADCC_)';
+                else if (val.startsWith('ADCT_')) entityType = 'Ticket d\'Ingénierie Support B2B (Préfixe ADCT_)';
+                else if (val.startsWith('ADC')) entityType = 'Portefeuille EOA / Trésorerie (Préfixe ADC)';
+
+                base58CheckResult.className = 'bg-emerald-50 border border-emerald-200 rounded-lg p-3.5 text-xs font-mono text-emerald-800';
+                base58CheckResult.textContent = `[VALIDE] Alphabet Base58 conforme (${val.length} caractères) | Type : ${entityType} | Compatible Mainnet #9012.`;
+            });
+        }
+
+        const calcAmountA = document.getElementById('calcAmountA');
+        const calcOpType = document.getElementById('calcOpType');
+        const outMicroVal = document.getElementById('outMicroVal');
+        const outFeeVal = document.getElementById('outFeeVal');
+        const outTotalVal = document.getElementById('outTotalVal');
+
+        function updateMicroCalculator() {
+            if (!calcAmountA || !calcOpType) return;
+            const amountA = Math.max(0, Number(calcAmountA.value) || 0);
+            const feeMicro = BigInt(Number(calcOpType.value) || 1000);
+            const amountMicro = BigInt(Math.round(amountA * 1000000));
+            const totalMicro = amountMicro + feeMicro;
+            const totalA = (Number(totalMicro) / 1000000).toFixed(6);
+            const feeA = (Number(feeMicro) / 1000000).toFixed(6);
+
+            outMicroVal.textContent = amountMicro.toString() + ' microA';
+            outFeeVal.textContent = `${feeMicro.toString()} microA (${feeA} ₳)`;
+            outTotalVal.textContent = `${totalMicro.toString()} microA (${totalA} ₳ = ${totalA} FCFA)`;
+        }
+
+        if (calcAmountA && calcOpType) {
+            calcAmountA.addEventListener('input', updateMicroCalculator);
+            calcOpType.addEventListener('change', updateMicroCalculator);
+        }
+
+        const faqData = [
+            {
+                fr: {
+                    q: "1. Comment fonctionne la parité stricte 1 ₳ = 1 XOF sur le réseau Nexus Core L1 ?",
+                    a: "Sur l'infrastructure souveraine Nexus Core Layer-1, chaque unité de la monnaie native ₳ (plafonnée à 100 000 000 000 ₳ dès le bloc Genèse #0) est strictement arrimée à parité fixe de 1 ₳ = 1 Franc CFA (XOF) via le mécanisme institutionnel de Preuve de Réserve (Proof of Reserve — Release-and-Lock) d'Atlas & Duc Corporation. Toutes les opérations techniques sont traitées en entiers atomiques microA (1 ₳ = 1 000 000 microA), garantissant une stabilité comptable totale et zéro volatilité spéculative."
+                },
+                en: {
+                    q: "1. How does the strict 1 ₳ = 1 XOF parity operate on the Nexus Core L1 network?",
+                    a: "On the sovereign Nexus Core Layer-1 infrastructure, every unit of the native currency ₳ (capped at 100,000,000,000 ₳ from Genesis Block #0) is strictly pegged at a fixed 1 ₳ = 1 CFA Franc (XOF) parity through Atlas & Duc Corporation's institutional Proof of Reserve (Release-and-Lock) mechanism. All technical operations are processed in atomic microA integers (1 ₳ = 1,000,000 microA), guaranteeing complete accounting stability and zero speculative volatility."
+                }
             },
-            en: {
-                nav_home: "<i class='fa-solid fa-house mr-1.5'></i> Home",
-                nav_doc: "<i class='fa-solid fa-book-open mr-1.5'></i> White Paper",
-                nav_api: "<i class='fa-solid fa-server mr-1.5'></i> RPC API",
-                nav_support: "<i class='fa-solid fa-headset mr-1.5'></i> B2B Support",
-                nav_privacy: "<i class='fa-solid fa-shield-halved mr-1.5'></i> Privacy Policy",
-                nav_cgu: "<i class='fa-solid fa-gavel mr-1.5'></i> Wallet T&C",
-                btn_print: "Print / PDF",
-                status: "Network Operations Center (L1 NOC): Engineers & Executive Board Available 24/7",
-                title: "INSTITUTIONAL <span class='text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-indAccent to-indGold'>B2B SUPPORT & SLA PORTAL</span>",
-                subtitle: "Critical engineering assistance, executive governance, merchant homologation, and operational continuity dedicated to the sovereign Nexus Core Layer-1 blockchain (native currency ₳, 1 ₳ = 1 XOF), operated by Atlas & Duc Corporation.",
-                stat1_label: "L1 SLA Uptime",
-                stat2_label: "P1 Response Time",
-                stat3_label: "L1 Standard & Unit",
-                stat4_label: "Ticket Traceability",
-                stat5_label: "Reference Volume",
-                sidebar_version: "B2B Support V.5.0 • 20 Modules",
-                sidebar_title_sections: "20 Support & SLA Protocols",
-                nav_secure: "Encrypted Channel TLS 1.3 & AES-256-GCM",
-                meta_banner_title: "Network Operations Directorate (L1 NOC) & Institutional B2B Support — Atlas & Duc Corporation",
-                meta_banner_desc: "Supervised by Yougma Thierry Joël (Founder, President & Lead Software Architect) • Official Receipt N° PHUE-3539/2025 • Headquarters: Koupéla & Bobo-Dioulasso, Burkina Faso.",
-                corp_dir: "<i class='fa-solid fa-building-shield text-indAccent'></i> Executive Departments & Official L1 Corporate Directory",
-                dir_title: "Presidency & Executive Board",
-                dir_pres: "Presidency (Direct Phone Line)",
-                dir_email: "Executive Management (Official Email)",
-                admin_title: "CTO & Administration",
-                admin_cto: "Technical Directorate (CTO / PoA Nodes)",
-                admin_email: "Administration & Legal (Email)",
-                tech_title: "B2B Support & Assistance",
-                tech_phone: "Technical Assistance (Direct Line)",
-                tech_email: "Technical Support (24/7 Email)",
-                label_chat: "Encrypted Internal Messaging Portal",
-                val_chat: "Open an Internal Ticket Session (discussion.html)",
-                label_whatsapp: "Operational Emergency Line (+226 76 16 73 64)",
-                val_whatsapp: "Direct B2B WhatsApp Liaison",
-                console_ticket_title: "B2B Incident & Homologation Ticket Generator",
-                console_ticket_sub: "Generate a Base58-indexed engineering ticket (ADCT_...) for RPC quota upgrades, POS integration, or NVM contract audits.",
-                lbl_ticket_cat: "1. B2B Department & Category",
-                lbl_ticket_wallet: "2. Merchant / Enterprise Base58 Address",
-                btn_gen_ticket: "Generate Base58 Ticket",
-                tickets_title: "<i class='fa-solid fa-list-check text-indGold mr-1.5'></i> Real-Time B2B Request & Ticket Registry",
-                th_id: "Base58 Ticket ID",
-                th_sujet: "B2B Intervention Subject",
-                th_statut: "SLA Status",
-                th_date: "Timestamp",
-                tk1_subj: "RPC API Rate-Limit Upgrade (1,500 req/s)",
-                tk1_time: "18 mins ago",
-                tk2_subj: "Merchant Node & POS Terminal Homologation (Houndé)",
-                tk2_time: "Yesterday",
-                tk3_subj: "Android Kotlin SDK & Base58 WebView Bridge Integration",
-                tk3_time: "October 2026",
-                status_progress: "In Progress (P1)",
-                status_resolved: "Resolved & Active",
-                faq_title: "<i class='fa-solid fa-circle-question text-indAccent'></i> Rapid Knowledge Base (Executive & Technical FAQ)",
-                q1: "1. How does the strict 1 ₳ = 1 XOF parity operate on the Nexus Core L1 network?",
-                a1: "On the sovereign Nexus Core Layer-1 infrastructure, every unit of the native currency ₳ (capped at 100,000,000,000 ₳ from the Genesis Block) is strictly pegged at a fixed 1 ₳ = 1 CFA Franc (XOF) parity through Atlas & Duc Corporation's Proof of Reserve (Release-and-Lock) mechanism. All technical operations are processed in atomic microA integers (1 ₳ = 1,000,000 microA), guaranteeing complete accounting stability and zero speculative volatility for B2B settlements.",
-                q2: "2. What is the Service Level Agreement (SLA) guaranteed to B2B partners?",
-                a2: "Atlas & Duc Corporation contractually guarantees a 99.999% network uptime SLA on Mainnet #9012 powered by Proof-of-Authority (nBFT) consensus, the In-Memory V8 state engine running on ECC DDR5 RAM, atomic anti-blackout persistence (WAL), and redundant server clusters orchestrated via PM2 and Cloudflare Argo Tunnels.",
-                q3: "3. Can B2B Support restore a lost BIP39 mnemonic phrase or reverse an ₳ transaction?",
-                a3: "No, never. Due to our 100% Non-Custodial architecture and local AES-256-GCM / Argon2id encryption, Atlas & Duc Corporation holds zero copies of users' private keys or BIP39 mnemonic phrases. Similarly, any transaction signed via ECDSA secp256k1 and sealed in a PoA block achieves irreversible finality within 2 seconds. No support agent will ever ask for your recovery phrase.",
-                q4: "4. Where can I verify Atlas & Duc Corporation's legal registration and request a B2B API key?",
-                a4: "Atlas & Duc Corporation (formerly Atlas Groupe International) is officially incorporated in Burkina Faso under receipt N° PHUE-3539/2025 dated July 11, 2025, with headquarters in Koupéla and Bobo-Dioulasso. To request a B2B API key (X-Nexus-API-Key at 1,500 req/s) or deploy Roger Service Pro POS, contact administration@agi-nexus-core.click or support@agi-nexus-core.click.",
-                footer_infra: "Sovereign Layer-1 Blockchain Infrastructure • Native Currency ₳",
-                footer_status: "L1 NOC Active 24/7 • 99.999% SLA • 1 ₳ = 1 XOF Parity",
-                footer_copy: "© 2026 Atlas & Duc Corporation (Receipt N° PHUE-3539/2025). Koupéla & Bobo-Dioulasso, Burkina Faso.",
-                search_placeholder: "Filter support (e.g., SLA, POS, SONABEL, ₳)...",
-                tech_clause_label: "B2B Operational Protocol & SLA Guarantee:",
-                chars_unit: "characters",
-                words_unit: "words",
-                section_headers: [
-                    "Section I — Institutional Support Protocol Framework and L1 NOC Governance",
-                    "Section II — Service Level Agreement (99.999% SLA) and Response Metrics (MTTA / MTTR)",
-                    "Section III — Technical Diagnostic Procedure on the In-Memory V8 State Engine",
-                    "Section IV — Cryptographic Intervention Security (Non-Custodial, Base58 & AES-256-GCM)",
-                    "Section V — Monetary Continuity in Native Coin ₳ (microA) and XOF Reconciliation",
-                    "Section VI — Supervision of JSON-RPC 2.0 Gateways and P2P WebSocket Bus (Port 6001)",
-                    "Section VII — Dedicated Support for NVM Smart Contracts (ADCC_) and NCRC-20 Standard",
-                    "Section VIII — Mobile Application Maintenance (Nexus Wallet Pro & A&D Business Pro)",
-                    "Section IX — Field POS Support (Roger Service Pro), Adama Digital & SONABEL/ONEA Gateways",
-                    "Section X — Executive Escalation, NexusScan Auditability, and WAEMU Compliance"
-                ],
-                matrix_headers: ["SLA / Support Parameter", "Atlas & Duc Operational Specification", "Execution Timeline & Guarantee", "Channel & Normative Reference"]
+            {
+                fr: {
+                    q: "2. Quel est l'engagement de disponibilité (SLA) garanti aux partenaires B2B et banques ?",
+                    a: "Atlas & Duc Corporation garantit contractuellement un taux de disponibilité réseau (Uptime SLA) de 99,999 % sur le Mainnet #9012 grâce au consensus Proof-of-Authority (nBFT), au moteur d'état In-Memory V8 logé dans 256 Go de RAM DDR5 ECC, à la persistance atomique anti-blackout (WAL) et aux grappes de serveurs redondants orchestrés par PM2 et tunnels Cloudflare Argo."
+                },
+                en: {
+                    q: "2. What is the Service Level Agreement (SLA) guaranteed to B2B partners and banks?",
+                    a: "Atlas & Duc Corporation contractually guarantees a 99.999% network uptime SLA on Mainnet #9012 powered by Proof-of-Authority (nBFT) consensus, the In-Memory V8 state engine housed in 256 GB of ECC DDR5 RAM, atomic anti-blackout persistence (WAL), and redundant server clusters orchestrated via PM2 and Cloudflare Argo Tunnels."
+                }
+            },
+            {
+                fr: {
+                    q: "3. Le Support B2B peut-il restaurer une phrase mnémonique BIP39 ou annuler une transaction en ₳ ?",
+                    a: "Non, jamais. En vertu de notre architecture 100 % Non-Custodial et du chiffrement local AES-256-GCM / Argon2id, Atlas & Duc Corporation ne détient aucune copie des clés privées ni des phrases mnémoniques BIP39 des utilisateurs. De même, toute transaction signée en ECDSA secp256k1 et scellée dans un bloc PoA acquiert une finalité irréversible en 2 secondes. Aucun agent du support ne vous demandera jamais votre phrase secrète."
+                },
+                en: {
+                    q: "3. Can B2B Support restore a lost BIP39 mnemonic phrase or reverse an ₳ transaction?",
+                    a: "No, never. Due to our 100% Non-Custodial architecture and local AES-256-GCM / Argon2id encryption, Atlas & Duc Corporation holds zero copies of users' private keys or BIP39 mnemonic phrases. Similarly, any transaction signed via ECDSA secp256k1 and sealed in a PoA block achieves irreversible finality within 2 seconds. No support agent will ever ask for your recovery phrase."
+                }
+            },
+            {
+                fr: {
+                    q: "4. Où consulter les références légales d'Atlas & Duc Corporation et demander une clé API B2B ?",
+                    a: "Atlas & Duc Corporation (anciennement Atlas Groupe International) est officiellement constituée au Burkina Faso sous le récépissé N° PHUE-3539/2025 du 11 juillet 2025, sous la présidence de son Fondateur Yougma Thierry Joël, avec sièges à Koupéla et Bobo-Dioulasso. Pour obtenir une clé API B2B (X-Nexus-API-Key à 1 500 req/s) ou un certificat mTLS, contactez administration@agi-nexus-core.click ou +226 70 87 37 73."
+                },
+                en: {
+                    q: "4. Where can I verify Atlas & Duc Corporation's legal registration and request a B2B API key?",
+                    a: "Atlas & Duc Corporation (formerly Atlas Groupe International) is officially incorporated in Burkina Faso under receipt N° PHUE-3539/2025 dated July 11, 2025, under the presidency of Founder Yougma Thierry Joël, with headquarters in Koupéla and Bobo-Dioulasso. To obtain a B2B API key (X-Nexus-API-Key at 1,500 req/s) or mTLS certificate, contact administration@agi-nexus-core.click or +226 70 87 37 73."
+                }
+            },
+            {
+                fr: {
+                    q: "5. Comment déployer le logiciel de caisse Roger Service Pro (POS) dans un commerce ou supermarché ?",
+                    a: "Le progiciel Roger Service Pro (construit sous Electron, HTML, CSS et JavaScript) s'installe localement sur vos postes de caisse sans dépendance cloud obligatoire. Il génère des factures par QR Code Base58 en ₳ (1 ₳ = 1 FCFA), gère vos stocks en temps réel et valide chaque paiement client en moins de 2 secondes via le port WebSocket 6001. Contactez le Support au +226 78 37 08 03 pour le déploiement."
+                },
+                en: {
+                    q: "5. How do we deploy the Roger Service Pro (POS) software in a retail store or supermarket?",
+                    a: "The Roger Service Pro software (built on Electron, HTML, CSS, and JavaScript) installs locally on your checkout terminals with zero mandatory cloud dependency. It generates Base58 QR Code invoices in ₳ (1 ₳ = 1 FCFA), manages inventory in real time, and validates every customer payment in under 2 seconds via WebSocket port 6001. Contact Support at +226 78 37 08 03 for deployment."
+                }
+            },
+            {
+                fr: {
+                    q: "6. Comment résoudre immédiatement une erreur RPC -32001 (ERR_NONCE_OUT_OF_SYNC) ?",
+                    a: "L'erreur -32001 signifie que le compteur séquentiel anti-rejeu (nonce) envoyé par votre client ne correspond pas à l'état actuel en mémoire RAM V8. Pour resynchroniser votre application instantanément, appelez la méthode POST nexus_getTransactionCount avec les paramètres [\"votreAdresseBase58\", \"pending\"] et utilisez l'entier retourné pour signer votre nouvelle transaction."
+                },
+                en: {
+                    q: "6. How do we immediately resolve a -32001 (ERR_NONCE_OUT_OF_SYNC) RPC error?",
+                    a: "Error -32001 indicates that the sequential anti-replay counter (nonce) sent by your client does not match the current state in V8 RAM. To resynchronize your application instantaneously, invoke the POST nexus_getTransactionCount method with parameters [\"yourBase58Address\", \"pending\"] and use the returned integer to sign your next transaction."
+                }
+            },
+            {
+                fr: {
+                    q: "7. Quels sont les frais exacts appliqués aux transactions B2B (Modèle Zero-Deviation Gas) ?",
+                    a: "Contrairement aux réseaux EVM où les frais fluctuent de manière imprévisible, Nexus Core L1 applique un barème fixe et constant (Zero-Deviation Gas) : 1 000 microA (0,001 ₳ soit 0,001 FCFA) pour un transfert monétaire standard, 5 000 microA (0,005 ₳) pour l'appel d'un contrat intelligent NVM (call_contract) et 50 000 microA (0,05 ₳) pour le déploiement d'un nouveau contrat (deploy_contract)."
+                },
+                en: {
+                    q: "7. What are the exact fees applied to B2B transactions (Zero-Deviation Gas Model)?",
+                    a: "Unlike EVM networks where fees fluctuate unpredictably, Nexus Core L1 enforces a fixed, constant schedule (Zero-Deviation Gas): 1,000 microA (0.001 ₳ or 0.001 FCFA) for a standard monetary transfer, 5,000 microA (0.005 ₳) for an NVM smart contract call (call_contract), and 50,000 microA (0.05 ₳) for deploying a new contract (deploy_contract)."
+                }
+            },
+            {
+                fr: {
+                    q: "8. Que se passe-t-il si un opérateur externe (SONABEL, ONEA ou Mobile Money) met du temps à répondre ?",
+                    a: "Lorsque vous réglez une facture SONABEL (CashPower) ou ONEA en ₳, notre automate de compensation vérifie le reçu L1 (nexus_getTransactionReceipt). Si le serveur de l'opérateur tiers subit une panne momentanée et ne délivre pas le jeton dans le délai imparti, le protocole déclenche une relance prioritaire ou restitue automatiquement l'intégralité des ₳ sur votre adresse Base58."
+                },
+                en: {
+                    q: "8. What happens if an external utility provider (SONABEL, ONEA, or Mobile Money) experiences latency?",
+                    a: "When you settle a SONABEL (CashPower) or ONEA bill in ₳, our clearing automaton verifies the L1 receipt (nexus_getTransactionReceipt). If the third-party provider's server experiences a momentary outage and fails to deliver the voucher within the allotted window, the protocol triggers a priority retry or automatically refunds the full ₳ amount back to your Base58 address."
+                }
+            },
+            {
+                fr: {
+                    q: "9. Comment fonctionne le séquestre commercial (Escrow NVM) sur Adama Digital et A&D Business Pro ?",
+                    a: "Lors d'une commande B2B ou e-commerce sur Adama Digital, le paiement en ₳ de l'acheteur est verrouillé dans le contrat intelligent ADCC_MarketplaceEscrowCore99XyZ. Le vendeur a la certitude mathématique que les fonds sont disponibles sur le registre L1, et le contrat ne libère les ₳ vers le portefeuille du vendeur qu'à la validation de la livraison."
+                },
+                en: {
+                    q: "9. How does commercial escrow (NVM Escrow) work on Adama Digital and A&D Business Pro?",
+                    a: "During a B2B or e-commerce order on Adama Digital, the buyer's ₳ payment is locked inside the ADCC_MarketplaceEscrowCore99XyZ smart contract. The seller has mathematical certainty that funds are secured on the L1 ledger, and the contract releases the ₳ to the seller's wallet only upon delivery confirmation."
+                }
+            },
+            {
+                fr: {
+                    q: "10. Une banque ou institution peut-elle héberger son propre nœud miroir de lecture Nexus Core ?",
+                    a: "Oui. Sur simple demande auprès de notre CTO (+226 70 87 37 73), les banques, SFD et grandes entreprises peuvent déployer un Nœud Miroir de Lecture (Read-Only Follower Node) dans leur propre centre de données. Ce nœud se synchronise en temps réel via le port WebSocket 6001 et permet des lectures locales du registre en moins de 0,1 milliseconde."
+                },
+                en: {
+                    q: "10. Can a bank or institution host its own Nexus Core read-only mirror node?",
+                    a: "Yes. Upon request to our CTO (+226 70 87 37 73), banks, microfinance institutions, and large corporations can deploy a Read-Only Follower Node inside their own data centers. This node synchronizes in real time over WebSocket port 6001 and enables local ledger reads in under 0.1 milliseconds."
+                }
+            },
+            {
+                fr: {
+                    q: "11. Comment vérifier publiquement la Preuve de Réserve (PoR) des 100 000 000 000 ₳ ?",
+                    a: "Toute institution ou citoyen peut interroger librement et sans clé d'authentification la route REST GET https://rpc.agi-nexus-core.click/api/supply ou consulter l'explorateur officiel NexusScan. Le registre expose en temps réel la répartition exacte entre la réserve souveraine (ADC6MH4qsxED6cLtH3NLng5QL6Kvb9HRa8ui), les contrats de staking et l'offre circulante."
+                },
+                en: {
+                    q: "11. How can anyone publicly verify the Proof of Reserve (PoR) for the 100,000,000,000 ₳ supply?",
+                    a: "Any institution or citizen can freely query without an API key the REST route GET https://rpc.agi-nexus-core.click/api/supply or inspect the official NexusScan explorer. The ledger exposes in real time the exact breakdown between the sovereign reserve (ADC6MH4qsxED6cLtH3NLng5QL6Kvb9HRa8ui), staking contracts, and circulating supply."
+                }
+            },
+            {
+                fr: {
+                    q: "12. Quelle est la procédure d'escalade directe vers la Présidence d'Atlas & Duc Corporation ?",
+                    a: "Si un ticket critique B2B (préfixé ADCT_) nécessite un arbitrage exécutif immédiat ou une décision stratégique, le partenaire peut contacter directement la Présidence au +226 76 20 38 48 ou par courriel à mr.yougma@agi-nexus-core.click en mentionnant l'identifiant Base58 de son ticket."
+                },
+                en: {
+                    q: "12. What is the direct escalation procedure to the Presidency of Atlas & Duc Corporation?",
+                    a: "If a critical B2B ticket (prefixed ADCT_) requires immediate executive arbitration or strategic decision-making, the partner may directly contact the Presidency at +226 76 20 38 48 or via email at mr.yougma@agi-nexus-core.click by referencing their Base58 ticket identifier."
+                }
             }
-        };
+        ];
 
         const articlesData = [
             {
@@ -773,21 +809,23 @@
                     short: "1. Gouvernance NOC L1 & Annuaire Direct",
                     title: "Protocole 1 — Architecture du Centre d'Opérations Réseau (NOC L1) et Annuaire Exécutif d'Atlas & Duc Corporation",
                     badge: "Gouvernance Directe 24/7",
-                    core: "Le Portail Institutionnel de Support B2B d'Atlas & Duc Corporation (anciennement constituée sous la dénomination Atlas Groupe International suivant récépissé officiel N° PHUE-3539/2025 du 11 juillet 2025, ayant ses sièges à Koupéla et Bobo-Dioulasso, Burkina Faso) est placé sous la supervision directe de son Fondateur, Président et Architecte Logiciel Principal, Yougma Thierry Joël. Contrairement aux infrastructures Web3 anonymes dépourvues d'interlocuteurs responsables, Atlas & Duc Corporation met à la disposition des banques, des entreprises B2B, des commerçants et des institutions publiques trois pôles de commandement joignables 24h/24 et 7j/7 : (1) la Présidence et Direction Générale (`+226 76 20 38 48` / `mr.yougma@agi-nexus-core.click`) pour les partenariats stratégiques et accords souverains ; (2) la Direction Technique CTO et Administration (`+226 70 87 37 73` / `administration@agi-nexus-core.click`) pour la gouvernance des nœuds PoA, la conformité légale et les clés API B2B ; et (3) le Support Technique Opérationnel (`+226 78 37 08 03` / `support@agi-nexus-core.click` / WhatsApp d'urgence `+226 76 16 73 64`).",
-                    cryptoFocus: "Chaque ticket d'assistance B2B ouvert auprès du NOC L1 reçoit un identifiant unique encodé en Base58 préfixé par `ADCT_`, permettant un suivi cryptographique infalsifiable de bout en bout.",
+                    core: "Le Portail Institutionnel de Support B2B d'Atlas & Duc Corporation (anciennement constituée sous la dénomination Atlas Groupe International suivant récépissé officiel N° PHUE-3539/2025 du 11 juillet 2025, ayant ses sièges à Koupéla et Bobo-Dioulasso, Burkina Faso) est placé sous la supervision directe de son Fondateur, Président et Architecte Logiciel Principal, Yougma Thierry Joël. Contrairement aux infrastructures Web3 anonymes dépourvues d'interlocuteurs responsables, Atlas & Duc Corporation met à la disposition des banques, des entreprises B2B, des commerçants et des institutions publiques trois pôles de commandement joignables 24h/24 et 7j/7 : (1) la Présidence et Direction Générale (+226 76 20 38 48 / mr.yougma@agi-nexus-core.click) pour les partenariats stratégiques et accords souverains ; (2) la Direction Technique CTO et Administration (+226 70 87 37 73 / administration@agi-nexus-core.click) pour la gouvernance des nœuds PoA, la conformité légale et les clés API B2B ; et (3) le Support Technique Opérationnel (+226 78 37 08 03 / support@agi-nexus-core.click / WhatsApp d'urgence +226 76 16 73 64).",
+                    cryptoFocus: "Chaque ticket d'assistance B2B ouvert auprès du NOC L1 reçoit un identifiant unique encodé en Base58 préfixé par ADCT_, permettant un suivi cryptographique infalsifiable de bout en bout.",
                     operationalFocus: "Coordination permanente entre les équipes d'ingénierie basées à Koupéla, Houndé, Kari, Pâ et Bobo-Dioulasso pour assurer une intervention immédiate à distance ou sur site.",
                     legalFocus: "Responsabilité institutionnelle clairement établie sous le droit burkinabè et le récépissé officiel N° PHUE-3539/2025.",
-                    tech: "Présidence : +226 76 20 38 48 | CTO : +226 70 87 37 73 | Support : +226 78 37 08 03 | WhatsApp Urgence : +226 76 16 73 64."
+                    tech: "Présidence : +226 76 20 38 48 | CTO : +226 70 87 37 73 | Support : +226 78 37 08 03 | WhatsApp Urgence : +226 76 16 73 64.",
+                    cmdSnippet: "curl -s https://rpc.agi-nexus-core.click/api/status"
                 },
                 en: {
                     short: "1. L1 NOC Governance & Direct Directory",
                     title: "Protocol 1 — Network Operations Center (L1 NOC) Architecture and Executive Directory of Atlas & Duc Corporation",
                     badge: "24/7 Direct Governance",
-                    core: "The Institutional B2B Support Portal of Atlas & Duc Corporation (formerly established under the corporate name Atlas Groupe International pursuant to official receipt N° PHUE-3539/2025 dated July 11, 2025, with headquarters in Koupéla and Bobo-Dioulasso, Burkina Faso) operates under the direct supervision of its Founder, President, and Lead Software Architect, Yougma Thierry Joël. Unlike anonymous Web3 infrastructures lacking accountable leadership, Atlas & Duc Corporation provides banks, B2B enterprises, merchants, and public institutions with three command divisions reachable 24/7: (1) Presidency and Executive Management (`+226 76 20 38 48` / `mr.yougma@agi-nexus-core.click`) for strategic partnerships and sovereign agreements; (2) CTO Technical Directorate and Administration (`+226 70 87 37 73` / `administration@agi-nexus-core.click`) for PoA node governance, legal compliance, and B2B API keys; and (3) Operational Technical Support (`+226 78 37 08 03` / `support@agi-nexus-core.click` / Emergency WhatsApp `+226 76 16 73 64`).",
-                    cryptoFocus: "Every B2B support ticket opened with the L1 NOC is assigned a unique Base58-encoded identifier prefixed with `ADCT_`, enabling tamper-proof end-to-end cryptographic tracking.",
+                    core: "The Institutional B2B Support Portal of Atlas & Duc Corporation (formerly established under the corporate name Atlas Groupe International pursuant to official receipt N° PHUE-3539/2025 dated July 11, 2025, with headquarters in Koupéla and Bobo-Dioulasso, Burkina Faso) operates under the direct supervision of its Founder, President, and Lead Software Architect, Yougma Thierry Joël. Unlike anonymous Web3 infrastructures lacking accountable leadership, Atlas & Duc Corporation provides banks, B2B enterprises, merchants, and public institutions with three command divisions reachable 24/7: (1) Presidency and Executive Management (+226 76 20 38 48 / mr.yougma@agi-nexus-core.click) for strategic partnerships and sovereign agreements; (2) CTO Technical Directorate and Administration (+226 70 87 37 73 / administration@agi-nexus-core.click) for PoA node governance, legal compliance, and B2B API keys; and (3) Operational Technical Support (+226 78 37 08 03 / support@agi-nexus-core.click / Emergency WhatsApp +226 76 16 73 64).",
+                    cryptoFocus: "Every B2B support ticket opened with the L1 NOC is assigned a unique Base58-encoded identifier prefixed with ADCT_, enabling tamper-proof end-to-end cryptographic tracking.",
                     operationalFocus: "Continuous coordination across engineering teams stationed in Koupéla, Houndé, Kari, Pâ, and Bobo-Dioulasso to guarantee immediate remote or on-site intervention.",
                     legalFocus: "Clearly established institutional accountability under the laws of Burkina Faso and official receipt N° PHUE-3539/2025.",
-                    tech: "Presidency: +226 76 20 38 48 | CTO: +226 70 87 37 73 | Support: +226 78 37 08 03 | Emergency WhatsApp: +226 76 16 73 64."
+                    tech: "Presidency: +226 76 20 38 48 | CTO: +226 70 87 37 73 | Support: +226 78 37 08 03 | Emergency WhatsApp: +226 76 16 73 64.",
+                    cmdSnippet: "curl -s https://rpc.agi-nexus-core.click/api/status"
                 }
             },
             {
@@ -800,21 +838,23 @@
                     short: "2. Matrice SLA (99,999 %) & Priorités P1-P4",
                     title: "Protocole 2 — Engagements de Niveau de Service (SLA 99,999 %) et Matrice de Priorité des Incidents (P1 à P4)",
                     badge: "SLA 99.999% Garanti",
-                    core: "Pour garantir la continuité absolue des règlements financiers en monnaie native ₳ sur le Mainnet #9012, Atlas & Duc Corporation applique une classification stricte des incidents B2B en quatre niveaux de criticité assortis de délais contractuels fermes de prise en charge (MTTA — Mean Time To Acknowledge) et de résolution (MTTR — Mean Time To Resolve) : (1) Priorité P1 Critique (indisponibilité d'un nœud RPC dédié, blocage de passerelle SONABEL/ONEA/Mobile Money ou alerte de sécurité) : prise en charge en moins de 15 minutes et résolution en moins de 60 minutes 24h/7j ; (2) Priorité P2 Majeure (augmentation urgente de quota `X-Nexus-API-Key` ou synchronisation POS Roger Service Pro) : prise en charge en 30 minutes et résolution sous 4 heures ; (3) Priorité P3 Standard (assistance SDK Android Kotlin / Node.js) : réponse sous 2 heures ; et (4) Priorité P4 Informationnelle (demande documentaire ou audit) : réponse sous 12 heures.",
+                    core: "Pour garantir la continuité absolue des règlements financiers en monnaie native ₳ sur le Mainnet #9012, Atlas & Duc Corporation applique une classification stricte des incidents B2B en quatre niveaux de criticité assortis de délais contractuels fermes de prise en charge (MTTA — Mean Time To Acknowledge) et de résolution (MTTR — Mean Time To Resolve) : (1) Priorité P1 Critique (indisponibilité d'un nœud RPC dédié, blocage de passerelle SONABEL/ONEA/Mobile Money ou alerte de sécurité) : prise en charge en moins de 15 minutes et résolution en moins de 60 minutes 24h/7j ; (2) Priorité P2 Majeure (augmentation urgente de quota X-Nexus-API-Key ou synchronisation POS Roger Service Pro) : prise en charge en 30 minutes et résolution sous 4 heures ; (3) Priorité P3 Standard (assistance SDK Android Kotlin / Node.js) : réponse sous 2 heures ; et (4) Priorité P4 Informationnelle (demande documentaire ou audit) : réponse sous 12 heures.",
                     cryptoFocus: "Surveillance automatisée toutes les 2000 ms de la production des blocs PoA (y compris les Heartbeat Blocks) déclenchant une alerte instantanée au CTO en cas de dérive supérieure à 500 ms.",
                     operationalFocus: "Redondance multi-nœuds sous gestionnaire de processus PM2 et tunnels Cloudflare Argo garantissant une disponibilité annuelle effective de 99,999 %.",
                     legalFocus: "Engagements SLA opposables intégrés aux contrats partenaires B2B et institutionnels d'Atlas & Duc Corporation.",
-                    tech: "SLA Réseau : 99,999% | P1 Critique : MTTA < 15 min / MTTR < 60 min | P2 Majeure : MTTA < 30 min / MTTR < 4h."
+                    tech: "SLA Réseau : 99,999% | P1 Critique : MTTA < 15 min / MTTR < 60 min | P2 Majeure : MTTA < 30 min / MTTR < 4h.",
+                    cmdSnippet: "curl -X POST https://rpc.agi-nexus-core.click -H 'Content-Type: application/json' -d '{\"jsonrpc\":\"2.0\",\"method\":\"nexus_blockNumber\",\"params\":[],\"id\":1}'"
                 },
                 en: {
                     short: "2. SLA Matrix (99.999%) & P1-P4 Priorities",
                     title: "Protocol 2 — Service Level Agreements (99.999% SLA) and Incident Priority Matrix (P1 through P4)",
                     badge: "99.999% Guaranteed SLA",
-                    core: "To guarantee uninterrupted financial settlements in the native currency ₳ on Mainnet #9012, Atlas & Duc Corporation enforces a strict four-tier B2B incident classification backed by binding Mean Time To Acknowledge (MTTA) and Mean Time To Resolve (MTTR) commitments: (1) Priority P1 Critical (dedicated RPC node outage, SONABEL/ONEA/Mobile Money gateway halt, or security alert): acknowledgment within 15 minutes and resolution under 60 minutes 24/7; (2) Priority P2 Major (urgent `X-Nexus-API-Key` quota upgrade or Roger Service Pro POS synchronization): acknowledgment within 30 minutes and resolution under 4 hours; (3) Priority P3 Standard (Android Kotlin / Node.js SDK assistance): response within 2 hours; and (4) Priority P4 Informational (documentary or audit inquiry): response within 12 hours.",
+                    core: "To guarantee uninterrupted financial settlements in the native currency ₳ on Mainnet #9012, Atlas & Duc Corporation enforces a strict four-tier B2B incident classification backed by binding Mean Time To Acknowledge (MTTA) and Mean Time To Resolve (MTTR) commitments: (1) Priority P1 Critical (dedicated RPC node outage, SONABEL/ONEA/Mobile Money gateway halt, or security alert): acknowledgment within 15 minutes and resolution under 60 minutes 24/7; (2) Priority P2 Major (urgent X-Nexus-API-Key quota upgrade or Roger Service Pro POS synchronization): acknowledgment within 30 minutes and resolution under 4 hours; (3) Priority P3 Standard (Android Kotlin / Node.js SDK assistance): response within 2 hours; and (4) Priority P4 Informational (documentary or audit inquiry): response within 12 hours.",
                     cryptoFocus: "Automated 2000 ms monitoring of PoA block sealing (including Heartbeat Blocks) triggering an instantaneous alert to the CTO if drift exceeds 500 ms.",
                     operationalFocus: "Multi-node redundancy under PM2 process managers and Cloudflare Argo Tunnels delivering 99.999% effective annual availability.",
                     legalFocus: "Binding SLA commitments embedded within Atlas & Duc Corporation's B2B and institutional partner agreements.",
-                    tech: "Network SLA: 99.999% | P1 Critical: MTTA < 15 min / MTTR < 60 min | P2 Major: MTTA < 30 min / MTTR < 4h."
+                    tech: "Network SLA: 99.999% | P1 Critical: MTTA < 15 min / MTTR < 60 min | P2 Major: MTTA < 30 min / MTTR < 4h.",
+                    cmdSnippet: "curl -X POST https://rpc.agi-nexus-core.click -H 'Content-Type: application/json' -d '{\"jsonrpc\":\"2.0\",\"method\":\"nexus_blockNumber\",\"params\":[],\"id\":1}'"
                 }
             },
             {
@@ -827,21 +867,23 @@
                     short: "3. Octroi de Clés API B2B & Certificats mTLS",
                     title: "Protocole 3 — Procédure d'Homologation et de Délivrance des Clés API B2B (X-Nexus-API-Key & mTLS)",
                     badge: "Quotas B2B 1500 req/s",
-                    core: "Tandis que l'accès public au point de terminaison `https://rpc.agi-nexus-core.click` est ouvert sans clé jusqu'à 200 requêtes/seconde par adresse IP pour les portefeuilles individuels Nexus Wallet Pro, les entreprises commerciales, les plateformes e-commerce et les institutions financières nécessitent des capacités de débit supérieures. Le pôle CTO & Administration (`administration@agi-nexus-core.click` / `+226 70 87 37 73`) délivre sous 2 heures les clés d'authentification `X-Nexus-API-Key` élevant le quota à 1 500 requêtes/seconde et 50 connexions WebSockets simultanées sur le port `6001`, ainsi que les certificats mutuels `mTLS` avec liste blanche d'IP (IP Whitelisting) offrant un débit illimité pour les banques et agrégateurs nationaux.",
+                    core: "Tandis que l'accès public au point de terminaison https://rpc.agi-nexus-core.click est ouvert sans clé jusqu'à 200 requêtes/seconde par adresse IP pour les portefeuilles individuels Nexus Wallet Pro, les entreprises commerciales, les plateformes e-commerce et les institutions financières nécessitent des capacités de débit supérieures. Le pôle CTO & Administration (administration@agi-nexus-core.click / +226 70 87 37 73) délivre sous 2 heures les clés d'authentification X-Nexus-API-Key élevant le quota à 1 500 requêtes/seconde et 50 connexions WebSockets simultanées sur le port 6001, ainsi que les certificats mutuels mTLS avec liste blanche d'IP (IP Whitelisting) offrant un débit illimité pour les banques et agrégateurs nationaux.",
                     cryptoFocus: "Génération des clés API B2B par entropie matérielle 256 bits encodée en Base58 et stockée sous forme de condensat SHA-256 dans la mémoire vive des pare-feu L7.",
                     operationalFocus: "Rotation à chaud des clés API (Zero-Downtime Key Rotation) permettant aux entreprises de renouveler périodiquement leurs secrets d'accès sans interrompre leurs caisses POS.",
                     legalFocus: "Vérification KYB (Know Your Business) préalable garantissant que les quotas haute fréquence sont réservés aux acteurs économiques légitimes.",
-                    tech: "Header B2B : X-Nexus-API-Key (1 500 req/s) | Tier Institutionnel : mTLS + IP Whitelist (Illimité) | Délivrance : < 2h."
+                    tech: "Header B2B : X-Nexus-API-Key (1 500 req/s) | Tier Institutionnel : mTLS + IP Whitelist (Illimité) | Délivrance : < 2h.",
+                    cmdSnippet: "curl -X POST https://rpc.agi-nexus-core.click -H 'X-Nexus-API-Key: adc_live_b2b_key' -H 'Content-Type: application/json' -d '{\"jsonrpc\":\"2.0\",\"method\":\"nexus_chainId\",\"params\":[],\"id\":3}'"
                 },
                 en: {
                     short: "3. B2B API Key & mTLS Provisioning",
                     title: "Protocol 3 — Homologation and Provisioning Procedure for B2B API Keys (X-Nexus-API-Key & mTLS)",
                     badge: "1500 req/s B2B Quotas",
-                    core: "While public access to the `https://rpc.agi-nexus-core.click` endpoint is open without a key up to 200 requests/second per IP address for individual Nexus Wallet Pro users, commercial enterprises, e-commerce platforms, and financial institutions require higher throughput capacities. The CTO & Administration division (`administration@agi-nexus-core.click` / `+226 70 87 37 73`) provisions within 2 hours `X-Nexus-API-Key` authentication credentials raising quotas to 1,500 requests/second and 50 concurrent WebSocket connections on port `6001`, as well as mutual TLS (`mTLS`) certificates with IP Whitelisting providing unlimited throughput for banks and national aggregators.",
+                    core: "While public access to the https://rpc.agi-nexus-core.click endpoint is open without a key up to 200 requests/second per IP address for individual Nexus Wallet Pro users, commercial enterprises, e-commerce platforms, and financial institutions require higher throughput capacities. The CTO & Administration division (administration@agi-nexus-core.click / +226 70 87 37 73) provisions within 2 hours X-Nexus-API-Key authentication credentials raising quotas to 1,500 requests/second and 50 concurrent WebSocket connections on port 6001, as well as mutual TLS (mTLS) certificates with IP Whitelisting providing unlimited throughput for banks and national aggregators.",
                     cryptoFocus: "Generation of B2B API keys via 256-bit hardware entropy encoded in Base58 and stored as SHA-256 digests within L7 firewall RAM.",
                     operationalFocus: "Zero-downtime hot key rotation enabling enterprises to periodically renew access secrets without interrupting POS checkouts.",
                     legalFocus: "Prior KYB (Know Your Business) verification ensuring high-frequency quotas are reserved for legitimate economic operators.",
-                    tech: "B2B Header: X-Nexus-API-Key (1,500 req/s) | Institutional Tier: mTLS + IP Whitelist (Unlimited) | Provisioning: < 2h."
+                    tech: "B2B Header: X-Nexus-API-Key (1,500 req/s) | Institutional Tier: mTLS + IP Whitelist (Unlimited) | Provisioning: < 2h.",
+                    cmdSnippet: "curl -X POST https://rpc.agi-nexus-core.click -H 'X-Nexus-API-Key: adc_live_b2b_key' -H 'Content-Type: application/json' -d '{\"jsonrpc\":\"2.0\",\"method\":\"nexus_chainId\",\"params\":[],\"id\":3}'"
                 }
             },
             {
@@ -854,21 +896,23 @@
                     short: "4. Support Roger Service Pro (POS Desktop)",
                     title: "Protocole 4 — Déploiement, Calibration et Support Terrain du Progiciel de Caisse Roger Service Pro (POS)",
                     badge: "Support Point de Vente",
-                    core: "Roger Service Pro est le progiciel officiel de Point de Vente (POS) et de gestion d'inventaire développé par Atlas & Duc Corporation sous architecture Electron, HTML, CSS et JavaScript pour les supermarchés, grossistes, pharmacies et commerces de détail. Le Support B2B accompagne chaque commerçant dans : (1) l'installation locale autonome du logiciel sur ses terminaux Windows ou Linux sans dépendance cloud externe ; (2) la configuration de l'adresse Base58 de réception marchande (`ADC...`) pour l'encaissement instantané en monnaie native ₳ au taux fixe `1 ₳ = 1 FCFA` ; (3) l'appariement des lecteurs optiques de codes-barres et des imprimantes thermiques de tickets ; et (4) la synchronisation temps réel avec le port WebSocket `6001` pour valider automatiquement chaque paiement client en moins de 2 secondes.",
-                    cryptoFocus: "Génération locale de QR Codes de facturation signés intégrant le montant exact en `microA` et le numéro de facture dans le champ `memo`.",
+                    core: "Roger Service Pro est le progiciel officiel de Point de Vente (POS) et de gestion d'inventaire développé par Atlas & Duc Corporation sous architecture Electron, HTML, CSS et JavaScript pour les supermarchés, grossistes, pharmacies et commerces de détail. Le Support B2B accompagne chaque commerçant dans : (1) l'installation locale autonome du logiciel sur ses terminaux Windows ou Linux sans dépendance cloud externe ; (2) la configuration de l'adresse Base58 de réception marchande (ADC...) pour l'encaissement instantané en monnaie native ₳ au taux fixe 1 ₳ = 1 FCFA ; (3) l'appariement des lecteurs optiques de codes-barres et des imprimantes thermiques de tickets ; et (4) la synchronisation temps réel avec le port WebSocket 6001 pour valider automatiquement chaque paiement client en moins de 2 secondes.",
+                    cryptoFocus: "Génération locale de QR Codes de facturation signés intégrant le montant exact en microA et le numéro de facture dans le champ memo.",
                     operationalFocus: "Sauvegarde locale chiffrée AES-256-GCM de la base de données de stocks et du journal des ventes du commerçant avec export comptable instantané.",
                     legalFocus: "Élimination totale des risques de fausse monnaie physique, des erreurs de rendu de caisse et des rétrofacturations frauduleuses.",
-                    tech: "Logiciel : Roger Service Pro (Electron POS) | Encaissement : QR Base58 en ₳ (1:1 XOF) | Confirmation WSS : < 2s."
+                    tech: "Logiciel : Roger Service Pro (Electron POS) | Encaissement : QR Base58 en ₳ (1:1 XOF) | Confirmation WSS : < 2s.",
+                    cmdSnippet: "nexus:ADC9RogerServiceProPOSHounde88Kx2?chainId=9012&amountMicro=15000000000&memo=POS-FACT-2026-0891"
                 },
                 en: {
                     short: "4. Roger Service Pro (Desktop POS) Support",
                     title: "Protocol 4 — Deployment, Calibration, and Field Support for Roger Service Pro Point of Sale (POS)",
                     badge: "Point of Sale Support",
-                    core: "Roger Service Pro is the official Point of Sale (POS) and inventory management software engineered by Atlas & Duc Corporation on Electron, HTML, CSS, and JavaScript architectures for supermarkets, wholesalers, pharmacies, and retail stores. B2B Support assists every merchant with: (1) self-contained local installation on Windows or Linux terminals without external cloud dependencies; (2) configuration of the merchant receiving Base58 address (`ADC...`) for instant checkout in the native currency ₳ at the fixed `1 ₳ = 1 FCFA` rate; (3) pairing of optical barcode scanners and thermal receipt printers; and (4) real-time synchronization with WebSocket port `6001` to automatically validate every customer payment in under 2 seconds.",
-                    cryptoFocus: "Local generation of signed billing QR Codes embedding the exact amount in `microA` and the invoice ID inside the `memo` field.",
+                    core: "Roger Service Pro is the official Point of Sale (POS) and inventory management software engineered by Atlas & Duc Corporation on Electron, HTML, CSS, and JavaScript architectures for supermarkets, wholesalers, pharmacies, and retail stores. B2B Support assists every merchant with: (1) self-contained local installation on Windows or Linux terminals without external cloud dependencies; (2) configuration of the merchant receiving Base58 address (ADC...) for instant checkout in the native currency ₳ at the fixed 1 ₳ = 1 FCFA rate; (3) pairing of optical barcode scanners and thermal receipt printers; and (4) real-time synchronization with WebSocket port 6001 to automatically validate every customer payment in under 2 seconds.",
+                    cryptoFocus: "Local generation of signed billing QR Codes embedding the exact amount in microA and the invoice ID inside the memo field.",
                     operationalFocus: "Local AES-256-GCM encrypted backup of the merchant's inventory database and sales ledger with instant accounting export.",
                     legalFocus: "Complete elimination of physical counterfeit currency risks, cash-handling errors, and fraudulent chargebacks.",
-                    tech: "Software: Roger Service Pro (Electron POS) | Checkout: Base58 QR in ₳ (1:1 XOF) | WSS Confirmation: < 2s."
+                    tech: "Software: Roger Service Pro (Electron POS) | Checkout: Base58 QR in ₳ (1:1 XOF) | WSS Confirmation: < 2s.",
+                    cmdSnippet: "nexus:ADC9RogerServiceProPOSHounde88Kx2?chainId=9012&amountMicro=15000000000&memo=POS-FACT-2026-0891"
                 }
             },
             {
@@ -881,21 +925,23 @@
                     short: "5. Support A&D Business Pro & Adama Digital",
                     title: "Protocole 5 — Assistance Entreprise pour la Suite A&D Business Pro et la Plateforme E-Commerce Adama Digital",
                     badge: "Suite Entreprise & E-Commerce",
-                    core: "Le département Support B2B assure l'accompagnement technique dédié des entreprises utilisant la suite mobile et web A&D Business Pro (anciennement AGI Business Pro) ainsi que des marchands opérant sur la plateforme de commerce électronique Adama Digital. Nos ingénieurs assistent les directions financières dans la gestion des portefeuilles multi-comptes en ₳, le paramétrage des coffres de staking d'entreprise (Staking Vaults), l'utilisation des terminaux de trading L1 et la sécurisation des transactions sur la place de marché P2P via les contrats intelligents de séquestre (`ADCC_MarketplaceEscrowCore99XyZ`). Sur Adama Digital, le support supervise l'intégration des webhooks de paiement L1 et la libération automatisée des fonds en ₳ dès confirmation de livraison.",
-                    cryptoFocus: "Protection des fonds commerciaux par contrats de séquestre NVM (`ADCC_...`) : les unités `microA` de l'acheteur restent verrouillées en RAM V8 jusqu'à validation cryptographique de la réception de la commande.",
+                    core: "Le département Support B2B assure l'accompagnement technique dédié des entreprises utilisant la suite mobile et web A&D Business Pro (anciennement AGI Business Pro) ainsi que des marchands opérant sur la plateforme de commerce électronique Adama Digital. Nos ingénieurs assistent les directions financières dans la gestion des portefeuilles multi-comptes en ₳, le paramétrage des coffres de staking d'entreprise (Staking Vaults), l'utilisation des terminaux de trading L1 et la sécurisation des transactions sur la place de marché P2P via les contrats intelligents de séquestre (ADCC_MarketplaceEscrowCore99XyZ). Sur Adama Digital, le support supervise l'intégration des webhooks de paiement L1 et la libération automatisée des fonds en ₳ dès confirmation de livraison.",
+                    cryptoFocus: "Protection des fonds commerciaux par contrats de séquestre NVM (ADCC_...) : les unités microA de l'acheteur restent verrouillées en RAM V8 jusqu'à validation cryptographique de la réception de la commande.",
                     operationalFocus: "Assistance directe au paramétrage des catalogues marchands, des grilles de livraison et des tableaux de bord de trésorerie en temps réel.",
                     legalFocus: "Sécurisation contractuelle des ventes à distance et arbitrage technique impartial sur la base des preuves inscrites sur NexusScan.",
-                    tech: "Plateformes : A&D Business Pro & Adama Digital | Sécurité Marchande : Escrow NVM (ADCC_) & Webhooks Temps Réel."
+                    tech: "Plateformes : A&D Business Pro & Adama Digital | Sécurité Marchande : Escrow NVM (ADCC_) & Webhooks Temps Réel.",
+                    cmdSnippet: "curl -X POST https://rpc.agi-nexus-core.click -H 'Content-Type: application/json' -d '{\"jsonrpc\":\"2.0\",\"method\":\"nexus_getContractState\",\"params\":[\"ADCC_MarketplaceEscrowCore99XyZ\"],\"id\":5}'"
                 },
                 en: {
                     short: "5. A&D Business Pro & Adama Digital Support",
                     title: "Protocol 5 — Enterprise Assistance for the A&D Business Pro Suite and Adama Digital E-Commerce Platform",
                     badge: "Enterprise Suite & E-Commerce",
-                    core: "The B2B Support department provides dedicated technical assistance to corporations operating the A&D Business Pro mobile and web suite (formerly AGI Business Pro) as well as merchants selling on the Adama Digital e-commerce platform. Our engineers assist financial officers with multi-account ₳ treasury management, corporate Staking Vault configuration, L1 trading terminal operation, and P2P marketplace settlement protection via smart contract escrows (`ADCC_MarketplaceEscrowCore99XyZ`). On Adama Digital, support oversees L1 payment webhook integration and automated release of ₳ funds upon delivery confirmation.",
-                    cryptoFocus: "Protection of commercial funds via NVM escrow contracts (`ADCC_...`): the buyer's `microA` units remain locked in V8 RAM until cryptographic confirmation of order delivery.",
+                    core: "The B2B Support department provides dedicated technical assistance to corporations operating the A&D Business Pro mobile and web suite (formerly AGI Business Pro) as well as merchants selling on the Adama Digital e-commerce platform. Our engineers assist financial officers with multi-account ₳ treasury management, corporate Staking Vault configuration, L1 trading terminal operation, and P2P marketplace settlement protection via smart contract escrows (ADCC_MarketplaceEscrowCore99XyZ). On Adama Digital, support oversees L1 payment webhook integration and automated release of ₳ funds upon delivery confirmation.",
+                    cryptoFocus: "Protection of commercial funds via NVM escrow contracts (ADCC_...): the buyer's microA units remain locked in V8 RAM until cryptographic confirmation of order delivery.",
                     operationalFocus: "Direct assistance with merchant catalog onboarding, shipping matrices, and real-time treasury dashboards.",
                     legalFocus: "Contractual protection of remote sales and impartial technical arbitration based on immutable NexusScan records.",
-                    tech: "Platforms: A&D Business Pro & Adama Digital | Merchant Security: NVM Escrow (ADCC_) & Real-Time Webhooks."
+                    tech: "Platforms: A&D Business Pro & Adama Digital | Merchant Security: NVM Escrow (ADCC_) & Real-Time Webhooks.",
+                    cmdSnippet: "curl -X POST https://rpc.agi-nexus-core.click -H 'Content-Type: application/json' -d '{\"jsonrpc\":\"2.0\",\"method\":\"nexus_getContractState\",\"params\":[\"ADCC_MarketplaceEscrowCore99XyZ\"],\"id\":5}'"
                 }
             },
             {
@@ -908,21 +954,23 @@
                     short: "6. Passerelles SONABEL, ONEA & Mobile Money",
                     title: "Protocole 6 — Supervision et Support des Passerelles de Facturation (SONABEL, ONEA) et Ponts Mobile Money",
                     badge: "Utilité Publique & Liquidité",
-                    core: "Les passerelles reliant la monnaie native ₳ aux services publics essentiels du Burkina Faso (électricité SONABEL avec émission de jetons prépayés CashPower, eau potable ONEA, bouquets numériques) et aux réseaux Mobile Money de l'espace UEMOA font l'objet d'une supervision prioritaire (Niveau P1) par le NOC L1. En cas de latence du réseau d'un opérateur externe lors d'un paiement de facture ou d'une conversion Cash-in / Cash-out, notre système de réconciliation automatique vérifie le reçu transactionnel L1 (`nexus_getTransactionReceipt`) : si l'automate partenaire n'a pas délivré le code CashPower ou crédité le compte Mobile Money dans le délai imparti, le contrat intelligent de passerelle déclenche soit une réémission prioritaire, soit la restitution intégrale et automatique des ₳ sur l'adresse Base58 de l'utilisateur.",
+                    core: "Les passerelles reliant la monnaie native ₳ aux services publics essentiels du Burkina Faso (électricité SONABEL avec émission de jetons prépayés CashPower, eau potable ONEA, bouquets numériques) et aux réseaux Mobile Money de l'espace UEMOA font l'objet d'une supervision prioritaire (Niveau P1) par le NOC L1. En cas de latence du réseau d'un opérateur externe lors d'un paiement de facture ou d'une conversion Cash-in / Cash-out, notre système de réconciliation automatique vérifie le reçu transactionnel L1 (nexus_getTransactionReceipt) : si l'automate partenaire n'a pas délivré le code CashPower ou crédité le compte Mobile Money dans le délai imparti, le contrat intelligent de passerelle déclenche soit une réémission prioritaire, soit la restitution intégrale et automatique des ₳ sur l'adresse Base58 de l'utilisateur.",
                     cryptoFocus: "Vérification croisée instantanée entre le hash Base58 de la transaction sur NexusScan et le journal chiffré AES-256-GCM du relais passerelle.",
-                    operationalFocus: "Assistance téléphonique et WhatsApp immédiate (`+226 78 37 08 03` / `+226 76 16 73 64`) sur simple présentation du hash Base58 de la transaction.",
+                    operationalFocus: "Assistance téléphonique et WhatsApp immédiate (+226 78 37 08 03 / +226 76 16 73 64) sur simple présentation du hash Base58 de la transaction.",
                     legalFocus: "Garantie de zéro perte de fonds lors des opérations inter-réseaux entre la blockchain Nexus Core L1 et les opérateurs facturiers.",
-                    tech: "Passerelles : SONABEL (CashPower), ONEA & Mobile Money | Sécurité : Réconciliation Automatique & Auto-Refund L1."
+                    tech: "Passerelles : SONABEL (CashPower), ONEA & Mobile Money | Sécurité : Réconciliation Automatique & Auto-Refund L1.",
+                    cmdSnippet: "curl -X POST https://rpc.agi-nexus-core.click -H 'Content-Type: application/json' -d '{\"jsonrpc\":\"2.0\",\"method\":\"nexus_getTransactionReceipt\",\"params\":[\"5K8mN9pQrStUvWxYz23456789ABCDEFGHJ\"],\"id\":6}'"
                 },
                 en: {
                     short: "6. SONABEL, ONEA & Mobile Money Gateways",
                     title: "Protocol 6 — Supervision and Support for Utility Billing Gateways (SONABEL, ONEA) and Mobile Money Bridges",
                     badge: "Public Utilities & Liquidity",
-                    core: "The gateways connecting the native currency ₳ to essential public utilities in Burkina Faso (SONABEL electricity including prepaid CashPower reload tokens, ONEA water utilities, digital TV packages) and WAEMU Mobile Money networks are monitored under Priority P1 by the L1 NOC. Should an external carrier experience latency during a bill payment or Cash-in / Cash-out conversion, our automated reconciliation engine inspects the L1 transaction receipt (`nexus_getTransactionReceipt`): if the partner automaton has not delivered the CashPower token or credited the Mobile Money account within the allotted window, the gateway smart contract triggers either priority re-issuance or an automatic, full refund of the ₳ back to the user's Base58 address.",
+                    core: "The gateways connecting the native currency ₳ to essential public utilities in Burkina Faso (SONABEL electricity including prepaid CashPower reload tokens, ONEA water utilities, digital TV packages) and WAEMU Mobile Money networks are monitored under Priority P1 by the L1 NOC. Should an external carrier experience latency during a bill payment or Cash-in / Cash-out conversion, our automated reconciliation engine inspects the L1 transaction receipt (nexus_getTransactionReceipt): if the partner automaton has not delivered the CashPower token or credited the Mobile Money account within the allotted window, the gateway smart contract triggers either priority re-issuance or an automatic, full refund of the ₳ back to the user's Base58 address.",
                     cryptoFocus: "Instantaneous cross-verification between the Base58 transaction hash on NexusScan and the AES-256-GCM encrypted gateway relay log.",
-                    operationalFocus: "Immediate phone and WhatsApp assistance (`+226 78 37 08 03` / `+226 76 16 73 64`) upon providing the Base58 transaction hash.",
+                    operationalFocus: "Immediate phone and WhatsApp assistance (+226 78 37 08 03 / +226 76 16 73 64) upon providing the Base58 transaction hash.",
                     legalFocus: "Zero-fund-loss guarantee across all cross-network operations between the Nexus Core L1 blockchain and utility billing providers.",
-                    tech: "Gateways: SONABEL (CashPower), ONEA & Mobile Money | Safety: Automated Reconciliation & L1 Auto-Refund."
+                    tech: "Gateways: SONABEL (CashPower), ONEA & Mobile Money | Safety: Automated Reconciliation & L1 Auto-Refund.",
+                    cmdSnippet: "curl -X POST https://rpc.agi-nexus-core.click -H 'Content-Type: application/json' -d '{\"jsonrpc\":\"2.0\",\"method\":\"nexus_getTransactionReceipt\",\"params\":[\"5K8mN9pQrStUvWxYz23456789ABCDEFGHJ\"],\"id\":6}'"
                 }
             },
             {
@@ -935,21 +983,23 @@
                     short: "7. Audit & Support Smart Contracts NVM (NCRC-20)",
                     title: "Protocole 7 — Homologation, Audit de Code et Débogage des Contrats Intelligents NVM (Standard NCRC-20)",
                     badge: "Audit NVM & NCRC-20",
-                    core: "Les institutions et développeurs d'entreprise souhaitant déployer des contrats intelligents sur la Machine Virtuelle Nexus (NVM V8) ou émettre des actifs tokenisés conformes au standard souverain NCRC-20 bénéficient d'un service d'ingénierie et d'audit dédié auprès de la Direction Technique (`+226 70 87 37 73`). Nos architectes vérifient avant déploiement sur le Mainnet #9012 : (1) le strict déterminisme du code JavaScript de la fonction `execute(state, action, caller)` ; (2) le respect du budget d'exécution CPU inférieur au coupe-circuit de 50 millisecondes ; (3) l'absence de vulnérabilités logiques dans les contrôles d'accès (`caller === state.owner`) ; et (4) la conformité des opérations arithmétiques en entiers `microA`.",
-                    cryptoFocus: "Attribution d'un certificat d'homologation on-chain aux contrats `ADCC_...` ayant passé avec succès l'audit formel de la Direction Technique d'Atlas & Duc Corporation.",
-                    operationalFocus: "Mise à disposition du réseau bac à sable Testnet (`https://testnet-rpc.agi-nexus-core.click`, Chain ID `9013`) et d'allocations de test `t₳` pour valider les contrats avant mise en production.",
+                    core: "Les institutions et développeurs d'entreprise souhaitant déployer des contrats intelligents sur la Machine Virtuelle Nexus (NVM V8) ou émettre des actifs tokenisés conformes au standard souverain NCRC-20 bénéficient d'un service d'ingénierie et d'audit dédié auprès de la Direction Technique (+226 70 87 37 73). Nos architectes vérifient avant déploiement sur le Mainnet #9012 : (1) le strict déterminisme du code JavaScript de la fonction execute(state, action, caller) ; (2) le respect du budget d'exécution CPU inférieur au coupe-circuit de 50 millisecondes ; (3) l'absence de vulnérabilités logiques dans les contrôles d'accès (caller === state.owner) ; et (4) la conformité des opérations arithmétiques en entiers microA.",
+                    cryptoFocus: "Attribution d'un certificat d'homologation on-chain aux contrats ADCC_... ayant passé avec succès l'audit formel de la Direction Technique d'Atlas & Duc Corporation.",
+                    operationalFocus: "Mise à disposition du réseau bac à sable Testnet (https://testnet-rpc.agi-nexus-core.click, Chain ID 9013) et d'allocations de test t₳ pour valider les contrats avant mise en production.",
                     legalFocus: "Protection de l'écosystème B2B contre les contrats mal programmés et garantie de sécurité d'exécution sous le modèle Zero-Deviation Gas.",
-                    tech: "Service : Audit Formel NVM V8 & Homologation NCRC-20 | Sandbox : Testnet #9013 | Contrainte CPU : < 50 ms."
+                    tech: "Service : Audit Formel NVM V8 & Homologation NCRC-20 | Sandbox : Testnet #9013 | Contrainte CPU : < 50 ms.",
+                    cmdSnippet: "curl -X POST https://testnet-rpc.agi-nexus-core.click -H 'Content-Type: application/json' -d '{\"jsonrpc\":\"2.0\",\"method\":\"nexus_estimateFee\",\"params\":[{\"type\":\"deploy_contract\"}],\"id\":7}'"
                 },
                 en: {
                     short: "7. NVM Smart Contract (NCRC-20) Audit & Support",
                     title: "Protocol 7 — Homologation, Code Auditing, and Debugging for NVM Smart Contracts (NCRC-20 Standard)",
                     badge: "NVM & NCRC-20 Auditing",
-                    core: "Institutions and enterprise developers seeking to deploy smart contracts on the Nexus Virtual Machine (V8 NVM) or issue tokenized assets compliant with the sovereign NCRC-20 standard benefit from dedicated engineering and code auditing services provided by the Technical Directorate (`+226 70 87 37 73`). Prior to Mainnet #9012 deployment, our architects verify: (1) strict determinism of the JavaScript `execute(state, action, caller)` function; (2) compliance with the CPU execution budget below the 50-millisecond circuit breaker; (3) absence of logic vulnerabilities in access controls (`caller === state.owner`); and (4) strict integer arithmetic in `microA`.",
-                    cryptoFocus: "Issuance of an on-chain homologation certificate to `ADCC_...` contracts that successfully pass formal auditing by Atlas & Duc Corporation's Technical Directorate.",
-                    operationalFocus: "Provision of the Testnet sandbox environment (`https://testnet-rpc.agi-nexus-core.click`, Chain ID `9013`) and `t₳` test allocations to validate contracts prior to production launch.",
+                    core: "Institutions and enterprise developers seeking to deploy smart contracts on the Nexus Virtual Machine (V8 NVM) or issue tokenized assets compliant with the sovereign NCRC-20 standard benefit from dedicated engineering and code auditing services provided by the Technical Directorate (+226 70 87 37 73). Prior to Mainnet #9012 deployment, our architects verify: (1) strict determinism of the JavaScript execute(state, action, caller) function; (2) compliance with the CPU execution budget below the 50-millisecond circuit breaker; (3) absence of logic vulnerabilities in access controls (caller === state.owner); and (4) strict integer arithmetic in microA.",
+                    cryptoFocus: "Issuance of an on-chain homologation certificate to ADCC_... contracts that successfully pass formal auditing by Atlas & Duc Corporation's Technical Directorate.",
+                    operationalFocus: "Provision of the Testnet sandbox environment (https://testnet-rpc.agi-nexus-core.click, Chain ID 9013) and t₳ test allocations to validate contracts prior to production launch.",
                     legalFocus: "Protection of the B2B ecosystem against flawed contracts and guaranteed execution safety under the Zero-Deviation Gas model.",
-                    tech: "Service: Formal V8 NVM Audit & NCRC-20 Homologation | Sandbox: Testnet #9013 | CPU Constraint: < 50 ms."
+                    tech: "Service: Formal V8 NVM Audit & NCRC-20 Homologation | Sandbox: Testnet #9013 | CPU Constraint: < 50 ms.",
+                    cmdSnippet: "curl -X POST https://testnet-rpc.agi-nexus-core.click -H 'Content-Type: application/json' -d '{\"jsonrpc\":\"2.0\",\"method\":\"nexus_estimateFee\",\"params\":[{\"type\":\"deploy_contract\"}],\"id\":7}'"
                 }
             },
             {
@@ -962,21 +1012,23 @@
                     short: "8. Assistance SDK Mobile Android & Node.js",
                     title: "Protocole 8 — Support d'Intégration pour Développeurs : SDK Android Natif (Kotlin/Java) et Microservices Node.js",
                     badge: "Support Développeurs B2B",
-                    core: "Le pôle Ingénierie d'Atlas & Duc Corporation accompagne les équipes techniques des banques et entreprises partenaires dans l'intégration directe du protocole Nexus Core Layer-1 au sein de leurs propres systèmes d'information. Nous fournissons une assistance complète sur : (1) l'intégration du pont natif Android `@JavascriptInterface` utilisant `BitcoinJ` (`ECKey`, `Sha256Hash`, `Base58`) et l'enclave matérielle `Android Keystore` ; (2) le déploiement de microservices backend sous Node.js, gestionnaire de démons PM2 et tunnels sécurisés `cloudflared` (y compris sur environnements légers ou terminaux mobiles Termux/ARM64) ; et (3) l'implémentation de la fonction souveraine d'encodage Base58 et du pipeline de signature ECDSA `secp256k1`.",
-                    cryptoFocus: "Validation par nos ingénieurs de la construction exacte de la pré-image canonique `${chainId}:${type}:${from}:${to}:${amountMicro}:${feeMicro}:${nonce}:${timestamp}` côté client.",
-                    operationalFocus: "Diagnostic rapide des erreurs d'intégration JSON-RPC 2.0 (telles que `-32001 ERR_NONCE_OUT_OF_SYNC` ou `-32010 ERR_SPOOFED_TX_SIGNATURE`) avec fourniture de correctifs de code prêts à l'emploi.",
+                    core: "Le pôle Ingénierie d'Atlas & Duc Corporation accompagne les équipes techniques des banques et entreprises partenaires dans l'intégration directe du protocole Nexus Core Layer-1 au sein de leurs propres systèmes d'information. Nous fournissons une assistance complète sur : (1) l'intégration du pont natif Android @JavascriptInterface utilisant BitcoinJ (ECKey, Sha256Hash, Base58) et l'enclave matérielle Android Keystore ; (2) le déploiement de microservices backend sous Node.js, gestionnaire de démons PM2 et tunnels sécurisés cloudflared (y compris sur environnements légers ou terminaux mobiles Termux/ARM64) ; et (3) l'implémentation de la fonction souveraine d'encodage Base58 et du pipeline de signature ECDSA secp256k1.",
+                    cryptoFocus: "Validation par nos ingénieurs de la construction exacte de la pré-image canonique ${chainId}:${type}:${from}:${to}:${amountMicro}:${feeMicro}:${nonce}:${timestamp} côté client.",
+                    operationalFocus: "Diagnostic rapide des erreurs d'intégration JSON-RPC 2.0 (telles que -32001 ERR_NONCE_OUT_OF_SYNC ou -32010 ERR_SPOOFED_TX_SIGNATURE) avec fourniture de correctifs de code prêts à l'emploi.",
                     legalFocus: "Transfert de compétence technique accéléré garantissant l'autonomie et la sécurité des intégrateurs partenaires.",
-                    tech: "Stacks Supportées : Android Kotlin/Java (AIDE/SDK), Node.js (PM2/Termux), Python & Electron | Codec : Base58."
+                    tech: "Stacks Supportées : Android Kotlin/Java (AIDE/SDK), Node.js (PM2/Termux), Python & Electron | Codec : Base58.",
+                    cmdSnippet: "pm2 start nexus_b2b_worker.js --name nexus-b2b-relay --max-memory-restart 512M"
                 },
                 en: {
                     short: "8. Android Mobile & Node.js SDK Assistance",
                     title: "Protocol 8 — Developer Integration Support: Native Android SDK (Kotlin/Java) and Node.js Microservices",
                     badge: "B2B Developer Support",
-                    core: "Atlas & Duc Corporation's Engineering division assists the technical teams of partner banks and enterprises in directly integrating the Nexus Core Layer-1 protocol into their own information systems. We provide comprehensive support covering: (1) integration of the native Android `@JavascriptInterface` bridge utilizing `BitcoinJ` (`ECKey`, `Sha256Hash`, `Base58`) and the hardware-backed `Android Keystore`; (2) deployment of backend microservices running on Node.js, PM2 daemon managers, and secure `cloudflared` tunnels (including on lightweight or ARM64/Termux environments); and (3) implementation of the sovereign Base58 encoding function and ECDSA `secp256k1` signing pipeline.",
-                    cryptoFocus: "Verification by our engineers of the exact client-side construction of the canonical pre-image `${chainId}:${type}:${from}:${to}:${amountMicro}:${feeMicro}:${nonce}:${timestamp}`.",
-                    operationalFocus: "Rapid troubleshooting of JSON-RPC 2.0 integration errors (such as `-32001 ERR_NONCE_OUT_OF_SYNC` or `-32010 ERR_SPOOFED_TX_SIGNATURE`) with production-ready code patches.",
+                    core: "Atlas & Duc Corporation's Engineering division assists the technical teams of partner banks and enterprises in directly integrating the Nexus Core Layer-1 protocol into their own information systems. We provide comprehensive support covering: (1) integration of the native Android @JavascriptInterface bridge utilizing BitcoinJ (ECKey, Sha256Hash, Base58) and the hardware-backed Android Keystore; (2) deployment of backend microservices running on Node.js, PM2 daemon managers, and secure cloudflared tunnels (including on lightweight or ARM64/Termux environments); and (3) implementation of the sovereign Base58 encoding function and ECDSA secp256k1 signing pipeline.",
+                    cryptoFocus: "Verification by our engineers of the exact client-side construction of the canonical pre-image ${chainId}:${type}:${from}:${to}:${amountMicro}:${feeMicro}:${nonce}:${timestamp}.",
+                    operationalFocus: "Rapid troubleshooting of JSON-RPC 2.0 integration errors (such as -32001 ERR_NONCE_OUT_OF_SYNC or -32010 ERR_SPOOFED_TX_SIGNATURE) with production-ready code patches.",
                     legalFocus: "Accelerated technical knowledge transfer ensuring the autonomy and security of partner integrators.",
-                    tech: "Supported Stacks: Android Kotlin/Java (AIDE/SDK), Node.js (PM2/Termux), Python & Electron | Codec: Base58."
+                    tech: "Supported Stacks: Android Kotlin/Java (AIDE/SDK), Node.js (PM2/Termux), Python & Electron | Codec: Base58.",
+                    cmdSnippet: "pm2 start nexus_b2b_worker.js --name nexus-b2b-relay --max-memory-restart 512M"
                 }
             },
             {
@@ -989,21 +1041,23 @@
                     short: "9. Opérations de Trésorerie & Liquidité B2B en ₳",
                     title: "Protocole 9 — Guichet Institutionnel de Trésorerie (On-Ramp / Off-Ramp) et Gestion de Liquidité B2B en ₳",
                     badge: "Trésorerie Institutionnelle",
-                    core: "Pour les grandes entreprises, les coopératives agricoles, les distributeurs régionaux et les institutions financières opérant des volumes élevés en monnaie native ₳, la Direction Générale et Financière d'Atlas & Duc Corporation met à disposition un guichet institutionnel de trésorerie (rattaché au coffre Genèse `ADC6MH4qsxED6cLtH3NLng5QL6Kvb9HRa8ui` et au Trésor réseau `AGIeiEd4WSC67yY8aYm5LTU4ctn8rKd1MNvLTth3jdHh`). Ce service assure les opérations d'émission sur dépôt fiduciaire (Cash-in XOF vers ₳) et de rachat fiduciaire (Cash-out ₳ vers XOF bancaire ou Mobile Money) à la parité stricte et invariable de `1 ₳ = 1 FCFA (XOF)`, selon le modèle comptable fermé « Release-and-Lock ».",
-                    cryptoFocus: "Exécution instantanée du transfert L1 en `microA` dès validation du bordereau de trésorerie, avec génération immédiate de la preuve cryptographique sur NexusScan.",
+                    core: "Pour les grandes entreprises, les coopératives agricoles, les distributeurs régionaux et les institutions financières opérant des volumes élevés en monnaie native ₳, la Direction Générale et Financière d'Atlas & Duc Corporation met à disposition un guichet institutionnel de trésorerie (rattaché au coffre Genèse ADC6MH4qsxED6cLtH3NLng5QL6Kvb9HRa8ui et au Trésor réseau AGIeiEd4WSC67yY8aYm5LTU4ctn8rKd1MNvLTth3jdHh). Ce service assure les opérations d'émission sur dépôt fiduciaire (Cash-in XOF vers ₳) et de rachat fiduciaire (Cash-out ₳ vers XOF bancaire ou Mobile Money) à la parité stricte et invariable de 1 ₳ = 1 FCFA (XOF), selon le modèle comptable fermé « Release-and-Lock ».",
+                    cryptoFocus: "Exécution instantanée du transfert L1 en microA dès validation du bordereau de trésorerie, avec génération immédiate de la preuve cryptographique sur NexusScan.",
                     operationalFocus: "Accompagnement personnalisé des trésoriers d'entreprise pour la structuration de portefeuilles multi-signatures (Multisig N-of-M) exigeant l'accord conjoint de plusieurs dirigeants avant tout décaissement.",
                     legalFocus: "Traçabilité comptable et conformité totale aux règles de Preuve de Réserve (PoR 100 %) d'Atlas & Duc Corporation.",
-                    tech: "Guichet Trésorerie : 1 ₳ = 1 XOF Strict | Modèle : Release-and-Lock (100B ₳ Cap) | Sécurité : Wallets Multisig B2B."
+                    tech: "Guichet Trésorerie : 1 ₳ = 1 XOF Strict | Modèle : Release-and-Lock (100B ₳ Cap) | Sécurité : Wallets Multisig B2B.",
+                    cmdSnippet: "curl -s https://rpc.agi-nexus-core.click/api/supply"
                 },
                 en: {
                     short: "9. Treasury Operations & B2B ₳ Liquidity",
                     title: "Protocol 9 — Institutional Treasury Desk (On-Ramp / Off-Ramp) and B2B Liquidity Management in ₳",
                     badge: "Institutional Treasury",
-                    core: "For large corporations, agricultural cooperatives, regional distributors, and financial institutions handling high volumes in the native currency ₳, Atlas & Duc Corporation's Executive and Financial Directorate provides an institutional treasury desk (linked to Genesis Vault `ADC6MH4qsxED6cLtH3NLng5QL6Kvb9HRa8ui` and Network Treasury `AGIeiEd4WSC67yY8aYm5LTU4ctn8rKd1MNvLTth3jdHh`). This desk executes fiat-backed issuance (XOF Cash-in to ₳) and fiat redemption (₳ Cash-out to bank wire or Mobile Money) at the strict, invariant parity of `1 ₳ = 1 CFA Franc (XOF)`, operating under the closed-loop 'Release-and-Lock' accounting model.",
-                    cryptoFocus: "Instantaneous execution of the L1 `microA` transfer upon treasury voucher validation, with immediate cryptographic proof generation on NexusScan.",
+                    core: "For large corporations, agricultural cooperatives, regional distributors, and financial institutions handling high volumes in the native currency ₳, Atlas & Duc Corporation's Executive and Financial Directorate provides an institutional treasury desk (linked to Genesis Vault ADC6MH4qsxED6cLtH3NLng5QL6Kvb9HRa8ui and Network Treasury AGIeiEd4WSC67yY8aYm5LTU4ctn8rKd1MNvLTth3jdHh). This desk executes fiat-backed issuance (XOF Cash-in to ₳) and fiat redemption (₳ Cash-out to bank wire or Mobile Money) at the strict, invariant parity of 1 ₳ = 1 CFA Franc (XOF), operating under the closed-loop 'Release-and-Lock' accounting model.",
+                    cryptoFocus: "Instantaneous execution of the L1 microA transfer upon treasury voucher validation, with immediate cryptographic proof generation on NexusScan.",
                     operationalFocus: "Dedicated support for corporate treasurers in structuring multi-signature wallets (N-of-M Multisig) requiring joint executive sign-off prior to any disbursement.",
                     legalFocus: "Full accounting traceability and compliance with Atlas & Duc Corporation's 100% Proof of Reserve (PoR) standards.",
-                    tech: "Treasury Desk: Strict 1 ₳ = 1 XOF | Model: Release-and-Lock (100B ₳ Cap) | Security: B2B Multisig Wallets."
+                    tech: "Treasury Desk: Strict 1 ₳ = 1 XOF | Model: Release-and-Lock (100B ₳ Cap) | Security: B2B Multisig Wallets.",
+                    cmdSnippet: "curl -s https://rpc.agi-nexus-core.click/api/supply"
                 }
             },
             {
@@ -1016,21 +1070,23 @@
                     short: "10. Doctrine Non-Custodial & Sécurité Support",
                     title: "Protocole 10 — Doctrine de Sécurité Absolue du Support : Inviolabilité Non-Custodial et Protocole Anti-Ingénierie Sociale",
                     badge: "Sécurité Non-Custodial",
-                    core: "Atlas & Duc Corporation érige en règle absolue et infranchissable le respect de l'architecture Non-Custodial lors de toute interaction avec le Support B2B ou le Support Client. Nos ingénieurs diagnostiquent et résolvent l'intégralité des incidents techniques en utilisant exclusivement des données publiques : l'adresse publique Base58 (`ADC...` ou `ADCC_...`), le hash Base58 de la transaction ou l'indice du bloc sur NexusScan. En aucun cas et sous aucun prétexte, un membre de la Présidence, du CTO ou du Support Technique d'Atlas & Duc Corporation ne demandera à un utilisateur ou à un marchand de lui communiquer sa phrase mnémonique BIP39 de 12/24 mots, sa clé privée ECDSA `secp256k1` ou son code PIN Argon2id.",
-                    cryptoFocus: "Vérification de l'identité des canaux officiels : seules les adresses électroniques se terminant par `@agi-nexus-core.click` et les numéros officiels répertoriés dans l'annuaire ci-dessus sont habilités à représenter Atlas & Duc Corporation.",
+                    core: "Atlas & Duc Corporation érige en règle absolue et infranchissable le respect de l'architecture Non-Custodial lors de toute interaction avec le Support B2B ou le Support Client. Nos ingénieurs diagnostiquent et résolvent l'intégralité des incidents techniques en utilisant exclusivement des données publiques : l'adresse publique Base58 (ADC... ou ADCC_...), le hash Base58 de la transaction ou l'indice du bloc sur NexusScan. En aucun cas et sous aucun prétexte, un membre de la Présidence, du CTO ou du Support Technique d'Atlas & Duc Corporation ne demandera à un utilisateur ou à un marchand de lui communiquer sa phrase mnémonique BIP39 de 12/24 mots, sa clé privée ECDSA secp256k1 ou son code PIN Argon2id.",
+                    cryptoFocus: "Vérification de l'identité des canaux officiels : seules les adresses électroniques se terminant par @agi-nexus-core.click et les numéros officiels répertoriés dans l'annuaire ci-dessus sont habilités à représenter Atlas & Duc Corporation.",
                     operationalFocus: "Procédure d'urgence en cas de compromission matérielle du terminal d'un marchand : assistance immédiate pour migrer la trésorerie en ₳ vers une nouvelle adresse Base58 vierge à l'aide de la sauvegarde physique du marchand.",
                     legalFocus: "Protection contractuelle des utilisateurs contre l'hameçonnage (Phishing) et rappel de la responsabilité exclusive de garde de la Seed Phrase.",
-                    tech: "Demande de Clé Privée / Seed par le Support : 0 (Strictement Interdit) | Diagnostic : 100% via Adresse/Hash Base58 Public."
+                    tech: "Demande de Clé Privée / Seed par le Support : 0 (Strictement Interdit) | Diagnostic : 100% via Adresse/Hash Base58 Public.",
+                    cmdSnippet: "curl -X POST https://rpc.agi-nexus-core.click -H 'Content-Type: application/json' -d '{\"jsonrpc\":\"2.0\",\"method\":\"nexus_getBalance\",\"params\":[\"ADC6MH4qsxED6cLtH3NLng5QL6Kvb9HRa8ui\"],\"id\":10}'"
                 },
                 en: {
                     short: "10. Non-Custodial Doctrine & Support Security",
                     title: "Protocol 10 — Absolute Support Security Doctrine: Non-Custodial Inviolability and Anti-Social Engineering Protocol",
                     badge: "Non-Custodial Security",
-                    core: "Atlas & Duc Corporation enforces as an absolute, unbreakable rule the respect of Non-Custodial architecture during every interaction with B2B or Customer Support. Our engineers diagnose and resolve all technical incidents using exclusively public data: the Base58 public address (`ADC...` or `ADCC_...`), the Base58 transaction hash, or the block index on NexusScan. Under no circumstances and under no pretext will any member of the Presidency, CTO division, or Technical Support of Atlas & Duc Corporation ever ask a user or merchant to disclose their 12/24-word BIP39 mnemonic phrase, their ECDSA `secp256k1` private key, or their Argon2id PIN code.",
-                    cryptoFocus: "Official channel verification: only email addresses ending in `@agi-nexus-core.click` and the official phone numbers listed in the directory above are authorized to represent Atlas & Duc Corporation.",
+                    core: "Atlas & Duc Corporation enforces as an absolute, unbreakable rule the respect of Non-Custodial architecture during every interaction with B2B or Customer Support. Our engineers diagnose and resolve all technical incidents using exclusively public data: the Base58 public address (ADC... or ADCC_...), the Base58 transaction hash, or the block index on NexusScan. Under no circumstances and under no pretext will any member of the Presidency, CTO division, or Technical Support of Atlas & Duc Corporation ever ask a user or merchant to disclose their 12/24-word BIP39 mnemonic phrase, their ECDSA secp256k1 private key, or their Argon2id PIN code.",
+                    cryptoFocus: "Official channel verification: only email addresses ending in @agi-nexus-core.click and the official phone numbers listed in the directory above are authorized to represent Atlas & Duc Corporation.",
                     operationalFocus: "Emergency procedure in the event of physical terminal theft or compromise for a merchant: immediate guidance to migrate ₳ treasury funds to a fresh Base58 address using the merchant's offline backup.",
                     legalFocus: "Contractual user protection against Phishing and reinforcement of exclusive Seed Phrase custody responsibility.",
-                    tech: "Support Requests for Private Key / Seed: 0 (Strictly Forbidden) | Diagnostics: 100% via Public Base58 Address/Hash."
+                    tech: "Support Requests for Private Key / Seed: 0 (Strictly Forbidden) | Diagnostics: 100% via Public Base58 Address/Hash.",
+                    cmdSnippet: "curl -X POST https://rpc.agi-nexus-core.click -H 'Content-Type: application/json' -d '{\"jsonrpc\":\"2.0\",\"method\":\"nexus_getBalance\",\"params\":[\"ADC6MH4qsxED6cLtH3NLng5QL6Kvb9HRa8ui\"],\"id\":10}'"
                 }
             },
             {
@@ -1043,21 +1099,23 @@
                     short: "11. Déploiement de Nœuds Miroirs & Relais B2B",
                     title: "Protocole 11 — Assistance au Déploiement de Nœuds Miroirs de Lecture (Read-Only Nodes) pour Banques et Institutions",
                     badge: "Nœuds Dédiés Banques",
-                    core: "Les institutions bancaires, les Systèmes Financiers Décentralisés (SFD), les opérateurs de télécommunications et les grandes chaînes de distribution qui souhaitent disposer d'une copie locale temps réel du registre Nexus Core Layer-1 au sein de leur propre centre de données peuvent déployer un Nœud Miroir de Lecture (Read-Only Follower Node). La Direction Technique (CTO `+226 70 87 37 73`) accompagne les ingénieurs de l'institution partenaire dans l'installation du binaire Node.js V8, la configuration du tunnel WebSocket P2P sur le port `6001` pour la réplication instantanée des blocs PoA, et la mise en place de la persistance locale chiffrée en AES-256-GCM.",
-                    cryptoFocus: "Vérification locale autonome par le nœud miroir de la banque de chaque signature d'autorité PoA, de chaque racine de Merkle et de chaque signature transactionnelle ECDSA `secp256k1`.",
+                    core: "Les institutions bancaires, les Systèmes Financiers Décentralisés (SFD), les opérateurs de télécommunications et les grandes chaînes de distribution qui souhaitent disposer d'une copie locale temps réel du registre Nexus Core Layer-1 au sein de leur propre centre de données peuvent déployer un Nœud Miroir de Lecture (Read-Only Follower Node). La Direction Technique (CTO +226 70 87 37 73) accompagne les ingénieurs de l'institution partenaire dans l'installation du binaire Node.js V8, la configuration du tunnel WebSocket P2P sur le port 6001 pour la réplication instantanée des blocs PoA, et la mise en place de la persistance locale chiffrée en AES-256-GCM.",
+                    cryptoFocus: "Vérification locale autonome par le nœud miroir de la banque de chaque signature d'autorité PoA, de chaque racine de Merkle et de chaque signature transactionnelle ECDSA secp256k1.",
                     operationalFocus: "Latence de lecture réduite à 0,1 milliseconde sur le réseau local (LAN) de la banque pour l'indexation comptable et l'audit réglementaire interne.",
                     legalFocus: "Souveraineté d'infrastructure permettant aux établissements financiers de consulter l'état du Mainnet #9012 en totale autonomie.",
-                    tech: "Type de Nœud : Read-Only Follower Node V8 | Synchronisation : WSS Port 6001 Temps Réel | Latence LAN : < 0,1 ms."
+                    tech: "Type de Nœud : Read-Only Follower Node V8 | Synchronisation : WSS Port 6001 Temps Réel | Latence LAN : < 0,1 ms.",
+                    cmdSnippet: "wscat -c wss://p2p.agi-nexus-core.click:6001 -x '{\"action\":\"sync_follower\",\"chainId\":9012}'"
                 },
                 en: {
                     short: "11. Mirror Node & B2B Relay Deployment",
                     title: "Protocol 11 — Deployment Assistance for Read-Only Mirror Nodes for Banks and Financial Institutions",
                     badge: "Dedicated Bank Nodes",
-                    core: "Banking institutions, microfinance institutions (MFIs), telecommunications carriers, and major retail chains wishing to maintain a real-time local copy of the Nexus Core Layer-1 ledger inside their own data centers can deploy a Read-Only Follower Node. The Technical Directorate (CTO `+226 70 87 37 73`) assists the partner institution's systems engineers in installing the Node.js V8 binary, configuring the P2P WebSocket tunnel on port `6001` for instantaneous PoA block replication, and setting up local AES-256-GCM encrypted persistence.",
-                    cryptoFocus: "Autonomous local verification by the bank's mirror node of every PoA authority signature, every Merkle root, and every ECDSA `secp256k1` transaction signature.",
+                    core: "Banking institutions, microfinance institutions (MFIs), telecommunications carriers, and major retail chains wishing to maintain a real-time local copy of the Nexus Core Layer-1 ledger inside their own data centers can deploy a Read-Only Follower Node. The Technical Directorate (CTO +226 70 87 37 73) assists the partner institution's systems engineers in installing the Node.js V8 binary, configuring the P2P WebSocket tunnel on port 6001 for instantaneous PoA block replication, and setting up local AES-256-GCM encrypted persistence.",
+                    cryptoFocus: "Autonomous local verification by the bank's mirror node of every PoA authority signature, every Merkle root, and every ECDSA secp256k1 transaction signature.",
                     operationalFocus: "Read latency reduced to 0.1 milliseconds across the bank's local area network (LAN) for accounting indexing and internal regulatory auditing.",
                     legalFocus: "Infrastructure autonomy enabling financial institutions to query Mainnet #9012 state independently.",
-                    tech: "Node Type: Read-Only V8 Follower Node | Sync: Real-Time Port 6001 WSS | LAN Latency: < 0.1 ms."
+                    tech: "Node Type: Read-Only V8 Follower Node | Sync: Real-Time Port 6001 WSS | LAN Latency: < 0.1 ms.",
+                    cmdSnippet: "wscat -c wss://p2p.agi-nexus-core.click:6001 -x '{\"action\":\"sync_follower\",\"chainId\":9012}'"
                 }
             },
             {
@@ -1070,21 +1128,23 @@
                     short: "12. Divulgation Responsable & Bug Bounty L1",
                     title: "Protocole 12 — Programme de Divulgation Responsable de Vulnérabilités (Responsible Disclosure) et Réponse Cyber (CERT L1)",
                     badge: "CERT L1 & Bug Bounty",
-                    core: "Atlas & Duc Corporation maintient une cellule de veille et de réponse aux incidents de sécurité informatique (CERT L1) rattachée directement au CTO (`+226 70 87 37 73` / `administration@agi-nexus-core.click`). Nous encourageons les chercheurs en sécurité informatique, les auditeurs cryptographiques et les ingénieurs partenaires à nous signaler de manière confidentielle et responsable toute anomalie potentielle identifiée dans les applications clientes (Nexus Wallet Pro, A&D Business Pro, Roger Service Pro), l'explorateur NexusScan ou les passerelles API RPC. Chaque signalement documenté reçoit un accusé de réception chiffré en moins de 60 minutes et fait l'objet d'une analyse prioritaire par l'Architecte Logiciel Principal.",
+                    core: "Atlas & Duc Corporation maintient une cellule de veille et de réponse aux incidents de sécurité informatique (CERT L1) rattachée directement au CTO (+226 70 87 37 73 / administration@agi-nexus-core.click). Nous encourageons les chercheurs en sécurité informatique, les auditeurs cryptographiques et les ingénieurs partenaires à nous signaler de manière confidentielle et responsable toute anomalie potentielle identifiée dans les applications clientes (Nexus Wallet Pro, A&D Business Pro, Roger Service Pro), l'explorateur NexusScan ou les passerelles API RPC. Chaque signalement documenté reçoit un accusé de réception chiffré en moins de 60 minutes et fait l'objet d'une analyse prioritaire par l'Architecte Logiciel Principal.",
                     cryptoFocus: "Déploiement immédiat des correctifs critiques via le mécanisme « Immediate In-App Update » et mise à jour atomique à chaud des pare-feu RPC sans interruption du consensus PoA.",
                     operationalFocus: "Immunité juridique (Safe Harbor) garantie aux chercheurs en sécurité de bonne foi respectant le protocole de divulgation confidentielle sans exploitation malveillante.",
                     legalFocus: "Protection proactive de l'intégrité du Mainnet #9012 et des 100 000 000 000 ₳ de l'écosystème.",
-                    tech: "Contact CERT L1 : administration@agi-nexus-core.click | Accusé de réception : < 60 min | Patching : Immediate Update."
+                    tech: "Contact CERT L1 : administration@agi-nexus-core.click | Accusé de réception : < 60 min | Patching : Immediate Update.",
+                    cmdSnippet: "gpg --encrypt --recipient administration@agi-nexus-core.click vulnerability_report.txt"
                 },
                 en: {
                     short: "12. Responsible Disclosure & L1 Bug Bounty",
                     title: "Protocol 12 — Responsible Vulnerability Disclosure Program and Cyber Incident Response (L1 CERT)",
                     badge: "L1 CERT & Bug Bounty",
-                    core: "Atlas & Duc Corporation operates a dedicated Cyber Emergency Response Team (L1 CERT) reporting directly to the CTO (`+226 70 87 37 73` / `administration@agi-nexus-core.click`). We encourage security researchers, cryptographic auditors, and partner engineers to confidentially and responsibly report any potential anomaly identified within client applications (Nexus Wallet Pro, A&D Business Pro, Roger Service Pro), the NexusScan explorer, or RPC API gateways. Every documented report receives an encrypted acknowledgment within 60 minutes and undergoes priority review by the Lead Software Architect.",
+                    core: "Atlas & Duc Corporation operates a dedicated Cyber Emergency Response Team (L1 CERT) reporting directly to the CTO (+226 70 87 37 73 / administration@agi-nexus-core.click). We encourage security researchers, cryptographic auditors, and partner engineers to confidentially and responsibly report any potential anomaly identified within client applications (Nexus Wallet Pro, A&D Business Pro, Roger Service Pro), the NexusScan explorer, or RPC API gateways. Every documented report receives an encrypted acknowledgment within 60 minutes and undergoes priority review by the Lead Software Architect.",
                     cryptoFocus: "Immediate deployment of critical patches via the 'Immediate In-App Update' mechanism and hot atomic updating of RPC firewalls without interrupting PoA consensus.",
                     operationalFocus: "Legal Safe Harbor guaranteed to good-faith security researchers adhering to confidential disclosure rules without malicious exploitation.",
                     legalFocus: "Proactive protection of Mainnet #9012 integrity and the ecosystem's 100,000,000,000 ₳ supply.",
-                    tech: "L1 CERT Contact: administration@agi-nexus-core.click | Acknowledgment: < 60 min | Patching: Immediate Update."
+                    tech: "L1 CERT Contact: administration@agi-nexus-core.click | Acknowledgment: < 60 min | Patching: Immediate Update.",
+                    cmdSnippet: "gpg --encrypt --recipient administration@agi-nexus-core.click vulnerability_report.txt"
                 }
             },
             {
@@ -1097,48 +1157,52 @@
                     short: "13. Formation B2B, Lives Éducatifs & Éditions",
                     title: "Protocole 13 — Formation des Équipes Marchandes, Sessions Éducatives Directes et Publications Éditions Atlas & Duc",
                     badge: "Formation & Accompagnement",
-                    core: "L'adoption réussie d'une infrastructure blockchain souveraine repose sur la maîtrise opérationnelle des outils par les commerçants, les comptables et les citoyens. Atlas & Duc Corporation déploie un programme permanent de formation et d'accompagnement terrain et numérique : (1) sessions de formation sur site à Koupéla, Houndé, Kari, Pâ et Bobo-Dioulasso pour les caissiers et gestionnaires utilisant Roger Service Pro POS et A&D Business Pro ; (2) diffusions éducatives en direct (Lives techniques et économiques animés par le Fondateur Yougma Thierry Joël) présentant l'architecture de la monnaie native ₳ et les modèles d'affaires numériques ; et (3) ouvrages de référence publiés par les ÉDITIONS ATLAS & DUC (notamment *L'Empire de l'Entrepreneur* et *Économie Rurale*).",
-                    cryptoFocus: "Vulgarisation rigoureuse des bonnes pratiques de sécurité cryptographique (sauvegarde hors-ligne de la phrase BIP39, vérification visuelle des adresses Base58 `ADC...`).",
+                    core: "L'adoption réussie d'une infrastructure blockchain souveraine repose sur la maîtrise opérationnelle des outils par les commerçants, les comptables et les citoyens. Atlas & Duc Corporation déploie un programme permanent de formation et d'accompagnement terrain et numérique : (1) sessions de formation sur site à Koupéla, Houndé, Kari, Pâ et Bobo-Dioulasso pour les caissiers et gestionnaires utilisant Roger Service Pro POS et A&D Business Pro ; (2) diffusions éducatives en direct (Lives techniques et économiques animés par le Fondateur Yougma Thierry Joël) présentant l'architecture de la monnaie native ₳ et les modèles d'affaires numériques ; et (3) ouvrages de référence publiés par les ÉDITIONS ATLAS & DUC (notamment L'Empire de l'Entrepreneur et Économie Rurale).",
+                    cryptoFocus: "Vulgarisation rigoureuse des bonnes pratiques de sécurité cryptographique (sauvegarde hors-ligne de la phrase BIP39, vérification visuelle des adresses Base58 ADC...).",
                     operationalFocus: "Certification des opérateurs de caisse et des agents techniques partenaires garantissant une qualité de service uniforme sur le terrain.",
                     legalFocus: "Promotion de la souveraineté numérique et de l'inclusion financière responsable au Burkina Faso et dans l'UEMOA.",
-                    tech: "Formations : Terrain (Koupéla, Houndé, Bobo-Dioulasso) & Lives Éducatifs | Publications : ÉDITIONS ATLAS & DUC."
+                    tech: "Formations : Terrain (Koupéla, Houndé, Bobo-Dioulasso) & Lives Éducatifs | Publications : ÉDITIONS ATLAS & DUC.",
+                    cmdSnippet: "curl -s https://rpc.agi-nexus-core.click/api/holders?page=1&limit=10"
                 },
                 en: {
                     short: "13. B2B Training, Educational Streams & Publishing",
                     title: "Protocol 13 — Merchant Team Training, Live Educational Broadcasts, and Éditions Atlas & Duc Publications",
                     badge: "Training & Onboarding",
-                    core: "Successful adoption of a sovereign blockchain infrastructure depends on operational mastery by merchants, accountants, and citizens. Atlas & Duc Corporation runs a continuous field and digital training program: (1) on-site training sessions across Koupéla, Houndé, Kari, Pâ, and Bobo-Dioulasso for cashiers and managers operating Roger Service Pro POS and A&D Business Pro; (2) live educational broadcasts (technical and economic streams hosted by Founder Yougma Thierry Joël) presenting the native currency ₳ architecture and digital business models; and (3) reference books published under ÉDITIONS ATLAS & DUC (notably *L'Empire de l'Entrepreneur* and *Économie Rurale*).",
-                    cryptoFocus: "Rigorous training on cryptographic security best practices (offline safekeeping of BIP39 recovery phrases, visual verification of Base58 `ADC...` addresses).",
+                    core: "Successful adoption of a sovereign blockchain infrastructure depends on operational mastery by merchants, accountants, and citizens. Atlas & Duc Corporation runs a continuous field and digital training program: (1) on-site training sessions across Koupéla, Houndé, Kari, Pâ, and Bobo-Dioulasso for cashiers and managers operating Roger Service Pro POS and A&D Business Pro; (2) live educational broadcasts (technical and economic streams hosted by Founder Yougma Thierry Joël) presenting the native currency ₳ architecture and digital business models; and (3) reference books published under ÉDITIONS ATLAS & DUC (notably L'Empire de l'Entrepreneur and Économie Rurale).",
+                    cryptoFocus: "Rigorous training on cryptographic security best practices (offline safekeeping of BIP39 recovery phrases, visual verification of Base58 ADC... addresses).",
                     operationalFocus: "Certification of POS cashiers and partner technical agents ensuring uniform service quality across all deployment zones.",
                     legalFocus: "Promotion of digital sovereignty and responsible financial inclusion throughout Burkina Faso and the WAEMU region.",
-                    tech: "Training: On-Site Field Sessions & Educational Live Streams | Publications: ÉDITIONS ATLAS & DUC."
+                    tech: "Training: On-Site Field Sessions & Educational Live Streams | Publications: ÉDITIONS ATLAS & DUC.",
+                    cmdSnippet: "curl -s https://rpc.agi-nexus-core.click/api/holders?page=1&limit=10"
                 }
             },
             {
                 id: "b2b-mod-14",
                 num: "14",
-                icon: "fa-Tractor",
+                icon: "fa-seedling",
                 color: "text-emerald-700 bg-emerald-500/10",
                 domainCode: "SUP-RUR-14",
                 fr: {
                     short: "14. Filières Agricoles, Coton & Économie Rurale",
                     title: "Protocole 14 — Support Dédié aux Coopératives Agricoles, Filières Cotonnières et Opérateurs d'Économie Rurale",
                     badge: "Économie Rurale & Filières",
-                    core: "Fort de l'expertise terrain approfondie de son Fondateur dans la structuration technique des filières agricoles et cotonnières (notamment dans les bassins de Houndé Ouest, Kari, Pâ et Koupéla), Atlas & Duc Corporation a doté le réseau Nexus Core Layer-1 de protocoles d'accompagnement spécifiquement adaptés aux groupements de producteurs, aux coopératives rurales et aux acheteurs d'intrants et de récoltes. Le Support B2B assiste les organisations rurales dans la numérisation des paiements de campagnes agricoles en monnaie native ₳ (`1 ₳ = 1 FCFA`), la traçabilité des pesées et des subventions via des contrats intelligents NVM (`ADCC_...`), et le fonctionnement de Nexus Wallet Pro dans les zones à faible couverture réseau grâce à la légèreté des trames JSON-RPC Base58.",
+                    core: "Fort de l'expertise terrain approfondie de son Fondateur dans la structuration technique des filières agricoles et cotonnières (notamment dans les bassins de Houndé Ouest, Kari, Pâ et Koupéla), Atlas & Duc Corporation a doté le réseau Nexus Core Layer-1 de protocoles d'accompagnement spécifiquement adaptés aux groupements de producteurs, aux coopératives rurales et aux acheteurs d'intrants et de récoltes. Le Support B2B assiste les organisations rurales dans la numérisation des paiements de campagnes agricoles en monnaie native ₳ (1 ₳ = 1 FCFA), la traçabilité des pesées et des subventions via des contrats intelligents NVM (ADCC_...), et le fonctionnement de Nexus Wallet Pro dans les zones à faible couverture réseau grâce à la légèreté des trames JSON-RPC Base58.",
                     cryptoFocus: "Optimisation extrême de la taille des paquets JSON-RPC (< 512 octets par transaction signée) permettant de valider un paiement en ₳ même sur une connexion mobile 2G/Edge instable.",
                     operationalFocus: "Élimination des risques liés au transport physique d'espèces lors des paiements aux producteurs ruraux et règlement instantané sans frais cachés (0,001 ₳ de frais fixe).",
                     legalFocus: "Transparence comptable intégrale pour les bureaux de coopératives et les partenaires financiers du monde rural.",
-                    tech: "Secteur : Coopératives Agricoles & Filières Rurales | Bande Passante Requise : Ultra-Faible (< 1 Ko/TX) | Frais : 0,001 ₳."
+                    tech: "Secteur : Coopératives Agricoles & Filières Rurales | Bande Passante Requise : Ultra-Faible (< 1 Ko/TX) | Frais : 0,001 ₳.",
+                    cmdSnippet: "curl -X POST https://rpc.agi-nexus-core.click -H 'Content-Type: application/json' -d '{\"jsonrpc\":\"2.0\",\"method\":\"nexus_estimateFee\",\"params\":[{\"type\":\"transfer\"}],\"id\":14}'"
                 },
                 en: {
                     short: "14. Agricultural Supply Chains & Rural Economy",
                     title: "Protocol 14 — Dedicated Support for Agricultural Cooperatives, Cotton Supply Chains, and Rural Economy Operators",
                     badge: "Rural Economy & Supply Chains",
-                    core: "Grounded in its Founder's deep field expertise in technical agricultural and cotton sector operations (notably across the Houndé Ouest, Kari, Pâ, and Koupéla basins), Atlas & Duc Corporation has equipped the Nexus Core Layer-1 network with support protocols specifically tailored for producer associations, rural cooperatives, and commodity buyers. B2B Support assists rural organizations in digitizing harvest campaign settlements in the native currency ₳ (`1 ₳ = 1 FCFA`), tracking weigh-ins and input subsidies via NVM smart contracts (`ADCC_...`), and operating Nexus Wallet Pro in low-connectivity areas thanks to ultra-compact Base58 JSON-RPC frames.",
+                    core: "Grounded in its Founder's deep field expertise in technical agricultural and cotton sector operations (notably across the Houndé Ouest, Kari, Pâ, and Koupéla basins), Atlas & Duc Corporation has equipped the Nexus Core Layer-1 network with support protocols specifically tailored for producer associations, rural cooperatives, and commodity buyers. B2B Support assists rural organizations in digitizing harvest campaign settlements in the native currency ₳ (1 ₳ = 1 FCFA), tracking weigh-ins and input subsidies via NVM smart contracts (ADCC_...), and operating Nexus Wallet Pro in low-connectivity areas thanks to ultra-compact Base58 JSON-RPC frames.",
                     cryptoFocus: "Extreme payload optimization (< 512 bytes per signed JSON-RPC transaction) enabling reliable ₳ payment validation even over unstable 2G/Edge mobile links.",
                     operationalFocus: "Elimination of physical cash transport risks during rural producer payouts and instantaneous settlement with zero hidden charges (0.001 ₳ flat fee).",
                     legalFocus: "Complete accounting transparency for cooperative boards and rural financial partners.",
-                    tech: "Sector: Agricultural Cooperatives & Rural Supply Chains | Bandwidth Footprint: Ultra-Low (< 1 KB/TX) | Fee: 0.001 ₳."
+                    tech: "Sector: Agricultural Cooperatives & Rural Supply Chains | Bandwidth Footprint: Ultra-Low (< 1 KB/TX) | Fee: 0.001 ₳.",
+                    cmdSnippet: "curl -X POST https://rpc.agi-nexus-core.click -H 'Content-Type: application/json' -d '{\"jsonrpc\":\"2.0\",\"method\":\"nexus_estimateFee\",\"params\":[{\"type\":\"transfer\"}],\"id\":14}'"
                 }
             },
             {
@@ -1151,21 +1215,23 @@
                     short: "15. Arbitrage Technique & Séquestres B2B (Escrow)",
                     title: "Protocole 15 — Procédure d'Arbitrage Technique et de Résolution des Litiges sur Contrats de Séquestre B2B (Escrow NVM)",
                     badge: "Arbitrage Séquestre B2B",
-                    core: "Lorsqu'une transaction commerciale entre deux entreprises ou sur la place de marché P2P / Adama Digital est exécutée via un contrat intelligent de séquestre (`ADCC_MarketplaceEscrowCore99XyZ`), les fonds en ₳ de l'acheteur sont verrouillés dans l'état RAM V8 du contrat jusqu'à la confirmation de livraison. Si un différend commercial survient entre l'acheteur et le vendeur avant la libération des fonds, l'une des parties peut soumettre un Ticket B2B d'Arbitrage (`ADCT_...`) auprès du Département Administration & Juridique (`administration@agi-nexus-core.click`). Nos auditeurs analysent les preuves cryptographiques d'expédition, les reçus transactionnels (`nexus_getTransactionReceipt`) et les journaux d'événements NVM pour instruire le règlement équitable du séquestre.",
-                    cryptoFocus: "Impossibilité pour l'une des parties de détourner unilatéralement les fonds verrouillés dans le contrat `ADCC_...` pendant toute la durée de l'instruction du ticket d'arbitrage.",
+                    core: "Lorsqu'une transaction commerciale entre deux entreprises ou sur la place de marché P2P / Adama Digital est exécutée via un contrat intelligent de séquestre (ADCC_MarketplaceEscrowCore99XyZ), les fonds en ₳ de l'acheteur sont verrouillés dans l'état RAM V8 du contrat jusqu'à la confirmation de livraison. Si un différend commercial survient entre l'acheteur et le vendeur avant la libération des fonds, l'une des parties peut soumettre un Ticket B2B d'Arbitrage (ADCT_...) auprès du Département Administration & Juridique (administration@agi-nexus-core.click). Nos auditeurs analysent les preuves cryptographiques d'expédition, les reçus transactionnels (nexus_getTransactionReceipt) et les journaux d'événements NVM pour instruire le règlement équitable du séquestre.",
+                    cryptoFocus: "Impossibilité pour l'une des parties de détourner unilatéralement les fonds verrouillés dans le contrat ADCC_... pendant toute la durée de l'instruction du ticket d'arbitrage.",
                     operationalFocus: "Délai d'instruction contradictoire de 24 à 48 heures ouvrées sur présentation des pièces justificatives et du hash Base58 du dépôt initial.",
                     legalFocus: "Sécurité transactionnelle supérieure au commerce électronique traditionnel grâce au verrouillage programmable en ₳.",
-                    tech: "Mécanisme : Séquestre Programmable NVM (ADCC_) | Instruction Litige : 24h-48h | Preuve : Logs & Receipts L1."
+                    tech: "Mécanisme : Séquestre Programmable NVM (ADCC_) | Instruction Litige : 24h-48h | Preuve : Logs & Receipts L1.",
+                    cmdSnippet: "curl -X POST https://rpc.agi-nexus-core.click -H 'Content-Type: application/json' -d '{\"jsonrpc\":\"2.0\",\"method\":\"nexus_getTransactionByHash\",\"params\":[\"5K8mN9pQrStUvWxYz23456789ABCDEFGHJ\"],\"id\":15}'"
                 },
                 en: {
                     short: "15. Technical Arbitration & B2B Escrow",
                     title: "Protocol 15 — Technical Arbitration and Dispute Resolution Procedure for B2B Escrow Contracts (NVM Escrow)",
                     badge: "B2B Escrow Arbitration",
-                    core: "When a commercial transaction between two enterprises or on the P2P marketplace / Adama Digital is executed through an escrow smart contract (`ADCC_MarketplaceEscrowCore99XyZ`), the buyer's ₳ funds are locked inside the contract's V8 RAM state pending delivery confirmation. Should a commercial dispute arise between buyer and seller prior to fund release, either party may submit a B2B Arbitration Ticket (`ADCT_...`) to the Administration & Legal Department (`administration@agi-nexus-core.click`). Our auditors examine cryptographic shipping proofs, transaction receipts (`nexus_getTransactionReceipt`), and NVM event logs to adjudicate fair escrow settlement.",
-                    cryptoFocus: "Impossibility for either party to unilaterally divert funds locked inside the `ADCC_...` contract while the arbitration ticket is under review.",
+                    core: "When a commercial transaction between two enterprises or on the P2P marketplace / Adama Digital is executed through an escrow smart contract (ADCC_MarketplaceEscrowCore99XyZ), the buyer's ₳ funds are locked inside the contract's V8 RAM state pending delivery confirmation. Should a commercial dispute arise between buyer and seller prior to fund release, either party may submit a B2B Arbitration Ticket (ADCT_...) to the Administration & Legal Department (administration@agi-nexus-core.click). Our auditors examine cryptographic shipping proofs, transaction receipts (nexus_getTransactionReceipt), and NVM event logs to adjudicate fair escrow settlement.",
+                    cryptoFocus: "Impossibility for either party to unilaterally divert funds locked inside the ADCC_... contract while the arbitration ticket is under review.",
                     operationalFocus: "Adversarial review timeline of 24 to 48 business hours upon submission of supporting vouchers and the initial deposit's Base58 hash.",
                     legalFocus: "Transactional security superior to conventional e-commerce through programmable ₳ locking.",
-                    tech: "Mechanism: Programmable NVM Escrow (ADCC_) | Dispute Review: 24h-48h | Proof: L1 Logs & Receipts."
+                    tech: "Mechanism: Programmable NVM Escrow (ADCC_) | Dispute Review: 24h-48h | Proof: L1 Logs & Receipts.",
+                    cmdSnippet: "curl -X POST https://rpc.agi-nexus-core.click -H 'Content-Type: application/json' -d '{\"jsonrpc\":\"2.0\",\"method\":\"nexus_getTransactionByHash\",\"params\":[\"5K8mN9pQrStUvWxYz23456789ABCDEFGHJ\"],\"id\":15}'"
                 }
             },
             {
@@ -1178,21 +1244,23 @@
                     short: "16. Continuité d'Activité (PRA) & Sauvegardes WAL",
                     title: "Protocole 16 — Plan de Reprise d'Activité (PRA), Écriture Atomique Anti-Blackout et Redondance des Données B2B",
                     badge: "Résilience Anti-Blackout",
-                    core: "Le Support B2B et la Direction Technique garantissent aux entreprises partenaires une résilience totale face aux coupures électriques (Blackouts) et aux aléas d'infrastructure. Sur les nœuds validateurs du Mainnet #9012, chaque bloc scellé toutes les 2 secondes fait l'objet d'une écriture journalisée atomique POSIX (`fs.renameSync` de `ledger_mainnet.tmp.json` vers `ledger_mainnet.json`) chiffrée en AES-256-GCM sur grappes NVMe RAID 10. Pour les commerçants utilisant Roger Service Pro POS en local, le Support B2B configure un utilitaire de sauvegarde incrémentale chiffrée permettant de restaurer l'intégralité du catalogue d'inventaire, de la comptabilité en ₳ et des paramètres de caisse en moins de 3 minutes sur une nouvelle machine en cas de panne matérielle.",
+                    core: "Le Support B2B et la Direction Technique garantissent aux entreprises partenaires une résilience totale face aux coupures électriques (Blackouts) et aux aléas d'infrastructure. Sur les nœuds validateurs du Mainnet #9012, chaque bloc scellé toutes les 2 secondes fait l'objet d'une écriture journalisée atomique POSIX (fs.renameSync de ledger_mainnet.tmp.json vers ledger_mainnet.json) chiffrée en AES-256-GCM sur grappes NVMe RAID 10. Pour les commerçants utilisant Roger Service Pro POS en local, le Support B2B configure un utilitaire de sauvegarde incrémentale chiffrée permettant de restaurer l'intégralité du catalogue d'inventaire, de la comptabilité en ₳ et des paramètres de caisse en moins de 3 minutes sur une nouvelle machine en cas de panne matérielle.",
                     cryptoFocus: "Vérification automatique du tag d'intégrité GMAC 128 bits et du condensat SHA-256 lors de toute restauration de sauvegarde serveur ou caisse POS.",
                     operationalFocus: "Objectif de point de reprise (RPO — Recovery Point Objective) égal à 0 transaction perdue sur la blockchain L1 et objectif de temps de reprise (RTO) inférieur à 2 secondes.",
                     legalFocus: "Continuité d'exploitation conforme aux normes bancaires de préservation des journaux comptables.",
-                    tech: "RPO Blockchain L1 : 0 TX perdue (WAL Atomique) | RTO Serveur : < 2s | Restauration Caisse POS : < 3 min."
+                    tech: "RPO Blockchain L1 : 0 TX perdue (WAL Atomique) | RTO Serveur : < 2s | Restauration Caisse POS : < 3 min.",
+                    cmdSnippet: "sha256sum ledger_mainnet.json && pm2 reload nexus-validator-node"
                 },
                 en: {
                     short: "16. Business Continuity (DRP) & WAL Backups",
                     title: "Protocol 16 — Disaster Recovery Plan (DRP), Anti-Blackout Atomic Writes, and B2B Data Redundancy",
                     badge: "Anti-Blackout Resilience",
-                    core: "B2B Support and the Technical Directorate guarantee partner enterprises complete resilience against power grid blackouts and infrastructure contingencies. On Mainnet #9012 validator nodes, every block sealed every 2 seconds undergoes an atomic POSIX write-ahead log commit (`fs.renameSync` from `ledger_mainnet.tmp.json` to `ledger_mainnet.json`) encrypted in AES-256-GCM across RAID 10 NVMe arrays. For merchants operating Roger Service Pro POS locally, B2B Support configures an encrypted incremental backup utility capable of restoring the entire inventory catalog, ₳ accounting ledger, and POS settings onto replacement hardware in under 3 minutes following a hardware failure.",
+                    core: "B2B Support and the Technical Directorate guarantee partner enterprises complete resilience against power grid blackouts and infrastructure contingencies. On Mainnet #9012 validator nodes, every block sealed every 2 seconds undergoes an atomic POSIX write-ahead log commit (fs.renameSync from ledger_mainnet.tmp.json to ledger_mainnet.json) encrypted in AES-256-GCM across RAID 10 NVMe arrays. For merchants operating Roger Service Pro POS locally, B2B Support configures an encrypted incremental backup utility capable of restoring the entire inventory catalog, ₳ accounting ledger, and POS settings onto replacement hardware in under 3 minutes following a hardware failure.",
                     cryptoFocus: "Automated verification of the 128-bit GMAC integrity tag and SHA-256 digest during any server or POS backup restoration.",
                     operationalFocus: "Recovery Point Objective (RPO) of 0 lost transactions on the L1 blockchain and Recovery Time Objective (RTO) under 2 seconds.",
                     legalFocus: "Operational continuity compliant with banking standards for accounting ledger preservation.",
-                    tech: "L1 Blockchain RPO: 0 lost TXs (Atomic WAL) | Server RTO: < 2s | POS Terminal Restore: < 3 min."
+                    tech: "L1 Blockchain RPO: 0 lost TXs (Atomic WAL) | Server RTO: < 2s | POS Terminal Restore: < 3 min.",
+                    cmdSnippet: "sha256sum ledger_mainnet.json && pm2 reload nexus-validator-node"
                 }
             },
             {
@@ -1205,21 +1273,23 @@
                     short: "17. Audit Comptable, Export Fiscal & Preuve PoR",
                     title: "Protocole 17 — Assistance à l'Audit Comptable, Certificats de Solde en ₳ et Attestations de Preuve de Réserve (PoR)",
                     badge: "Audit & Comptabilité B2B",
-                    core: "Lors des clôtures d'exercices comptables ou des contrôles menés par des commissaires aux comptes, les entreprises détenant de la trésorerie en monnaie native ₳ peuvent solliciter auprès du Département Administration (`administration@agi-nexus-core.click`) ou générer directement via l'API (`/api/address/:addr/txs` et `nexus_getBalance`) un état certifié de leurs avoirs et mouvements. Grâce à la parité fixe `1 ₳ = 1 FCFA (XOF)` et à l'absence de volatilité spéculative, la réconciliation entre le grand livre on-chain sur NexusScan et le bilan comptable OHADA de l'entreprise est immédiate, exacte au millionième d'unité (`microA`) et vérifiable mathématiquement par tout auditeur externe.",
+                    core: "Lors des clôtures d'exercices comptables ou des contrôles menés par des commissaires aux comptes, les entreprises détenant de la trésorerie en monnaie native ₳ peuvent solliciter auprès du Département Administration (administration@agi-nexus-core.click) ou générer directement via l'API (/api/address/:addr/txs et nexus_getBalance) un état certifié de leurs avoirs et mouvements. Grâce à la parité fixe 1 ₳ = 1 FCFA (XOF) et à l'absence de volatilité spéculative, la réconciliation entre le grand livre on-chain sur NexusScan et le bilan comptable OHADA de l'entreprise est immédiate, exacte au millionième d'unité (microA) et vérifiable mathématiquement par tout auditeur externe.",
                     cryptoFocus: "Chaque ligne du relevé comptable B2B est adossée à son hash de transaction Base58 immuable et à l'indice du bloc PoA correspondant sur le Mainnet #9012.",
                     operationalFocus: "Délivrance sous 24 heures d'attestations officielles de solde et de conformité de réserve signées par l'Administration d'Atlas & Duc Corporation.",
                     legalFocus: "Compatibilité intégrale avec le Système Comptable OHADA (SYSCOHADA) en vigueur au Burkina Faso et dans l'espace UEMOA.",
-                    tech: "Norme Comptable : Alignement SYSCOHADA (1 ₳ = 1 XOF) | Preuve : Hash Base58 NexusScan & Certificat PoR."
+                    tech: "Norme Comptable : Alignement SYSCOHADA (1 ₳ = 1 XOF) | Preuve : Hash Base58 NexusScan & Certificat PoR.",
+                    cmdSnippet: "curl -s https://rpc.agi-nexus-core.click/api/address/ADC6MH4qsxED6cLtH3NLng5QL6Kvb9HRa8ui/txs?page=1&limit=100"
                 },
                 en: {
                     short: "17. Accounting Audit, Tax Export & PoR Proof",
                     title: "Protocol 17 — Accounting Audit Assistance, ₳ Balance Certificates, and Proof of Reserve (PoR) Attestations",
                     badge: "B2B Audit & Accounting",
-                    core: "During fiscal year-end closings or statutory audits conducted by certified public accountants, corporations holding treasury reserves in the native currency ₳ may request from the Administration Department (`administration@agi-nexus-core.click`) or generate directly via the API (`/api/address/:addr/txs` and `nexus_getBalance`) a certified statement of their holdings and transaction flows. Thanks to the fixed `1 ₳ = 1 CFA Franc (XOF)` parity and absence of speculative volatility, reconciliation between the on-chain ledger on NexusScan and the enterprise's OHADA balance sheet is instantaneous, accurate to one-millionth of a unit (`microA`), and mathematically verifiable by any external auditor.",
+                    core: "During fiscal year-end closings or statutory audits conducted by certified public accountants, corporations holding treasury reserves in the native currency ₳ may request from the Administration Department (administration@agi-nexus-core.click) or generate directly via the API (/api/address/:addr/txs and nexus_getBalance) a certified statement of their holdings and transaction flows. Thanks to the fixed 1 ₳ = 1 CFA Franc (XOF) parity and absence of speculative volatility, reconciliation between the on-chain ledger on NexusScan and the enterprise's OHADA balance sheet is instantaneous, accurate to one-millionth of a unit (microA), and mathematically verifiable by any external auditor.",
                     cryptoFocus: "Every line item on the B2B accounting statement is backed by its immutable Base58 transaction hash and corresponding PoA block index on Mainnet #9012.",
                     operationalFocus: "Issuance within 24 hours of official balance and reserve compliance attestations signed by Atlas & Duc Corporation's Administration.",
                     legalFocus: "Full compatibility with the OHADA Accounting System (SYSCOHADA) enforced in Burkina Faso and across the WAEMU region.",
-                    tech: "Accounting Standard: SYSCOHADA Alignment (1 ₳ = 1 XOF) | Proof: Base58 NexusScan Hash & PoR Certificate."
+                    tech: "Accounting Standard: SYSCOHADA Alignment (1 ₳ = 1 XOF) | Proof: Base58 NexusScan Hash & PoR Certificate.",
+                    cmdSnippet: "curl -s https://rpc.agi-nexus-core.click/api/address/ADC6MH4qsxED6cLtH3NLng5QL6Kvb9HRa8ui/txs?page=1&limit=100"
                 }
             },
             {
@@ -1232,21 +1302,23 @@
                     short: "18. Gestion des Mises à Niveau & Hard Forks L1",
                     title: "Protocole 18 — Accompagnement des Partenaires B2B lors des Mises à Niveau Protocolaires (Soft & Hard Forks L1)",
                     badge: "Coordination Upgrades L1",
-                    core: "Lorsque la Direction de l'Architecture Logicielle d'Atlas & Duc Corporation planifie une mise à niveau évolutive du protocole Nexus Core Layer-1 ou de la Machine Virtuelle NVM, un protocole de coordination B2B anticipé est déclenché 14 jours avant le bloc d'activation (hors correctif de sécurité critique immédiat). Tous les titulaires d'une clé `X-Nexus-API-Key` et les opérateurs de caisses Roger Service Pro reçoivent une notification technique détaillant la hauteur de bloc cible (`Block Height`), le cliché d'état (`State Snapshot` garantissant à 100 % la conservation des soldes en ₳ au microA près) et les éventuelles mises à jour de SDK ou d'application mobile via « Immediate In-App Update ».",
-                    cryptoFocus: "Conservation mathématique intégrale des soldes `this.balances`, des compteurs `this.nonces` et des états `this.contractsState` lors de toute migration de version du nœud V8.",
+                    core: "Lorsque la Direction de l'Architecture Logicielle d'Atlas & Duc Corporation planifie une mise à niveau évolutive du protocole Nexus Core Layer-1 ou de la Machine Virtuelle NVM, un protocole de coordination B2B anticipé est déclenché 14 jours avant le bloc d'activation (hors correctif de sécurité critique immédiat). Tous les titulaires d'une clé X-Nexus-API-Key et les opérateurs de caisses Roger Service Pro reçoivent une notification technique détaillant la hauteur de bloc cible (Block Height), le cliché d'état (State Snapshot garantissant à 100 % la conservation des soldes en ₳ au microA près) et les éventuelles mises à jour de SDK ou d'application mobile via « Immediate In-App Update ».",
+                    cryptoFocus: "Conservation mathématique intégrale des soldes this.balances, des compteurs this.nonces et des états this.contractsState lors de toute migration de version du nœud V8.",
                     operationalFocus: "Assistance directe par téléphone et WhatsApp pendant la fenêtre de bascule (qui dure moins de 2 secondes grâce au consensus PoA nBFT).",
                     legalFocus: "Garantie contractuelle de continuité patrimoniale et fonctionnelle pour tous les partenaires de l'écosystème.",
-                    tech: "Préavis Upgrade Standard : 14 jours | Conservation Soldes ₳ : 100% par State Snapshot | Interruption : < 2s."
+                    tech: "Préavis Upgrade Standard : 14 jours | Conservation Soldes ₳ : 100% par State Snapshot | Interruption : < 2s.",
+                    cmdSnippet: "curl -X POST https://rpc.agi-nexus-core.click -H 'Content-Type: application/json' -d '{\"jsonrpc\":\"2.0\",\"method\":\"nexus_getBlockByNumber\",\"params\":[\"latest\",false],\"id\":18}'"
                 },
                 en: {
                     short: "18. Upgrade Management & L1 Hard Forks",
                     title: "Protocol 18 — B2B Partner Coordination During Protocol Upgrades (L1 Soft & Hard Forks)",
                     badge: "L1 Upgrade Coordination",
-                    core: "Whenever Atlas & Duc Corporation's Lead Software Architecture Division schedules an evolutionary upgrade of the Nexus Core Layer-1 protocol or NVM Virtual Machine, an advance B2B coordination protocol is initiated 14 days prior to the activation block (excluding immediate critical security patches). All `X-Nexus-API-Key` holders and Roger Service Pro POS operators receive a technical bulletin detailing the target `Block Height`, the cryptographic `State Snapshot` (guaranteeing 100% preservation of ₳ balances down to the exact microA), and any required SDK or mobile app updates via 'Immediate In-App Update'.",
-                    cryptoFocus: "Complete mathematical preservation of `this.balances`, `this.nonces`, and `this.contractsState` maps across any V8 node version migration.",
+                    core: "Whenever Atlas & Duc Corporation's Lead Software Architecture Division schedules an evolutionary upgrade of the Nexus Core Layer-1 protocol or NVM Virtual Machine, an advance B2B coordination protocol is initiated 14 days prior to the activation block (excluding immediate critical security patches). All X-Nexus-API-Key holders and Roger Service Pro POS operators receive a technical bulletin detailing the target Block Height, the cryptographic State Snapshot (guaranteeing 100% preservation of ₳ balances down to the exact microA), and any required SDK or mobile app updates via 'Immediate In-App Update'.",
+                    cryptoFocus: "Complete mathematical preservation of this.balances, this.nonces, and this.contractsState maps across any V8 node version migration.",
                     operationalFocus: "Direct phone and WhatsApp engineering support throughout the switchover window (which completes in under 2 seconds thanks to nBFT PoA consensus).",
                     legalFocus: "Contractual guarantee of patrimonial and functional continuity for all ecosystem partners.",
-                    tech: "Standard Upgrade Notice: 14 days | ₳ Balance Preservation: 100% via State Snapshot | Downtime: < 2s."
+                    tech: "Standard Upgrade Notice: 14 days | ₳ Balance Preservation: 100% via State Snapshot | Downtime: < 2s.",
+                    cmdSnippet: "curl -X POST https://rpc.agi-nexus-core.click -H 'Content-Type: application/json' -d '{\"jsonrpc\":\"2.0\",\"method\":\"nexus_getBlockByNumber\",\"params\":[\"latest\",false],\"id\":18}'"
                 }
             },
             {
@@ -1259,21 +1331,23 @@
                     short: "19. Guichet Régulateurs, Banques & Autorités",
                     title: "Protocole 19 — Canal Officiel de Liaison avec les Autorités Réglementaires (CIL, BCEAO, CENTIF) et Institutions Bancaires",
                     badge: "Liaison Institutionnelle",
-                    core: "Atlas & Duc Corporation met à la disposition des autorités de régulation (Commission de l'Informatique et des Libertés — CIL du Burkina Faso, autorités monétaires de l'UEMOA, CENTIF) ainsi que des directions de la conformité des banques partenaires un canal de communication officiel dédié piloté par la Présidence (`+226 76 20 38 48` / `mr.yougma@agi-nexus-core.click`) et l'Administration (`administration@agi-nexus-core.click`). Ce guichet traite en priorité absolue les demandes d'audit de conformité, les vérifications de Preuve de Réserve (PoR) des 100 milliards de ₳, les questions relatives à notre architecture Privacy-by-Design (Loi N° 001-2021/AN) et l'assistance analytique sur les écritures publiques du registre NexusScan.",
+                    core: "Atlas & Duc Corporation met à la disposition des autorités de régulation (Commission de l'Informatique et des Libertés — CIL du Burkina Faso, autorités monétaires de l'UEMOA, CENTIF) ainsi que des directions de la conformité des banques partenaires un canal de communication officiel dédié piloté par la Présidence (+226 76 20 38 48 / mr.yougma@agi-nexus-core.click) et l'Administration (administration@agi-nexus-core.click). Ce guichet traite en priorité absolue les demandes d'audit de conformité, les vérifications de Preuve de Réserve (PoR) des 100 milliards de ₳, les questions relatives à notre architecture Privacy-by-Design (Loi N° 001-2021/AN) et l'assistance analytique sur les écritures publiques du registre NexusScan.",
                     cryptoFocus: "Démonstration vérifiable par audit du code source de nos deux invariants réglementaires : 0 % de collecte de données civiles PII sur les portefeuilles non-custodiaux et 100 % de traçabilité publique des flux en ₳ sur NexusScan.",
                     operationalFocus: "Transmission sous 24 heures des dossiers techniques d'architecture, du Livre Blanc officiel et des certificats de récépissé N° PHUE-3539/2025.",
                     legalFocus: "Coopération institutionnelle exemplaire et transparence souveraine au service de la stabilité financière du Burkina Faso et de l'UEMOA.",
-                    tech: "Guichet Autorités : administration@agi-nexus-core.click & mr.yougma@agi-nexus-core.click | Récépissé : N° PHUE-3539/2025."
+                    tech: "Guichet Autorités : administration@agi-nexus-core.click & mr.yougma@agi-nexus-core.click | Récépissé : N° PHUE-3539/2025.",
+                    cmdSnippet: "curl -s https://rpc.agi-nexus-core.click/api/exchange/ticker"
                 },
                 en: {
                     short: "19. Regulators, Banks & Authorities Desk",
                     title: "Protocol 19 — Official Liaison Channel for Regulatory Authorities (CIL, BCEAO, CENTIF) and Banking Institutions",
                     badge: "Institutional Liaison",
-                    core: "Atlas & Duc Corporation provides regulatory authorities (Commission de l'Informatique et des Libertés — CIL of Burkina Faso, WAEMU monetary authorities, CENTIF) as well as compliance directorates of partner banks with a dedicated official liaison channel led by the Presidency (`+226 76 20 38 48` / `mr.yougma@agi-nexus-core.click`) and Administration (`administration@agi-nexus-core.click`). This desk processes with top priority compliance audit inquiries, Proof of Reserve (PoR) verifications for the 100 billion ₳ supply, questions regarding our Privacy-by-Design architecture (Law N° 001-2021/AN), and analytical assistance on public NexusScan ledger records.",
+                    core: "Atlas & Duc Corporation provides regulatory authorities (Commission de l'Informatique et des Libertés — CIL of Burkina Faso, WAEMU monetary authorities, CENTIF) as well as compliance directorates of partner banks with a dedicated official liaison channel led by the Presidency (+226 76 20 38 48 / mr.yougma@agi-nexus-core.click) and Administration (administration@agi-nexus-core.click). This desk processes with top priority compliance audit inquiries, Proof of Reserve (PoR) verifications for the 100 billion ₳ supply, questions regarding our Privacy-by-Design architecture (Law N° 001-2021/AN), and analytical assistance on public NexusScan ledger records.",
                     cryptoFocus: "Source-code auditable demonstration of our two regulatory invariants: 0% civil PII collection on non-custodial wallets and 100% public traceability of ₳ flows on NexusScan.",
                     operationalFocus: "Delivery within 24 hours of technical architecture dossiers, the official White Paper, and corporate registration certificates (Receipt N° PHUE-3539/2025).",
                     legalFocus: "Exemplary institutional cooperation and sovereign transparency serving financial stability in Burkina Faso and the WAEMU region.",
-                    tech: "Authorities Desk: administration@agi-nexus-core.click & mr.yougma@agi-nexus-core.click | Receipt: N° PHUE-3539/2025."
+                    tech: "Authorities Desk: administration@agi-nexus-core.click & mr.yougma@agi-nexus-core.click | Receipt: N° PHUE-3539/2025.",
+                    cmdSnippet: "curl -s https://rpc.agi-nexus-core.click/api/exchange/ticker"
                 }
             },
             {
@@ -1286,21 +1360,23 @@
                     short: "20. Escalade Exécutive & Sièges Souverains",
                     title: "Protocole 20 — Procédure d'Escalade Exécutive vers la Présidence, Élection de Domicile et Engagement Souverain",
                     badge: "Escalade Présidence",
-                    core: "Dans l'hypothèse exceptionnelle où un ticket d'incident B2B de priorité P1 ou P2 (`ADCT_...`) ne serait pas résolu dans les délais SLA impartis par le Support Technique (`+226 78 37 08 03` / `support@agi-nexus-core.click`), le partenaire B2B dispose d'un droit d'escalade directe vers la Direction Technique CTO (`+226 70 87 37 73` / `administration@agi-nexus-core.click`) puis vers la Présidence d'Atlas & Duc Corporation (`+226 76 20 38 48` / `mr.yougma@agi-nexus-core.click`). En mentionnant l'identifiant Base58 du ticket initial, le dossier est immédiatement pris en main par l'équipe de direction à Koupéla et Bobo-Dioulasso jusqu'à résolution complète et définitive.",
+                    core: "Dans l'hypothèse exceptionnelle où un ticket d'incident B2B de priorité P1 ou P2 (ADCT_...) ne serait pas résolu dans les délais SLA impartis par le Support Technique (+226 78 37 08 03 / support@agi-nexus-core.click), le partenaire B2B dispose d'un droit d'escalade directe vers la Direction Technique CTO (+226 70 87 37 73 / administration@agi-nexus-core.click) puis vers la Présidence d'Atlas & Duc Corporation (+226 76 20 38 48 / mr.yougma@agi-nexus-core.click). En mentionnant l'identifiant Base58 du ticket initial, le dossier est immédiatement pris en main par l'équipe de direction à Koupéla et Bobo-Dioulasso jusqu'à résolution complète et définitive.",
                     cryptoFocus: "Audit complet de la chaîne d'exécution (du client mobile ou POS jusqu'au noyau V8 du nœud validateur Maître) supervisé par l'Architecte Logiciel Principal.",
                     operationalFocus: "Engagement personnel et institutionnel de la direction d'Atlas & Duc Corporation à garantir une fiabilité sans compromis à chaque entreprise utilisatrice de la monnaie native ₳.",
                     legalFocus: "Élection de domicile officielle à Koupéla (BP 131 Koupéla, Province du Kouritenga) et Bobo-Dioulasso (Secteur 20), République du Burkina Faso (Récépissé N° PHUE-3539/2025).",
-                    tech: "Escalade Niveau 1 : Support (+226 78 37 08 03) -> Niveau 2 : CTO (+226 70 87 37 73) -> Niveau 3 : Présidence (+226 76 20 38 48)."
+                    tech: "Escalade Niveau 1 : Support (+226 78 37 08 03) -> Niveau 2 : CTO (+226 70 87 37 73) -> Niveau 3 : Présidence (+226 76 20 38 48).",
+                    cmdSnippet: "curl -s https://rpc.agi-nexus-core.click/api/price"
                 },
                 en: {
                     short: "20. Executive Escalation & Sovereign HQ",
                     title: "Protocol 20 — Executive Escalation Procedure to the Presidency, Election of Domicile, and Sovereign Commitment",
                     badge: "Presidency Escalation",
-                    core: "In the exceptional event that a Priority P1 or P2 B2B incident ticket (`ADCT_...`) is not resolved within the stipulated SLA window by Technical Support (`+226 78 37 08 03` / `support@agi-nexus-core.click`), the B2B partner holds a direct right of escalation to the CTO Technical Directorate (`+226 70 87 37 73` / `administration@agi-nexus-core.click`) and subsequently to the Presidency of Atlas & Duc Corporation (`+226 76 20 38 48` / `mr.yougma@agi-nexus-core.click`). By referencing the initial Base58 ticket identifier, the case is immediately assumed by the executive leadership in Koupéla and Bobo-Dioulasso until full and definitive resolution.",
+                    core: "In the exceptional event that a Priority P1 or P2 B2B incident ticket (ADCT_...) is not resolved within the stipulated SLA window by Technical Support (+226 78 37 08 03 / support@agi-nexus-core.click), the B2B partner holds a direct right of escalation to the CTO Technical Directorate (+226 70 87 37 73 / administration@agi-nexus-core.click) and subsequently to the Presidency of Atlas & Duc Corporation (+226 76 20 38 48 / mr.yougma@agi-nexus-core.click). By referencing the initial Base58 ticket identifier, the case is immediately assumed by the executive leadership in Koupéla and Bobo-Dioulasso until full and definitive resolution.",
                     cryptoFocus: "End-to-end execution chain audit (from the mobile or POS client right down to the Master Validator Node's V8 kernel) supervised by the Lead Software Architect.",
                     operationalFocus: "Personal and institutional commitment by Atlas & Duc Corporation's leadership to guarantee uncompromising reliability for every enterprise operating with the native currency ₳.",
                     legalFocus: "Official election of domicile in Koupéla (BP 131 Koupéla, Kouritenga Province) and Bobo-Dioulasso (Sector 20), Republic of Burkina Faso (Receipt N° PHUE-3539/2025).",
-                    tech: "Escalation Tier 1: Support (+226 78 37 08 03) -> Tier 2: CTO (+226 70 87 37 73) -> Tier 3: Presidency (+226 76 20 38 48)."
+                    tech: "Escalation Tier 1: Support (+226 78 37 08 03) -> Tier 2: CTO (+226 70 87 37 73) -> Tier 3: Presidency (+226 76 20 38 48).",
+                    cmdSnippet: "curl -s https://rpc.agi-nexus-core.click/api/price"
                 }
             }
         ];
@@ -1359,6 +1435,29 @@
 
         let currentLang = 'fr';
 
+        function renderFaqList() {
+            const faqContainer = document.getElementById('faqListContainer');
+            if (!faqContainer) return;
+            faqContainer.innerHTML = '';
+            faqData.forEach((item, idx) => {
+                const langItem = item[currentLang];
+                const div = document.createElement('div');
+                div.className = `faq-item ${idx === 0 ? 'active ' : ''}bg-white border border-indBorder rounded-xl transition-colors`;
+                div.innerHTML = `
+                    <button class="w-full text-left p-4 flex justify-between items-center outline-none rounded-xl" onclick="toggleFaq(this)">
+                        <span class="font-black text-sm text-premiumDark pr-4">${langItem.q}</span>
+                        <i class="fa-solid fa-chevron-down text-indAccent faq-icon transition-transform duration-200 text-xs shrink-0"></i>
+                    </button>
+                    <div class="faq-content">
+                        <div class="px-4 pb-4 pt-0 text-xs text-slate-600 leading-relaxed text-justify-custom font-medium">
+                            ${langItem.a}
+                        </div>
+                    </div>
+                `;
+                faqContainer.appendChild(div);
+            });
+        }
+
         function renderSupportPage() {
             const container = document.getElementById('articlesContainer');
             const sidebarList = document.getElementById('sidebarArticlesList');
@@ -1367,6 +1466,8 @@
 
             container.innerHTML = '';
             sidebarList.innerHTML = '';
+
+            renderFaqList();
 
             let totalCorpusChars = 0;
 
@@ -1377,7 +1478,7 @@
                 const headers = uiStrings[currentLang].section_headers;
                 const mHeaders = uiStrings[currentLang].matrix_headers;
 
-                const fullTextForMeasure = langObj.title + " " + sections.join(" ") + " " + langObj.tech + " " + matrixRows.flat().join(" ");
+                const fullTextForMeasure = langObj.title + " " + sections.join(" ") + " " + langObj.tech + " " + langObj.cmdSnippet + " " + matrixRows.flat().join(" ");
                 const charCount = fullTextForMeasure.length;
                 const wordCount = fullTextForMeasure.split(/\s+/).length;
                 totalCorpusChars += charCount;
@@ -1452,6 +1553,16 @@
                             ${clausesHtml}
                         </div>
 
+                        <div class="dev-code-block mb-6">
+                            <div class="dev-code-header">
+                                <span class="text-[10px] font-mono font-bold text-indGold uppercase tracking-wider"><i class="fa-solid fa-terminal mr-1.5"></i> Commande de Diagnostic & Vérification NOC L1 (${art.domainCode})</span>
+                                <span class="text-[10px] font-mono text-slate-400">Mainnet #9012 • ₳ / Base58</span>
+                            </div>
+                            <div class="dev-code-body">
+                                <code>${langObj.cmdSnippet}</code>
+                            </div>
+                        </div>
+
                         <div class="overflow-x-auto rounded-xl border border-slate-200 mb-5">
                             <table class="w-full text-left border-collapse text-xs">
                                 <thead>
@@ -1513,6 +1624,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             renderSupportPage();
+            updateMicroCalculator();
             const searchInput = document.getElementById('articleSearchInput');
             if (searchInput) {
                 searchInput.addEventListener('input', () => {
