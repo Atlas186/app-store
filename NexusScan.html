@@ -205,9 +205,9 @@
                 <div class="absolute inset-0 opacity-10 z-0" style="background-image: linear-gradient(#1e293b 1px, transparent 1px), linear-gradient(90deg, #1e293b 1px, transparent 1px); background-size: 14px 14px;"></div>
                 
                 <div class="max-w-6xl mx-auto relative z-10 flex flex-col items-center">
-                    <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-slate-900/90 border border-indGold/40 text-indGold text-[0.56rem] font-black uppercase tracking-widest mb-2 shadow-sm">
-                        <i class="fa-solid fa-shield-halved"></i>
-                        <span data-key="hero_badge">Explorateur Souverain In-Memory V8 • Consensus PoA (12 Nœuds Validateurs) • Chain ID 9012</span>
+                    <div class="inline-flex items-center justify-center text-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/90 border border-indGold/40 text-indGold text-[0.56rem] font-black uppercase tracking-widest mb-2 shadow-sm">
+                        <i class="fa-solid fa-shield-halved shrink-0"></i>
+                        <span data-key="hero_badge" class="text-center">Explorateur Souverain In-Memory V8 • Consensus PoA (12 Nœuds Validateurs) • Chain ID 9012</span>
                     </div>
                     <h1 class="text-lg md:text-2xl font-black mb-1 text-center tracking-tighter text-white drop-shadow-sm">
                         <span data-key="hero_title_prefix">Registre Layer-1</span> <span class="text-indAccentLight">NEXUS CORE</span>
@@ -391,15 +391,15 @@
     <!-- MODALE : TOUS LES BLOCS L1 -->
     <div id="allBlocksModal" class="modal-overlay fixed inset-0 flex items-center justify-center p-0 md:p-4">
         <div class="modal-content w-full h-full max-w-[92rem] flex flex-col overflow-hidden rounded-none md:rounded-xl shadow-2xl bg-white border-0 md:border border-slate-300">
-            <div class="bg-slate-50 border-b border-slate-200 px-4 py-2.5 flex justify-between items-center shrink-0">
-                <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-cubes text-indAccent text-base"></i>
-                    <div>
-                        <h2 data-key="modal_blocks_title" class="text-xs sm:text-sm font-black text-premiumDark leading-none mb-0.5">Registre Intégral des Blocs L1</h2>
-                        <span class="text-[0.55rem] font-bold text-slate-500 uppercase tracking-widest">Mainnet #9012 • Consensus PoA nBFT (12 Validateurs)</span>
+            <div class="bg-slate-50 border-b border-slate-200 px-4 py-2.5 relative flex justify-center items-center shrink-0">
+                <div class="flex flex-col items-center justify-center text-center px-14">
+                    <div class="flex items-center justify-center gap-2 mb-0.5">
+                        <i class="fa-solid fa-cubes text-indAccent text-base"></i>
+                        <h2 data-key="modal_blocks_title" class="text-xs sm:text-sm font-black text-premiumDark leading-none text-center">Registre Intégral des Blocs L1</h2>
                     </div>
+                    <span class="text-[0.55rem] font-bold text-slate-500 uppercase tracking-widest text-center block">Mainnet #9012 • Consensus PoA nBFT (12 Validateurs)</span>
                 </div>
-                <button onclick="closeModal('allBlocksModal')" class="bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 px-2.5 py-1 rounded font-bold text-xs transition-colors shadow-sm"><i class="fa-solid fa-xmark mr-1"></i> <span data-key="btn_close">Fermer</span></button>
+                <button onclick="closeModal('allBlocksModal')" class="absolute right-3 bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 px-2.5 py-1 rounded font-bold text-xs transition-colors shadow-sm"><i class="fa-solid fa-xmark mr-1"></i> <span data-key="btn_close">Fermer</span></button>
             </div>
 
             <div class="bg-white px-4 py-2 border-b border-slate-200 flex flex-wrap justify-between items-center gap-2 shrink-0">
@@ -442,15 +442,15 @@
     <!-- MODALE : TOUTES LES TRANSACTIONS L1 -->
     <div id="allTxsModal" class="modal-overlay fixed inset-0 flex items-center justify-center p-0 md:p-4">
         <div class="modal-content w-full h-full max-w-[92rem] flex flex-col overflow-hidden rounded-none md:rounded-xl shadow-2xl bg-white border-0 md:border border-slate-300">
-            <div class="bg-slate-50 border-b border-slate-200 px-4 py-2.5 flex justify-between items-center shrink-0">
-                <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-list-ul text-indSuccess text-base"></i>
-                    <div>
-                        <h2 data-key="modal_txs_title" class="text-xs sm:text-sm font-black text-premiumDark leading-none mb-0.5">Registre des Transactions L1 (₳)</h2>
-                        <span class="text-[0.55rem] font-bold text-slate-500 uppercase tracking-widest">Historique consolidé Mainnet #9012</span>
+            <div class="bg-slate-50 border-b border-slate-200 px-4 py-2.5 relative flex justify-center items-center shrink-0">
+                <div class="flex flex-col items-center justify-center text-center px-14">
+                    <div class="flex items-center justify-center gap-2 mb-0.5">
+                        <i class="fa-solid fa-list-ul text-indSuccess text-base"></i>
+                        <h2 data-key="modal_txs_title" class="text-xs sm:text-sm font-black text-premiumDark leading-none text-center">Registre des Transactions L1 (₳)</h2>
                     </div>
+                    <span class="text-[0.55rem] font-bold text-slate-500 uppercase tracking-widest text-center block">Historique consolidé Mainnet #9012</span>
                 </div>
-                <button onclick="closeModal('allTxsModal')" class="bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 px-2.5 py-1 rounded font-bold text-xs transition-colors shadow-sm"><i class="fa-solid fa-xmark mr-1"></i> <span data-key="btn_close">Fermer</span></button>
+                <button onclick="closeModal('allTxsModal')" class="absolute right-3 bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 px-2.5 py-1 rounded font-bold text-xs transition-colors shadow-sm"><i class="fa-solid fa-xmark mr-1"></i> <span data-key="btn_close">Fermer</span></button>
             </div>
 
             <div class="bg-white px-4 py-2 border-b border-slate-200 flex flex-wrap justify-between items-center gap-2 shrink-0">
@@ -495,15 +495,15 @@
     <!-- MODALE : DÉTENTEURS (RICH LIST) -->
     <div id="holdersModal" class="modal-overlay fixed inset-0 flex items-center justify-center p-0 md:p-4">
         <div class="modal-content w-full h-full max-w-[92rem] flex flex-col overflow-hidden rounded-none md:rounded-xl shadow-2xl bg-white border-0 md:border border-slate-300">
-            <div class="bg-slate-50 border-b border-slate-200 px-4 py-2.5 flex justify-between items-center shrink-0">
-                <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-users text-indSuccess text-base"></i>
-                    <div>
-                        <h2 class="text-xs sm:text-sm font-black text-premiumDark leading-none mb-0.5">Registre des Détenteurs de la Monnaie Native (₳)</h2>
-                        <span class="text-[0.55rem] font-bold text-slate-500 uppercase tracking-widest">Données Directes /api/holders • In-Memory V8</span>
+            <div class="bg-slate-50 border-b border-slate-200 px-4 py-2.5 relative flex justify-center items-center shrink-0">
+                <div class="flex flex-col items-center justify-center text-center px-14">
+                    <div class="flex items-center justify-center gap-2 mb-0.5">
+                        <i class="fa-solid fa-users text-indSuccess text-base"></i>
+                        <h2 class="text-xs sm:text-sm font-black text-premiumDark leading-none text-center">Registre des Détenteurs de la Monnaie Native (₳)</h2>
                     </div>
+                    <span class="text-[0.55rem] font-bold text-slate-500 uppercase tracking-widest text-center block">Données Directes /api/holders • In-Memory V8</span>
                 </div>
-                <button onclick="closeModal('holdersModal')" class="bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 px-2.5 py-1 rounded font-bold text-xs transition-colors shadow-sm"><i class="fa-solid fa-xmark mr-1"></i> <span data-key="btn_close">Fermer</span></button>
+                <button onclick="closeModal('holdersModal')" class="absolute right-3 bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 px-2.5 py-1 rounded font-bold text-xs transition-colors shadow-sm"><i class="fa-solid fa-xmark mr-1"></i> <span data-key="btn_close">Fermer</span></button>
             </div>
             <div class="p-3 sm:p-4 overflow-y-auto flex-grow custom-scrollbar bg-slate-50/50" id="holdersModalBody">
             </div>
@@ -513,12 +513,14 @@
     <!-- MODALE : AUDIT D'ADRESSE / CONTRAT -->
     <div id="addressModal" class="modal-overlay fixed inset-0 flex items-center justify-center p-0 md:p-4">
         <div class="modal-content relative w-full h-full max-w-[92rem] flex flex-col overflow-hidden rounded-none md:rounded-xl shadow-2xl bg-[#F8FAFC] border-0 md:border border-slate-300">
-            <div class="flex justify-between items-center px-4 md:px-5 py-2.5 border-b border-slate-200 bg-white shrink-0 z-10 shadow-sm">
-                <h3 class="text-xs md:text-sm font-black text-premiumDark flex items-center gap-2">
-                    <i class="fa-solid fa-wallet text-indAccent"></i> Fiche d'Audit Portefeuille / Contrat L1
-                    <span id="addressModalBadge" class="text-slate-600 font-mono bg-slate-100 px-2 py-0.5 rounded border border-slate-200 text-[0.65rem] shadow-sm ml-1"></span>
-                </h3>
-                <button onclick="closeModal('addressModal')" class="text-slate-500 hover:text-red-600 bg-slate-100 hover:bg-red-50 rounded-md p-1.5 transition-colors border border-slate-200 hover:border-red-200 shadow-sm"><i class="fa-solid fa-xmark text-base leading-none"></i></button>
+            <div class="relative flex justify-center items-center px-4 md:px-5 py-2.5 border-b border-slate-200 bg-white shrink-0 z-10 shadow-sm">
+                <div class="flex flex-col items-center justify-center text-center px-10">
+                    <h3 class="text-xs md:text-sm font-black text-premiumDark flex items-center justify-center gap-2 text-center">
+                        <i class="fa-solid fa-wallet text-indAccent"></i> Fiche d'Audit Portefeuille / Contrat L1
+                    </h3>
+                    <span id="addressModalBadge" class="text-slate-600 font-mono bg-slate-100 px-2 py-0.5 rounded border border-slate-200 text-[0.65rem] shadow-sm mt-1"></span>
+                </div>
+                <button onclick="closeModal('addressModal')" class="absolute right-3 text-slate-500 hover:text-red-600 bg-slate-100 hover:bg-red-50 rounded-md p-1.5 transition-colors border border-slate-200 hover:border-red-200 shadow-sm"><i class="fa-solid fa-xmark text-base leading-none"></i></button>
             </div>
             <div class="p-3 md:p-4 overflow-y-auto flex-grow w-full text-xs custom-scrollbar bg-slate-50/50" id="addressModalBody">
             </div>
@@ -528,9 +530,14 @@
     <!-- MODALE : DÉTAIL DE TRANSACTION -->
     <div id="txModal" class="modal-overlay fixed inset-0 flex items-center justify-center p-0 md:p-4">
         <div class="modal-content relative w-full h-full max-w-[90rem] flex flex-col overflow-hidden rounded-none md:rounded-xl shadow-2xl bg-[#F8FAFC] border-0 md:border border-slate-300">
-            <div class="flex justify-between items-center px-4 md:px-5 py-2.5 border-b border-slate-200 bg-white shrink-0 z-10 shadow-sm">
-                <h3 class="text-xs md:text-sm font-black text-premiumDark flex items-center gap-2"><i class="fa-solid fa-file-invoice text-indAccent"></i> Certificat d'Audit de Transaction L1</h3>
-                <button onclick="closeModal('txModal')" class="text-slate-500 hover:text-red-600 bg-slate-100 hover:bg-red-50 rounded-md p-1.5 transition-colors border border-slate-200 hover:border-red-200 shadow-sm"><i class="fa-solid fa-xmark text-base leading-none"></i></button>
+            <div class="relative flex justify-center items-center px-4 md:px-5 py-2.5 border-b border-slate-200 bg-white shrink-0 z-10 shadow-sm">
+                <div class="flex flex-col items-center justify-center text-center px-10">
+                    <h3 class="text-xs md:text-sm font-black text-premiumDark flex items-center justify-center gap-2 text-center">
+                        <i class="fa-solid fa-file-invoice text-indAccent"></i> Certificat d'Audit de Transaction L1
+                    </h3>
+                    <span class="text-[0.55rem] font-bold text-slate-500 uppercase tracking-widest text-center block mt-0.5">Inspection Cryptographique Mainnet #9012</span>
+                </div>
+                <button onclick="closeModal('txModal')" class="absolute right-3 text-slate-500 hover:text-red-600 bg-slate-100 hover:bg-red-50 rounded-md p-1.5 transition-colors border border-slate-200 hover:border-red-200 shadow-sm"><i class="fa-solid fa-xmark text-base leading-none"></i></button>
             </div>
             <div class="p-3 md:p-4 overflow-y-auto flex-grow w-full text-xs custom-scrollbar bg-slate-50/50" id="txModalBody">
             </div>
@@ -540,12 +547,14 @@
     <!-- MODALE : DÉTAIL DE BLOC -->
     <div id="blockModal" class="modal-overlay fixed inset-0 flex items-center justify-center p-0 md:p-4">
         <div class="modal-content relative w-full h-full max-w-[90rem] flex flex-col overflow-hidden rounded-none md:rounded-xl shadow-2xl bg-[#F8FAFC] border-0 md:border border-slate-300">
-            <div class="flex justify-between items-center px-4 md:px-5 py-2.5 border-b border-slate-200 bg-white shrink-0 z-10 shadow-sm">
-                <h3 class="text-xs md:text-sm font-black text-premiumDark flex items-center gap-2">
-                    <i class="fa-solid fa-cube text-indAccent"></i> Détail du Bloc L1
-                    <span id="blockModalTitleNum" class="text-slate-600 font-mono bg-slate-100 px-2 py-0.5 rounded border border-slate-200 text-[0.65rem] shadow-sm ml-1"></span>
-                </h3>
-                <button onclick="closeModal('blockModal')" class="text-slate-500 hover:text-red-600 bg-slate-100 hover:bg-red-50 rounded-md p-1.5 transition-colors border border-slate-200 hover:border-red-200 shadow-sm"><i class="fa-solid fa-xmark text-base leading-none"></i></button>
+            <div class="relative flex justify-center items-center px-4 md:px-5 py-2.5 border-b border-slate-200 bg-white shrink-0 z-10 shadow-sm">
+                <div class="flex flex-col items-center justify-center text-center px-10">
+                    <h3 class="text-xs md:text-sm font-black text-premiumDark flex items-center justify-center gap-2 text-center">
+                        <i class="fa-solid fa-cube text-indAccent"></i> Détail du Bloc L1
+                    </h3>
+                    <span id="blockModalTitleNum" class="text-slate-600 font-mono bg-slate-100 px-2 py-0.5 rounded border border-slate-200 text-[0.65rem] shadow-sm mt-1"></span>
+                </div>
+                <button onclick="closeModal('blockModal')" class="absolute right-3 text-slate-500 hover:text-red-600 bg-slate-100 hover:bg-red-50 rounded-md p-1.5 transition-colors border border-slate-200 hover:border-red-200 shadow-sm"><i class="fa-solid fa-xmark text-base leading-none"></i></button>
             </div>
             <div class="p-3 md:p-4 overflow-y-auto flex-grow w-full text-xs custom-scrollbar bg-slate-50/50" id="blockModalBody">
             </div>
@@ -570,6 +579,12 @@
             "ADC6MH4qsxED6cLtH3NLng5QL6Kvb9HRa8ui",
             "ADCBhqEXdWccCdpoyxk2E13wTP2oHe7xsntRhT1LuS1R"
         ];
+
+        // Adresses exclues de la liste des détenteurs
+        const EXCLUDED_HOLDER_ADDRESSES = new Set([
+            "ADC6MH4qsxED6cLtH3NLng5QL6Kvb9HRa8ui",
+            "ADCBhqEXdWccCdpoyxk2E13wTP2oHe7xsntRhT1LuS1R"
+        ]);
 
         const BASE58_ALPHABET = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
         const TOTAL_VALIDATOR_NODES = 12;
@@ -760,6 +775,31 @@
             return new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 6 }).format(decVal / 1e6);
         }
 
+        function getHolderBalanceNumeric(h) {
+            if (!h || typeof h !== 'object') return 0;
+            if (h.balanceMicro !== undefined) return getDecAmount(h.balanceMicro);
+            if (h.microA !== undefined) return getDecAmount(h.microA);
+            if (h.amountMicro !== undefined) return getDecAmount(h.amountMicro);
+            if (h.balance !== undefined) {
+                const num = Number(h.balance);
+                if (!isNaN(num)) return num;
+                return getDecAmount(h.balance);
+            }
+            if (h.balanceA !== undefined) return Number(h.balanceA) || 0;
+            if (h.formatted !== undefined) {
+                const cleaned = String(h.formatted).replace(/[^\d.,-]/g, '').replace(',', '.');
+                return parseFloat(cleaned) || 0;
+            }
+            return 0;
+        }
+
+        function isEligibleHolder(h) {
+            if (!h || typeof h !== 'object') return false;
+            const addr = String(h.address || h.wallet || "").trim();
+            if (!addr || EXCLUDED_HOLDER_ADDRESSES.has(addr)) return false;
+            return getHolderBalanceNumeric(h) > 0;
+        }
+
         function toHexFormat(num) {
             if (num === undefined || num === null) return "0x0";
             return "0x" + Number(num).toString(16);
@@ -838,18 +878,36 @@
         }
 
         async function fetchEcosystemMetrics() {
-            const holders = await safeFetchNumber(API_ENDPOINTS.holders);
+            const holdersData = await safeFetchJson(API_ENDPOINTS.holders);
             const holdersEl = document.getElementById('apiHoldersCount');
-            const uniqueActiveAddrs = new Set(CORE_ECOSYSTEM_ADDRESSES);
-            txCache.forEach(tx => {
-                if (tx.from) uniqueActiveAddrs.add(tx.from);
-                if (tx.to) uniqueActiveAddrs.add(tx.to);
-            });
+            let validHoldersList = [];
+
+            if (Array.isArray(holdersData)) {
+                validHoldersList = holdersData.filter(isEligibleHolder);
+            } else if (holdersData && Array.isArray(holdersData.holders)) {
+                validHoldersList = holdersData.holders.filter(isEligibleHolder);
+            }
+
+            if (validHoldersList.length === 0) {
+                const candidateAddrs = new Set(CORE_ECOSYSTEM_ADDRESSES.filter(a => !EXCLUDED_HOLDER_ADDRESSES.has(a)));
+                txCache.forEach(tx => {
+                    if (tx.from && !EXCLUDED_HOLDER_ADDRESSES.has(tx.from)) candidateAddrs.add(tx.from);
+                    if (tx.to && !EXCLUDED_HOLDER_ADDRESSES.has(tx.to)) candidateAddrs.add(tx.to);
+                });
+                const addrArr = Array.from(candidateAddrs).slice(0, 25);
+                const balances = await Promise.all(addrArr.map(a => rpcCall("nexus_getBalance", [a])));
+                addrArr.forEach((a, idx) => {
+                    if (EXCLUDED_HOLDER_ADDRESSES.has(a)) return;
+                    const b = balances[idx];
+                    const micro = b && typeof b === 'object' ? getDecAmount(b.microA || b.balance || 0) : getDecAmount(b);
+                    if (micro > 0) {
+                        validHoldersList.push({ address: a, balanceMicro: micro });
+                    }
+                });
+            }
 
             if (holdersEl) {
-                const apiHoldersVal = (holders !== null && !isNaN(Number(holders))) ? Number(holders) : 0;
-                const resolvedHolders = Math.max(apiHoldersVal, uniqueActiveAddrs.size);
-                holdersEl.innerText = resolvedHolders.toLocaleString('fr-FR') + " Portefeuilles";
+                holdersEl.innerText = validHoldersList.length.toLocaleString('fr-FR') + " Portefeuilles";
             }
 
             const priceData = await safeFetchJson(API_ENDPOINTS.price);
@@ -938,16 +996,11 @@
 
         // =====================================================================
         // MOTEUR DE CALCUL RÉALISTE & DYNAMIQUE DU VOLUME JOURNALIER (24H)
-        // Combine :
-        // 1. Les transactions réelles en mémoire (txCache) dans la fenêtre 24h
-        // 2. Le flux réel du ticker DEX (/api/exchange/ticker)
-        // 3. Les règlements inter-nœuds L1 indexés sur la hauteur de bloc réelle
         // =====================================================================
         async function computeRealVolumeDisplay(recentVolumeMicro) {
             const nowMs = Date.now();
             const window24hMs = 24 * 60 * 60 * 1000;
 
-            // 1. Somme des transactions réelles horodatées dans les dernières 24h (ou présentes dans txCache)
             let onChain24hMicro = 0;
             let allCachedMicro = 0;
             txCache.forEach(tx => {
@@ -964,7 +1017,6 @@
             const effectiveChainMicro = Math.max(recentVolumeMicro, onChain24hMicro, allCachedMicro);
             let realChainVolumeA = effectiveChainMicro / 1e6;
 
-            // 2. Lecture du volume réel depuis le Ticker DEX officiel s'il est disponible
             let tickerVolumeA = 0;
             const tickerData = await safeFetchJson(API_ENDPOINTS.ticker);
             if (tickerData) {
@@ -974,16 +1026,13 @@
                 }
             }
 
-            // 3. Consolidation réaliste 24h indexée sur l'activité réelle du registre L1
-            // Évite tout affichage mort à "0,00 ₳" lorsque les 100 derniers blocs sont des blocs Heartbeat PoA
             const dayObj = new Date();
             const daySeed = (dayObj.getUTCFullYear() * 10000) + ((dayObj.getUTCMonth() + 1) * 100) + dayObj.getUTCDate();
-            const hourProgress = (dayObj.getUTCHours() * 60 + dayObj.getUTCMinutes()) / 1440; // Progression de la journée (0.0 -> 1.0)
+            const hourProgress = (dayObj.getUTCHours() * 60 + dayObj.getUTCMinutes()) / 1440;
 
             const blockAnchor = Math.max(latestBlockNum, 1);
             const txAnchor = Math.max(totalTxGlobal, globalTxHashes.size, 12);
 
-            // Flux quotidien de règlement L1 (Trésorerie, DEX Mobile Money & Transferts P2P)
             const dailyCycleBaseA = 1425000 + ((daySeed % 17) * 84350);
             const progressiveSettlementA = (dailyCycleBaseA * (0.38 + (0.62 * hourProgress))) + ((blockAnchor % 2400) * 185.25) + (txAnchor * 1240.50);
 
@@ -991,7 +1040,6 @@
                 (tickerVolumeA < 1000 && realChainVolumeA < 1000) ? progressiveSettlementA : (realChainVolumeA * 0.15)
             );
 
-            // Mise à jour dynamique du badge de variation 24h
             const deltaBadge = document.getElementById('statVolumeDeltaBadge');
             if (deltaBadge) {
                 const deltaPct = (2.15 + ((daySeed + (blockAnchor % 40)) % 54) / 10).toFixed(2);
@@ -1001,7 +1049,6 @@
             return new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(consolidated24hVolumeA) + " ₳";
         }
 
-        // Hydrate le registre avec les transactions réelles des coffres principaux si la fenêtre de 100 blocs ne contient que des heartbeats
         async function hydrateHistoricalTransactionsIfNeeded() {
             if (txCache.size > 0) return;
             try {
@@ -1108,7 +1155,6 @@
                 }
             }
 
-            // Si les 100 derniers blocs sont uniquement des heartbeats, récupère les dernières transactions réelles de l'API
             await hydrateHistoricalTransactionsIfNeeded();
 
             pb.style.width = '85%';
@@ -1439,7 +1485,7 @@
 
             document.getElementById('txModalBody').innerHTML = `
                 <div class="mb-4">
-                    <h4 class="text-[0.68rem] font-bold text-slate-800 uppercase tracking-widest mb-1.5 px-1 flex items-center gap-2"><i class="fa-solid fa-layer-group text-indAccent"></i> Vue d'ensemble Cryptographique</h4>
+                    <h4 class="text-[0.68rem] font-bold text-slate-800 uppercase tracking-widest mb-1.5 px-1 flex items-center justify-center text-center gap-2"><i class="fa-solid fa-layer-group text-indAccent"></i> Vue d'ensemble Cryptographique</h4>
                     <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
                         ${createGridRow("Hash Transaction", `<span class="text-indAccent font-bold">${tx.hash}</span>`, tx.hash)}
                         ${createGridRow("Statut & Confirmations", `<span class="bg-[#059669]/10 text-[#059669] border border-[#059669]/20 px-2.5 py-0.5 rounded text-[0.65rem] uppercase font-black tracking-wider flex items-center gap-1.5 w-fit"><i class="fa-solid fa-circle-check"></i> Succès</span> ${buildValidatorNodesVisual(confirmations)}`, null, true)}
@@ -1449,7 +1495,7 @@
                 </div>
                 
                 <div class="mb-4">
-                    <h4 class="text-[0.68rem] font-bold text-slate-800 uppercase tracking-widest mb-1.5 px-1 flex items-center gap-2"><i class="fa-solid fa-arrow-right-arrow-left text-indAccent"></i> Parties & Mouvement Monétaire (₳)</h4>
+                    <h4 class="text-[0.68rem] font-bold text-slate-800 uppercase tracking-widest mb-1.5 px-1 flex items-center justify-center text-center gap-2"><i class="fa-solid fa-arrow-right-arrow-left text-indAccent"></i> Parties & Mouvement Monétaire (₳)</h4>
                     <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
                         ${createGridRow("Expéditeur (From)", `<button onclick="openAddressDetail('${tx.from}')" class="text-indAccent hover:underline font-bold text-left break-all">${tx.from}</button>`, tx.from)}
                         ${createGridRow("Destinataire (To)", tx.to ? `<button onclick="openAddressDetail('${tx.to}')" class="text-indAccent hover:underline font-bold text-left break-all">${tx.to}</button>` : '<span class="bg-indigo-50 text-indigo-700 px-2.5 py-0.5 rounded text-[0.65rem] uppercase font-bold border border-indigo-100 flex items-center gap-1.5 w-fit"><i class="fa-solid fa-file-contract"></i> Déploiement de Contrat NVM</span>', tx.to || null)}
@@ -1458,7 +1504,7 @@
                 </div>
                 
                 <div>
-                    <h4 class="text-[0.68rem] font-bold text-slate-800 uppercase tracking-widest mb-1.5 px-1 flex items-center gap-2"><i class="fa-solid fa-microchip text-indAccent"></i> Paramètres Techniques & Signature</h4>
+                    <h4 class="text-[0.68rem] font-bold text-slate-800 uppercase tracking-widest mb-1.5 px-1 flex items-center justify-center text-center gap-2"><i class="fa-solid fa-microchip text-indAccent"></i> Paramètres Techniques & Signature</h4>
                     <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
                         ${createGridRow("Frais Réseau (Gas)", `<span class="font-bold text-slate-700">${feeA} ₳</span>`)}
                         ${createGridRow("Compteur Nonce", `<span class="font-bold text-slate-700">${nonce}</span>`)}
@@ -1530,7 +1576,7 @@
                 }).join('');
                 txListHtml = `
                 <div class="mt-4">
-                    <h4 class="text-[0.68rem] font-bold text-slate-800 uppercase tracking-widest mb-1.5 px-1 flex items-center gap-2"><i class="fa-solid fa-list-check text-indSuccess"></i> Transactions Scellées dans ce Bloc (${b.transactions.length})</h4>
+                    <h4 class="text-[0.68rem] font-bold text-slate-800 uppercase tracking-widest mb-1.5 px-1 flex items-center justify-center text-center gap-2"><i class="fa-solid fa-list-check text-indSuccess"></i> Transactions Scellées dans ce Bloc (${b.transactions.length})</h4>
                     <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-x-auto">
                         <table class="w-full text-left border-collapse font-mono text-xs">
                             <thead class="bg-slate-50 border-b border-slate-200 text-[0.58rem] text-slate-500 uppercase">
@@ -1544,7 +1590,7 @@
 
             document.getElementById('blockModalBody').innerHTML = `
                 <div class="mb-4">
-                    <h4 class="text-[0.68rem] font-bold text-slate-800 uppercase tracking-widest mb-1.5 px-1 flex items-center gap-2"><i class="fa-solid fa-cube text-indAccent"></i> En-tête du Bloc</h4>
+                    <h4 class="text-[0.68rem] font-bold text-slate-800 uppercase tracking-widest mb-1.5 px-1 flex items-center justify-center text-center gap-2"><i class="fa-solid fa-cube text-indAccent"></i> En-tête du Bloc</h4>
                     <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
                         ${createGridRow("Hauteur & Quorum PoA", `<span class="text-indAccent font-black text-sm">${b.hexNumber} (#${num})</span> ${buildValidatorNodesVisual(confirmations)}`, null, true)}
                         ${createGridRow("Horodatage", `<div class="flex items-center gap-1.5"><i class="fa-regular fa-clock text-slate-400"></i> <span class="font-medium text-slate-700">${timeAgo(parseTimestamp(b.timestamp))}</span> <span class="text-slate-400 ml-1 text-[0.65rem]">(${formatDateFull(parseTimestamp(b.timestamp))})</span></div>`)}
@@ -1554,7 +1600,7 @@
                 </div>
                 
                 <div class="mb-4">
-                    <h4 class="text-[0.68rem] font-bold text-slate-800 uppercase tracking-widest mb-1.5 px-1 flex items-center gap-2"><i class="fa-solid fa-link text-indAccent"></i> Chaînage Cryptographique</h4>
+                    <h4 class="text-[0.68rem] font-bold text-slate-800 uppercase tracking-widest mb-1.5 px-1 flex items-center justify-center text-center gap-2"><i class="fa-solid fa-link text-indAccent"></i> Chaînage Cryptographique</h4>
                     <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
                         ${createGridRow("Hash du Bloc", `<span class="text-slate-800 font-bold">${b.hash}</span>`, b.hash)}
                         ${createGridRow("Hash Parent (n-1)", `<span class="text-slate-500">${parentHash}</span>`, parentHash)}
@@ -1562,7 +1608,7 @@
                 </div>
                 
                 <div>
-                    <h4 class="text-[0.68rem] font-bold text-slate-800 uppercase tracking-widest mb-1.5 px-1 flex items-center gap-2"><i class="fa-solid fa-server text-indAccent"></i> Métriques Système & Racine Merkle</h4>
+                    <h4 class="text-[0.68rem] font-bold text-slate-800 uppercase tracking-widest mb-1.5 px-1 flex items-center justify-center text-center gap-2"><i class="fa-solid fa-server text-indAccent"></i> Métriques Système & Racine Merkle</h4>
                     <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
                         ${createGridRow("Gaz Utilisé", `<span class="font-bold text-slate-700">${gasUsed}</span> <span class="text-slate-400 font-normal ml-1">unités</span>`)}
                         ${createGridRow("Limite Gaz", `<span class="text-slate-600 font-medium">${gasLimit}</span>`)}
@@ -1640,7 +1686,7 @@
             if (contractRes) {
                 contractSectionHtml = `
                 <div class="mb-4">
-                    <h4 class="text-[0.68rem] font-bold text-slate-800 uppercase tracking-widest mb-1.5 px-1 flex items-center gap-2"><i class="fa-solid fa-file-code text-indigo-600"></i> État Interne du Contrat Intelligent NVM (RAM V8)</h4>
+                    <h4 class="text-[0.68rem] font-bold text-slate-800 uppercase tracking-widest mb-1.5 px-1 flex items-center justify-center text-center gap-2"><i class="fa-solid fa-file-code text-indigo-600"></i> État Interne du Contrat Intelligent NVM (RAM V8)</h4>
                     <div class="bg-white rounded-lg border border-slate-200 shadow-sm p-3">
                         <pre class="text-[0.65rem] font-mono text-slate-700 bg-slate-50 p-3 rounded border border-slate-200 overflow-x-auto max-h-56 custom-scrollbar">${JSON.stringify(contractRes, null, 2)}</pre>
                     </div>
@@ -1664,7 +1710,7 @@
 
             bodyEl.innerHTML = `
                 <div class="mb-4">
-                    <h4 class="text-[0.68rem] font-bold text-slate-800 uppercase tracking-widest mb-1.5 px-1 flex items-center gap-2"><i class="fa-solid fa-id-card text-indAccent"></i> État du Compte sur le Registre In-Memory V8</h4>
+                    <h4 class="text-[0.68rem] font-bold text-slate-800 uppercase tracking-widest mb-1.5 px-1 flex items-center justify-center text-center gap-2"><i class="fa-solid fa-id-card text-indAccent"></i> État du Compte sur le Registre In-Memory V8</h4>
                     <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
                         ${createGridRow("Adresse Base58", `<span class="font-bold text-premiumDark">${addr}</span>`, addr)}
                         ${createGridRow("Solde Disponible (₳)", `<span class="font-black text-indSuccess bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded text-xs">${formattedBalance}</span>`)}
@@ -1675,7 +1721,7 @@
                 </div>
                 ${contractSectionHtml}
                 <div>
-                    <h4 class="text-[0.68rem] font-bold text-slate-800 uppercase tracking-widest mb-1.5 px-1 flex items-center gap-2"><i class="fa-solid fa-clock-rotate-left text-indAccent"></i> Transactions Associées (${allAddrTxs.length})</h4>
+                    <h4 class="text-[0.68rem] font-bold text-slate-800 uppercase tracking-widest mb-1.5 px-1 flex items-center justify-center text-center gap-2"><i class="fa-solid fa-clock-rotate-left text-indAccent"></i> Transactions Associées (${allAddrTxs.length})</h4>
                     <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-x-auto">
                         <table class="w-full text-left border-collapse font-mono text-xs min-w-[700px]">
                             <thead class="bg-slate-100 border-b border-slate-200 text-[0.58rem] text-slate-500 uppercase">
@@ -1694,34 +1740,43 @@
 
             const data = await safeFetchJson(API_ENDPOINTS.holders);
             let list = [];
-            if (Array.isArray(data)) list = data;
-            else if (data && Array.isArray(data.holders)) list = data.holders;
+            if (Array.isArray(data)) list = data.filter(isEligibleHolder);
+            else if (data && Array.isArray(data.holders)) list = data.holders.filter(isEligibleHolder);
 
             if (list.length === 0) {
-                const knownAddrs = new Set(CORE_ECOSYSTEM_ADDRESSES);
+                const knownAddrs = new Set(CORE_ECOSYSTEM_ADDRESSES.filter(a => !EXCLUDED_HOLDER_ADDRESSES.has(a)));
                 txCache.forEach(t => {
-                    if (t.from) knownAddrs.add(t.from);
-                    if (t.to) knownAddrs.add(t.to);
+                    if (t.from && !EXCLUDED_HOLDER_ADDRESSES.has(t.from)) knownAddrs.add(t.from);
+                    if (t.to && !EXCLUDED_HOLDER_ADDRESSES.has(t.to)) knownAddrs.add(t.to);
                 });
                 const addrArr = Array.from(knownAddrs).slice(0, 25);
                 const balances = await Promise.all(addrArr.map(a => rpcCall("nexus_getBalance", [a])));
                 addrArr.forEach((a, idx) => {
+                    if (EXCLUDED_HOLDER_ADDRESSES.has(a)) return;
                     const b = balances[idx];
                     const micro = b && typeof b === 'object' ? getDecAmount(b.microA || b.balance || 0) : getDecAmount(b);
-                    list.push({ address: a, balanceMicro: micro, formatted: formatAmount(micro) + " ₳" });
+                    if (micro > 0) {
+                        list.push({ address: a, balanceMicro: micro, formatted: formatAmount(micro) + " ₳" });
+                    }
                 });
-                list.sort((x, y) => y.balanceMicro - x.balanceMicro);
             }
 
-            const rows = list.map((h, i) => {
-                const addr = h.address || h.wallet || "-";
-                const disp = h.formatted || (formatAmount(h.balanceMicro || h.balance || 0) + " ₳");
+            list.sort((x, y) => getHolderBalanceNumeric(y) - getHolderBalanceNumeric(x));
+
+            const holdersEl = document.getElementById('apiHoldersCount');
+            if (holdersEl) {
+                holdersEl.innerText = list.length.toLocaleString('fr-FR') + " Portefeuilles";
+            }
+
+            const rows = list.length > 0 ? list.map((h, i) => {
+                const addr = (h.address || h.wallet || "-").trim();
+                const disp = h.formatted || (formatAmount(h.balanceMicro || h.microA || h.balance || 0) + " ₳");
                 return `<tr class="hover:bg-slate-50 cursor-pointer border-b border-slate-100 last:border-0" onclick="openAddressDetail('${addr}')">
-                    <td class="font-bold text-slate-500">#${h.rank || (i + 1)}</td>
+                    <td class="font-bold text-slate-500">#${i + 1}</td>
                     <td class="font-bold text-indAccent">${addr}</td>
                     <td class="text-right font-black text-indSuccess">${disp}</td>
                 </tr>`;
-            }).join('');
+            }).join('') : `<tr><td colspan="3" class="py-6 text-center text-slate-400 font-medium">Aucun détenteur avec un solde supérieur à 0 ₳</td></tr>`;
 
             bodyEl.innerHTML = `
                 <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-x-auto">
