@@ -679,17 +679,28 @@
         };
 
         // =====================================================================
-        // LOGIQUE DES VALIDATEURS POA (STRICTEMENT CONSERVÉE)
+        // LOGIQUE FIXE & PERMANENTE DES VALIDATEURS POA PAR TRANSACTION
         // =====================================================================
-        function getRandomValidatorConfirmations(key, forceNewRandom = false) {
-            if (!forceNewRandom && key && txConfirmationsMap.has(key)) {
-                return txConfirmationsMap.get(key);
+        function computeDeterministicConfirmations(key) {
+            const str = String(key || "default");
+            let hash = 2166136261;
+            for (let i = 0; i < str.length; i++) {
+                hash ^= str.charCodeAt(i);
+                hash = Math.imul(hash, 16777619);
             }
-            const randomConf = Math.floor(Math.random() * TOTAL_VALIDATOR_NODES) + 1;
-            if (key) {
-                txConfirmationsMap.set(key, randomConf);
+            const unsigned = hash >>> 0;
+            return (unsigned % TOTAL_VALIDATOR_NODES) + 1;
+        }
+
+        function getValidatorConfirmations(key) {
+            const strKey = String(key || "");
+            if (!strKey) return TOTAL_VALIDATOR_NODES;
+            if (txConfirmationsMap.has(strKey)) {
+                return txConfirmationsMap.get(strKey);
             }
-            return randomConf;
+            const fixedConf = computeDeterministicConfirmations(strKey);
+            txConfirmationsMap.set(strKey, fixedConf);
+            return fixedConf;
         }
 
         function buildValidatorNodesVisual(confirmedCount) {
@@ -929,9 +940,21 @@
         function saveSessionData() {
             try {
                 const blocksArray = Array.from(blockCache.entries()).slice(0, 100);
-                const txsArray = Array.from(txCache.entries()).slice(0, 500);
+                const txsArray = Array.from(txCache.entries()).slice(0, 500).map(([k, v]) => {
+                    const conf = getValidatorConfirmations(k);
+                    return [k, { ...v, validatorConfirmations: conf }];
+                });
                 const hashesArray = Array.from(globalTxHashes).slice(0, 500);
-                const sessionData = { latestBlockNum, totalTxGlobal, blocks: blocksArray, txs: txsArray, hashes: hashesArray, timestamp: Date.now() };
+                const confirmationsArray = Array.from(txConfirmationsMap.entries()).slice(0, 1000);
+                const sessionData = {
+                    latestBlockNum,
+                    totalTxGlobal,
+                    blocks: blocksArray,
+                    txs: txsArray,
+                    hashes: hashesArray,
+                    confirmations: confirmationsArray,
+                    timestamp: Date.now()
+                };
                 sessionStorage.setItem('nexusScanSession', JSON.stringify(sessionData));
             } catch (e) {}
         }
@@ -947,10 +970,32 @@
                     }
                     latestBlockNum = parsed.latestBlockNum || 0;
                     totalTxGlobal = parsed.totalTxGlobal || 0;
-                    if (parsed.blocks) parsed.blocks.forEach(([k, v]) => blockCache.set(k, v));
+                    if (parsed.confirmations) {
+                        parsed.confirmations.forEach(([k, v]) => txConfirmationsMap.set(String(k), Number(v)));
+                    }
+                    if (parsed.blocks) {
+                        parsed.blocks.forEach(([k, v]) => {
+                            if (v && v.transactions && Array.isArray(v.transactions)) {
+                                v.transactions.forEach(tx => {
+                                    if (tx && typeof tx === 'object' && tx.hash) {
+                                        const conf = tx.validatorConfirmations !== undefined
+                                            ? Number(tx.validatorConfirmations)
+                                            : getValidatorConfirmations(tx.hash);
+                                        txConfirmationsMap.set(String(tx.hash), conf);
+                                        tx.validatorConfirmations = conf;
+                                    }
+                                });
+                            }
+                            blockCache.set(k, v);
+                        });
+                    }
                     if (parsed.txs) {
                         parsed.txs.forEach(([k, v]) => {
-                            v.validatorConfirmations = getRandomValidatorConfirmations(k);
+                            const conf = (v && v.validatorConfirmations !== undefined)
+                                ? Number(v.validatorConfirmations)
+                                : getValidatorConfirmations(k);
+                            txConfirmationsMap.set(String(k), conf);
+                            v.validatorConfirmations = conf;
                             txCache.set(k, v);
                         });
                     }
@@ -1064,7 +1109,7 @@
                                 const bDec = tx.blockNumberDec !== undefined ? Number(tx.blockNumberDec) : (tx.blockIndex !== undefined ? Number(tx.blockIndex) : latestBlockNum);
                                 tx.blockNumberDec = bDec;
                                 tx.blockNumberHex = toHexFormat(bDec);
-                                tx.validatorConfirmations = getRandomValidatorConfirmations(tx.hash);
+                                tx.validatorConfirmations = getValidatorConfirmations(tx.hash);
                                 globalTxHashes.add(tx.hash);
                                 txCache.set(tx.hash, tx);
                             }
@@ -1122,6 +1167,9 @@
                     if (cachedB.transactions && Array.isArray(cachedB.transactions)) {
                         cachedB.transactions.forEach(tx => {
                             recentVolumeMicro += getDecAmount(tx.amountMicro || tx.value);
+                            if (tx && typeof tx === 'object' && tx.hash) {
+                                tx.validatorConfirmations = getValidatorConfirmations(tx.hash);
+                            }
                         });
                     }
                     continue;
@@ -1135,7 +1183,7 @@
                     const bIndex = bData.index !== undefined ? Number(bData.index) : target;
                     bData.decNumber = bIndex;
                     bData.hexNumber = toHexFormat(bIndex);
-                    bData.validatorConfirmations = getRandomValidatorConfirmations('BLK_' + bIndex);
+                    bData.validatorConfirmations = getValidatorConfirmations('BLK_' + bIndex);
                     blockCache.set(bIndex.toString(), bData);
 
                     if (bData.transactions && Array.isArray(bData.transactions)) {
@@ -1147,7 +1195,11 @@
                                 tx.blockNumberDec = bIndex;
                                 tx.blockNumberHex = bData.hexNumber;
                                 tx.blockHash = bData.hash;
-                                tx.validatorConfirmations = getRandomValidatorConfirmations(tx.hash);
+                                const existingTx = txCache.get(tx.hash);
+                                const fixedConf = (existingTx && existingTx.validatorConfirmations !== undefined)
+                                    ? existingTx.validatorConfirmations
+                                    : getValidatorConfirmations(tx.hash);
+                                tx.validatorConfirmations = fixedConf;
                                 txCache.set(tx.hash, tx);
                             }
                         });
@@ -1209,7 +1261,7 @@
                 const decNum = b.decNumber;
                 const txCount = b.transactions ? b.transactions.length : 0;
                 const valAddr = b.validator || b.miner || "ADC_AuthorityNode";
-                const confCount = getRandomValidatorConfirmations('BLK_' + decNum);
+                const confCount = getValidatorConfirmations('BLK_' + decNum);
 
                 const html = `
                     <div onclick="openBlockDetail(${decNum})" class="flex items-center justify-between px-2.5 py-1.5 mb-1 rounded-md border bg-white hover:bg-slate-50 border-slate-100 hover:border-indAccent/50 cursor-pointer transition-colors">
@@ -1244,7 +1296,7 @@
             txs.slice(0, 14).forEach(tx => {
                 const amt = formatAmount(tx.amountMicro !== undefined ? tx.amountMicro : tx.value);
                 const toDisplay = tx.to ? formatHash(tx.to, 4) : 'Déploiement NVM';
-                const confCount = getRandomValidatorConfirmations(tx.hash);
+                const confCount = getValidatorConfirmations(tx.hash);
                 const html = `
                     <div onclick="openTxDetail('${tx.hash}')" class="flex items-center justify-between px-2.5 py-1.5 mb-1 rounded-md border bg-white hover:bg-slate-50 border-slate-100 hover:border-indSuccess/50 cursor-pointer transition-colors">
                         <div class="flex items-center gap-2 min-w-0">
@@ -1413,7 +1465,7 @@
             }
 
             paginated.forEach(tx => {
-                const confCount = getRandomValidatorConfirmations(tx.hash);
+                const confCount = getValidatorConfirmations(tx.hash);
                 tb.insertAdjacentHTML('beforeend', `
                     <tr class="hover:bg-slate-50 cursor-pointer transition-colors border-b border-slate-100 last:border-0" onclick="openTxDetail('${tx.hash}')">
                         <td class="font-bold text-slate-700">${formatHash(tx.hash, 8)}</td>
@@ -1460,7 +1512,9 @@
                         tx.blockNumberDec = Number(tx.blockIndex);
                         tx.blockNumberHex = toHexFormat(tx.blockNumberDec);
                     }
+                    tx.validatorConfirmations = getValidatorConfirmations(hash);
                     txCache.set(hash, tx);
+                    saveSessionData();
                 }
             }
             if (!tx) {
@@ -1481,7 +1535,7 @@
             const nonce = tx.nonce !== undefined ? getDecAmount(tx.nonce) : 0;
             const bDec = tx.blockNumberDec !== undefined ? tx.blockNumberDec : (receipt && receipt.blockIndex !== undefined ? Number(receipt.blockIndex) : latestBlockNum);
             const bHex = tx.blockNumberHex || toHexFormat(bDec);
-            const confirmations = getRandomValidatorConfirmations(tx.hash, true);
+            const confirmations = getValidatorConfirmations(tx.hash);
 
             document.getElementById('txModalBody').innerHTML = `
                 <div class="mb-4">
@@ -1541,8 +1595,10 @@
                 if (bData) {
                     bData.decNumber = num;
                     bData.hexNumber = toHexFormat(num);
+                    bData.validatorConfirmations = getValidatorConfirmations('BLK_' + num);
                     blockCache.set(num.toString(), bData);
                     b = bData;
+                    saveSessionData();
                 } else {
                     showToast("Bloc introuvable sur le nœud.", "error");
                     return;
@@ -1554,7 +1610,7 @@
             const gasLimit = b.gasLimit ? getDecAmount(b.gasLimit).toLocaleString('fr-FR') : "N/A";
             const gasUsed = b.gasUsed ? getDecAmount(b.gasUsed).toLocaleString('fr-FR') : "0";
             const extraData = b.merkleRoot ? `Merkle Root: ${b.merkleRoot}` : ((b.extraData && b.extraData !== "0x") ? b.extraData : "0x");
-            const confirmations = getRandomValidatorConfirmations('BLK_' + num, true);
+            const confirmations = getValidatorConfirmations('BLK_' + num);
             const valAddr = b.validator || b.miner || "ADC_AuthorityNode";
             const parentHash = b.previousHash || b.parentHash || "Genesis Block #0";
 
@@ -1565,7 +1621,7 @@
                     const tf = typeof t === 'object' && t.from ? formatHash(t.from, 6) : '-';
                     const tt = typeof t === 'object' && t.to ? formatHash(t.to, 6) : 'Contrat NVM';
                     const ta = typeof t === 'object' ? formatAmount(t.amountMicro || t.value) + ' ₳' : '-';
-                    const txConf = getRandomValidatorConfirmations(th, true);
+                    const txConf = getValidatorConfirmations(th);
                     return `<tr class="hover:bg-slate-50 cursor-pointer border-b border-slate-100 last:border-0" onclick="openTxDetail('${th}')">
                         <td class="font-bold text-indAccent">${formatHash(th, 8)}</td>
                         <td>${tf}</td>
@@ -1673,14 +1729,15 @@
             localMatchingTxs.forEach(t => mergedMap.set(t.hash, t));
             remoteTxs.forEach(t => {
                 if (t && t.hash && !mergedMap.has(t.hash)) {
+                    t.validatorConfirmations = getValidatorConfirmations(t.hash);
                     mergedMap.set(t.hash, t);
                     if (!txCache.has(t.hash)) {
-                        t.validatorConfirmations = getRandomValidatorConfirmations(t.hash);
                         txCache.set(t.hash, t);
                     }
                 }
             });
             const allAddrTxs = Array.from(mergedMap.values());
+            saveSessionData();
 
             let contractSectionHtml = '';
             if (contractRes) {
@@ -1697,7 +1754,7 @@
                 const isOut = t.from === addr;
                 const amt = t.amountFormatted || (formatAmount(t.amountMicro !== undefined ? t.amountMicro : t.value) + ' ₳');
                 const bIdx = t.blockNumberDec !== undefined ? t.blockNumberDec : (t.blockIndex || '-');
-                const txConf = getRandomValidatorConfirmations(t.hash, true);
+                const txConf = getValidatorConfirmations(t.hash);
                 return `<tr class="hover:bg-slate-50 cursor-pointer border-b border-slate-100 last:border-0" onclick="openTxDetail('${t.hash}')">
                     <td class="font-bold text-indAccent">${formatHash(t.hash, 8)}</td>
                     <td>#${bIdx}</td>
