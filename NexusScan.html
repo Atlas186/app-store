@@ -711,7 +711,7 @@
             }
             return `
                 <div class="inline-flex items-center gap-2 bg-slate-50 px-2.5 py-1 rounded border border-slate-200 shadow-sm">
-                    <span class="text-[0.65rem] text-premiumDark font-black font-mono">${confirmedCount} / ${TOTAL_VALIDATOR_NODES} Confirmations (Nœuds Validateurs)</span>
+                    <span class="text-[0.65rem] text-premiumDark font-black font-mono">${confirmedCount} / ${TOTAL_VALIDATOR_NODES} Conf.</span>
                     <div class="flex items-center gap-1">${dotsHtml}</div>
                 </div>`;
         }
@@ -1040,58 +1040,53 @@
         }
 
         // =====================================================================
-        // MOTEUR DE CALCUL RÉALISTE & DYNAMIQUE DU VOLUME JOURNALIER (24H)
+        // CALCUL RÉEL & TEMPS RÉEL DU VOLUME SUR 24 HEURES (SANS ARTIFICES EXAGÉRÉS)
         // =====================================================================
         async function computeRealVolumeDisplay(recentVolumeMicro) {
             const nowMs = Date.now();
             const window24hMs = 24 * 60 * 60 * 1000;
+            const seenTx = new Set();
+            let real24hMicro = 0;
 
-            let onChain24hMicro = 0;
-            let allCachedMicro = 0;
-            txCache.forEach(tx => {
-                const valMicro = getDecAmount(tx.amountMicro !== undefined ? tx.amountMicro : tx.value);
-                if (valMicro > 0) {
-                    allCachedMicro += valMicro;
-                    const txTs = parseTimestamp(tx.timestamp);
-                    if ((nowMs - txTs) <= window24hMs) {
-                        onChain24hMicro += valMicro;
-                    }
+            txCache.forEach((tx, hashKey) => {
+                if (!tx || typeof tx !== 'object') return;
+                const id = String(tx.hash || hashKey || "");
+                if (id && seenTx.has(id)) return;
+                if (id) seenTx.add(id);
+
+                const txTs = parseTimestamp(tx.timestamp);
+                if ((nowMs - txTs) <= window24hMs) {
+                    const valMicro = getDecAmount(tx.amountMicro !== undefined ? tx.amountMicro : tx.value);
+                    if (valMicro > 0) real24hMicro += valMicro;
                 }
             });
 
-            const effectiveChainMicro = Math.max(recentVolumeMicro, onChain24hMicro, allCachedMicro);
-            let realChainVolumeA = effectiveChainMicro / 1e6;
+            if (real24hMicro === 0 && recentVolumeMicro > 0) {
+                real24hMicro = recentVolumeMicro;
+            }
 
-            let tickerVolumeA = 0;
+            let realVolumeA = real24hMicro / 1e6;
+
             const tickerData = await safeFetchJson(API_ENDPOINTS.ticker);
+            let tickerVolumeA = 0;
             if (tickerData) {
                 const pair = (tickerData.pairs && (tickerData.pairs['₳_XOF'] || tickerData.pairs.AGCOIN_XOF)) || tickerData.AGCOIN_XOF || tickerData['₳_XOF'];
-                if (pair && pair.base_volume !== undefined && !isNaN(Number(pair.base_volume))) {
-                    tickerVolumeA = Number(pair.base_volume);
+                if (pair) {
+                    const rawVol = pair.volume_24h !== undefined ? pair.volume_24h : (pair.base_volume !== undefined ? pair.base_volume : pair.volume);
+                    if (rawVol !== undefined && !isNaN(Number(rawVol)) && Number(rawVol) > 0) {
+                        tickerVolumeA = Number(rawVol);
+                    }
                 }
             }
 
-            const dayObj = new Date();
-            const daySeed = (dayObj.getUTCFullYear() * 10000) + ((dayObj.getUTCMonth() + 1) * 100) + dayObj.getUTCDate();
-            const hourProgress = (dayObj.getUTCHours() * 60 + dayObj.getUTCMinutes()) / 1440;
-
-            const blockAnchor = Math.max(latestBlockNum, 1);
-            const txAnchor = Math.max(totalTxGlobal, globalTxHashes.size, 12);
-
-            const dailyCycleBaseA = 1425000 + ((daySeed % 17) * 84350);
-            const progressiveSettlementA = (dailyCycleBaseA * (0.38 + (0.62 * hourProgress))) + ((blockAnchor % 2400) * 185.25) + (txAnchor * 1240.50);
-
-            const consolidated24hVolumeA = Math.max(tickerVolumeA, realChainVolumeA) + (
-                (tickerVolumeA < 1000 && realChainVolumeA < 1000) ? progressiveSettlementA : (realChainVolumeA * 0.15)
-            );
+            const consolidatedVolumeA = Math.max(realVolumeA, tickerVolumeA);
 
             const deltaBadge = document.getElementById('statVolumeDeltaBadge');
             if (deltaBadge) {
-                const deltaPct = (2.15 + ((daySeed + (blockAnchor % 40)) % 54) / 10).toFixed(2);
-                deltaBadge.textContent = `+${deltaPct}% (24h)`;
+                deltaBadge.textContent = "24H RÉEL";
             }
 
-            return new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(consolidated24hVolumeA) + " ₳";
+            return new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 6 }).format(consolidatedVolumeA) + " ₳";
         }
 
         async function hydrateHistoricalTransactionsIfNeeded() {
@@ -1156,6 +1151,8 @@
             document.getElementById('statLatestBlock').innerText = `${toHexFormat(currentBlockNum)} (#${currentBlockNum.toLocaleString('fr-FR')})`;
             pb.style.width = '60%';
 
+            const nowMs = Date.now();
+            const window24hMs = 24 * 60 * 60 * 1000;
             let recentVolumeMicro = 0;
 
             for (let i = 0; i < BLOCKS_TO_FETCH; i++) {
@@ -1164,9 +1161,13 @@
 
                 if (blockCache.has(target.toString()) && i > 5) {
                     const cachedB = blockCache.get(target.toString());
+                    const bTs = parseTimestamp(cachedB.timestamp);
                     if (cachedB.transactions && Array.isArray(cachedB.transactions)) {
                         cachedB.transactions.forEach(tx => {
-                            recentVolumeMicro += getDecAmount(tx.amountMicro || tx.value);
+                            const txTs = tx.timestamp ? parseTimestamp(tx.timestamp) : bTs;
+                            if ((nowMs - txTs) <= window24hMs) {
+                                recentVolumeMicro += getDecAmount(tx.amountMicro || tx.value);
+                            }
                             if (tx && typeof tx === 'object' && tx.hash) {
                                 tx.validatorConfirmations = getValidatorConfirmations(tx.hash);
                             }
@@ -1185,13 +1186,17 @@
                     bData.hexNumber = toHexFormat(bIndex);
                     bData.validatorConfirmations = getValidatorConfirmations('BLK_' + bIndex);
                     blockCache.set(bIndex.toString(), bData);
+                    const bTs = parseTimestamp(bData.timestamp);
 
                     if (bData.transactions && Array.isArray(bData.transactions)) {
                         bData.transactions.forEach(tx => {
                             if (tx && typeof tx === 'object') {
                                 globalTxHashes.add(tx.hash);
-                                recentVolumeMicro += getDecAmount(tx.amountMicro || tx.value);
-                                if (!tx.timestamp) tx.timestamp = bData.timestamp;
+                                const txTs = tx.timestamp ? parseTimestamp(tx.timestamp) : bTs;
+                                if (!tx.timestamp) tx.timestamp = txTs;
+                                if ((nowMs - txTs) <= window24hMs) {
+                                    recentVolumeMicro += getDecAmount(tx.amountMicro || tx.value);
+                                }
                                 tx.blockNumberDec = bIndex;
                                 tx.blockNumberHex = bData.hexNumber;
                                 tx.blockHash = bData.hash;
@@ -1898,8 +1903,14 @@
                 const cachedBlocks = Array.from(blockCache.values()).sort((a, b) => b.decNumber - a.decNumber);
                 const cachedTxs = Array.from(txCache.values()).sort((a, b) => parseTimestamp(b.timestamp) - parseTimestamp(a.timestamp));
 
+                const nowMs = Date.now();
+                const window24hMs = 24 * 60 * 60 * 1000;
                 let recentVolumeMicro = 0;
-                cachedTxs.forEach(tx => { recentVolumeMicro += getDecAmount(tx.amountMicro || tx.value); });
+                cachedTxs.forEach(tx => {
+                    if ((nowMs - parseTimestamp(tx.timestamp)) <= window24hMs) {
+                        recentVolumeMicro += getDecAmount(tx.amountMicro !== undefined ? tx.amountMicro : tx.value);
+                    }
+                });
                 computeRealVolumeDisplay(recentVolumeMicro).then(volStr => {
                     document.getElementById('statVolume24h').innerText = volStr;
                 });
