@@ -36,25 +36,25 @@
         }
     </script>
     <style>
-        .fade-in { animation: fadeIn 0.45s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         .live-pulse { animation: pulseGreen 2s infinite; }
         @keyframes pulseGreen { 
             0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); } 
-            70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); } 
+            70% { box-shadow: 0 0 0 5px rgba(16, 185, 129, 0); } 
             100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } 
         }
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: #F1F5F9; }
-        ::-webkit-scrollbar-thumb { background: #94A3B8; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #94A3B8; border-radius: 8px; }
         ::-webkit-scrollbar-thumb:hover { background: #0EA5E9; }
         html { scroll-behavior: smooth; }
         .text-justify-custom { text-align: justify; text-justify: inter-word; hyphens: auto; }
-        .clause-box { border-left: 3px solid #0EA5E9; background: linear-gradient(to right, #F8FAFC, #FFFFFF); }
-        .gold-box { border-left: 3px solid #D4AF37; background: linear-gradient(to right, #FFFBEB, #FFFFFF); }
-        .dev-code-block { background-color: #0D1117; border: 1px solid #21262D; border-radius: 10px; overflow: hidden; box-shadow: 0 10px 20px -5px rgba(0,0,0,0.25); }
-        .dev-code-header { background-color: #161B22; border-bottom: 1px solid #21262D; padding: 8px 14px; display: flex; justify-content: space-between; align-items: center; }
-        .dev-code-body { padding: 14px; overflow-x: auto; font-family: 'Fira Code', monospace; font-size: 11.5px; line-height: 1.6; color: #E2E8F0; }
+        .clause-box { border-left: 2.5px solid #0EA5E9; background: linear-gradient(to right, #F8FAFC, #FFFFFF); }
+        .gold-box { border-left: 2.5px solid #D4AF37; background: linear-gradient(to right, #FFFBEB, #FFFFFF); }
+        .dev-code-block { background-color: #0D1117; border: 1px solid #21262D; border-radius: 8px; overflow: hidden; box-shadow: 0 8px 16px -4px rgba(0,0,0,0.2); }
+        .dev-code-header { background-color: #161B22; border-bottom: 1px solid #21262D; padding: 6px 12px; display: flex; justify-content: space-between; align-items: center; }
+        .dev-code-body { padding: 11px 14px; overflow-x: auto; font-family: 'Fira Code', monospace; font-size: 10.5px; line-height: 1.55; color: #E2E8F0; }
         .faq-content { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.25s ease-out; }
         .faq-content > div { overflow: hidden; }
         .faq-item.active .faq-content { grid-template-rows: 1fr; }
@@ -63,366 +63,402 @@
         @media print {
             header, aside, footer, .no-print { display: none !important; }
             body { background: #FFFFFF !important; color: #000000 !important; }
-            section { break-inside: avoid; page-break-inside: avoid; border: 1px solid #CBD5E1 !important; margin-bottom: 24px !important; }
+            section { break-inside: avoid; page-break-inside: avoid; border: 1px solid #CBD5E1 !important; margin-bottom: 18px !important; }
         }
     </style>
 </head>
-<body class="bg-indBg text-premiumDark font-sans antialiased flex flex-col min-h-screen text-[13px] selection:bg-indAccent selection:text-white">
+<body class="bg-indBg text-premiumDark font-sans antialiased flex flex-col min-h-screen text-[11.5px] selection:bg-indAccent selection:text-white">
 
-    <button onclick="toggleLang()" class="no-print fixed bottom-6 right-6 z-50 bg-premiumDark text-white px-5 h-12 rounded-full shadow-2xl border-2 border-indGold/60 flex items-center gap-2.5 hover:bg-indAccent hover:border-white transition-all group focus:outline-none">
-        <i class="fa-solid fa-globe text-indGold group-hover:text-white group-hover:rotate-45 transition-transform text-base"></i>
-        <span id="floatingLangLabel" class="font-mono font-black text-xs tracking-widest">FR / EN</span>
+    <!-- Bouton Flottant Bilingue -->
+    <button onclick="toggleLang()" class="no-print fixed bottom-5 right-5 z-50 bg-premiumDark text-white px-4 h-10 rounded-full shadow-xl border border-indGold/60 flex items-center gap-2 hover:bg-indAccent hover:border-white transition-all group focus:outline-none">
+        <i class="fa-solid fa-globe text-indGold group-hover:text-white group-hover:rotate-45 transition-transform text-xs"></i>
+        <span id="floatingLangLabel" class="font-mono font-extrabold text-[10px] tracking-widest">FR / EN</span>
     </button>
 
+    <!-- Header Institutionnel -->
     <header class="bg-indCard/95 backdrop-blur-md border-b border-indBorder sticky top-0 z-40 shadow-sm">
         <div class="max-w-[98rem] mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <a href="NexusScan.html" class="flex items-center gap-3 cursor-pointer group">
-                    <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo Nexus Core" class="h-10 w-10 rounded-lg border border-indBorder object-cover shadow-sm group-hover:border-indAccent transition-colors">
+            <div class="flex justify-between items-center h-14">
+                <a href="NexusScan.html" class="flex items-center gap-2.5 cursor-pointer group">
+                    <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo Nexus Core" class="h-8 w-8 rounded-lg border border-indBorder object-cover shadow-sm group-hover:border-indAccent transition-colors">
                     <div class="flex flex-col">
                         <div class="flex items-center gap-1.5">
-                            <span class="font-black text-lg tracking-tight text-premiumDark leading-none">NEXUS<span class="text-indAccent">SCAN</span></span>
-                            <span class="bg-premiumDark text-indGold border border-indGold/40 text-[9px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider">SUPPORT B2B</span>
+                            <span class="font-black text-base tracking-tight text-premiumDark leading-none">NEXUS<span class="text-indAccent">SCAN</span></span>
+                            <span class="bg-premiumDark text-indGold border border-indGold/40 text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider">SUPPORT B2B</span>
                         </div>
-                        <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mt-1">Atlas & Duc Corporation</span>
+                        <span class="text-[8.5px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">Atlas & Duc Corporation</span>
                     </div>
                 </a>
 
-                <nav class="hidden lg:flex space-x-6 items-center h-full">
-                    <a href="NexusScan.html" data-key="nav_home" class="text-indTextMuted hover:text-premiumDark font-semibold text-[13px] transition-colors flex items-center h-full"><i class="fa-solid fa-house mr-1.5"></i> Accueil</a>
-                    <a href="documentation.html" data-key="nav_doc" class="text-indTextMuted hover:text-premiumDark font-semibold text-[13px] transition-colors flex items-center h-full"><i class="fa-solid fa-book-open mr-1.5"></i> Livre Blanc</a>
-                    <a href="api.html" data-key="nav_api" class="text-indTextMuted hover:text-premiumDark font-semibold text-[13px] transition-colors flex items-center h-full"><i class="fa-solid fa-server mr-1.5"></i> API RPC</a>
-                    <a href="support.html" data-key="nav_support" class="text-indAccent font-extrabold text-[13px] border-b-2 border-indAccent flex items-center h-full"><i class="fa-solid fa-headset mr-1.5"></i> Support B2B</a>
-                    <a href="privacy.html" data-key="nav_privacy" class="text-indTextMuted hover:text-premiumDark font-semibold text-[13px] transition-colors flex items-center h-full"><i class="fa-solid fa-shield-halved mr-1.5"></i> Confidentialité</a>
-                    <a href="wallet_cgu.html" data-key="nav_cgu" class="text-indTextMuted hover:text-premiumDark font-semibold text-[13px] transition-colors flex items-center h-full"><i class="fa-solid fa-gavel mr-1.5"></i> Wallet CGU</a>
+                <nav class="hidden lg:flex space-x-5 items-center h-full">
+                    <a href="NexusScan.html" data-key="nav_home" class="text-indTextMuted hover:text-premiumDark font-semibold text-[11.5px] transition-colors flex items-center h-full"><i class="fa-solid fa-house mr-1.5 text-[10px]"></i> Accueil</a>
+                    <a href="documentation.html" data-key="nav_doc" class="text-indTextMuted hover:text-premiumDark font-semibold text-[11.5px] transition-colors flex items-center h-full"><i class="fa-solid fa-book-open mr-1.5 text-[10px]"></i> Livre Blanc</a>
+                    <a href="api.html" data-key="nav_api" class="text-indTextMuted hover:text-premiumDark font-semibold text-[11.5px] transition-colors flex items-center h-full"><i class="fa-solid fa-server mr-1.5 text-[10px]"></i> API RPC</a>
+                    <a href="support.html" data-key="nav_support" class="text-indAccent font-extrabold text-[11.5px] border-b-2 border-indAccent flex items-center h-full"><i class="fa-solid fa-headset mr-1.5 text-[10px]"></i> Support B2B</a>
+                    <a href="privacy.html" data-key="nav_privacy" class="text-indTextMuted hover:text-premiumDark font-semibold text-[11.5px] transition-colors flex items-center h-full"><i class="fa-solid fa-shield-halved mr-1.5 text-[10px]"></i> Confidentialité</a>
+                    <a href="wallet_cgu.html" data-key="nav_cgu" class="text-indTextMuted hover:text-premiumDark font-semibold text-[11.5px] transition-colors flex items-center h-full"><i class="fa-solid fa-gavel mr-1.5 text-[10px]"></i> Wallet CGU</a>
                 </nav>
 
-                <div class="flex items-center gap-2.5">
-                    <button onclick="toggleLang()" class="hidden sm:flex items-center gap-2 bg-slate-100 hover:bg-slate-200 border border-slate-200 text-premiumDark px-3 py-1.5 rounded-lg text-xs font-bold transition-colors">
+                <div class="flex items-center gap-2">
+                    <button onclick="toggleLang()" class="hidden sm:flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 border border-slate-200 text-premiumDark px-2.5 py-1 rounded-md text-[10px] font-bold transition-colors">
                         <i class="fa-solid fa-language text-indAccent"></i>
                         <span id="headerLangBadge">FRANÇAIS (ACTIF)</span>
                     </button>
-                    <button onclick="window.print()" class="hidden md:flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold transition-colors">
+                    <button onclick="window.print()" class="hidden md:flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 px-2.5 py-1 rounded-md text-[10px] font-bold transition-colors">
                         <i class="fa-solid fa-print text-slate-500"></i>
                         <span data-key="btn_print">Imprimer / PDF</span>
                     </button>
-                    <div class="hidden sm:flex items-center gap-2 bg-premiumDark border border-slate-700 px-3 py-1.5 rounded-full text-white shadow-sm">
-                        <div class="w-2 h-2 rounded-full bg-indSuccess live-pulse"></div>
-                        <span class="text-[10px] font-bold tracking-widest uppercase">Mainnet <span class="text-indGold font-mono">₳</span></span>
+                    <div class="hidden sm:flex items-center gap-1.5 bg-premiumDark border border-slate-700 px-2.5 py-1 rounded-full text-white shadow-sm">
+                        <div class="w-1.5 h-1.5 rounded-full bg-indSuccess live-pulse"></div>
+                        <span class="text-[9px] font-bold tracking-widest uppercase">Mainnet <span class="text-indGold font-mono">₳</span></span>
                     </div>
-                    <button id="mobileMenuBtn" class="lg:hidden text-premiumDark hover:text-indAccent focus:outline-none text-2xl p-1">
+                    <button id="mobileMenuBtn" class="lg:hidden text-premiumDark hover:text-indAccent focus:outline-none text-xl p-1">
                         <i class="fa-solid fa-bars"></i>
                     </button>
                 </div>
             </div>
         </div>
 
-        <div id="mobileMenu" class="hidden lg:hidden bg-indCard border-b border-indBorder px-4 pt-2 pb-4 shadow-xl absolute w-full z-50">
-            <a href="NexusScan.html" data-key="nav_home" class="block py-2.5 text-indTextMuted font-semibold text-[13px] border-b border-indBorder"><i class="fa-solid fa-house w-6 text-center"></i> Accueil</a>
-            <a href="documentation.html" data-key="nav_doc" class="block py-2.5 text-indTextMuted font-semibold text-[13px] border-b border-indBorder"><i class="fa-solid fa-book-open w-6 text-center"></i> Livre Blanc</a>
-            <a href="api.html" data-key="nav_api" class="block py-2.5 text-indTextMuted font-semibold text-[13px] border-b border-indBorder"><i class="fa-solid fa-server w-6 text-center"></i> API RPC</a>
-            <a href="support.html" data-key="nav_support" class="block py-2.5 text-indAccent font-bold text-[13px] bg-sky-50 px-2 rounded mt-1 mb-1"><i class="fa-solid fa-headset w-6 text-center"></i> Support B2B</a>
-            <a href="privacy.html" data-key="nav_privacy" class="block py-2.5 text-indTextMuted font-semibold text-[13px] border-b border-indBorder"><i class="fa-solid fa-shield-halved w-6 text-center"></i> Confidentialité</a>
-            <a href="wallet_cgu.html" data-key="nav_cgu" class="block py-2.5 text-indTextMuted font-semibold text-[13px]"><i class="fa-solid fa-gavel w-6 text-center"></i> Wallet CGU</a>
+        <div id="mobileMenu" class="hidden lg:hidden bg-indCard border-b border-indBorder px-4 pt-2 pb-3 shadow-xl absolute w-full z-50 text-[11.5px]">
+            <a href="NexusScan.html" data-key="nav_home" class="block py-2 text-indTextMuted font-semibold border-b border-indBorder"><i class="fa-solid fa-house w-5 text-center"></i> Accueil</a>
+            <a href="documentation.html" data-key="nav_doc" class="block py-2 text-indTextMuted font-semibold border-b border-indBorder"><i class="fa-solid fa-book-open w-5 text-center"></i> Livre Blanc</a>
+            <a href="api.html" data-key="nav_api" class="block py-2 text-indTextMuted font-semibold border-b border-indBorder"><i class="fa-solid fa-server w-5 text-center"></i> API RPC</a>
+            <a href="support.html" data-key="nav_support" class="block py-2 text-indAccent font-bold bg-sky-50 px-2 rounded mt-1 mb-1"><i class="fa-solid fa-headset w-5 text-center"></i> Support B2B</a>
+            <a href="privacy.html" data-key="nav_privacy" class="block py-2 text-indTextMuted font-semibold border-b border-indBorder"><i class="fa-solid fa-shield-halved w-5 text-center"></i> Confidentialité</a>
+            <a href="wallet_cgu.html" data-key="nav_cgu" class="block py-2 text-indTextMuted font-semibold"><i class="fa-solid fa-gavel w-5 text-center"></i> Wallet CGU</a>
         </div>
     </header>
 
-    <section class="bg-premiumDark text-white pt-14 pb-16 px-4 relative overflow-hidden border-b border-slate-800">
+    <!-- Hero Section Institutionnelle -->
+    <section class="bg-premiumDark text-white pt-10 pb-12 px-4 relative overflow-hidden border-b border-slate-800">
         <div class="absolute inset-0 bg-gradient-to-br from-[#0B1120] via-[#0F172A] to-[#020617] z-0"></div>
-        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#38bdf8 1px, transparent 1px); background-size: 26px 26px;"></div>
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#38bdf8 1px, transparent 1px); background-size: 24px 24px;"></div>
         <div class="max-w-6xl mx-auto relative z-10 text-center fade-in">
-            <div class="inline-flex flex-wrap items-center justify-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/90 border border-indSuccess/40 text-indSuccess text-[10px] font-black mb-5 uppercase tracking-widest shadow-lg">
-                <div class="w-2 h-2 rounded-full bg-indSuccess live-pulse"></div>
+            <div class="inline-flex flex-wrap items-center justify-center gap-2 px-3.5 py-1 rounded-full bg-slate-900/90 border border-indSuccess/40 text-indSuccess text-[9px] font-black mb-4 uppercase tracking-widest shadow-lg">
+                <div class="w-1.5 h-1.5 rounded-full bg-indSuccess live-pulse"></div>
                 <span data-key="status">Centre d'Opérations Réseau (NOC L1) : Ingénieurs & Direction Disponibles 24/7</span>
             </div>
-            <h1 data-key="title" class="text-3xl sm:text-5xl lg:text-6xl font-black mb-5 tracking-tight leading-tight">
+            <h1 data-key="title" class="text-2xl sm:text-4xl lg:text-[2.6rem] font-black mb-3.5 tracking-tight leading-tight">
                 PORTAIL INSTITUTIONNEL DE <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-indAccent to-indGold">SUPPORT B2B & SLA</span>
             </h1>
-            <p data-key="subtitle" class="text-slate-300 text-xs sm:text-sm md:text-base max-w-4xl mx-auto font-medium leading-relaxed mb-8">
+            <p data-key="subtitle" class="text-slate-300 text-[11.5px] sm:text-xs md:text-[13px] max-w-4xl mx-auto font-medium leading-relaxed mb-6">
                 Assistance d'ingénierie critique, gouvernance exécutive, homologation marchande et continuité d'exploitation dédiées à la blockchain souveraine Nexus Core Layer-1 (monnaie native ₳, 1 ₳ = 1 XOF), opérée par Atlas & Duc Corporation.
             </p>
 
-            <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 max-w-5xl mx-auto text-left mb-8">
-                <div class="bg-slate-900/80 border border-slate-800 p-3.5 rounded-xl">
-                    <div data-key="stat1_label" class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Disponibilité SLA L1</div>
-                    <div class="text-xs sm:text-sm font-black text-indSuccess font-mono mt-0.5">99.999% (nBFT PoA)</div>
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 max-w-5xl mx-auto text-left mb-6">
+                <div class="bg-slate-900/80 border border-slate-800 p-3 rounded-lg">
+                    <div data-key="stat1_label" class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Disponibilité SLA L1</div>
+                    <div class="text-xs font-black text-indSuccess font-mono mt-0.5">99.999% (nBFT PoA)</div>
                 </div>
-                <div class="bg-slate-900/80 border border-slate-800 p-3.5 rounded-xl">
-                    <div data-key="stat2_label" class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Temps de Réponse P1</div>
-                    <div class="text-xs sm:text-sm font-black text-white font-mono mt-0.5">&lt; 15 Minutes (24/7)</div>
+                <div class="bg-slate-900/80 border border-slate-800 p-3 rounded-lg">
+                    <div data-key="stat2_label" class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Temps de Réponse P1</div>
+                    <div class="text-xs font-black text-white font-mono mt-0.5">&lt; 15 Minutes (24/7)</div>
                 </div>
-                <div class="bg-slate-900/80 border border-slate-800 p-3.5 rounded-xl">
-                    <div data-key="stat3_label" class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Étalon & Unité L1</div>
-                    <div class="text-xs sm:text-sm font-black text-indAccent font-mono mt-0.5">1 ₳ = 1 XOF (microA)</div>
+                <div class="bg-slate-900/80 border border-slate-800 p-3 rounded-lg">
+                    <div data-key="stat3_label" class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Étalon & Unité L1</div>
+                    <div class="text-xs font-black text-indAccent font-mono mt-0.5">1 ₳ = 1 XOF (microA)</div>
                 </div>
-                <div class="bg-slate-900/80 border border-slate-800 p-3.5 rounded-xl">
-                    <div data-key="stat4_label" class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Traçabilité Tickets</div>
-                    <div class="text-xs sm:text-sm font-black text-indGold font-mono mt-0.5">Base58 • AES-256-GCM</div>
+                <div class="bg-slate-900/80 border border-slate-800 p-3 rounded-lg">
+                    <div data-key="stat4_label" class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Sync Temps Réel</div>
+                    <div id="heroFirebaseBadge" class="text-xs font-black text-indGold font-mono mt-0.5">Firebase RTDB Live</div>
                 </div>
-                <div class="col-span-2 sm:col-span-1 bg-slate-900/80 border border-indGold/40 p-3.5 rounded-xl">
-                    <div data-key="stat5_label" class="text-[10px] font-bold text-indGold uppercase tracking-wider">Volume Référentiel</div>
-                    <div id="totalCorpusCounter" class="text-xs sm:text-sm font-black text-white font-mono mt-0.5">&gt; 315 000 chars</div>
+                <div class="col-span-2 sm:col-span-1 bg-slate-900/80 border border-indGold/40 p-3 rounded-lg">
+                    <div data-key="stat5_label" class="text-[9px] font-bold text-indGold uppercase tracking-wider">Volume Référentiel</div>
+                    <div id="totalCorpusCounter" class="text-xs font-black text-white font-mono mt-0.5">&gt; 315 000 chars</div>
                 </div>
             </div>
 
-            <div class="flex flex-wrap justify-center gap-3">
-                <a href="#corp_dir" class="bg-indAccent hover:bg-sky-500 text-white px-6 py-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all shadow-lg shadow-indAccent/25"><i class="fa-solid fa-address-book mr-1.5"></i> Annuaire Corporatif Officiel</a>
-                <a href="#ticket_console" class="bg-indGold/20 hover:bg-indGold/30 border border-indGold text-indGold px-6 py-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all"><i class="fa-solid fa-ticket mr-1.5"></i> Générer un Ticket B2B Base58</a>
-                <a href="#diag_lab" class="bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-400 text-emerald-300 px-6 py-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all"><i class="fa-solid fa-microchip mr-1.5"></i> Vérificateur Base58 & ₳</a>
-                <a href="#b2b-mod-1" class="bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white px-6 py-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all"><i class="fa-solid fa-book-journal-whills mr-1.5"></i> 20 Protocoles SLA & B2B</a>
+            <div class="flex flex-wrap justify-center gap-2.5">
+                <a href="#corp_dir" class="bg-indAccent hover:bg-sky-500 text-white px-4 py-2 rounded-lg text-[10.5px] font-black uppercase tracking-wider transition-all shadow-md shadow-indAccent/25"><i class="fa-solid fa-address-book mr-1.5"></i> Annuaire Corporatif Officiel</a>
+                <a href="#ticket_console" class="bg-indGold/20 hover:bg-indGold/30 border border-indGold text-indGold px-4 py-2 rounded-lg text-[10.5px] font-black uppercase tracking-wider transition-all"><i class="fa-solid fa-ticket mr-1.5"></i> Console Tickets Firebase RTDB</a>
+                <a href="#diag_lab" class="bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-400 text-emerald-300 px-4 py-2 rounded-lg text-[10.5px] font-black uppercase tracking-wider transition-all"><i class="fa-solid fa-microchip mr-1.5"></i> Vérificateur Base58 & ₳</a>
+                <a href="#b2b-mod-1" class="bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white px-4 py-2 rounded-lg text-[10.5px] font-black uppercase tracking-wider transition-all"><i class="fa-solid fa-book-journal-whills mr-1.5"></i> 20 Protocoles SLA & B2B</a>
             </div>
         </div>
     </section>
 
-    <div class="max-w-[98rem] mx-auto w-full flex-grow flex flex-col lg:flex-row gap-8 px-4 sm:px-6 lg:px-8 py-10">
+    <!-- Conteneur Principal avec Barre Latérale -->
+    <div class="max-w-[98rem] mx-auto w-full flex-grow flex flex-col lg:flex-row gap-6 px-4 sm:px-6 lg:px-8 py-8">
         
-        <aside class="w-full lg:w-80 shrink-0 hidden lg:block">
-            <div class="sticky top-20 bg-indCard rounded-2xl border border-indBorder p-5 shadow-sm max-h-[86vh] flex flex-col">
-                <div class="pb-4 mb-3 border-b border-slate-100">
-                    <div class="flex items-center justify-between mb-3">
+        <!-- Sidebar Navigation -->
+        <aside class="w-full lg:w-72 shrink-0 hidden lg:block">
+            <div class="sticky top-16 bg-indCard rounded-xl border border-indBorder p-4 shadow-sm max-h-[88vh] flex flex-col">
+                <div class="pb-3 mb-2.5 border-b border-slate-100">
+                    <div class="flex items-center justify-between mb-2.5">
                         <div class="flex items-center gap-2">
-                            <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo" class="h-8 w-8 rounded-lg border border-slate-200">
+                            <img src="https://i.imgur.com/W632hIe.jpeg" alt="Logo" class="h-7 w-7 rounded-md border border-slate-200">
                             <div>
-                                <h3 class="font-black text-premiumDark text-xs tracking-wider uppercase leading-none">Atlas & Duc Corp.</h3>
-                                <p data-key="sidebar_version" class="text-indAccent font-bold text-[10px] mt-0.5">Support B2B V.5.0 • 20 Modules</p>
+                                <h3 class="font-black text-premiumDark text-[11px] tracking-wider uppercase leading-none">Atlas & Duc Corp.</h3>
+                                <p data-key="sidebar_version" class="text-indAccent font-bold text-[9px] mt-0.5">Support B2B V.5.1 • 20 Modules</p>
                             </div>
                         </div>
-                        <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[9px] font-black px-2 py-0.5 rounded uppercase">NOC 24/7</span>
+                        <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[8px] font-black px-1.5 py-0.5 rounded uppercase">NOC 24/7</span>
                     </div>
                     <div class="relative">
-                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
-                        <input type="text" id="articleSearchInput" placeholder="Filtrer le support (ex: SLA, POS, SONABEL, ₳)..." class="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium text-premiumDark focus:outline-none focus:border-indAccent transition-colors">
+                        <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2 text-slate-400 text-[10px]"></i>
+                        <input type="text" id="articleSearchInput" placeholder="Filtrer le support (ex: SLA, POS, SONABEL, ₳)..." class="w-full pl-7 pr-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-md text-[10.5px] font-medium text-premiumDark focus:outline-none focus:border-indAccent transition-colors">
                     </div>
                 </div>
 
-                <div class="grid grid-cols-3 gap-1.5 mb-3">
-                    <a href="#corp_dir" class="bg-slate-100 hover:bg-sky-50 hover:text-indAccent text-slate-700 font-bold text-[10px] py-1.5 px-1.5 rounded-lg text-center border border-slate-200 transition-colors"><i class="fa-solid fa-phone mr-1"></i>Contacts</a>
-                    <a href="#diag_lab" class="bg-slate-100 hover:bg-sky-50 hover:text-indAccent text-slate-700 font-bold text-[10px] py-1.5 px-1.5 rounded-lg text-center border border-slate-200 transition-colors"><i class="fa-solid fa-vial mr-1"></i>Outil B2B</a>
-                    <a href="#faq_section" class="bg-slate-900 hover:bg-indAccent text-indGold hover:text-white font-bold text-[10px] py-1.5 px-1.5 rounded-lg text-center transition-colors"><i class="fa-solid fa-circle-question mr-1"></i>12 FAQ</a>
+                <div class="grid grid-cols-3 gap-1 mb-2.5">
+                    <a href="#corp_dir" class="bg-slate-100 hover:bg-sky-50 hover:text-indAccent text-slate-700 font-bold text-[9px] py-1 px-1 rounded text-center border border-slate-200 transition-colors"><i class="fa-solid fa-phone mr-0.5"></i>Contacts</a>
+                    <a href="#diag_lab" class="bg-slate-100 hover:bg-sky-50 hover:text-indAccent text-slate-700 font-bold text-[9px] py-1 px-1 rounded text-center border border-slate-200 transition-colors"><i class="fa-solid fa-vial mr-0.5"></i>Outil B2B</a>
+                    <a href="#faq_section" class="bg-slate-900 hover:bg-indAccent text-indGold hover:text-white font-bold text-[9px] py-1 px-1 rounded text-center transition-colors"><i class="fa-solid fa-circle-question mr-0.5"></i>12 FAQ</a>
                 </div>
 
-                <div class="mb-2 flex items-center justify-between">
-                    <h4 data-key="sidebar_title_sections" class="font-black text-slate-400 uppercase tracking-widest text-[9px]">20 Protocoles Support & SLA</h4>
-                    <span class="text-[9px] font-mono font-bold text-slate-400">10 Clauses / Mod.</span>
+                <div class="mb-1.5 flex items-center justify-between">
+                    <h4 data-key="sidebar_title_sections" class="font-black text-slate-400 uppercase tracking-widest text-[8.5px]">20 Protocoles Support & SLA</h4>
+                    <span class="text-[8.5px] font-mono font-bold text-slate-400">10 Clauses / Mod.</span>
                 </div>
 
-                <ul id="sidebarArticlesList" class="space-y-1.5 text-[11.5px] font-bold text-slate-600 overflow-y-auto pr-1 flex-1">
+                <ul id="sidebarArticlesList" class="space-y-1 text-[10.5px] font-bold text-slate-600 overflow-y-auto pr-1 flex-1">
                 </ul>
 
-                <div class="pt-4 mt-3 border-t border-slate-100 space-y-1.5">
-                    <div class="flex items-center gap-2 text-slate-600 font-bold text-[11px]">
+                <div class="pt-3 mt-2.5 border-t border-slate-100 space-y-1">
+                    <div class="flex items-center gap-1.5 text-slate-600 font-bold text-[10px]">
                         <i class="fa-solid fa-shield-halved text-indSuccess"></i> <span data-key="nav_secure">Canal Chiffré TLS 1.3 & AES-256-GCM</span>
                     </div>
-                    <a href="mailto:support@agi-nexus-core.click" class="flex items-center gap-2 text-[11px] text-indAccent hover:underline font-mono break-all font-bold">
+                    <a href="mailto:support@agi-nexus-core.click" class="flex items-center gap-1.5 text-[10px] text-indAccent hover:underline font-mono break-all font-bold">
                         <i class="fa-solid fa-envelope"></i> support@agi-nexus-core.click
                     </a>
                 </div>
             </div>
         </aside>
 
-        <main class="flex-1 min-w-0 space-y-10 fade-in pb-16">
+        <!-- Contenu Principal -->
+        <main class="flex-1 min-w-0 space-y-8 fade-in pb-12">
 
-            <div class="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 shadow-sm flex flex-col xl:flex-row xl:items-center justify-between gap-4">
-                <div class="flex items-start sm:items-center gap-4">
-                    <div class="w-12 h-12 rounded-xl bg-premiumDark text-indGold flex items-center justify-center shrink-0 text-xl shadow-md border border-indGold/30">
+            <!-- Bannière Institutionnelle -->
+            <div class="bg-white border border-slate-200 rounded-xl p-4 sm:p-5 shadow-sm flex flex-col xl:flex-row xl:items-center justify-between gap-3">
+                <div class="flex items-start sm:items-center gap-3.5">
+                    <div class="w-10 h-10 rounded-lg bg-premiumDark text-indGold flex items-center justify-center shrink-0 text-base shadow-sm border border-indGold/30">
                         <i class="fa-solid fa-headset"></i>
                     </div>
                     <div>
-                        <h2 data-key="meta_banner_title" class="font-black text-premiumDark text-sm sm:text-base uppercase tracking-tight">Direction des Opérations Réseau (NOC L1) & Assistance Institutionnelle B2B — Atlas & Duc Corporation</h2>
-                        <p data-key="meta_banner_desc" class="text-xs text-slate-500 font-medium mt-1">Supervisé par Yougma Thierry Joël (Fondateur, Président & Architecte Logiciel Principal) • Récépissé Officiel N° PHUE-3539/2025 • Sièges : Koupéla & Bobo-Dioulasso, Burkina Faso.</p>
+                        <h2 data-key="meta_banner_title" class="font-black text-premiumDark text-xs sm:text-[13px] uppercase tracking-tight">Direction des Opérations Réseau (NOC L1) & Assistance Institutionnelle B2B — Atlas & Duc Corporation</h2>
+                        <p data-key="meta_banner_desc" class="text-[11px] text-slate-500 font-medium mt-0.5">Supervisé par Yougma Thierry Joël (Fondateur, Président & Architecte Logiciel Principal) • Récépissé Officiel N° PHUE-3539/2025 • Sièges : Koupéla & Bobo-Dioulasso, Burkina Faso.</p>
                     </div>
                 </div>
                 <div class="flex flex-wrap items-center gap-2 self-start xl:self-auto shrink-0">
-                    <span class="bg-slate-900 text-white font-mono text-[11px] font-bold px-3 py-1.5 rounded-lg">Mainnet #9012</span>
-                    <span class="bg-amber-50 text-amber-900 font-mono text-[11px] font-black px-3 py-1.5 rounded-lg border border-amber-300">Parité : 1 ₳ = 1 XOF</span>
+                    <span class="bg-slate-900 text-white font-mono text-[10px] font-bold px-2.5 py-1 rounded-md">Mainnet #9012</span>
+                    <span class="bg-amber-50 text-amber-900 font-mono text-[10px] font-black px-2.5 py-1 rounded-md border border-amber-300">Parité : 1 ₳ = 1 XOF</span>
                 </div>
             </div>
 
-            <section id="corp_dir" class="scroll-mt-24">
-                <div class="flex items-center justify-between mb-4 border-b border-indBorder pb-2">
-                    <h2 data-key="corp_dir" class="text-sm font-black text-premiumDark uppercase tracking-wider flex items-center gap-2">
+            <!-- Annuaire Corporatif -->
+            <section id="corp_dir" class="scroll-mt-20">
+                <div class="flex items-center justify-between mb-3 border-b border-indBorder pb-1.5">
+                    <h2 data-key="corp_dir" class="text-xs font-black text-premiumDark uppercase tracking-wider flex items-center gap-2">
                         <i class="fa-solid fa-building-shield text-indAccent"></i> Départements Exécutifs & Annuaire Corporatif Officiel L1
                     </h2>
-                    <span class="text-[10px] font-mono font-bold text-indSuccess bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">Lignes Directes Certifiées</span>
+                    <span class="text-[9.5px] font-mono font-bold text-indSuccess bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">Lignes Directes Certifiées</span>
                 </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
-                    <div class="bg-white border-2 border-slate-200 rounded-2xl p-5 shadow-sm hover:border-indAccent hover:shadow-md transition-all">
-                        <div class="flex items-center gap-3 mb-4 border-b border-slate-100 pb-3">
-                            <div class="w-10 h-10 rounded-xl bg-indAccent/10 flex items-center justify-center text-indAccent text-base shadow-sm"><i class="fa-solid fa-building-user"></i></div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm hover:border-indAccent hover:shadow-md transition-all">
+                        <div class="flex items-center gap-2.5 mb-3 border-b border-slate-100 pb-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-indAccent/10 flex items-center justify-center text-indAccent text-sm"><i class="fa-solid fa-building-user"></i></div>
                             <div>
-                                <h3 data-key="dir_title" class="font-black text-sm text-premiumDark">Présidence & Direction</h3>
-                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Gouvernance Souveraine</span>
+                                <h3 data-key="dir_title" class="font-black text-xs text-premiumDark">Présidence & Direction</h3>
+                                <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Gouvernance Souveraine</span>
                             </div>
                         </div>
-                        <div class="space-y-3.5 text-xs">
-                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
-                                <p data-key="dir_pres" class="text-slate-400 font-black uppercase text-[9px] tracking-wider mb-1">Présidence (Ligne Téléphonique Directe)</p>
-                                <a href="tel:+22676203848" class="font-mono font-black text-sm text-premiumDark hover:text-indAccent flex items-center gap-2 transition-colors"><i class="fa-solid fa-phone text-indAccent"></i> +226 76 20 38 48</a>
+                        <div class="space-y-2.5 text-[11px]">
+                            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+                                <p data-key="dir_pres" class="text-slate-400 font-black uppercase text-[8.5px] tracking-wider mb-0.5">Présidence (Ligne Téléphonique Directe)</p>
+                                <a href="tel:+22676203848" class="font-mono font-black text-xs text-premiumDark hover:text-indAccent flex items-center gap-1.5 transition-colors"><i class="fa-solid fa-phone text-indAccent text-[10px]"></i> +226 76 20 38 48</a>
                             </div>
-                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
-                                <p data-key="dir_email" class="text-slate-400 font-black uppercase text-[9px] tracking-wider mb-1">Direction Générale (Courriel Officiel)</p>
-                                <a href="mailto:mr.yougma@agi-nexus-core.click" class="font-mono font-bold text-xs text-indAccent hover:text-sky-700 flex items-center gap-2 transition-colors break-all"><i class="fa-solid fa-envelope shrink-0"></i> mr.yougma@agi-nexus-core.click</a>
+                            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+                                <p data-key="dir_email" class="text-slate-400 font-black uppercase text-[8.5px] tracking-wider mb-0.5">Direction Générale (Courriel Officiel)</p>
+                                <a href="mailto:mr.yougma@agi-nexus-core.click" class="font-mono font-bold text-[10.5px] text-indAccent hover:text-sky-700 flex items-center gap-1.5 transition-colors break-all"><i class="fa-solid fa-envelope shrink-0 text-[10px]"></i> mr.yougma@agi-nexus-core.click</a>
                             </div>
                         </div>
                     </div>
 
-                    <div class="bg-white border-2 border-slate-200 rounded-2xl p-5 shadow-sm hover:border-amber-500 hover:shadow-md transition-all">
-                        <div class="flex items-center gap-3 mb-4 border-b border-slate-100 pb-3">
-                            <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-600 text-base shadow-sm"><i class="fa-solid fa-server"></i></div>
+                    <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm hover:border-amber-500 hover:shadow-md transition-all">
+                        <div class="flex items-center gap-2.5 mb-3 border-b border-slate-100 pb-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-600 text-sm"><i class="fa-solid fa-server"></i></div>
                             <div>
-                                <h3 data-key="admin_title" class="font-black text-sm text-premiumDark">CTO & Administration</h3>
-                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Architecture L1 & Conformité</span>
+                                <h3 data-key="admin_title" class="font-black text-xs text-premiumDark">CTO & Administration</h3>
+                                <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Architecture L1 & Conformité</span>
                             </div>
                         </div>
-                        <div class="space-y-3.5 text-xs">
-                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
-                                <p data-key="admin_cto" class="text-slate-400 font-black uppercase text-[9px] tracking-wider mb-1">Direction Technique (CTO / Nœuds PoA)</p>
-                                <a href="tel:+22670873773" class="font-mono font-black text-sm text-premiumDark hover:text-amber-600 flex items-center gap-2 transition-colors"><i class="fa-solid fa-phone text-amber-600"></i> +226 70 87 37 73</a>
+                        <div class="space-y-2.5 text-[11px]">
+                            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+                                <p data-key="admin_cto" class="text-slate-400 font-black uppercase text-[8.5px] tracking-wider mb-0.5">Direction Technique (CTO / Nœuds PoA)</p>
+                                <a href="tel:+22670873773" class="font-mono font-black text-xs text-premiumDark hover:text-amber-600 flex items-center gap-1.5 transition-colors"><i class="fa-solid fa-phone text-amber-600 text-[10px]"></i> +226 70 87 37 73</a>
                             </div>
-                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
-                                <p data-key="admin_email" class="text-slate-400 font-black uppercase text-[9px] tracking-wider mb-1">Administration & Juridique (Courriel)</p>
-                                <a href="mailto:administration@agi-nexus-core.click" class="font-mono font-bold text-xs text-amber-600 hover:text-amber-700 flex items-center gap-2 transition-colors break-all"><i class="fa-solid fa-envelope shrink-0"></i> administration@agi-nexus-core.click</a>
+                            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+                                <p data-key="admin_email" class="text-slate-400 font-black uppercase text-[8.5px] tracking-wider mb-0.5">Administration & Juridique (Courriel)</p>
+                                <a href="mailto:administration@agi-nexus-core.click" class="font-mono font-bold text-[10.5px] text-amber-600 hover:text-amber-700 flex items-center gap-1.5 transition-colors break-all"><i class="fa-solid fa-envelope shrink-0 text-[10px]"></i> administration@agi-nexus-core.click</a>
                             </div>
                         </div>
                     </div>
 
-                    <div class="bg-white border-2 border-slate-200 rounded-2xl p-5 shadow-sm hover:border-indSuccess hover:shadow-md transition-all">
-                        <div class="flex items-center gap-3 mb-4 border-b border-slate-100 pb-3">
-                            <div class="w-10 h-10 rounded-xl bg-indSuccess/10 flex items-center justify-center text-indSuccess text-base shadow-sm"><i class="fa-solid fa-headset"></i></div>
+                    <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm hover:border-indSuccess hover:shadow-md transition-all">
+                        <div class="flex items-center gap-2.5 mb-3 border-b border-slate-100 pb-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-indSuccess/10 flex items-center justify-center text-indSuccess text-sm"><i class="fa-solid fa-headset"></i></div>
                             <div>
-                                <h3 data-key="tech_title" class="font-black text-sm text-premiumDark">Support & Assistance B2B</h3>
-                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Intégration RPC, POS & Wallets</span>
+                                <h3 data-key="tech_title" class="font-black text-xs text-premiumDark">Support & Assistance B2B</h3>
+                                <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Intégration RPC, POS & Wallets</span>
                             </div>
                         </div>
-                        <div class="space-y-3.5 text-xs">
-                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
-                                <p data-key="tech_phone" class="text-slate-400 font-black uppercase text-[9px] tracking-wider mb-1">Assistance Technique (Ligne Directe)</p>
-                                <a href="tel:+22678370803" class="font-mono font-black text-sm text-premiumDark hover:text-indSuccess flex items-center gap-2 transition-colors"><i class="fa-solid fa-phone text-indSuccess"></i> +226 78 37 08 03</a>
+                        <div class="space-y-2.5 text-[11px]">
+                            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+                                <p data-key="tech_phone" class="text-slate-400 font-black uppercase text-[8.5px] tracking-wider mb-0.5">Assistance Technique (Ligne Directe)</p>
+                                <a href="tel:+22678370803" class="font-mono font-black text-xs text-premiumDark hover:text-indSuccess flex items-center gap-1.5 transition-colors"><i class="fa-solid fa-phone text-indSuccess text-[10px]"></i> +226 78 37 08 03</a>
                             </div>
-                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
-                                <p data-key="tech_email" class="text-slate-400 font-black uppercase text-[9px] tracking-wider mb-1">Support Technique (Courriel 24/7)</p>
-                                <a href="mailto:support@agi-nexus-core.click" class="font-mono font-bold text-xs text-indSuccess hover:text-emerald-700 flex items-center gap-2 transition-colors break-all"><i class="fa-solid fa-envelope shrink-0"></i> support@agi-nexus-core.click</a>
+                            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+                                <p data-key="tech_email" class="text-slate-400 font-black uppercase text-[8.5px] tracking-wider mb-0.5">Support Technique (Courriel 24/7)</p>
+                                <a href="mailto:support@agi-nexus-core.click" class="font-mono font-bold text-[10.5px] text-indSuccess hover:text-emerald-700 flex items-center gap-1.5 transition-colors break-all"><i class="fa-solid fa-envelope shrink-0 text-[10px]"></i> support@agi-nexus-core.click</a>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div id="fast_channels" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <a href="discussion.html" class="bg-white border-2 border-slate-200 rounded-2xl p-5 flex items-center justify-between hover:border-indAccent hover:shadow-md transition-all group">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-indAccent/10 text-indAccent flex items-center justify-center text-lg group-hover:bg-indAccent group-hover:text-white transition-colors shadow-sm">
+                <div id="fast_channels" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                    <a href="discussion.html" class="bg-white border border-slate-200 rounded-xl p-4 flex items-center justify-between hover:border-indAccent hover:shadow-md transition-all group">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-indAccent/10 text-indAccent flex items-center justify-center text-base group-hover:bg-indAccent group-hover:text-white transition-colors">
                                 <i class="fa-solid fa-comments"></i>
                             </div>
                             <div>
-                                <p data-key="label_chat" class="text-[10px] font-black text-indTextMuted uppercase tracking-widest mb-0.5">Portail de Messagerie Interne Chiffré</p>
-                                <h3 data-key="val_chat" class="font-black text-base text-premiumDark">Ouvrir une Session Ticket Interne (discussion.html)</h3>
+                                <p data-key="label_chat" class="text-[9px] font-black text-indTextMuted uppercase tracking-widest mb-0.5">Portail de Messagerie Interne Chiffré</p>
+                                <h3 data-key="val_chat" class="font-black text-xs sm:text-[13px] text-premiumDark">Ouvrir une Session Ticket Interne (discussion.html)</h3>
                             </div>
                         </div>
-                        <i class="fa-solid fa-arrow-right text-slate-300 group-hover:text-indAccent group-hover:translate-x-1 transition-all"></i>
+                        <i class="fa-solid fa-arrow-right text-slate-300 group-hover:text-indAccent group-hover:translate-x-1 transition-all text-xs"></i>
                     </a>
 
-                    <a href="https://wa.me/22676167364" target="_blank" rel="noopener noreferrer" class="bg-white border-2 border-slate-200 rounded-2xl p-5 flex items-center justify-between hover:border-indSuccess hover:shadow-md transition-all group">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-indSuccess/10 text-indSuccess flex items-center justify-center text-xl group-hover:bg-indSuccess group-hover:text-white transition-colors shadow-sm">
+                    <a href="https://wa.me/22676167364" target="_blank" rel="noopener noreferrer" class="bg-white border border-slate-200 rounded-xl p-4 flex items-center justify-between hover:border-indSuccess hover:shadow-md transition-all group">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-indSuccess/10 text-indSuccess flex items-center justify-center text-lg group-hover:bg-indSuccess group-hover:text-white transition-colors">
                                 <i class="fa-brands fa-whatsapp"></i>
                             </div>
                             <div>
-                                <p data-key="label_whatsapp" class="text-[10px] font-black text-indTextMuted uppercase tracking-widest mb-0.5">Ligne d'Urgence Opérationnelle (+226 76 16 73 64)</p>
-                                <h3 data-key="val_whatsapp" class="font-black text-base text-premiumDark">Liaison Directe WhatsApp B2B</h3>
+                                <p data-key="label_whatsapp" class="text-[9px] font-black text-indTextMuted uppercase tracking-widest mb-0.5">Ligne d'Urgence Opérationnelle (+226 76 16 73 64)</p>
+                                <h3 data-key="val_whatsapp" class="font-black text-xs sm:text-[13px] text-premiumDark">Liaison Directe WhatsApp B2B</h3>
                             </div>
                         </div>
-                        <i class="fa-solid fa-arrow-up-right-from-square text-slate-300 group-hover:text-indSuccess transition-all"></i>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-slate-300 group-hover:text-indSuccess transition-all text-xs"></i>
                     </a>
                 </div>
             </section>
 
-            <section id="ticket_console" class="scroll-mt-24 bg-premiumDark border-2 border-indAccent/40 rounded-2xl p-6 sm:p-8 text-white shadow-xl">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 mb-6 border-b border-slate-800">
+            <!-- Console Temps Réel Firebase Realtime Database -->
+            <section id="ticket_console" class="scroll-mt-20 bg-premiumDark border border-indAccent/40 rounded-xl p-5 sm:p-6 text-white shadow-xl">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-4 mb-5 border-b border-slate-800">
                     <div>
-                        <div class="inline-flex items-center gap-2 text-indGold text-[10px] font-black uppercase tracking-widest mb-1">
-                            <i class="fa-solid fa-fingerprint"></i> Enregistrement Cryptographique Base58
+                        <div class="inline-flex items-center gap-2 text-indGold text-[9px] font-black uppercase tracking-widest mb-1">
+                            <i class="fa-solid fa-database"></i> Synchronisation Temps Réel • Firebase Realtime Database
                         </div>
-                        <h2 data-key="console_ticket_title" class="text-xl sm:text-2xl font-black text-white">Générateur de Ticket d'Incident & Homologation B2B</h2>
-                        <p data-key="console_ticket_sub" class="text-xs text-slate-400 mt-1">Créez un ticket d'ingénierie indexé en Base58 (ADCT_...) pour vos demandes de quota RPC, d'intégration POS ou d'audit de contrat NVM.</p>
+                        <h2 data-key="console_ticket_title" class="text-base sm:text-lg font-black text-white">Console d'Incidents, Homologation B2B & Registre Live (Base58)</h2>
+                        <p data-key="console_ticket_sub" class="text-[11px] text-slate-400 mt-0.5">Chaque ticket créé est enregistré en direct dans Firebase Realtime Database sous un identifiant Base58 unique (ADCT_...) et diffusé instantanément au NOC L1.</p>
                     </div>
-                    <span class="bg-slate-900 border border-slate-700 text-indAccent font-mono text-xs font-bold px-3.5 py-2 rounded-xl self-start md:self-auto">
-                        SLA Priorité P1 : &lt; 15 min
-                    </span>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-6">
-                    <div class="lg:col-span-4">
-                        <label data-key="lbl_ticket_cat" class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">1. Département & Catégorie B2B</label>
-                        <select id="b2bTicketCategory" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs font-bold text-white focus:outline-none focus:border-indAccent">
-                            <option value="Quota API RPC (1 500 req/s & mTLS)">Quota API RPC (1 500 req/s & mTLS)</option>
-                            <option value="Déploiement Caisse Roger Service Pro (POS)">Déploiement Caisse Roger Service Pro (POS)</option>
-                            <option value="Intégration Passerelle SONABEL / ONEA / MoMo">Intégration Passerelle SONABEL / ONEA / MoMo</option>
-                            <option value="Audit Smart Contract NVM / NCRC-20 (ADCC_)">Audit Smart Contract NVM / NCRC-20 (ADCC_)</option>
-                            <option value="Homologation Marchand Adama Digital / A&D Business">Homologation Marchand Adama Digital / A&D Business</option>
-                            <option value="Guichet Trésorerie Institutionnelle (1 ₳ = 1 XOF)">Guichet Trésorerie Institutionnelle (1 ₳ = 1 XOF)</option>
-                        </select>
-                    </div>
-                    <div class="lg:col-span-2">
-                        <label data-key="lbl_ticket_prio" class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">2. Niveau SLA</label>
-                        <select id="b2bTicketPriority" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2.5 text-xs font-mono font-bold text-indGold focus:outline-none focus:border-indAccent">
-                            <option value="P1">P1 (&lt; 15 min)</option>
-                            <option value="P2">P2 (&lt; 30 min)</option>
-                            <option value="P3">P3 (&lt; 2h)</option>
-                            <option value="P4">P4 (&lt; 12h)</option>
-                        </select>
-                    </div>
-                    <div class="lg:col-span-3">
-                        <label data-key="lbl_ticket_wallet" class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">3. Adresse Base58 Cible</label>
-                        <input type="text" id="b2bTicketWallet" value="ADC6MH4qsxED6cLtH3NLng5QL6Kvb9HRa8ui" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs font-mono text-sky-300 focus:outline-none focus:border-indAccent">
-                    </div>
-                    <div class="lg:col-span-3 flex items-end">
-                        <button id="createB2bTicketBtn" class="w-full bg-indAccent hover:bg-sky-500 text-white font-black text-xs uppercase tracking-widest py-3 px-4 rounded-xl shadow-lg shadow-indAccent/25 transition-all flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-plus-circle"></i> <span data-key="btn_gen_ticket">Générer Ticket Base58</span>
+                    <div class="flex flex-wrap items-center gap-2 self-start md:self-auto">
+                        <div id="firebaseSyncStatus" class="bg-slate-900 border border-slate-700 text-amber-300 font-mono text-[10px] font-bold px-3 py-1.5 rounded-lg flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                            <span>Connexion Firebase RTDB...</span>
+                        </div>
+                        <button type="button" id="toggleFirebaseConfigBtn" class="bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-200 font-mono text-[10px] font-bold px-2.5 py-1.5 rounded-lg transition-colors" title="Configurer l'URL Firebase Realtime Database">
+                            <i class="fa-solid fa-gear text-indGold"></i> Config RTDB
                         </button>
                     </div>
                 </div>
 
-                <div id="ticketConfirmBanner" class="hidden bg-slate-900/95 border border-indSuccess/50 rounded-xl p-4 text-xs font-mono text-emerald-300 mb-4">
+                <!-- Panneau de configuration Firebase RTDB (repliable) -->
+                <div id="firebaseConfigPanel" class="hidden bg-slate-950/90 border border-indGold/40 rounded-lg p-3.5 mb-5 text-[11px]">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                        <span class="font-mono font-bold text-indGold uppercase text-[10px]"><i class="fa-solid fa-fire mr-1.5"></i>Point de terminaison Firebase Realtime Database (Database URL)</span>
+                        <span class="text-[9.5px] text-slate-400 font-mono">Nœud cible : <code class="text-sky-300">/nexus_b2b_tickets</code></span>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-2">
+                        <input type="url" id="firebaseDbUrlInput" placeholder="https://votre-projet-default-rtdb.firebaseio.com" class="flex-1 bg-slate-900 border border-slate-700 rounded-md px-3 py-1.5 text-[11px] font-mono text-sky-300 focus:outline-none focus:border-indAccent">
+                        <button type="button" id="saveFirebaseUrlBtn" class="bg-indGold hover:bg-amber-500 text-premiumDark font-black text-[10px] uppercase tracking-wider px-4 py-1.5 rounded-md transition-colors shrink-0">
+                            Connecter & Synchroniser
+                        </button>
+                    </div>
                 </div>
 
-                <div id="recent_tickets" class="bg-slate-900/90 border border-slate-800 rounded-xl overflow-hidden">
-                    <div class="px-4 py-3 bg-slate-950 border-b border-slate-800 flex items-center justify-between">
-                        <span data-key="tickets_title" class="text-[11px] font-black uppercase tracking-widest text-slate-300"><i class="fa-solid fa-list-check text-indGold mr-1.5"></i> Registre Temps Réel des Requêtes & Tickets B2B</span>
-                        <span class="text-[10px] font-mono text-slate-400">Encodage Identifiant : Base58 Strict</span>
+                <!-- Formulaire de Création de Ticket Réel -->
+                <form id="b2bTicketForm" class="space-y-3.5 mb-5">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-3">
+                        <div class="lg:col-span-4">
+                            <label data-key="lbl_ticket_cat" class="block text-[9.5px] font-bold text-slate-400 uppercase tracking-wider mb-1">1. Département & Catégorie B2B *</label>
+                            <select id="b2bTicketCategory" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-[11px] font-bold text-white focus:outline-none focus:border-indAccent">
+                                <option value="Quota API RPC (1 500 req/s & mTLS)">Quota API RPC (1 500 req/s & mTLS)</option>
+                                <option value="Déploiement Caisse Roger Service Pro (POS)">Déploiement Caisse Roger Service Pro (POS)</option>
+                                <option value="Intégration Passerelle SONABEL / ONEA / MoMo">Intégration Passerelle SONABEL / ONEA / MoMo</option>
+                                <option value="Audit Smart Contract NVM / NCRC-20 (ADCC_)">Audit Smart Contract NVM / NCRC-20 (ADCC_)</option>
+                                <option value="Homologation Marchand Adama Digital / A&D Business">Homologation Marchand Adama Digital / A&D Business</option>
+                                <option value="Guichet Trésorerie Institutionnelle (1 ₳ = 1 XOF)">Guichet Trésorerie Institutionnelle (1 ₳ = 1 XOF)</option>
+                            </select>
+                        </div>
+                        <div class="lg:col-span-2">
+                            <label data-key="lbl_ticket_prio" class="block text-[9.5px] font-bold text-slate-400 uppercase tracking-wider mb-1">2. Niveau SLA *</label>
+                            <select id="b2bTicketPriority" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-2 text-[11px] font-mono font-bold text-indGold focus:outline-none focus:border-indAccent">
+                                <option value="P1">P1 (&lt; 15 min)</option>
+                                <option value="P2">P2 (&lt; 30 min)</option>
+                                <option value="P3">P3 (&lt; 2h)</option>
+                                <option value="P4">P4 (&lt; 12h)</option>
+                            </select>
+                        </div>
+                        <div class="lg:col-span-3">
+                            <label data-key="lbl_ticket_org" class="block text-[9.5px] font-bold text-slate-400 uppercase tracking-wider mb-1">3. Raison Sociale / Entité *</label>
+                            <input type="text" id="b2bTicketOrg" required placeholder="Ex: Société ou Établissement" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-[11px] font-semibold text-white placeholder-slate-500 focus:outline-none focus:border-indAccent">
+                        </div>
+                        <div class="lg:col-span-3">
+                            <label data-key="lbl_ticket_wallet" class="block text-[9.5px] font-bold text-slate-400 uppercase tracking-wider mb-1">4. Adresse Base58 Cible *</label>
+                            <input type="text" id="b2bTicketWallet" required placeholder="ADC..." class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-[11px] font-mono text-sky-300 placeholder-slate-500 focus:outline-none focus:border-indAccent">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 items-end">
+                        <div class="lg:col-span-9">
+                            <label data-key="lbl_ticket_desc" class="block text-[9.5px] font-bold text-slate-400 uppercase tracking-wider mb-1">5. Description Technique de la Requête ou Hash de Transaction Base58 *</label>
+                            <input type="text" id="b2bTicketDesc" required placeholder="Décrivez précisément l'opération, le point de terminaison RPC, le terminal POS ou le hash Base58 concerné..." class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-[11px] text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indAccent">
+                        </div>
+                        <div class="lg:col-span-3">
+                            <button type="submit" id="createB2bTicketBtn" class="w-full bg-indAccent hover:bg-sky-500 disabled:opacity-50 text-white font-black text-[10.5px] uppercase tracking-widest py-2.5 px-4 rounded-lg shadow-lg shadow-indAccent/25 transition-all flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-paper-plane"></i> <span data-key="btn_gen_ticket">Publier sur Firebase RTDB</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Bannière de confirmation ou d'erreur RTDB -->
+                <div id="ticketConfirmBanner" class="hidden rounded-lg p-3 text-[10.5px] font-mono mb-4">
+                </div>
+
+                <!-- Tableau Temps Réel alimenté exclusivement par Firebase Realtime Database -->
+                <div id="recent_tickets" class="bg-slate-900/90 border border-slate-800 rounded-lg overflow-hidden">
+                    <div class="px-3.5 py-2.5 bg-slate-950 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2">
+                        <span data-key="tickets_title" class="text-[10px] font-black uppercase tracking-widest text-slate-300">
+                            <i class="fa-solid fa-satellite-dish text-indGold mr-1.5"></i> Flux Temps Réel des Tickets B2B (Firebase Realtime Database)
+                        </span>
+                        <div class="flex items-center gap-3">
+                            <span id="liveTicketsCounter" class="text-[9.5px] font-mono text-indSuccess font-bold">0 ticket enregistré</span>
+                            <span class="text-[9.5px] font-mono text-slate-400">Encodage : Base58 Strict</span>
+                        </div>
                     </div>
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse text-xs min-w-[650px]">
+                        <table class="w-full text-left border-collapse text-[11px] min-w-[760px]">
                             <thead>
-                                <tr class="border-b border-slate-800 text-[10px] text-slate-400 uppercase tracking-widest">
-                                    <th data-key="th_id" class="py-3 px-4 font-bold">ID Ticket Base58</th>
-                                    <th data-key="th_sujet" class="py-3 px-4 font-bold">Objet de l'Intervention B2B</th>
-                                    <th class="py-3 px-4 font-bold">Portefeuille Cible</th>
-                                    <th data-key="th_statut" class="py-3 px-4 font-bold">Statut SLA</th>
-                                    <th data-key="th_date" class="py-3 px-4 font-bold">Horodatage</th>
+                                <tr class="border-b border-slate-800 text-[9px] text-slate-400 uppercase tracking-widest bg-slate-950/50">
+                                    <th data-key="th_id" class="py-2.5 px-3.5 font-bold">ID Ticket Base58</th>
+                                    <th data-key="th_sujet" class="py-2.5 px-3.5 font-bold">Catégorie & Détails B2B</th>
+                                    <th class="py-2.5 px-3.5 font-bold">Entité</th>
+                                    <th class="py-2.5 px-3.5 font-bold">Adresse Base58</th>
+                                    <th data-key="th_statut" class="py-2.5 px-3.5 font-bold">Statut SLA</th>
+                                    <th data-key="th_date" class="py-2.5 px-3.5 font-bold">Horodatage UTC</th>
                                 </tr>
                             </thead>
-                            <tbody id="ticketsTableBody" class="divide-y divide-slate-800/70 font-mono text-[11.5px]">
-                                <tr class="hover:bg-slate-800/50 transition-colors">
-                                    <td class="py-3 px-4 font-bold text-indGold">ADCT_8502Km9pQrSt</td>
-                                    <td data-key="tk1_subj" class="py-3 px-4 font-sans text-slate-200 font-semibold">Augmentation Rate-Limit API RPC (1 500 req/s)</td>
-                                    <td class="py-3 px-4 text-sky-400">ADC6MH4qsxED6c...</td>
-                                    <td class="py-3 px-4"><span data-key="status_progress" class="bg-amber-500/20 text-amber-300 border border-amber-500/40 px-2.5 py-0.5 rounded text-[10px] font-bold uppercase">En cours (P1)</span></td>
-                                    <td data-key="tk1_time" class="py-3 px-4 text-slate-400 font-sans">Il y a 18 min</td>
-                                </tr>
-                                <tr class="hover:bg-slate-800/50 transition-colors">
-                                    <td class="py-3 px-4 font-bold text-indGold">ADCT_8499Vx4nL7wZ</td>
-                                    <td data-key="tk2_subj" class="py-3 px-4 font-sans text-slate-200 font-semibold">Homologation Nœud Marchand & Terminal POS Houndé</td>
-                                    <td class="py-3 px-4 text-sky-400">ADC9RogerServ...</td>
-                                    <td class="py-3 px-4"><span data-key="status_resolved" class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-2.5 py-0.5 rounded text-[10px] font-bold uppercase">Résolu & Actif</span></td>
-                                    <td data-key="tk2_time" class="py-3 px-4 text-slate-400 font-sans">Hier</td>
-                                </tr>
-                                <tr class="hover:bg-slate-800/50 transition-colors">
-                                    <td class="py-3 px-4 font-bold text-indGold">ADCT_8475Bp2cM9yQ</td>
-                                    <td data-key="tk3_subj" class="py-3 px-4 font-sans text-slate-200 font-semibold">Intégration SDK Android Kotlin & Pont WebView Base58</td>
-                                    <td class="py-3 px-4 text-sky-400">ADCC_Escrow99...</td>
-                                    <td class="py-3 px-4"><span data-key="status_resolved" class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-2.5 py-0.5 rounded text-[10px] font-bold uppercase">Résolu & Actif</span></td>
-                                    <td data-key="tk3_time" class="py-3 px-4 text-slate-400 font-sans">Octobre 2026</td>
+                            <tbody id="ticketsTableBody" class="divide-y divide-slate-800/70 font-mono text-[10.5px]">
+                                <tr>
+                                    <td colspan="6" class="py-6 px-4 text-center text-slate-400 font-sans">
+                                        <i class="fa-solid fa-circle-notch fa-spin text-indAccent mr-2"></i>
+                                        Synchronisation en cours avec le nœud Firebase Realtime Database (<code class="text-sky-400">/nexus_b2b_tickets</code>)...
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -430,47 +466,48 @@
                 </div>
             </section>
 
-            <section id="diag_lab" class="scroll-mt-24 bg-white border-2 border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 mb-6 border-b border-slate-100">
+            <!-- Outil de Diagnostic Base58 & Calculateur MicroA -->
+            <section id="diag_lab" class="scroll-mt-20 bg-white border border-slate-200 rounded-xl p-5 sm:p-6 shadow-sm">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-4 mb-5 border-b border-slate-100">
                     <div>
-                        <span class="text-[10px] font-mono font-black uppercase tracking-widest text-indAccent bg-sky-50 border border-sky-200 px-2.5 py-1 rounded">Outil d'Auto-Diagnostic Marchand & B2B</span>
-                        <h2 data-key="diag_title" class="text-xl font-black text-premiumDark mt-2">Vérificateur d'Intégrité Base58 & Calculateur Comptable (₳ / microA / XOF)</h2>
-                        <p data-key="diag_sub" class="text-xs text-slate-500 mt-0.5">Vérifiez la conformité d'une adresse Base58 et calculez les montants exacts en microA ainsi que les frais Zero-Deviation Gas avant l'envoi RPC.</p>
+                        <span class="text-[9px] font-mono font-black uppercase tracking-widest text-indAccent bg-sky-50 border border-sky-200 px-2 py-0.5 rounded">Outil d'Auto-Diagnostic Marchand & B2B</span>
+                        <h2 data-key="diag_title" class="text-base sm:text-lg font-black text-premiumDark mt-1.5">Vérificateur d'Intégrité Base58 & Calculateur Comptable (₳ / microA / XOF)</h2>
+                        <p data-key="diag_sub" class="text-[11px] text-slate-500 mt-0.5">Vérifiez la conformité d'une adresse Base58 et calculez les montants exacts en microA ainsi que les frais Zero-Deviation Gas avant l'envoi RPC.</p>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-4">
-                        <h3 data-key="diag_box1_title" class="font-black text-sm text-premiumDark flex items-center gap-2"><i class="fa-solid fa-check-double text-indAccent"></i> 1. Audit Syntaxique d'Identifiant Base58 (ADC / ADCC_ / ADCT_)</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 space-y-3">
+                        <h3 data-key="diag_box1_title" class="font-black text-xs text-premiumDark flex items-center gap-2"><i class="fa-solid fa-check-double text-indAccent"></i> 1. Audit Syntaxique d'Identifiant Base58 (ADC / ADCC_ / ADCT_)</h3>
                         <div>
-                            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-wider mb-1">Entrer une Adresse ou un Hash Base58 à vérifier</label>
+                            <label class="block text-[9px] font-black text-slate-400 uppercase tracking-wider mb-1">Entrer une Adresse ou un Hash Base58 à vérifier</label>
                             <div class="flex gap-2">
-                                <input type="text" id="base58CheckInput" value="ADC6MH4qsxED6cLtH3NLng5QL6Kvb9HRa8ui" class="flex-1 bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-mono text-premiumDark focus:outline-none focus:border-indAccent">
-                                <button id="runBase58CheckBtn" class="bg-premiumDark hover:bg-indAccent text-white font-bold text-xs px-4 py-2 rounded-lg transition-colors shrink-0">Vérifier</button>
+                                <input type="text" id="base58CheckInput" value="ADC6MH4qsxED6cLtH3NLng5QL6Kvb9HRa8ui" class="flex-1 bg-white border border-slate-300 rounded-md px-3 py-1.5 text-[11px] font-mono text-premiumDark focus:outline-none focus:border-indAccent">
+                                <button id="runBase58CheckBtn" class="bg-premiumDark hover:bg-indAccent text-white font-bold text-[10.5px] px-3.5 py-1.5 rounded-md transition-colors shrink-0">Vérifier</button>
                             </div>
                         </div>
-                        <div id="base58CheckResult" class="bg-white border border-emerald-200 rounded-lg p-3.5 text-xs font-mono text-emerald-800">
+                        <div id="base58CheckResult" class="bg-white border border-emerald-200 rounded-md p-3 text-[10.5px] font-mono text-emerald-800">
                             [VALIDE] Alphabet Base58 conforme (0 caractère ambigu) | Type détecté : Portefeuille EOA / Trésorerie (Préfixe ADC) | Prêt pour Mainnet #9012.
                         </div>
                     </div>
 
-                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-4">
-                        <h3 data-key="diag_box2_title" class="font-black text-sm text-premiumDark flex items-center gap-2"><i class="fa-solid fa-calculator text-indGold"></i> 2. Convertisseur Exact ₳ &lt;-&gt; microA &amp; Zero-Deviation Gas</h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 space-y-3">
+                        <h3 data-key="diag_box2_title" class="font-black text-xs text-premiumDark flex items-center gap-2"><i class="fa-solid fa-calculator text-indGold"></i> 2. Convertisseur Exact ₳ &lt;-&gt; microA &amp; Zero-Deviation Gas</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                             <div>
-                                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-wider mb-1">Montant en Monnaie Native (₳)</label>
-                                <input type="number" id="calcAmountA" value="25000" min="0" step="0.000001" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-mono font-bold text-premiumDark focus:outline-none focus:border-indAccent">
+                                <label class="block text-[9px] font-black text-slate-400 uppercase tracking-wider mb-1">Montant en Monnaie Native (₳)</label>
+                                <input type="number" id="calcAmountA" value="25000" min="0" step="0.000001" class="w-full bg-white border border-slate-300 rounded-md px-3 py-1.5 text-[11px] font-mono font-bold text-premiumDark focus:outline-none focus:border-indAccent">
                             </div>
                             <div>
-                                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-wider mb-1">Type d'Opération RPC L1</label>
-                                <select id="calcOpType" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-mono font-bold text-premiumDark focus:outline-none focus:border-indAccent">
+                                <label class="block text-[9px] font-black text-slate-400 uppercase tracking-wider mb-1">Type d'Opération RPC L1</label>
+                                <select id="calcOpType" class="w-full bg-white border border-slate-300 rounded-md px-2.5 py-1.5 text-[11px] font-mono font-bold text-premiumDark focus:outline-none focus:border-indAccent">
                                     <option value="1000">transfer (1 000 microA)</option>
                                     <option value="5000">call_contract (5 000 microA)</option>
                                     <option value="50000">deploy_contract (50 000 microA)</option>
                                 </select>
                             </div>
                         </div>
-                        <div id="calcOutputBox" class="bg-premiumDark text-slate-200 rounded-lg p-3.5 text-xs font-mono space-y-1">
+                        <div id="calcOutputBox" class="bg-premiumDark text-slate-200 rounded-md p-3 text-[10.5px] font-mono space-y-1">
                             <div class="flex justify-between"><span>amountMicro (BigInt) :</span><span id="outMicroVal" class="text-sky-300 font-bold">25000000000</span></div>
                             <div class="flex justify-between"><span>feeMicro (Zero-Deviation) :</span><span id="outFeeVal" class="text-indGold font-bold">1000 (0.001000 ₳)</span></div>
                             <div class="flex justify-between border-t border-slate-800 pt-1 mt-1"><span>Provision Totale Requise :</span><span id="outTotalVal" class="text-indSuccess font-bold">25000001000 microA (25000.001000 FCFA)</span></div>
@@ -479,34 +516,37 @@
                 </div>
             </section>
 
-            <section id="faq_section" class="scroll-mt-24">
-                <div class="flex items-center justify-between mb-4 border-b border-indBorder pb-2">
-                    <h2 data-key="faq_title" class="text-sm font-black text-premiumDark uppercase tracking-wider flex items-center gap-2">
+            <!-- Base de Connaissances FAQ -->
+            <section id="faq_section" class="scroll-mt-20">
+                <div class="flex items-center justify-between mb-3 border-b border-indBorder pb-1.5">
+                    <h2 data-key="faq_title" class="text-xs font-black text-premiumDark uppercase tracking-wider flex items-center gap-2">
                         <i class="fa-solid fa-circle-question text-indAccent"></i> Base de Connaissances Exécutive & Technique (12 Réponses Certifiées)
                     </h2>
-                    <span class="text-[10px] font-mono font-bold text-slate-500">FAQ B2B & Institutionnelle</span>
+                    <span class="text-[9.5px] font-mono font-bold text-slate-500">FAQ B2B & Institutionnelle</span>
                 </div>
-                <div id="faqListContainer" class="space-y-3">
+                <div id="faqListContainer" class="space-y-2">
                 </div>
             </section>
 
-            <div id="articlesContainer" class="space-y-10">
+            <!-- Conteneur des 20 Protocoles B2B -->
+            <div id="articlesContainer" class="space-y-7">
             </div>
 
         </main>
     </div>
 
-    <footer class="bg-premiumDark border-t border-slate-800 mt-auto pt-12 pb-8">
+    <!-- Footer Institutionnel -->
+    <footer class="bg-premiumDark border-t border-slate-800 mt-auto pt-10 pb-6">
         <div class="max-w-[98rem] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center relative z-10">
-            <div class="flex flex-col items-center justify-center gap-3 mb-6">
-                <img src="https://i.imgur.com/Tc7Jzx3.jpeg" alt="Logo Atlas & Duc" class="h-16 w-16 rounded-full border-2 border-indGold/60 shadow-lg object-cover">
+            <div class="flex flex-col items-center justify-center gap-2.5 mb-5">
+                <img src="https://i.imgur.com/Tc7Jzx3.jpeg" alt="Logo Atlas & Duc" class="h-14 w-14 rounded-full border-2 border-indGold/60 shadow-lg object-cover">
                 <div class="flex flex-col items-center justify-center">
-                    <h4 class="text-white font-black text-base md:text-lg tracking-widest uppercase leading-none mb-1.5">Atlas & Duc Corporation</h4>
-                    <span data-key="footer_infra" class="text-indGold text-[10px] font-bold tracking-[0.2em] uppercase">Infrastructure Blockchain Souveraine Layer-1 • Monnaie Native ₳</span>
+                    <h4 class="text-white font-black text-sm md:text-base tracking-widest uppercase leading-none mb-1">Atlas & Duc Corporation</h4>
+                    <span data-key="footer_infra" class="text-indGold text-[9px] font-bold tracking-[0.2em] uppercase">Infrastructure Blockchain Souveraine Layer-1 • Monnaie Native ₳</span>
                 </div>
             </div>
 
-            <div class="flex flex-wrap items-center justify-center gap-5 md:gap-8 text-[12px] font-bold text-slate-400 w-full mb-6">
+            <div class="flex flex-wrap items-center justify-center gap-4 md:gap-6 text-[11px] font-bold text-slate-400 w-full mb-5">
                 <a href="NexusScan.html" data-key="nav_home" class="hover:text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-house"></i> Accueil</a>
                 <a href="documentation.html" data-key="nav_doc" class="hover:text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-book-open"></i> Livre Blanc</a>
                 <a href="api.html" data-key="nav_api" class="hover:text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-server"></i> API RPC</a>
@@ -515,19 +555,207 @@
                 <a href="wallet_cgu.html" data-key="nav_cgu" class="hover:text-indAccent transition-colors flex items-center justify-center gap-1.5"><i class="fa-solid fa-gavel"></i> Wallet CGU</a>
             </div>
 
-            <div class="flex flex-col items-center justify-center border-t border-slate-800/80 w-full pt-5 max-w-lg">
-                <div class="flex items-center justify-center gap-2 mb-2 bg-slate-900/80 px-3.5 py-1 rounded-full border border-slate-800">
-                    <div class="w-2 h-2 rounded-full bg-indSuccess live-pulse"></div>
-                    <p data-key="footer_status" class="text-[10px] text-slate-300 font-bold uppercase tracking-widest">NOC L1 Actif 24/7 • SLA 99.999% • Parité 1 ₳ = 1 XOF</p>
+            <div class="flex flex-col items-center justify-center border-t border-slate-800/80 w-full pt-4 max-w-lg">
+                <div class="flex items-center justify-center gap-2 mb-1.5 bg-slate-900/80 px-3 py-1 rounded-full border border-slate-800">
+                    <div class="w-1.5 h-1.5 rounded-full bg-indSuccess live-pulse"></div>
+                    <p data-key="footer_status" class="text-[9px] text-slate-300 font-bold uppercase tracking-widest">NOC L1 Actif 24/7 • SLA 99.999% • Parité 1 ₳ = 1 XOF</p>
                 </div>
-                <p data-key="footer_copy" class="text-[10px] text-slate-500 font-bold tracking-wider">&copy; 2026 Atlas & Duc Corporation (Récépissé N° PHUE-3539/2025). Koupéla & Bobo-Dioulasso, Burkina Faso.</p>
+                <p data-key="footer_copy" class="text-[9.5px] text-slate-500 font-bold tracking-wider">&copy; 2026 Atlas & Duc Corporation (Récépissé N° PHUE-3539/2025). Koupéla & Bobo-Dioulasso, Burkina Faso.</p>
             </div>
         </div>
     </footer>
 
-    <script>
+    <!-- Script Principal & Intégration Firebase Realtime Database SDK v10 -->
+    <script type="module">
+        import { initializeApp, deleteApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+        import { getDatabase, ref, push, set, onValue, query, limitToLast, serverTimestamp, off } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
+
         'use strict';
 
+        // =========================================================================
+        // 1. CONFIGURATION & CONNEXION TEMPS RÉEL FIREBASE REALTIME DATABASE
+        // =========================================================================
+        const DEFAULT_RTDB_URL = localStorage.getItem('nexus_firebase_rtdb_url') || 'https://nexus-core-l1-default-rtdb.firebaseio.com';
+        let currentRtdbUrl = DEFAULT_RTDB_URL;
+        let firebaseAppInstance = null;
+        let firebaseDbInstance = null;
+        let activeTicketsQuery = null;
+
+        const syncStatusEl = document.getElementById('firebaseSyncStatus');
+        const heroBadgeEl = document.getElementById('heroFirebaseBadge');
+        const ticketsTbody = document.getElementById('ticketsTableBody');
+        const liveCounterEl = document.getElementById('liveTicketsCounter');
+        const configPanelEl = document.getElementById('firebaseConfigPanel');
+        const dbUrlInputEl = document.getElementById('firebaseDbUrlInput');
+
+        if (dbUrlInputEl) {
+            dbUrlInputEl.value = currentRtdbUrl;
+        }
+
+        function setSyncBadge(state, message) {
+            if (!syncStatusEl) return;
+            if (state === 'connected') {
+                syncStatusEl.className = 'bg-emerald-950/80 border border-indSuccess/50 text-emerald-300 font-mono text-[10px] font-bold px-3 py-1.5 rounded-lg flex items-center gap-2';
+                syncStatusEl.innerHTML = `<span class="w-2 h-2 rounded-full bg-indSuccess live-pulse"></span><span>${message}</span>`;
+                if (heroBadgeEl) heroBadgeEl.textContent = 'RTDB Connecté (Live)';
+            } else if (state === 'error') {
+                syncStatusEl.className = 'bg-rose-950/80 border border-rose-500/50 text-rose-300 font-mono text-[10px] font-bold px-3 py-1.5 rounded-lg flex items-center gap-2';
+                syncStatusEl.innerHTML = `<span class="w-2 h-2 rounded-full bg-rose-500"></span><span>${message}</span>`;
+                if (heroBadgeEl) heroBadgeEl.textContent = 'RTDB Hors-Ligne / Config';
+            } else {
+                syncStatusEl.className = 'bg-slate-900 border border-slate-700 text-amber-300 font-mono text-[10px] font-bold px-3 py-1.5 rounded-lg flex items-center gap-2';
+                syncStatusEl.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span><span>${message}</span>`;
+            }
+        }
+
+        function escapeHtml(str) {
+            if (typeof str !== 'string') return '';
+            return str
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function formatUtcTimestamp(ts) {
+            if (!ts || typeof ts !== 'number') return 'Synchronisation...';
+            const d = new Date(ts);
+            return d.toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
+        }
+
+        function renderRealtimeTickets(ticketsList) {
+            if (!ticketsTbody) return;
+            if (!ticketsList || ticketsList.length === 0) {
+                if (liveCounterEl) liveCounterEl.textContent = '0 ticket enregistré';
+                ticketsTbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="py-7 px-4 text-center text-slate-400 font-sans">
+                            <i class="fa-solid fa-inbox text-slate-500 text-base mb-1 block"></i>
+                            Aucun ticket actif dans <code class="text-sky-400">/nexus_b2b_tickets</code> pour le moment. Utilisez le formulaire ci-dessus pour enregistrer une requête réelle.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            if (liveCounterEl) {
+                liveCounterEl.textContent = `${ticketsList.length} ticket${ticketsList.length > 1 ? 's' : ''} synchronisé${ticketsList.length > 1 ? 's' : ''}`;
+            }
+
+            ticketsTbody.innerHTML = '';
+            ticketsList.forEach(item => {
+                const safeId = escapeHtml(item.ticketId || item.key || 'ADCT_UNKNOWN');
+                const safeCat = escapeHtml(item.category || '');
+                const safeDesc = escapeHtml(item.description || '');
+                const safeOrg = escapeHtml(item.organization || 'Partenaire B2B');
+                const safeWallet = escapeHtml(item.walletAddress || '');
+                const shortWallet = safeWallet.length > 18 ? (safeWallet.slice(0, 15) + '...') : safeWallet;
+                const safePrio = escapeHtml(item.priority || 'P1');
+                const safeStatus = escapeHtml(item.status || 'OUVERT_NOC_L1');
+                const timeText = formatUtcTimestamp(item.createdAt);
+
+                let statusBadge = `<span class="bg-sky-500/20 text-sky-300 border border-sky-500/40 px-2 py-0.5 rounded text-[9px] font-bold uppercase">${safeStatus} (${safePrio})</span>`;
+                if (safeStatus === 'RESOLU') {
+                    statusBadge = `<span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded text-[9px] font-bold uppercase">Résolu (${safePrio})</span>`;
+                } else if (safeStatus === 'EN_COURS') {
+                    statusBadge = `<span class="bg-amber-500/20 text-amber-300 border border-amber-500/40 px-2 py-0.5 rounded text-[9px] font-bold uppercase">En cours (${safePrio})</span>`;
+                }
+
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-800/60 transition-colors';
+                tr.innerHTML = `
+                    <td class="py-2.5 px-3.5 font-bold text-indGold whitespace-nowrap">${safeId}</td>
+                    <td class="py-2.5 px-3.5 font-sans">
+                        <div class="text-slate-100 font-bold">${safeCat}</div>
+                        <div class="text-slate-400 text-[10px] mt-0.5 line-clamp-2">${safeDesc}</div>
+                    </td>
+                    <td class="py-2.5 px-3.5 font-sans text-slate-200 font-semibold whitespace-nowrap">${safeOrg}</td>
+                    <td class="py-2.5 px-3.5 text-sky-400 whitespace-nowrap" title="${safeWallet}">${shortWallet}</td>
+                    <td class="py-2.5 px-3.5 whitespace-nowrap">${statusBadge}</td>
+                    <td class="py-2.5 px-3.5 text-slate-400 whitespace-nowrap">${timeText}</td>
+                `;
+                ticketsTbody.appendChild(tr);
+            });
+        }
+
+        async function connectFirebaseRtdb(databaseUrl) {
+            setSyncBadge('connecting', 'Connexion Firebase RTDB...');
+            try {
+                if (activeTicketsQuery) {
+                    off(activeTicketsQuery);
+                    activeTicketsQuery = null;
+                }
+                if (firebaseAppInstance) {
+                    await deleteApp(firebaseAppInstance);
+                    firebaseAppInstance = null;
+                }
+
+                const appName = 'NexusSupportB2B_' + Date.now();
+                firebaseAppInstance = initializeApp({
+                    databaseURL: databaseUrl
+                }, appName);
+
+                firebaseDbInstance = getDatabase(firebaseAppInstance);
+                const ticketsRef = ref(firebaseDbInstance, 'nexus_b2b_tickets');
+                activeTicketsQuery = query(ticketsRef, limitToLast(50));
+
+                onValue(activeTicketsQuery, (snapshot) => {
+                    setSyncBadge('connected', 'Firebase RTDB Synchronisé (Temps Réel)');
+                    const rawData = snapshot.val();
+                    if (!rawData) {
+                        renderRealtimeTickets([]);
+                        return;
+                    }
+                    const items = Object.entries(rawData).map(([key, val]) => ({
+                        key,
+                        ...val
+                    }));
+                    items.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+                    renderRealtimeTickets(items);
+                }, (error) => {
+                    console.error('Erreur Firebase RTDB:', error);
+                    setSyncBadge('error', 'Erreur Permission/URL Firebase RTDB');
+                    if (ticketsTbody) {
+                        ticketsTbody.innerHTML = `
+                            <tr>
+                                <td colspan="6" class="py-6 px-4 text-center text-rose-300 font-sans">
+                                    <i class="fa-solid fa-triangle-exclamation text-rose-400 mr-1.5"></i>
+                                    Impossible de lire <code class="text-amber-300">/nexus_b2b_tickets</code> sur <strong>${escapeHtml(databaseUrl)}</strong> (${escapeHtml(error.message)}). Cliquez sur <strong>Config RTDB</strong> pour renseigner l'URL de votre base Firebase Realtime Database.
+                                </td>
+                            </tr>
+                        `;
+                    }
+                });
+            } catch (err) {
+                console.error('Erreur initialisation Firebase:', err);
+                setSyncBadge('error', 'URL Firebase RTDB invalide');
+            }
+        }
+
+        // Gestion de l'ouverture/sauvegarde de l'URL Firebase RTDB
+        const toggleConfigBtn = document.getElementById('toggleFirebaseConfigBtn');
+        const saveFirebaseBtn = document.getElementById('saveFirebaseUrlBtn');
+        if (toggleConfigBtn && configPanelEl) {
+            toggleConfigBtn.addEventListener('click', () => {
+                configPanelEl.classList.toggle('hidden');
+            });
+        }
+        if (saveFirebaseBtn && dbUrlInputEl) {
+            saveFirebaseBtn.addEventListener('click', () => {
+                const newUrl = dbUrlInputEl.value.trim().replace(/\/+$/, '');
+                if (newUrl && newUrl.startsWith('https://')) {
+                    currentRtdbUrl = newUrl;
+                    localStorage.setItem('nexus_firebase_rtdb_url', newUrl);
+                    connectFirebaseRtdb(newUrl);
+                    configPanelEl.classList.add('hidden');
+                }
+            });
+        }
+
+        // =========================================================================
+        // 2. ENCODAGE BASE58 STRICT & SOUMISSION RÉELLE SUR FIREBASE RTDB
+        // =========================================================================
         const BASE58_ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
 
         function encodeBase58FromBytes(uint8Arr) {
@@ -550,17 +778,99 @@
             return digits.reverse().map(d => BASE58_ALPHABET[d]).join('');
         }
 
+        function isValidNexusBase58(val) {
+            if (!val || val.length < 8) return false;
+            const cleanPart = val.replace(/^ADCC_|^ADCT_/, '');
+            for (let i = 0; i < cleanPart.length; i++) {
+                if (!BASE58_ALPHABET.includes(cleanPart[i])) return false;
+            }
+            return true;
+        }
+
         function generateNexusBase58Id(seedString, prefix = 'ADCT_') {
             const raw = (seedString && seedString.trim()) ? seedString.trim() : ('TICKET-' + Date.now() + '-' + Math.random());
             const encoder = new TextEncoder();
             const bytes = encoder.encode(raw);
+            const randomBytes = new Uint8Array(12);
+            if (window.crypto && window.crypto.getRandomValues) {
+                window.crypto.getRandomValues(randomBytes);
+            }
             const mixed = new Uint8Array(12);
             for (let i = 0; i < 12; i++) {
-                mixed[i] = (bytes[i % bytes.length] ^ ((i * 41 + Date.now()) & 0xff)) & 0xff;
+                mixed[i] = (bytes[i % bytes.length] ^ randomBytes[i]) & 0xff;
             }
             return prefix + encodeBase58FromBytes(mixed).slice(0, 12);
         }
 
+        const ticketForm = document.getElementById('b2bTicketForm');
+        const createTicketBtn = document.getElementById('createB2bTicketBtn');
+        const ticketCatEl = document.getElementById('b2bTicketCategory');
+        const ticketPrioEl = document.getElementById('b2bTicketPriority');
+        const ticketOrgEl = document.getElementById('b2bTicketOrg');
+        const ticketWalletEl = document.getElementById('b2bTicketWallet');
+        const ticketDescEl = document.getElementById('b2bTicketDesc');
+        const ticketBanner = document.getElementById('ticketConfirmBanner');
+
+        if (ticketForm) {
+            ticketForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                if (!firebaseDbInstance) {
+                    ticketBanner.className = 'bg-rose-950/90 border border-rose-500/50 rounded-lg p-3 text-[10.5px] font-mono text-rose-300 mb-4';
+                    ticketBanner.classList.remove('hidden');
+                    ticketBanner.textContent = '[ERREUR RTDB] Base Firebase Realtime Database non initialisée. Vérifiez votre connexion ou Config RTDB.';
+                    return;
+                }
+
+                const category = ticketCatEl.value.trim();
+                const priority = ticketPrioEl.value.trim();
+                const organization = ticketOrgEl.value.trim();
+                const walletAddress = ticketWalletEl.value.trim();
+                const description = ticketDescEl.value.trim();
+
+                if (!isValidNexusBase58(walletAddress)) {
+                    ticketBanner.className = 'bg-rose-950/90 border border-rose-500/50 rounded-lg p-3 text-[10.5px] font-mono text-rose-300 mb-4';
+                    ticketBanner.classList.remove('hidden');
+                    ticketBanner.textContent = '[ERREUR -32003 ERR_INVALID_BASE58_ADDRESS] L\'adresse cible doit respecter strictement l\'alphabet Base58 (sans 0, O, I, l ni 0x).';
+                    return;
+                }
+
+                const ticketId = generateNexusBase58Id(`${category}:${organization}:${walletAddress}:${Date.now()}`, 'ADCT_');
+
+                createTicketBtn.disabled = true;
+                try {
+                    const ticketsListRef = ref(firebaseDbInstance, 'nexus_b2b_tickets');
+                    const newTicketRef = push(ticketsListRef);
+                    await set(newTicketRef, {
+                        ticketId: ticketId,
+                        category: category,
+                        priority: priority,
+                        organization: organization,
+                        walletAddress: walletAddress,
+                        description: description,
+                        status: 'OUVERT_NOC_L1',
+                        chainId: 9012,
+                        createdAt: serverTimestamp()
+                    });
+
+                    ticketBanner.className = 'bg-emerald-950/90 border border-indSuccess/50 rounded-lg p-3 text-[10.5px] font-mono text-emerald-300 mb-4';
+                    ticketBanner.classList.remove('hidden');
+                    ticketBanner.textContent = `[FIREBASE RTDB COMMIT] Ticket B2B enregistré en temps réel : ${ticketId} | Entité : ${organization} | SLA : ${priority} | Clé RTDB : ${newTicketRef.key}`;
+
+                    ticketDescEl.value = '';
+                } catch (err) {
+                    console.error('Erreur écriture Firebase RTDB:', err);
+                    ticketBanner.className = 'bg-rose-950/90 border border-rose-500/50 rounded-lg p-3 text-[10.5px] font-mono text-rose-300 mb-4';
+                    ticketBanner.classList.remove('hidden');
+                    ticketBanner.textContent = `[ERREUR ÉCRITURE FIREBASE RTDB] ${err.message}`;
+                } finally {
+                    createTicketBtn.disabled = false;
+                }
+            });
+        }
+
+        // =========================================================================
+        // 3. INTERFACE MOBILE, FAQ, VÉRIFICATEUR BASE58 & CALCULATEUR MICROA
+        // =========================================================================
         const mobileBtn = document.getElementById('mobileMenuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
         if (mobileBtn && mobileMenu) {
@@ -575,45 +885,12 @@
             });
         }
 
-        function toggleFaq(button) {
+        window.toggleFaq = function(button) {
             const item = button.parentElement;
             const isActive = item.classList.contains('active');
             document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
             if (!isActive) item.classList.add('active');
-        }
-
-        const createTicketBtn = document.getElementById('createB2bTicketBtn');
-        const ticketCatEl = document.getElementById('b2bTicketCategory');
-        const ticketPrioEl = document.getElementById('b2bTicketPriority');
-        const ticketWalletEl = document.getElementById('b2bTicketWallet');
-        const ticketsTbody = document.getElementById('ticketsTableBody');
-        const ticketBanner = document.getElementById('ticketConfirmBanner');
-
-        if (createTicketBtn && ticketCatEl && ticketWalletEl && ticketsTbody) {
-            createTicketBtn.addEventListener('click', () => {
-                const subj = ticketCatEl.value;
-                const prio = ticketPrioEl ? ticketPrioEl.value : 'P1';
-                const wallet = ticketWalletEl.value.trim() || 'ADC6MH4qsxED6cLtH3NLng5QL6Kvb9HRa8ui';
-                const ticketId = generateNexusBase58Id(subj + ':' + wallet + ':' + Date.now(), 'ADCT_');
-                const shortWallet = wallet.length > 16 ? (wallet.slice(0, 14) + '...') : wallet;
-
-                const tr = document.createElement('tr');
-                tr.className = 'bg-sky-950/40 hover:bg-slate-800/50 transition-colors';
-                tr.innerHTML = `
-                    <td class="py-3 px-4 font-bold text-indGold">${ticketId}</td>
-                    <td class="py-3 px-4 font-sans text-white font-bold">${subj}</td>
-                    <td class="py-3 px-4 text-sky-400">${shortWallet}</td>
-                    <td class="py-3 px-4"><span class="bg-indAccent/20 text-sky-300 border border-indAccent/40 px-2.5 py-0.5 rounded text-[10px] font-bold uppercase">Assigné NOC (${prio})</span></td>
-                    <td class="py-3 px-4 text-emerald-400 font-sans font-bold">À l'instant</td>
-                `;
-                ticketsTbody.insertBefore(tr, ticketsTbody.firstChild);
-
-                if (ticketBanner) {
-                    ticketBanner.classList.remove('hidden');
-                    ticketBanner.textContent = `[NOC L1 CONFIRMATION] Ticket B2B généré sous l'identifiant Base58 : ${ticketId} | Niveau : ${prio} | Portefeuille : ${wallet} | Canal chiffré AES-256-GCM initialisé.`;
-                }
-            });
-        }
+        };
 
         const base58CheckInput = document.getElementById('base58CheckInput');
         const runBase58CheckBtn = document.getElementById('runBase58CheckBtn');
@@ -623,7 +900,7 @@
             runBase58CheckBtn.addEventListener('click', () => {
                 const val = base58CheckInput.value.trim();
                 if (!val || val.length < 8) {
-                    base58CheckResult.className = 'bg-red-50 border border-red-200 rounded-lg p-3.5 text-xs font-mono text-red-700';
+                    base58CheckResult.className = 'bg-red-50 border border-red-200 rounded-md p-3 text-[10.5px] font-mono text-red-700';
                     base58CheckResult.textContent = '[ERREUR -32003] Identifiant trop court ou vide. Longueur minimale requise : 8 caractères Base58.';
                     return;
                 }
@@ -636,7 +913,7 @@
                     }
                 }
                 if (invalidChar) {
-                    base58CheckResult.className = 'bg-red-50 border border-red-200 rounded-lg p-3.5 text-xs font-mono text-red-700';
+                    base58CheckResult.className = 'bg-red-50 border border-red-200 rounded-md p-3 text-[10.5px] font-mono text-red-700';
                     base58CheckResult.textContent = `[ERREUR -32003 ERR_INVALID_BASE58_ADDRESS] Caractère interdit détecté : "${invalidChar}". Rappel : 0, O, I, l et 0x sont proscrits sur Nexus Core L1.`;
                     return;
                 }
@@ -645,7 +922,7 @@
                 else if (val.startsWith('ADCT_')) entityType = 'Ticket d\'Ingénierie Support B2B (Préfixe ADCT_)';
                 else if (val.startsWith('ADC')) entityType = 'Portefeuille EOA / Trésorerie (Préfixe ADC)';
 
-                base58CheckResult.className = 'bg-emerald-50 border border-emerald-200 rounded-lg p-3.5 text-xs font-mono text-emerald-800';
+                base58CheckResult.className = 'bg-emerald-50 border border-emerald-200 rounded-md p-3 text-[10.5px] font-mono text-emerald-800';
                 base58CheckResult.textContent = `[VALIDE] Alphabet Base58 conforme (${val.length} caractères) | Type : ${entityType} | Compatible Mainnet #9012.`;
             });
         }
@@ -674,6 +951,160 @@
             calcAmountA.addEventListener('input', updateMicroCalculator);
             calcOpType.addEventListener('change', updateMicroCalculator);
         }
+
+        // =========================================================================
+        // 4. DICTIONNAIRE BILINGUE FR / EN & 20 PROTOCOLES INSTITUTIONNELS
+        // =========================================================================
+        const uiStrings = {
+            fr: {
+                nav_home: '<i class="fa-solid fa-house mr-1.5 text-[10px]"></i> Accueil',
+                nav_doc: '<i class="fa-solid fa-book-open mr-1.5 text-[10px]"></i> Livre Blanc',
+                nav_api: '<i class="fa-solid fa-server mr-1.5 text-[10px]"></i> API RPC',
+                nav_support: '<i class="fa-solid fa-headset mr-1.5 text-[10px]"></i> Support B2B',
+                nav_privacy: '<i class="fa-solid fa-shield-halved mr-1.5 text-[10px]"></i> Confidentialité',
+                nav_cgu: '<i class="fa-solid fa-gavel mr-1.5 text-[10px]"></i> Wallet CGU',
+                btn_print: 'Imprimer / PDF',
+                status: 'Centre d\'Opérations Réseau (NOC L1) : Ingénieurs & Direction Disponibles 24/7',
+                title: 'PORTAIL INSTITUTIONNEL DE <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-indAccent to-indGold">SUPPORT B2B & SLA</span>',
+                subtitle: 'Assistance d\'ingénierie critique, gouvernance exécutive, homologation marchande et continuité d\'exploitation dédiées à la blockchain souveraine Nexus Core Layer-1 (monnaie native ₳, 1 ₳ = 1 XOF), opérée par Atlas & Duc Corporation.',
+                stat1_label: 'Disponibilité SLA L1',
+                stat2_label: 'Temps de Réponse P1',
+                stat3_label: 'Étalon & Unité L1',
+                stat4_label: 'Sync Temps Réel',
+                stat5_label: 'Volume Référentiel',
+                sidebar_version: 'Support B2B V.5.1 • 20 Modules',
+                sidebar_title_sections: '20 Protocoles Support & SLA',
+                nav_secure: 'Canal Chiffré TLS 1.3 & AES-256-GCM',
+                meta_banner_title: 'Direction des Opérations Réseau (NOC L1) & Assistance Institutionnelle B2B — Atlas & Duc Corporation',
+                meta_banner_desc: 'Supervisé par Yougma Thierry Joël (Fondateur, Président & Architecte Logiciel Principal) • Récépissé Officiel N° PHUE-3539/2025 • Sièges : Koupéla & Bobo-Dioulasso, Burkina Faso.',
+                corp_dir: '<i class="fa-solid fa-building-shield text-indAccent"></i> Départements Exécutifs & Annuaire Corporatif Officiel L1',
+                dir_title: 'Présidence & Direction',
+                dir_pres: 'Présidence (Ligne Téléphonique Directe)',
+                dir_email: 'Direction Générale (Courriel Officiel)',
+                admin_title: 'CTO & Administration',
+                admin_cto: 'Direction Technique (CTO / Nœuds PoA)',
+                admin_email: 'Administration & Juridique (Courriel)',
+                tech_title: 'Support & Assistance B2B',
+                tech_phone: 'Assistance Technique (Ligne Directe)',
+                tech_email: 'Support Technique (Courriel 24/7)',
+                label_chat: 'Portail de Messagerie Interne Chiffré',
+                val_chat: 'Ouvrir une Session Ticket Interne (discussion.html)',
+                label_whatsapp: 'Ligne d\'Urgence Opérationnelle (+226 76 16 73 64)',
+                val_whatsapp: 'Liaison Directe WhatsApp B2B',
+                console_ticket_title: 'Console d\'Incidents, Homologation B2B & Registre Live (Base58)',
+                console_ticket_sub: 'Chaque ticket créé est enregistré en direct dans Firebase Realtime Database sous un identifiant Base58 unique (ADCT_...) et diffusé instantanément au NOC L1.',
+                lbl_ticket_cat: '1. Département & Catégorie B2B *',
+                lbl_ticket_prio: '2. Niveau SLA *',
+                lbl_ticket_org: '3. Raison Sociale / Entité *',
+                lbl_ticket_wallet: '4. Adresse Base58 Cible *',
+                lbl_ticket_desc: '5. Description Technique de la Requête ou Hash de Transaction Base58 *',
+                btn_gen_ticket: 'Publier sur Firebase RTDB',
+                tickets_title: '<i class="fa-solid fa-satellite-dish text-indGold mr-1.5"></i> Flux Temps Réel des Tickets B2B (Firebase Realtime Database)',
+                th_id: 'ID Ticket Base58',
+                th_sujet: 'Catégorie & Détails B2B',
+                th_statut: 'Statut SLA',
+                th_date: 'Horodatage UTC',
+                diag_title: 'Vérificateur d\'Intégrité Base58 & Calculateur Comptable (₳ / microA / XOF)',
+                diag_sub: 'Vérifiez la conformité d\'une adresse Base58 et calculez les montants exacts en microA ainsi que les frais Zero-Deviation Gas avant l\'envoi RPC.',
+                diag_box1_title: '<i class="fa-solid fa-check-double text-indAccent"></i> 1. Audit Syntaxique d\'Identifiant Base58 (ADC / ADCC_ / ADCT_)',
+                diag_box2_title: '<i class="fa-solid fa-calculator text-indGold"></i> 2. Convertisseur Exact ₳ &lt;-&gt; microA &amp; Zero-Deviation Gas',
+                faq_title: '<i class="fa-solid fa-circle-question text-indAccent"></i> Base de Connaissances Exécutive & Technique (12 Réponses Certifiées)',
+                footer_infra: 'Infrastructure Blockchain Souveraine Layer-1 • Monnaie Native ₳',
+                footer_status: 'NOC L1 Actif 24/7 • SLA 99.999% • Parité 1 ₳ = 1 XOF',
+                footer_copy: '&copy; 2026 Atlas & Duc Corporation (Récépissé N° PHUE-3539/2025). Koupéla & Bobo-Dioulasso, Burkina Faso.',
+                search_placeholder: 'Filtrer le support (ex: SLA, POS, SONABEL, ₳)...',
+                chars_unit: 'caractères',
+                words_unit: 'mots',
+                tech_clause_label: 'Paramètres Opérationnels :',
+                matrix_headers: ['Dimension', 'Spécification Officielle', 'Garantie SLA / Métrique', 'Référentiel & Norme'],
+                section_headers: [
+                    'Clause 1 — Périmètre Institutionnel et Mandat Exécutif',
+                    'Clause 2 — Engagements SLA, Délais d\'Intervention et Disponibilité',
+                    'Clause 3 — Diagnostic en Mémoire Vive (V8 State Ledger)',
+                    'Clause 4 — Sécurité Cryptographique et Inviolabilité Non-Custodial',
+                    'Clause 5 — Exactitude Monétaire (1 ₳ = 1 XOF / microA)',
+                    'Clause 6 — Supervision Télécoms, API RPC et Flux WebSockets',
+                    'Clause 7 — Programmabilité NVM V8 et Contrats Intelligents NCRC-20',
+                    'Clause 8 — Support Mobilité Entreprise (Android SDK & iOS)',
+                    'Clause 9 — Déploiement Terrain POS (Roger Service Pro) & Passerelles',
+                    'Clause 10 — Gouvernance, Conformité Réglementaire et Escalade'
+                ]
+            },
+            en: {
+                nav_home: '<i class="fa-solid fa-house mr-1.5 text-[10px]"></i> Home',
+                nav_doc: '<i class="fa-solid fa-book-open mr-1.5 text-[10px]"></i> White Paper',
+                nav_api: '<i class="fa-solid fa-server mr-1.5 text-[10px]"></i> RPC API',
+                nav_support: '<i class="fa-solid fa-headset mr-1.5 text-[10px]"></i> B2B Support',
+                nav_privacy: '<i class="fa-solid fa-shield-halved mr-1.5 text-[10px]"></i> Privacy',
+                nav_cgu: '<i class="fa-solid fa-gavel mr-1.5 text-[10px]"></i> Wallet ToS',
+                btn_print: 'Print / PDF',
+                status: 'Network Operations Center (L1 NOC): Engineers & Executive Leadership Available 24/7',
+                title: 'INSTITUTIONAL <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-indAccent to-indGold">B2B SUPPORT & SLA</span> PORTAL',
+                subtitle: 'Mission-critical engineering assistance, executive governance, merchant homologation, and operational continuity dedicated to the sovereign Nexus Core Layer-1 blockchain (native currency ₳, 1 ₳ = 1 XOF), operated by Atlas & Duc Corporation.',
+                stat1_label: 'L1 SLA Availability',
+                stat2_label: 'P1 Response Time',
+                stat3_label: 'L1 Standard & Unit',
+                stat4_label: 'Real-Time Sync',
+                stat5_label: 'Corpus Volume',
+                sidebar_version: 'B2B Support V.5.1 • 20 Modules',
+                sidebar_title_sections: '20 Support & SLA Protocols',
+                nav_secure: 'Encrypted TLS 1.3 & AES-256-GCM Channel',
+                meta_banner_title: 'Network Operations Directorate (L1 NOC) & Institutional B2B Assistance — Atlas & Duc Corporation',
+                meta_banner_desc: 'Supervised by Yougma Thierry Joël (Founder, President & Lead Software Architect) • Official Receipt N° PHUE-3539/2025 • Headquarters: Koupéla & Bobo-Dioulasso, Burkina Faso.',
+                corp_dir: '<i class="fa-solid fa-building-shield text-indAccent"></i> Executive Departments & Official L1 Corporate Directory',
+                dir_title: 'Presidency & Executive',
+                dir_pres: 'Presidency (Direct Telephone Line)',
+                dir_email: 'General Management (Official Email)',
+                admin_title: 'CTO & Administration',
+                admin_cto: 'Technical Directorate (CTO / PoA Nodes)',
+                admin_email: 'Administration & Legal (Email)',
+                tech_title: 'B2B Support & Assistance',
+                tech_phone: 'Technical Assistance (Direct Line)',
+                tech_email: 'Technical Support (24/7 Email)',
+                label_chat: 'Encrypted Internal Messaging Portal',
+                val_chat: 'Open an Internal Ticket Session (discussion.html)',
+                label_whatsapp: 'Operational Emergency Line (+226 76 16 73 64)',
+                val_whatsapp: 'Direct B2B WhatsApp Liaison',
+                console_ticket_title: 'Incident Console, B2B Homologation & Live Ledger (Base58)',
+                console_ticket_sub: 'Every submitted ticket is recorded live in Firebase Realtime Database under a unique Base58 identifier (ADCT_...) and broadcast instantaneously to the L1 NOC.',
+                lbl_ticket_cat: '1. B2B Department & Category *',
+                lbl_ticket_prio: '2. SLA Tier *',
+                lbl_ticket_org: '3. Corporate Entity / Organization *',
+                lbl_ticket_wallet: '4. Target Base58 Address *',
+                lbl_ticket_desc: '5. Technical Issue Description or Base58 Transaction Hash *',
+                btn_gen_ticket: 'Publish to Firebase RTDB',
+                tickets_title: '<i class="fa-solid fa-satellite-dish text-indGold mr-1.5"></i> Real-Time B2B Ticket Stream (Firebase Realtime Database)',
+                th_id: 'Base58 Ticket ID',
+                th_sujet: 'B2B Category & Details',
+                th_statut: 'SLA Status',
+                th_date: 'UTC Timestamp',
+                diag_title: 'Base58 Integrity Verifier & Accounting Calculator (₳ / microA / XOF)',
+                diag_sub: 'Verify Base58 address compliance and compute exact microA amounts plus Zero-Deviation Gas fees prior to RPC submission.',
+                diag_box1_title: '<i class="fa-solid fa-check-double text-indAccent"></i> 1. Syntax Audit for Base58 Identifier (ADC / ADCC_ / ADCT_)',
+                diag_box2_title: '<i class="fa-solid fa-calculator text-indGold"></i> 2. Exact ₳ &lt;-&gt; microA &amp; Zero-Deviation Gas Converter',
+                faq_title: '<i class="fa-solid fa-circle-question text-indAccent"></i> Executive & Technical Knowledge Base (12 Certified Answers)',
+                footer_infra: 'Sovereign Layer-1 Blockchain Infrastructure • Native Currency ₳',
+                footer_status: 'L1 NOC Active 24/7 • 99.999% SLA • Parity 1 ₳ = 1 XOF',
+                footer_copy: '&copy; 2026 Atlas & Duc Corporation (Receipt N° PHUE-3539/2025). Koupéla & Bobo-Dioulasso, Burkina Faso.',
+                search_placeholder: 'Filter support (e.g., SLA, POS, SONABEL, ₳)...',
+                chars_unit: 'characters',
+                words_unit: 'words',
+                tech_clause_label: 'Operational Parameters:',
+                matrix_headers: ['Dimension', 'Official Specification', 'SLA Guarantee / Metric', 'Standard & Reference'],
+                section_headers: [
+                    'Clause 1 — Institutional Scope and Executive Mandate',
+                    'Clause 2 — SLA Commitments, Response Windows, and Availability',
+                    'Clause 3 — In-Memory State Ledger Diagnostics (V8 Engine)',
+                    'Clause 4 — Cryptographic Security and Non-Custodial Inviolability',
+                    'Clause 5 — Monetary Accuracy (1 ₳ = 1 XOF / microA)',
+                    'Clause 6 — Telecom Supervision, RPC API, and WebSocket Streams',
+                    'Clause 7 — V8 NVM Programmability and NCRC-20 Smart Contracts',
+                    'Clause 8 — Enterprise Mobility Support (Android SDK & iOS)',
+                    'Clause 9 — Field POS Deployment (Roger Service Pro) & Gateways',
+                    'Clause 10 — Governance, Regulatory Compliance, and Escalation'
+                ]
+            }
+        };
 
         const faqData = [
             {
@@ -810,7 +1241,7 @@
                     title: "Protocole 1 — Architecture du Centre d'Opérations Réseau (NOC L1) et Annuaire Exécutif d'Atlas & Duc Corporation",
                     badge: "Gouvernance Directe 24/7",
                     core: "Le Portail Institutionnel de Support B2B d'Atlas & Duc Corporation (anciennement constituée sous la dénomination Atlas Groupe International suivant récépissé officiel N° PHUE-3539/2025 du 11 juillet 2025, ayant ses sièges à Koupéla et Bobo-Dioulasso, Burkina Faso) est placé sous la supervision directe de son Fondateur, Président et Architecte Logiciel Principal, Yougma Thierry Joël. Contrairement aux infrastructures Web3 anonymes dépourvues d'interlocuteurs responsables, Atlas & Duc Corporation met à la disposition des banques, des entreprises B2B, des commerçants et des institutions publiques trois pôles de commandement joignables 24h/24 et 7j/7 : (1) la Présidence et Direction Générale (+226 76 20 38 48 / mr.yougma@agi-nexus-core.click) pour les partenariats stratégiques et accords souverains ; (2) la Direction Technique CTO et Administration (+226 70 87 37 73 / administration@agi-nexus-core.click) pour la gouvernance des nœuds PoA, la conformité légale et les clés API B2B ; et (3) le Support Technique Opérationnel (+226 78 37 08 03 / support@agi-nexus-core.click / WhatsApp d'urgence +226 76 16 73 64).",
-                    cryptoFocus: "Chaque ticket d'assistance B2B ouvert auprès du NOC L1 reçoit un identifiant unique encodé en Base58 préfixé par ADCT_, permettant un suivi cryptographique infalsifiable de bout en bout.",
+                    cryptoFocus: "Chaque ticket d'assistance B2B ouvert auprès du NOC L1 reçoit un identifiant unique encodé en Base58 préfixé par ADCT_, enregistré en temps réel dans Firebase Realtime Database.",
                     operationalFocus: "Coordination permanente entre les équipes d'ingénierie basées à Koupéla, Houndé, Kari, Pâ et Bobo-Dioulasso pour assurer une intervention immédiate à distance ou sur site.",
                     legalFocus: "Responsabilité institutionnelle clairement établie sous le droit burkinabè et le récépissé officiel N° PHUE-3539/2025.",
                     tech: "Présidence : +226 76 20 38 48 | CTO : +226 70 87 37 73 | Support : +226 78 37 08 03 | WhatsApp Urgence : +226 76 16 73 64.",
@@ -821,7 +1252,7 @@
                     title: "Protocol 1 — Network Operations Center (L1 NOC) Architecture and Executive Directory of Atlas & Duc Corporation",
                     badge: "24/7 Direct Governance",
                     core: "The Institutional B2B Support Portal of Atlas & Duc Corporation (formerly established under the corporate name Atlas Groupe International pursuant to official receipt N° PHUE-3539/2025 dated July 11, 2025, with headquarters in Koupéla and Bobo-Dioulasso, Burkina Faso) operates under the direct supervision of its Founder, President, and Lead Software Architect, Yougma Thierry Joël. Unlike anonymous Web3 infrastructures lacking accountable leadership, Atlas & Duc Corporation provides banks, B2B enterprises, merchants, and public institutions with three command divisions reachable 24/7: (1) Presidency and Executive Management (+226 76 20 38 48 / mr.yougma@agi-nexus-core.click) for strategic partnerships and sovereign agreements; (2) CTO Technical Directorate and Administration (+226 70 87 37 73 / administration@agi-nexus-core.click) for PoA node governance, legal compliance, and B2B API keys; and (3) Operational Technical Support (+226 78 37 08 03 / support@agi-nexus-core.click / Emergency WhatsApp +226 76 16 73 64).",
-                    cryptoFocus: "Every B2B support ticket opened with the L1 NOC is assigned a unique Base58-encoded identifier prefixed with ADCT_, enabling tamper-proof end-to-end cryptographic tracking.",
+                    cryptoFocus: "Every B2B support ticket opened with the L1 NOC is assigned a unique Base58-encoded identifier prefixed with ADCT_, stored in real time inside Firebase Realtime Database.",
                     operationalFocus: "Continuous coordination across engineering teams stationed in Koupéla, Houndé, Kari, Pâ, and Bobo-Dioulasso to guarantee immediate remote or on-site intervention.",
                     legalFocus: "Clearly established institutional accountability under the laws of Burkina Faso and official receipt N° PHUE-3539/2025.",
                     tech: "Presidency: +226 76 20 38 48 | CTO: +226 70 87 37 73 | Support: +226 78 37 08 03 | Emergency WhatsApp: +226 76 16 73 64.",
@@ -1389,26 +1820,26 @@
             if (lang === 'fr') {
                 return [
                     `${d.core} Ce Protocole Institutionnel #${num} (Référence opérationnelle : ${code}) s'inscrit dans la charte globale de qualité et de continuité d'exploitation promulguée par Atlas & Duc Corporation (société de droit burkinabè enregistrée sous le récépissé officiel N° PHUE-3539/2025 du 11 juillet 2025, ayant ses sièges statutaires et opérationnels à Koupéla et Bobo-Dioulasso, Burkina Faso, sous la présidence et la direction d'architecture logicielle de son fondateur Yougma Thierry Joël). L'objectif fondamental de ce protocole est d'offrir aux banques, aux institutions financières, aux commerçants équipés de Roger Service Pro, aux entreprises utilisatrices d'A&D Business Pro et aux marchands d'Adama Digital un accompagnement humain et technique d'excellence, à la hauteur de la vitesse sub-milliseconde du réseau Nexus Core Layer-1.`,
-                    `Au titre des engagements de niveau de service (SLA) et de la réactivité opérationnelle, le présent Protocole #${num} garantit une disponibilité réseau de 99,999 % sur le Mainnet #9012. Chaque demande d'assistance ou signalement d'incident soumis via nos canaux officiels — téléphone direct Support (` + "`+226 78 37 08 03`" + `), Direction CTO (` + "`+226 70 87 37 73`" + `), Présidence (` + "`+226 76 20 38 48`" + `), WhatsApp d'urgence (` + "`+226 76 16 73 64`" + `), portail interne ` + "`discussion.html`" + ` ou courriels certifiés ` + "`support@agi-nexus-core.click`" + `, ` + "`administration@agi-nexus-core.click`" + ` et ` + "`mr.yougma@agi-nexus-core.click`" + ` — est immédiatement indexé sous un identifiant unique encodé en Base58 (` + "`ADCT_...`" + `). Les incidents critiques de priorité P1 sont pris en charge en moins de quinze (15) minutes 24h/24 et 7j/7 par un ingénieur système habilité.`,
+                    `Au titre des engagements de niveau de service (SLA) et de la réactivité opérationnelle, le présent Protocole #${num} garantit une disponibilité réseau de 99,999 % sur le Mainnet #9012. Chaque demande d'assistance ou signalement d'incident soumis via nos canaux officiels — console temps réel Firebase Realtime Database, téléphone direct Support (` + "`+226 78 37 08 03`" + `), Direction CTO (` + "`+226 70 87 37 73`" + `), Présidence (` + "`+226 76 20 38 48`" + `), WhatsApp d'urgence (` + "`+226 76 16 73 64`" + `), portail interne ` + "`discussion.html`" + ` ou courriels certifiés ` + "`support@agi-nexus-core.click`" + `, ` + "`administration@agi-nexus-core.click`" + ` et ` + "`mr.yougma@agi-nexus-core.click`" + ` — est immédiatement indexé sous un identifiant unique encodé en Base58 (` + "`ADCT_...`" + `). Les incidents critiques de priorité P1 sont pris en charge en moins de quinze (15) minutes 24h/24 et 7j/7 par un ingénieur système habilité.`,
                     `Sur le plan du diagnostic technique au sein du moteur d'état, ${d.operationalFocus} Lorsqu'un partenaire B2B sollicite une vérification technique, les ingénieurs du Centre d'Opérations Réseau (NOC L1) inspectent en temps réel les métriques du registre « In-Memory V8 State Ledger » logé dans les 256 Go de RAM DDR5 ECC des nœuds validateurs. Sans jamais interrompre la cadence de production des blocs fixée à 2000 millisecondes, nos outils d'inspection vérifient l'état de la table des soldes ` + "`this.balances`" + `, la synchronisation du compteur séquentiel ` + "`this.nonces`" + ` (via ` + "`nexus_getTransactionCount`" + `) et l'arbre d'état des contrats intelligents ` + "`this.contractsState`" + ` (via ` + "`nexus_getContractState`" + `), permettant d'identifier et de corriger toute erreur d'intégration côté client en quelques minutes.`,
                     `En matière de sécurité cryptographique lors des opérations de support, le présent Protocole #${num} applique une règle d'airain : ${d.cryptoFocus} Conformément à l'architecture 100 % Non-Custodial de Nexus Wallet Pro et d'A&D Business Pro, les clés privées ECDSA ` + "`secp256k1`" + ` et les phrases mnémoniques BIP39 de 12 ou 24 mots demeurent exclusivement chiffrées en ` + "`AES-256-GCM`" + ` (avec dérivation anti-ASIC ` + "`Argon2id`" + `) au sein de l'enclave matérielle du téléphone ou du serveur du partenaire. Aucun ingénieur d'Atlas & Duc Corporation n'a accès à ces secrets ni ne les demandera jamais. Toutes nos interventions de diagnostic s'effectuent exclusivement à partir des identifiants publics encodés en Base58 (adresses ` + "`ADC...`" + `, contrats ` + "`ADCC_...`" + ` et hachages de transactions).`,
                     `Concernant la continuité monétaire et l'exactitude comptable, les procédures de ce Protocole #${num} veillent au respect absolu des invariants de la monnaie native souveraine « ₳ » (Layer-1 Native Coin). Dotée d'une offre maximale fixe et non inflationniste de 100 000 000 000 ₳ scellée dès le bloc Genèse et arrimée à parité fixe de un pour un au Franc CFA (` + "`1 ₳ = 1 XOF`" + `), la pièce native ₳ est traitée dans tous les appels RPC et contrats NVM sous forme d'entiers atomiques indivisibles appelés « microA » (` + "`1 ₳ = 1 000 000 microA`" + `, précision à 6 décimales). Nos équipes assistent les services comptables des entreprises partenaires pour garantir que leurs logiciels de facturation convertissent systématiquement les montants en entiers ` + "`microA`" + `, éliminant ainsi toute erreur d'arrondi IEEE 754.`,
                     `Au niveau de la supervision des télécommunications et des passerelles d'accès, le présent Protocole #${num} couvre le monitoring continu du point de terminaison HTTPS TLS 1.3 ` + "`https://rpc.agi-nexus-core.click`" + ` (ainsi que du Testnet ` + "`https://testnet-rpc.agi-nexus-core.click`" + `) et du serveur de streaming WebSocket P2P sur le port ` + "`6001`" + ` (` + "`wss://p2p.agi-nexus-core.click:6001`" + `). Le NOC L1 ajuste dynamiquement les règles de protection anti-DDoS et accompagne les partenaires B2B dans le paramétrage de leurs en-têtes ` + "`X-Nexus-API-Key`" + ` (quota de 1 500 requêtes/seconde) ou de leurs certificats mutuels ` + "`mTLS`" + ` (débit illimité), ainsi que dans l'écoute asynchrone des canaux ` + "`NEW_BLOCK`" + `, ` + "`NEW_TRANSACTION`" + `, ` + "`CONTRACT_EVENT`" + ` et ` + "`ADDRESS_ACTIVITY`" + `.`,
                     `Pour les entreprises exploitant la programmabilité de couche 1 via la Machine Virtuelle Nexus (NVM) et le standard NCRC-20, ce Protocole #${num} encadre le support dédié aux contrats intelligents préfixés par ` + "`ADCC_`" + `. Nos architectes logiciels vérifient la bonne exécution des transactions ` + "`deploy_contract`" + ` et ` + "`call_contract`" + ` au sein de l'isolat V8 déterministe, s'assurent que le temps de calcul reste bien en deçà du coupe-circuit de 50 ms CPU et contrôlent l'application du modèle tarifaire « Zero-Deviation Gas » (frais fixes et constants de ` + "`1 000 microA`" + ` soit ` + "`0,001 ₳`" + ` pour un transfert, ` + "`5 000 microA`" + ` pour un appel NVM et ` + "`50 000 microA`" + ` pour un déploiement).`,
-                    `Dans le domaine de la mobilité d'entreprise, le présent Protocole #${num} régit le support technique des applications natives et hybrides Android et iOS (Nexus Wallet Pro et A&D Business Pro). Nos ingénieurs assistent les partenaires sur la compilation et l'intégration du pont natif Kotlin/Java `@JavascriptInterface`, l'utilisation de la bibliothèque cryptographique ` + "`BitcoinJ`" + ` (` + "`ECKey`" + `, ` + "`Sha256Hash`" + `, ` + "`Base58`" + `), le déverrouillage biométrique de l'` + "`Android Keystore`" + ` et le déploiement des mises à jour critiques via le mécanisme « Immediate In-App Update » garantissant que l'ensemble du parc mobile utilise toujours la version certifiée du protocole.`,
+                    `Dans le domaine de la mobilité d'entreprise, le présent Protocole #${num} régit le support technique des applications natives et hybrides Android et iOS (Nexus Wallet Pro et A&D Business Pro). Nos ingénieurs assistent les partenaires sur la compilation et l'intégration du pont natif Kotlin/Java ` + "`@JavascriptInterface`" + `, l'utilisation de la bibliothèque cryptographique ` + "`BitcoinJ`" + ` (` + "`ECKey`" + `, ` + "`Sha256Hash`" + `, ` + "`Base58`" + `), le déverrouillage biométrique de l'` + "`Android Keystore`" + ` et le déploiement des mises à jour critiques via le mécanisme « Immediate In-App Update » garantissant que l'ensemble du parc mobile utilise toujours la version certifiée du protocole.`,
                     `Sur le terrain commercial et industriel à Koupéla, Houndé, Kari, Pâ, Bobo-Dioulasso, Ouagadougou et dans toute la sous-région, ce Protocole #${num} organise l'assistance directe aux commerçants équipés du logiciel de caisse Roger Service Pro (Point of Sale sous Electron), aux vendeurs de la plateforme Adama Digital et aux utilisateurs des passerelles de règlement de factures (SONABEL électricité / CashPower, ONEA eau potable) et ponts Mobile Money. En cas de question sur un encaissement par QR Code Base58 ou sur une quittance de passerelle, nos équipes vérifient instantanément le reçu ` + "`nexus_getTransactionReceipt`" + ` et assurent la continuité immédiate du service.`,
                     `Enfin, au titre de la gouvernance exécutive, de la conformité réglementaire et de l'escalade (${code}), ${d.legalFocus} Tout partenaire B2B dispose de la garantie formelle que chaque requête est suivie jusqu'à sa résolution complète, avec possibilité d'escalade directe vers le CTO (` + "`+226 70 87 37 73`" + `) et la Présidence d'Atlas & Duc Corporation (` + "`+226 76 20 38 48`" + `). L'intégralité des opérations validées sur le réseau demeure publiquement vérifiable à chaque seconde sur l'explorateur officiel NexusScan.`
                 ];
             } else {
                 return [
                     `${d.core} This Institutional Protocol #${num} (Operational Reference: ${code}) forms an integral part of the global quality and business continuity charter promulgated by Atlas & Duc Corporation (a corporation organized under the laws of Burkina Faso registered under official receipt N° PHUE-3539/2025 dated July 11, 2025, with statutory and operational headquarters in Koupéla and Bobo-Dioulasso, Burkina Faso, under the presidency and lead software architecture of its founder Yougma Thierry Joël). The fundamental objective of this protocol is to provide banks, financial institutions, merchants operating Roger Service Pro, enterprises utilizing A&D Business Pro, and Adama Digital sellers with world-class human and technical support matching the sub-millisecond speed of the Nexus Core Layer-1 network.`,
-                    `Under our Service Level Agreements (SLA) and operational responsiveness mandates, this Protocol #${num} guarantees 99.999% network availability on Mainnet #9012. Every support inquiry or incident report submitted through our official channels—direct Support phone (` + "`+226 78 37 08 03`" + `), CTO Directorate (` + "`+226 70 87 37 73`" + `), Presidency (` + "`+226 76 20 38 48`" + `), Emergency WhatsApp (` + "`+226 76 16 73 64`" + `), internal portal ` + "`discussion.html`" + `, or certified emails ` + "`support@agi-nexus-core.click`" + `, ` + "`administration@agi-nexus-core.click`" + `, and ` + "`mr.yougma@agi-nexus-core.click`" + `—is immediately indexed under a unique Base58-encoded identifier (` + "`ADCT_...`" + `). Priority P1 critical incidents are acknowledged within fifteen (15) minutes 24/7 by a cleared systems engineer.`,
+                    `Under our Service Level Agreements (SLA) and operational responsiveness mandates, this Protocol #${num} guarantees 99.999% network availability on Mainnet #9012. Every support inquiry or incident report submitted through our official channels—real-time Firebase Realtime Database console, direct Support phone (` + "`+226 78 37 08 03`" + `), CTO Directorate (` + "`+226 70 87 37 73`" + `), Presidency (` + "`+226 76 20 38 48`" + `), Emergency WhatsApp (` + "`+226 76 16 73 64`" + `), internal portal ` + "`discussion.html`" + `, or certified emails ` + "`support@agi-nexus-core.click`" + `, ` + "`administration@agi-nexus-core.click`" + `, and ` + "`mr.yougma@agi-nexus-core.click`" + `—is immediately indexed under a unique Base58-encoded identifier (` + "`ADCT_...`" + `). Priority P1 critical incidents are acknowledged within fifteen (15) minutes 24/7 by a cleared systems engineer.`,
                     `With respect to technical diagnostics within the state engine, ${d.operationalFocus} Whenever a B2B partner requests a technical verification, Network Operations Center (L1 NOC) engineers inspect in real time the metrics of the 'In-Memory V8 State Ledger' housed inside the 256 GB of ECC DDR5 RAM on the validator nodes. Without ever interrupting the 2000-millisecond block sealing cadence, our diagnostic tools verify the state of the ` + "`this.balances`" + ` map, sequential counter synchronization in ` + "`this.nonces`" + ` (via ` + "`nexus_getTransactionCount`" + `), and the smart contract state tree ` + "`this.contractsState`" + ` (via ` + "`nexus_getContractState`" + `), identifying and resolving any client-side integration issue within minutes.`,
                     `Regarding cryptographic security during support operations, this Protocol #${num} enforces an ironclad rule: ${d.cryptoFocus} In accordance with the 100% Non-Custodial architecture of Nexus Wallet Pro and A&D Business Pro, ECDSA ` + "`secp256k1`" + ` private keys and 12/24-word BIP39 mnemonic phrases remain exclusively encrypted in ` + "`AES-256-GCM`" + ` (with anti-ASIC ` + "`Argon2id`" + ` derivation) inside the hardware enclave of the partner's phone or server. No Atlas & Duc Corporation engineer has access to these secrets or will ever ask for them. All diagnostic interventions are performed exclusively using public Base58-encoded identifiers (` + "`ADC...`" + ` addresses, ` + "`ADCC_...`" + ` contracts, and transaction hashes).`,
                     `Concerning monetary continuity and accounting accuracy, the procedures of this Protocol #${num} uphold absolute adherence to the invariants of the sovereign native currency '₳' (Layer-1 Native Coin). Endowed with a fixed, non-inflationary maximum supply of 100,000,000,000 ₳ sealed at the Genesis Block and pegged at a fixed one-to-one parity with the CFA Franc (` + "`1 ₳ = 1 XOF`" + `), the native coin ₳ is processed across all RPC calls and NVM contracts as indivisible atomic integers termed 'microA' (` + "`1 ₳ = 1,000,000 microA`" + `, 6-decimal precision). Our teams assist partner accounting departments to ensure their billing software systematically converts amounts into ` + "`microA`" + ` integers, eradicating any IEEE 754 floating-point rounding error.`,
                     `At the telecommunications and gateway supervision layer, this Protocol #${num} covers continuous monitoring of the HTTPS TLS 1.3 endpoint ` + "`https://rpc.agi-nexus-core.click`" + ` (as well as Testnet ` + "`https://testnet-rpc.agi-nexus-core.click`" + `) and the P2P WebSocket streaming server on port ` + "`6001`" + ` (` + "`wss://p2p.agi-nexus-core.click:6001`" + `). The L1 NOC dynamically tunes anti-DDoS rules and assists B2B partners in configuring their ` + "`X-Nexus-API-Key`" + ` headers (1,500 requests/second quota) or mutual TLS ` + "`mTLS`" + ` certificates (unlimited throughput), as well as asynchronous subscription to the ` + "`NEW_BLOCK`" + `, ` + "`NEW_TRANSACTION`" + `, ` + "`CONTRACT_EVENT`" + `, and ` + "`ADDRESS_ACTIVITY`" + ` channels.`,
                     `For enterprises leveraging Layer-1 programmability via the Nexus Virtual Machine (NVM) and the NCRC-20 standard, this Protocol #${num} governs dedicated support for smart contracts prefixed with ` + "`ADCC_`" + `. Our software architects verify proper execution of ` + "`deploy_contract`" + ` and ` + "`call_contract`" + ` transactions inside the deterministic V8 isolate, ensure computation time stays well below the 50 ms CPU circuit breaker, and monitor enforcement of the 'Zero-Deviation Gas' fee model (fixed, constant fees of ` + "`1,000 microA`" + ` or ` + "`0.001 ₳`" + ` for a transfer, ` + "`5,000 microA`" + ` for an NVM call, and ` + "`50,000 microA`" + ` for deployment).`,
-                    `In the enterprise mobility domain, this Protocol #${num} governs technical support for native and hybrid Android and iOS applications (Nexus Wallet Pro and A&D Business Pro). Our engineers assist partners with compiling and integrating the native Kotlin/Java `@JavascriptInterface` bridge, utilizing the ` + "`BitcoinJ`" + ` cryptographic library (` + "`ECKey`" + `, ` + "`Sha256Hash`" + `, ` + "`Base58`" + `), biometric unlocking of the ` + "`Android Keystore`" + `, and deploying critical updates via the 'Immediate In-App Update' mechanism ensuring the entire mobile fleet always runs the certified protocol build.`,
+                    `In the enterprise mobility domain, this Protocol #${num} governs technical support for native and hybrid Android and iOS applications (Nexus Wallet Pro and A&D Business Pro). Our engineers assist partners with compiling and integrating the native Kotlin/Java ` + "`@JavascriptInterface`" + ` bridge, utilizing the ` + "`BitcoinJ`" + ` cryptographic library (` + "`ECKey`" + `, ` + "`Sha256Hash`" + `, ` + "`Base58`" + `), biometric unlocking of the ` + "`Android Keystore`" + `, and deploying critical updates via the 'Immediate In-App Update' mechanism ensuring the entire mobile fleet always runs the certified protocol build.`,
                     `Across commercial and industrial field operations in Koupéla, Houndé, Kari, Pâ, Bobo-Dioulasso, Ouagadougou, and throughout the sub-region, this Protocol #${num} organizes direct assistance for merchants operating the Roger Service Pro Point of Sale software (Electron POS), sellers on the Adama Digital platform, and users of utility bill settlement gateways (SONABEL electricity / CashPower, ONEA water) and Mobile Money bridges. Whenever a question arises regarding a Base58 QR Code checkout or gateway voucher, our teams instantaneously verify the ` + "`nexus_getTransactionReceipt`" + ` record and ensure immediate service continuity.`,
                     `Finally, under executive governance, regulatory compliance, and escalation (${code}), ${d.legalFocus} Every B2B partner holds the formal guarantee that each inquiry is tracked through to complete resolution, backed by direct escalation rights to the CTO (` + "`+226 70 87 37 73`" + `) and the Presidency of Atlas & Duc Corporation (` + "`+226 76 20 38 48`" + `). All operations validated on the network remain publicly verifiable every second on the official NexusScan explorer.`
                 ];
@@ -1420,14 +1851,14 @@
                 return [
                     ["Code Protocole B2B", `${art.domainCode} (Module Support #${art.num})`, "Prise en charge NOC L1 24h/24 & 7j/7", "Charte SLA Atlas & Duc Corp."],
                     ["Étalon & Comptabilité", "Monnaie Native ₳ (1 ₳ = 1 000 000 microA = 1 XOF)", "Réconciliation Exacte SYSCOHADA & PoR 100%", "Mainnet Nexus Core L1 (#9012)"],
-                    ["Sécurité & Traçabilité", "Tickets Base58 (ADCT_) • 100% Non-Custodial", "Chiffrement AES-256-GCM / Argon2id / TLS 1.3", "Loi N° 001-2021/AN (CIL-BF) & RGPD"],
+                    ["Sécurité & Traçabilité", "Tickets Base58 (ADCT_) • Firebase RTDB Live", "Chiffrement AES-256-GCM / Argon2id / TLS 1.3", "Loi N° 001-2021/AN (CIL-BF) & RGPD"],
                     ["Canaux d'Intervention", "Présidence, CTO, Support & WhatsApp Urgence", "MTTA P1 < 15 min • Uptime Réseau 99,999%", "Récépissé Officiel N° PHUE-3539/2025"]
                 ];
             } else {
                 return [
                     ["B2B Protocol Code", `${art.domainCode} (Support Module #${art.num})`, "24/7/365 L1 NOC Engineering Coverage", "Atlas & Duc Corp. SLA Charter"],
                     ["Standard & Accounting", "Native Coin ₳ (1 ₳ = 1,000,000 microA = 1 XOF)", "Exact SYSCOHADA Reconciliation & 100% PoR", "Nexus Core L1 Mainnet (#9012)"],
-                    ["Security & Traceability", "Base58 Tickets (ADCT_) • 100% Non-Custodial", "AES-256-GCM / Argon2id / TLS 1.3 Encryption", "Law N° 001-2021/AN (CIL-BF) & GDPR"],
+                    ["Security & Traceability", "Base58 Tickets (ADCT_) • Firebase RTDB Live", "AES-256-GCM / Argon2id / TLS 1.3 Encryption", "Law N° 001-2021/AN (CIL-BF) & GDPR"],
                     ["Intervention Channels", "Presidency, CTO, Support & Emergency WhatsApp", "P1 MTTA < 15 min • 99.999% Network Uptime", "Official Receipt N° PHUE-3539/2025"]
                 ];
             }
@@ -1442,14 +1873,14 @@
             faqData.forEach((item, idx) => {
                 const langItem = item[currentLang];
                 const div = document.createElement('div');
-                div.className = `faq-item ${idx === 0 ? 'active ' : ''}bg-white border border-indBorder rounded-xl transition-colors`;
+                div.className = `faq-item ${idx === 0 ? 'active ' : ''}bg-white border border-indBorder rounded-lg transition-colors`;
                 div.innerHTML = `
-                    <button class="w-full text-left p-4 flex justify-between items-center outline-none rounded-xl" onclick="toggleFaq(this)">
-                        <span class="font-black text-sm text-premiumDark pr-4">${langItem.q}</span>
-                        <i class="fa-solid fa-chevron-down text-indAccent faq-icon transition-transform duration-200 text-xs shrink-0"></i>
+                    <button class="w-full text-left p-3.5 flex justify-between items-center outline-none rounded-lg" onclick="toggleFaq(this)">
+                        <span class="font-extrabold text-xs text-premiumDark pr-4">${langItem.q}</span>
+                        <i class="fa-solid fa-chevron-down text-indAccent faq-icon transition-transform duration-200 text-[10px] shrink-0"></i>
                     </button>
                     <div class="faq-content">
-                        <div class="px-4 pb-4 pt-0 text-xs text-slate-600 leading-relaxed text-justify-custom font-medium">
+                        <div class="px-3.5 pb-3.5 pt-0 text-[11px] text-slate-600 leading-relaxed text-justify-custom font-medium">
                             ${langItem.a}
                         </div>
                     </div>
@@ -1462,7 +1893,7 @@
             const container = document.getElementById('articlesContainer');
             const sidebarList = document.getElementById('sidebarArticlesList');
             const searchInput = document.getElementById('articleSearchInput');
-            const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+            const queryText = searchInput ? searchInput.value.toLowerCase().trim() : '';
 
             container.innerHTML = '';
             sidebarList.innerHTML = '';
@@ -1483,17 +1914,17 @@
                 const wordCount = fullTextForMeasure.split(/\s+/).length;
                 totalCorpusChars += charCount;
 
-                const matchesSearch = !query || fullTextForMeasure.toLowerCase().includes(query) || langObj.badge.toLowerCase().includes(query);
+                const matchesSearch = !queryText || fullTextForMeasure.toLowerCase().includes(queryText) || langObj.badge.toLowerCase().includes(queryText);
 
                 const li = document.createElement('li');
                 li.style.display = matchesSearch ? 'block' : 'none';
                 li.innerHTML = `
-                    <a href="#${art.id}" class="hover:text-indAccent hover:bg-slate-50 px-2.5 py-1.5 rounded-lg transition-colors flex items-center justify-between gap-2 group">
-                        <div class="flex items-center gap-2 truncate">
-                            <span class="font-mono text-[10px] font-black text-indAccent bg-sky-50 border border-sky-200 px-1.5 py-0.5 rounded">${art.num}</span>
+                    <a href="#${art.id}" class="hover:text-indAccent hover:bg-slate-50 px-2 py-1 rounded-md transition-colors flex items-center justify-between gap-1.5 group">
+                        <div class="flex items-center gap-1.5 truncate">
+                            <span class="font-mono text-[9px] font-black text-indAccent bg-sky-50 border border-sky-200 px-1 py-0.5 rounded">${art.num}</span>
                             <span class="truncate">${langObj.short.replace(/^\d+\.\s*/, '')}</span>
                         </div>
-                        <span class="text-[9px] font-mono text-slate-400 group-hover:text-indAccent shrink-0">${(charCount / 1000).toFixed(1)}k</span>
+                        <span class="text-[8.5px] font-mono text-slate-400 group-hover:text-indAccent shrink-0">${(charCount / 1000).toFixed(1)}k</span>
                     </a>
                 `;
                 sidebarList.appendChild(li);
@@ -1501,18 +1932,18 @@
                 if (matchesSearch) {
                     const sectionEl = document.createElement('section');
                     sectionEl.id = art.id;
-                    sectionEl.className = 'scroll-mt-24 bg-white border border-indBorder rounded-2xl p-6 sm:p-8 shadow-sm hover:border-slate-300 transition-all';
+                    sectionEl.className = 'scroll-mt-20 bg-white border border-indBorder rounded-xl p-5 sm:p-6 shadow-sm hover:border-slate-300 transition-all';
 
                     let clausesHtml = '';
                     sections.forEach((secText, idx) => {
                         const boxStyle = idx % 2 === 0 ? 'clause-box' : 'gold-box';
                         clausesHtml += `
-                            <div class="${boxStyle} p-4 sm:p-5 rounded-r-xl border border-slate-100 mb-4">
-                                <div class="flex items-center justify-between gap-2 mb-2">
-                                    <h3 class="font-black text-premiumDark text-xs sm:text-[13px] uppercase tracking-wide">${headers[idx]}</h3>
-                                    <span class="font-mono text-[10px] font-bold text-slate-400 shrink-0">${art.domainCode} • §${idx + 1}</span>
+                            <div class="${boxStyle} p-3.5 sm:p-4 rounded-r-lg border border-slate-100 mb-3">
+                                <div class="flex items-center justify-between gap-2 mb-1.5">
+                                    <h3 class="font-black text-premiumDark text-[11px] uppercase tracking-wide">${headers[idx]}</h3>
+                                    <span class="font-mono text-[9px] font-bold text-slate-400 shrink-0">${art.domainCode} • §${idx + 1}</span>
                                 </div>
-                                <p class="text-slate-600 text-[12.5px] sm:text-[13px] leading-relaxed text-justify-custom font-medium">
+                                <p class="text-slate-600 text-[11.5px] leading-relaxed text-justify-custom font-medium">
                                     ${secText}
                                 </p>
                             </div>
@@ -1523,54 +1954,54 @@
                     matrixRows.forEach(r => {
                         tableRowsHtml += `
                             <tr class="hover:bg-slate-50/80">
-                                <td class="py-2.5 px-3.5 font-bold text-premiumDark border-b border-slate-100">${r[0]}</td>
-                                <td class="py-2.5 px-3.5 font-mono text-indAccent font-semibold border-b border-slate-100">${r[1]}</td>
-                                <td class="py-2.5 px-3.5 text-slate-600 border-b border-slate-100">${r[2]}</td>
-                                <td class="py-2.5 px-3.5 font-mono text-slate-500 border-b border-slate-100">${r[3]}</td>
+                                <td class="py-2 px-3 font-bold text-premiumDark border-b border-slate-100">${r[0]}</td>
+                                <td class="py-2 px-3 font-mono text-indAccent font-semibold border-b border-slate-100">${r[1]}</td>
+                                <td class="py-2 px-3 text-slate-600 border-b border-slate-100">${r[2]}</td>
+                                <td class="py-2 px-3 font-mono text-slate-500 border-b border-slate-100">${r[3]}</td>
                             </tr>
                         `;
                     });
 
                     sectionEl.innerHTML = `
-                        <div class="flex flex-wrap items-center justify-between gap-3 mb-6 pb-4 border-b-2 border-slate-100">
-                            <div class="flex items-center gap-3.5">
-                                <div class="w-12 h-12 rounded-xl ${art.color} flex items-center justify-center shrink-0 text-lg shadow-sm">
+                        <div class="flex flex-wrap items-center justify-between gap-2.5 mb-5 pb-3.5 border-b border-slate-100">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg ${art.color} flex items-center justify-center shrink-0 text-base shadow-sm">
                                     <i class="fa-solid ${art.icon}"></i>
                                 </div>
                                 <div>
-                                    <div class="flex flex-wrap items-center gap-2 mb-1">
-                                        <span class="font-mono text-[10px] font-black uppercase tracking-widest text-indAccent bg-sky-50 px-2 py-0.5 rounded border border-sky-200">PROTOCOLE B2B OFFICIEL #${art.num}</span>
-                                        <span class="font-mono text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">${art.domainCode}</span>
-                                        <span class="font-mono text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">${charCount.toLocaleString()} ${uiStrings[currentLang].chars_unit} • ${wordCount.toLocaleString()} ${uiStrings[currentLang].words_unit}</span>
+                                    <div class="flex flex-wrap items-center gap-1.5 mb-1">
+                                        <span class="font-mono text-[9px] font-black uppercase tracking-widest text-indAccent bg-sky-50 px-1.5 py-0.5 rounded border border-sky-200">PROTOCOLE B2B OFFICIEL #${art.num}</span>
+                                        <span class="font-mono text-[9px] font-bold text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded">${art.domainCode}</span>
+                                        <span class="font-mono text-[9px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded">${charCount.toLocaleString()} ${uiStrings[currentLang].chars_unit} • ${wordCount.toLocaleString()} ${uiStrings[currentLang].words_unit}</span>
                                     </div>
-                                    <h2 class="text-lg sm:text-xl font-black text-premiumDark tracking-tight leading-snug">${langObj.title}</h2>
+                                    <h2 class="text-sm sm:text-base font-black text-premiumDark tracking-tight leading-snug">${langObj.title}</h2>
                                 </div>
                             </div>
-                            <span class="bg-premiumDark text-indGold border border-indGold/40 text-[10px] font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider shrink-0">${langObj.badge}</span>
+                            <span class="bg-premiumDark text-indGold border border-indGold/40 text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-wider shrink-0">${langObj.badge}</span>
                         </div>
 
-                        <div class="space-y-4 mb-6">
+                        <div class="space-y-3 mb-5">
                             ${clausesHtml}
                         </div>
 
-                        <div class="dev-code-block mb-6">
+                        <div class="dev-code-block mb-5">
                             <div class="dev-code-header">
-                                <span class="text-[10px] font-mono font-bold text-indGold uppercase tracking-wider"><i class="fa-solid fa-terminal mr-1.5"></i> Commande de Diagnostic & Vérification NOC L1 (${art.domainCode})</span>
-                                <span class="text-[10px] font-mono text-slate-400">Mainnet #9012 • ₳ / Base58</span>
+                                <span class="text-[9px] font-mono font-bold text-indGold uppercase tracking-wider"><i class="fa-solid fa-terminal mr-1.5"></i> Commande de Diagnostic & Vérification NOC L1 (${art.domainCode})</span>
+                                <span class="text-[9px] font-mono text-slate-400">Mainnet #9012 • ₳ / Base58</span>
                             </div>
                             <div class="dev-code-body">
                                 <code>${langObj.cmdSnippet}</code>
                             </div>
                         </div>
 
-                        <div class="overflow-x-auto rounded-xl border border-slate-200 mb-5">
-                            <table class="w-full text-left border-collapse text-xs">
+                        <div class="overflow-x-auto rounded-lg border border-slate-200 mb-4">
+                            <table class="w-full text-left border-collapse text-[10.5px]">
                                 <thead>
-                                    <tr class="bg-slate-900 text-white text-[10px] uppercase tracking-wider font-black">
-                                        <th class="py-3 px-3.5">${mHeaders[0]}</th>
-                                        <th class="py-3 px-3.5">${mHeaders[1]}</th>
-                                        <th class="py-3 px-3.5">${mHeaders[2]}</th>
-                                        <th class="py-3 px-3.5">${mHeaders[3]}</th>
+                                    <tr class="bg-slate-900 text-white text-[9px] uppercase tracking-wider font-black">
+                                        <th class="py-2.5 px-3">${mHeaders[0]}</th>
+                                        <th class="py-2.5 px-3">${mHeaders[1]}</th>
+                                        <th class="py-2.5 px-3">${mHeaders[2]}</th>
+                                        <th class="py-2.5 px-3">${mHeaders[3]}</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white">
@@ -1579,7 +2010,7 @@
                             </table>
                         </div>
 
-                        <div class="bg-premiumDark text-slate-200 rounded-xl px-4 py-3.5 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-mono">
+                        <div class="bg-premiumDark text-slate-200 rounded-lg px-3.5 py-2.5 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-[10.5px] font-mono">
                             <span class="text-indGold font-bold shrink-0"><i class="fa-solid fa-headset mr-1.5"></i>${uiStrings[currentLang].tech_clause_label}</span>
                             <span class="text-sky-300">${langObj.tech}</span>
                         </div>
@@ -1617,14 +2048,16 @@
             document.documentElement.lang = currentLang;
         }
 
-        function toggleLang() {
+        window.toggleLang = function() {
             currentLang = currentLang === 'fr' ? 'en' : 'fr';
             renderSupportPage();
-        }
+        };
 
         document.addEventListener('DOMContentLoaded', () => {
             renderSupportPage();
             updateMicroCalculator();
+            connectFirebaseRtdb(currentRtdbUrl);
+
             const searchInput = document.getElementById('articleSearchInput');
             if (searchInput) {
                 searchInput.addEventListener('input', () => {
