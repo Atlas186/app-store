@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Atlas & Duc Corporation | Société d'Ingénierie Logicielle, FinTech & Blockchain Nexus Core Layer-1</title>
     
-        <!-- Icônes officielles (Favicon) alignées sur https://agi-nexus-core.click -->
+    <!-- Icônes officielles (Favicon) alignées sur https://agi-nexus-core.click -->
     <link rel="icon" type="image/jpeg" sizes="48x48" href="/Logo-entreprise.jpg">
     <link rel="icon" type="image/jpeg" sizes="192x192" href="/Logo-entreprise.jpg">
     <link rel="shortcut icon" type="image/jpeg" href="https://agi-nexus-core.click/Logo-entreprise.jpg">
@@ -570,6 +570,9 @@
             <a href="#applications" onclick="closeMenu()" class="btn-core" style="background: var(--agi-emerald); color: white; font-size: 11px; width: 100%; justify-content: center; padding: 10px;">
                 <i class="fa-solid fa-mobile-screen-button"></i> <span class="data-lang" data-key="nav_apps">Applications & Wallets</span>
             </a>
+            <a href="./AppStore.html" onclick="closeMenu()" class="btn-core" style="background: #f59e0b; color: var(--agi-navy); font-size: 11px; width: 100%; justify-content: center; padding: 10px;">
+                <i class="fa-solid fa-store"></i> <span class="data-lang" data-key="leg_btn_appstore">App Store Officiel</span>
+            </a>
             <a href="#nexus-spec" onclick="closeMenu()" class="btn-core" style="background: #0284c7; color: white; font-size: 11px; width: 100%; justify-content: center; padding: 10px;">
                 <i class="fa-solid fa-cubes"></i> <span class="data-lang" data-key="nav_specs">Spécifications Layer-1</span>
             </a>
@@ -625,10 +628,10 @@
         </div>
     </div>
 
-    <!-- Bouton Flottant Terminal Unifié -->
+    <!-- Bouton Flottant App Store -->
     <div id="quickAccess" class="fixed-access-btn">
-        <a href="./agi-business.pro.apk" id="openTerminalBtn" class="btn-core" style="background: var(--agi-gold); color: var(--agi-navy); padding: 15px 28px; border-radius: 50px; font-size: 11px; border: 2px solid var(--agi-navy); box-shadow: 0 12px 30px rgba(245,158,11,0.45);">
-            <i class="fa-solid fa-right-to-bracket"></i> <span class="data-lang" data-key="btn_terminal">ATLAS & DUC BUSINESS PRO</span>
+        <a href="./AppStore.html" id="openTerminalBtn" class="btn-core" style="background: var(--agi-gold); color: var(--agi-navy); padding: 15px 28px; border-radius: 50px; font-size: 11px; border: 2px solid var(--agi-navy); box-shadow: 0 12px 30px rgba(245,158,11,0.45);">
+            <i class="fa-solid fa-store"></i> <span class="data-lang" data-key="btn_terminal">ACCÉDEZ À L'APP STORE</span>
         </a>
     </div>
 
@@ -650,6 +653,7 @@
             <nav class="hidden-mobile flex" style="gap: 15px; align-items: center;">
                 <a href="#services" class="txt-xs font-black uppercase data-lang" data-key="nav_services" style="text-decoration:none; color:inherit;">Nos Services</a>
                 <a href="#applications" class="txt-xs font-black uppercase data-lang" data-key="nav_apps" style="text-decoration:none; color:inherit;">Applications & Wallets</a>
+                <a href="./AppStore.html" class="txt-xs font-black uppercase data-lang" data-key="leg_btn_appstore" style="text-decoration:none; color:var(--agi-gold);">App Store</a>
                 <a href="#nexus-spec" class="txt-xs font-black uppercase data-lang" data-key="nav_specs" style="text-decoration:none; color:inherit;">Protocole Layer-1</a>
                 <a href="#mining" class="txt-xs font-black uppercase data-lang" data-key="nav_mining" style="text-decoration:none; color:inherit;">Minage SHA256</a>
                 <a href="#invest" class="txt-xs font-black uppercase data-lang" data-key="nav_contracts" style="text-decoration:none; color:inherit;">Staking</a>
@@ -696,8 +700,8 @@
                 <a href="#services" class="btn-core" style="background: var(--agi-navy); color: var(--agi-gold); border: 1.5px solid var(--agi-gold); padding: 13px 26px; font-size: 11px;">
                     <i class="fas fa-laptop-code"></i> <span class="data-lang" data-key="btn_services_cta">COMMANDER UNE APPLICATION OU UN SITE WEB</span>
                 </a>
-                <a href="#applications" class="btn-core" style="background: var(--agi-emerald); color: white; padding: 13px 26px; font-size: 11px;">
-                    <i class="fas fa-wallet"></i> <span class="data-lang" data-key="btn_ecosystem">NEXUS WALLET PRO & ATLAS & DUC BUSINESS PRO</span>
+                <a href="./AppStore.html" class="btn-core" style="background: var(--agi-emerald); color: white; padding: 13px 26px; font-size: 11px;">
+                    <i class="fa-solid fa-store"></i> <span class="data-lang" data-key="btn_ecosystem">APP STORE • NEXUS WALLET PRO & BUSINESS PRO</span>
                 </a>
                 <a href="whitepaper.html" class="btn-core" style="background: rgba(255,255,255,0.92); color: var(--agi-navy); border: 1.5px solid var(--agi-azure); padding: 13px 26px; font-size: 11px;">
                     <i class="fas fa-file-alt" style="color: var(--agi-azure);"></i> <span class="data-lang" data-key="btn_whitepaper">CONSULTER LE LIVRE BLANC LAYER-1</span>
@@ -739,7 +743,7 @@
                     </div>
                     <div>
                         <p class="txt-sm data-lang" data-key="hero_exec_p2" style="color: var(--text-dark);">
-                            Contrairement aux architectures conventionnelles tributaires de réseaux étrangers coûteux et volatils, le réseau <strong>Nexus Core Layer-1</strong> repose sur sa propre chaîne de blocs principale et sa <strong>monnaie native (coin) ₳</strong> (strictement distincte d'un simple jeton ou token secondaire). Chaque unité <strong>₳</strong> conserve une parité fixe rigoureuse de <strong>1 ₳ = 1 FCFA (XOF)</strong> et s'échange instantanément via nos applications officielles <strong>Nexus Wallet</strong>, <strong>Nexus Wallet Pro</strong> et <strong>Atlas & Duc Business Pro</strong>.
+                            Contrairement aux architectures conventionnelles tributaires de réseaux étrangers coûteux et volatils, le réseau <strong>Nexus Core Layer-1</strong> repose sur sa propre chaîne de blocs principale et sa <strong>monnaie native (coin) ₳</strong> (strictement distincte d'un simple jeton ou token secondaire). Chaque unité <strong>₳</strong> conserve une parité fixe rigoureuse de <strong>1 ₳ = 1 FCFA (XOF)</strong> et s'échange instantanément via nos applications officielles <strong>Nexus Wallet</strong>, <strong>Nexus Wallet Pro</strong> et <strong>Atlas & Duc Business Pro</strong> disponibles sur <strong>AppStore.html</strong>.
                         </p>
                     </div>
                 </div>
@@ -857,7 +861,7 @@
                             <td>Disponibilité 99.98%, maintenance évolutive, formation des équipes et déploiement continu</td>
                         </tr>
                         <tr>
-                            <td><strong>Logiciels d'itation & Systèmes POS/ERP</strong></td>
+                            <td><strong>Logiciels d'Entreprise & Systèmes POS/ERP</strong></td>
                             <td><strong>Windows</strong> (Postes PC, Terminaux Caisses, Serveurs Linux/Termux)</td>
                             <td>Architecture client-serveur locale et Cloud, Node.js, Express, PM2 Process Manager, Cloudflare Tunnels</td>
                             <td>Contrôle d'accès par rôles (RBAC), journalisation d'audit immuable, sauvegardes automatiques chiffrées</td>
@@ -920,7 +924,7 @@
                 <span class="section-tag data-lang" data-key="app_badge" style="color: var(--white); background: var(--agi-navy); border: 1px solid var(--agi-gold);">SUITE LOGICIELLE & FINTECH PROPRIÉTAIRE</span>
                 <h2 class="font-black uppercase tracking-ultra data-lang" data-key="app_main_title" style="font-size: 1.75rem; color: var(--agi-navy);">Atlas & Duc Business Pro, Nexus Wallet Pro & Nexus Wallet</h2>
                 <p class="txt-sm font-bold data-lang" data-key="app_subtitle" style="color: #0369a1; margin-top: 10px;">
-                    Trois applications complémentaires interconnectées au réseau principal Nexus Core Layer-1 pour gérer la monnaie native ₳, les investissements industriels et les paiements instantanés
+                    Trois applications complémentaires interconnectées au réseau principal Nexus Core Layer-1 pour gérer la monnaie native ₳, les investissements industriels et les paiements instantanés — disponibles via AppStore.html
                 </p>
             </div>
 
@@ -944,8 +948,8 @@
                         </ul>
                     </div>
                     <div style="margin-top: 22px;">
-                        <a href="./agi-business.pro.apk" class="btn-core" style="background: var(--agi-navy); color: var(--agi-gold); border: 1px solid var(--agi-gold); width: 100%; justify-content: center; padding: 13px; font-size: 11px;">
-                            <i class="fa-brands fa-android"></i> <span class="data-lang" data-key="app_c1_btn">Télécharger Atlas & Duc Business Pro (APK)</span>
+                        <a href="./AppStore.html" class="btn-core" style="background: var(--agi-navy); color: var(--agi-gold); border: 1px solid var(--agi-gold); width: 100%; justify-content: center; padding: 13px; font-size: 11px;">
+                            <i class="fa-solid fa-store"></i> <span class="data-lang" data-key="app_c1_btn">Accéder à l'App Store (Atlas & Duc Business Pro)</span>
                         </a>
                     </div>
                 </div>
@@ -968,8 +972,8 @@
                         </ul>
                     </div>
                     <div style="margin-top: 22px;">
-                        <a href="https://nexus-betting.netlify.app/Nexus-Wallet-Pro.apk" class="btn-core" style="background: var(--agi-azure); color: white; width: 100%; justify-content: center; padding: 13px; font-size: 11px;">
-                            <i class="fa-solid fa-wallet"></i> <span class="data-lang" data-key="app_c2_btn">Ouvrir le Portail Nexus Wallet Pro</span>
+                        <a href="./AppStore.html" class="btn-core" style="background: var(--agi-azure); color: white; width: 100%; justify-content: center; padding: 13px; font-size: 11px;">
+                            <i class="fa-solid fa-store"></i> <span class="data-lang" data-key="app_c2_btn">Accéder à l'App Store (Nexus Wallet Pro)</span>
                         </a>
                     </div>
                 </div>
@@ -992,8 +996,8 @@
                         </ul>
                     </div>
                     <div style="margin-top: 22px;">
-                        <a href="NexusScan.html" class="btn-core" style="background: var(--agi-emerald); color: white; width: 100%; justify-content: center; padding: 13px; font-size: 11px;">
-                            <i class="fa-solid fa-magnifying-glass-chart"></i> <span class="data-lang" data-key="app_c3_btn">Vérifier le Registre Nexus Wallet</span>
+                        <a href="./AppStore.html" class="btn-core" style="background: var(--agi-emerald); color: white; width: 100%; justify-content: center; padding: 13px; font-size: 11px;">
+                            <i class="fa-solid fa-store"></i> <span class="data-lang" data-key="app_c3_btn">Accéder à l'App Store (Nexus Wallet)</span>
                         </a>
                     </div>
                 </div>
@@ -1079,7 +1083,7 @@
 
             <!-- Spécifications Techniques de Bas Niveau du Protocole Layer-1 -->
             <div class="institutional-dossier">
-                <h4><i class="fa-solid fa-Network-wired" style="color: var(--agi-navy);"></i> Architecture Interne des Blocs, Topologie des Nœuds & Paramètres du Mainnet Nexus Core</h4>
+                <h4><i class="fa-solid fa-network-wired" style="color: var(--agi-navy);"></i> Architecture Interne des Blocs, Topologie des Nœuds & Paramètres du Mainnet Nexus Core</h4>
                 <div class="table-responsive" style="margin-top: 15px;">
                     <table class="inst-table">
                         <thead>
@@ -1150,7 +1154,7 @@
                         </ul>
                     </div>
                     <div style="margin-top: 18px; padding-top: 12px; border-top: 1px solid #e0f2fe; font-size: 0.74rem; color: var(--text-mute);">
-                        <i class="fa-solid fa-circle-check" style="color: var(--agi-emerald);"></i> Accessible immédiatement depuis la console de calcul <strong>Atlas & Duc Business Pro</strong>.
+                        <i class="fa-solid fa-circle-check" style="color: var(--agi-emerald);"></i> Accessible immédiatement depuis la console de calcul <strong>Atlas & Duc Business Pro</strong> (<a href="./AppStore.html" style="color:var(--agi-navy);font-weight:700;">AppStore.html</a>).
                     </div>
                 </div>
 
@@ -1215,7 +1219,7 @@
     <section id="invest" style="padding: 90px 0; background: #ffffff;" data-scroll>
         <div class="container">
             <div class="section-header-box">
-                <span class="section-tag" style="color: var(--agi-navy); background: var(--agi-gold-light); border: 1px solid var(--agi-gold);"> CONTRATS INTELLIGENTS DE TRÉSORERIE & STAKING ADOSSÉ AUX ACTIFS RÉELS</span>
+                <span class="section-tag" style="color: var(--agi-navy); background: var(--agi-gold-light); border: 1px solid var(--agi-gold);">CONTRATS INTELLIGENTS DE TRÉSORERIE & STAKING ADOSSÉ AUX ACTIFS RÉELS</span>
                 <h2 class="font-black uppercase tracking-ultra data-lang" data-key="invest_title" style="font-size: 1.75rem; color: var(--agi-navy);">Coffres Verrouillés de Staking & Piliers Industriels</h2>
                 <p class="txt-sm font-bold data-lang" data-key="invest_subtitle" style="color: #0284c7; margin-top: 10px;">
                     Garantie de liquidité intégrale de 100% assurée par les flux d'exploitation réels du groupe — Zéro volatilité spéculative et versement automatisé du capital + intérêts à l'échéance exacte
@@ -1353,6 +1357,7 @@
   "identity_engine": { "encoding": "Base58_Deterministic", "alphabet": "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz" },
   "security_stack": { "encryption": "AES-256-GCM", "key_custody": "Shamir_Secret_Sharing_SSS", "code_protection": "R8_Obfuscation" },
   "supported_terminals": ["Atlas & Duc Business Pro", "Nexus Wallet Pro", "Nexus Wallet"],
+  "app_store_portal": "./AppStore.html",
   "ussd_gateways": { "orange_money_bf": "*144*2*1*76203848*", "moov_money_bf": "*555*2*1*70873773*" }
 }
 </pre>
@@ -1367,7 +1372,7 @@
     <section id="projets" style="padding: 90px 0; background: #bae6fd;" data-scroll>
         <div class="container">
             <div class="section-header-box">
-                <span class="section-tag" style="color: var(--agi-navy); background: var(--white); border: 1px solid var(--agi-navy);">ÉCONOMie RÉELLE & TOKENISATION D'INFRASTRUCTURES</span>
+                <span class="section-tag" style="color: var(--agi-navy); background: var(--white); border: 1px solid var(--agi-navy);">ÉCONOMIE RÉELLE & TOKENISATION D'INFRASTRUCTURES</span>
                 <h2 class="font-black uppercase tracking-ultra data-lang" data-key="eco_title" style="font-size: 1.75rem; color: var(--agi-navy);">Écosystème Diversifié & Interconnecté Atlas & Duc</h2>
                 <p class="txt-sm font-bold data-lang" data-key="eco_subtitle" style="color: #0369a1; margin-top: 10px;">
                     Huit piliers opérationnels unissant l'industrie lourde, l'économie rurale, la transition énergétique solaire et l'innovation FinTech au Burkina Faso
@@ -1545,9 +1550,9 @@
                 </div>
 
                 <div>
-                    <h3 class="txt-md font-black uppercase tracking-ultra" style="margin-bottom: 20px; color: var(--agi-navy); border-left: 4px solid var(--agi-azure); padding-left: 12px;">Canaux d'Assistance Directe & Téléchargement APK</h3>
+                    <h3 class="txt-md font-black uppercase tracking-ultra" style="margin-bottom: 20px; color: var(--agi-navy); border-left: 4px solid var(--agi-azure); padding-left: 12px;">Canaux d'Assistance Directe & Accès AppStore.html</h3>
                     <p class="txt-sm text-justify" style="color: var(--text-dark); margin-bottom: 20px;">
-                        Nos équipes d'ingénieurs et de support client résidents sont joignables en permanence via nos canaux de discussion directe ou par téléphone pour vous assister dans la création de vos logiciels et l'utilisation de <strong>Nexus Wallet Pro</strong> et <strong>Atlas & Duc Business Pro</strong>.
+                        Nos équipes d'ingénieurs et de support client résidents sont joignables en permanence via nos canaux de discussion directe ou par téléphone pour vous assister dans la création de vos logiciels et l'accès à <strong>AppStore.html</strong> (<strong>Nexus Wallet Pro</strong>, <strong>Nexus Wallet</strong> et <strong>Atlas & Duc Business Pro</strong>).
                     </p>
 
                     <div style="background: #f0f9ff; border: 1.5px dashed var(--agi-azure); padding: 18px; border-radius: 18px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
@@ -1562,11 +1567,11 @@
                         </div>
                     </div>
 
-                    <a href="./agi-business.pro.apk" id="openTerminalBtnBottom" class="btn-core" style="width: 100%; margin-top: 20px; background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%); color: var(--agi-navy); border: 2px solid var(--agi-azure); padding: 24px; justify-content: center; border-radius: 20px; box-shadow: var(--shadow-premium);">
+                    <a href="./AppStore.html" id="openTerminalBtnBottom" class="btn-core" style="width: 100%; margin-top: 20px; background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%); color: var(--agi-navy); border: 2px solid var(--agi-azure); padding: 24px; justify-content: center; border-radius: 20px; box-shadow: var(--shadow-premium);">
                         <div class="text-center">
-                            <i class="fa-brands fa-android" style="font-size: 32px; color: var(--agi-emerald); display: block; margin-bottom: 8px;"></i>
-                            <span class="txt-sm font-black uppercase tracking-ultra data-lang" data-key="apk_download_text">Télécharger Atlas & Duc Business Pro & Nexus Wallet Pro</span>
-                            <small style="display: block; font-size: 0.7rem; color: #0369a1; margin-top: 4px;">Package APK Officiel Signé • Chiffrement AES-256-GCM • Compatible Android</small>
+                            <i class="fa-solid fa-store" style="font-size: 32px; color: var(--agi-emerald); display: block; margin-bottom: 8px;"></i>
+                            <span class="txt-sm font-black uppercase tracking-ultra data-lang" data-key="apk_download_text">Ouvrir AppStore.html — Atlas & Duc Business Pro & Les Wallets Nexus</span>
+                            <small style="display: block; font-size: 0.7rem; color: #0369a1; margin-top: 4px;">Catalogue Officiel AppStore.html • Chiffrement AES-256-GCM • Compatible Android</small>
                         </div>
                     </a>
                 </div>
@@ -1591,7 +1596,7 @@
                         </div>
                     </div>
                     <p class="txt-xs font-black uppercase mono" style="color: var(--agi-slate); margin-bottom: 14px;">
-                        <i class="fas fa-link"></i> <span class="data-lang" data-key="foot_web_portal">PORTAILS WEB DÉPLOYÉS :https://www.agi-nexus-core.click</span>
+                        <i class="fas fa-link"></i> <span class="data-lang" data-key="foot_web_portal">PORTAILS WEB DÉPLOYÉS : https://www.agi-nexus-core.click • ./AppStore.html</span>
                     </p>
                     <p class="txt-xs data-lang" data-key="foot_address" style="color: #cbd5e1; max-width: 540px; line-height: 1.7;">
                         <strong>Prestations d'Ingénierie :</strong> Création d'Applications & Logiciels (Android • iPhone • Windows), Création de Sites Web (Site Web Vitrine • Site Web Professionnel), Solutions FinTech & Blockchain.<br>
@@ -1639,11 +1644,12 @@
             fr: {},
             en: {
                 menu_title: "Institutional Portal",
-                btn_terminal: "ATLAS & DUC BUSINESS PRO",
+                btn_terminal: "ACCESS APP STORE",
                 header_title: "Atlas & Duc Corporation",
                 header_receipt: "SOFTWARE ENGINEERING • FINTECH • BLOCKCHAIN",
                 nav_services: "Our Services",
                 nav_apps: "Apps & Wallets",
+                leg_btn_appstore: "Official App Store",
                 nav_pillars: "Industrial Pillars",
                 nav_specs: "Layer-1 Protocol",
                 nav_mining: "SHA256 Mining",
@@ -1655,7 +1661,7 @@
                 hero_description: "<strong>Atlas & Duc Corporation (SASU)</strong> is an OHADA-registered corporation specializing in <strong>High-Precision Software Engineering</strong>, <strong>Financial Technology (FinTech)</strong>, and the proprietary <strong>Nexus Core Layer-1 Blockchain</strong>. We custom-design and deploy your <strong>Native Applications & Software (Android, iPhone, Windows)</strong> as well as your <strong>Showcase & Professional Websites</strong>, while operating a sovereign ecosystem powered by our <strong>native coin ₳</strong> and our flagship applications: <strong>Atlas & Duc Business Pro</strong>, <strong>Nexus Wallet Pro</strong>, and <strong>Nexus Wallet</strong>.",
                 btn_services_cta: "ORDER AN APPLICATION OR WEBSITE",
                 btn_whitepaper: "READ THE LAYER-1 WHITEPAPER",
-                btn_ecosystem: "NEXUS WALLET PRO & ATLAS & DUC BUSINESS PRO",
+                btn_ecosystem: "APP STORE • NEXUS WALLET PRO & BUSINESS PRO",
                 stat_stability: "Native Coin",
                 stat_fixed: "Fixed Peg",
                 stat_speed: "Transaction Finality",
@@ -1665,7 +1671,7 @@
                 stat_bandwidth_val: "65,000+ Maximum TPS",
                 hero_exec_title: "Executive Summary & Sovereign Engineering Doctrine of Atlas & Duc Corporation",
                 hero_exec_p1: "Founded and led by <strong>Mr. YOUGMA Thierry Joël</strong>, <strong>Atlas & Duc Corporation</strong> addresses a dual strategic imperative in West Africa: delivering international-grade software and web engineering services to businesses, merchants, and institutions (Android, iPhone, Windows software, Showcase and Professional Websites), while operating an autonomous Layer-1 FinTech and Blockchain infrastructure financing real industrialization in Burkina Faso.",
-                hero_exec_p2: "Unlike conventional architectures reliant on costly foreign chains, the <strong>Nexus Core Layer-1</strong> network runs on its own mainchain and its <strong>native coin ₳</strong> (strictly a Layer-1 native coin, not a secondary token). Each <strong>₳</strong> unit maintains a strict fixed parity of <strong>1 ₳ = 1 FCFA (XOF)</strong> and is transacted seamlessly across <strong>Nexus Wallet</strong>, <strong>Nexus Wallet Pro</strong>, and <strong>Atlas & Duc Business Pro</strong>.",
+                hero_exec_p2: "Unlike conventional architectures reliant on costly foreign chains, the <strong>Nexus Core Layer-1</strong> network runs on its own mainchain and its <strong>native coin ₳</strong> (strictly a Layer-1 native coin, not a secondary token). Each <strong>₳</strong> unit maintains a strict fixed parity of <strong>1 ₳ = 1 FCFA (XOF)</strong> and is transacted seamlessly across <strong>Nexus Wallet</strong>, <strong>Nexus Wallet Pro</strong>, and <strong>Atlas & Duc Business Pro</strong> via <strong>AppStore.html</strong>.",
                 srv_badge: "SOFTWARE ENGINEERING • FINTECH • BLOCKCHAIN DIVISION",
                 srv_main_title: "Our Services: Application, Software & Website Creation",
                 srv_subtitle: "From architectural design to production deployment: custom digital solutions for Android, iPhone, Windows, Showcase Web and Professional Web",
@@ -1685,16 +1691,16 @@
                 srv_contact_sub: "Request your custom quote today for the creation of your Android app, iPhone app, Windows software, Showcase Website, or Professional Website.",
                 app_badge: "PROPRIETARY SOFTWARE & FINTECH SUITE",
                 app_main_title: "Atlas & Duc Business Pro, Nexus Wallet Pro & Nexus Wallet",
-                app_subtitle: "Three complementary applications interconnected with the Nexus Core Layer-1 mainnet to manage the native coin ₳, industrial investments, and instant payments",
+                app_subtitle: "Three complementary applications interconnected with the Nexus Core Layer-1 mainnet to manage the native coin ₳, industrial investments, and instant payments — available via AppStore.html",
                 app_c1_title: "Atlas & Duc Business Pro",
                 app_c1_desc: "<strong>Atlas & Duc Business Pro</strong> is the group's unified economic, industrial, and financial super-app. Built for investors, entrepreneurs, and partners, it centralizes staking vaults, Nexus-SHA256 mining units, and multi-asset FinTech trading.",
-                app_c1_btn: "Download Atlas & Duc Business Pro (APK)",
+                app_c1_btn: "Open App Store (Atlas & Duc Business Pro)",
                 app_c2_title: "Nexus Wallet Pro",
                 app_c2_desc: "<strong>Nexus Wallet Pro</strong> is our military-grade institutional cryptographic wallet designed for high-security custody of the <strong>native coin ₳</strong>, corporate treasury management, Layer-1 Smart Contract signing, and multi-asset swaps.",
-                app_c2_btn: "Open Nexus Wallet Pro Portal",
+                app_c2_btn: "Open App Store (Nexus Wallet Pro)",
                 app_c3_title: "Nexus Wallet",
                 app_c3_desc: "<strong>Nexus Wallet</strong> is the fast, intuitive everyday wallet designed for instant micro-payments in <strong>native coin ₳</strong> (1 ₳ = 1 FCFA), sub-second QR Code / Base58 transfers, and direct Orange Money & Moov Money USSD settlements.",
-                app_c3_btn: "Verify Nexus Wallet Public Registry",
+                app_c3_btn: "Open App Store (Nexus Wallet)",
                 spec_main_title: "Protocol Layer-1 Architectural Specifications",
                 spec_subtitle: "A sovereign, autonomous blockchain backed by real-world industrial assets and powered by the native coin ₳",
                 spec_card1_title: "Proof-of-Asset (PoA) Consensus & Native Coin ₳",
@@ -1786,9 +1792,9 @@
                 leg_btn_chats: "Direct Chats",
                 leg_btn_disc: "Discussion Forum",
                 supp_sub_title: "Direct Support Spaces:",
-                apk_download_text: "Download Atlas & Duc Business Pro & Nexus Wallet Pro",
+                apk_download_text: "Open AppStore.html — Atlas & Duc Business Pro & Nexus Wallets",
                 foot_corp_sub: "SOFTWARE ENGINEERING • FINTECH • BLOCKCHAIN COMPANY",
-                foot_web_portal: "DEPLOYED WEB PORTALS: https://www.agi-nexus-core.click",
+                foot_web_portal: "DEPLOYED WEB PORTALS: https://www.agi-nexus-core.click • ./AppStore.html",
                 foot_address: "<strong>Engineering Services:</strong> Application & Software Creation (Android • iPhone • Windows), Website Creation (Showcase Website • Professional Website), FinTech & Blockchain Solutions.<br><strong>Locations in Burkina Faso:</strong> Headquarters: Koupéla • Operational Direction: Bobo-Dioulasso • Field Expertise: Houndé.",
                 foot_support_title: "Official Contacts & Engineering Central",
                 f_cnt_dir: "mr.yougma@agi-nexus-core.click",
@@ -1875,28 +1881,10 @@
             });
         }
 
-        // Détection & Deep Linking pour le Terminal (APK Download)
+        // Redirection directe vers AppStore.html (sans tentative d'ouverture de schéma APK/deep-link)
         function handleAppDeepLink(e) {
             e.preventDefault();
-            const deepLink = 'agi://';
-            const fallbackUrl = './agi-business.pro.apk';
-            let appOpened = false;
-            
-            const visibilityHandler = function() {
-                if (document.hidden || document.visibilityState === 'hidden') {
-                    appOpened = true;
-                }
-            };
-            
-            document.addEventListener('visibilitychange', visibilityHandler);
-            window.location.href = deepLink;
-            
-            setTimeout(function() {
-                document.removeEventListener('visibilitychange', visibilityHandler);
-                if (!appOpened) {
-                    window.location.href = fallbackUrl;
-                }
-            }, 2500);
+            window.location.href = './AppStore.html';
         }
 
         const terminalBtn = document.getElementById('openTerminalBtn');
