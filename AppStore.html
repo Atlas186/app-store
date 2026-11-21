@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Store Institutionnel | Atlas &amp; Duc Corporation — Nexus Core L1</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        storeDark: '#0B1120',
+                        storeNavy: '#0F172A',
+                        storeAccent: '#0EA5E9',
+                        storeGold: '#D4AF37',
+                        storeSuccess: '#10B981',
+                        storeBg: '#F8FAFC',
+                        storeCard: '#FFFFFF',
+                        storeBorder: '#E2E8F0'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html, body { max-width: 100%; overflow-x: hidden; }
+        .live-pulse { animation: pulseGreen 2s infinite; }
+        @keyframes pulseGreen {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.55); }
+            70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+        .glass-gold {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(212, 175, 55, 0.35);
+        }
+        .store-modal-backdrop {
+            backdrop-filter: blur(8px);
+            background: rgba(2, 6, 23, 0.72);
+        }
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: #F1F5F9; }
+        ::-webkit-scrollbar-thumb { background: #94A3B8; border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0EA5E9; }
+    </style>
+</head>
+<body class="bg-storeBg text-storeDark font-sans antialiased flex flex-col min-h-screen text-[11.5px] selection:bg-storeAccent selection:text-white">
+
+    <!-- EN-TÊTE INSTITUTIONNEL -->
+    <header class="bg-storeCard/95 backdrop-blur-md border-b border-storeBorder sticky top-0 z-40 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between gap-3">
+            <a href="#top" class="flex items-center gap-2.5 min-w-0">
+                <img src="https://i.imgur.com/5AUl2eJ.jpeg" alt="Atlas & Duc App Store" class="h-9 w-9 rounded-xl border border-storeBorder object-cover shrink-0">
+                <div class="min-w-0">
+                    <div class="flex items-center gap-1.5">
+                        <span class="font-black text-sm tracking-tight text-storeDark truncate">ATLAS &amp; DUC <span class="text-storeAccent">STORE</span></span>
+                        <span class="bg-storeDark text-storeGold border border-storeGold/40 text-[7.5px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider shrink-0">L1 OFFICIAL</span>
+                    </div>
+                    <span class="text-[8px] font-bold text-slate-500 uppercase tracking-widest block truncate">Nexus Core Layer-1 • Chain ID 9012 • 1 ₳ = 1 XOF</span>
+                </div>
+            </a>
+
+            <nav class="hidden md:flex items-center gap-6 text-[11px] font-bold text-slate-600">
+                <a href="#catalogue" class="hover:text-storeAccent transition-colors">Applications</a>
+                <a href="#architecture" class="hover:text-storeAccent transition-colors">Architecture L1</a>
+                <a href="#securite" class="hover:text-storeAccent transition-colors">Sécurité &amp; Conformité</a>
+                <a href="#gouvernance" class="hover:text-storeAccent transition-colors">Gouvernance</a>
+            </nav>
+
+            <div class="flex items-center gap-2 shrink-0">
+                <div class="flex items-center gap-1.5 bg-storeDark text-white px-2.5 py-1 rounded-full text-[8.5px] font-mono font-bold border border-slate-700">
+                    <span class="w-1.5 h-1.5 rounded-full bg-storeSuccess live-pulse"></span>
+                    <span>MAINNET #9012</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO INSTITUTIONNEL -->
+    <section id="top" class="bg-storeDark text-white pt-9 pb-11 px-4 relative overflow-hidden border-b border-slate-800">
+        <div class="absolute inset-0 bg-gradient-to-br from-[#0B1120] via-[#0F172A] to-[#020617]"></div>
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#38bdf8 1px, transparent 1px); background-size: 24px 24px;"></div>
+
+        <div class="max-w-6xl mx-auto relative z-10">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-gold text-storeGold text-[8.5px] font-black uppercase tracking-widest mb-4">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>Boutique Applicative Souveraine Certifiée • Atlas &amp; Duc Corporation</span>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                <div class="lg:col-span-8">
+                    <h1 class="text-2xl sm:text-4xl font-black tracking-tight leading-tight mb-3">
+                        APP STORE INSTITUTIONNEL <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-storeAccent to-storeGold">NEXUS CORE L1</span>
+                    </h1>
+                    <p class="text-slate-300 text-xs leading-relaxed max-w-3xl">
+                        Découvrez et téléchargez les éditions officielles Android de l'écosystème <strong>Atlas &amp; Duc Corporation</strong> connectées à la blockchain propriétaire <strong>Nexus Core</strong> (<code>Chain ID 9012</code>) et à la monnaie native <strong>₳</strong> (parité fixe <code>1 ₳ = 1 XOF</code>, précision <code>6</code> décimales en <code>microA</code>, <code>1 ₳ = 1 000 000 microA</code>). Cliquez sur une application pour ouvrir sa fiche complète.
+                    </p>
+                </div>
+
+                <div class="lg:col-span-4 glass-gold rounded-2xl p-4 space-y-2 font-mono text-[10px]">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-1.5">
+                        <span class="text-slate-400">RÉSEAU L1</span>
+                        <span class="text-sky-300 font-bold">Nexus Core (#9012)</span>
+                    </div>
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-1.5">
+                        <span class="text-slate-400">MONNAIE NATIVE</span>
+                        <span class="text-storeGold font-bold">1 ₳ = 1 XOF (FCFA)</span>
+                    </div>
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-1.5">
+                        <span class="text-slate-400">UNITÉ ATOMIQUE</span>
+                        <span class="text-white font-bold">1 000 000 microA / ₳</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-slate-400">SIÈGES</span>
+                        <span class="text-emerald-400 font-bold">Koupéla &amp; Bobo-Dioulasso</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CATALOGUE DES 3 APPLICATIONS OFFICIELLES -->
+    <main id="catalogue" class="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-9 space-y-9 flex-grow">
+
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-storeBorder pb-3">
+            <div>
+                <span class="text-[9px] font-mono font-black uppercase tracking-widest text-storeAccent">Catalogue Officiel • 3 Applications Certifiées</span>
+                <h2 class="text-lg sm:text-xl font-black text-storeDark mt-0.5">Applications de l'Écosystème Atlas &amp; Duc Corporation</h2>
+            </div>
+            <span class="text-[10px] font-mono text-slate-500">Cliquez sur une carte pour ouvrir la fiche complète</span>
+        </div>
+
+        <div id="appsGrid" class="grid grid-cols-1 md:grid-cols-3 gap-5"></div>
+
+        <!-- ARCHITECTURE L1 -->
+        <section id="architecture" class="bg-storeCard border border-storeBorder rounded-2xl p-5 sm:p-6 shadow-sm space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                <h2 class="text-sm sm:text-base font-black text-storeDark uppercase tracking-tight">
+                    <i class="fa-solid fa-layer-group text-storeAccent mr-1.5"></i> Architecture &amp; Standards de l'Écosystème Nexus Core L1
+                </h2>
+                <span class="font-mono text-[9px] font-bold text-slate-500 bg-slate-100 px-2.5 py-1 rounded">Mainnet Chain ID 9012 • Port 9545</span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-[10.5px] text-slate-600 leading-relaxed">
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5">
+                    <div class="font-black text-storeDark mb-1">Blockchain Propriétaire Nexus Core</div>
+                    <p>Réseau Layer-1 indépendant (<code>Chain ID 9012</code>) opérant avec un registre en mémoire (<code>NexusLedgerState</code>), un consensus <strong>PoA</strong>, des blocs cadencés à <strong>2 000 ms</strong> et des signatures asymétriques <strong>ECDSA secp256k1</strong>.</p>
+                </div>
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5">
+                    <div class="font-black text-storeDark mb-1">Monnaie Native ₳ &amp; Parité 1:1 XOF</div>
+                    <p>La monnaie native <strong>₳</strong> (<code>6</code> décimales en <code>microA</code>, <code>1 ₳ = 1 000 000 microA</code>, offre totale déclarée de <code>100 000 000 000</code>) suit une parité de référence de <code>1 ₳ = 1 XOF</code> (FCFA).</p>
+                </div>
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5">
+                    <div class="font-black text-storeDark mb-1">Adressage Base58 &amp; Smart Contracts</div>
+                    <p>Les adresses de comptes utilisent l'encodage <strong>Base58</strong> préfixé <code>ADC...</code> (44 caractères) et les contrats intelligents exécutés en sandbox (50 ms) utilisent le préfixe <code>ADCC...</code>.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SÉCURITÉ & CONFORMITÉ -->
+        <section id="securite" class="bg-storeCard border border-storeBorder rounded-2xl p-5 sm:p-6 shadow-sm space-y-3">
+            <h2 class="text-sm sm:text-base font-black text-storeDark uppercase tracking-tight">
+                <i class="fa-solid fa-shield-halved text-emerald-600 mr-1.5"></i> Sécurité Cryptographique &amp; Bonnes Pratiques d'Installation
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-[10.5px] text-slate-600 leading-relaxed">
+                <div class="border border-slate-200 rounded-xl p-3 bg-slate-50/70">
+                    <div class="font-black text-storeDark mb-1">Signatures ECDSA secp256k1</div>
+                    <p>Chaque transaction est hachée en <strong>SHA-256</strong>, encodée en <strong>Base58</strong> et vérifiée cryptographiquement avant son admission dans la mempool (plafonnée à 50 000 tx).</p>
+                </div>
+                <div class="border border-slate-200 rounded-xl p-3 bg-slate-50/70">
+                    <div class="font-black text-storeDark mb-1">Garde des Clés Privées</div>
+                    <p>Conservez vos clés privées et phrases secrètes en lieu sûr. Ne partagez jamais vos identifiants sensibles avec un tiers.</p>
+                </div>
+                <div class="border border-slate-200 rounded-xl p-3 bg-slate-50/70">
+                    <div class="font-black text-storeDark mb-1">Sources Officielles Uniquement</div>
+                    <p>Téléchargez exclusivement les paquets APK depuis les liens officiels publiés sur ce portail d'<strong>Atlas &amp; Duc Corporation</strong>.</p>
+                </div>
+                <div class="border border-slate-200 rounded-xl p-3 bg-slate-50/70">
+                    <div class="font-black text-storeDark mb-1">Notifications &amp; Synchronisation</div>
+                    <p>Suivi des transactions et alertes push via Firebase Cloud Messaging (FCM) et synchronisation continue avec le nœud.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- GOUVERNANCE -->
+        <section id="gouvernance" class="bg-storeCard border border-storeBorder rounded-2xl p-5 sm:p-6 shadow-sm">
+            <h2 class="text-sm sm:text-base font-black text-storeDark uppercase tracking-tight mb-2">
+                <i class="fa-solid fa-building-columns text-amber-600 mr-1.5"></i> Gouvernance — Atlas &amp; Duc Corporation
+            </h2>
+            <p class="text-[11px] text-slate-600 leading-relaxed">
+                <strong>Atlas &amp; Duc Corporation</strong> (anciennement Atlas Groupe International, enregistrée sous le récépissé officiel <strong>N° PHUE-3539/2025</strong> du 11 juillet 2025) est dirigée par <strong>Yougma Thierry Joël</strong>, Président Fondateur et Directeur Général, au <strong>Burkina Faso</strong> (Koupéla et Bobo-Dioulasso).
+            </p>
+        </section>
+    </main>
+
+    <!-- FENÊTRE DÉDIÉE À CHAQUE APPLICATION (STYLE APP STORE / GOOGLE PLAY) -->
+    <div id="appDetailModal" class="fixed inset-0 z-50 hidden store-modal-backdrop items-center justify-center p-3 sm:p-6" onclick="if(event.target === this) closeAppModal()">
+        <div class="bg-white border border-slate-200 rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+            <!-- En-tête de la fiche application -->
+            <div class="bg-storeNavy text-white p-4 sm:p-5 flex items-start justify-between gap-3 border-b border-slate-800">
+                <div class="flex items-center gap-3.5 min-w-0">
+                    <img id="modalAppLogo" src="" alt="" class="h-16 w-16 rounded-2xl border-2 border-storeGold object-cover shadow-md shrink-0">
+                    <div class="min-w-0">
+                        <div class="flex flex-wrap items-center gap-1.5 mb-1">
+                            <span id="modalAppCategory" class="bg-sky-500/20 text-sky-300 border border-sky-400/30 text-[8.5px] font-mono font-black px-2 py-0.5 rounded uppercase"></span>
+                            <span id="modalAppApkName" class="text-slate-400 font-mono text-[9px]"></span>
+                        </div>
+                        <h3 id="modalAppTitle" class="text-base sm:text-xl font-black text-white leading-tight truncate"></h3>
+                        <p id="modalAppTagline" class="text-[10px] font-bold text-storeGold uppercase tracking-wider mt-0.5 truncate"></p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeAppModal()" aria-label="Fermer la fiche" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center shrink-0 transition-colors">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            </div>
+
+            <!-- Corps scrollable de la fiche application -->
+            <div class="p-4 sm:p-6 overflow-y-auto space-y-5 text-[11px] text-slate-600 leading-relaxed">
+                <!-- Bandeau métriques style Store -->
+                <div class="grid grid-cols-3 gap-2.5 text-center font-mono">
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-2.5">
+                        <div class="text-[8px] font-sans font-black uppercase text-slate-400">Réseau</div>
+                        <div class="text-[10.5px] font-black text-storeDark mt-0.5">Nexus L1 #9012</div>
+                    </div>
+                    <div class="bg-amber-50/70 border border-amber-200 rounded-xl p-2.5">
+                        <div class="text-[8px] font-sans font-black uppercase text-amber-700">Monnaie</div>
+                        <div class="text-[10.5px] font-black text-amber-800 mt-0.5">1 ₳ = 1 XOF</div>
+                    </div>
+                    <div class="bg-emerald-50/70 border border-emerald-200 rounded-xl p-2.5">
+                        <div class="text-[8px] font-sans font-black uppercase text-emerald-700">Format</div>
+                        <div class="text-[10.5px] font-black text-emerald-800 mt-0.5">Android APK</div>
+                    </div>
+                </div>
+
+                <!-- Description complète -->
+                <div>
+                    <h4 class="font-black text-xs uppercase text-storeDark tracking-wider mb-1.5">À propos de cette application</h4>
+                    <p id="modalAppFullDesc" class="text-slate-600 leading-relaxed"></p>
+                </div>
+
+                <!-- Contenus & fonctionnalités détaillés -->
+                <div>
+                    <h4 class="font-black text-xs uppercase text-storeDark tracking-wider mb-2">Contenus &amp; fonctionnalités incluses</h4>
+                    <ul id="modalAppFeatures" class="space-y-2"></ul>
+                </div>
+
+                <!-- Informations techniques & lien source -->
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 space-y-1.5 font-mono text-[9.5px]">
+                    <div class="flex items-center justify-between gap-2">
+                        <span class="text-slate-500">Éditeur :</span>
+                        <span class="font-bold text-storeDark">Atlas &amp; Duc Corporation</span>
+                    </div>
+                    <div class="flex items-center justify-between gap-2">
+                        <span class="text-slate-500">Unité atomique :</span>
+                        <span class="font-bold text-storeDark">6 décimales (1 ₳ = 1 000 000 microA)</span>
+                    </div>
+                    <div class="flex items-center justify-between gap-2">
+                        <span class="text-slate-500">URL APK :</span>
+                        <a id="modalAppUrlText" href="" target="_blank" rel="noopener noreferrer" class="font-bold text-storeAccent hover:underline truncate max-w-[320px]"></a>
+                    </div>
+                </div>
+
+                <!-- Guide d'installation -->
+                <div class="bg-sky-50/60 border border-sky-200 rounded-xl p-3.5">
+                    <h4 class="font-black text-[10.5px] uppercase text-sky-900 tracking-wider mb-1.5">
+                        <i class="fa-solid fa-circle-info text-storeAccent mr-1"></i> Installation sur Android
+                    </h4>
+                    <ol class="list-decimal pl-4 space-y-1 text-[10.5px] text-slate-700">
+                        <li>Cliquez sur le bouton de téléchargement ci-dessous pour récupérer le fichier APK officiel.</li>
+                        <li>Ouvrez le fichier téléchargé et autorisez l'installation depuis votre navigateur ou gestionnaire de fichiers si demandé.</li>
+                        <li>Lancez l'application et connectez-vous au réseau <strong>Nexus Core L1</strong> (<code>Chain ID 9012</code>).</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Pied de la fenêtre avec bouton de téléchargement direct -->
+            <div class="bg-slate-50 border-t border-slate-200 px-4 sm:px-6 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-2.5">
+                <button type="button" onclick="closeAppModal()" class="w-full sm:w-auto px-4 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 font-bold text-[10.5px] uppercase tracking-wider transition-colors">
+                    Fermer
+                </button>
+                <a id="modalAppDownloadBtn" href="" download class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-storeDark hover:bg-slate-800 text-white font-black text-[10.5px] uppercase tracking-wider px-5 py-2.5 rounded-xl transition-colors shadow-md">
+                    <i class="fa-solid fa-download text-storeGold"></i>
+                    <span id="modalAppDownloadLabel">Télécharger (.APK)</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER INSTITUTIONNEL -->
+    <footer class="bg-storeDark text-slate-400 border-t border-slate-800 py-6 px-4 text-center text-[10px] mt-auto">
+        <div class="max-w-5xl mx-auto space-y-1.5">
+            <div class="font-black text-white text-xs tracking-widest uppercase">Atlas &amp; Duc Corporation • Nexus Core Layer-1</div>
+            <p class="text-slate-500 font-semibold">Récépissé N° PHUE-3539/2025 • Koupéla &amp; Bobo-Dioulasso, Burkina Faso • Monnaie Native ₳</p>
+        </div>
+    </footer>
+
+    <script>
+        'use strict';
+
+        const STORE_APPS = [
+            {
+                id: 'business-pro',
+                title: 'Atlas & Duc Business Pro',
+                category: 'Suite Entreprise & Services L1',
+                tagline: 'Gestion commerciale, trésorerie ₳, coffre d\'épargne & outils de l\'écosystème',
+                apkName: 'AGI-Business.Pro.apk',
+                logo: 'https://i.imgur.com/xmlW7VD.jpeg',
+                url: 'https://agi-nexus-core.click/AGI-Business.Pro.apk',
+                badgeClass: 'bg-sky-50 text-sky-700 border-sky-200',
+                accentTextClass: 'text-storeAccent',
+                btnClass: 'bg-storeDark hover:bg-slate-800 text-white',
+                cardBorderClass: 'border-storeBorder hover:border-storeAccent',
+                shortDesc: 'Suite professionnelle dédiée aux opérateurs, commerçants et partenaires de l\'écosystème Atlas & Duc Corporation pour la gestion des opérations, du coffre d\'épargne/staking et des flux en monnaie native ₳.',
+                fullDesc: 'Atlas & Duc Business Pro réunit les outils opérationnels et financiers de l\'écosystème Atlas & Duc Corporation connectés à la blockchain propriétaire Nexus Core (Chain ID 9012). Elle permet de suivre la trésorerie en monnaie native ₳ (parité de référence 1 ₳ = 1 XOF, précision 6 décimales en microA), d\'accéder aux modules de gestion, d\'épargne à terme, de suivi des cycles et d\'opérations de l\'écosystème.',
+                features: [
+                    'Gestion de trésorerie et consultation des soldes en monnaie native ₳ (1 ₳ = 1 000 000 microA) avec parité 1 ₳ = 1 XOF.',
+                    'Suivi de marché, indicateurs d\'activité et exécution d\'opérations dans l\'environnement Atlas & Duc.',
+                    'Coffre d\'épargne et de capitalisation à terme avec visualisation des échéances et intérêts prévus.',
+                    'Suivi des unités actives, des cycles de production et des versements de récompenses vers le portefeuille.',
+                    'Facilitation des règlements commerciaux, échanges entre partenaires et suivi de l\'historique des transactions.',
+                    'Signature cryptographique des opérations sur courbe secp256k1 et adressage Base58 (ADC... / ADCC...).'
+                ]
+            },
+            {
+                id: 'nexus-wallet',
+                title: 'NEXUS WALLET',
+                category: 'Portefeuille Essentiel L1',
+                tagline: 'Consultation de solde ₳, parité 1:1 XOF & transferts sur Nexus Core',
+                apkName: 'Nexus-Wallet.apk',
+                logo: 'https://i.imgur.com/RElaTHm.jpeg',
+                url: 'https://nexus-betting.netlify.app/Nexus-Wallet.apk',
+                badgeClass: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+                accentTextClass: 'text-emerald-700',
+                btnClass: 'bg-storeAccent hover:bg-sky-500 text-white',
+                cardBorderClass: 'border-storeBorder hover:border-storeAccent',
+                shortDesc: 'Portefeuille mobile conçu pour consulter votre solde en ₳ et sa parité 1 ₳ = 1 XOF, suivre vos transactions et envoyer/recevoir des fonds sur le réseau Nexus Core Layer-1.',
+                fullDesc: 'NEXUS WALLET est le portefeuille essentiel d\'accès à la blockchain propriétaire Nexus Core Layer-1 (Chain ID 9012). Conçu pour une prise en main claire et directe, il permet de consulter les soldes en microA et en ₳ (6 décimales), de vérifier la contre-valeur en Franc CFA (1 ₳ = 1 XOF), de consulter l\'historique des transactions et d\'effectuer des transferts signés en ECDSA secp256k1.',
+                features: [
+                    'Affichage clair du solde en monnaie native ₳, en microA et en équivalent FCFA (parité 1 ₳ = 1 XOF).',
+                    'Envoi et réception de fonds en ₳ sur le réseau Nexus Core Layer-1 avec vérification d\'adresse Base58 (ADC...).',
+                    'Consultation de l\'historique des transactions et des confirmations de blocs (cadence 2 000 ms).',
+                    'Gestion des nonces séquentiels et signatures cryptographiques ECDSA secp256k1.',
+                    'Interface légère et réactive adaptée au suivi quotidien des opérations.'
+                ]
+            },
+            {
+                id: 'nexus-wallet-pro',
+                title: 'NEXUS WALLET PRO',
+                category: 'Édition Avancée L1',
+                tagline: 'Sécurité renforcée, Swap, Coffre-Fort, Mining & notifications temps réel',
+                apkName: 'Nexus-Wallet-Pro.apk',
+                logo: 'https://i.imgur.com/y47VHp5.jpeg',
+                url: 'https://nexus-betting.netlify.app/Nexus-Wallet-Pro.apk',
+                badgeClass: 'bg-amber-50 text-amber-800 border-amber-300',
+                accentTextClass: 'text-amber-700',
+                btnClass: 'bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-700 hover:to-amber-600 text-white',
+                cardBorderClass: 'border-2 border-storeGold/70 hover:border-storeGold shadow-md',
+                shortDesc: 'Édition complète intégrant la sécurité biométrique, le swap, le coffre-fort d\'épargne (Holding), le suivi des opérations en temps réel et l\'accès complet à l\'écosystème Nexus Core L1.',
+                fullDesc: 'NEXUS WALLET PRO est l\'édition avancée de l\'écosystème Nexus Wallet pour la blockchain propriétaire Nexus Core (Chain ID 9012). Elle intègre l\'ensemble des outils de gestion de portefeuille en ₳ (1 ₳ = 1 XOF, 6 décimales en microA), l\'accès au swap, au coffre d\'épargne (Holding), au suivi des opérations et aux notifications de transactions sur le réseau.',
+                features: [
+                    'Accès complet au tableau de bord du portefeuille, au suivi des transactions récentes et à la parité 1 ₳ = 1 XOF.',
+                    'Intégration des modules d\'échange (Swap), de coffre-fort d\'épargne (Holding) et de suivi des opérations.',
+                    'Notifications de suivi des transactions et alertes liées à l\'activité du réseau.',
+                    'Signature locale en ECDSA secp256k1, encodage Base58 (ADC... / ADCC...) et migration de portefeuille.',
+                    'Synchronisation avec le nœud Nexus Core Layer-1 (Chain ID 9012) et les services associés.'
+                ]
+            }
+        ];
+
+        function renderAppsGrid() {
+            const grid = document.getElementById('appsGrid');
+            if (!grid) return;
+
+            grid.innerHTML = STORE_APPS.map((appItem, idx) => `
+                <article onclick="openAppModal(${idx})" class="bg-storeCard ${appItem.cardBorderClass} border rounded-2xl p-5 shadow-sm transition-all flex flex-col justify-between cursor-pointer group">
+                    <div>
+                        <div class="flex items-start justify-between gap-3 mb-4">
+                            <img src="${appItem.logo}" alt="Logo ${appItem.title}" class="h-16 w-16 rounded-2xl border border-storeBorder object-cover shadow-sm shrink-0 group-hover:scale-105 transition-transform">
+                            <div class="text-right">
+                                <span class="inline-block ${appItem.badgeClass} border text-[8.5px] font-mono font-black px-2 py-0.5 rounded uppercase">${appItem.category}</span>
+                                <div class="text-[9px] font-mono text-slate-400 mt-1">${appItem.apkName}</div>
+                            </div>
+                        </div>
+
+                        <h3 class="text-base font-black text-storeDark leading-snug group-hover:text-storeAccent transition-colors">${appItem.title}</h3>
+                        <p class="text-[10px] font-bold ${appItem.accentTextClass} uppercase tracking-wider mt-0.5 mb-2.5">${appItem.tagline}</p>
+                        <p class="text-[11px] text-slate-600 leading-relaxed mb-4">${appItem.shortDesc}</p>
+
+                        <div class="bg-slate-50 border border-slate-200 rounded-xl p-2.5 mb-4 font-mono text-[9.5px] text-slate-600 space-y-1">
+                            <div class="flex justify-between"><span>Réseau :</span><span class="text-storeDark font-bold">Nexus Core #9012</span></div>
+                            <div class="flex justify-between"><span>Unité :</span><span class="text-amber-700 font-bold">1 ₳ = 1 XOF • microA</span></div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <a href="${appItem.url}" download onclick="event.stopPropagation();" class="w-full inline-flex items-center justify-center gap-2 ${appItem.btnClass} font-black text-[10px] uppercase tracking-wider py-3 px-4 rounded-xl transition-all shadow-sm">
+                            <i class="fa-solid fa-download"></i>
+                            <span>Télécharger ${appItem.apkName}</span>
+                        </a>
+                        <button type="button" onclick="event.stopPropagation(); openAppModal(${idx});" class="w-full inline-flex items-center justify-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-storeDark font-bold text-[9.5px] uppercase tracking-wider py-2 px-3 rounded-xl transition-colors">
+                            <i class="fa-solid fa-up-right-from-square text-storeAccent"></i>
+                            <span>Ouvrir la fiche complète</span>
+                        </button>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        function openAppModal(index) {
+            const item = STORE_APPS[index];
+            if (!item) return;
+
+            const modal = document.getElementById('appDetailModal');
+            document.getElementById('modalAppLogo').src = item.logo;
+            document.getElementById('modalAppLogo').alt = `Logo ${item.title}`;
+            document.getElementById('modalAppCategory').textContent = item.category;
+            document.getElementById('modalAppApkName').textContent = item.apkName;
+            document.getElementById('modalAppTitle').textContent = item.title;
+            document.getElementById('modalAppTagline').textContent = item.tagline;
+            document.getElementById('modalAppFullDesc').textContent = item.fullDesc;
+
+            const ul = document.getElementById('modalAppFeatures');
+            ul.innerHTML = item.features.map(f => `
+                <li class="flex items-start gap-2 bg-slate-50 border border-slate-200/80 rounded-lg p-2.5">
+                    <i class="fa-solid fa-circle-check text-emerald-600 mt-0.5 shrink-0"></i>
+                    <span class="text-slate-700">${f}</span>
+                </li>
+            `).join('');
+
+            const urlLink = document.getElementById('modalAppUrlText');
+            urlLink.href = item.url;
+            urlLink.textContent = item.url;
+
+            const dlBtn = document.getElementById('modalAppDownloadBtn');
+            dlBtn.href = item.url;
+            document.getElementById('modalAppDownloadLabel').textContent = `Télécharger ${item.apkName}`;
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAppModal() {
+            const modal = document.getElementById('appDetailModal');
+            if (!modal) return;
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeAppModal();
+        });
+
+        document.addEventListener('DOMContentLoaded', renderAppsGrid);
+    </script>
+
+</body>
+</html>
