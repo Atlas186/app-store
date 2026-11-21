@@ -3,272 +3,1139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>AG-COIN | Support Privé</title>
+    <title>Support Privé & Assistance Temps Réel ₳ | Atlas & Duc Corporation</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
+            --bg-outer: #082f49;        /* Bleu profond institutionnel */
             --bg-app: #f0f9ff;          /* Bleu ciel très clair (Sky 50) */
             --bg-chat: #e0f2fe;         /* Fond de discussion (Sky 100) */
+            --navy: #0c4a6e;            /* Marine Atlas & Duc */
             --primary: #0284c7;         /* Bleu ciel profond (Sky 600) */
             --primary-light: #0ea5e9;   /* Bleu ciel vif */
             --primary-dark: #0369a1;    /* Bleu profond au survol */
-            --surface: #ffffff;         /* Blanc pur pour les cartes et inputs */
-            --sent-bubble: #0284c7;     /* Messages envoyés */
+            --surface: #ffffff;         /* Blanc pur pour cartes et barres */
+            --sent-bubble: #0c4a6e;     /* Bulles envoyées */
             --text-main: #0f172a;       /* Slate 900 */
             --text-dim: #64748b;        /* Slate 500 */
-            --agi-gold: #eab308;        /* Or AG-COIN (Yellow 500) */
+            --agi-gold: #f59e0b;        /* Or Atlas & Duc */
+            --agi-gold-soft: #fef3c7;   /* Or doux */
             --online: #10b981;          /* Vert connecté */
+            --offline: #ef4444;         /* Rouge hors-ligne */
+            --border-soft: rgba(12, 74, 110, 0.12);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
-        body { background-color: #f1f5f9; color: var(--text-main); font-family: 'Plus Jakarta Sans', sans-serif; height: 100dvh; display: flex; justify-content: center; overflow: hidden; }
+        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; }
+        
+        body { 
+            background: radial-gradient(circle at top, #0c4a6e 0%, #082f49 100%);
+            color: var(--text-main); 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            height: 100dvh; 
+            display: flex; 
+            justify-content: center; 
+            overflow: hidden; 
+        }
 
         .app-container { 
-            width: 100%; max-width: 600px; background-color: var(--bg-app); height: 100%; 
-            display: flex; flex-direction: column; position: relative;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+            width: 100%; 
+            max-width: 680px; 
+            background-color: var(--bg-app); 
+            height: 100%; 
+            display: flex; 
+            flex-direction: column; 
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.45);
         }
         
+        /* Barre de Navigation Supérieure */
         nav { 
-            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); padding: 14px 18px; 
-            display: flex; align-items: center; gap: 14px; z-index: 1001; border-bottom: 1px solid rgba(2, 132, 199, 0.15);
+            background: rgba(255, 255, 255, 0.96); 
+            backdrop-filter: blur(20px); 
+            padding: 10px 14px; 
+            display: flex; 
+            align-items: center; 
+            gap: 11px; 
+            z-index: 1001; 
+            border-bottom: 1.5px solid var(--border-soft);
         }
 
-        .status-badge { font-size: 0.7rem; color: var(--primary); background: rgba(2, 132, 199, 0.1); padding: 3px 10px; border-radius: 20px; font-weight: 700; display: inline-flex; align-items: center; gap: 5px; margin-top: 2px; }
+        .back-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: 0.2s;
+            flex-shrink: 0;
+        }
+        .back-btn:hover { background: var(--primary); color: #fff; }
 
-        #messageArea { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 12px; background-color: var(--bg-chat); }
-        .message { max-width: 80%; padding: 12px 16px; border-radius: 20px; font-size: 0.92rem; line-height: 1.4; animation: slideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1); position: relative; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
-        .received { align-self: flex-start; background: var(--surface); color: var(--text-main); border-bottom-left-radius: 4px; border-left: 4px solid var(--agi-gold); }
-        .sent { align-self: flex-end; background: var(--sent-bubble); color: #ffffff; border-bottom-right-radius: 4px; }
+        .avatar-wrapper {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .avatar-wrapper img {
+            width: 40px; 
+            height: 40px; 
+            border-radius: 50%; 
+            border: 2px solid var(--agi-gold); 
+            object-fit: cover;
+            display: block;
+        }
+
+        .conn-dot {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: var(--agi-gold);
+            border: 2px solid #fff;
+            transition: background 0.3s;
+        }
+        .conn-dot.online { background: var(--online); box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2); }
+        .conn-dot.offline { background: var(--offline); }
+
+        .nav-info { flex: 1; min-width: 0; }
+        .nav-title { 
+            font-size: 0.88rem; 
+            font-weight: 800; 
+            color: var(--navy); 
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            letter-spacing: -0.01em;
+        }
+
+        .nav-meta {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: 2px;
+        }
+
+        .status-badge { 
+            font-size: 0.65rem; 
+            color: var(--primary-dark); 
+            background: rgba(2, 132, 199, 0.1); 
+            padding: 2px 8px; 
+            border-radius: 20px; 
+            font-weight: 700; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 4px; 
+        }
+
+        .ticket-pill {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.62rem;
+            font-weight: 700;
+            color: var(--navy);
+            background: var(--agi-gold-soft);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            padding: 2px 7px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: 0.2s;
+        }
+        .ticket-pill:hover { background: var(--agi-gold); color: #fff; }
+
+        .nav-action-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            background: transparent;
+            border: 1px solid #e2e8f0;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: 0.2s;
+            flex-shrink: 0;
+        }
+        .nav-action-btn:hover { background: #f0f9ff; border-color: var(--primary); color: var(--primary); }
+
+        /* Bandeau de contexte / Identification Session */
+        .session-bar {
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 7px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            font-size: 0.7rem;
+            color: var(--text-dim);
+        }
+        .session-bar strong { color: var(--navy); font-weight: 700; }
+        .edit-profile-link {
+            color: var(--primary);
+            font-weight: 700;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.68rem;
+            text-decoration: underline;
+        }
+
+        /* Ruban de Sujets Rapides (Categories Support) */
+        .quick-topics {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 7px 12px;
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            border-bottom: 1px solid rgba(2, 132, 199, 0.1);
+            scrollbar-width: none;
+        }
+        .quick-topics::-webkit-scrollbar { display: none; }
+
+        .topic-chip {
+            white-space: nowrap;
+            font-size: 0.67rem;
+            font-weight: 700;
+            color: var(--navy);
+            background: #ffffff;
+            border: 1px solid #bae6fd;
+            padding: 4px 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.2s;
+            flex-shrink: 0;
+        }
+        .topic-chip:hover, .topic-chip.active {
+            background: var(--navy);
+            color: var(--agi-gold);
+            border-color: var(--navy);
+        }
+
+        /* Zone des Messages */
+        #messageArea { 
+            flex: 1; 
+            overflow-y: auto; 
+            padding: 14px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 10px; 
+            background-color: var(--bg-chat);
+            background-image: radial-gradient(rgba(2, 132, 199, 0.12) 1px, transparent 1px);
+            background-size: 18px 18px;
+        }
+
+        .system-welcome {
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid #bae6fd;
+            border-left: 4px solid var(--agi-gold);
+            border-radius: 14px;
+            padding: 11px 13px;
+            font-size: 0.74rem;
+            color: var(--text-main);
+            line-height: 1.45;
+            box-shadow: 0 2px 6px rgba(12, 74, 110, 0.05);
+        }
+        .system-welcome-title {
+            font-weight: 800;
+            color: var(--navy);
+            font-size: 0.76rem;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .security-note {
+            margin-top: 6px;
+            padding-top: 6px;
+            border-top: 1px dashed #cbd5e1;
+            font-size: 0.67rem;
+            color: #b45309;
+            font-weight: 600;
+        }
+
+        .date-divider {
+            align-self: center;
+            background: rgba(12, 74, 110, 0.1);
+            color: var(--navy);
+            font-size: 0.64rem;
+            font-weight: 700;
+            padding: 3px 11px;
+            border-radius: 12px;
+            margin: 4px 0;
+        }
+
+        .message { 
+            max-width: 82%; 
+            padding: 10px 14px; 
+            border-radius: 16px; 
+            font-size: 0.84rem; 
+            line-height: 1.45; 
+            animation: slideIn 0.22s cubic-bezier(0.16, 1, 0.3, 1); 
+            position: relative; 
+            box-shadow: 0 2px 5px rgba(12, 74, 110, 0.07); 
+        }
+        .received { 
+            align-self: flex-start; 
+            background: var(--surface); 
+            color: var(--text-main); 
+            border-bottom-left-radius: 4px; 
+            border-left: 3.5px solid var(--agi-gold); 
+        }
+        .sent { 
+            align-self: flex-end; 
+            background: linear-gradient(135deg, #0c4a6e 0%, #0284c7 100%); 
+            color: #ffffff; 
+            border-bottom-right-radius: 4px; 
+        }
         
-        .media-content { width: 100%; border-radius: 12px; margin: 6px 0; display: block; max-height: 250px; object-fit: cover; cursor: pointer; transition: transform 0.2s; }
-        .media-content:hover { transform: scale(1.02); }
-        .timestamp { font-size: 0.65rem; color: var(--text-dim); text-align: right; display: block; margin-top: 6px; }
-        .sent .timestamp { color: rgba(255, 255, 255, 0.75); }
+        .agent-label {
+            font-size: 0.68rem; 
+            color: var(--primary-dark); 
+            font-weight: 800; 
+            display: flex; 
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
 
-        .input-area { padding: 12px 16px; background: var(--surface); display: flex; align-items: center; gap: 12px; border-top: 1px solid rgba(2, 132, 199, 0.1); padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
-        .input-card { flex: 1; background: #f8fafc; border-radius: 30px; padding: 4px 16px; display: flex; align-items: center; gap: 14px; border: 1px solid #e2e8f0; }
-        #messageInput { flex: 1; background: transparent; border: none; color: var(--text-main); padding: 10px 0; font-size: 0.8rem; }
+        .topic-tag {
+            display: inline-block;
+            font-size: 0.62rem;
+            font-weight: 700;
+            padding: 1px 7px;
+            border-radius: 6px;
+            margin-bottom: 4px;
+            background: rgba(245, 158, 11, 0.22);
+            color: #fef3c7;
+        }
+        .received .topic-tag {
+            background: #e0f2fe;
+            color: var(--navy);
+        }
+
+        .media-content { 
+            width: 100%; 
+            border-radius: 10px; 
+            margin: 5px 0; 
+            display: block; 
+            max-height: 240px; 
+            object-fit: cover; 
+            cursor: pointer; 
+            transition: transform 0.2s; 
+            border: 1px solid rgba(0,0,0,0.08);
+        }
+        .media-content:hover { transform: scale(1.01); }
+
+        .file-attachment {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            background: rgba(255,255,255,0.14);
+            padding: 8px 10px;
+            border-radius: 10px;
+            margin: 4px 0;
+            text-decoration: none;
+            color: inherit;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .received .file-attachment { background: #f1f5f9; color: var(--navy); }
+
+        .msg-footer {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 5px;
+            margin-top: 4px;
+        }
+        .timestamp { font-size: 0.62rem; color: var(--text-dim); }
+        .sent .timestamp { color: rgba(255, 255, 255, 0.78); }
+        .check-icon { font-size: 0.62rem; color: #38bdf8; }
+
+        /* Indicateur de frappe Agent en temps réel */
+        #typingIndicator {
+            display: none;
+            padding: 6px 14px;
+            background: var(--bg-chat);
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            align-items: center;
+            gap: 6px;
+        }
+        #typingIndicator.visible { display: flex; }
+        .dots span {
+            display: inline-block;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--primary);
+            animation: bounce 1.3s infinite ease-in-out;
+        }
+        .dots span:nth-child(2) { animation-delay: 0.15s; }
+        .dots span:nth-child(3) { animation-delay: 0.3s; }
+        @keyframes bounce { 0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; } 40% { transform: scale(1); opacity: 1; } }
+
+        /* Barre de progression d'envoi */
+        #uploadBar {
+            display: none;
+            background: #fffbeb;
+            border-top: 1px solid #fde68a;
+            padding: 6px 14px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #92400e;
+            align-items: center;
+            gap: 8px;
+        }
+        #uploadBar.visible { display: flex; }
+
+        /* Zone de Saisie */
+        .input-area { 
+            padding: 10px 14px; 
+            background: var(--surface); 
+            display: flex; 
+            align-items: flex-end; 
+            gap: 10px; 
+            border-top: 1px solid rgba(2, 132, 199, 0.15); 
+            padding-bottom: calc(10px + env(safe-area-inset-bottom)); 
+        }
+        .input-card { 
+            flex: 1; 
+            background: #f8fafc; 
+            border-radius: 22px; 
+            padding: 4px 14px; 
+            display: flex; 
+            align-items: center; 
+            gap: 11px; 
+            border: 1.5px solid #cbd5e1; 
+            transition: border-color 0.2s;
+        }
+        .input-card:focus-within { border-color: var(--primary); background: #ffffff; }
+
+        #messageInput { 
+            flex: 1; 
+            background: transparent; 
+            border: none; 
+            color: var(--text-main); 
+            padding: 8px 0; 
+            font-size: 0.83rem; 
+            font-family: inherit;
+            resize: none;
+            max-height: 96px;
+            line-height: 1.35;
+        }
         #messageInput::placeholder { color: #94a3b8; }
         
-        .icon-btn { color: var(--text-dim); font-size: 1.25rem; cursor: pointer; transition: color 0.2s; }
+        .icon-btn { color: var(--text-dim); font-size: 1.12rem; cursor: pointer; transition: color 0.2s; flex-shrink: 0; }
         .icon-btn:hover { color: var(--primary); }
         
-        .circle-btn { width: 44px; height: 44px; border-radius: 50%; background: var(--primary); border: none; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; cursor: pointer; transition: background 0.2s; }
-        .circle-btn:hover { background: var(--primary-dark); }
+        .circle-btn { 
+            width: 42px; 
+            height: 42px; 
+            border-radius: 50%; 
+            background: linear-gradient(135deg, #0c4a6e 0%, #0284c7 100%); 
+            border: none; 
+            color: #fff; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 1rem; 
+            cursor: pointer; 
+            transition: transform 0.15s, filter 0.2s; 
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+        }
+        .circle-btn:hover { filter: brightness(1.08); transform: scale(1.03); }
+        .circle-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
         #fileInput, #cameraInput { display: none; }
 
-        @keyframes slideIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        /* Modale Profil / Infos Support & Lightbox */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(8, 47, 73, 0.72);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+        .modal-overlay.open { display: flex; }
+
+        .modal-card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 420px;
+            border-radius: 18px;
+            padding: 20px;
+            border: 1.5px solid #bae6fd;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            animation: slideIn 0.2s ease-out;
+        }
+        .modal-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--navy);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .modal-input {
+            width: 100%;
+            padding: 9px 12px;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            margin-top: 4px;
+            margin-bottom: 12px;
+            font-family: inherit;
+        }
+        .modal-input:focus { border-color: var(--primary); }
+
+        .modal-btn {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            background: var(--navy);
+            color: var(--agi-gold);
+            font-weight: 800;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+        }
+
+        /* Toast Notification */
+        #toastBox {
+            position: fixed;
+            top: 68px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--navy);
+            color: #fff;
+            border: 1px solid var(--agi-gold);
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            z-index: 3000;
+            display: none;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+        }
+
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <div class="app-container">
-        <nav>
-            <img src="https://i.imgur.com/6YRySSd.jpeg" style="width:42px; height:42px; border-radius:50%; border: 2px solid var(--agi-gold); object-fit: cover;" alt="Logo">
-            <div style="flex:1">
-                <h2 style="font-size:1rem; font-weight:700; color: var(--text-main);">SUPPORT AG-COIN Burkina</h2>
-                <div class="status-badge"><i class="fa-solid fa-shield-halved"></i> Canal Privé Sécurisé</div>
+    <div id="toastBox"></div>
+
+    <!-- Modale Identification Client / Informations Ticket -->
+    <div class="modal-overlay" id="profileModal">
+        <div class="modal-card">
+            <div class="modal-title">
+                <span><i class="fa-solid fa-id-card-clip" style="color: var(--primary);"></i> Identification du Ticket Support</span>
+                <button onclick="closeModal('profileModal')" style="background:none;border:none;font-size:1.1rem;cursor:pointer;color:#64748b;"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <i class="fa-solid fa-circle-info" style="color: var(--primary); font-size: 1.2rem;"></i>
+            <p style="font-size: 0.74rem; color: var(--text-dim); margin-bottom: 12px; line-height: 1.4;">
+                Renseignez votre adresse e-mail ou identifiant client pour synchroniser votre session avec nos équipes techniques d'<strong>Atlas & Duc Corporation</strong>.
+            </p>
+            <label style="font-size: 0.7rem; font-weight: 700; color: var(--navy);">Identifiant Base58 du Canal Privé :</label>
+            <input type="text" id="modalBase58Display" class="modal-input" readonly style="background:#f1f5f9; font-family:'JetBrains Mono', monospace; font-weight:700; color:var(--navy);">
+            
+            <label style="font-size: 0.7rem; font-weight: 700; color: var(--navy);">Votre Nom ou E-mail de suivi :</label>
+            <input type="text" id="modalEmailInput" class="modal-input" placeholder="exemple@domaine.com">
+
+            <button class="modal-btn" id="saveProfileBtn"><i class="fa-solid fa-check"></i> Enregistrer & Synchroniser</button>
+        </div>
+    </div>
+
+    <!-- Modale Contacts Directs NOC L1 -->
+    <div class="modal-overlay" id="infoModal">
+        <div class="modal-card">
+            <div class="modal-title">
+                <span><i class="fa-solid fa-headset" style="color: var(--agi-gold);"></i> Assistance Directe Atlas & Duc</span>
+                <button onclick="closeModal('infoModal')" style="background:none;border:none;font-size:1.1rem;cursor:pointer;color:#64748b;"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-main); space-y: 8px; line-height: 1.55;">
+                <p style="margin-bottom: 8px;"><strong>Atlas & Duc Corporation (SASU)</strong> — Support Technique & FinTech <strong>Nexus Core Layer-1 (₳)</strong>.</p>
+                <div style="background:#f8fafc; padding:10px; border-radius:10px; border:1px solid #e2e8f0; margin-bottom:10px; font-family:'JetBrains Mono', monospace; font-size:0.7rem;">
+                    <div><i class="fa-solid fa-phone" style="color:var(--primary);"></i> Support : +226 78 37 08 03</div>
+                    <div><i class="fa-solid fa-phone" style="color:var(--agi-gold);"></i> CTO / Admin : +226 70 87 37 73</div>
+                    <div><i class="fa-solid fa-phone" style="color:var(--online);"></i> Présidence : +226 76 20 38 48</div>
+                    <div style="margin-top:4px;"><i class="fa-solid fa-envelope" style="color:var(--primary);"></i> support@agi-nexus-core.click</div>
+                </div>
+                <p style="font-size: 0.68rem; color: #b45309; font-weight: 600;">
+                    <i class="fa-solid fa-shield-halved"></i> Sécurité : Nos agents ne vous demanderont jamais votre phrase secrète (12/24 mots) ni votre clé privée.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox Aperçu Image Plein Écran -->
+    <div class="modal-overlay" id="lightboxModal" onclick="closeModal('lightboxModal')">
+        <img id="lightboxImg" src="" alt="Aperçu" style="max-width: 95%; max-height: 90dvh; border-radius: 12px; border: 2px solid var(--agi-gold);">
+    </div>
+
+    <div class="app-container">
+        <!-- Navigation Supérieure -->
+        <nav>
+            <a href="support.html" class="back-btn" title="Retour au Portail Support"><i class="fa-solid fa-arrow-left"></i></a>
+            <div class="avatar-wrapper">
+                <img src="https://i.imgur.com/YgpGaCP.jpeg" alt="Logo Atlas & Duc">
+                <span class="conn-dot" id="connDot" title="Statut Firebase Temps Réel"></span>
+            </div>
+            <div class="nav-info">
+                <h2 class="nav-title">SUPPORT ATLAS & DUC • RÉSEAU ₳</h2>
+                <div class="nav-meta">
+                    <span class="status-badge" id="connStatusBadge"><i class="fa-solid fa-circle-notch fa-spin"></i> Connexion RTDB...</span>
+                    <span class="ticket-pill" id="ticketIdBadge" title="Cliquer pour copier l'ID du ticket Base58">
+                        <i class="fa-solid fa-fingerprint"></i> <span id="ticketIdText">...</span>
+                    </span>
+                </div>
+            </div>
+            <button class="nav-action-btn" onclick="openModal('infoModal')" title="Contacts Directs & Horaires">
+                <i class="fa-solid fa-circle-info"></i>
+            </button>
         </nav>
 
-        <div id="messageArea"></div>
+        <!-- Barre d'Identification de Session -->
+        <div class="session-bar">
+            <span>Session : <strong id="sessionUserLabel">Visiteur Vérifié</strong> • Parité <strong>1 ₳ = 1 XOF</strong></span>
+            <button class="edit-profile-link" onclick="openModal('profileModal')"><i class="fa-solid fa-pen"></i> Modifier profil</button>
+        </div>
 
+        <!-- Sélecteur Rapide de Sujet -->
+        <div class="quick-topics" id="topicBar">
+            <button type="button" class="topic-chip active" data-topic="Assistance Générale">Général</button>
+            <button type="button" class="topic-chip" data-topic="Dépôt / Retrait Mobile Money">Dépôt / Retrait ₳</button>
+            <button type="button" class="topic-chip" data-topic="Nexus Wallet Pro">Nexus Wallet Pro</button>
+            <button type="button" class="topic-chip" data-topic="A&D Business Pro">A&D Business Pro</button>
+            <button type="button" class="topic-chip" data-topic="Factures SONABEL / ONEA / Canal+">Factures & Paiements</button>
+            <button type="button" class="topic-chip" data-topic="Roger Service Pro POS">Caisse POS</button>
+        </div>
+
+        <!-- Fil de Discussion Temps Réel -->
+        <div id="messageArea">
+            <div class="system-welcome">
+                <div class="system-welcome-title">
+                    <i class="fa-solid fa-shield-halved" style="color: var(--primary);"></i>
+                    Canal Privé Chiffré — Atlas & Duc Corporation (Nexus Core Layer-1)
+                </div>
+                Bienvenue sur votre espace d'assistance directe en temps réel. Exposez votre demande ou joignez une capture d'écran : un ingénieur ou conseiller client vous répondra directement dans ce fil.
+                <div class="security-note">
+                    <i class="fa-solid fa-lock"></i> Rappel de sécurité : Ne communiquez jamais votre phrase mnémonique (12/24 mots) ni votre clé privée.
+                </div>
+            </div>
+        </div>
+
+        <!-- Indicateur de frappe Agent en temps réel -->
+        <div id="typingIndicator">
+            <i class="fa-solid fa-headset"></i>
+            <span>Un agent Atlas & Duc rédige une réponse</span>
+            <span class="dots"><span></span><span></span><span></span></span>
+        </div>
+
+        <!-- Barre d'état d'envoi média -->
+        <div id="uploadBar">
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            <span id="uploadBarText">Traitement et chiffrement du fichier en cours...</span>
+        </div>
+
+        <!-- Zone de Saisie -->
         <div class="input-area">
             <div class="input-card">
-                <label for="fileInput" class="icon-btn" title="Joindre un fichier">
+                <label for="fileInput" class="icon-btn" title="Joindre une image, vidéo ou document">
                     <i class="fa-solid fa-paperclip"></i>
                 </label>
-                <!-- Inputs cachés pour fichiers et caméra -->
-                <input type="file" id="fileInput" accept="image/*,video/*">
+                <input type="file" id="fileInput" accept="image/*,video/*,application/pdf">
                 <input type="file" id="cameraInput" accept="image/*" capture="environment">
                 
-                <input type="text" id="messageInput" placeholder="Décrivez votre problème..." autocomplete="off">
+                <textarea id="messageInput" rows="1" placeholder="Écrivez votre message au support..." autocomplete="off"></textarea>
                 
-                <!-- Icône déclenchant la caméra -->
                 <i class="fa-solid fa-camera icon-btn" onclick="document.getElementById('cameraInput').click()" title="Prendre une photo"></i>
             </div>
-            <button class="circle-btn" id="mainBtn">
+            <button class="circle-btn" id="mainBtn" title="Envoyer le message">
                 <i class="fa-solid fa-paper-plane"></i>
             </button>
         </div>
     </div>
 
     <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getDatabase, ref, push, onChildAdded, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getDatabase, ref, push, set, onChildAdded, onValue, serverTimestamp, onDisconnect } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-    // Configuration Firebase
-    const firebaseConfig = { databaseURL: "https://atlasgroupebusiness-default-rtdb.firebaseio.com" };
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
+        'use strict';
 
-    // Configuration FCM (Pointant vers votre Cloud Run)
-    const FCM_SERVER_URL = "https://agi-fcm-server-876963848028.us-central1.run.app/api/v1/notify/transaction";
-    // L'API_KEY statique a été retirée pour des raisons de sécurité critiques.
+        // =========================================================================
+        // 1. INITIALISATION FIREBASE REALTIME DATABASE
+        // =========================================================================
+        const firebaseConfig = { 
+            databaseURL: "https://atlasgroupebusiness-default-rtdb.firebaseio.com" 
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
 
-    let isFirstLoad = true;
+        const FCM_SERVER_URL = "https://agi-fcm-server-876963848028.us-central1.run.app/api/v1/notify/transaction";
 
-    // Fonction de génération base 58 conservée
-    const getSyncID = () => {
-        const rawEmail = localStorage.getItem('agi_logged_email') || "user_" + Math.random().toString(36).substr(2, 9);
-        const email = rawEmail.toLowerCase().trim();
-        const alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
-        let hash = 0;
-        for (let i = 0; i < email.length; i++) { hash = (hash << 5) - hash + email.charCodeAt(i); hash |= 0; }
-        let res = "AGI"; 
-        let n = Math.abs(hash * 999999);
-        while (n > 0) { res += alphabet[n % 58]; n = Math.floor(n / 58); }
-        return res.substring(0, 20);
-    };
-
-    const userId = getSyncID();
-    const userEmail = localStorage.getItem('agi_logged_email') || "Client";
-    const ticketRef = ref(db, `support_tickets/${userId}`);
-
-    // Gestion de la réception en temps réel
-    onChildAdded(ticketRef, (snap) => {
-        const msg = snap.val();
-        renderMessage(msg);
-        
-        if (!isFirstLoad && msg.senderId !== userId) {
-            triggerDeviceNotification(msg.text || "Fichier multimédia reçu");
-        }
-    });
-
-    setTimeout(() => { isFirstLoad = false; }, 2000);
-
-    // Notification locale (Vibration/Bridge)
-    function triggerDeviceNotification(text) {
-        if (window.NexusBridge && typeof window.NexusBridge.shareContent === 'function') {
-            console.log("Notification via NexusBridge interceptée : " + text);
-        } else if (navigator.vibrate) {
-            navigator.vibrate(200);
-        }
-    }
-
-    // Appel au serveur (Sécurisé : l'en-tête d'autorisation statique a été supprimé)
-    async function notifyFCM(messageText) {
-        try {
-            const response = await fetch(FCM_SERVER_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                    // L'authentification doit désormais être gérée via Firebase Auth Token 
-                    // ou directement côté serveur en écoutant la base de données.
-                },
-                body: JSON.stringify({
-                    title: "Nouveau message Support AG-COIN",
-                    body: messageText || "Un fichier a été envoyé",
-                    userId: userId,
-                    senderName: userEmail,
-                    type: "chat_message"
-                })
-            });
-
-            if (!response.ok) {
-                console.warn("FCM Server a répondu avec le statut :", response.status);
+        // =========================================================================
+        // 2. GÉNÉRATION DÉTERMINISTE BASE58 DE L'IDENTIFIANT DE SESSION (CONSERVÉE)
+        // =========================================================================
+        const getSyncID = () => {
+            let storedId = localStorage.getItem('agi_support_base58_id');
+            const rawEmail = localStorage.getItem('agi_logged_email');
+            if (!rawEmail && storedId && storedId.startsWith('AGI')) {
+                return storedId;
             }
-        } catch (error) {
-            console.error("Erreur de connexion au serveur FCM (silencieuse) :", error);
-            // Le chat continue de fonctionner même si la notification échoue
-        }
-    }
-
-    window.onBiometricResult = function(success, message) {
-        console.log("Statut d'authentification Nexus Core :", success, message);
-    };
-
-    function renderMessage(msg) {
-        const isMe = msg.senderId === userId;
-        const area = document.getElementById('messageArea');
-        const div = document.createElement('div');
-        div.className = `message ${isMe ? 'sent' : 'received'}`;
-        
-        let html = !isMe ? `<span style="font-size:0.75rem; color:var(--primary); font-weight:700; display:block; margin-bottom:4px;">AGENT AG-COIN ₳</span>` : "";
-        
-        if (msg.fileData) {
-            if (msg.fileType.includes('image')) {
-                html += `<img src="${msg.fileData}" class="media-content" onclick="window.open(this.src)">`;
-            } else if (msg.fileType.includes('video')) {
-                html += `<video src="${msg.fileData}" class="media-content" controls></video>`;
+            const seed = rawEmail || ("user_" + Math.random().toString(36).substring(2, 11));
+            const email = seed.toLowerCase().trim();
+            const alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+            let hash = 0;
+            for (let i = 0; i < email.length; i++) { 
+                hash = (hash << 5) - hash + email.charCodeAt(i); 
+                hash |= 0; 
             }
-        }
-
-        if (msg.text) {
-            html += `<p style="word-break: break-word;">${msg.text}</p>`;
-        }
-        
-        const msgTime = msg.timestamp ? new Date(msg.timestamp) : new Date();
-        html += `<span class="timestamp">${msgTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>`;
-        
-        div.innerHTML = html;
-        area.appendChild(div);
-        area.scrollTo({ top: area.scrollHeight, behavior: 'smooth' });
-    }
-
-    const sendMessage = async (text = null, file = null) => {
-        const payload = {
-            senderId: userId,
-            senderName: userEmail,
-            timestamp: serverTimestamp()
+            let res = "AGI"; 
+            let n = Math.abs(hash * 999999);
+            if (n === 0) n = 987654321;
+            while (n > 0) { 
+                res += alphabet[n % 58]; 
+                n = Math.floor(n / 58); 
+            }
+            const finalId = res.substring(0, 20);
+            localStorage.setItem('agi_support_base58_id', finalId);
+            return finalId;
         };
 
-        if (text) payload.text = text;
-        if (file) {
-            payload.fileData = file.data;
-            payload.fileType = file.type;
+        let userId = getSyncID();
+        let userEmail = localStorage.getItem('agi_logged_email') || "Client Nexus";
+        let selectedTopic = "Assistance Générale";
+        let isFirstLoad = true;
+        let lastRenderedDate = null;
+        const renderedKeys = new Set();
+
+        // Références Firebase
+        let ticketRef = ref(db, `support_tickets/${userId}`);
+        let metaRef = ref(db, `support_tickets_meta/${userId}`);
+        let agentTypingRef = ref(db, `support_typing/${userId}/agent`);
+        let clientTypingRef = ref(db, `support_typing/${userId}/client`);
+
+        // Mise à jour UI de l'identité
+        function refreshIdentityUI() {
+            document.getElementById('ticketIdText').textContent = userId;
+            document.getElementById('sessionUserLabel').textContent = userEmail;
+            document.getElementById('modalBase58Display').value = userId;
+            document.getElementById('modalEmailInput').value = localStorage.getItem('agi_logged_email') || '';
+        }
+        refreshIdentityUI();
+
+        // =========================================================================
+        // 3. SURVEILLANCE DE LA CONNEXION TEMPS RÉEL (.info/connected)
+        // =========================================================================
+        const connectedRef = ref(db, ".info/connected");
+        const connDot = document.getElementById('connDot');
+        const connStatusBadge = document.getElementById('connStatusBadge');
+
+        onValue(connectedRef, (snap) => {
+            if (snap.val() === true) {
+                connDot.className = 'conn-dot online';
+                connStatusBadge.innerHTML = '<i class="fa-solid fa-shield-halved"></i> En ligne • Temps Réel 100%';
+                connStatusBadge.style.color = '#065f46';
+                connStatusBadge.style.background = 'rgba(16, 185, 129, 0.14)';
+
+                // Nettoyer automatiquement l'état de frappe en cas de coupure réseau
+                onDisconnect(clientTypingRef).set(false);
+            } else {
+                connDot.className = 'conn-dot offline';
+                connStatusBadge.innerHTML = '<i class="fa-solid fa-wifi"></i> Reconnexion au serveur...';
+                connStatusBadge.style.color = '#991b1b';
+                connStatusBadge.style.background = 'rgba(239, 68, 68, 0.14)';
+            }
+        });
+
+        // Écoute de l'indicateur de frappe de l'Agent Support
+        onValue(agentTypingRef, (snap) => {
+            const typingEl = document.getElementById('typingIndicator');
+            if (snap.val() === true) {
+                typingEl.classList.add('visible');
+                const area = document.getElementById('messageArea');
+                area.scrollTo({ top: area.scrollHeight, behavior: 'smooth' });
+            } else {
+                typingEl.classList.remove('visible');
+            }
+        });
+
+        // =========================================================================
+        // 4. ÉCOUTE ET RENDU DES MESSAGES EN TEMPS RÉEL
+        // =========================================================================
+        function escapeHtml(str) {
+            if (typeof str !== 'string') return '';
+            return str
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
         }
 
-        if (payload.text || payload.fileData) {
-            // 1. Envoi à la base de données Firebase
-            await push(ticketRef, payload);
+        function formatMessageWithLinks(rawText) {
+            const escaped = escapeHtml(rawText);
+            return escaped
+                .replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;font-weight:700;">$1</a>')
+                .replace(/\n/g, '<br>');
+        }
+
+        function attachTicketListener() {
+            onChildAdded(ticketRef, (snap) => {
+                const key = snap.key;
+                if (renderedKeys.has(key)) return;
+                renderedKeys.add(key);
+
+                const msg = snap.val();
+                if (!msg) return;
+                renderMessage(msg);
+                
+                if (!isFirstLoad && msg.senderId !== userId) {
+                    triggerDeviceNotification(msg.text || "Nouvelle pièce jointe reçue du Support");
+                }
+            });
+            setTimeout(() => { isFirstLoad = false; }, 1500);
+        }
+        attachTicketListener();
+
+        function triggerDeviceNotification(text) {
+            if (window.NexusBridge && typeof window.NexusBridge.shareContent === 'function') {
+                console.log("Notification NexusBridge :", text);
+            } else if (navigator.vibrate) {
+                navigator.vibrate([150, 80, 150]);
+            }
+        }
+
+        function renderMessage(msg) {
+            const isMe = msg.senderId === userId;
+            const area = document.getElementById('messageArea');
+            const msgDateObj = msg.timestamp ? new Date(msg.timestamp) : new Date();
+            const dateStr = msgDateObj.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' });
+
+            // Séparateur chronologique par journée
+            if (lastRenderedDate !== dateStr) {
+                lastRenderedDate = dateStr;
+                const sep = document.createElement('div');
+                sep.className = 'date-divider';
+                sep.textContent = dateStr;
+                area.appendChild(sep);
+            }
+
+            const div = document.createElement('div');
+            div.className = `message ${isMe ? 'sent' : 'received'}`;
             
-            // 2. Déclenchement asynchrone du Push FCM
-            notifyFCM(text);
+            let html = '';
+            if (!isMe) {
+                const agentName = escapeHtml(msg.senderName || 'AGENT ATLAS & DUC ₳');
+                html += `<span class="agent-label"><i class="fa-solid fa-headset" style="color:var(--agi-gold);"></i> ${agentName}</span>`;
+            }
+
+            if (msg.topic) {
+                html += `<span class="topic-tag"><i class="fa-solid fa-tag"></i> ${escapeHtml(msg.topic)}</span>`;
+            }
+            
+            if (msg.fileData && msg.fileType) {
+                if (msg.fileType.includes('image')) {
+                    html += `<img src="${msg.fileData}" class="media-content" alt="Capture" onclick="openLightbox(this.src)">`;
+                } else if (msg.fileType.includes('video')) {
+                    html += `<video src="${msg.fileData}" class="media-content" controls></video>`;
+                } else {
+                    const fName = escapeHtml(msg.fileName || 'Document_joint.pdf');
+                    html += `<a href="${msg.fileData}" download="${fName}" class="file-attachment"><i class="fa-solid fa-file-pdf" style="font-size:1.1rem;color:var(--agi-gold);"></i><span>${fName}</span></a>`;
+                }
+            }
+
+            if (msg.text) {
+                html += `<p style="word-break: break-word;">${formatMessageWithLinks(msg.text)}</p>`;
+            }
+            
+            const timeFormatted = msgDateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            html += `
+                <div class="msg-footer">
+                    <span class="timestamp">${timeFormatted}</span>
+                    ${isMe ? '<i class="fa-solid fa-check-double check-icon" title="Synchronisé sur Firebase RTDB"></i>' : ''}
+                </div>
+            `;
+            
+            div.innerHTML = html;
+            area.appendChild(div);
+            area.scrollTo({ top: area.scrollHeight, behavior: 'smooth' });
         }
-    };
 
-    document.getElementById('mainBtn').onclick = () => {
-        const input = document.getElementById('messageInput');
-        const text = input.value.trim();
-        if(text) {
-            sendMessage(text);
-            input.value = "";
+        // =========================================================================
+        // 5. ENVOI DES MESSAGES, MÉTADONNÉES TICKET & NOTIFICATION FCM
+        // =========================================================================
+        async function notifyFCM(messageText) {
+            try {
+                await fetch(FCM_SERVER_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        title: "Nouveau message Support Atlas & Duc ₳",
+                        body: messageText || "Une pièce jointe a été transmise",
+                        userId: userId,
+                        senderName: userEmail,
+                        topic: selectedTopic,
+                        type: "chat_message"
+                    })
+                });
+            } catch (error) {
+                // Silencieux : le chat RTDB reste prioritaire et opérationnel
+            }
         }
-    };
 
-    const handleFileSelect = function(e) {
-        const file = e.target.files[0];
-        if (!file) return;
+        const sendMessage = async (text = null, file = null) => {
+            const sendBtn = document.getElementById('mainBtn');
+            const payload = {
+                senderId: userId,
+                senderName: userEmail,
+                topic: selectedTopic,
+                timestamp: serverTimestamp()
+            };
 
-        if (file.size > 3 * 1024 * 1024) {
-            alert("Fichier trop lourd (Max 3Mo).");
-            return;
-        }
+            if (text) payload.text = text;
+            if (file) {
+                payload.fileData = file.data;
+                payload.fileType = file.type;
+                if (file.name) payload.fileName = file.name;
+            }
 
-        const reader = new FileReader();
-        reader.onload = function(event) {
-            sendMessage(null, {
-                data: event.target.result,
-                type: file.type
-            });
+            if (!payload.text && !payload.fileData) return;
+
+            sendBtn.disabled = true;
+            try {
+                // 1. Écriture du message dans la file temps réel du ticket
+                await push(ticketRef, payload);
+
+                // 2. Mise à jour de l'index des tickets actifs pour le tableau de bord Agents NOC
+                await set(metaRef, {
+                    ticketId: userId,
+                    userEmail: userEmail,
+                    lastTopic: selectedTopic,
+                    lastMessage: text ? text.substring(0, 120) : `[Fichier : ${file?.type || 'média'}]`,
+                    status: "EN_ATTENTE_AGENT",
+                    updatedAt: serverTimestamp()
+                });
+
+                // 3. Réinitialisation de l'état de frappe client
+                set(clientTypingRef, false);
+
+                // 4. Notification Push asynchrone
+                notifyFCM(text);
+            } catch (err) {
+                showToast("Erreur réseau : réessayez l'envoi.");
+                console.error(err);
+            } finally {
+                sendBtn.disabled = false;
+            }
         };
-        reader.readAsDataURL(file);
-        this.value = ""; 
-    };
 
-    document.getElementById('fileInput').onchange = handleFileSelect;
-    document.getElementById('cameraInput').onchange = handleFileSelect;
+        // =========================================================================
+        // 6. GESTION DES INTERACTIONS UI, COMPRESSION IMAGE & SAISIE
+        // =========================================================================
+        const msgInput = document.getElementById('messageInput');
+        const mainBtn = document.getElementById('mainBtn');
+        let typingTimeout = null;
 
-    document.getElementById('messageInput').onkeypress = (e) => {
-        if(e.key === 'Enter') document.getElementById('mainBtn').click();
-    };
+        msgInput.addEventListener('input', () => {
+            // Auto-ajustement hauteur textarea
+            msgInput.style.height = 'auto';
+            msgInput.style.height = Math.min(msgInput.scrollHeight, 96) + 'px';
+
+            // Diffusion état de frappe client en temps réel
+            set(clientTypingRef, msgInput.value.trim().length > 0);
+            clearTimeout(typingTimeout);
+            typingTimeout = setTimeout(() => {
+                set(clientTypingRef, false);
+            }, 2500);
+        });
+
+        mainBtn.onclick = () => {
+            const text = msgInput.value.trim();
+            if (text) {
+                sendMessage(text);
+                msgInput.value = "";
+                msgInput.style.height = 'auto';
+            }
+        };
+
+        msgInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                mainBtn.click();
+            }
+        });
+
+        // Gestion des puces de sujets rapides
+        document.querySelectorAll('.topic-chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                document.querySelectorAll('.topic-chip').forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                selectedTopic = chip.getAttribute('data-topic');
+                showToast(`Sujet sélectionné : ${selectedTopic}`);
+            });
+        });
+
+        // Compression d'image client pour envoi rapide en Base64 sur RTDB
+        function compressImageToDataUrl(file, maxDim = 1280, quality = 0.82) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        let w = img.width;
+                        let h = img.height;
+                        if (w > maxDim || h > maxDim) {
+                            if (w > h) {
+                                h = Math.round((h * maxDim) / w);
+                                w = maxDim;
+                            } else {
+                                w = Math.round((w * maxDim) / h);
+                                h = maxDim;
+                            }
+                        }
+                        const canvas = document.createElement('canvas');
+                        canvas.width = w;
+                        canvas.height = h;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, w, h);
+                        resolve(canvas.toDataURL('image/jpeg', quality));
+                    };
+                    img.onerror = reject;
+                    img.src = e.target.result;
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        const handleFileSelect = async function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const uploadBar = document.getElementById('uploadBar');
+            const uploadBarText = document.getElementById('uploadBarText');
+
+            if (file.type.startsWith('image/')) {
+                uploadBar.classList.add('visible');
+                uploadBarText.textContent = "Optimisation et envoi de la capture d'écran...";
+                try {
+                    const compressedData = await compressImageToDataUrl(file);
+                    await sendMessage(null, {
+                        data: compressedData,
+                        type: 'image/jpeg',
+                        name: file.name
+                    });
+                } catch (err) {
+                    showToast("Impossible de traiter cette image.");
+                } finally {
+                    uploadBar.classList.remove('visible');
+                }
+            } else {
+                if (file.size > 3 * 1024 * 1024) {
+                    showToast("Fichier trop volumineux (Maximum 3 Mo).");
+                    this.value = "";
+                    return;
+                }
+                uploadBar.classList.add('visible');
+                uploadBarText.textContent = `Envoi du fichier ${file.name}...`;
+                const reader = new FileReader();
+                reader.onload = async function(event) {
+                    await sendMessage(null, {
+                        data: event.target.result,
+                        type: file.type || 'application/octet-stream',
+                        name: file.name
+                    });
+                    uploadBar.classList.remove('visible');
+                };
+                reader.readAsDataURL(file);
+            }
+            this.value = ""; 
+        };
+
+        document.getElementById('fileInput').onchange = handleFileSelect;
+        document.getElementById('cameraInput').onchange = handleFileSelect;
+
+        // Copie de l'ID Base58 en un clic
+        document.getElementById('ticketIdBadge').addEventListener('click', () => {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(userId);
+                showToast(`ID Ticket Base58 copié : ${userId}`);
+            }
+        });
+
+        // Sauvegarde du profil client dans la modale
+        document.getElementById('saveProfileBtn').addEventListener('click', () => {
+            const val = document.getElementById('modalEmailInput').value.trim();
+            if (val) {
+                localStorage.setItem('agi_logged_email', val);
+                userEmail = val;
+                const newId = getSyncID();
+                if (newId !== userId) {
+                    userId = newId;
+                    renderedKeys.clear();
+                    lastRenderedDate = null;
+                    document.getElementById('messageArea').innerHTML = '';
+                    ticketRef = ref(db, `support_tickets/${userId}`);
+                    metaRef = ref(db, `support_tickets_meta/${userId}`);
+                    agentTypingRef = ref(db, `support_typing/${userId}/agent`);
+                    clientTypingRef = ref(db, `support_typing/${userId}/client`);
+                    isFirstLoad = true;
+                    attachTicketListener();
+                }
+                refreshIdentityUI();
+                showToast("Session synchronisée avec votre identifiant.");
+            }
+            window.closeModal('profileModal');
+        });
+
+        // Fonctions globales pour les modales et le bridge natif Android
+        window.openModal = (id) => document.getElementById(id).classList.add('open');
+        window.closeModal = (id) => document.getElementById(id).classList.remove('open');
+        window.openLightbox = (src) => {
+            document.getElementById('lightboxImg').src = src;
+            window.openModal('lightboxModal');
+        };
+
+        function showToast(msg) {
+            const box = document.getElementById('toastBox');
+            box.textContent = msg;
+            box.style.display = 'block';
+            clearTimeout(box._timer);
+            box._timer = setTimeout(() => { box.style.display = 'none'; }, 2800);
+        }
+
+        window.onBiometricResult = function(success, message) {
+            console.log("Statut d'authentification Nexus Core :", success, message);
+        };
     </script>
 </body>
 </html>
