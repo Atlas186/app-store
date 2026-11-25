@@ -474,27 +474,11 @@
         </div>
     </footer>
 
-    <!-- Script Firebase Realtime Database & Logique Support B2B -->
+    <!-- Script REST Firebase Realtime Database & Logique Support B2B (Sans clé API) -->
     <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-        import { getDatabase, ref, push, set, onValue, query, limitToLast, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
-
         'use strict';
 
-        // Configuration Firebase Officielle
-        const firebaseConfig = {
-            apiKey: "AIzaSyAOExj8-x4KjGIQi2ewzU7LQP302l9pZrU",
-            authDomain: "atlasgroupebusiness.firebaseapp.com",
-            databaseURL: "https://atlasgroupebusiness-default-rtdb.firebaseio.com",
-            projectId: "atlasgroupebusiness",
-            storageBucket: "atlasgroupebusiness.firebasestorage.app",
-            messagingSenderId: "876963848028",
-            appId: "1:876963848028:web:89a37065ded7b60c1c6b99",
-            measurementId: "G-2RSEDM5HE3"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
+        const RTDB_TICKETS_URL = 'https://atlasgroupebusiness-default-rtdb.firebaseio.com/nexus_b2b_tickets';
 
         const syncStatusEl = document.getElementById('firebaseSyncStatus');
         const heroBadgeEl = document.getElementById('heroFirebaseBadge');
@@ -609,27 +593,32 @@
             });
         }
 
-        // Écoute Temps Réel Firebase Realtime Database
-        const ticketsRef = ref(db, 'nexus_b2b_tickets');
-        const recentTicketsQuery = query(ticketsRef, limitToLast(50));
-
-        onValue(recentTicketsQuery, (snapshot) => {
-            setSyncBadge('connected', 'RTDB Connecté (Live)');
-            const rawData = snapshot.val();
-            if (!rawData) {
-                renderRealtimeTickets([]);
-                return;
+        async function loadRecentTickets() {
+            try {
+                const res = await fetch(`${RTDB_TICKETS_URL}.json?orderBy="$key"&limitToLast=50`, {
+                    method: 'GET',
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (!res.ok) {
+                    throw new Error(`HTTP ${res.status}`);
+                }
+                setSyncBadge('connected', 'RTDB Connecté (Live)');
+                const rawData = await res.json();
+                if (!rawData) {
+                    renderRealtimeTickets([]);
+                    return;
+                }
+                const items = Object.entries(rawData).map(([key, val]) => ({
+                    key,
+                    ...(val && typeof val === 'object' ? val : {})
+                }));
+                items.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+                renderRealtimeTickets(items);
+            } catch (error) {
+                console.error('Erreur Firebase RTDB REST:', error);
+                setSyncBadge('error', 'Erreur Connexion RTDB');
             }
-            const items = Object.entries(rawData).map(([key, val]) => ({
-                key,
-                ...val
-            }));
-            items.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-            renderRealtimeTickets(items);
-        }, (error) => {
-            console.error('Erreur Firebase RTDB:', error);
-            setSyncBadge('error', 'Erreur Connexion RTDB');
-        });
+        }
 
         // Génération d'identifiants Base58 stricts
         const BASE58_ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
@@ -678,7 +667,7 @@
             return prefix + encodeBase58FromBytes(mixed).slice(0, 12);
         }
 
-        // Soumission de Ticket B2B sur Firebase RTDB
+        // Soumission de Ticket B2B sur Firebase RTDB via REST
         const ticketForm = document.getElementById('b2bTicketForm');
         const createTicketBtn = document.getElementById('createB2bTicketBtn');
         const ticketCatEl = document.getElementById('b2bTicketCategory');
@@ -708,23 +697,31 @@
 
                 createTicketBtn.disabled = true;
                 try {
-                    const newTicketRef = push(ticketsRef);
-                    await set(newTicketRef, {
-                        ticketId: ticketId,
-                        category: category,
-                        priority: priority,
-                        organization: organization,
-                        walletAddress: walletAddress,
-                        description: description,
-                        status: 'OUVERT',
-                        chainId: 9012,
-                        createdAt: serverTimestamp()
+                    const res = await fetch(`${RTDB_TICKETS_URL}.json`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            ticketId: ticketId,
+                            category: category,
+                            priority: priority,
+                            organization: organization,
+                            walletAddress: walletAddress,
+                            description: description,
+                            status: 'OUVERT',
+                            chainId: 9012,
+                            createdAt: Date.now()
+                        })
                     });
+
+                    if (!res.ok) {
+                        throw new Error(`HTTP ${res.status}`);
+                    }
 
                     ticketBanner.className = 'bg-emerald-950/90 border border-indSuccess/50 rounded-lg p-2.5 text-[10px] font-mono text-emerald-300 mb-4 safe-wrap';
                     ticketBanner.classList.remove('hidden');
                     ticketBanner.textContent = `[SUCCÈS] Ticket ${ticketId} enregistré en temps réel pour ${organization} (Priorité ${priority}).`;
                     ticketDescEl.value = '';
+                    await loadRecentTickets();
                 } catch (err) {
                     ticketBanner.className = 'bg-rose-950/90 border border-rose-500/50 rounded-lg p-2.5 text-[10px] font-mono text-rose-300 mb-4 safe-wrap';
                     ticketBanner.classList.remove('hidden');
@@ -1013,6 +1010,10 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             applyLanguage();
+            loadRecentTickets();
+            setInterval(() => {
+                loadRecentTickets();
+            }, 5000);
         });
     </script>
 </body>
